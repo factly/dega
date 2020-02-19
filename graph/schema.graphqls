@@ -1,0 +1,208 @@
+# GraphQL schema example
+#
+# https://gqlgen.com/getting-started/
+
+type Category {
+  _id: ID!
+  _class: String!
+  name: String!
+  slug: String!
+  client_id: String!
+  created_date: Time!
+  last_updated_date: Time!
+}
+
+type Tag {
+  _id: ID!
+  _class: String!
+  name: String!
+  slug: String!
+  client_id: String!
+  created_date: Time!
+  last_updated_date: Time!
+}
+
+type Format {
+  _id: ID!
+  _class: String!
+  name: String!
+  slug: String!
+  client_id: String!
+  is_default: Boolean
+  created_date: Time!
+  last_updated_date: Time!
+}
+
+type Status {
+  _id: ID!
+  _class: String!
+  name: String!
+  slug: String!
+  client_id: String!
+  is_default: Boolean
+  created_date: Time!
+  last_updated_date: Time!
+}
+
+type Medium {
+  _id: ID!
+  name: String!
+  type: String!
+  url: String!
+  file_size: String!
+  title: String!
+  alt_text: String!
+  uploaded_by: String!
+  published_date: Time!
+  last_updated_date: Time!
+  slug: String
+  client_id: String!
+  created_date: Time!
+  _class: String!
+}
+
+type Post {
+  _id: ID!
+  title: String!
+  client_id: String!
+  content: String!
+  excerpt: String
+  published_date: Time!
+  last_updated_date: Time!
+  featured: Boolean!
+  sticky: Boolean!
+  updates: String
+  slug: String!
+  created_date: Time!
+  status: Status!
+  format: Format!
+  media: Medium
+  categories: [Category!]!
+  tags: [Tag!]!
+  degaUsers: [User!]!
+  _class: String!
+}
+
+type Organization {
+  _id: ID!
+  name: String!
+  site_title: String!
+  tag_line: String!
+  client_id: String!
+  slug: String!
+  email: String!
+  created_date: Time!
+  last_updated_date: Time!
+  site_address: String!
+  enable_factchecking: Boolean!
+  mediaLogo: Medium
+  mediaMobileLogo: Medium
+  mediaFavicon: Medium
+  mediaMobileIcon: Medium
+  _class: String!
+}
+
+type User {
+  _id: ID!
+  first_name: String!
+  last_name: String!
+  display_name: String!
+  slug: String!
+  enabled: Boolean!
+  email_verified: Boolean!
+  email: String!
+  keycloak_id: String!
+  created_date: Time!
+  is_super_admin: Boolean!
+  organizationDefault: Organization!
+  organizationCurrent: Organization!
+  media: Medium
+  _class: String!
+}
+
+type Rating {
+  _id: ID!
+  name: String!
+  numeric_value: Int!
+  is_default: Boolean!
+  client_id: String!
+  slug: String!
+  description: String!
+  created_date: Time!
+  last_updated_date: Time!
+  media: Medium
+  _class: String!
+}
+
+type Claimant {
+  _id: ID!
+  name: String!
+  tag_line: String!
+  description: String!
+  client_id: String!
+  slug: String!
+  created_date: Time!
+  last_updated_date: Time!
+  media: Medium
+  _class: String!
+}
+
+type Claim {
+  _id: ID!
+  claim: String!
+  description: String!
+  claim_date: Time!
+  claim_source: String!
+  checked_date: Time!
+  review_sources: String!
+  review: String!
+  review_tag_line: String
+  client_id: String!
+  slug: String!
+  created_date: Time!
+  last_updated_date: Time!
+  rating: Rating!
+  claimant: Claimant!
+  _class: String!
+}
+
+type Factcheck {
+  _id: ID!
+  title: String!
+  client_id: String!
+  introduction: String!
+  summary: String!
+  excerpt: String
+  last_updated_date: Time!
+  featured: Boolean!
+  sticky: Boolean!
+  updates: String
+  sub_title: String
+  created_date: Time!
+  published_date: Time!
+  claims: [Claim!]!
+  status: Status!
+  format: Format!
+  media: Medium
+  categories: [Category!]!
+  tags: [Tag!]!
+  degaUsers: [User!]!
+  _class: String!
+}
+
+type Query {
+  categories: [Category!]!
+  tags: [Tag!]!
+  formats: [Format!]!
+  statuses: [Status!]!
+  media: [Medium!]!
+  posts: [Post!]!
+  organizations: [Organization!]!
+  users: [User!]!
+  ratings: [Rating!]!
+  claimnats: [Claimant!]!
+  claims: [Claim!]!
+  factchecks: [Factcheck!]!
+}
+
+scalar Time
