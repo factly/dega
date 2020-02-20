@@ -7,10 +7,10 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/monarkatfactly/dega-api-go.git/graph"
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
 	"github.com/monarkatfactly/dega-api-go.git/graph/loaders"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
+	"github.com/monarkatfactly/dega-api-go.git/graph/resolvers"
 )
 
 const defaultPort = "8080"
@@ -21,7 +21,7 @@ func main() {
 		port = defaultPort
 	}
 	mongo.Setup()
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
 	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	http.Handle("/query", loaders.DataloaderMiddleware(srv))
