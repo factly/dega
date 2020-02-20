@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
+	"github.com/monarkatfactly/dega-api-go.git/graph/loaders"
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -14,40 +15,11 @@ import (
 )
 
 func (r *claimResolver) Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error) {
-	cid, err := primitive.ObjectIDFromHex(obj.Rating.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Rating
-
-	err = mongo.Factcheck.Collection("rating").FindOne(ctx, bson.M{"_id": cid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
-	//return loaders.RatingsLoader(ctx).Load(obj.Rating.ID)
+	return loaders.GetRatingLoader(ctx).Load(obj.Rating.ID)
 }
 
 func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*models.Claimant, error) {
-	cid, err := primitive.ObjectIDFromHex(obj.Claimant.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Claimant
-
-	err = mongo.Factcheck.Collection("claimant").FindOne(ctx, bson.M{"_id": cid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
+	return loaders.GetClaimantLoader(ctx).Load(obj.Claimant.ID)
 }
 
 func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*models.Medium, error) {
@@ -55,21 +27,7 @@ func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*mo
 		return nil, nil
 	}
 
-	mid, err := primitive.ObjectIDFromHex(obj.Media.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
+	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
 func (r *factcheckResolver) Claims(ctx context.Context, obj *models.Factcheck) ([]*models.Claim, error) {
@@ -107,43 +65,14 @@ func (r *factcheckResolver) Claims(ctx context.Context, obj *models.Factcheck) (
 }
 
 func (r *factcheckResolver) Status(ctx context.Context, obj *models.Factcheck) (*models.Status, error) {
-	sid, err := primitive.ObjectIDFromHex(obj.Status.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Status
-
-	err = mongo.Core.Collection("status").FindOne(ctx, bson.M{"_id": sid}).Decode(&result)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return result, nil
+	return loaders.GetStatusLoader(ctx).Load(obj.Status.ID)
 }
 
 func (r *factcheckResolver) Media(ctx context.Context, obj *models.Factcheck) (*models.Medium, error) {
 	if obj.Media == nil {
 		return nil, nil
 	}
-
-	mid, err := primitive.ObjectIDFromHex(obj.Media.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
+	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
 func (r *factcheckResolver) Categories(ctx context.Context, obj *models.Factcheck) ([]*models.Category, error) {
@@ -253,146 +182,43 @@ func (r *organizationResolver) MediaLogo(ctx context.Context, obj *models.Organi
 	if obj.MediaLogo == nil {
 		return nil, nil
 	}
-
-	mid, err := primitive.ObjectIDFromHex(obj.MediaLogo.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
+	return loaders.GetMediumLoader(ctx).Load(obj.MediaLogo.ID)
 }
 
 func (r *organizationResolver) MediaMobileLogo(ctx context.Context, obj *models.Organization) (*models.Medium, error) {
 	if obj.MediaMobileLogo == nil {
 		return nil, nil
 	}
-
-	mid, err := primitive.ObjectIDFromHex(obj.MediaMobileLogo.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
+	return loaders.GetMediumLoader(ctx).Load(obj.MediaMobileLogo.ID)
 }
 
 func (r *organizationResolver) MediaFavicon(ctx context.Context, obj *models.Organization) (*models.Medium, error) {
 	if obj.MediaFavicon == nil {
 		return nil, nil
 	}
-
-	mid, err := primitive.ObjectIDFromHex(obj.MediaFavicon.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
+	return loaders.GetMediumLoader(ctx).Load(obj.MediaFavicon.ID)
 }
 
 func (r *organizationResolver) MediaMobileIcon(ctx context.Context, obj *models.Organization) (*models.Medium, error) {
 	if obj.MediaMobileIcon == nil {
 		return nil, nil
 	}
-
-	mid, err := primitive.ObjectIDFromHex(obj.MediaMobileIcon.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
+	return loaders.GetMediumLoader(ctx).Load(obj.MediaMobileIcon.ID)
 }
 
 func (r *postResolver) Status(ctx context.Context, obj *models.Post) (*models.Status, error) {
-	sid, err := primitive.ObjectIDFromHex(obj.Status.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Status
-
-	err = mongo.Core.Collection("status").FindOne(ctx, bson.M{"_id": sid}).Decode(&result)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return result, nil
+	return loaders.GetStatusLoader(ctx).Load(obj.Status.ID)
 }
 
 func (r *postResolver) Format(ctx context.Context, obj *models.Post) (*models.Format, error) {
-	fid, err := primitive.ObjectIDFromHex(obj.Format.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Format
-
-	err = mongo.Core.Collection("format").FindOne(ctx, bson.M{"_id": fid}).Decode(&result)
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	return result, nil
+	return loaders.GetFormatLoader(ctx).Load(obj.Format.ID)
 }
 
 func (r *postResolver) Media(ctx context.Context, obj *models.Post) (*models.Medium, error) {
 	if obj.Media == nil {
 		return nil, nil
 	}
-
-	mid, err := primitive.ObjectIDFromHex(obj.Media.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
+	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
 func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*models.Category, error) {
@@ -497,6 +323,30 @@ func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*mode
 	return results, nil
 }
 
+func (r *ratingResolver) Media(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
+	if obj.Media == nil {
+		return nil, nil
+	}
+
+	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
+}
+
+func (r *userResolver) OrganizationDefault(ctx context.Context, obj *models.User) (*models.Organization, error) {
+	return loaders.GetOrganizationLoader(ctx).Load(obj.OrganizationDefault.ID)
+}
+
+func (r *userResolver) OrganizationCurrent(ctx context.Context, obj *models.User) (*models.Organization, error) {
+	return loaders.GetOrganizationLoader(ctx).Load(obj.OrganizationCurrent.ID)
+}
+
+func (r *userResolver) Media(ctx context.Context, obj *models.User) (*models.Medium, error) {
+	if obj.Media == nil {
+		return nil, nil
+	}
+
+	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
+}
+
 func (r *queryResolver) Categories(ctx context.Context) ([]*models.Category, error) {
 	cursor, err := mongo.Core.Collection("category").Find(ctx, bson.D{})
 
@@ -560,7 +410,7 @@ func (r *queryResolver) Formats(ctx context.Context) ([]*models.Format, error) {
 }
 
 func (r *queryResolver) Statuses(ctx context.Context) ([]*models.Status, error) {
-	cursor, err := mongo.Core.Collection("format").Find(ctx, bson.M{})
+	cursor, err := mongo.Core.Collection("status").Find(ctx, bson.M{})
 
 	if err != nil {
 		log.Fatal(err)
@@ -746,86 +596,6 @@ func (r *queryResolver) Factchecks(ctx context.Context) ([]*models.Factcheck, er
 	}
 
 	return results, nil
-}
-
-func (r *ratingResolver) Media(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
-	if obj.Media == nil {
-		return nil, nil
-	}
-
-	mid, err := primitive.ObjectIDFromHex(obj.Media.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
-}
-
-func (r *userResolver) OrganizationDefault(ctx context.Context, obj *models.User) (*models.Organization, error) {
-	oid, err := primitive.ObjectIDFromHex(obj.OrganizationDefault.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Organization
-
-	err = mongo.Core.Collection("organization").FindOne(ctx, bson.M{"_id": oid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
-}
-
-func (r *userResolver) OrganizationCurrent(ctx context.Context, obj *models.User) (*models.Organization, error) {
-	oid, err := primitive.ObjectIDFromHex(obj.OrganizationCurrent.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Organization
-
-	err = mongo.Core.Collection("organization").FindOne(ctx, bson.M{"_id": oid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
-}
-
-func (r *userResolver) Media(ctx context.Context, obj *models.User) (*models.Medium, error) {
-	if obj.Media == nil {
-		return nil, nil
-	}
-
-	mid, err := primitive.ObjectIDFromHex(obj.Media.ID)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	var result *models.Medium
-
-	err = mongo.Core.Collection("media").FindOne(ctx, bson.M{"_id": mid}).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
 }
 
 func (r *Resolver) Claim() generated.ClaimResolver               { return &claimResolver{r} }

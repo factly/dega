@@ -7,13 +7,12 @@ import (
 	"time"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// CategoryLoaderConfig captures the config to create a new CategoryLoader
-type CategoryLoaderConfig struct {
+// OrganizationLoaderConfig captures the config to create a new OrganizationLoader
+type OrganizationLoaderConfig struct {
 	// Fetch is a method that provides the data for the loader
-	Fetch func(keys []primitive.ObjectID) ([]*models.Category, []error)
+	Fetch func(keys []string) ([]*models.Organization, []error)
 
 	// Wait is how long wait before sending a batch
 	Wait time.Duration
@@ -22,19 +21,19 @@ type CategoryLoaderConfig struct {
 	MaxBatch int
 }
 
-// NewCategoryLoader creates a new CategoryLoader given a fetch, wait, and maxBatch
-func NewCategoryLoader(config CategoryLoaderConfig) *CategoryLoader {
-	return &CategoryLoader{
+// NewOrganizationLoader creates a new OrganizationLoader given a fetch, wait, and maxBatch
+func NewOrganizationLoader(config OrganizationLoaderConfig) *OrganizationLoader {
+	return &OrganizationLoader{
 		fetch:    config.Fetch,
 		wait:     config.Wait,
 		maxBatch: config.MaxBatch,
 	}
 }
 
-// CategoryLoader batches and caches requests
-type CategoryLoader struct {
+// OrganizationLoader batches and caches requests
+type OrganizationLoader struct {
 	// this method provides the data for the loader
-	fetch func(keys []primitive.ObjectID) ([]*models.Category, []error)
+	fetch func(keys []string) ([]*models.Organization, []error)
 
 	// how long to done before sending a batch
 	wait time.Duration
@@ -45,51 +44,51 @@ type CategoryLoader struct {
 	// INTERNAL
 
 	// lazily created cache
-	cache map[primitive.ObjectID]*models.Category
+	cache map[string]*models.Organization
 
 	// the current batch. keys will continue to be collected until timeout is hit,
 	// then everything will be sent to the fetch method and out to the listeners
-	batch *categoryLoaderBatch
+	batch *organizationLoaderBatch
 
 	// mutex to prevent races
 	mu sync.Mutex
 }
 
-type categoryLoaderBatch struct {
-	keys    []primitive.ObjectID
-	data    []*models.Category
+type organizationLoaderBatch struct {
+	keys    []string
+	data    []*models.Organization
 	error   []error
 	closing bool
 	done    chan struct{}
 }
 
-// Load a Category by key, batching and caching will be applied automatically
-func (l *CategoryLoader) Load(key primitive.ObjectID) (*models.Category, error) {
+// Load a Organization by key, batching and caching will be applied automatically
+func (l *OrganizationLoader) Load(key string) (*models.Organization, error) {
 	return l.LoadThunk(key)()
 }
 
-// LoadThunk returns a function that when called will block waiting for a Category.
+// LoadThunk returns a function that when called will block waiting for a Organization.
 // This method should be used if you want one goroutine to make requests to many
 // different data loaders without blocking until the thunk is called.
-func (l *CategoryLoader) LoadThunk(key primitive.ObjectID) func() (*models.Category, error) {
+func (l *OrganizationLoader) LoadThunk(key string) func() (*models.Organization, error) {
 	l.mu.Lock()
 	if it, ok := l.cache[key]; ok {
 		l.mu.Unlock()
-		return func() (*models.Category, error) {
+		return func() (*models.Organization, error) {
 			return it, nil
 		}
 	}
 	if l.batch == nil {
-		l.batch = &categoryLoaderBatch{done: make(chan struct{})}
+		l.batch = &organizationLoaderBatch{done: make(chan struct{})}
 	}
 	batch := l.batch
 	pos := batch.keyIndex(l, key)
 	l.mu.Unlock()
 
-	return func() (*models.Category, error) {
+	return func() (*models.Organization, error) {
 		<-batch.done
 
-		var data *models.Category
+		var data *models.Organization
 		if pos < len(batch.data) {
 			data = batch.data[pos]
 		}
@@ -114,43 +113,43 @@ func (l *CategoryLoader) LoadThunk(key primitive.ObjectID) func() (*models.Categ
 
 // LoadAll fetches many keys at once. It will be broken into appropriate sized
 // sub batches depending on how the loader is configured
-func (l *CategoryLoader) LoadAll(keys []primitive.ObjectID) ([]*models.Category, []error) {
-	results := make([]func() (*models.Category, error), len(keys))
+func (l *OrganizationLoader) LoadAll(keys []string) ([]*models.Organization, []error) {
+	results := make([]func() (*models.Organization, error), len(keys))
 
 	for i, key := range keys {
 		results[i] = l.LoadThunk(key)
 	}
 
-	categorys := make([]*models.Category, len(keys))
+	organizations := make([]*models.Organization, len(keys))
 	errors := make([]error, len(keys))
 	for i, thunk := range results {
-		categorys[i], errors[i] = thunk()
+		organizations[i], errors[i] = thunk()
 	}
-	return categorys, errors
+	return organizations, errors
 }
 
-// LoadAllThunk returns a function that when called will block waiting for a Categorys.
+// LoadAllThunk returns a function that when called will block waiting for a Organizations.
 // This method should be used if you want one goroutine to make requests to many
 // different data loaders without blocking until the thunk is called.
-func (l *CategoryLoader) LoadAllThunk(keys []primitive.ObjectID) func() ([]*models.Category, []error) {
-	results := make([]func() (*models.Category, error), len(keys))
+func (l *OrganizationLoader) LoadAllThunk(keys []string) func() ([]*models.Organization, []error) {
+	results := make([]func() (*models.Organization, error), len(keys))
 	for i, key := range keys {
 		results[i] = l.LoadThunk(key)
 	}
-	return func() ([]*models.Category, []error) {
-		categorys := make([]*models.Category, len(keys))
+	return func() ([]*models.Organization, []error) {
+		organizations := make([]*models.Organization, len(keys))
 		errors := make([]error, len(keys))
 		for i, thunk := range results {
-			categorys[i], errors[i] = thunk()
+			organizations[i], errors[i] = thunk()
 		}
-		return categorys, errors
+		return organizations, errors
 	}
 }
 
 // Prime the cache with the provided key and value. If the key already exists, no change is made
 // and false is returned.
 // (To forcefully prime the cache, clear the key first with loader.clear(key).prime(key, value).)
-func (l *CategoryLoader) Prime(key primitive.ObjectID, value *models.Category) bool {
+func (l *OrganizationLoader) Prime(key string, value *models.Organization) bool {
 	l.mu.Lock()
 	var found bool
 	if _, found = l.cache[key]; !found {
@@ -164,22 +163,22 @@ func (l *CategoryLoader) Prime(key primitive.ObjectID, value *models.Category) b
 }
 
 // Clear the value at key from the cache, if it exists
-func (l *CategoryLoader) Clear(key primitive.ObjectID) {
+func (l *OrganizationLoader) Clear(key string) {
 	l.mu.Lock()
 	delete(l.cache, key)
 	l.mu.Unlock()
 }
 
-func (l *CategoryLoader) unsafeSet(key primitive.ObjectID, value *models.Category) {
+func (l *OrganizationLoader) unsafeSet(key string, value *models.Organization) {
 	if l.cache == nil {
-		l.cache = map[primitive.ObjectID]*models.Category{}
+		l.cache = map[string]*models.Organization{}
 	}
 	l.cache[key] = value
 }
 
 // keyIndex will return the location of the key in the batch, if its not found
 // it will add the key to the batch
-func (b *categoryLoaderBatch) keyIndex(l *CategoryLoader, key primitive.ObjectID) int {
+func (b *organizationLoaderBatch) keyIndex(l *OrganizationLoader, key string) int {
 	for i, existingKey := range b.keys {
 		if key == existingKey {
 			return i
@@ -203,7 +202,7 @@ func (b *categoryLoaderBatch) keyIndex(l *CategoryLoader, key primitive.ObjectID
 	return pos
 }
 
-func (b *categoryLoaderBatch) startTimer(l *CategoryLoader) {
+func (b *organizationLoaderBatch) startTimer(l *OrganizationLoader) {
 	time.Sleep(l.wait)
 	l.mu.Lock()
 
@@ -219,7 +218,7 @@ func (b *categoryLoaderBatch) startTimer(l *CategoryLoader) {
 	b.end(l)
 }
 
-func (b *categoryLoaderBatch) end(l *CategoryLoader) {
+func (b *organizationLoaderBatch) end(l *OrganizationLoader) {
 	b.data, b.error = l.fetch(b.keys)
 	close(b.done)
 }
