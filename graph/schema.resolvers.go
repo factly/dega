@@ -463,20 +463,35 @@ func (r *queryResolver) Factchecks(ctx context.Context) ([]*models.Factcheck, er
 	return results, nil
 }
 
-func (r *Resolver) Claim() generated.ClaimResolver               { return &claimResolver{r} }
-func (r *Resolver) Claimant() generated.ClaimantResolver         { return &claimantResolver{r} }
-func (r *Resolver) Factcheck() generated.FactcheckResolver       { return &factcheckResolver{r} }
+// Claim model resolver
+func (r *Resolver) Claim() generated.ClaimResolver { return &claimResolver{r} }
+
+// Claimant model resolver
+func (r *Resolver) Claimant() generated.ClaimantResolver { return &claimantResolver{r} }
+
+// Factcheck model resolver
+func (r *Resolver) Factcheck() generated.FactcheckResolver { return &factcheckResolver{r} }
+
+// Organization model resolver
 func (r *Resolver) Organization() generated.OrganizationResolver { return &organizationResolver{r} }
-func (r *Resolver) Post() generated.PostResolver                 { return &postResolver{r} }
-func (r *Resolver) Query() generated.QueryResolver               { return &queryResolver{r} }
-func (r *Resolver) Rating() generated.RatingResolver             { return &ratingResolver{r} }
-func (r *Resolver) User() generated.UserResolver                 { return &userResolver{r} }
+
+// Post model resolver
+func (r *Resolver) Post() generated.PostResolver { return &postResolver{r} }
+
+// Rating model resolver
+func (r *Resolver) Rating() generated.RatingResolver { return &ratingResolver{r} }
+
+// User model resolver
+func (r *Resolver) User() generated.UserResolver { return &userResolver{r} }
+
+// Query resolver
+func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type claimResolver struct{ *Resolver }
 type claimantResolver struct{ *Resolver }
 type factcheckResolver struct{ *Resolver }
 type organizationResolver struct{ *Resolver }
 type postResolver struct{ *Resolver }
-type queryResolver struct{ *Resolver }
 type ratingResolver struct{ *Resolver }
 type userResolver struct{ *Resolver }
+type queryResolver struct{ *Resolver }

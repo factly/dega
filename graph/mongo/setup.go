@@ -9,11 +9,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-// Core mongodb core collection list
+// Core mongodb collection
 var Core *mongo.Database
+
+// Factcheck mongodb collection
 var Factcheck *mongo.Database
 
-// Setup mongodb setup function
+// Setup to connect to db
 func Setup() {
 	log.Print("Initializing ...")
 	var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)

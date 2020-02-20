@@ -1,4 +1,4 @@
 package graph
 
-// Resolver abc
+// Resolver query
 type Resolver struct{}
