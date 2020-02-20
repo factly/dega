@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
+	"github.com/monarkatfactly/dega-api-go.git/graph/loaders"
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -14,7 +15,7 @@ import (
 )
 
 func (r *claimResolver) Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error) {
-	var result *models.Rating
+	/*var result *models.Rating
 
 	err := mongo.Factcheck.Collection("rating").FindOne(ctx, bson.M{"_id": obj.Rating.ID}).Decode(&result)
 
@@ -22,7 +23,8 @@ func (r *claimResolver) Rating(ctx context.Context, obj *models.Claim) (*models.
 		return nil, nil
 	}
 
-	return result, nil
+	return result, nil*/
+	return loaders.RatingsLoader(ctx).Load(obj.Rating.ID)
 }
 
 func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*models.Claimant, error) {
@@ -332,6 +334,15 @@ func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*mod
 		results = append(results, each)
 	}
 	return results, nil
+
+	/*return loaders.CategoriesLoader(ctx).LoadAll(allCategoryID)
+	/*var results []*models.Category
+	var errs []error
+	results, errs = loaders.CategoriesLoader(ctx).LoadAll(allCategoryID)
+	if len(errs) > 0 {
+		return nil, nil
+	}
+	return results, nil*/
 }
 
 func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Tag, error) {
