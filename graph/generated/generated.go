@@ -101,7 +101,6 @@ type ComplexityRoot struct {
 		DegaUsers       func(childComplexity int) int
 		Excerpt         func(childComplexity int) int
 		Featured        func(childComplexity int) int
-		Format          func(childComplexity int) int
 		ID              func(childComplexity int) int
 		Introduction    func(childComplexity int) int
 		LastUpdatedDate func(childComplexity int) int
@@ -264,7 +263,6 @@ type ClaimantResolver interface {
 type FactcheckResolver interface {
 	Claims(ctx context.Context, obj *models.Factcheck) ([]*models.Claim, error)
 	Status(ctx context.Context, obj *models.Factcheck) (*models.Status, error)
-	Format(ctx context.Context, obj *models.Factcheck) (*models.Format, error)
 	Media(ctx context.Context, obj *models.Factcheck) (*models.Medium, error)
 	Categories(ctx context.Context, obj *models.Factcheck) ([]*models.Category, error)
 	Tags(ctx context.Context, obj *models.Factcheck) ([]*models.Tag, error)
@@ -608,13 +606,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Factcheck.Featured(childComplexity), true
-
-	case "Factcheck.format":
-		if e.complexity.Factcheck.Format == nil {
-			break
-		}
-
-		return e.complexity.Factcheck.Format(childComplexity), true
 
 	case "Factcheck._id":
 		if e.complexity.Factcheck.ID == nil {
@@ -1704,7 +1695,6 @@ type Factcheck {
   published_date: Time!
   claims: [Claim!]!
   status: Status!
-  format: Format!
   media: Medium
   categories: [Category!]!
   tags: [Tag!]!
@@ -3400,40 +3390,6 @@ func (ec *executionContext) _Factcheck_status(ctx context.Context, field graphql
 	res := resTmp.(*models.Status)
 	fc.Result = res
 	return ec.marshalNStatus2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatus(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Factcheck_format(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Factcheck",
-		Field:    field,
-		Args:     nil,
-		IsMethod: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Factcheck().Format(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.Format)
-	fc.Result = res
-	return ec.marshalNFormat2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormat(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck_media(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -8781,20 +8737,6 @@ func (ec *executionContext) _Factcheck(ctx context.Context, sel ast.SelectionSet
 					}
 				}()
 				res = ec._Factcheck_status(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			})
-		case "format":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Factcheck_format(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}

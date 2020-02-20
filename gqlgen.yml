@@ -125,8 +125,6 @@ models:
           resolver: true
         categories:
           resolver: true
-        format:
-          resolver: true
         media:
           resolver: true
         degaUsers:

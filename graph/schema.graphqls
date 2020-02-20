@@ -182,7 +182,6 @@ type Factcheck {
   published_date: Time!
   claims: [Claim!]!
   status: Status!
-  format: Format!
   media: Medium
   categories: [Category!]!
   tags: [Tag!]!

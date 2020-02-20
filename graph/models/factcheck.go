@@ -20,7 +20,6 @@ type Factcheck struct {
 	PublishedDate   time.Time      `bson:"published_date"`
 	Claims          []*DatabaseRef `bson:"claims"`
 	Status          DatabaseRef    `bson:"status"`
-	Format          DatabaseRef    `bson:"format"`
 	Media           *DatabaseRef   `bson:"media"`
 	Categories      []*DatabaseRef `bson:"categories"`
 	Tags            []*DatabaseRef `bson:"tags"`
