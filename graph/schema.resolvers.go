@@ -11,7 +11,6 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (r *claimResolver) Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error) {
@@ -31,37 +30,18 @@ func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*mo
 }
 
 func (r *factcheckResolver) Claims(ctx context.Context, obj *models.Factcheck) ([]*models.Claim, error) {
-	var allClaimID []primitive.ObjectID
-
-	for _, claim := range obj.Claims {
-		cid, err := primitive.ObjectIDFromHex(claim.ID)
-
-		if err == nil {
-			allClaimID = append(allClaimID, cid)
-		}
-	}
-
-	if len(allClaimID) == 0 {
+	if len(obj.Claims) == 0 {
 		return nil, nil
 	}
 
-	var results []*models.Claim
+	var allClaimID []string
 
-	cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, bson.M{"_id": bson.M{"$in": allClaimID}})
-
-	if err != nil {
-		log.Fatal(err)
+	for _, claim := range obj.Claims {
+		allClaimID = append(allClaimID, claim.ID)
 	}
 
-	for cursor.Next(ctx) {
-		var each *models.Claim
-		err := cursor.Decode(&each)
-		if err != nil {
-			log.Fatal(err)
-		}
-		results = append(results, each)
-	}
-	return results, nil
+	claims, _ := loaders.GetClaimLoader(ctx).LoadAll(allClaimID)
+	return claims, nil
 }
 
 func (r *factcheckResolver) Status(ctx context.Context, obj *models.Factcheck) (*models.Status, error) {
@@ -76,106 +56,48 @@ func (r *factcheckResolver) Media(ctx context.Context, obj *models.Factcheck) (*
 }
 
 func (r *factcheckResolver) Categories(ctx context.Context, obj *models.Factcheck) ([]*models.Category, error) {
-	var allCategoryID []primitive.ObjectID
-
-	for _, category := range obj.Categories {
-		cid, err := primitive.ObjectIDFromHex(category.ID)
-
-		if err == nil {
-			allCategoryID = append(allCategoryID, cid)
-		}
-	}
-
-	if len(allCategoryID) == 0 {
+	if len(obj.Categories) == 0 {
 		return nil, nil
 	}
 
-	var results []*models.Category
+	var allCategoryID []string
 
-	cursor, err := mongo.Core.Collection("category").Find(ctx, bson.M{"_id": bson.M{"$in": allCategoryID}})
-
-	if err != nil {
-		log.Fatal(err)
+	for _, category := range obj.Categories {
+		allCategoryID = append(allCategoryID, category.ID)
 	}
 
-	for cursor.Next(ctx) {
-		var each *models.Category
-		err := cursor.Decode(&each)
-		if err != nil {
-			log.Fatal(err)
-		}
-		results = append(results, each)
-	}
-	return results, nil
+	categories, _ := loaders.GetCategoryLoader(ctx).LoadAll(allCategoryID)
+	return categories, nil
 }
 
 func (r *factcheckResolver) Tags(ctx context.Context, obj *models.Factcheck) ([]*models.Tag, error) {
-	var allTagID []primitive.ObjectID
+	if len(obj.Tags) == 0 {
+		return nil, nil
+	}
+
+	var allTagID []string
 
 	for _, tag := range obj.Tags {
-		tid, err := primitive.ObjectIDFromHex(tag.ID)
-
-		if err == nil {
-			allTagID = append(allTagID, tid)
-		}
+		allTagID = append(allTagID, tag.ID)
 	}
 
-	var results []*models.Tag
-
-	if len(allTagID) == 0 {
-		return results, nil
-	}
-
-	cursor, err := mongo.Core.Collection("tag").Find(ctx, bson.M{"_id": bson.M{"$in": allTagID}})
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for cursor.Next(ctx) {
-		var each *models.Tag
-		err := cursor.Decode(&each)
-		if err != nil {
-			log.Fatal(err)
-		}
-		results = append(results, each)
-	}
-	return results, nil
+	tags, _ := loaders.GetTagLoader(ctx).LoadAll(allTagID)
+	return tags, nil
 }
 
 func (r *factcheckResolver) DegaUsers(ctx context.Context, obj *models.Factcheck) ([]*models.User, error) {
-	var allUserID []primitive.ObjectID
+	if len(obj.DegaUsers) == 0 {
+		return nil, nil
+	}
+
+	var allUserID []string
 
 	for _, user := range obj.DegaUsers {
-		uid, err := primitive.ObjectIDFromHex(user.ID)
-
-		if err == nil {
-			allUserID = append(allUserID, uid)
-		}
-
+		allUserID = append(allUserID, user.ID)
 	}
 
-	var results []*models.User
-
-	if len(allUserID) == 0 {
-		return results, nil
-	}
-
-	cursor, err := mongo.Core.Collection("dega_user").Find(ctx, bson.M{"_id": bson.M{"$in": allUserID}})
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for cursor.Next(ctx) {
-		var each *models.User
-		err := cursor.Decode(&each)
-		if err != nil {
-			log.Fatal(err)
-		}
-		results = append(results, each)
-	}
-	return results, nil
+	users, _ := loaders.GetUserLoader(ctx).LoadAll(allUserID)
+	return users, nil
 }
 
 func (r *organizationResolver) MediaLogo(ctx context.Context, obj *models.Organization) (*models.Medium, error) {
@@ -222,105 +144,48 @@ func (r *postResolver) Media(ctx context.Context, obj *models.Post) (*models.Med
 }
 
 func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*models.Category, error) {
-	var allCategoryID []primitive.ObjectID
-
-	for _, category := range obj.Categories {
-		cid, err := primitive.ObjectIDFromHex(category.ID)
-
-		if err == nil {
-			allCategoryID = append(allCategoryID, cid)
-		}
-	}
-
-	if len(allCategoryID) == 0 {
+	if len(obj.Categories) == 0 {
 		return nil, nil
 	}
 
-	var results []*models.Category
+	var allCategoryID []string
 
-	cursor, err := mongo.Core.Collection("category").Find(ctx, bson.M{"_id": bson.M{"$in": allCategoryID}})
-
-	if err != nil {
-		log.Fatal(err)
+	for _, category := range obj.Categories {
+		allCategoryID = append(allCategoryID, category.ID)
 	}
 
-	for cursor.Next(ctx) {
-		var each *models.Category
-		err := cursor.Decode(&each)
-		if err != nil {
-			log.Fatal(err)
-		}
-		results = append(results, each)
-	}
-	return results, nil
+	categories, _ := loaders.GetCategoryLoader(ctx).LoadAll(allCategoryID)
+	return categories, nil
 }
 
 func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Tag, error) {
-	var allTagID []primitive.ObjectID
-
-	for _, tag := range obj.Tags {
-		tid, err := primitive.ObjectIDFromHex(tag.ID)
-
-		if err == nil {
-			allTagID = append(allTagID, tid)
-		}
-	}
-
-	if len(allTagID) == 0 {
+	if len(obj.Tags) == 0 {
 		return nil, nil
 	}
 
-	var results []*models.Tag
+	var allTagID []string
 
-	cursor, err := mongo.Core.Collection("tag").Find(ctx, bson.M{"_id": bson.M{"$in": allTagID}})
-
-	if err != nil {
-		log.Fatal(err)
+	for _, tag := range obj.Tags {
+		allTagID = append(allTagID, tag.ID)
 	}
 
-	for cursor.Next(ctx) {
-		var each *models.Tag
-		err := cursor.Decode(&each)
-		if err != nil {
-			log.Fatal(err)
-		}
-		results = append(results, each)
-	}
-	return results, nil
+	tags, _ := loaders.GetTagLoader(ctx).LoadAll(allTagID)
+	return tags, nil
 }
 
 func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error) {
-	var allUserID []primitive.ObjectID
-
-	for _, user := range obj.DegaUsers {
-		uid, err := primitive.ObjectIDFromHex(user.ID)
-
-		if err == nil {
-			allUserID = append(allUserID, uid)
-		}
-	}
-
-	if len(allUserID) == 0 {
+	if len(obj.DegaUsers) == 0 {
 		return nil, nil
 	}
 
-	var results []*models.User
+	var allUserID []string
 
-	cursor, err := mongo.Core.Collection("dega_user").Find(ctx, bson.M{"_id": bson.M{"$in": allUserID}})
-
-	if err != nil {
-		log.Fatal(err)
+	for _, user := range obj.DegaUsers {
+		allUserID = append(allUserID, user.ID)
 	}
 
-	for cursor.Next(ctx) {
-		var each *models.User
-		err := cursor.Decode(&each)
-		if err != nil {
-			log.Fatal(err)
-		}
-		results = append(results, each)
-	}
-	return results, nil
+	users, _ := loaders.GetUserLoader(ctx).LoadAll(allUserID)
+	return users, nil
 }
 
 func (r *ratingResolver) Media(ctx context.Context, obj *models.Rating) (*models.Medium, error) {

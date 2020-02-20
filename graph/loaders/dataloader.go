@@ -18,6 +18,10 @@ const mediumloaderkey = "mediumloader"
 const statusloaderkey = "statusloader"
 const formatloaderkey = "formatloader"
 const organizationloaderkey = "organizationloader"
+const claimloaderkey = "claimloader"
+const categoryloaderkey = "categoryloader"
+const tagloaderkey = "tagloader"
+const userloaderkey = "userloader"
 
 type Values struct {
 	m map[string]interface{}
@@ -347,6 +351,218 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			},
 		}
 
+		claimloader := ClaimLoader{
+			maxBatch: 100,
+			wait:     1 * time.Millisecond,
+			fetch: func(ids []string) ([]*models.Claim, []error) {
+				var keys []primitive.ObjectID
+
+				for _, id := range ids {
+					rid, err := primitive.ObjectIDFromHex(id)
+
+					if err != nil {
+						log.Fatal(err)
+					}
+					keys = append(keys, rid)
+				}
+
+				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+
+				cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
+
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				var claims []*models.Claim
+
+				for cursor.Next(ctx) {
+					var each *models.Claim
+					err := cursor.Decode(&each)
+					if err != nil {
+						log.Fatal(err)
+					}
+					claims = append(claims, each)
+				}
+
+				c := make(map[string]*models.Claim, len(ids))
+
+				for _, claim := range claims {
+					c[claim.ID] = claim
+				}
+
+				results := make([]*models.Claim, len(ids))
+
+				for i, id := range ids {
+					if c[id] == nil {
+						log.Fatal(c[id])
+					}
+					results[i] = c[id]
+				}
+
+				return results, nil
+			},
+		}
+
+		categoryloader := CategoryLoader{
+			maxBatch: 100,
+			wait:     1 * time.Millisecond,
+			fetch: func(ids []string) ([]*models.Category, []error) {
+				var keys []primitive.ObjectID
+
+				for _, id := range ids {
+					rid, err := primitive.ObjectIDFromHex(id)
+
+					if err != nil {
+						log.Fatal(err)
+					}
+					keys = append(keys, rid)
+				}
+
+				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+
+				cursor, err := mongo.Core.Collection("category").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
+
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				var categories []*models.Category
+
+				for cursor.Next(ctx) {
+					var each *models.Category
+					err := cursor.Decode(&each)
+					if err != nil {
+						log.Fatal(err)
+					}
+					categories = append(categories, each)
+				}
+
+				c := make(map[string]*models.Category, len(ids))
+
+				for _, category := range categories {
+					c[category.ID] = category
+				}
+
+				results := make([]*models.Category, len(ids))
+
+				for i, id := range ids {
+					if c[id] == nil {
+						log.Fatal(c[id])
+					}
+					results[i] = c[id]
+				}
+
+				return results, nil
+			},
+		}
+
+		tagloader := TagLoader{
+			maxBatch: 100,
+			wait:     1 * time.Millisecond,
+			fetch: func(ids []string) ([]*models.Tag, []error) {
+				var keys []primitive.ObjectID
+
+				for _, id := range ids {
+					rid, err := primitive.ObjectIDFromHex(id)
+
+					if err != nil {
+						log.Fatal(err)
+					}
+					keys = append(keys, rid)
+				}
+
+				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+
+				cursor, err := mongo.Core.Collection("tag").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
+
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				var tags []*models.Tag
+
+				for cursor.Next(ctx) {
+					var each *models.Tag
+					err := cursor.Decode(&each)
+					if err != nil {
+						log.Fatal(err)
+					}
+					tags = append(tags, each)
+				}
+
+				t := make(map[string]*models.Tag, len(ids))
+
+				for _, tag := range tags {
+					t[tag.ID] = tag
+				}
+
+				results := make([]*models.Tag, len(ids))
+
+				for i, id := range ids {
+					if t[id] == nil {
+						log.Fatal(t[id])
+					}
+					results[i] = t[id]
+				}
+
+				return results, nil
+			},
+		}
+
+		userloader := UserLoader{
+			maxBatch: 100,
+			wait:     1 * time.Millisecond,
+			fetch: func(ids []string) ([]*models.User, []error) {
+				var keys []primitive.ObjectID
+
+				for _, id := range ids {
+					rid, err := primitive.ObjectIDFromHex(id)
+
+					if err != nil {
+						log.Fatal(err)
+					}
+					keys = append(keys, rid)
+				}
+
+				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+
+				cursor, err := mongo.Core.Collection("dega_user").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
+
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				var users []*models.User
+
+				for cursor.Next(ctx) {
+					var each *models.User
+					err := cursor.Decode(&each)
+					if err != nil {
+						log.Fatal(err)
+					}
+					users = append(users, each)
+				}
+
+				u := make(map[string]*models.User, len(ids))
+
+				for _, user := range users {
+					u[user.ID] = user
+				}
+
+				results := make([]*models.User, len(ids))
+
+				for i, id := range ids {
+					if u[id] == nil {
+						log.Fatal(u[id])
+					}
+					results[i] = u[id]
+				}
+
+				return results, nil
+			},
+		}
+
 		v := Values{map[string]interface{}{
 			claimantloaderKey:     &claimantloader,
 			ratingloaderKey:       &ratingloader,
@@ -354,6 +570,10 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			statusloaderkey:       &statusloader,
 			formatloaderkey:       &formatloader,
 			organizationloaderkey: &organizationloader,
+			claimloaderkey:        &claimloader,
+			categoryloaderkey:     &categoryloader,
+			tagloaderkey:          &tagloader,
+			userloaderkey:         &userloader,
 		}}
 
 		ctx := context.WithValue(r.Context(), "loaders", v)
@@ -383,4 +603,20 @@ func GetFormatLoader(ctx context.Context) *FormatLoader {
 
 func GetOrganizationLoader(ctx context.Context) *OrganizationLoader {
 	return ctx.Value("loaders").(Values).Get(organizationloaderkey).(*OrganizationLoader)
+}
+
+func GetClaimLoader(ctx context.Context) *ClaimLoader {
+	return ctx.Value("loaders").(Values).Get(claimloaderkey).(*ClaimLoader)
+}
+
+func GetCategoryLoader(ctx context.Context) *CategoryLoader {
+	return ctx.Value("loaders").(Values).Get(categoryloaderkey).(*CategoryLoader)
+}
+
+func GetTagLoader(ctx context.Context) *TagLoader {
+	return ctx.Value("loaders").(Values).Get(tagloaderkey).(*TagLoader)
+}
+
+func GetUserLoader(ctx context.Context) *UserLoader {
+	return ctx.Value("loaders").(Values).Get(userloaderkey).(*UserLoader)
 }
