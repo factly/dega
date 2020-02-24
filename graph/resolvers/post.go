@@ -9,6 +9,7 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func (r *postResolver) Status(ctx context.Context, obj *models.Post) (*models.Status, error) {
@@ -71,8 +72,57 @@ func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*mode
 	return users, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context) ([]*models.Post, error) {
-	cursor, err := mongo.Core.Collection("post").Find(ctx, bson.M{})
+func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []string, users []string) ([]*models.Post, error) {
+
+	client := ctx.Value("client").(string)
+
+	query := bson.M{
+		"client_id": client,
+	}
+
+	if len(categories) > 0 {
+		keys := []primitive.ObjectID{}
+
+		for _, id := range categories {
+			rid, err := primitive.ObjectIDFromHex(id)
+
+			if err == nil {
+				keys = append(keys, rid)
+			}
+		}
+
+		query["categories.$id"] = bson.M{"$in": keys}
+	}
+
+	if len(tags) > 0 {
+		keys := []primitive.ObjectID{}
+
+		for _, id := range tags {
+			cid, err := primitive.ObjectIDFromHex(id)
+
+			if err == nil {
+				keys = append(keys, cid)
+			}
+		}
+
+		query["tags.$id"] = bson.M{"$in": keys}
+	}
+
+	if len(users) > 0 {
+		keys := []primitive.ObjectID{}
+
+		for _, id := range users {
+			cid, err := primitive.ObjectIDFromHex(id)
+
+			if err == nil {
+				keys = append(keys, cid)
+			}
+		}
+
+		query["degaUsers.$id"] = bson.M{"$in": keys}
+	}
+
+	cursor, err := mongo.Core.Collection("post").Find(ctx, query)
 
 	if err != nil {
 		log.Fatal(err)

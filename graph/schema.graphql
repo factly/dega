@@ -1,7 +1,3 @@
-# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
 type Category {
   _id: ID!
   _class: String!
@@ -195,7 +191,7 @@ type Query {
   formats: [Format!]!
   statuses: [Status!]!
   media: [Medium!]!
-  posts: [Post!]!
+  posts(categories: [String!], tags: [String!], users: [String!]): [Post!]!
   organizations: [Organization!]!
   users: [User!]!
   ratings: [Rating!]!

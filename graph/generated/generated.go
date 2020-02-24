@@ -192,7 +192,7 @@ type ComplexityRoot struct {
 		Formats       func(childComplexity int) int
 		Media         func(childComplexity int) int
 		Organizations func(childComplexity int) int
-		Posts         func(childComplexity int) int
+		Posts         func(childComplexity int, categories []string, tags []string, users []string) int
 		Ratings       func(childComplexity int) int
 		Statuses      func(childComplexity int) int
 		Tags          func(childComplexity int, ids []string) int
@@ -288,7 +288,7 @@ type QueryResolver interface {
 	Formats(ctx context.Context) ([]*models.Format, error)
 	Statuses(ctx context.Context) ([]*models.Status, error)
 	Media(ctx context.Context) ([]*models.Medium, error)
-	Posts(ctx context.Context) ([]*models.Post, error)
+	Posts(ctx context.Context, categories []string, tags []string, users []string) ([]*models.Post, error)
 	Organizations(ctx context.Context) ([]*models.Organization, error)
 	Users(ctx context.Context) ([]*models.User, error)
 	Ratings(ctx context.Context) ([]*models.Rating, error)
@@ -1154,7 +1154,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.Posts(childComplexity), true
+		args, err := ec.field_Query_posts_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Posts(childComplexity, args["categories"].([]string), args["tags"].([]string), args["users"].([]string)), true
 
 	case "Query.ratings":
 		if e.complexity.Query.Ratings == nil {
@@ -1526,11 +1531,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	&ast.Source{Name: "graph/schema.graphql", Input: `# GraphQL schema example
-#
-# https://gqlgen.com/getting-started/
-
-type Category {
+	&ast.Source{Name: "graph/schema.graphql", Input: `type Category {
   _id: ID!
   _class: String!
   name: String!
@@ -1723,7 +1724,7 @@ type Query {
   formats: [Format!]!
   statuses: [Status!]!
   media: [Medium!]!
-  posts: [Post!]!
+  posts(categories: [String!], tags: [String!], users: [String!]): [Post!]!
   organizations: [Organization!]!
   users: [User!]!
   ratings: [Rating!]!
@@ -1787,6 +1788,36 @@ func (ec *executionContext) field_Query_claims_args(ctx context.Context, rawArgs
 		}
 	}
 	args["claimants"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_posts_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 []string
+	if tmp, ok := rawArgs["categories"]; ok {
+		arg0, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["categories"] = arg0
+	var arg1 []string
+	if tmp, ok := rawArgs["tags"]; ok {
+		arg1, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["tags"] = arg1
+	var arg2 []string
+	if tmp, ok := rawArgs["users"]; ok {
+		arg2, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["users"] = arg2
 	return args, nil
 }
 
@@ -5734,9 +5765,16 @@ func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.Coll
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_posts_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Posts(rctx)
+		return ec.resolvers.Query().Posts(rctx, args["categories"].([]string), args["tags"].([]string), args["users"].([]string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
