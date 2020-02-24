@@ -31,6 +31,8 @@ func (v values) Get(key string) interface{} {
 	return v.m[key]
 }
 
+var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+
 // DataloaderMiddleware to add middleware in main
 func DataloaderMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -48,8 +50,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					}
 					keys = append(keys, rid)
 				}
-
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 
 				cursor, err := mongo.Factcheck.Collection("rating").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
@@ -102,8 +102,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					keys = append(keys, rid)
 				}
 
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
-
 				cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
@@ -154,8 +152,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					}
 					keys = append(keys, rid)
 				}
-
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 
 				cursor, err := mongo.Core.Collection("media").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
@@ -208,8 +204,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					keys = append(keys, rid)
 				}
 
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
-
 				cursor, err := mongo.Core.Collection("status").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
@@ -260,8 +254,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					}
 					keys = append(keys, rid)
 				}
-
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 
 				cursor, err := mongo.Core.Collection("format").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
@@ -314,8 +306,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					keys = append(keys, rid)
 				}
 
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
-
 				cursor, err := mongo.Core.Collection("organization").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
@@ -366,8 +356,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					}
 					keys = append(keys, rid)
 				}
-
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 
 				cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
@@ -420,8 +408,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					keys = append(keys, rid)
 				}
 
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
-
 				cursor, err := mongo.Core.Collection("category").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
@@ -473,8 +459,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					keys = append(keys, rid)
 				}
 
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
-
 				cursor, err := mongo.Core.Collection("tag").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
@@ -525,8 +509,6 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					}
 					keys = append(keys, rid)
 				}
-
-				var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
 
 				cursor, err := mongo.Core.Collection("dega_user").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 

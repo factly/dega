@@ -185,9 +185,9 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Categories    func(childComplexity int) int
-		Claimnats     func(childComplexity int) int
-		Claims        func(childComplexity int) int
+		Categories    func(childComplexity int, ids []string) int
+		Claimants     func(childComplexity int) int
+		Claims        func(childComplexity int, ratings []string, claimants []string) int
 		Factchecks    func(childComplexity int) int
 		Formats       func(childComplexity int) int
 		Media         func(childComplexity int) int
@@ -195,7 +195,7 @@ type ComplexityRoot struct {
 		Posts         func(childComplexity int) int
 		Ratings       func(childComplexity int) int
 		Statuses      func(childComplexity int) int
-		Tags          func(childComplexity int) int
+		Tags          func(childComplexity int, ids []string) int
 		Users         func(childComplexity int) int
 	}
 
@@ -283,8 +283,8 @@ type PostResolver interface {
 	DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error)
 }
 type QueryResolver interface {
-	Categories(ctx context.Context) ([]*models.Category, error)
-	Tags(ctx context.Context) ([]*models.Tag, error)
+	Categories(ctx context.Context, ids []string) ([]*models.Category, error)
+	Tags(ctx context.Context, ids []string) ([]*models.Tag, error)
 	Formats(ctx context.Context) ([]*models.Format, error)
 	Statuses(ctx context.Context) ([]*models.Status, error)
 	Media(ctx context.Context) ([]*models.Medium, error)
@@ -292,8 +292,8 @@ type QueryResolver interface {
 	Organizations(ctx context.Context) ([]*models.Organization, error)
 	Users(ctx context.Context) ([]*models.User, error)
 	Ratings(ctx context.Context) ([]*models.Rating, error)
-	Claimnats(ctx context.Context) ([]*models.Claimant, error)
-	Claims(ctx context.Context) ([]*models.Claim, error)
+	Claimants(ctx context.Context) ([]*models.Claimant, error)
+	Claims(ctx context.Context, ratings []string, claimants []string) ([]*models.Claim, error)
 	Factchecks(ctx context.Context) ([]*models.Factcheck, error)
 }
 type RatingResolver interface {
@@ -1095,21 +1095,31 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.Categories(childComplexity), true
+		args, err := ec.field_Query_categories_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
 
-	case "Query.claimnats":
-		if e.complexity.Query.Claimnats == nil {
+		return e.complexity.Query.Categories(childComplexity, args["ids"].([]string)), true
+
+	case "Query.claimants":
+		if e.complexity.Query.Claimants == nil {
 			break
 		}
 
-		return e.complexity.Query.Claimnats(childComplexity), true
+		return e.complexity.Query.Claimants(childComplexity), true
 
 	case "Query.claims":
 		if e.complexity.Query.Claims == nil {
 			break
 		}
 
-		return e.complexity.Query.Claims(childComplexity), true
+		args, err := ec.field_Query_claims_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Claims(childComplexity, args["ratings"].([]string), args["claimants"].([]string)), true
 
 	case "Query.factchecks":
 		if e.complexity.Query.Factchecks == nil {
@@ -1165,7 +1175,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.Tags(childComplexity), true
+		args, err := ec.field_Query_tags_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Tags(childComplexity, args["ids"].([]string)), true
 
 	case "Query.users":
 		if e.complexity.Query.Users == nil {
@@ -1511,7 +1526,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	&ast.Source{Name: "graph/schema.graphqls", Input: `# GraphQL schema example
+	&ast.Source{Name: "graph/schema.graphql", Input: `# GraphQL schema example
 #
 # https://gqlgen.com/getting-started/
 
@@ -1703,8 +1718,8 @@ type Factcheck {
 }
 
 type Query {
-  categories: [Category!]!
-  tags: [Tag!]!
+  categories(ids: [String!]): [Category!]!
+  tags(ids: [String!]): [Tag!]!
   formats: [Format!]!
   statuses: [Status!]!
   media: [Medium!]!
@@ -1712,8 +1727,8 @@ type Query {
   organizations: [Organization!]!
   users: [User!]!
   ratings: [Rating!]!
-  claimnats: [Claimant!]!
-  claims: [Claim!]!
+  claimants: [Claimant!]!
+  claims(ratings: [String!], claimants:[String!]): [Claim!]!
   factchecks: [Factcheck!]!
 }
 
@@ -1736,6 +1751,56 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 		}
 	}
 	args["name"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_categories_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 []string
+	if tmp, ok := rawArgs["ids"]; ok {
+		arg0, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["ids"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_claims_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 []string
+	if tmp, ok := rawArgs["ratings"]; ok {
+		arg0, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["ratings"] = arg0
+	var arg1 []string
+	if tmp, ok := rawArgs["claimants"]; ok {
+		arg1, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["claimants"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_tags_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 []string
+	if tmp, ok := rawArgs["ids"]; ok {
+		arg0, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["ids"] = arg0
 	return args, nil
 }
 
@@ -5485,9 +5550,16 @@ func (ec *executionContext) _Query_categories(ctx context.Context, field graphql
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_categories_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Categories(rctx)
+		return ec.resolvers.Query().Categories(rctx, args["ids"].([]string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5519,9 +5591,16 @@ func (ec *executionContext) _Query_tags(ctx context.Context, field graphql.Colle
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_tags_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Tags(rctx)
+		return ec.resolvers.Query().Tags(rctx, args["ids"].([]string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5776,7 +5855,7 @@ func (ec *executionContext) _Query_ratings(ctx context.Context, field graphql.Co
 	return ec.marshalNRating2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRatingᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Query_claimnats(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+func (ec *executionContext) _Query_claimants(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -5793,7 +5872,7 @@ func (ec *executionContext) _Query_claimnats(ctx context.Context, field graphql.
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Claimnats(rctx)
+		return ec.resolvers.Query().Claimants(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5825,9 +5904,16 @@ func (ec *executionContext) _Query_claims(ctx context.Context, field graphql.Col
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_claims_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Claims(rctx)
+		return ec.resolvers.Query().Claims(rctx, args["ratings"].([]string), args["claimants"].([]string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -9388,7 +9474,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				}
 				return res
 			})
-		case "claimnats":
+		case "claimants":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
 				defer func() {
@@ -9396,7 +9482,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_claimnats(ctx, field)
+				res = ec._Query_claimants(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -10958,6 +11044,38 @@ func (ec *executionContext) unmarshalOString2string(ctx context.Context, v inter
 
 func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	return graphql.MarshalString(v)
+}
+
+func (ec *executionContext) unmarshalOString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
+	var vSlice []interface{}
+	if v != nil {
+		if tmp1, ok := v.([]interface{}); ok {
+			vSlice = tmp1
+		} else {
+			vSlice = []interface{}{v}
+		}
+	}
+	var err error
+	res := make([]string, len(vSlice))
+	for i := range vSlice {
+		res[i], err = ec.unmarshalNString2string(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOString2ᚕstringᚄ(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalNString2string(ctx, sel, v[i])
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {

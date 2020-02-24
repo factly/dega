@@ -19,8 +19,8 @@ func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*mo
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Claimnats(ctx context.Context) ([]*models.Claimant, error) {
-	cursor, err := mongo.Factcheck.Collection("claimnat").Find(ctx, bson.M{})
+func (r *queryResolver) Claimants(ctx context.Context) ([]*models.Claimant, error) {
+	cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, bson.M{})
 
 	if err != nil {
 		log.Fatal(err)

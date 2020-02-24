@@ -190,8 +190,8 @@ type Factcheck {
 }
 
 type Query {
-  categories: [Category!]!
-  tags: [Tag!]!
+  categories(ids: [String!]): [Category!]!
+  tags(ids: [String!]): [Tag!]!
   formats: [Format!]!
   statuses: [Status!]!
   media: [Medium!]!
@@ -199,8 +199,8 @@ type Query {
   organizations: [Organization!]!
   users: [User!]!
   ratings: [Rating!]!
-  claimnats: [Claimant!]!
-  claims: [Claim!]!
+  claimants: [Claimant!]!
+  claims(ratings: [String!], claimants:[String!]): [Claim!]!
   factchecks: [Factcheck!]!
 }
 
