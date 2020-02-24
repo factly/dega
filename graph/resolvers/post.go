@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
@@ -75,6 +76,10 @@ func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*mode
 func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []string, users []string) ([]*models.Post, error) {
 
 	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
 
 	query := bson.M{
 		"client_id": client,
