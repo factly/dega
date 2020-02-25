@@ -37,7 +37,7 @@ func main() {
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	})
 
-	r.Use(cors.Handler)
+	router.Use(cors.Handler)
 
 	router.Use(middleware.Client())
 
