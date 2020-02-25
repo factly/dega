@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
@@ -28,7 +29,17 @@ func (r *userResolver) Media(ctx context.Context, obj *models.User) (*models.Med
 }
 
 func (r *queryResolver) Users(ctx context.Context) ([]*models.User, error) {
-	cursor, err := mongo.Core.Collection("dega_user").Find(ctx, bson.M{})
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	query := bson.M{
+		"client_id": client,
+	}
+
+	cursor, err := mongo.Core.Collection("dega_user").Find(ctx, query)
 
 	if err != nil {
 		log.Fatal(err)

@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
@@ -10,7 +11,17 @@ import (
 )
 
 func (r *queryResolver) Statuses(ctx context.Context) ([]*models.Status, error) {
-	cursor, err := mongo.Core.Collection("status").Find(ctx, bson.M{})
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	query := bson.M{
+		"client_id": client,
+	}
+
+	cursor, err := mongo.Core.Collection("status").Find(ctx, query)
 
 	if err != nil {
 		log.Fatal(err)

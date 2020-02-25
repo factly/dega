@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
@@ -20,7 +21,17 @@ func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*mo
 }
 
 func (r *queryResolver) Claimants(ctx context.Context) ([]*models.Claimant, error) {
-	cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, bson.M{})
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	query := bson.M{
+		"client_id": client,
+	}
+
+	cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, query)
 
 	if err != nil {
 		log.Fatal(err)

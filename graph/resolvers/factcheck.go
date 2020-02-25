@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
@@ -83,7 +84,17 @@ func (r *factcheckResolver) DegaUsers(ctx context.Context, obj *models.Factcheck
 }
 
 func (r *queryResolver) Factchecks(ctx context.Context) ([]*models.Factcheck, error) {
-	cursor, err := mongo.Factcheck.Collection("factcheck").Find(ctx, bson.M{})
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	query := bson.M{
+		"client_id": client,
+	}
+
+	cursor, err := mongo.Factcheck.Collection("factcheck").Find(ctx, query)
 
 	if err != nil {
 		log.Fatal(err)

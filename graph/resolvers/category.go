@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
@@ -12,7 +13,15 @@ import (
 
 func (r *queryResolver) Categories(ctx context.Context, ids []string) ([]*models.Category, error) {
 
-	query := bson.M{}
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	query := bson.M{
+		"client_id": client,
+	}
 
 	if len(ids) > 0 {
 		keys := []primitive.ObjectID{}

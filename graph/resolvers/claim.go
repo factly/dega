@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
@@ -22,7 +23,15 @@ func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*model
 
 func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants []string) ([]*models.Claim, error) {
 
-	query := bson.M{}
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	query := bson.M{
+		"client_id": client,
+	}
 
 	if len(ratings) > 0 {
 		keys := []primitive.ObjectID{}

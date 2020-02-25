@@ -31,7 +31,7 @@ func (v values) Get(key string) interface{} {
 	return v.m[key]
 }
 
-var ctx, _ = context.WithTimeout(context.Background(), 10*time.Second)
+var ctx = context.Background()
 
 // DataloaderMiddleware to add middleware in main
 func DataloaderMiddleware(next http.Handler) http.Handler {
