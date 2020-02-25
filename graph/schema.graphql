@@ -190,11 +190,10 @@ type Query {
   tags(ids: [String!], page: Int, limit: Int): [Tag!]!
   formats: [Format!]!
   statuses: [Status!]!
-  media: [Medium!]!
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Post!]!
-  users: [User!]!
-  ratings: [Rating!]!
-  claimants: [Claimant!]!
+  users(page: Int, limit: Int): [User!]!
+  ratings(page: Int, limit: Int): [Rating!]!
+  claimants(page: Int, limit: Int): [Claimant!]!
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): [Claim!]!
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Factcheck!]!
 }

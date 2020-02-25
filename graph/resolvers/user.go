@@ -9,6 +9,7 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (r *userResolver) OrganizationDefault(ctx context.Context, obj *models.User) (*models.Organization, error) {
@@ -27,11 +28,21 @@ func (r *userResolver) Media(ctx context.Context, obj *models.User) (*models.Med
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Users(ctx context.Context) ([]*models.User, error) {
+func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) ([]*models.User, error) {
 
 	query := bson.M{}
 
-	cursor, err := mongo.Core.Collection("dega_user").Find(ctx, query)
+	pageLimit := 10
+	pageNo := 1
+	if limit != nil && *limit > 0 && *limit <= 20 {
+		pageLimit = *limit
+	}
+	if page != nil {
+		pageNo = *page
+	}
+
+	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	cursor, err := mongo.Core.Collection("dega_user").Find(ctx, query, opts)
 
 	if err != nil {
 		log.Fatal(err)

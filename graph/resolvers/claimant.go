@@ -10,6 +10,7 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*models.Medium, error) {
@@ -20,7 +21,7 @@ func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*mo
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Claimants(ctx context.Context) ([]*models.Claimant, error) {
+func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int) ([]*models.Claimant, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -31,7 +32,17 @@ func (r *queryResolver) Claimants(ctx context.Context) ([]*models.Claimant, erro
 		"client_id": client,
 	}
 
-	cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, query)
+	pageLimit := 10
+	pageNo := 1
+	if limit != nil {
+		pageLimit = *limit
+	}
+	if page != nil {
+		pageNo = *page
+	}
+
+	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, query, opts)
 
 	if err != nil {
 		log.Fatal(err)

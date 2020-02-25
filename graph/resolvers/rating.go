@@ -10,6 +10,7 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (r *ratingResolver) Media(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
@@ -20,7 +21,7 @@ func (r *ratingResolver) Media(ctx context.Context, obj *models.Rating) (*models
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Ratings(ctx context.Context) ([]*models.Rating, error) {
+func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int) ([]*models.Rating, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -31,7 +32,17 @@ func (r *queryResolver) Ratings(ctx context.Context) ([]*models.Rating, error) {
 		"client_id": client,
 	}
 
-	cursor, err := mongo.Factcheck.Collection("rating").Find(ctx, query)
+	pageLimit := 10
+	pageNo := 1
+	if limit != nil {
+		pageLimit = *limit
+	}
+	if page != nil {
+		pageNo = *page
+	}
+
+	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	cursor, err := mongo.Factcheck.Collection("rating").Find(ctx, query, opts)
 
 	if err != nil {
 		log.Fatal(err)
