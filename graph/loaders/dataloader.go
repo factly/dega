@@ -12,16 +12,18 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-const ratingloaderKey = "ratingloader"
-const claimantloaderKey = "claimantloader"
-const mediumloaderkey = "mediumloader"
-const statusloaderkey = "statusloader"
-const formatloaderkey = "formatloader"
-const organizationloaderkey = "organizationloader"
-const claimloaderkey = "claimloader"
-const categoryloaderkey = "categoryloader"
-const tagloaderkey = "tagloader"
-const userloaderkey = "userloader"
+const loadersKey = "loaders"
+
+const ratingLoaderKey = "ratingloader"
+const claimantLoaderKey = "claimantloader"
+const mediumLoaderKey = "mediumloader"
+const statusLoaderKey = "statusloader"
+const formatLoaderKey = "formatloader"
+const organizationLoaderKey = "organizationloader"
+const claimLoaderKey = "claimloader"
+const categoryLoaderKey = "categoryloader"
+const tagLoaderKey = "tagloader"
+const userLoaderKey = "userloader"
 
 type values struct {
 	m map[string]interface{}
@@ -547,69 +549,69 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 		}
 
 		v := values{map[string]interface{}{
-			claimantloaderKey:     &claimantloader,
-			ratingloaderKey:       &ratingloader,
-			mediumloaderkey:       &mediumloader,
-			statusloaderkey:       &statusloader,
-			formatloaderkey:       &formatloader,
-			organizationloaderkey: &organizationloader,
-			claimloaderkey:        &claimloader,
-			categoryloaderkey:     &categoryloader,
-			tagloaderkey:          &tagloader,
-			userloaderkey:         &userloader,
+			claimantLoaderKey:     &claimantloader,
+			ratingLoaderKey:       &ratingloader,
+			mediumLoaderKey:       &mediumloader,
+			statusLoaderKey:       &statusloader,
+			formatLoaderKey:       &formatloader,
+			organizationLoaderKey: &organizationloader,
+			claimLoaderKey:        &claimloader,
+			categoryLoaderKey:     &categoryloader,
+			tagLoaderKey:          &tagloader,
+			userLoaderKey:         &userloader,
 		}}
 
-		ctx := context.WithValue(r.Context(), "loaders", v)
+		ctx := context.WithValue(r.Context(), loadersKey, v)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
 // GetRatingLoader batches and caches rating
 func GetRatingLoader(ctx context.Context) *RatingLoader {
-	return ctx.Value("loaders").(values).Get(ratingloaderKey).(*RatingLoader)
+	return ctx.Value(loadersKey).(values).Get(ratingLoaderKey).(*RatingLoader)
 }
 
 // GetClaimantLoader batches and caches claimant
 func GetClaimantLoader(ctx context.Context) *ClaimantLoader {
-	return ctx.Value("loaders").(values).Get(claimantloaderKey).(*ClaimantLoader)
+	return ctx.Value(loadersKey).(values).Get(claimantLoaderKey).(*ClaimantLoader)
 }
 
 // GetMediumLoader batches and caches medium
 func GetMediumLoader(ctx context.Context) *MediumLoader {
-	return ctx.Value("loaders").(values).Get(mediumloaderkey).(*MediumLoader)
+	return ctx.Value(loadersKey).(values).Get(mediumLoaderKey).(*MediumLoader)
 }
 
 // GetStatusLoader batches and caches status
 func GetStatusLoader(ctx context.Context) *StatusLoader {
-	return ctx.Value("loaders").(values).Get(statusloaderkey).(*StatusLoader)
+	return ctx.Value(loadersKey).(values).Get(statusLoaderKey).(*StatusLoader)
 }
 
 // GetFormatLoader batches and caches format
 func GetFormatLoader(ctx context.Context) *FormatLoader {
-	return ctx.Value("loaders").(values).Get(formatloaderkey).(*FormatLoader)
+	return ctx.Value(loadersKey).(values).Get(formatLoaderKey).(*FormatLoader)
 }
 
 // GetOrganizationLoader batches and caches organization
 func GetOrganizationLoader(ctx context.Context) *OrganizationLoader {
-	return ctx.Value("loaders").(values).Get(organizationloaderkey).(*OrganizationLoader)
+	return ctx.Value(loadersKey).(values).Get(organizationLoaderKey).(*OrganizationLoader)
 }
 
 // GetClaimLoader batches and caches claim
 func GetClaimLoader(ctx context.Context) *ClaimLoader {
-	return ctx.Value("loaders").(values).Get(claimloaderkey).(*ClaimLoader)
+	return ctx.Value(loadersKey).(values).Get(claimLoaderKey).(*ClaimLoader)
 }
 
 // GetCategoryLoader batches and caches category
 func GetCategoryLoader(ctx context.Context) *CategoryLoader {
-	return ctx.Value("loaders").(values).Get(categoryloaderkey).(*CategoryLoader)
+	return ctx.Value(loadersKey).(values).Get(categoryLoaderKey).(*CategoryLoader)
 }
 
 // GetTagLoader batches and caches tag
 func GetTagLoader(ctx context.Context) *TagLoader {
-	return ctx.Value("loaders").(values).Get(tagloaderkey).(*TagLoader)
+	return ctx.Value(loadersKey).(values).Get(tagLoaderKey).(*TagLoader)
 }
 
 // GetUserLoader batches and caches user
 func GetUserLoader(ctx context.Context) *UserLoader {
-	return ctx.Value("loaders").(values).Get(userloaderkey).(*UserLoader)
+	return ctx.Value(loadersKey).(values).Get(userLoaderKey).(*UserLoader)
 }

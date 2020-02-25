@@ -9,9 +9,10 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r *queryResolver) Categories(ctx context.Context, ids []string) ([]*models.Category, error) {
+func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int, limit *int) ([]*models.Category, error) {
 
 	client := ctx.Value("client").(string)
 
@@ -37,7 +38,17 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string) ([]*models
 		query["_id"] = bson.M{"$in": keys}
 	}
 
-	cursor, err := mongo.Core.Collection("category").Find(ctx, query)
+	pageLimit := 10
+	pageNo := 1
+	if limit != nil {
+		pageLimit = *limit
+	}
+	if page != nil {
+		pageNo = *page
+	}
+
+	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	cursor, err := mongo.Core.Collection("category").Find(ctx, query, opts)
 
 	if err != nil {
 		log.Fatal(err)

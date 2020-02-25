@@ -11,6 +11,7 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (r *postResolver) Status(ctx context.Context, obj *models.Post) (*models.Status, error) {
@@ -73,7 +74,7 @@ func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*mode
 	return users, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []string, users []string) ([]*models.Post, error) {
+func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) ([]*models.Post, error) {
 
 	client := ctx.Value("client").(string)
 
@@ -127,7 +128,18 @@ func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []s
 		query["degaUsers.$id"] = bson.M{"$in": keys}
 	}
 
-	cursor, err := mongo.Core.Collection("post").Find(ctx, query)
+	pageLimit := 10
+	pageNo := 1
+	if limit != nil {
+		pageLimit = *limit
+	}
+	if page != nil {
+		pageNo = *page
+	}
+
+	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+
+	cursor, err := mongo.Core.Collection("post").Find(ctx, query, opts)
 
 	if err != nil {
 		log.Fatal(err)

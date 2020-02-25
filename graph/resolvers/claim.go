@@ -11,6 +11,7 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (r *claimResolver) Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error) {
@@ -21,7 +22,7 @@ func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*model
 	return loaders.GetClaimantLoader(ctx).Load(obj.Claimant.ID)
 }
 
-func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants []string) ([]*models.Claim, error) {
+func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int) ([]*models.Claim, error) {
 
 	client := ctx.Value("client").(string)
 
@@ -61,7 +62,18 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 		query["claimant.$id"] = bson.M{"$in": keys}
 	}
 
-	cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, query)
+	pageLimit := 10
+	pageNo := 1
+	if limit != nil {
+		pageLimit = *limit
+	}
+	if page != nil {
+		pageNo = *page
+	}
+
+	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+
+	cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, query, opts)
 
 	if err != nil {
 		log.Fatal(err)

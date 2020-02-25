@@ -185,18 +185,17 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Categories    func(childComplexity int, ids []string) int
-		Claimants     func(childComplexity int) int
-		Claims        func(childComplexity int, ratings []string, claimants []string) int
-		Factchecks    func(childComplexity int) int
-		Formats       func(childComplexity int) int
-		Media         func(childComplexity int) int
-		Organizations func(childComplexity int) int
-		Posts         func(childComplexity int, categories []string, tags []string, users []string) int
-		Ratings       func(childComplexity int) int
-		Statuses      func(childComplexity int) int
-		Tags          func(childComplexity int, ids []string) int
-		Users         func(childComplexity int) int
+		Categories func(childComplexity int, ids []string, page *int, limit *int) int
+		Claimants  func(childComplexity int) int
+		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int) int
+		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
+		Formats    func(childComplexity int) int
+		Media      func(childComplexity int) int
+		Posts      func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
+		Ratings    func(childComplexity int) int
+		Statuses   func(childComplexity int) int
+		Tags       func(childComplexity int, ids []string, page *int, limit *int) int
+		Users      func(childComplexity int) int
 	}
 
 	Rating struct {
@@ -283,18 +282,17 @@ type PostResolver interface {
 	DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error)
 }
 type QueryResolver interface {
-	Categories(ctx context.Context, ids []string) ([]*models.Category, error)
-	Tags(ctx context.Context, ids []string) ([]*models.Tag, error)
+	Categories(ctx context.Context, ids []string, page *int, limit *int) ([]*models.Category, error)
+	Tags(ctx context.Context, ids []string, page *int, limit *int) ([]*models.Tag, error)
 	Formats(ctx context.Context) ([]*models.Format, error)
 	Statuses(ctx context.Context) ([]*models.Status, error)
 	Media(ctx context.Context) ([]*models.Medium, error)
-	Posts(ctx context.Context, categories []string, tags []string, users []string) ([]*models.Post, error)
-	Organizations(ctx context.Context) ([]*models.Organization, error)
+	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) ([]*models.Post, error)
 	Users(ctx context.Context) ([]*models.User, error)
 	Ratings(ctx context.Context) ([]*models.Rating, error)
 	Claimants(ctx context.Context) ([]*models.Claimant, error)
-	Claims(ctx context.Context, ratings []string, claimants []string) ([]*models.Claim, error)
-	Factchecks(ctx context.Context) ([]*models.Factcheck, error)
+	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int) ([]*models.Claim, error)
+	Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) ([]*models.Factcheck, error)
 }
 type RatingResolver interface {
 	Media(ctx context.Context, obj *models.Rating) (*models.Medium, error)
@@ -1100,7 +1098,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Categories(childComplexity, args["ids"].([]string)), true
+		return e.complexity.Query.Categories(childComplexity, args["ids"].([]string), args["page"].(*int), args["limit"].(*int)), true
 
 	case "Query.claimants":
 		if e.complexity.Query.Claimants == nil {
@@ -1119,14 +1117,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Claims(childComplexity, args["ratings"].([]string), args["claimants"].([]string)), true
+		return e.complexity.Query.Claims(childComplexity, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int)), true
 
 	case "Query.factchecks":
 		if e.complexity.Query.Factchecks == nil {
 			break
 		}
 
-		return e.complexity.Query.Factchecks(childComplexity), true
+		args, err := ec.field_Query_factchecks_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Factchecks(childComplexity, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int)), true
 
 	case "Query.formats":
 		if e.complexity.Query.Formats == nil {
@@ -1142,13 +1145,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Media(childComplexity), true
 
-	case "Query.organizations":
-		if e.complexity.Query.Organizations == nil {
-			break
-		}
-
-		return e.complexity.Query.Organizations(childComplexity), true
-
 	case "Query.posts":
 		if e.complexity.Query.Posts == nil {
 			break
@@ -1159,7 +1155,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Posts(childComplexity, args["categories"].([]string), args["tags"].([]string), args["users"].([]string)), true
+		return e.complexity.Query.Posts(childComplexity, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int)), true
 
 	case "Query.ratings":
 		if e.complexity.Query.Ratings == nil {
@@ -1185,7 +1181,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Tags(childComplexity, args["ids"].([]string)), true
+		return e.complexity.Query.Tags(childComplexity, args["ids"].([]string), args["page"].(*int), args["limit"].(*int)), true
 
 	case "Query.users":
 		if e.complexity.Query.Users == nil {
@@ -1719,18 +1715,17 @@ type Factcheck {
 }
 
 type Query {
-  categories(ids: [String!]): [Category!]!
-  tags(ids: [String!]): [Tag!]!
+  categories(ids: [String!], page: Int, limit: Int): [Category!]!
+  tags(ids: [String!], page: Int, limit: Int): [Tag!]!
   formats: [Format!]!
   statuses: [Status!]!
   media: [Medium!]!
-  posts(categories: [String!], tags: [String!], users: [String!]): [Post!]!
-  organizations: [Organization!]!
+  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Post!]!
   users: [User!]!
   ratings: [Rating!]!
   claimants: [Claimant!]!
-  claims(ratings: [String!], claimants:[String!]): [Claim!]!
-  factchecks: [Factcheck!]!
+  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): [Claim!]!
+  factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Factcheck!]!
 }
 
 scalar Time`, BuiltIn: false},
@@ -1766,6 +1761,22 @@ func (ec *executionContext) field_Query_categories_args(ctx context.Context, raw
 		}
 	}
 	args["ids"] = arg0
+	var arg1 *int
+	if tmp, ok := rawArgs["page"]; ok {
+		arg1, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["page"] = arg1
+	var arg2 *int
+	if tmp, ok := rawArgs["limit"]; ok {
+		arg2, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg2
 	return args, nil
 }
 
@@ -1788,6 +1799,68 @@ func (ec *executionContext) field_Query_claims_args(ctx context.Context, rawArgs
 		}
 	}
 	args["claimants"] = arg1
+	var arg2 *int
+	if tmp, ok := rawArgs["page"]; ok {
+		arg2, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["page"] = arg2
+	var arg3 *int
+	if tmp, ok := rawArgs["limit"]; ok {
+		arg3, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg3
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_factchecks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 []string
+	if tmp, ok := rawArgs["categories"]; ok {
+		arg0, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["categories"] = arg0
+	var arg1 []string
+	if tmp, ok := rawArgs["tags"]; ok {
+		arg1, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["tags"] = arg1
+	var arg2 []string
+	if tmp, ok := rawArgs["users"]; ok {
+		arg2, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["users"] = arg2
+	var arg3 *int
+	if tmp, ok := rawArgs["page"]; ok {
+		arg3, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["page"] = arg3
+	var arg4 *int
+	if tmp, ok := rawArgs["limit"]; ok {
+		arg4, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg4
 	return args, nil
 }
 
@@ -1818,6 +1891,22 @@ func (ec *executionContext) field_Query_posts_args(ctx context.Context, rawArgs 
 		}
 	}
 	args["users"] = arg2
+	var arg3 *int
+	if tmp, ok := rawArgs["page"]; ok {
+		arg3, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["page"] = arg3
+	var arg4 *int
+	if tmp, ok := rawArgs["limit"]; ok {
+		arg4, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg4
 	return args, nil
 }
 
@@ -1832,6 +1921,22 @@ func (ec *executionContext) field_Query_tags_args(ctx context.Context, rawArgs m
 		}
 	}
 	args["ids"] = arg0
+	var arg1 *int
+	if tmp, ok := rawArgs["page"]; ok {
+		arg1, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["page"] = arg1
+	var arg2 *int
+	if tmp, ok := rawArgs["limit"]; ok {
+		arg2, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["limit"] = arg2
 	return args, nil
 }
 
@@ -5590,7 +5695,7 @@ func (ec *executionContext) _Query_categories(ctx context.Context, field graphql
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Categories(rctx, args["ids"].([]string))
+		return ec.resolvers.Query().Categories(rctx, args["ids"].([]string), args["page"].(*int), args["limit"].(*int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5631,7 +5736,7 @@ func (ec *executionContext) _Query_tags(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Tags(rctx, args["ids"].([]string))
+		return ec.resolvers.Query().Tags(rctx, args["ids"].([]string), args["page"].(*int), args["limit"].(*int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5774,7 +5879,7 @@ func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.Coll
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Posts(rctx, args["categories"].([]string), args["tags"].([]string), args["users"].([]string))
+		return ec.resolvers.Query().Posts(rctx, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5789,40 +5894,6 @@ func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.Coll
 	res := resTmp.([]*models.Post)
 	fc.Result = res
 	return ec.marshalNPost2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPostᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Query_organizations(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Query",
-		Field:    field,
-		Args:     nil,
-		IsMethod: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Organizations(rctx)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.Organization)
-	fc.Result = res
-	return ec.marshalNOrganization2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganizationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_users(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -5951,7 +6022,7 @@ func (ec *executionContext) _Query_claims(ctx context.Context, field graphql.Col
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Claims(rctx, args["ratings"].([]string), args["claimants"].([]string))
+		return ec.resolvers.Query().Claims(rctx, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5983,9 +6054,16 @@ func (ec *executionContext) _Query_factchecks(ctx context.Context, field graphql
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_factchecks_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Factchecks(rctx)
+		return ec.resolvers.Query().Factchecks(rctx, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -9470,20 +9548,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				}
 				return res
 			})
-		case "organizations":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_organizations(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			})
 		case "users":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -10486,43 +10550,6 @@ func (ec *executionContext) marshalNOrganization2githubᚗcomᚋmonarkatfactly�
 	return ec._Organization(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNOrganization2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganizationᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Organization) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNOrganization2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganization(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-	return ret
-}
-
 func (ec *executionContext) marshalNOrganization2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganization(ctx context.Context, sel ast.SelectionSet, v *models.Organization) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -11063,6 +11090,29 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 		return graphql.Null
 	}
 	return ec.marshalOBoolean2bool(ctx, sel, *v)
+}
+
+func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {
+	return graphql.UnmarshalInt(v)
+}
+
+func (ec *executionContext) marshalOInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
+	return graphql.MarshalInt(v)
+}
+
+func (ec *executionContext) unmarshalOInt2ᚖint(ctx context.Context, v interface{}) (*int, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalOInt2int(ctx, v)
+	return &res, err
+}
+
+func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.SelectionSet, v *int) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec.marshalOInt2int(ctx, sel, *v)
 }
 
 func (ec *executionContext) marshalOMedium2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx context.Context, sel ast.SelectionSet, v models.Medium) graphql.Marshaler {

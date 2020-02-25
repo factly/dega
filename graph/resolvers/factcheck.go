@@ -10,6 +10,8 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func (r *factcheckResolver) Claims(ctx context.Context, obj *models.Factcheck) ([]*models.Claim, error) {
@@ -83,7 +85,7 @@ func (r *factcheckResolver) DegaUsers(ctx context.Context, obj *models.Factcheck
 	return users, nil
 }
 
-func (r *queryResolver) Factchecks(ctx context.Context) ([]*models.Factcheck, error) {
+func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) ([]*models.Factcheck, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -94,7 +96,60 @@ func (r *queryResolver) Factchecks(ctx context.Context) ([]*models.Factcheck, er
 		"client_id": client,
 	}
 
-	cursor, err := mongo.Factcheck.Collection("factcheck").Find(ctx, query)
+	if len(categories) > 0 {
+		keys := []primitive.ObjectID{}
+
+		for _, id := range categories {
+			rid, err := primitive.ObjectIDFromHex(id)
+
+			if err == nil {
+				keys = append(keys, rid)
+			}
+		}
+
+		query["categories.$id"] = bson.M{"$in": keys}
+	}
+
+	if len(tags) > 0 {
+		keys := []primitive.ObjectID{}
+
+		for _, id := range tags {
+			cid, err := primitive.ObjectIDFromHex(id)
+
+			if err == nil {
+				keys = append(keys, cid)
+			}
+		}
+
+		query["tags.$id"] = bson.M{"$in": keys}
+	}
+
+	if len(users) > 0 {
+		keys := []primitive.ObjectID{}
+
+		for _, id := range users {
+			cid, err := primitive.ObjectIDFromHex(id)
+
+			if err == nil {
+				keys = append(keys, cid)
+			}
+		}
+
+		query["degaUsers.$id"] = bson.M{"$in": keys}
+	}
+
+	pageLimit := 10
+	pageNo := 1
+	if limit != nil {
+		pageLimit = *limit
+	}
+	if page != nil {
+		pageNo = *page
+	}
+
+	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+
+	cursor, err := mongo.Factcheck.Collection("factcheck").Find(ctx, query, opts)
 
 	if err != nil {
 		log.Fatal(err)

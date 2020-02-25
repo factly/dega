@@ -186,18 +186,17 @@ type Factcheck {
 }
 
 type Query {
-  categories(ids: [String!]): [Category!]!
-  tags(ids: [String!]): [Tag!]!
+  categories(ids: [String!], page: Int, limit: Int): [Category!]!
+  tags(ids: [String!], page: Int, limit: Int): [Tag!]!
   formats: [Format!]!
   statuses: [Status!]!
   media: [Medium!]!
-  posts(categories: [String!], tags: [String!], users: [String!]): [Post!]!
-  organizations: [Organization!]!
+  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Post!]!
   users: [User!]!
   ratings: [Rating!]!
   claimants: [Claimant!]!
-  claims(ratings: [String!], claimants:[String!]): [Claim!]!
-  factchecks: [Factcheck!]!
+  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): [Claim!]!
+  factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Factcheck!]!
 }
 
 scalar Time
