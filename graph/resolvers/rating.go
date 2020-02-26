@@ -21,7 +21,7 @@ func (r *ratingResolver) Media(ctx context.Context, obj *models.Rating) (*models
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int) ([]*models.Rating, error) {
+func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int) (*models.RatingsPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -48,7 +48,13 @@ func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int) ([]*
 		log.Fatal(err)
 	}
 
-	var results []*models.Rating
+	count, err := mongo.Factcheck.Collection("rating").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Rating
 
 	for cursor.Next(ctx) {
 		var each *models.Rating
@@ -56,10 +62,15 @@ func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int) ([]*
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.RatingsPaging = new(models.RatingsPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }
 
 // Rating model resolver

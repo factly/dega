@@ -17,3 +17,8 @@ type Rating struct {
 	Media           *DatabaseRef `bson:"media"`
 	Class           string       `bson:"_class"`
 }
+
+type RatingsPaging struct {
+	Nodes []*Rating `json:"nodes"`
+	Total int       `json:"total"`
+}

@@ -112,6 +112,8 @@ models:
     fields:
         media:
           resolver: true
+  RatingsPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.RatingsPaging
   Claimant:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Claimant
     fields:

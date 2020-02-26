@@ -220,6 +220,11 @@ type ClaimantsPaging {
   total: Int!
 }
 
+type RatingsPaging {
+  nodes: [Rating!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
@@ -227,7 +232,7 @@ type Query {
   statuses: [Status!]!
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
   users(page: Int, limit: Int): UsersPaging
-  ratings(page: Int, limit: Int): [Rating!]!
+  ratings(page: Int, limit: Int): RatingsPaging
   claimants(page: Int, limit: Int): ClaimantsPaging
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): ClaimsPaging
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): FactchecksPaging
