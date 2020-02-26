@@ -74,7 +74,7 @@ func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*mode
 	return users, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) ([]*models.Post, error) {
+func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.PostsPaging, error) {
 
 	client := ctx.Value("client").(string)
 
@@ -145,7 +145,13 @@ func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []s
 		log.Fatal(err)
 	}
 
-	var results []*models.Post
+	count, err := mongo.Core.Collection("post").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Post
 
 	for cursor.Next(ctx) {
 		var each *models.Post
@@ -153,10 +159,15 @@ func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []s
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.PostsPaging = new(models.PostsPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }
 
 // Post model resolver

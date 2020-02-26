@@ -195,12 +195,17 @@ type TagsPaging {
   total: Int!
 }
 
+type PostsPaging {
+  nodes: [Post!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: [Format!]!
   statuses: [Status!]!
-  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Post!]!
+  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
   users(page: Int, limit: Int): [User!]!
   ratings(page: Int, limit: Int): [Rating!]!
   claimants(page: Int, limit: Int): [Claimant!]!

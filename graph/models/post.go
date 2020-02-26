@@ -25,3 +25,8 @@ type Post struct {
 	DegaUsers       []*DatabaseRef `bson:"degaUsers"`
 	Class           string         `bson:"_class"`
 }
+
+type PostsPaging struct {
+	Nodes []*Post `json:"nodes"`
+	Total int     `json:"total"`
+}

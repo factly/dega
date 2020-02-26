@@ -103,6 +103,8 @@ models:
           resolver: true
         degaUsers:
           resolver: true
+  PostsPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.PostsPaging
   Rating:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Rating
     fields:
