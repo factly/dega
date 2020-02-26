@@ -225,10 +225,15 @@ type RatingsPaging {
   total: Int!
 }
 
+type FormatsPaging {
+  nodes: [Format!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
-  formats: [Format!]!
+  formats: FormatsPaging
   statuses: [Status!]!
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
   users(page: Int, limit: Int): UsersPaging

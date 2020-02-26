@@ -146,6 +146,11 @@ type ComplexityRoot struct {
 		Slug            func(childComplexity int) int
 	}
 
+	FormatsPaging struct {
+		Nodes func(childComplexity int) int
+		Total func(childComplexity int) int
+	}
+
 	Medium struct {
 		AltText         func(childComplexity int) int
 		Class           func(childComplexity int) int
@@ -323,7 +328,7 @@ type PostResolver interface {
 type QueryResolver interface {
 	Categories(ctx context.Context, ids []string, page *int, limit *int) (*models.CategoriesPaging, error)
 	Tags(ctx context.Context, ids []string, page *int, limit *int) (*models.TagsPaging, error)
-	Formats(ctx context.Context) ([]*models.Format, error)
+	Formats(ctx context.Context) (*models.FormatsPaging, error)
 	Statuses(ctx context.Context) ([]*models.Status, error)
 	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.PostsPaging, error)
 	Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error)
@@ -838,6 +843,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Format.Slug(childComplexity), true
+
+	case "FormatsPaging.nodes":
+		if e.complexity.FormatsPaging.Nodes == nil {
+			break
+		}
+
+		return e.complexity.FormatsPaging.Nodes(childComplexity), true
+
+	case "FormatsPaging.total":
+		if e.complexity.FormatsPaging.Total == nil {
+			break
+		}
+
+		return e.complexity.FormatsPaging.Total(childComplexity), true
 
 	case "Medium.alt_text":
 		if e.complexity.Medium.AltText == nil {
@@ -1912,10 +1931,15 @@ type RatingsPaging {
   total: Int!
 }
 
+type FormatsPaging {
+  nodes: [Format!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
-  formats: [Format!]!
+  formats: FormatsPaging
   statuses: [Status!]!
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
   users(page: Int, limit: Int): UsersPaging
@@ -4564,6 +4588,74 @@ func (ec *executionContext) _Format_last_updated_date(ctx context.Context, field
 	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _FormatsPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.FormatsPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "FormatsPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Nodes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Format)
+	fc.Result = res
+	return ec.marshalNFormat2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _FormatsPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.FormatsPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "FormatsPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Total, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Medium__id(ctx context.Context, field graphql.CollectedField, obj *models.Medium) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -6374,14 +6466,11 @@ func (ec *executionContext) _Query_formats(ctx context.Context, field graphql.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.Format)
+	res := resTmp.(*models.FormatsPaging)
 	fc.Result = res
-	return ec.marshalNFormat2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatᚄ(ctx, field.Selections, res)
+	return ec.marshalOFormatsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_statuses(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -9970,6 +10059,38 @@ func (ec *executionContext) _Format(ctx context.Context, sel ast.SelectionSet, o
 	return out
 }
 
+var formatsPagingImplementors = []string{"FormatsPaging"}
+
+func (ec *executionContext) _FormatsPaging(ctx context.Context, sel ast.SelectionSet, obj *models.FormatsPaging) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, formatsPagingImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("FormatsPaging")
+		case "nodes":
+			out.Values[i] = ec._FormatsPaging_nodes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "total":
+			out.Values[i] = ec._FormatsPaging_total(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var mediumImplementors = []string{"Medium"}
 
 func (ec *executionContext) _Medium(ctx context.Context, sel ast.SelectionSet, obj *models.Medium) graphql.Marshaler {
@@ -10425,9 +10546,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_formats(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
 				return res
 			})
 		case "statuses":
@@ -12071,6 +12189,17 @@ func (ec *executionContext) marshalOFactchecksPaging2ᚖgithubᚗcomᚋmonarkatf
 		return graphql.Null
 	}
 	return ec._FactchecksPaging(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOFormatsPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatsPaging(ctx context.Context, sel ast.SelectionSet, v models.FormatsPaging) graphql.Marshaler {
+	return ec._FormatsPaging(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOFormatsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatsPaging(ctx context.Context, sel ast.SelectionSet, v *models.FormatsPaging) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._FormatsPaging(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {

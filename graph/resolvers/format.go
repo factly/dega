@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (r *queryResolver) Formats(ctx context.Context) ([]*models.Format, error) {
+func (r *queryResolver) Formats(ctx context.Context) (*models.FormatsPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -27,7 +27,13 @@ func (r *queryResolver) Formats(ctx context.Context) ([]*models.Format, error) {
 		log.Fatal(err)
 	}
 
-	var results []*models.Format
+	count, err := mongo.Core.Collection("format").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Format
 
 	for cursor.Next(ctx) {
 		var each *models.Format
@@ -35,8 +41,13 @@ func (r *queryResolver) Formats(ctx context.Context) ([]*models.Format, error) {
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.FormatsPaging = new(models.FormatsPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }

@@ -58,6 +58,8 @@ models:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Status
   Format:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Format
+  FormatsPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.FormatsPaging
   Medium:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Medium
   Category:

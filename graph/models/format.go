@@ -14,3 +14,8 @@ type Format struct {
 	CreatedDate     time.Time `bson:"created_date"`
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 }
+
+type FormatsPaging struct {
+	Nodes []*Format `json:"nodes"`
+	Total int       `json:"total"`
+}
