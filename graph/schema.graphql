@@ -200,6 +200,11 @@ type PostsPaging {
   total: Int!
 }
 
+type FactchecksPaging {
+  nodes: [Factcheck!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
@@ -210,7 +215,7 @@ type Query {
   ratings(page: Int, limit: Int): [Rating!]!
   claimants(page: Int, limit: Int): [Claimant!]!
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): [Claim!]!
-  factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Factcheck!]!
+  factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): FactchecksPaging
 }
 
 scalar Time

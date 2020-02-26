@@ -85,7 +85,7 @@ func (r *factcheckResolver) DegaUsers(ctx context.Context, obj *models.Factcheck
 	return users, nil
 }
 
-func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) ([]*models.Factcheck, error) {
+func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.FactchecksPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -155,7 +155,13 @@ func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tag
 		log.Fatal(err)
 	}
 
-	var results []*models.Factcheck
+	count, err := mongo.Factcheck.Collection("factcheck").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Factcheck
 
 	for cursor.Next(ctx) {
 		var each *models.Factcheck
@@ -163,10 +169,15 @@ func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tag
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.FactchecksPaging = new(models.FactchecksPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }
 
 // Factcheck model resolver

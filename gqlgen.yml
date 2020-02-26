@@ -137,4 +137,6 @@ models:
           resolver: true
         claims:
           resolver: true
+  FactchecksPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.FactchecksPaging
         

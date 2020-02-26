@@ -26,3 +26,8 @@ type Factcheck struct {
 	DegaUsers       []*DatabaseRef `bson:"degaUsers"`
 	Class           string         `bson:"_class"`
 }
+
+type FactchecksPaging struct {
+	Nodes []*Factcheck `json:"nodes"`
+	Total int          `json:"total"`
+}
