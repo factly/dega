@@ -56,6 +56,8 @@ models:
       - github.com/99designs/gqlgen/graphql.Int32
   Status:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Status
+  StatusesPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.StatusesPaging
   Format:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Format
   FormatsPaging:

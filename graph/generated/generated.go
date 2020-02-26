@@ -257,6 +257,11 @@ type ComplexityRoot struct {
 		Slug            func(childComplexity int) int
 	}
 
+	StatusesPaging struct {
+		Nodes func(childComplexity int) int
+		Total func(childComplexity int) int
+	}
+
 	Tag struct {
 		Class           func(childComplexity int) int
 		ClientID        func(childComplexity int) int
@@ -329,7 +334,7 @@ type QueryResolver interface {
 	Categories(ctx context.Context, ids []string, page *int, limit *int) (*models.CategoriesPaging, error)
 	Tags(ctx context.Context, ids []string, page *int, limit *int) (*models.TagsPaging, error)
 	Formats(ctx context.Context) (*models.FormatsPaging, error)
-	Statuses(ctx context.Context) ([]*models.Status, error)
+	Statuses(ctx context.Context) (*models.StatusesPaging, error)
 	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.PostsPaging, error)
 	Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error)
 	Ratings(ctx context.Context, page *int, limit *int) (*models.RatingsPaging, error)
@@ -1472,6 +1477,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Status.Slug(childComplexity), true
 
+	case "StatusesPaging.nodes":
+		if e.complexity.StatusesPaging.Nodes == nil {
+			break
+		}
+
+		return e.complexity.StatusesPaging.Nodes(childComplexity), true
+
+	case "StatusesPaging.total":
+		if e.complexity.StatusesPaging.Total == nil {
+			break
+		}
+
+		return e.complexity.StatusesPaging.Total(childComplexity), true
+
 	case "Tag._class":
 		if e.complexity.Tag.Class == nil {
 			break
@@ -1936,11 +1955,16 @@ type FormatsPaging {
   total: Int!
 }
 
+type StatusesPaging {
+  nodes: [Status!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: FormatsPaging
-  statuses: [Status!]!
+  statuses: StatusesPaging
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   ratings(page: Int, limit: Int): RatingsPaging
@@ -6497,14 +6521,11 @@ func (ec *executionContext) _Query_statuses(ctx context.Context, field graphql.C
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.Status)
+	res := resTmp.(*models.StatusesPaging)
 	fc.Result = res
-	return ec.marshalNStatus2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusᚄ(ctx, field.Selections, res)
+	return ec.marshalOStatusesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusesPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -7510,6 +7531,74 @@ func (ec *executionContext) _Status_last_updated_date(ctx context.Context, field
 	res := resTmp.(time.Time)
 	fc.Result = res
 	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _StatusesPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.StatusesPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "StatusesPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Nodes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Status)
+	fc.Result = res
+	return ec.marshalNStatus2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _StatusesPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.StatusesPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "StatusesPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Total, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Tag__id(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
@@ -10557,9 +10646,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_statuses(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
 				return res
 			})
 		case "posts":
@@ -10803,6 +10889,38 @@ func (ec *executionContext) _Status(ctx context.Context, sel ast.SelectionSet, o
 			}
 		case "last_updated_date":
 			out.Values[i] = ec._Status_last_updated_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var statusesPagingImplementors = []string{"StatusesPaging"}
+
+func (ec *executionContext) _StatusesPaging(ctx context.Context, sel ast.SelectionSet, obj *models.StatusesPaging) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, statusesPagingImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("StatusesPaging")
+		case "nodes":
+			out.Values[i] = ec._StatusesPaging_nodes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "total":
+			out.Values[i] = ec._StatusesPaging_total(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -12256,6 +12374,17 @@ func (ec *executionContext) marshalORatingsPaging2ᚖgithubᚗcomᚋmonarkatfact
 		return graphql.Null
 	}
 	return ec._RatingsPaging(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOStatusesPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusesPaging(ctx context.Context, sel ast.SelectionSet, v models.StatusesPaging) graphql.Marshaler {
+	return ec._StatusesPaging(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOStatusesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusesPaging(ctx context.Context, sel ast.SelectionSet, v *models.StatusesPaging) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._StatusesPaging(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2string(ctx context.Context, v interface{}) (string, error) {

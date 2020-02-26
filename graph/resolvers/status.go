@@ -10,7 +10,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func (r *queryResolver) Statuses(ctx context.Context) ([]*models.Status, error) {
+func (r *queryResolver) Statuses(ctx context.Context) (*models.StatusesPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -27,7 +27,13 @@ func (r *queryResolver) Statuses(ctx context.Context) ([]*models.Status, error) 
 		log.Fatal(err)
 	}
 
-	var results []*models.Status
+	count, err := mongo.Core.Collection("status").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Status
 
 	for cursor.Next(ctx) {
 		var each *models.Status
@@ -35,8 +41,13 @@ func (r *queryResolver) Statuses(ctx context.Context) ([]*models.Status, error) 
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.StatusesPaging = new(models.StatusesPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }

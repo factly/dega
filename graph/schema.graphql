@@ -230,11 +230,16 @@ type FormatsPaging {
   total: Int!
 }
 
+type StatusesPaging {
+  nodes: [Status!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: FormatsPaging
-  statuses: [Status!]!
+  statuses: StatusesPaging
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   ratings(page: Int, limit: Int): RatingsPaging
