@@ -16,3 +16,8 @@ type Claimant struct {
 	Media           *DatabaseRef `bson:"media"`
 	Class           string       `bson:"_class"`
 }
+
+type ClaimantsPaging struct {
+	Nodes []*Claimant `json:"nodes"`
+	Total int         `json:"total"`
+}

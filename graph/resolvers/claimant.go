@@ -21,7 +21,7 @@ func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*mo
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int) ([]*models.Claimant, error) {
+func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int) (*models.ClaimantsPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -48,7 +48,13 @@ func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int) ([
 		log.Fatal(err)
 	}
 
-	var results []*models.Claimant
+	count, err := mongo.Factcheck.Collection("claimant").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Claimant
 
 	for cursor.Next(ctx) {
 		var each *models.Claimant
@@ -56,10 +62,15 @@ func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int) ([
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.ClaimantsPaging = new(models.ClaimantsPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }
 
 // Claimant model resolver

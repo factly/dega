@@ -117,6 +117,8 @@ models:
     fields:
         media:
           resolver: true
+  ClaimantsPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.ClaimantsPaging
   Claim:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Claim
     fields:
