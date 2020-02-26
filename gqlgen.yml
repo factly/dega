@@ -62,8 +62,12 @@ models:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Medium
   Category:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Category
+  CategoriesPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.CategoriesPaging
   Tag:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Tag
+  TagsPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.TagsPaging
   Organization:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Organization
     fields:

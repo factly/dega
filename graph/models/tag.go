@@ -13,3 +13,8 @@ type Tag struct {
 	CreatedDate     time.Time `bson:"created_date"`
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 }
+
+type TagsPaging struct {
+	Nodes []*Tag `json:"nodes"`
+	Total int    `json:"total"`
+}

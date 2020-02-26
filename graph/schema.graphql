@@ -185,9 +185,19 @@ type Factcheck {
   _class: String!
 }
 
+type CategoriesPaging {
+  nodes: [Category!]!
+  total: Int!
+}
+
+type TagsPaging {
+  nodes: [Tag!]!
+  total: Int!
+}
+
 type Query {
-  categories(ids: [String!], page: Int, limit: Int): [Category!]!
-  tags(ids: [String!], page: Int, limit: Int): [Tag!]!
+  categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
+  tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: [Format!]!
   statuses: [Status!]!
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Post!]!

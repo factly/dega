@@ -50,6 +50,11 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
+	CategoriesPaging struct {
+		Nodes func(childComplexity int) int
+		Total func(childComplexity int) int
+	}
+
 	Category struct {
 		Class           func(childComplexity int) int
 		ClientID        func(childComplexity int) int
@@ -232,6 +237,11 @@ type ComplexityRoot struct {
 		Slug            func(childComplexity int) int
 	}
 
+	TagsPaging struct {
+		Nodes func(childComplexity int) int
+		Total func(childComplexity int) int
+	}
+
 	User struct {
 		Class               func(childComplexity int) int
 		CreatedDate         func(childComplexity int) int
@@ -281,8 +291,8 @@ type PostResolver interface {
 	DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error)
 }
 type QueryResolver interface {
-	Categories(ctx context.Context, ids []string, page *int, limit *int) ([]*models.Category, error)
-	Tags(ctx context.Context, ids []string, page *int, limit *int) ([]*models.Tag, error)
+	Categories(ctx context.Context, ids []string, page *int, limit *int) (*models.CategoriesPaging, error)
+	Tags(ctx context.Context, ids []string, page *int, limit *int) (*models.TagsPaging, error)
 	Formats(ctx context.Context) ([]*models.Format, error)
 	Statuses(ctx context.Context) ([]*models.Status, error)
 	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) ([]*models.Post, error)
@@ -315,6 +325,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	ec := executionContext{nil, e}
 	_ = ec
 	switch typeName + "." + field {
+
+	case "CategoriesPaging.nodes":
+		if e.complexity.CategoriesPaging.Nodes == nil {
+			break
+		}
+
+		return e.complexity.CategoriesPaging.Nodes(childComplexity), true
+
+	case "CategoriesPaging.total":
+		if e.complexity.CategoriesPaging.Total == nil {
+			break
+		}
+
+		return e.complexity.CategoriesPaging.Total(childComplexity), true
 
 	case "Category._class":
 		if e.complexity.Category.Class == nil {
@@ -1378,6 +1402,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.Slug(childComplexity), true
 
+	case "TagsPaging.nodes":
+		if e.complexity.TagsPaging.Nodes == nil {
+			break
+		}
+
+		return e.complexity.TagsPaging.Nodes(childComplexity), true
+
+	case "TagsPaging.total":
+		if e.complexity.TagsPaging.Total == nil {
+			break
+		}
+
+		return e.complexity.TagsPaging.Total(childComplexity), true
+
 	case "User._class":
 		if e.complexity.User.Class == nil {
 			break
@@ -1720,9 +1758,19 @@ type Factcheck {
   _class: String!
 }
 
+type CategoriesPaging {
+  nodes: [Category!]!
+  total: Int!
+}
+
+type TagsPaging {
+  nodes: [Tag!]!
+  total: Int!
+}
+
 type Query {
-  categories(ids: [String!], page: Int, limit: Int): [Category!]!
-  tags(ids: [String!], page: Int, limit: Int): [Tag!]!
+  categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
+  tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: [Format!]!
   statuses: [Status!]!
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): [Post!]!
@@ -2046,6 +2094,74 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 // endregion ************************** directives.gotpl **************************
 
 // region    **************************** field.gotpl *****************************
+
+func (ec *executionContext) _CategoriesPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.CategoriesPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "CategoriesPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Nodes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Category)
+	fc.Result = res
+	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoryᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CategoriesPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.CategoriesPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "CategoriesPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Total, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
 
 func (ec *executionContext) _Category__id(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
 	defer func() {
@@ -5773,14 +5889,11 @@ func (ec *executionContext) _Query_categories(ctx context.Context, field graphql
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.Category)
+	res := resTmp.(*models.CategoriesPaging)
 	fc.Result = res
-	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoryᚄ(ctx, field.Selections, res)
+	return ec.marshalOCategoriesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoriesPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_tags(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -5814,14 +5927,11 @@ func (ec *executionContext) _Query_tags(ctx context.Context, field graphql.Colle
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.Tag)
+	res := resTmp.(*models.TagsPaging)
 	fc.Result = res
-	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
+	return ec.marshalOTagsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_formats(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -7083,6 +7193,74 @@ func (ec *executionContext) _Tag_last_updated_date(ctx context.Context, field gr
 	res := resTmp.(time.Time)
 	fc.Result = res
 	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _TagsPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.TagsPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "TagsPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Nodes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Tag)
+	fc.Result = res
+	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _TagsPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.TagsPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "TagsPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Total, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User__id(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
@@ -8655,6 +8833,38 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 
 // region    **************************** object.gotpl ****************************
 
+var categoriesPagingImplementors = []string{"CategoriesPaging"}
+
+func (ec *executionContext) _CategoriesPaging(ctx context.Context, sel ast.SelectionSet, obj *models.CategoriesPaging) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, categoriesPagingImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CategoriesPaging")
+		case "nodes":
+			out.Values[i] = ec._CategoriesPaging_nodes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "total":
+			out.Values[i] = ec._CategoriesPaging_total(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var categoryImplementors = []string{"Category"}
 
 func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet, obj *models.Category) graphql.Marshaler {
@@ -9531,9 +9741,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_categories(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
 				return res
 			})
 		case "tags":
@@ -9545,9 +9752,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_tags(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
 				return res
 			})
 		case "formats":
@@ -9862,6 +10066,38 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 			}
 		case "last_updated_date":
 			out.Values[i] = ec._Tag_last_updated_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var tagsPagingImplementors = []string{"TagsPaging"}
+
+func (ec *executionContext) _TagsPaging(ctx context.Context, sel ast.SelectionSet, obj *models.TagsPaging) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, tagsPagingImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TagsPaging")
+		case "nodes":
+			out.Values[i] = ec._TagsPaging_nodes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "total":
+			out.Values[i] = ec._TagsPaging_total(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
@@ -11085,6 +11321,17 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return ec.marshalOBoolean2bool(ctx, sel, *v)
 }
 
+func (ec *executionContext) marshalOCategoriesPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoriesPaging(ctx context.Context, sel ast.SelectionSet, v models.CategoriesPaging) graphql.Marshaler {
+	return ec._CategoriesPaging(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOCategoriesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoriesPaging(ctx context.Context, sel ast.SelectionSet, v *models.CategoriesPaging) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CategoriesPaging(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {
 	return graphql.UnmarshalInt(v)
 }
@@ -11172,6 +11419,17 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 		return graphql.Null
 	}
 	return ec.marshalOString2string(ctx, sel, *v)
+}
+
+func (ec *executionContext) marshalOTagsPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagsPaging(ctx context.Context, sel ast.SelectionSet, v models.TagsPaging) graphql.Marshaler {
+	return ec._TagsPaging(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOTagsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagsPaging(ctx context.Context, sel ast.SelectionSet, v *models.TagsPaging) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._TagsPaging(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalO__EnumValue2ᚕgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐEnumValueᚄ(ctx context.Context, sel ast.SelectionSet, v []introspection.EnumValue) graphql.Marshaler {

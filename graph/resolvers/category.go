@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int, limit *int) ([]*models.Category, error) {
+func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int, limit *int) (*models.CategoriesPaging, error) {
 
 	client := ctx.Value("client").(string)
 
@@ -54,7 +54,13 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int,
 		log.Fatal(err)
 	}
 
-	var results []*models.Category
+	count, err := mongo.Core.Collection("category").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Category
 
 	for cursor.Next(ctx) {
 		var each *models.Category
@@ -62,7 +68,13 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int,
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
-	return results, nil
+
+	var result *models.CategoriesPaging = new(models.CategoriesPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }

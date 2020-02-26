@@ -13,3 +13,8 @@ type Category struct {
 	CreatedDate     time.Time `bson:"created_date"`
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 }
+
+type CategoriesPaging struct {
+	Nodes []*Category `json:"nodes"`
+	Total int         `json:"total"`
+}

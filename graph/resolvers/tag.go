@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit *int) ([]*models.Tag, error) {
+func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit *int) (*models.TagsPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -54,7 +54,13 @@ func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit
 		log.Fatal(err)
 	}
 
-	var results []*models.Tag
+	count, err := mongo.Core.Collection("tag").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Tag
 
 	for cursor.Next(ctx) {
 		var each *models.Tag
@@ -62,8 +68,13 @@ func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.TagsPaging = new(models.TagsPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }
