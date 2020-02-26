@@ -21,3 +21,8 @@ type User struct {
 	Media               *DatabaseRef `bson:"media"`
 	Class               string       `bson:"_class"`
 }
+
+type UsersPaging struct {
+	Nodes []*User `json:"nodes"`
+	Total int     `json:"total"`
+}

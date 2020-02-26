@@ -88,6 +88,8 @@ models:
           resolver: true
         media:
           resolver: true
+  UsersPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.UsersPaging
   Post:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Post
     fields:

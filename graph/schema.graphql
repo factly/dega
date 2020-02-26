@@ -205,13 +205,18 @@ type FactchecksPaging {
   total: Int!
 }
 
+type UsersPaging {
+  nodes: [User!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: [Format!]!
   statuses: [Status!]!
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
-  users(page: Int, limit: Int): [User!]!
+  users(page: Int, limit: Int): UsersPaging
   ratings(page: Int, limit: Int): [Rating!]!
   claimants(page: Int, limit: Int): [Claimant!]!
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): [Claim!]!

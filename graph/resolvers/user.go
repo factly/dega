@@ -28,7 +28,7 @@ func (r *userResolver) Media(ctx context.Context, obj *models.User) (*models.Med
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) ([]*models.User, error) {
+func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error) {
 
 	query := bson.M{}
 
@@ -48,7 +48,13 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) ([]*mo
 		log.Fatal(err)
 	}
 
-	var results []*models.User
+	count, err := mongo.Core.Collection("dega_user").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.User
 
 	for cursor.Next(ctx) {
 		var each *models.User
@@ -56,10 +62,15 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) ([]*mo
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.UsersPaging = new(models.UsersPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }
 
 // User model resolver

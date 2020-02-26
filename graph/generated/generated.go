@@ -269,6 +269,11 @@ type ComplexityRoot struct {
 		OrganizationDefault func(childComplexity int) int
 		Slug                func(childComplexity int) int
 	}
+
+	UsersPaging struct {
+		Nodes func(childComplexity int) int
+		Total func(childComplexity int) int
+	}
 }
 
 type ClaimResolver interface {
@@ -306,7 +311,7 @@ type QueryResolver interface {
 	Formats(ctx context.Context) ([]*models.Format, error)
 	Statuses(ctx context.Context) ([]*models.Status, error)
 	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.PostsPaging, error)
-	Users(ctx context.Context, page *int, limit *int) ([]*models.User, error)
+	Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error)
 	Ratings(ctx context.Context, page *int, limit *int) ([]*models.Rating, error)
 	Claimants(ctx context.Context, page *int, limit *int) ([]*models.Claimant, error)
 	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int) ([]*models.Claim, error)
@@ -1559,6 +1564,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.Slug(childComplexity), true
 
+	case "UsersPaging.nodes":
+		if e.complexity.UsersPaging.Nodes == nil {
+			break
+		}
+
+		return e.complexity.UsersPaging.Nodes(childComplexity), true
+
+	case "UsersPaging.total":
+		if e.complexity.UsersPaging.Total == nil {
+			break
+		}
+
+		return e.complexity.UsersPaging.Total(childComplexity), true
+
 	}
 	return 0, false
 }
@@ -1816,13 +1835,18 @@ type FactchecksPaging {
   total: Int!
 }
 
+type UsersPaging {
+  nodes: [User!]!
+  total: Int!
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: [Format!]!
   statuses: [Status!]!
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
-  users(page: Int, limit: Int): [User!]!
+  users(page: Int, limit: Int): UsersPaging
   ratings(page: Int, limit: Int): [Rating!]!
   claimants(page: Int, limit: Int): [Claimant!]!
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): [Claim!]!
@@ -6255,14 +6279,11 @@ func (ec *executionContext) _Query_users(ctx context.Context, field graphql.Coll
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.User)
+	res := resTmp.(*models.UsersPaging)
 	fc.Result = res
-	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalOUsersPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUsersPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_ratings(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -7946,6 +7967,74 @@ func (ec *executionContext) _User__class(ctx context.Context, field graphql.Coll
 	res := resTmp.(string)
 	fc.Result = res
 	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _UsersPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.UsersPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "UsersPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Nodes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.User)
+	fc.Result = res
+	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUserᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _UsersPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.UsersPaging) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "UsersPaging",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Total, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) ___Directive_name(ctx context.Context, field graphql.CollectedField, obj *introspection.Directive) (ret graphql.Marshaler) {
@@ -10044,9 +10133,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_users(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
 				return res
 			})
 		case "ratings":
@@ -10457,6 +10543,38 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			out.Values[i] = ec._User__class(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var usersPagingImplementors = []string{"UsersPaging"}
+
+func (ec *executionContext) _UsersPaging(ctx context.Context, sel ast.SelectionSet, obj *models.UsersPaging) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, usersPagingImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("UsersPaging")
+		case "nodes":
+			out.Values[i] = ec._UsersPaging_nodes(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "total":
+			out.Values[i] = ec._UsersPaging_total(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
 			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -11688,6 +11806,17 @@ func (ec *executionContext) marshalOTagsPaging2ᚖgithubᚗcomᚋmonarkatfactly�
 		return graphql.Null
 	}
 	return ec._TagsPaging(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOUsersPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUsersPaging(ctx context.Context, sel ast.SelectionSet, v models.UsersPaging) graphql.Marshaler {
+	return ec._UsersPaging(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOUsersPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUsersPaging(ctx context.Context, sel ast.SelectionSet, v *models.UsersPaging) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._UsersPaging(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalO__EnumValue2ᚕgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐEnumValueᚄ(ctx context.Context, sel ast.SelectionSet, v []introspection.EnumValue) graphql.Marshaler {
