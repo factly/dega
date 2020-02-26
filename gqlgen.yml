@@ -124,6 +124,8 @@ models:
           resolver: true
         rating:
           resolver: true
+  ClaimsPaging:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.ClaimsPaging
   Factcheck:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Factcheck
     fields:

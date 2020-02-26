@@ -22,3 +22,8 @@ type Claim struct {
 	Claimant        *DatabaseRef `bson:"claimant"`
 	Class           string       `bson:"_class"`
 }
+
+type ClaimsPaging struct {
+	Nodes []*Claim `json:"nodes"`
+	Total int      `json:"total"`
+}

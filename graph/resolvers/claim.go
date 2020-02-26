@@ -22,7 +22,7 @@ func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*model
 	return loaders.GetClaimantLoader(ctx).Load(obj.Claimant.ID)
 }
 
-func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int) ([]*models.Claim, error) {
+func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int) (*models.ClaimsPaging, error) {
 
 	client := ctx.Value("client").(string)
 
@@ -79,7 +79,13 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 		log.Fatal(err)
 	}
 
-	var results []*models.Claim
+	count, err := mongo.Factcheck.Collection("claim").CountDocuments(ctx, query)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var nodes []*models.Claim
 
 	for cursor.Next(ctx) {
 		var each *models.Claim
@@ -87,10 +93,15 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 		if err != nil {
 			log.Fatal(err)
 		}
-		results = append(results, each)
+		nodes = append(nodes, each)
 	}
 
-	return results, nil
+	var result *models.ClaimsPaging = new(models.ClaimsPaging)
+
+	result.Nodes = nodes
+	result.Total = int(count)
+
+	return result, nil
 }
 
 // Claim model resolver
