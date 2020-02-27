@@ -218,7 +218,7 @@ type ComplexityRoot struct {
 		Categories func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claimants  func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
+		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Formats    func(childComplexity int) int
 		Posts      func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Ratings    func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
@@ -340,7 +340,7 @@ type QueryResolver interface {
 	Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error)
 	Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error)
 	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error)
-	Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.FactchecksPaging, error)
+	Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.FactchecksPaging, error)
 }
 type RatingResolver interface {
 	Media(ctx context.Context, obj *models.Rating) (*models.Medium, error)
@@ -1266,7 +1266,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Factchecks(childComplexity, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int)), true
+		return e.complexity.Query.Factchecks(childComplexity, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.formats":
 		if e.complexity.Query.Formats == nil {
@@ -1970,7 +1970,7 @@ type Query {
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
-  factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): FactchecksPaging
+  factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): FactchecksPaging
 }
 
 scalar Time`, BuiltIn: false},
@@ -2176,6 +2176,22 @@ func (ec *executionContext) field_Query_factchecks_args(ctx context.Context, raw
 		}
 	}
 	args["limit"] = arg4
+	var arg5 *string
+	if tmp, ok := rawArgs["sortBy"]; ok {
+		arg5, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortBy"] = arg5
+	var arg6 *string
+	if tmp, ok := rawArgs["sortOrder"]; ok {
+		arg6, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortOrder"] = arg6
 	return args, nil
 }
 
@@ -6854,7 +6870,7 @@ func (ec *executionContext) _Query_factchecks(ctx context.Context, field graphql
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Factchecks(rctx, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int))
+		return ec.resolvers.Query().Factchecks(rctx, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

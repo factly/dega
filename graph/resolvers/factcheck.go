@@ -85,7 +85,7 @@ func (r *factcheckResolver) DegaUsers(ctx context.Context, obj *models.Factcheck
 	return users, nil
 }
 
-func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.FactchecksPaging, error) {
+func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.FactchecksPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -140,6 +140,9 @@ func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tag
 
 	pageLimit := 10
 	pageNo := 1
+	pageSortBy := "created_date"
+	pageSortOrder := -1
+
 	if limit != nil {
 		pageLimit = *limit
 	}
@@ -147,7 +150,14 @@ func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tag
 		pageNo = *page
 	}
 
-	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	if sortBy != nil {
+		pageSortBy = *sortBy
+	}
+	if sortOrder != nil && *sortOrder == "ASC" {
+		pageSortOrder = 1
+	}
+
+	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
 
 	cursor, err := mongo.Factcheck.Collection("factcheck").Find(ctx, query, opts)
 
