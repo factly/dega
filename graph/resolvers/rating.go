@@ -21,7 +21,7 @@ func (r *ratingResolver) Media(ctx context.Context, obj *models.Rating) (*models
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int) (*models.RatingsPaging, error) {
+func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -34,6 +34,9 @@ func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int) (*mo
 
 	pageLimit := 10
 	pageNo := 1
+	pageSortBy := "created_date"
+	pageSortOrder := -1
+
 	if limit != nil {
 		pageLimit = *limit
 	}
@@ -41,7 +44,14 @@ func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int) (*mo
 		pageNo = *page
 	}
 
-	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	if sortBy != nil {
+		pageSortBy = *sortBy
+	}
+	if sortOrder != nil && *sortOrder == "ASC" {
+		pageSortOrder = 1
+	}
+
+	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
 	cursor, err := mongo.Factcheck.Collection("rating").Find(ctx, query, opts)
 
 	if err != nil {
