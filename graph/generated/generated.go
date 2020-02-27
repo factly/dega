@@ -220,7 +220,7 @@ type ComplexityRoot struct {
 		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int) int
 		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
 		Formats    func(childComplexity int) int
-		Posts      func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
+		Posts      func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Ratings    func(childComplexity int, page *int, limit *int) int
 		Statuses   func(childComplexity int) int
 		Tags       func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
@@ -335,7 +335,7 @@ type QueryResolver interface {
 	Tags(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
 	Formats(ctx context.Context) (*models.FormatsPaging, error)
 	Statuses(ctx context.Context) (*models.StatusesPaging, error)
-	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.PostsPaging, error)
+	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error)
 	Ratings(ctx context.Context, page *int, limit *int) (*models.RatingsPaging, error)
 	Claimants(ctx context.Context, page *int, limit *int) (*models.ClaimantsPaging, error)
@@ -1285,7 +1285,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Posts(childComplexity, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int)), true
+		return e.complexity.Query.Posts(childComplexity, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.ratings":
 		if e.complexity.Query.Ratings == nil {
@@ -1965,7 +1965,7 @@ type Query {
   tags(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   formats: FormatsPaging
   statuses: StatusesPaging
-  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
+  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   ratings(page: Int, limit: Int): RatingsPaging
   claimants(page: Int, limit: Int): ClaimantsPaging
@@ -2190,6 +2190,22 @@ func (ec *executionContext) field_Query_posts_args(ctx context.Context, rawArgs 
 		}
 	}
 	args["limit"] = arg4
+	var arg5 *string
+	if tmp, ok := rawArgs["sortBy"]; ok {
+		arg5, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortBy"] = arg5
+	var arg6 *string
+	if tmp, ok := rawArgs["sortOrder"]; ok {
+		arg6, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortOrder"] = arg6
 	return args, nil
 }
 
@@ -6584,7 +6600,7 @@ func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.Coll
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Posts(rctx, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int))
+		return ec.resolvers.Query().Posts(rctx, args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

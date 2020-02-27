@@ -240,7 +240,7 @@ type Query {
   tags(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   formats: FormatsPaging
   statuses: StatusesPaging
-  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
+  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   ratings(page: Int, limit: Int): RatingsPaging
   claimants(page: Int, limit: Int): ClaimantsPaging
