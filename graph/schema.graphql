@@ -236,7 +236,7 @@ type StatusesPaging {
 }
 
 type Query {
-  categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
+  categories(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: FormatsPaging
   statuses: StatusesPaging

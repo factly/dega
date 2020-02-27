@@ -215,7 +215,7 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Categories func(childComplexity int, ids []string, page *int, limit *int) int
+		Categories func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claimants  func(childComplexity int, page *int, limit *int) int
 		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int) int
 		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
@@ -331,7 +331,7 @@ type PostResolver interface {
 	DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error)
 }
 type QueryResolver interface {
-	Categories(ctx context.Context, ids []string, page *int, limit *int) (*models.CategoriesPaging, error)
+	Categories(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error)
 	Tags(ctx context.Context, ids []string, page *int, limit *int) (*models.TagsPaging, error)
 	Formats(ctx context.Context) (*models.FormatsPaging, error)
 	Statuses(ctx context.Context) (*models.StatusesPaging, error)
@@ -1230,7 +1230,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Categories(childComplexity, args["ids"].([]string), args["page"].(*int), args["limit"].(*int)), true
+		return e.complexity.Query.Categories(childComplexity, args["ids"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.claimants":
 		if e.complexity.Query.Claimants == nil {
@@ -1961,7 +1961,7 @@ type StatusesPaging {
 }
 
 type Query {
-  categories(ids: [String!], page: Int, limit: Int): CategoriesPaging
+  categories(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
   tags(ids: [String!], page: Int, limit: Int): TagsPaging
   formats: FormatsPaging
   statuses: StatusesPaging
@@ -2022,6 +2022,22 @@ func (ec *executionContext) field_Query_categories_args(ctx context.Context, raw
 		}
 	}
 	args["limit"] = arg2
+	var arg3 *string
+	if tmp, ok := rawArgs["sortBy"]; ok {
+		arg3, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortBy"] = arg3
+	var arg4 *string
+	if tmp, ok := rawArgs["sortOrder"]; ok {
+		arg4, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortOrder"] = arg4
 	return args, nil
 }
 
@@ -6414,7 +6430,7 @@ func (ec *executionContext) _Query_categories(ctx context.Context, field graphql
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Categories(rctx, args["ids"].([]string), args["page"].(*int), args["limit"].(*int))
+		return ec.resolvers.Query().Categories(rctx, args["ids"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

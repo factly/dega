@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int, limit *int) (*models.CategoriesPaging, error) {
+func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
 
 	client := ctx.Value("client").(string)
 
@@ -47,7 +47,15 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int,
 		pageNo = *page
 	}
 
-	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	pageSortBy := "created_date"
+	if sortBy != nil {
+		pageSortBy = *sortBy
+	}
+	pageSortOrder := -1
+	if sortOrder != nil && *sortOrder == "ASC" {
+		pageSortOrder = 1
+	}
+	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
 	cursor, err := mongo.Core.Collection("category").Find(ctx, query, opts)
 
 	if err != nil {

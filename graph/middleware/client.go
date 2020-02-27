@@ -5,13 +5,13 @@ import (
 	"net/http"
 )
 
-// Client store client id into ctx
+// Client adding client id into context
 func Client() func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			client := r.Header.Get("client")
 
-			// put it in context
+			// adding client into context
 			ctx := context.WithValue(r.Context(), "client", client)
 
 			// and call the next with our new context
