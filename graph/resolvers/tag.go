@@ -12,7 +12,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit *int) (*models.TagsPaging, error) {
+func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error) {
 	client := ctx.Value("client").(string)
 
 	if client == "" {
@@ -39,6 +39,9 @@ func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit
 
 	pageLimit := 10
 	pageNo := 1
+	pageSortBy := "created_date"
+	pageSortOrder := -1
+
 	if limit != nil {
 		pageLimit = *limit
 	}
@@ -46,8 +49,14 @@ func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit
 		pageNo = *page
 	}
 
-	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	if sortBy != nil {
+		pageSortBy = *sortBy
+	}
+	if sortOrder != nil && *sortOrder == "ASC" {
+		pageSortOrder = 1
+	}
 
+	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
 	cursor, err := mongo.Core.Collection("tag").Find(ctx, query, opts)
 
 	if err != nil {

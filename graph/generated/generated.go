@@ -223,7 +223,7 @@ type ComplexityRoot struct {
 		Posts      func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
 		Ratings    func(childComplexity int, page *int, limit *int) int
 		Statuses   func(childComplexity int) int
-		Tags       func(childComplexity int, ids []string, page *int, limit *int) int
+		Tags       func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Users      func(childComplexity int, page *int, limit *int) int
 	}
 
@@ -332,7 +332,7 @@ type PostResolver interface {
 }
 type QueryResolver interface {
 	Categories(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error)
-	Tags(ctx context.Context, ids []string, page *int, limit *int) (*models.TagsPaging, error)
+	Tags(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
 	Formats(ctx context.Context) (*models.FormatsPaging, error)
 	Statuses(ctx context.Context) (*models.StatusesPaging, error)
 	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.PostsPaging, error)
@@ -1316,7 +1316,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Tags(childComplexity, args["ids"].([]string), args["page"].(*int), args["limit"].(*int)), true
+		return e.complexity.Query.Tags(childComplexity, args["ids"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.users":
 		if e.complexity.Query.Users == nil {
@@ -1962,7 +1962,7 @@ type StatusesPaging {
 
 type Query {
   categories(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
-  tags(ids: [String!], page: Int, limit: Int): TagsPaging
+  tags(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   formats: FormatsPaging
   statuses: StatusesPaging
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): PostsPaging
@@ -2242,6 +2242,22 @@ func (ec *executionContext) field_Query_tags_args(ctx context.Context, rawArgs m
 		}
 	}
 	args["limit"] = arg2
+	var arg3 *string
+	if tmp, ok := rawArgs["sortBy"]; ok {
+		arg3, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortBy"] = arg3
+	var arg4 *string
+	if tmp, ok := rawArgs["sortOrder"]; ok {
+		arg4, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortOrder"] = arg4
 	return args, nil
 }
 
@@ -6468,7 +6484,7 @@ func (ec *executionContext) _Query_tags(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Tags(rctx, args["ids"].([]string), args["page"].(*int), args["limit"].(*int))
+		return ec.resolvers.Query().Tags(rctx, args["ids"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

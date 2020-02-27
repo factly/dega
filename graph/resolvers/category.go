@@ -40,6 +40,9 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int,
 
 	pageLimit := 10
 	pageNo := 1
+	pageSortBy := "created_date"
+	pageSortOrder := -1
+
 	if limit != nil {
 		pageLimit = *limit
 	}
@@ -47,14 +50,13 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int,
 		pageNo = *page
 	}
 
-	pageSortBy := "created_date"
 	if sortBy != nil {
 		pageSortBy = *sortBy
 	}
-	pageSortOrder := -1
 	if sortOrder != nil && *sortOrder == "ASC" {
 		pageSortOrder = 1
 	}
+
 	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
 	cursor, err := mongo.Core.Collection("category").Find(ctx, query, opts)
 
