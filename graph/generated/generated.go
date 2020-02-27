@@ -216,7 +216,7 @@ type ComplexityRoot struct {
 
 	Query struct {
 		Categories func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Claimants  func(childComplexity int, page *int, limit *int) int
+		Claimants  func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int) int
 		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
 		Formats    func(childComplexity int) int
@@ -338,7 +338,7 @@ type QueryResolver interface {
 	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error)
 	Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error)
-	Claimants(ctx context.Context, page *int, limit *int) (*models.ClaimantsPaging, error)
+	Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error)
 	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int) (*models.ClaimsPaging, error)
 	Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.FactchecksPaging, error)
 }
@@ -1242,7 +1242,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Claimants(childComplexity, args["page"].(*int), args["limit"].(*int)), true
+		return e.complexity.Query.Claimants(childComplexity, args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.claims":
 		if e.complexity.Query.Claims == nil {
@@ -1968,7 +1968,7 @@ type Query {
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
-  claimants(page: Int, limit: Int): ClaimantsPaging
+  claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): ClaimsPaging
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): FactchecksPaging
 }
@@ -2060,6 +2060,22 @@ func (ec *executionContext) field_Query_claimants_args(ctx context.Context, rawA
 		}
 	}
 	args["limit"] = arg1
+	var arg2 *string
+	if tmp, ok := rawArgs["sortBy"]; ok {
+		arg2, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortBy"] = arg2
+	var arg3 *string
+	if tmp, ok := rawArgs["sortOrder"]; ok {
+		arg3, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortOrder"] = arg3
 	return args, nil
 }
 
@@ -6746,7 +6762,7 @@ func (ec *executionContext) _Query_claimants(ctx context.Context, field graphql.
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Claimants(rctx, args["page"].(*int), args["limit"].(*int))
+		return ec.resolvers.Query().Claimants(rctx, args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
