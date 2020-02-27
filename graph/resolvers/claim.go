@@ -22,7 +22,7 @@ func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*model
 	return loaders.GetClaimantLoader(ctx).Load(obj.Claimant.ID)
 }
 
-func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int) (*models.ClaimsPaging, error) {
+func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
 
 	client := ctx.Value("client").(string)
 
@@ -64,6 +64,9 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 
 	pageLimit := 10
 	pageNo := 1
+	pageSortBy := "created_date"
+	pageSortOrder := -1
+
 	if limit != nil {
 		pageLimit = *limit
 	}
@@ -71,8 +74,14 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 		pageNo = *page
 	}
 
-	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	if sortBy != nil {
+		pageSortBy = *sortBy
+	}
+	if sortOrder != nil && *sortOrder == "ASC" {
+		pageSortOrder = 1
+	}
 
+	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
 	cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, query, opts)
 
 	if err != nil {

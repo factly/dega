@@ -244,7 +244,7 @@ type Query {
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
-  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): ClaimsPaging
+  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): FactchecksPaging
 }
 

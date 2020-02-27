@@ -217,7 +217,7 @@ type ComplexityRoot struct {
 	Query struct {
 		Categories func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claimants  func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int) int
+		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int) int
 		Formats    func(childComplexity int) int
 		Posts      func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
@@ -339,7 +339,7 @@ type QueryResolver interface {
 	Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error)
 	Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error)
 	Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error)
-	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int) (*models.ClaimsPaging, error)
+	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error)
 	Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int) (*models.FactchecksPaging, error)
 }
 type RatingResolver interface {
@@ -1254,7 +1254,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Claims(childComplexity, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int)), true
+		return e.complexity.Query.Claims(childComplexity, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.factchecks":
 		if e.complexity.Query.Factchecks == nil {
@@ -1969,7 +1969,7 @@ type Query {
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
-  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int): ClaimsPaging
+  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int): FactchecksPaging
 }
 
@@ -2114,6 +2114,22 @@ func (ec *executionContext) field_Query_claims_args(ctx context.Context, rawArgs
 		}
 	}
 	args["limit"] = arg3
+	var arg4 *string
+	if tmp, ok := rawArgs["sortBy"]; ok {
+		arg4, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortBy"] = arg4
+	var arg5 *string
+	if tmp, ok := rawArgs["sortOrder"]; ok {
+		arg5, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sortOrder"] = arg5
 	return args, nil
 }
 
@@ -6800,7 +6816,7 @@ func (ec *executionContext) _Query_claims(ctx context.Context, field graphql.Col
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Claims(rctx, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int))
+		return ec.resolvers.Query().Claims(rctx, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
