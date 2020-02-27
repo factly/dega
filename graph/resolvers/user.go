@@ -28,12 +28,15 @@ func (r *userResolver) Media(ctx context.Context, obj *models.User) (*models.Med
 	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
 }
 
-func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error) {
+func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error) {
 
 	query := bson.M{}
 
 	pageLimit := 10
 	pageNo := 1
+	pageSortBy := "created_date"
+	pageSortOrder := -1
+
 	if limit != nil && *limit > 0 && *limit <= 20 {
 		pageLimit = *limit
 	}
@@ -41,7 +44,14 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 		pageNo = *page
 	}
 
-	opts := options.Find().SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
+	if sortBy != nil {
+		pageSortBy = *sortBy
+	}
+	if sortOrder != nil && *sortOrder == "ASC" {
+		pageSortOrder = 1
+	}
+
+	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
 	cursor, err := mongo.Core.Collection("dega_user").Find(ctx, query, opts)
 
 	if err != nil {
