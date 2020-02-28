@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
@@ -9,6 +10,7 @@ import (
 	"github.com/monarkatfactly/dega-api-go.git/graph/models"
 	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
@@ -79,6 +81,35 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 
 	result.Nodes = nodes
 	result.Total = int(count)
+
+	return result, nil
+}
+
+func (r *queryResolver) User(ctx context.Context, id string) (*models.User, error) {
+
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	oid, err := primitive.ObjectIDFromHex(id)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	query := bson.M{
+		"_id": oid,
+	}
+
+	var result *models.User
+
+	err = mongo.Core.Collection("dega_user").FindOne(ctx, query).Decode(&result)
+
+	if err != nil {
+		return nil, nil
+	}
 
 	return result, nil
 }

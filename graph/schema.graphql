@@ -245,6 +245,7 @@ type Query {
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: String!): Post
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
+  user(id: String!): User
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
