@@ -180,6 +180,36 @@ func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []s
 	return result, nil
 }
 
+func (r *queryResolver) Post(ctx context.Context, id string) (*models.Post, error) {
+
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	oid, err := primitive.ObjectIDFromHex(id)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	query := bson.M{
+		"client_id": client,
+		"_id":       oid,
+	}
+
+	var result *models.Post
+
+	err = mongo.Core.Collection("post").FindOne(ctx, query).Decode(&result)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	return result, nil
+}
+
 // Post model resolver
 func (r *Resolver) Post() generated.PostResolver { return &postResolver{r} }
 
