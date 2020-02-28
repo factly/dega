@@ -239,6 +239,7 @@ type Query {
   categories(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
   category(id: String!): Category
   tags(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
+  tag(id: String!): Tag
   formats: FormatsPaging
   statuses: StatusesPaging
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging

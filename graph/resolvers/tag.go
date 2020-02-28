@@ -87,3 +87,33 @@ func (r *queryResolver) Tags(ctx context.Context, ids []string, page *int, limit
 
 	return result, nil
 }
+
+func (r *queryResolver) Tag(ctx context.Context, id string) (*models.Tag, error) {
+
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	oid, err := primitive.ObjectIDFromHex(id)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	query := bson.M{
+		"client_id": client,
+		"_id":       oid,
+	}
+
+	var result *models.Tag
+
+	err = mongo.Core.Collection("tag").FindOne(ctx, query).Decode(&result)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	return result, nil
+}
