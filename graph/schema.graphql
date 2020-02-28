@@ -250,6 +250,7 @@ type Query {
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): FactchecksPaging
+  factcheck(id: String!): Factcheck
 }
 
 scalar Time

@@ -219,6 +219,7 @@ type ComplexityRoot struct {
 		Category   func(childComplexity int, id string) int
 		Claimants  func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Factcheck  func(childComplexity int, id string) int
 		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Formats    func(childComplexity int) int
 		Post       func(childComplexity int, id string) int
@@ -349,6 +350,7 @@ type QueryResolver interface {
 	Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error)
 	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error)
 	Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.FactchecksPaging, error)
+	Factcheck(ctx context.Context, id string) (*models.Factcheck, error)
 }
 type RatingResolver interface {
 	Media(ctx context.Context, obj *models.Rating) (*models.Medium, error)
@@ -1276,6 +1278,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Claims(childComplexity, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
+	case "Query.factcheck":
+		if e.complexity.Query.Factcheck == nil {
+			break
+		}
+
+		args, err := ec.field_Query_factcheck_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Factcheck(childComplexity, args["id"].(string)), true
+
 	case "Query.factchecks":
 		if e.complexity.Query.Factchecks == nil {
 			break
@@ -2031,6 +2045,7 @@ type Query {
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): FactchecksPaging
+  factcheck(id: String!): Factcheck
 }
 
 scalar Time`, BuiltIn: false},
@@ -2204,6 +2219,20 @@ func (ec *executionContext) field_Query_claims_args(ctx context.Context, rawArgs
 		}
 	}
 	args["sortOrder"] = arg5
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_factcheck_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["id"]; ok {
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
 	return args, nil
 }
 
@@ -7152,6 +7181,44 @@ func (ec *executionContext) _Query_factchecks(ctx context.Context, field graphql
 	return ec.marshalOFactchecksPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactchecksPaging(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Query_factcheck(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Query",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_factcheck_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Factcheck(rctx, args["id"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.Factcheck)
+	fc.Result = res
+	return ec.marshalOFactcheck2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -11154,6 +11221,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				res = ec._Query_factchecks(ctx, field)
 				return res
 			})
+		case "factcheck":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_factcheck(ctx, field)
+				return res
+			})
 		case "__type":
 			out.Values[i] = ec._Query___type(ctx, field)
 		case "__schema":
@@ -12747,6 +12825,17 @@ func (ec *executionContext) marshalOClaimsPaging2ᚖgithubᚗcomᚋmonarkatfactl
 		return graphql.Null
 	}
 	return ec._ClaimsPaging(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOFactcheck2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v models.Factcheck) graphql.Marshaler {
+	return ec._Factcheck(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOFactcheck2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v *models.Factcheck) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Factcheck(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOFactchecksPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactchecksPaging(ctx context.Context, sel ast.SelectionSet, v models.FactchecksPaging) graphql.Marshaler {
