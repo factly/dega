@@ -88,3 +88,33 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int,
 
 	return result, nil
 }
+
+func (r *queryResolver) Category(ctx context.Context, id string) (*models.Category, error) {
+
+	client := ctx.Value("client").(string)
+
+	if client == "" {
+		return nil, errors.New("client id missing")
+	}
+
+	oid, err := primitive.ObjectIDFromHex(id)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	query := bson.M{
+		"client_id": client,
+		"_id":       oid,
+	}
+
+	var result *models.Category
+
+	err = mongo.Core.Collection("category").FindOne(ctx, query).Decode(&result)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	return result, nil
+}
