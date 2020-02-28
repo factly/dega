@@ -40,6 +40,7 @@ func main() {
 	router.Use(cors.Handler)
 
 	router.Use(middleware.Client())
+	router.Use(middleware.Tracing())
 
 	mongo.Setup()
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
