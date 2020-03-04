@@ -10,6 +10,7 @@ type User struct {
 	LastName            string       `bson:"last_name"`
 	DisplayName         string       `bson:"display_name"`
 	Slug                string       `bson:"slug"`
+	Description         string       `bson:"description"`
 	Enabled             bool         `bson:"enabled"`
 	EmailVerified       bool         `bson:"email_verified"`
 	Email               string       `bson:"email"`

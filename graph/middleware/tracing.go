@@ -7,8 +7,9 @@ import (
 	"time"
 )
 
-const RequestIDKey = "logging"
+const requestIDKey = "logging"
 
+// Tracing incoming req
 func Tracing() func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -16,7 +17,7 @@ func Tracing() func(http.Handler) http.Handler {
 			if requestID == "" {
 				requestID = fmt.Sprintf("%d", time.Now().UnixNano())
 			}
-			ctx := context.WithValue(r.Context(), RequestIDKey, requestID)
+			ctx := context.WithValue(r.Context(), requestIDKey, requestID)
 			w.Header().Set("X-Request-Id", requestID)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})

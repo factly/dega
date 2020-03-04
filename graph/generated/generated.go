@@ -215,21 +215,22 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Categories func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Category   func(childComplexity int, id string) int
-		Claimants  func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Factcheck  func(childComplexity int, id string) int
-		Factchecks func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Formats    func(childComplexity int) int
-		Post       func(childComplexity int, id string) int
-		Posts      func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Ratings    func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Statuses   func(childComplexity int) int
-		Tag        func(childComplexity int, id string) int
-		Tags       func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
-		User       func(childComplexity int, id string) int
-		Users      func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Categories   func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Category     func(childComplexity int, id string) int
+		Claimants    func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Claims       func(childComplexity int, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Factcheck    func(childComplexity int, id string) int
+		Factchecks   func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Formats      func(childComplexity int) int
+		Organization func(childComplexity int) int
+		Post         func(childComplexity int, id string) int
+		Posts        func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Ratings      func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Statuses     func(childComplexity int) int
+		Tag          func(childComplexity int, id string) int
+		Tags         func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		User         func(childComplexity int, id string) int
+		Users        func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
 	}
 
 	Rating struct {
@@ -285,6 +286,7 @@ type ComplexityRoot struct {
 	User struct {
 		Class               func(childComplexity int) int
 		CreatedDate         func(childComplexity int) int
+		Description         func(childComplexity int) int
 		DisplayName         func(childComplexity int) int
 		Email               func(childComplexity int) int
 		EmailVerified       func(childComplexity int) int
@@ -342,6 +344,7 @@ type QueryResolver interface {
 	Tag(ctx context.Context, id string) (*models.Tag, error)
 	Formats(ctx context.Context) (*models.FormatsPaging, error)
 	Statuses(ctx context.Context) (*models.StatusesPaging, error)
+	Organization(ctx context.Context) (*models.Organization, error)
 	Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Post(ctx context.Context, id string) (*models.Post, error)
 	Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error)
@@ -1309,6 +1312,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Formats(childComplexity), true
 
+	case "Query.organization":
+		if e.complexity.Query.Organization == nil {
+			break
+		}
+
+		return e.complexity.Query.Organization(childComplexity), true
+
 	case "Query.post":
 		if e.complexity.Query.Post == nil {
 			break
@@ -1638,6 +1648,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.CreatedDate(childComplexity), true
 
+	case "User.description":
+		if e.complexity.User.Description == nil {
+			break
+		}
+
+		return e.complexity.User.Description(childComplexity), true
+
 	case "User.display_name":
 		if e.complexity.User.DisplayName == nil {
 			break
@@ -1898,6 +1915,7 @@ type User {
   first_name: String!
   last_name: String!
   display_name: String!
+  description: String
   slug: String!
   enabled: Boolean!
   email_verified: Boolean!
@@ -2037,6 +2055,7 @@ type Query {
   tag(id: String!): Tag
   formats: FormatsPaging
   statuses: StatusesPaging
+  organization: Organization
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: String!): Post
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
@@ -6877,6 +6896,37 @@ func (ec *executionContext) _Query_statuses(ctx context.Context, field graphql.C
 	return ec.marshalOStatusesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusesPaging(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Query_organization(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Query",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Organization(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.Organization)
+	fc.Result = res
+	return ec.marshalOOrganization2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganization(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -8504,6 +8554,37 @@ func (ec *executionContext) _User_display_name(ctx context.Context, field graphq
 	res := resTmp.(string)
 	fc.Result = res
 	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _User_description(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "User",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User_slug(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
@@ -11133,6 +11214,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				res = ec._Query_statuses(ctx, field)
 				return res
 			})
+		case "organization":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_organization(ctx, field)
+				return res
+			})
 		case "posts":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -11573,6 +11665,8 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
+		case "description":
+			out.Values[i] = ec._User_description(ctx, field, obj)
 		case "slug":
 			out.Values[i] = ec._User_slug(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -12892,6 +12986,17 @@ func (ec *executionContext) marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋde
 		return graphql.Null
 	}
 	return ec._Medium(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOOrganization2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganization(ctx context.Context, sel ast.SelectionSet, v models.Organization) graphql.Marshaler {
+	return ec._Organization(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOOrganization2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganization(ctx context.Context, sel ast.SelectionSet, v *models.Organization) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Organization(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOPost2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v models.Post) graphql.Marshaler {

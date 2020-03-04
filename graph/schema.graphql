@@ -103,6 +103,7 @@ type User {
   first_name: String!
   last_name: String!
   display_name: String!
+  description: String
   slug: String!
   enabled: Boolean!
   email_verified: Boolean!
@@ -242,6 +243,7 @@ type Query {
   tag(id: String!): Tag
   formats: FormatsPaging
   statuses: StatusesPaging
+  organization: Organization
   posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: String!): Post
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
