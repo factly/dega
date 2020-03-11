@@ -236,6 +236,25 @@ type StatusesPaging {
   total: Int!
 }
 
+type Sitemap {
+  slug: String!
+  _id: ID!
+  created_date: Time!
+}
+
+type Sitemaps {
+  categories: [Sitemap]
+  tags: [Sitemap]
+  users: [Sitemap]
+  formats: [Sitemap]
+  statuses: [Sitemap]
+  posts: [Sitemap]
+  factchecks: [Sitemap]
+  claims: [Sitemap]
+  claimants: [Sitemap]
+  ratings: [Sitemap] 
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
   category(id: String!): Category
@@ -253,6 +272,7 @@ type Query {
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): FactchecksPaging
   factcheck(id: String!): Factcheck
+  sitemap: Sitemaps
 }
 
 scalar Time

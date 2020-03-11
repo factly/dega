@@ -151,4 +151,29 @@ models:
           resolver: true
   FactchecksPaging:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.FactchecksPaging
+  Sitemap:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Sitemap
+  Sitemaps:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Sitemaps
+    fields:
+        categories:
+          resolver: true
+        tags:
+          resolver: true
+        users:
+          resolver: true
+        formats:
+          resolver: true
+        statuses:
+          resolver: true
+        posts:
+          resolver: true
+        factchecks:
+          resolver: true
+        claims:
+          resolver: true
+        claimants:
+          resolver: true
+        ratings:
+          resolver: true
         

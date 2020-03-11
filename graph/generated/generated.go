@@ -43,6 +43,7 @@ type ResolverRoot interface {
 	Post() PostResolver
 	Query() QueryResolver
 	Rating() RatingResolver
+	Sitemaps() SitemapsResolver
 	User() UserResolver
 }
 
@@ -226,6 +227,7 @@ type ComplexityRoot struct {
 		Post         func(childComplexity int, id string) int
 		Posts        func(childComplexity int, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Ratings      func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Sitemap      func(childComplexity int) int
 		Statuses     func(childComplexity int) int
 		Tag          func(childComplexity int, id string) int
 		Tags         func(childComplexity int, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) int
@@ -250,6 +252,25 @@ type ComplexityRoot struct {
 	RatingsPaging struct {
 		Nodes func(childComplexity int) int
 		Total func(childComplexity int) int
+	}
+
+	Sitemap struct {
+		CreatedDate func(childComplexity int) int
+		ID          func(childComplexity int) int
+		Slug        func(childComplexity int) int
+	}
+
+	Sitemaps struct {
+		Categories func(childComplexity int) int
+		Claimants  func(childComplexity int) int
+		Claims     func(childComplexity int) int
+		Factchecks func(childComplexity int) int
+		Formats    func(childComplexity int) int
+		Posts      func(childComplexity int) int
+		Ratings    func(childComplexity int) int
+		Statuses   func(childComplexity int) int
+		Tags       func(childComplexity int) int
+		Users      func(childComplexity int) int
 	}
 
 	Status struct {
@@ -354,9 +375,22 @@ type QueryResolver interface {
 	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error)
 	Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.FactchecksPaging, error)
 	Factcheck(ctx context.Context, id string) (*models.Factcheck, error)
+	Sitemap(ctx context.Context) (*models.Sitemaps, error)
 }
 type RatingResolver interface {
 	Media(ctx context.Context, obj *models.Rating) (*models.Medium, error)
+}
+type SitemapsResolver interface {
+	Categories(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Tags(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Users(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Formats(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Statuses(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Posts(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Factchecks(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Claims(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Claimants(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
+	Ratings(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
 }
 type UserResolver interface {
 	OrganizationDefault(ctx context.Context, obj *models.User) (*models.Organization, error)
@@ -1355,6 +1389,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Ratings(childComplexity, args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
+	case "Query.sitemap":
+		if e.complexity.Query.Sitemap == nil {
+			break
+		}
+
+		return e.complexity.Query.Sitemap(childComplexity), true
+
 	case "Query.statuses":
 		if e.complexity.Query.Statuses == nil {
 			break
@@ -1500,6 +1541,97 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.RatingsPaging.Total(childComplexity), true
+
+	case "Sitemap.created_date":
+		if e.complexity.Sitemap.CreatedDate == nil {
+			break
+		}
+
+		return e.complexity.Sitemap.CreatedDate(childComplexity), true
+
+	case "Sitemap._id":
+		if e.complexity.Sitemap.ID == nil {
+			break
+		}
+
+		return e.complexity.Sitemap.ID(childComplexity), true
+
+	case "Sitemap.slug":
+		if e.complexity.Sitemap.Slug == nil {
+			break
+		}
+
+		return e.complexity.Sitemap.Slug(childComplexity), true
+
+	case "Sitemaps.categories":
+		if e.complexity.Sitemaps.Categories == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Categories(childComplexity), true
+
+	case "Sitemaps.claimants":
+		if e.complexity.Sitemaps.Claimants == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Claimants(childComplexity), true
+
+	case "Sitemaps.claims":
+		if e.complexity.Sitemaps.Claims == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Claims(childComplexity), true
+
+	case "Sitemaps.factchecks":
+		if e.complexity.Sitemaps.Factchecks == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Factchecks(childComplexity), true
+
+	case "Sitemaps.formats":
+		if e.complexity.Sitemaps.Formats == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Formats(childComplexity), true
+
+	case "Sitemaps.posts":
+		if e.complexity.Sitemaps.Posts == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Posts(childComplexity), true
+
+	case "Sitemaps.ratings":
+		if e.complexity.Sitemaps.Ratings == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Ratings(childComplexity), true
+
+	case "Sitemaps.statuses":
+		if e.complexity.Sitemaps.Statuses == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Statuses(childComplexity), true
+
+	case "Sitemaps.tags":
+		if e.complexity.Sitemaps.Tags == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Tags(childComplexity), true
+
+	case "Sitemaps.users":
+		if e.complexity.Sitemaps.Users == nil {
+			break
+		}
+
+		return e.complexity.Sitemaps.Users(childComplexity), true
 
 	case "Status._class":
 		if e.complexity.Status.Class == nil {
@@ -2048,6 +2180,25 @@ type StatusesPaging {
   total: Int!
 }
 
+type Sitemap {
+  slug: String!
+  _id: ID!
+  created_date: Time!
+}
+
+type Sitemaps {
+  categories: [Sitemap]
+  tags: [Sitemap]
+  users: [Sitemap]
+  formats: [Sitemap]
+  statuses: [Sitemap]
+  posts: [Sitemap]
+  factchecks: [Sitemap]
+  claims: [Sitemap]
+  claimants: [Sitemap]
+  ratings: [Sitemap] 
+}
+
 type Query {
   categories(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
   category(id: String!): Category
@@ -2065,6 +2216,7 @@ type Query {
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): FactchecksPaging
   factcheck(id: String!): Factcheck
+  sitemap: Sitemaps
 }
 
 scalar Time`, BuiltIn: false},
@@ -7269,6 +7421,37 @@ func (ec *executionContext) _Query_factcheck(ctx context.Context, field graphql.
 	return ec.marshalOFactcheck2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Query_sitemap(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Query",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Sitemap(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.Sitemaps)
+	fc.Result = res
+	return ec.marshalOSitemaps2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemaps(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -7775,6 +7958,418 @@ func (ec *executionContext) _RatingsPaging_total(ctx context.Context, field grap
 	res := resTmp.(int)
 	fc.Result = res
 	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemap_slug(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemap",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Slug, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemap__id(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemap",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNID2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemap_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemap",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDate, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_categories(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Categories(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_tags(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Tags(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_users(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Users(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_formats(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Formats(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_statuses(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Statuses(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_posts(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Posts(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_factchecks(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Factchecks(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_claims(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Claims(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_claimants(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Claimants(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Sitemaps_ratings(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Sitemaps",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemaps().Ratings(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*models.Sitemap)
+	fc.Result = res
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Status__id(ctx context.Context, field graphql.CollectedField, obj *models.Status) (ret graphql.Marshaler) {
@@ -11324,6 +11919,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				res = ec._Query_factcheck(ctx, field)
 				return res
 			})
+		case "sitemap":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_sitemap(ctx, field)
+				return res
+			})
 		case "__type":
 			out.Values[i] = ec._Query___type(ctx, field)
 		case "__schema":
@@ -11443,6 +12049,175 @@ func (ec *executionContext) _RatingsPaging(ctx context.Context, sel ast.Selectio
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var sitemapImplementors = []string{"Sitemap"}
+
+func (ec *executionContext) _Sitemap(ctx context.Context, sel ast.SelectionSet, obj *models.Sitemap) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, sitemapImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Sitemap")
+		case "slug":
+			out.Values[i] = ec._Sitemap_slug(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "_id":
+			out.Values[i] = ec._Sitemap__id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "created_date":
+			out.Values[i] = ec._Sitemap_created_date(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var sitemapsImplementors = []string{"Sitemaps"}
+
+func (ec *executionContext) _Sitemaps(ctx context.Context, sel ast.SelectionSet, obj *models.Sitemaps) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, sitemapsImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("Sitemaps")
+		case "categories":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_categories(ctx, field, obj)
+				return res
+			})
+		case "tags":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_tags(ctx, field, obj)
+				return res
+			})
+		case "users":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_users(ctx, field, obj)
+				return res
+			})
+		case "formats":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_formats(ctx, field, obj)
+				return res
+			})
+		case "statuses":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_statuses(ctx, field, obj)
+				return res
+			})
+		case "posts":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_posts(ctx, field, obj)
+				return res
+			})
+		case "factchecks":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_factchecks(ctx, field, obj)
+				return res
+			})
+		case "claims":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_claims(ctx, field, obj)
+				return res
+			})
+		case "claimants":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_claimants(ctx, field, obj)
+				return res
+			})
+		case "ratings":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemaps_ratings(ctx, field, obj)
+				return res
+			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -13030,6 +13805,68 @@ func (ec *executionContext) marshalORatingsPaging2ᚖgithubᚗcomᚋmonarkatfact
 		return graphql.Null
 	}
 	return ec._RatingsPaging(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOSitemap2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v models.Sitemap) graphql.Marshaler {
+	return ec._Sitemap(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v []*models.Sitemap) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalOSitemap2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+	return ret
+}
+
+func (ec *executionContext) marshalOSitemap2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v *models.Sitemap) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Sitemap(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOSitemaps2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemaps(ctx context.Context, sel ast.SelectionSet, v models.Sitemaps) graphql.Marshaler {
+	return ec._Sitemaps(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalOSitemaps2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemaps(ctx context.Context, sel ast.SelectionSet, v *models.Sitemaps) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Sitemaps(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOStatusesPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusesPaging(ctx context.Context, sel ast.SelectionSet, v models.StatusesPaging) graphql.Marshaler {
