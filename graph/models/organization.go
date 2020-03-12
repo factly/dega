@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Organization model
 type Organization struct {
 	ID                 string       `bson:"_id"`
 	Name               string       `bson:"name"`

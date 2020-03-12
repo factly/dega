@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Rating model
 type Rating struct {
 	ID              string       `bson:"_id"`
 	Name            string       `bson:"name"`
@@ -18,6 +19,7 @@ type Rating struct {
 	Class           string       `bson:"_class"`
 }
 
+// RatingsPaging model
 type RatingsPaging struct {
 	Nodes []*Rating `json:"nodes"`
 	Total int       `json:"total"`

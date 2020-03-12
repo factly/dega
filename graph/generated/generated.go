@@ -122,6 +122,7 @@ type ComplexityRoot struct {
 		LastUpdatedDate func(childComplexity int) int
 		Media           func(childComplexity int) int
 		PublishedDate   func(childComplexity int) int
+		Slug            func(childComplexity int) int
 		Status          func(childComplexity int) int
 		Sticky          func(childComplexity int) int
 		SubTitle        func(childComplexity int) int
@@ -776,6 +777,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Factcheck.PublishedDate(childComplexity), true
+
+	case "Factcheck.slug":
+		if e.complexity.Factcheck.Slug == nil {
+			break
+		}
+
+		return e.complexity.Factcheck.Slug(childComplexity), true
 
 	case "Factcheck.status":
 		if e.complexity.Factcheck.Status == nil {
@@ -2118,6 +2126,7 @@ type Factcheck {
   featured: Boolean!
   sticky: Boolean!
   updates: String
+  slug: String!
   sub_title: String
   created_date: Time!
   published_date: Time!
@@ -4383,6 +4392,40 @@ func (ec *executionContext) _Factcheck_updates(ctx context.Context, field graphq
 	res := resTmp.(*string)
 	fc.Result = res
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Factcheck_slug(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Factcheck",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Slug, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck_sub_title(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -11087,6 +11130,11 @@ func (ec *executionContext) _Factcheck(ctx context.Context, sel ast.SelectionSet
 			}
 		case "updates":
 			out.Values[i] = ec._Factcheck_updates(ctx, field, obj)
+		case "slug":
+			out.Values[i] = ec._Factcheck_slug(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "sub_title":
 			out.Values[i] = ec._Factcheck_sub_title(ctx, field, obj)
 		case "created_date":

@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Format model
 type Format struct {
 	ID              string    `bson:"_id"`
 	Class           string    `bson:"_class"`
@@ -15,6 +16,7 @@ type Format struct {
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 }
 
+// FormatsPaging model
 type FormatsPaging struct {
 	Nodes []*Format `json:"nodes"`
 	Total int       `json:"total"`

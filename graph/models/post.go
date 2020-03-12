@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Post model
 type Post struct {
 	ID              string         `bson:"_id"`
 	Title           string         `bson:"title"`
@@ -26,6 +27,7 @@ type Post struct {
 	Class           string         `bson:"_class"`
 }
 
+// PostsPaging model
 type PostsPaging struct {
 	Nodes []*Post `json:"nodes"`
 	Total int     `json:"total"`

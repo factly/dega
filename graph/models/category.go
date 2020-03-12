@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Category model
 type Category struct {
 	ID              string    `bson:"_id"`
 	Class           string    `bson:"_class"`
@@ -14,6 +15,7 @@ type Category struct {
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 }
 
+// CategoriesPaging model
 type CategoriesPaging struct {
 	Nodes []*Category `json:"nodes"`
 	Total int         `json:"total"`

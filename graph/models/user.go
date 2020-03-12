@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// User model
 type User struct {
 	ID                  string       `bson:"_id"`
 	FirstName           string       `bson:"first_name"`
@@ -23,6 +24,7 @@ type User struct {
 	Class               string       `bson:"_class"`
 }
 
+// UsersPaging model
 type UsersPaging struct {
 	Nodes []*User `json:"nodes"`
 	Total int     `json:"total"`

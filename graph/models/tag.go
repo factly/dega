@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Tag model
 type Tag struct {
 	ID              string    `bson:"_id"`
 	Class           string    `bson:"_class"`
@@ -14,6 +15,7 @@ type Tag struct {
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 }
 
+// TagsPaging model
 type TagsPaging struct {
 	Nodes []*Tag `json:"nodes"`
 	Total int    `json:"total"`

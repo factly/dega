@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Medium model
 type Medium struct {
 	ID              string    `bson:"_id"`
 	Name            string    `bson:"name"`

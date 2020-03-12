@@ -326,7 +326,7 @@ func (r *sitemapsResolver) Ratings(ctx context.Context, obj *models.Sitemaps) ([
 	return nodes, nil
 }
 
-// Rating model resolver
+// Sitemaps model resolver
 func (r *Resolver) Sitemaps() generated.SitemapsResolver { return &sitemapsResolver{r} }
 
 type sitemapsResolver struct{ *Resolver }

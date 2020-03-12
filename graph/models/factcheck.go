@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Factcheck model
 type Factcheck struct {
 	ID              string         `bson:"_id"`
 	Title           string         `bson:"title"`
@@ -15,6 +16,7 @@ type Factcheck struct {
 	Featured        bool           `bson:"featured"`
 	Sticky          bool           `bson:"sticky"`
 	Updates         *string        `bson:"updates"`
+	Slug            string         `bson:"slug"`
 	SubTitle        *string        `bson:"sub_title"`
 	CreatedDate     time.Time      `bson:"created_date"`
 	PublishedDate   time.Time      `bson:"published_date"`
@@ -27,6 +29,7 @@ type Factcheck struct {
 	Class           string         `bson:"_class"`
 }
 
+// FactchecksPaging model
 type FactchecksPaging struct {
 	Nodes []*Factcheck `json:"nodes"`
 	Total int          `json:"total"`

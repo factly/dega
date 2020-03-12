@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Status model
 type Status struct {
 	ID              string    `bson:"_id"`
 	Class           string    `bson:"_class"`
@@ -15,6 +16,7 @@ type Status struct {
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 }
 
+// StatusesPaging model
 type StatusesPaging struct {
 	Nodes []*Status `json:"nodes"`
 	Total int       `json:"total"`

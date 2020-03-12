@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Claimant model
 type Claimant struct {
 	ID              string       `bson:"_id"`
 	Name            string       `bson:"name"`
@@ -17,6 +18,7 @@ type Claimant struct {
 	Class           string       `bson:"_class"`
 }
 
+// ClaimantsPaging model
 type ClaimantsPaging struct {
 	Nodes []*Claimant `json:"nodes"`
 	Total int         `json:"total"`
