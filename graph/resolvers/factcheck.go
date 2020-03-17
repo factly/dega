@@ -87,7 +87,6 @@ func (r *factcheckResolver) DegaUsers(ctx context.Context, obj *models.Factcheck
 
 func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) ([]*models.Schemas, error) {
 	claims, err := r.Claims(ctx, obj)
-
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -117,17 +116,20 @@ func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) 
 		var itemReviewed *models.ItemReviewed = new(models.ItemReviewed)
 
 		var ratingType = "Rating"
-		var reviewedType = "Creative work"
+		var reviewedType = "CreativeWork"
 		var authorType = "Person"
+		var context = "http://schema.org"
 
 		reviewRating.Type = &ratingType
 		itemReviewed.Type = &reviewedType
 		author.Type = &authorType
 		itemReviewed.Author = author
-
+		schema.Context = &context
+		schema.Type = "ClaimReview"
 		schema.ClaimReviewed = claim.Claim
 		authorType = "Organization"
 		schema.Author = author
+
 		if org != nil {
 			url := org.SiteAddress + "/factcheck" + obj.Slug + "-" + obj.ID
 			schema.URL = &url
@@ -178,6 +180,9 @@ func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) 
 			}
 			itemReviewed.Author = author
 		}
+		itemReviewed.DatePublished = claim.ClaimDate
+		itemReviewed.Name = &claim.Claim
+
 		schema.ItemReviewed = itemReviewed
 		schemas = append(schemas, schema)
 	}
