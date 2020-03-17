@@ -85,6 +85,106 @@ func (r *factcheckResolver) DegaUsers(ctx context.Context, obj *models.Factcheck
 	return users, nil
 }
 
+func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) ([]*models.Schemas, error) {
+	claims, err := r.Claims(ctx, obj)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	client := obj.ClientID
+	query := bson.M{
+		"client_id": client,
+	}
+
+	var org *models.Organization = new(models.Organization)
+	err = mongo.Factcheck.Collection("organization").FindOne(ctx, query).Decode(&org)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	orgMediaLogo, err := r.Organization().MediaLogo(ctx, org)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	var schemas []*models.Schemas
+
+	for _, claim := range claims {
+		var schema *models.Schemas = new(models.Schemas)
+		var author *models.Author = new(models.Author)
+		var reviewRating *models.ReviewRating = new(models.ReviewRating)
+		var itemReviewed *models.ItemReviewed = new(models.ItemReviewed)
+
+		var ratingType = "Rating"
+		var reviewedType = "Creative work"
+		var authorType = "Person"
+
+		reviewRating.Type = &ratingType
+		itemReviewed.Type = &reviewedType
+		author.Type = &authorType
+		itemReviewed.Author = author
+
+		schema.ClaimReviewed = claim.Claim
+		authorType = "Organization"
+		schema.Author = author
+		if org != nil {
+			url := org.SiteAddress + "/factcheck" + obj.Slug + "-" + obj.ID
+			schema.URL = &url
+			author.URL = &org.SiteAddress
+			if orgMediaLogo != nil {
+				author.Image = &orgMediaLogo.URL
+			}
+			author.Name = org.Name
+			schema.Author = author
+		}
+
+		schema.DatePublished = obj.PublishedDate
+
+		rating, err := r.Claim().Rating(ctx, claim)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		ratingMedia, err := r.Rating().Media(ctx, rating)
+
+		if rating != nil {
+			reviewRating.AlternateName = rating.Name
+			if rating.NumericValue != 0 {
+				reviewRating.RatingValue = rating.NumericValue
+			}
+			if ratingMedia != nil {
+				reviewRating.Image = &ratingMedia.URL
+			}
+		}
+
+		reviewRating.BestRating = 5
+		reviewRating.WorstRating = 1
+
+		schema.ReviewRating = reviewRating
+
+		claimant, err := r.Claim().Claimant(ctx, claim)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		claimantMedia, err := r.Claimant().Media(ctx, claimant)
+		if claimant != nil {
+			author.Name = claimant.Name
+			if claimantMedia != nil {
+				author.Image = &claimantMedia.URL
+
+			}
+			itemReviewed.Author = author
+		}
+		schema.ItemReviewed = itemReviewed
+		schemas = append(schemas, schema)
+	}
+
+	return schemas, nil
+}
+
 func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.FactchecksPaging, error) {
 	client := ctx.Value("client").(string)
 
