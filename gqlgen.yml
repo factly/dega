@@ -35,7 +35,7 @@ model:
 # gqlgen will search for any type names in the schema in these go packages
 # if they match it will use them, otherwise it will generate them.
 autobind:
-  - "github.com/monarkatfactly/dega-api-go.git/graph/model"
+  - "github.com/factly/dega-api/graph/model"
 
 # This section declares type mapping between the GraphQL and go type systems
 #
@@ -55,33 +55,33 @@ models:
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
   Status:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Status
+    model: github.com/factly/dega-api/graph/models.Status
   StatusesPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.StatusesPaging
+    model: github.com/factly/dega-api/graph/models.StatusesPaging
   Format:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Format
+    model: github.com/factly/dega-api/graph/models.Format
   FormatsPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.FormatsPaging
+    model: github.com/factly/dega-api/graph/models.FormatsPaging
   Medium:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Medium
+    model: github.com/factly/dega-api/graph/models.Medium
   Category:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Category
+    model: github.com/factly/dega-api/graph/models.Category
   CategoriesPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.CategoriesPaging
+    model: github.com/factly/dega-api/graph/models.CategoriesPaging
   Tag:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Tag
+    model: github.com/factly/dega-api/graph/models.Tag
   TagsPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.TagsPaging
+    model: github.com/factly/dega-api/graph/models.TagsPaging
   Author:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Author
+    model: github.com/factly/dega-api/graph/models.Author
   ItemReviewed:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.ItemReviewed
+    model: github.com/factly/dega-api/graph/models.ItemReviewed
   ReviewRating:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.ReviewRating
+    model: github.com/factly/dega-api/graph/models.ReviewRating
   Schemas:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Schemas
+    model: github.com/factly/dega-api/graph/models.Schemas
   Organization:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Organization
+    model: github.com/factly/dega-api/graph/models.Organization
     fields:
         mediaLogo:
           resolver: true
@@ -92,7 +92,7 @@ models:
         mediaMobileIcon:
           resolver: true
   User:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.User
+    model: github.com/factly/dega-api/graph/models.User
     fields:
         organizationDefault:
           resolver: true
@@ -101,9 +101,9 @@ models:
         media:
           resolver: true
   UsersPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.UsersPaging
+    model: github.com/factly/dega-api/graph/models.UsersPaging
   Post:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Post
+    model: github.com/factly/dega-api/graph/models.Post
     fields:
         status:
           resolver: true
@@ -118,32 +118,32 @@ models:
         degaUsers:
           resolver: true
   PostsPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.PostsPaging
+    model: github.com/factly/dega-api/graph/models.PostsPaging
   Rating:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Rating
+    model: github.com/factly/dega-api/graph/models.Rating
     fields:
         media:
           resolver: true
   RatingsPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.RatingsPaging
+    model: github.com/factly/dega-api/graph/models.RatingsPaging
   Claimant:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Claimant
+    model: github.com/factly/dega-api/graph/models.Claimant
     fields:
         media:
           resolver: true
   ClaimantsPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.ClaimantsPaging
+    model: github.com/factly/dega-api/graph/models.ClaimantsPaging
   Claim:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Claim
+    model: github.com/factly/dega-api/graph/models.Claim
     fields:
         claimant:
           resolver: true
         rating:
           resolver: true
   ClaimsPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.ClaimsPaging
+    model: github.com/factly/dega-api/graph/models.ClaimsPaging
   Factcheck:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Factcheck
+    model: github.com/factly/dega-api/graph/models.Factcheck
     fields:
         status:
           resolver: true
@@ -160,11 +160,11 @@ models:
         schemas:
           resolver: true
   FactchecksPaging:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.FactchecksPaging
+    model: github.com/factly/dega-api/graph/models.FactchecksPaging
   Sitemap:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Sitemap
+    model: github.com/factly/dega-api/graph/models.Sitemap
   Sitemaps:
-    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Sitemaps
+    model: github.com/factly/dega-api/graph/models.Sitemaps
     fields:
         categories:
           resolver: true

@@ -7,13 +7,13 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/factly/dega-api/graph/generated"
+	"github.com/factly/dega-api/graph/loaders"
+	"github.com/factly/dega-api/graph/middleware"
+	"github.com/factly/dega-api/graph/mongo"
+	"github.com/factly/dega-api/graph/resolvers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
-	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
-	"github.com/monarkatfactly/dega-api-go.git/graph/loaders"
-	"github.com/monarkatfactly/dega-api-go.git/graph/middleware"
-	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
-	"github.com/monarkatfactly/dega-api-go.git/graph/resolvers"
 )
 
 const defaultPort = "8080"

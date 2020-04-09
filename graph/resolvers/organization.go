@@ -4,10 +4,10 @@ import (
 	"context"
 	"errors"
 
-	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
-	"github.com/monarkatfactly/dega-api-go.git/graph/loaders"
-	"github.com/monarkatfactly/dega-api-go.git/graph/models"
-	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
+	"github.com/factly/dega-api/graph/generated"
+	"github.com/factly/dega-api/graph/loaders"
+	"github.com/factly/dega-api/graph/models"
+	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
 )
 

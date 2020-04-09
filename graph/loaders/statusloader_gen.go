@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/monarkatfactly/dega-api-go.git/graph/models"
+	"github.com/factly/dega-api/graph/models"
 )
 
 // StatusLoaderConfig captures the config to create a new StatusLoader

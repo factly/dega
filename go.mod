@@ -1,4 +1,4 @@
-module github.com/monarkatfactly/dega-api-go.git
+module github.com/factly/dega-api
 
 go 1.13
 

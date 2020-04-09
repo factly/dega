@@ -13,7 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/monarkatfactly/dega-api-go.git/graph/models"
+	"github.com/factly/dega-api/graph/models"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -3308,7 +3308,7 @@ func (ec *executionContext) _CategoriesPaging_nodes(ctx context.Context, field g
 	}
 	res := resTmp.([]*models.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoryᚄ(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoryᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _CategoriesPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.CategoriesPaging) (ret graphql.Marshaler) {
@@ -4084,7 +4084,7 @@ func (ec *executionContext) _Claim_rating(ctx context.Context, field graphql.Col
 	}
 	res := resTmp.(*models.Rating)
 	fc.Result = res
-	return ec.marshalNRating2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRating(ctx, field.Selections, res)
+	return ec.marshalNRating2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRating(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_claimant(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -4118,7 +4118,7 @@ func (ec *executionContext) _Claim_claimant(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*models.Claimant)
 	fc.Result = res
-	return ec.marshalNClaimant2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimant(ctx, field.Selections, res)
+	return ec.marshalNClaimant2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimant(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim__class(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -4455,7 +4455,7 @@ func (ec *executionContext) _Claimant_media(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claimant__class(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
@@ -4523,7 +4523,7 @@ func (ec *executionContext) _ClaimantsPaging_nodes(ctx context.Context, field gr
 	}
 	res := resTmp.([]*models.Claimant)
 	fc.Result = res
-	return ec.marshalNClaimant2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimantᚄ(ctx, field.Selections, res)
+	return ec.marshalNClaimant2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimantᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ClaimantsPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.ClaimantsPaging) (ret graphql.Marshaler) {
@@ -4591,7 +4591,7 @@ func (ec *executionContext) _ClaimsPaging_nodes(ctx context.Context, field graph
 	}
 	res := resTmp.([]*models.Claim)
 	fc.Result = res
-	return ec.marshalNClaim2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimᚄ(ctx, field.Selections, res)
+	return ec.marshalNClaim2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ClaimsPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.ClaimsPaging) (ret graphql.Marshaler) {
@@ -5126,7 +5126,7 @@ func (ec *executionContext) _Factcheck_claims(ctx context.Context, field graphql
 	}
 	res := resTmp.([]*models.Claim)
 	fc.Result = res
-	return ec.marshalNClaim2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimᚄ(ctx, field.Selections, res)
+	return ec.marshalNClaim2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck_status(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -5160,7 +5160,7 @@ func (ec *executionContext) _Factcheck_status(ctx context.Context, field graphql
 	}
 	res := resTmp.(*models.Status)
 	fc.Result = res
-	return ec.marshalNStatus2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatus(ctx, field.Selections, res)
+	return ec.marshalNStatus2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck_media(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -5191,7 +5191,7 @@ func (ec *executionContext) _Factcheck_media(ctx context.Context, field graphql.
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck_categories(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -5225,7 +5225,7 @@ func (ec *executionContext) _Factcheck_categories(ctx context.Context, field gra
 	}
 	res := resTmp.([]*models.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoryᚄ(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoryᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck_tags(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -5259,7 +5259,7 @@ func (ec *executionContext) _Factcheck_tags(ctx context.Context, field graphql.C
 	}
 	res := resTmp.([]*models.Tag)
 	fc.Result = res
-	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
+	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck_degaUsers(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -5293,7 +5293,7 @@ func (ec *executionContext) _Factcheck_degaUsers(ctx context.Context, field grap
 	}
 	res := resTmp.([]*models.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUserᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck_schemas(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -5327,7 +5327,7 @@ func (ec *executionContext) _Factcheck_schemas(ctx context.Context, field graphq
 	}
 	res := resTmp.([]*models.Schemas)
 	fc.Result = res
-	return ec.marshalNSchemas2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSchemasᚄ(ctx, field.Selections, res)
+	return ec.marshalNSchemas2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSchemasᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Factcheck__class(ctx context.Context, field graphql.CollectedField, obj *models.Factcheck) (ret graphql.Marshaler) {
@@ -5395,7 +5395,7 @@ func (ec *executionContext) _FactchecksPaging_nodes(ctx context.Context, field g
 	}
 	res := resTmp.([]*models.Factcheck)
 	fc.Result = res
-	return ec.marshalNFactcheck2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheckᚄ(ctx, field.Selections, res)
+	return ec.marshalNFactcheck2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactcheckᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _FactchecksPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.FactchecksPaging) (ret graphql.Marshaler) {
@@ -5732,7 +5732,7 @@ func (ec *executionContext) _FormatsPaging_nodes(ctx context.Context, field grap
 	}
 	res := resTmp.([]*models.Format)
 	fc.Result = res
-	return ec.marshalNFormat2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatᚄ(ctx, field.Selections, res)
+	return ec.marshalNFormat2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormatᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _FormatsPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.FormatsPaging) (ret graphql.Marshaler) {
@@ -5834,7 +5834,7 @@ func (ec *executionContext) _ItemReviewed_author(ctx context.Context, field grap
 	}
 	res := resTmp.(*models.Author)
 	fc.Result = res
-	return ec.marshalNAuthor2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐAuthor(ctx, field.Selections, res)
+	return ec.marshalNAuthor2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐAuthor(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ItemReviewed_datePublished(ctx context.Context, field graphql.CollectedField, obj *models.ItemReviewed) (ret graphql.Marshaler) {
@@ -7372,7 +7372,7 @@ func (ec *executionContext) _Organization_mediaLogo(ctx context.Context, field g
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Organization_mediaMobileLogo(ctx context.Context, field graphql.CollectedField, obj *models.Organization) (ret graphql.Marshaler) {
@@ -7403,7 +7403,7 @@ func (ec *executionContext) _Organization_mediaMobileLogo(ctx context.Context, f
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Organization_mediaFavicon(ctx context.Context, field graphql.CollectedField, obj *models.Organization) (ret graphql.Marshaler) {
@@ -7434,7 +7434,7 @@ func (ec *executionContext) _Organization_mediaFavicon(ctx context.Context, fiel
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Organization_mediaMobileIcon(ctx context.Context, field graphql.CollectedField, obj *models.Organization) (ret graphql.Marshaler) {
@@ -7465,7 +7465,7 @@ func (ec *executionContext) _Organization_mediaMobileIcon(ctx context.Context, f
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Organization__class(ctx context.Context, field graphql.CollectedField, obj *models.Organization) (ret graphql.Marshaler) {
@@ -7966,7 +7966,7 @@ func (ec *executionContext) _Post_status(ctx context.Context, field graphql.Coll
 	}
 	res := resTmp.(*models.Status)
 	fc.Result = res
-	return ec.marshalNStatus2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatus(ctx, field.Selections, res)
+	return ec.marshalNStatus2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post_format(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
@@ -8000,7 +8000,7 @@ func (ec *executionContext) _Post_format(ctx context.Context, field graphql.Coll
 	}
 	res := resTmp.(*models.Format)
 	fc.Result = res
-	return ec.marshalNFormat2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormat(ctx, field.Selections, res)
+	return ec.marshalNFormat2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormat(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post_media(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
@@ -8031,7 +8031,7 @@ func (ec *executionContext) _Post_media(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post_categories(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
@@ -8065,7 +8065,7 @@ func (ec *executionContext) _Post_categories(ctx context.Context, field graphql.
 	}
 	res := resTmp.([]*models.Category)
 	fc.Result = res
-	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoryᚄ(ctx, field.Selections, res)
+	return ec.marshalNCategory2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoryᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post_tags(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
@@ -8099,7 +8099,7 @@ func (ec *executionContext) _Post_tags(ctx context.Context, field graphql.Collec
 	}
 	res := resTmp.([]*models.Tag)
 	fc.Result = res
-	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
+	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post_degaUsers(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
@@ -8133,7 +8133,7 @@ func (ec *executionContext) _Post_degaUsers(ctx context.Context, field graphql.C
 	}
 	res := resTmp.([]*models.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUserᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post__class(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
@@ -8201,7 +8201,7 @@ func (ec *executionContext) _PostsPaging_nodes(ctx context.Context, field graphq
 	}
 	res := resTmp.([]*models.Post)
 	fc.Result = res
-	return ec.marshalNPost2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPostᚄ(ctx, field.Selections, res)
+	return ec.marshalNPost2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PostsPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.PostsPaging) (ret graphql.Marshaler) {
@@ -8273,7 +8273,7 @@ func (ec *executionContext) _Query_categories(ctx context.Context, field graphql
 	}
 	res := resTmp.(*models.CategoriesPaging)
 	fc.Result = res
-	return ec.marshalOCategoriesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoriesPaging(ctx, field.Selections, res)
+	return ec.marshalOCategoriesPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoriesPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_category(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8311,7 +8311,7 @@ func (ec *executionContext) _Query_category(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*models.Category)
 	fc.Result = res
-	return ec.marshalOCategory2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategory(ctx, field.Selections, res)
+	return ec.marshalOCategory2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_tags(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8349,7 +8349,7 @@ func (ec *executionContext) _Query_tags(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(*models.TagsPaging)
 	fc.Result = res
-	return ec.marshalOTagsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagsPaging(ctx, field.Selections, res)
+	return ec.marshalOTagsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_tag(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8387,7 +8387,7 @@ func (ec *executionContext) _Query_tag(ctx context.Context, field graphql.Collec
 	}
 	res := resTmp.(*models.Tag)
 	fc.Result = res
-	return ec.marshalOTag2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTag(ctx, field.Selections, res)
+	return ec.marshalOTag2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTag(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_formats(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8418,7 +8418,7 @@ func (ec *executionContext) _Query_formats(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.(*models.FormatsPaging)
 	fc.Result = res
-	return ec.marshalOFormatsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatsPaging(ctx, field.Selections, res)
+	return ec.marshalOFormatsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormatsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_statuses(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8449,7 +8449,7 @@ func (ec *executionContext) _Query_statuses(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*models.StatusesPaging)
 	fc.Result = res
-	return ec.marshalOStatusesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusesPaging(ctx, field.Selections, res)
+	return ec.marshalOStatusesPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatusesPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_organization(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8480,7 +8480,7 @@ func (ec *executionContext) _Query_organization(ctx context.Context, field graph
 	}
 	res := resTmp.(*models.Organization)
 	fc.Result = res
-	return ec.marshalOOrganization2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganization(ctx, field.Selections, res)
+	return ec.marshalOOrganization2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐOrganization(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8518,7 +8518,7 @@ func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.Coll
 	}
 	res := resTmp.(*models.PostsPaging)
 	fc.Result = res
-	return ec.marshalOPostsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPostsPaging(ctx, field.Selections, res)
+	return ec.marshalOPostsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_post(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8556,7 +8556,7 @@ func (ec *executionContext) _Query_post(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(*models.Post)
 	fc.Result = res
-	return ec.marshalOPost2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPost(ctx, field.Selections, res)
+	return ec.marshalOPost2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPost(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_users(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8594,7 +8594,7 @@ func (ec *executionContext) _Query_users(ctx context.Context, field graphql.Coll
 	}
 	res := resTmp.(*models.UsersPaging)
 	fc.Result = res
-	return ec.marshalOUsersPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUsersPaging(ctx, field.Selections, res)
+	return ec.marshalOUsersPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUsersPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_user(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8632,7 +8632,7 @@ func (ec *executionContext) _Query_user(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(*models.User)
 	fc.Result = res
-	return ec.marshalOUser2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUser(ctx, field.Selections, res)
+	return ec.marshalOUser2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_ratings(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8670,7 +8670,7 @@ func (ec *executionContext) _Query_ratings(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.(*models.RatingsPaging)
 	fc.Result = res
-	return ec.marshalORatingsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRatingsPaging(ctx, field.Selections, res)
+	return ec.marshalORatingsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRatingsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_claimants(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8708,7 +8708,7 @@ func (ec *executionContext) _Query_claimants(ctx context.Context, field graphql.
 	}
 	res := resTmp.(*models.ClaimantsPaging)
 	fc.Result = res
-	return ec.marshalOClaimantsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimantsPaging(ctx, field.Selections, res)
+	return ec.marshalOClaimantsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimantsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_claims(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8746,7 +8746,7 @@ func (ec *executionContext) _Query_claims(ctx context.Context, field graphql.Col
 	}
 	res := resTmp.(*models.ClaimsPaging)
 	fc.Result = res
-	return ec.marshalOClaimsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimsPaging(ctx, field.Selections, res)
+	return ec.marshalOClaimsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_factchecks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8784,7 +8784,7 @@ func (ec *executionContext) _Query_factchecks(ctx context.Context, field graphql
 	}
 	res := resTmp.(*models.FactchecksPaging)
 	fc.Result = res
-	return ec.marshalOFactchecksPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactchecksPaging(ctx, field.Selections, res)
+	return ec.marshalOFactchecksPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactchecksPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_factcheck(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8822,7 +8822,7 @@ func (ec *executionContext) _Query_factcheck(ctx context.Context, field graphql.
 	}
 	res := resTmp.(*models.Factcheck)
 	fc.Result = res
-	return ec.marshalOFactcheck2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx, field.Selections, res)
+	return ec.marshalOFactcheck2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactcheck(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_sitemap(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8853,7 +8853,7 @@ func (ec *executionContext) _Query_sitemap(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.(*models.Sitemaps)
 	fc.Result = res
-	return ec.marshalOSitemaps2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemaps(ctx, field.Selections, res)
+	return ec.marshalOSitemaps2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemaps(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -9259,7 +9259,7 @@ func (ec *executionContext) _Rating_media(ctx context.Context, field graphql.Col
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Rating__class(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
@@ -9327,7 +9327,7 @@ func (ec *executionContext) _RatingsPaging_nodes(ctx context.Context, field grap
 	}
 	res := resTmp.([]*models.Rating)
 	fc.Result = res
-	return ec.marshalNRating2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRatingᚄ(ctx, field.Selections, res)
+	return ec.marshalNRating2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRatingᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _RatingsPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.RatingsPaging) (ret graphql.Marshaler) {
@@ -9726,7 +9726,7 @@ func (ec *executionContext) _Schemas_author(ctx context.Context, field graphql.C
 	}
 	res := resTmp.(*models.Author)
 	fc.Result = res
-	return ec.marshalNAuthor2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐAuthor(ctx, field.Selections, res)
+	return ec.marshalNAuthor2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐAuthor(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Schemas_claimReviewed(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
@@ -9794,7 +9794,7 @@ func (ec *executionContext) _Schemas_reviewRating(ctx context.Context, field gra
 	}
 	res := resTmp.(*models.ReviewRating)
 	fc.Result = res
-	return ec.marshalNReviewRating2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐReviewRating(ctx, field.Selections, res)
+	return ec.marshalNReviewRating2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐReviewRating(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Schemas_itemReviewed(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
@@ -9828,7 +9828,7 @@ func (ec *executionContext) _Schemas_itemReviewed(ctx context.Context, field gra
 	}
 	res := resTmp.(*models.ItemReviewed)
 	fc.Result = res
-	return ec.marshalNItemReviewed2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐItemReviewed(ctx, field.Selections, res)
+	return ec.marshalNItemReviewed2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐItemReviewed(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemap_slug(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
@@ -9961,7 +9961,7 @@ func (ec *executionContext) _Sitemaps_categories(ctx context.Context, field grap
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_tags(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -9992,7 +9992,7 @@ func (ec *executionContext) _Sitemaps_tags(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_users(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -10023,7 +10023,7 @@ func (ec *executionContext) _Sitemaps_users(ctx context.Context, field graphql.C
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_formats(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -10054,7 +10054,7 @@ func (ec *executionContext) _Sitemaps_formats(ctx context.Context, field graphql
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_statuses(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -10085,7 +10085,7 @@ func (ec *executionContext) _Sitemaps_statuses(ctx context.Context, field graphq
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_posts(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -10116,7 +10116,7 @@ func (ec *executionContext) _Sitemaps_posts(ctx context.Context, field graphql.C
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_factchecks(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -10147,7 +10147,7 @@ func (ec *executionContext) _Sitemaps_factchecks(ctx context.Context, field grap
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_claims(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -10178,7 +10178,7 @@ func (ec *executionContext) _Sitemaps_claims(ctx context.Context, field graphql.
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_claimants(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -10209,7 +10209,7 @@ func (ec *executionContext) _Sitemaps_claimants(ctx context.Context, field graph
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Sitemaps_ratings(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
@@ -10240,7 +10240,7 @@ func (ec *executionContext) _Sitemaps_ratings(ctx context.Context, field graphql
 	}
 	res := resTmp.([]*models.Sitemap)
 	fc.Result = res
-	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
+	return ec.marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Status__id(ctx context.Context, field graphql.CollectedField, obj *models.Status) (ret graphql.Marshaler) {
@@ -10543,7 +10543,7 @@ func (ec *executionContext) _StatusesPaging_nodes(ctx context.Context, field gra
 	}
 	res := resTmp.([]*models.Status)
 	fc.Result = res
-	return ec.marshalNStatus2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusᚄ(ctx, field.Selections, res)
+	return ec.marshalNStatus2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatusᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _StatusesPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.StatusesPaging) (ret graphql.Marshaler) {
@@ -10880,7 +10880,7 @@ func (ec *executionContext) _TagsPaging_nodes(ctx context.Context, field graphql
 	}
 	res := resTmp.([]*models.Tag)
 	fc.Result = res
-	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
+	return ec.marshalNTag2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _TagsPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.TagsPaging) (ret graphql.Marshaler) {
@@ -11335,7 +11335,7 @@ func (ec *executionContext) _User_media(ctx context.Context, field graphql.Colle
 	}
 	res := resTmp.(*models.Medium)
 	fc.Result = res
-	return ec.marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _User__class(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
@@ -11403,7 +11403,7 @@ func (ec *executionContext) _UsersPaging_nodes(ctx context.Context, field graphq
 	}
 	res := resTmp.([]*models.User)
 	fc.Result = res
-	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUserᚄ(ctx, field.Selections, res)
+	return ec.marshalNUser2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUserᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _UsersPaging_total(ctx context.Context, field graphql.CollectedField, obj *models.UsersPaging) (ret graphql.Marshaler) {
@@ -14831,11 +14831,11 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) marshalNAuthor2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐAuthor(ctx context.Context, sel ast.SelectionSet, v models.Author) graphql.Marshaler {
+func (ec *executionContext) marshalNAuthor2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐAuthor(ctx context.Context, sel ast.SelectionSet, v models.Author) graphql.Marshaler {
 	return ec._Author(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNAuthor2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐAuthor(ctx context.Context, sel ast.SelectionSet, v *models.Author) graphql.Marshaler {
+func (ec *executionContext) marshalNAuthor2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐAuthor(ctx context.Context, sel ast.SelectionSet, v *models.Author) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -14859,11 +14859,11 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNCategory2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v models.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v models.Category) graphql.Marshaler {
 	return ec._Category(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoryᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoryᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Category) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -14887,7 +14887,7 @@ func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋmonarkatfactly
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCategory2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategory(ctx, sel, v[i])
+			ret[i] = ec.marshalNCategory2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategory(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -14900,7 +14900,7 @@ func (ec *executionContext) marshalNCategory2ᚕᚖgithubᚗcomᚋmonarkatfactly
 	return ret
 }
 
-func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v *models.Category) graphql.Marshaler {
+func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v *models.Category) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -14910,11 +14910,11 @@ func (ec *executionContext) marshalNCategory2ᚖgithubᚗcomᚋmonarkatfactlyᚋ
 	return ec._Category(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNClaim2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaim(ctx context.Context, sel ast.SelectionSet, v models.Claim) graphql.Marshaler {
+func (ec *executionContext) marshalNClaim2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaim(ctx context.Context, sel ast.SelectionSet, v models.Claim) graphql.Marshaler {
 	return ec._Claim(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNClaim2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Claim) graphql.Marshaler {
+func (ec *executionContext) marshalNClaim2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Claim) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -14938,7 +14938,7 @@ func (ec *executionContext) marshalNClaim2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNClaim2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaim(ctx, sel, v[i])
+			ret[i] = ec.marshalNClaim2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaim(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -14951,7 +14951,7 @@ func (ec *executionContext) marshalNClaim2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋ
 	return ret
 }
 
-func (ec *executionContext) marshalNClaim2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaim(ctx context.Context, sel ast.SelectionSet, v *models.Claim) graphql.Marshaler {
+func (ec *executionContext) marshalNClaim2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaim(ctx context.Context, sel ast.SelectionSet, v *models.Claim) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -14961,11 +14961,11 @@ func (ec *executionContext) marshalNClaim2ᚖgithubᚗcomᚋmonarkatfactlyᚋdeg
 	return ec._Claim(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNClaimant2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimant(ctx context.Context, sel ast.SelectionSet, v models.Claimant) graphql.Marshaler {
+func (ec *executionContext) marshalNClaimant2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimant(ctx context.Context, sel ast.SelectionSet, v models.Claimant) graphql.Marshaler {
 	return ec._Claimant(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNClaimant2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimantᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Claimant) graphql.Marshaler {
+func (ec *executionContext) marshalNClaimant2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimantᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Claimant) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -14989,7 +14989,7 @@ func (ec *executionContext) marshalNClaimant2ᚕᚖgithubᚗcomᚋmonarkatfactly
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNClaimant2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimant(ctx, sel, v[i])
+			ret[i] = ec.marshalNClaimant2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimant(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15002,7 +15002,7 @@ func (ec *executionContext) marshalNClaimant2ᚕᚖgithubᚗcomᚋmonarkatfactly
 	return ret
 }
 
-func (ec *executionContext) marshalNClaimant2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimant(ctx context.Context, sel ast.SelectionSet, v *models.Claimant) graphql.Marshaler {
+func (ec *executionContext) marshalNClaimant2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimant(ctx context.Context, sel ast.SelectionSet, v *models.Claimant) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15012,11 +15012,11 @@ func (ec *executionContext) marshalNClaimant2ᚖgithubᚗcomᚋmonarkatfactlyᚋ
 	return ec._Claimant(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNFactcheck2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v models.Factcheck) graphql.Marshaler {
+func (ec *executionContext) marshalNFactcheck2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v models.Factcheck) graphql.Marshaler {
 	return ec._Factcheck(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNFactcheck2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheckᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Factcheck) graphql.Marshaler {
+func (ec *executionContext) marshalNFactcheck2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactcheckᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Factcheck) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -15040,7 +15040,7 @@ func (ec *executionContext) marshalNFactcheck2ᚕᚖgithubᚗcomᚋmonarkatfactl
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNFactcheck2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx, sel, v[i])
+			ret[i] = ec.marshalNFactcheck2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactcheck(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15053,7 +15053,7 @@ func (ec *executionContext) marshalNFactcheck2ᚕᚖgithubᚗcomᚋmonarkatfactl
 	return ret
 }
 
-func (ec *executionContext) marshalNFactcheck2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v *models.Factcheck) graphql.Marshaler {
+func (ec *executionContext) marshalNFactcheck2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v *models.Factcheck) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15063,11 +15063,11 @@ func (ec *executionContext) marshalNFactcheck2ᚖgithubᚗcomᚋmonarkatfactly�
 	return ec._Factcheck(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNFormat2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormat(ctx context.Context, sel ast.SelectionSet, v models.Format) graphql.Marshaler {
+func (ec *executionContext) marshalNFormat2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormat(ctx context.Context, sel ast.SelectionSet, v models.Format) graphql.Marshaler {
 	return ec._Format(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNFormat2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Format) graphql.Marshaler {
+func (ec *executionContext) marshalNFormat2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormatᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Format) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -15091,7 +15091,7 @@ func (ec *executionContext) marshalNFormat2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNFormat2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormat(ctx, sel, v[i])
+			ret[i] = ec.marshalNFormat2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormat(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15104,7 +15104,7 @@ func (ec *executionContext) marshalNFormat2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 	return ret
 }
 
-func (ec *executionContext) marshalNFormat2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormat(ctx context.Context, sel ast.SelectionSet, v *models.Format) graphql.Marshaler {
+func (ec *executionContext) marshalNFormat2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormat(ctx context.Context, sel ast.SelectionSet, v *models.Format) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15142,11 +15142,11 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNItemReviewed2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐItemReviewed(ctx context.Context, sel ast.SelectionSet, v models.ItemReviewed) graphql.Marshaler {
+func (ec *executionContext) marshalNItemReviewed2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐItemReviewed(ctx context.Context, sel ast.SelectionSet, v models.ItemReviewed) graphql.Marshaler {
 	return ec._ItemReviewed(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNItemReviewed2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐItemReviewed(ctx context.Context, sel ast.SelectionSet, v *models.ItemReviewed) graphql.Marshaler {
+func (ec *executionContext) marshalNItemReviewed2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐItemReviewed(ctx context.Context, sel ast.SelectionSet, v *models.ItemReviewed) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15156,11 +15156,11 @@ func (ec *executionContext) marshalNItemReviewed2ᚖgithubᚗcomᚋmonarkatfactl
 	return ec._ItemReviewed(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNPost2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v models.Post) graphql.Marshaler {
+func (ec *executionContext) marshalNPost2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v models.Post) graphql.Marshaler {
 	return ec._Post(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNPost2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPostᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Post) graphql.Marshaler {
+func (ec *executionContext) marshalNPost2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Post) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -15184,7 +15184,7 @@ func (ec *executionContext) marshalNPost2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋd
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNPost2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPost(ctx, sel, v[i])
+			ret[i] = ec.marshalNPost2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPost(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15197,7 +15197,7 @@ func (ec *executionContext) marshalNPost2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋd
 	return ret
 }
 
-func (ec *executionContext) marshalNPost2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v *models.Post) graphql.Marshaler {
+func (ec *executionContext) marshalNPost2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v *models.Post) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15207,11 +15207,11 @@ func (ec *executionContext) marshalNPost2ᚖgithubᚗcomᚋmonarkatfactlyᚋdega
 	return ec._Post(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNRating2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRating(ctx context.Context, sel ast.SelectionSet, v models.Rating) graphql.Marshaler {
+func (ec *executionContext) marshalNRating2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRating(ctx context.Context, sel ast.SelectionSet, v models.Rating) graphql.Marshaler {
 	return ec._Rating(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNRating2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRatingᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Rating) graphql.Marshaler {
+func (ec *executionContext) marshalNRating2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRatingᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Rating) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -15235,7 +15235,7 @@ func (ec *executionContext) marshalNRating2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNRating2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRating(ctx, sel, v[i])
+			ret[i] = ec.marshalNRating2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRating(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15248,7 +15248,7 @@ func (ec *executionContext) marshalNRating2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 	return ret
 }
 
-func (ec *executionContext) marshalNRating2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRating(ctx context.Context, sel ast.SelectionSet, v *models.Rating) graphql.Marshaler {
+func (ec *executionContext) marshalNRating2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRating(ctx context.Context, sel ast.SelectionSet, v *models.Rating) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15258,11 +15258,11 @@ func (ec *executionContext) marshalNRating2ᚖgithubᚗcomᚋmonarkatfactlyᚋde
 	return ec._Rating(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNReviewRating2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐReviewRating(ctx context.Context, sel ast.SelectionSet, v models.ReviewRating) graphql.Marshaler {
+func (ec *executionContext) marshalNReviewRating2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐReviewRating(ctx context.Context, sel ast.SelectionSet, v models.ReviewRating) graphql.Marshaler {
 	return ec._ReviewRating(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNReviewRating2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐReviewRating(ctx context.Context, sel ast.SelectionSet, v *models.ReviewRating) graphql.Marshaler {
+func (ec *executionContext) marshalNReviewRating2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐReviewRating(ctx context.Context, sel ast.SelectionSet, v *models.ReviewRating) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15272,11 +15272,11 @@ func (ec *executionContext) marshalNReviewRating2ᚖgithubᚗcomᚋmonarkatfactl
 	return ec._ReviewRating(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNSchemas2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSchemas(ctx context.Context, sel ast.SelectionSet, v models.Schemas) graphql.Marshaler {
+func (ec *executionContext) marshalNSchemas2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSchemas(ctx context.Context, sel ast.SelectionSet, v models.Schemas) graphql.Marshaler {
 	return ec._Schemas(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNSchemas2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSchemasᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Schemas) graphql.Marshaler {
+func (ec *executionContext) marshalNSchemas2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSchemasᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Schemas) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -15300,7 +15300,7 @@ func (ec *executionContext) marshalNSchemas2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNSchemas2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSchemas(ctx, sel, v[i])
+			ret[i] = ec.marshalNSchemas2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSchemas(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15313,7 +15313,7 @@ func (ec *executionContext) marshalNSchemas2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 	return ret
 }
 
-func (ec *executionContext) marshalNSchemas2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSchemas(ctx context.Context, sel ast.SelectionSet, v *models.Schemas) graphql.Marshaler {
+func (ec *executionContext) marshalNSchemas2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSchemas(ctx context.Context, sel ast.SelectionSet, v *models.Schemas) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15323,11 +15323,11 @@ func (ec *executionContext) marshalNSchemas2ᚖgithubᚗcomᚋmonarkatfactlyᚋd
 	return ec._Schemas(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNStatus2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatus(ctx context.Context, sel ast.SelectionSet, v models.Status) graphql.Marshaler {
+func (ec *executionContext) marshalNStatus2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatus(ctx context.Context, sel ast.SelectionSet, v models.Status) graphql.Marshaler {
 	return ec._Status(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNStatus2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Status) graphql.Marshaler {
+func (ec *executionContext) marshalNStatus2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatusᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Status) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -15351,7 +15351,7 @@ func (ec *executionContext) marshalNStatus2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNStatus2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatus(ctx, sel, v[i])
+			ret[i] = ec.marshalNStatus2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatus(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15364,7 +15364,7 @@ func (ec *executionContext) marshalNStatus2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 	return ret
 }
 
-func (ec *executionContext) marshalNStatus2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatus(ctx context.Context, sel ast.SelectionSet, v *models.Status) graphql.Marshaler {
+func (ec *executionContext) marshalNStatus2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatus(ctx context.Context, sel ast.SelectionSet, v *models.Status) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15406,11 +15406,11 @@ func (ec *executionContext) marshalNString2ᚖstring(ctx context.Context, sel as
 	return ec.marshalNString2string(ctx, sel, *v)
 }
 
-func (ec *executionContext) marshalNTag2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTag(ctx context.Context, sel ast.SelectionSet, v models.Tag) graphql.Marshaler {
+func (ec *executionContext) marshalNTag2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTag(ctx context.Context, sel ast.SelectionSet, v models.Tag) graphql.Marshaler {
 	return ec._Tag(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNTag2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Tag) graphql.Marshaler {
+func (ec *executionContext) marshalNTag2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Tag) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -15434,7 +15434,7 @@ func (ec *executionContext) marshalNTag2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋde
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNTag2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTag(ctx, sel, v[i])
+			ret[i] = ec.marshalNTag2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTag(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15447,7 +15447,7 @@ func (ec *executionContext) marshalNTag2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋde
 	return ret
 }
 
-func (ec *executionContext) marshalNTag2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTag(ctx context.Context, sel ast.SelectionSet, v *models.Tag) graphql.Marshaler {
+func (ec *executionContext) marshalNTag2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTag(ctx context.Context, sel ast.SelectionSet, v *models.Tag) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15471,11 +15471,11 @@ func (ec *executionContext) marshalNTime2timeᚐTime(ctx context.Context, sel as
 	return res
 }
 
-func (ec *executionContext) marshalNUser2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v models.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v models.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUserᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.User) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -15499,7 +15499,7 @@ func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋd
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNUser2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUser(ctx, sel, v[i])
+			ret[i] = ec.marshalNUser2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUser(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15512,7 +15512,7 @@ func (ec *executionContext) marshalNUser2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋd
 	return ret
 }
 
-func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v *models.User) graphql.Marshaler {
+func (ec *executionContext) marshalNUser2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v *models.User) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -15771,77 +15771,77 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return ec.marshalOBoolean2bool(ctx, sel, *v)
 }
 
-func (ec *executionContext) marshalOCategoriesPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoriesPaging(ctx context.Context, sel ast.SelectionSet, v models.CategoriesPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOCategoriesPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoriesPaging(ctx context.Context, sel ast.SelectionSet, v models.CategoriesPaging) graphql.Marshaler {
 	return ec._CategoriesPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOCategoriesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategoriesPaging(ctx context.Context, sel ast.SelectionSet, v *models.CategoriesPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOCategoriesPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoriesPaging(ctx context.Context, sel ast.SelectionSet, v *models.CategoriesPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CategoriesPaging(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOCategory2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v models.Category) graphql.Marshaler {
+func (ec *executionContext) marshalOCategory2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v models.Category) graphql.Marshaler {
 	return ec._Category(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOCategory2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v *models.Category) graphql.Marshaler {
+func (ec *executionContext) marshalOCategory2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategory(ctx context.Context, sel ast.SelectionSet, v *models.Category) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Category(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOClaimantsPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimantsPaging(ctx context.Context, sel ast.SelectionSet, v models.ClaimantsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOClaimantsPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimantsPaging(ctx context.Context, sel ast.SelectionSet, v models.ClaimantsPaging) graphql.Marshaler {
 	return ec._ClaimantsPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOClaimantsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimantsPaging(ctx context.Context, sel ast.SelectionSet, v *models.ClaimantsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOClaimantsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimantsPaging(ctx context.Context, sel ast.SelectionSet, v *models.ClaimantsPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._ClaimantsPaging(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOClaimsPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimsPaging(ctx context.Context, sel ast.SelectionSet, v models.ClaimsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOClaimsPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimsPaging(ctx context.Context, sel ast.SelectionSet, v models.ClaimsPaging) graphql.Marshaler {
 	return ec._ClaimsPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOClaimsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐClaimsPaging(ctx context.Context, sel ast.SelectionSet, v *models.ClaimsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOClaimsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimsPaging(ctx context.Context, sel ast.SelectionSet, v *models.ClaimsPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._ClaimsPaging(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOFactcheck2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v models.Factcheck) graphql.Marshaler {
+func (ec *executionContext) marshalOFactcheck2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v models.Factcheck) graphql.Marshaler {
 	return ec._Factcheck(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOFactcheck2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v *models.Factcheck) graphql.Marshaler {
+func (ec *executionContext) marshalOFactcheck2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactcheck(ctx context.Context, sel ast.SelectionSet, v *models.Factcheck) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Factcheck(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOFactchecksPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactchecksPaging(ctx context.Context, sel ast.SelectionSet, v models.FactchecksPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOFactchecksPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactchecksPaging(ctx context.Context, sel ast.SelectionSet, v models.FactchecksPaging) graphql.Marshaler {
 	return ec._FactchecksPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOFactchecksPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFactchecksPaging(ctx context.Context, sel ast.SelectionSet, v *models.FactchecksPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOFactchecksPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFactchecksPaging(ctx context.Context, sel ast.SelectionSet, v *models.FactchecksPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._FactchecksPaging(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOFormatsPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatsPaging(ctx context.Context, sel ast.SelectionSet, v models.FormatsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOFormatsPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormatsPaging(ctx context.Context, sel ast.SelectionSet, v models.FormatsPaging) graphql.Marshaler {
 	return ec._FormatsPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOFormatsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐFormatsPaging(ctx context.Context, sel ast.SelectionSet, v *models.FormatsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOFormatsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐFormatsPaging(ctx context.Context, sel ast.SelectionSet, v *models.FormatsPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -15871,66 +15871,66 @@ func (ec *executionContext) marshalOInt2ᚖint(ctx context.Context, sel ast.Sele
 	return ec.marshalOInt2int(ctx, sel, *v)
 }
 
-func (ec *executionContext) marshalOMedium2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx context.Context, sel ast.SelectionSet, v models.Medium) graphql.Marshaler {
+func (ec *executionContext) marshalOMedium2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx context.Context, sel ast.SelectionSet, v models.Medium) graphql.Marshaler {
 	return ec._Medium(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOMedium2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐMedium(ctx context.Context, sel ast.SelectionSet, v *models.Medium) graphql.Marshaler {
+func (ec *executionContext) marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx context.Context, sel ast.SelectionSet, v *models.Medium) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Medium(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOOrganization2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganization(ctx context.Context, sel ast.SelectionSet, v models.Organization) graphql.Marshaler {
+func (ec *executionContext) marshalOOrganization2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐOrganization(ctx context.Context, sel ast.SelectionSet, v models.Organization) graphql.Marshaler {
 	return ec._Organization(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOOrganization2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐOrganization(ctx context.Context, sel ast.SelectionSet, v *models.Organization) graphql.Marshaler {
+func (ec *executionContext) marshalOOrganization2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐOrganization(ctx context.Context, sel ast.SelectionSet, v *models.Organization) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Organization(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOPost2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v models.Post) graphql.Marshaler {
+func (ec *executionContext) marshalOPost2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v models.Post) graphql.Marshaler {
 	return ec._Post(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOPost2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v *models.Post) graphql.Marshaler {
+func (ec *executionContext) marshalOPost2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPost(ctx context.Context, sel ast.SelectionSet, v *models.Post) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Post(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOPostsPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPostsPaging(ctx context.Context, sel ast.SelectionSet, v models.PostsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOPostsPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostsPaging(ctx context.Context, sel ast.SelectionSet, v models.PostsPaging) graphql.Marshaler {
 	return ec._PostsPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOPostsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐPostsPaging(ctx context.Context, sel ast.SelectionSet, v *models.PostsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOPostsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostsPaging(ctx context.Context, sel ast.SelectionSet, v *models.PostsPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._PostsPaging(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalORatingsPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRatingsPaging(ctx context.Context, sel ast.SelectionSet, v models.RatingsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalORatingsPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRatingsPaging(ctx context.Context, sel ast.SelectionSet, v models.RatingsPaging) graphql.Marshaler {
 	return ec._RatingsPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalORatingsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐRatingsPaging(ctx context.Context, sel ast.SelectionSet, v *models.RatingsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalORatingsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐRatingsPaging(ctx context.Context, sel ast.SelectionSet, v *models.RatingsPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._RatingsPaging(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOSitemap2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v models.Sitemap) graphql.Marshaler {
+func (ec *executionContext) marshalOSitemap2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v models.Sitemap) graphql.Marshaler {
 	return ec._Sitemap(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v []*models.Sitemap) graphql.Marshaler {
+func (ec *executionContext) marshalOSitemap2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v []*models.Sitemap) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -15957,7 +15957,7 @@ func (ec *executionContext) marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOSitemap2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx, sel, v[i])
+			ret[i] = ec.marshalOSitemap2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -15970,29 +15970,29 @@ func (ec *executionContext) marshalOSitemap2ᚕᚖgithubᚗcomᚋmonarkatfactly�
 	return ret
 }
 
-func (ec *executionContext) marshalOSitemap2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v *models.Sitemap) graphql.Marshaler {
+func (ec *executionContext) marshalOSitemap2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemap(ctx context.Context, sel ast.SelectionSet, v *models.Sitemap) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Sitemap(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOSitemaps2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemaps(ctx context.Context, sel ast.SelectionSet, v models.Sitemaps) graphql.Marshaler {
+func (ec *executionContext) marshalOSitemaps2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemaps(ctx context.Context, sel ast.SelectionSet, v models.Sitemaps) graphql.Marshaler {
 	return ec._Sitemaps(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOSitemaps2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐSitemaps(ctx context.Context, sel ast.SelectionSet, v *models.Sitemaps) graphql.Marshaler {
+func (ec *executionContext) marshalOSitemaps2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐSitemaps(ctx context.Context, sel ast.SelectionSet, v *models.Sitemaps) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Sitemaps(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOStatusesPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusesPaging(ctx context.Context, sel ast.SelectionSet, v models.StatusesPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOStatusesPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatusesPaging(ctx context.Context, sel ast.SelectionSet, v models.StatusesPaging) graphql.Marshaler {
 	return ec._StatusesPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOStatusesPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐStatusesPaging(ctx context.Context, sel ast.SelectionSet, v *models.StatusesPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOStatusesPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐStatusesPaging(ctx context.Context, sel ast.SelectionSet, v *models.StatusesPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -16054,44 +16054,44 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return ec.marshalOString2string(ctx, sel, *v)
 }
 
-func (ec *executionContext) marshalOTag2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTag(ctx context.Context, sel ast.SelectionSet, v models.Tag) graphql.Marshaler {
+func (ec *executionContext) marshalOTag2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTag(ctx context.Context, sel ast.SelectionSet, v models.Tag) graphql.Marshaler {
 	return ec._Tag(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOTag2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTag(ctx context.Context, sel ast.SelectionSet, v *models.Tag) graphql.Marshaler {
+func (ec *executionContext) marshalOTag2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTag(ctx context.Context, sel ast.SelectionSet, v *models.Tag) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Tag(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOTagsPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagsPaging(ctx context.Context, sel ast.SelectionSet, v models.TagsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOTagsPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagsPaging(ctx context.Context, sel ast.SelectionSet, v models.TagsPaging) graphql.Marshaler {
 	return ec._TagsPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOTagsPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐTagsPaging(ctx context.Context, sel ast.SelectionSet, v *models.TagsPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOTagsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagsPaging(ctx context.Context, sel ast.SelectionSet, v *models.TagsPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._TagsPaging(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOUser2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v models.User) graphql.Marshaler {
+func (ec *executionContext) marshalOUser2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v models.User) graphql.Marshaler {
 	return ec._User(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v *models.User) graphql.Marshaler {
+func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v *models.User) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._User(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOUsersPaging2githubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUsersPaging(ctx context.Context, sel ast.SelectionSet, v models.UsersPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOUsersPaging2githubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUsersPaging(ctx context.Context, sel ast.SelectionSet, v models.UsersPaging) graphql.Marshaler {
 	return ec._UsersPaging(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOUsersPaging2ᚖgithubᚗcomᚋmonarkatfactlyᚋdegaᚑapiᚑgoᚗgitᚋgraphᚋmodelsᚐUsersPaging(ctx context.Context, sel ast.SelectionSet, v *models.UsersPaging) graphql.Marshaler {
+func (ec *executionContext) marshalOUsersPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUsersPaging(ctx context.Context, sel ast.SelectionSet, v *models.UsersPaging) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

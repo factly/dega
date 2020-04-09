@@ -5,8 +5,8 @@ import (
 	"errors"
 	"log"
 
-	"github.com/monarkatfactly/dega-api-go.git/graph/models"
-	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
+	"github.com/factly/dega-api/graph/models"
+	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
 )
 

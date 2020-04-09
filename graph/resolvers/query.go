@@ -1,7 +1,7 @@
 package resolvers
 
 import (
-	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
+	"github.com/factly/dega-api/graph/generated"
 )
 
 // Resolver query

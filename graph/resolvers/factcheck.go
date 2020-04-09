@@ -5,10 +5,10 @@ import (
 	"errors"
 	"log"
 
-	"github.com/monarkatfactly/dega-api-go.git/graph/generated"
-	"github.com/monarkatfactly/dega-api-go.git/graph/loaders"
-	"github.com/monarkatfactly/dega-api-go.git/graph/models"
-	"github.com/monarkatfactly/dega-api-go.git/graph/mongo"
+	"github.com/factly/dega-api/graph/generated"
+	"github.com/factly/dega-api/graph/loaders"
+	"github.com/factly/dega-api/graph/models"
+	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -97,7 +97,7 @@ func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) 
 	}
 
 	var org *models.Organization = new(models.Organization)
-	err = mongo.Factcheck.Collection("organization").FindOne(ctx, query).Decode(&org)
+	err = mongo.Core.Collection("organization").FindOne(ctx, query).Decode(&org)
 	if err != nil {
 		log.Fatal(err)
 	}
