@@ -16,6 +16,7 @@ type Post struct {
 	Featured        bool           `bson:"featured"`
 	Sticky          bool           `bson:"sticky"`
 	Updates         *string        `bson:"updates"`
+	SubTitle        *string        `bson:"sub_title"`
 	Slug            string         `bson:"slug"`
 	CreatedDate     time.Time      `bson:"created_date"`
 	Status          DatabaseRef    `bson:"status"`

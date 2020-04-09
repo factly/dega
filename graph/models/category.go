@@ -12,6 +12,7 @@ type Category struct {
 	Slug            string    `bson:"slug"`
 	ClientID        string    `bson:"client_id"`
 	CreatedDate     time.Time `bson:"created_date"`
+	Description     *string   `bson:"description"`
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 }
 

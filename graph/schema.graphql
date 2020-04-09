@@ -3,6 +3,7 @@ type Category {
   _class: String!
   name: String!
   slug: String!
+  description: String
   client_id: String!
   created_date: Time!
   last_updated_date: Time!
@@ -13,6 +14,7 @@ type Tag {
   _class: String!
   name: String!
   slug: String!
+  description: String
   client_id: String!
   created_date: Time!
   last_updated_date: Time!
@@ -48,12 +50,15 @@ type Medium {
   file_size: String!
   title: String!
   alt_text: String!
+  description: String
   uploaded_by: String!
   published_date: Time!
   last_updated_date: Time!
   slug: String
   client_id: String!
   created_date: Time!
+  relative_url: String!
+  source_url: String!
   _class: String!
 }
 
@@ -69,6 +74,7 @@ type Post {
   sticky: Boolean!
   updates: String
   slug: String!
+  sub_title: String
   created_date: Time!
   status: Status!
   format: Format!
@@ -84,6 +90,22 @@ type Organization {
   name: String!
   site_title: String!
   tag_line: String!
+  description: String
+  baidu_verification_code: String
+  bing_verification_code: String
+  google_verification_code: String
+  yandex_verification_code: String
+  facebook_url: String
+  twitter_url: String
+  instagram_url: String
+  linked_in_url: String
+  pinterest_url: String
+  youTube_url: String
+  github_url: String
+  facebook_page_access_token: String
+  ga_tracking_code: String
+  site_language: String
+  time_zone: String
   client_id: String!
   slug: String!
   email: String!
@@ -104,15 +126,13 @@ type User {
   last_name: String!
   display_name: String!
   description: String
+  facebook_url: String
+  twitter_url: String
+  instagram_url: String
+  linkedin_url: String
+  github_url: String
   slug: String!
-  enabled: Boolean!
-  email_verified: Boolean!
   email: String!
-  keycloak_id: String!
-  created_date: Time!
-  is_super_admin: Boolean!
-  organizationDefault: Organization!
-  organizationCurrent: Organization!
   media: Medium
   _class: String!
 }

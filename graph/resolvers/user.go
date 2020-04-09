@@ -14,14 +14,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func (r *userResolver) OrganizationDefault(ctx context.Context, obj *models.User) (*models.Organization, error) {
-	return loaders.GetOrganizationLoader(ctx).Load(obj.OrganizationDefault.ID)
-}
-
-func (r *userResolver) OrganizationCurrent(ctx context.Context, obj *models.User) (*models.Organization, error) {
-	return loaders.GetOrganizationLoader(ctx).Load(obj.OrganizationCurrent.ID)
-}
-
 func (r *userResolver) Media(ctx context.Context, obj *models.User) (*models.Medium, error) {
 	if obj.Media == nil {
 		return nil, nil

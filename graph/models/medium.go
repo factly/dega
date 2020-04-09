@@ -17,7 +17,10 @@ type Medium struct {
 	PublishedDate   time.Time `bson:"published_date"`
 	LastUpdatedDate time.Time `bson:"last_updated_date"`
 	Slug            *string   `bson:"slug"`
+	Description     *string   `bson:"description"`
 	ClientID        string    `bson:"client_id"`
 	CreatedDate     time.Time `bson:"created_date"`
 	Class           string    `bson:"_class"`
+	RelativeURL     string    `bson:"relative_url"`
+	SourceURL       string    `bson:"source_url"`
 }

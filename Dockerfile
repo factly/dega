@@ -6,5 +6,5 @@ ENV PORT 8080
 ENV MONGO_URI mongodb://localhost:27017
 COPY . .
 RUN go build -o main .
-EXPOSE 8080
+EXPOSE ${PORT}
 CMD ["./main"]
