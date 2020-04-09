@@ -204,6 +204,7 @@ type Factcheck {
   categories: [Category!]!
   tags: [Tag!]!
   degaUsers: [User!]!
+  schemas: [Schemas!]!
   _class: String!
 }
 
@@ -274,6 +275,40 @@ type Sitemaps {
   claims: [Sitemap]
   claimants: [Sitemap]
   ratings: [Sitemap] 
+}
+
+type Author {
+  name: String
+  type: String!
+  url: String
+  image: String
+}
+
+type ReviewRating {
+  type: String!
+  ratingValue: Int!
+  bestRating: Int!
+  worstRating: Int!
+  image: String
+  alternateName: String!
+}
+
+type ItemReviewed {
+  type: String!
+  author: Author!
+  datePublished: Time!
+  name: String
+}
+
+type Schemas {
+  context: String
+  type: String!
+  datePublished: Time!
+  url: String
+  author: Author!
+  claimReviewed: String!
+  reviewRating: ReviewRating!
+  itemReviewed: ItemReviewed!
 }
 
 type Query {

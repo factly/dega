@@ -72,6 +72,14 @@ models:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Tag
   TagsPaging:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.TagsPaging
+  Author:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Author
+  ItemReviewed:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.ItemReviewed
+  ReviewRating:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.ReviewRating
+  Schemas:
+    model: github.com/monarkatfactly/dega-api-go.git/graph/models.Schemas
   Organization:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.Organization
     fields:
@@ -148,6 +156,8 @@ models:
         degaUsers:
           resolver: true
         claims:
+          resolver: true
+        schemas:
           resolver: true
   FactchecksPaging:
     model: github.com/monarkatfactly/dega-api-go.git/graph/models.FactchecksPaging
