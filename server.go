@@ -17,11 +17,17 @@ import (
 )
 
 const defaultPort = "8080"
+const defaultMode = "prod"
 
 func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
+	}
+
+	mode := os.Getenv("MODE")
+	if mode == "" {
+		mode = defaultMode
 	}
 
 	router := chi.NewRouter()
@@ -45,8 +51,11 @@ func main() {
 	mongo.Setup()
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	router.Handle("/query", loaders.DataloaderMiddleware(srv))
+
+	if mode == "dev" {
+		router.Handle("/", playground.Handler("GraphQL playground", "/query"))
+	}
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
 	log.Fatal(http.ListenAndServe(":"+port, router))

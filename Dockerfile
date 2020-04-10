@@ -4,6 +4,7 @@ COPY go.mod go.sum ./
 RUN go mod download
 ENV PORT 8080
 ENV MONGO_URI mongodb://localhost:27017
+ENV MODE prod
 COPY . .
 RUN go build -o main .
 EXPOSE ${PORT}
