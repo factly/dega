@@ -3,9 +3,9 @@ package resolvers
 import (
 	"context"
 	"errors"
-	"log"
 
 	"github.com/factly/dega-api/graph/generated"
+	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -30,7 +30,8 @@ func (r *sitemapsResolver) Categories(ctx context.Context, obj *models.Sitemaps)
 	cursor, err := mongo.Core.Collection("category").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -39,7 +40,8 @@ func (r *sitemapsResolver) Categories(ctx context.Context, obj *models.Sitemaps)
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -61,7 +63,8 @@ func (r *sitemapsResolver) Tags(ctx context.Context, obj *models.Sitemaps) ([]*m
 	cursor, err := mongo.Core.Collection("tag").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -70,7 +73,8 @@ func (r *sitemapsResolver) Tags(ctx context.Context, obj *models.Sitemaps) ([]*m
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -92,7 +96,8 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 	cursor, err := mongo.Core.Collection("degaUsers").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -101,7 +106,8 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -123,7 +129,8 @@ func (r *sitemapsResolver) Formats(ctx context.Context, obj *models.Sitemaps) ([
 	cursor, err := mongo.Core.Collection("format").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -132,7 +139,8 @@ func (r *sitemapsResolver) Formats(ctx context.Context, obj *models.Sitemaps) ([
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -154,7 +162,8 @@ func (r *sitemapsResolver) Statuses(ctx context.Context, obj *models.Sitemaps) (
 	cursor, err := mongo.Core.Collection("status").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -163,7 +172,8 @@ func (r *sitemapsResolver) Statuses(ctx context.Context, obj *models.Sitemaps) (
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -185,7 +195,8 @@ func (r *sitemapsResolver) Posts(ctx context.Context, obj *models.Sitemaps) ([]*
 	cursor, err := mongo.Core.Collection("post").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -194,7 +205,8 @@ func (r *sitemapsResolver) Posts(ctx context.Context, obj *models.Sitemaps) ([]*
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -216,7 +228,8 @@ func (r *sitemapsResolver) Factchecks(ctx context.Context, obj *models.Sitemaps)
 	cursor, err := mongo.Factcheck.Collection("factcheck").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -225,7 +238,8 @@ func (r *sitemapsResolver) Factchecks(ctx context.Context, obj *models.Sitemaps)
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -247,7 +261,8 @@ func (r *sitemapsResolver) Claims(ctx context.Context, obj *models.Sitemaps) ([]
 	cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -256,7 +271,8 @@ func (r *sitemapsResolver) Claims(ctx context.Context, obj *models.Sitemaps) ([]
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -278,7 +294,8 @@ func (r *sitemapsResolver) Claimants(ctx context.Context, obj *models.Sitemaps) 
 	cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -287,7 +304,8 @@ func (r *sitemapsResolver) Claimants(ctx context.Context, obj *models.Sitemaps) 
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -309,7 +327,8 @@ func (r *sitemapsResolver) Ratings(ctx context.Context, obj *models.Sitemaps) ([
 	cursor, err := mongo.Factcheck.Collection("rating").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Sitemap
@@ -318,7 +337,8 @@ func (r *sitemapsResolver) Ratings(ctx context.Context, obj *models.Sitemaps) ([
 		var each *models.Sitemap
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}

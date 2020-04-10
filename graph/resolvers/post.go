@@ -3,10 +3,10 @@ package resolvers
 import (
 	"context"
 	"errors"
-	"log"
 
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
+	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -152,13 +152,15 @@ func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []s
 	cursor, err := mongo.Core.Collection("post").Find(ctx, query, opts)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	count, err := mongo.Core.Collection("post").CountDocuments(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Post
@@ -167,7 +169,8 @@ func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []s
 		var each *models.Post
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}

@@ -3,10 +3,10 @@ package resolvers
 import (
 	"context"
 	"errors"
-	"log"
 
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
+	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -88,7 +88,8 @@ func (r *factcheckResolver) DegaUsers(ctx context.Context, obj *models.Factcheck
 func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) ([]*models.Schemas, error) {
 	claims, err := r.Claims(ctx, obj)
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	client := obj.ClientID
@@ -99,13 +100,15 @@ func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) 
 	var org *models.Organization = new(models.Organization)
 	err = mongo.Core.Collection("organization").FindOne(ctx, query).Decode(&org)
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	orgMediaLogo, err := r.Organization().MediaLogo(ctx, org)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 	var schemas []*models.Schemas
 
@@ -145,7 +148,8 @@ func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) 
 
 		rating, err := r.Claim().Rating(ctx, claim)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 
 		ratingMedia, err := r.Rating().Media(ctx, rating)
@@ -168,7 +172,8 @@ func (r *factcheckResolver) Schemas(ctx context.Context, obj *models.Factcheck) 
 		claimant, err := r.Claim().Claimant(ctx, claim)
 
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 
 		claimantMedia, err := r.Claimant().Media(ctx, claimant)
@@ -267,13 +272,15 @@ func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tag
 	cursor, err := mongo.Factcheck.Collection("factcheck").Find(ctx, query, opts)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	count, err := mongo.Factcheck.Collection("factcheck").CountDocuments(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Factcheck
@@ -282,7 +289,8 @@ func (r *queryResolver) Factchecks(ctx context.Context, categories []string, tag
 		var each *models.Factcheck
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}

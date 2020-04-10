@@ -9,10 +9,11 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
-	"github.com/factly/dega-api/graph/middleware"
 	"github.com/factly/dega-api/graph/mongo"
 	"github.com/factly/dega-api/graph/resolvers"
+	"github.com/factly/dega-api/graph/validater"
 	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 )
 
@@ -45,8 +46,9 @@ func main() {
 
 	router.Use(cors.Handler)
 
-	router.Use(middleware.Client())
-	router.Use(middleware.Tracing())
+	router.Use(validater.Client())
+	router.Use(middleware.RealIP)
+	router.Use(middleware.Logger)
 
 	mongo.Setup()
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))

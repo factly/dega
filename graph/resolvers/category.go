@@ -3,8 +3,8 @@ package resolvers
 import (
 	"context"
 	"errors"
-	"log"
 
+	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -61,13 +61,15 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int,
 	cursor, err := mongo.Core.Collection("category").Find(ctx, query, opts)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	count, err := mongo.Core.Collection("category").CountDocuments(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Category
@@ -76,7 +78,8 @@ func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int,
 		var each *models.Category
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}
@@ -100,6 +103,7 @@ func (r *queryResolver) Category(ctx context.Context, id string) (*models.Catego
 	oid, err := primitive.ObjectIDFromHex(id)
 
 	if err != nil {
+		logger.Error(err)
 		return nil, nil
 	}
 

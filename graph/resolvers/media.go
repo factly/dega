@@ -3,8 +3,8 @@ package resolvers
 import (
 	"context"
 	"errors"
-	"log"
 
+	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -24,7 +24,8 @@ func (r *queryResolver) Media(ctx context.Context) ([]*models.Medium, error) {
 	cursor, err := mongo.Core.Collection("media").Find(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var results []*models.Medium
@@ -33,7 +34,8 @@ func (r *queryResolver) Media(ctx context.Context) ([]*models.Medium, error) {
 		var each *models.Medium
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		results = append(results, each)
 	}

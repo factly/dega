@@ -3,10 +3,10 @@ package resolvers
 import (
 	"context"
 	"errors"
-	"log"
 
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
+	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -85,13 +85,15 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 	cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, query, opts)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	count, err := mongo.Factcheck.Collection("claim").CountDocuments(ctx, query)
 
 	if err != nil {
-		log.Fatal(err)
+		logger.Error(err)
+		return nil, nil
 	}
 
 	var nodes []*models.Claim
@@ -100,7 +102,8 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 		var each *models.Claim
 		err := cursor.Decode(&each)
 		if err != nil {
-			log.Fatal(err)
+			logger.Error(err)
+			return nil, nil
 		}
 		nodes = append(nodes, each)
 	}

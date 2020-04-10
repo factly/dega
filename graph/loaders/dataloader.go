@@ -2,10 +2,11 @@ package loaders
 
 import (
 	"context"
-	"log"
+	"errors"
 	"net/http"
 	"time"
 
+	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/mongo"
 	"go.mongodb.org/mongo-driver/bson"
@@ -48,7 +49,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -56,7 +58,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Factcheck.Collection("rating").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var ratings []*models.Rating
@@ -65,7 +68,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Rating
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					ratings = append(ratings, each)
 				}
@@ -80,7 +84,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if r[id] == nil {
-						log.Fatal(r[id])
+						logger.Error(errors.New("Rating not found for " + id))
 					}
 					results[i] = r[id]
 				}
@@ -99,7 +103,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -107,7 +112,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var claimants []*models.Claimant
@@ -116,7 +122,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Claimant
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					claimants = append(claimants, each)
 				}
@@ -131,7 +138,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if c[id] == nil {
-						log.Fatal(c[id])
+						logger.Error(errors.New("Claimant not found for " + id))
 					}
 					results[i] = c[id]
 				}
@@ -150,7 +157,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -158,7 +166,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Core.Collection("media").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var media []*models.Medium
@@ -167,7 +176,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Medium
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					media = append(media, each)
 				}
@@ -182,7 +192,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if m[id] == nil {
-						log.Fatal(m[id])
+						logger.Error(errors.New("Medium not found for " + id))
 					}
 					results[i] = m[id]
 				}
@@ -201,7 +211,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -209,7 +220,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Core.Collection("status").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var statuses []*models.Status
@@ -218,7 +230,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Status
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					statuses = append(statuses, each)
 				}
@@ -233,7 +246,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if s[id] == nil {
-						log.Fatal(s[id])
+						logger.Error(errors.New("Status not found for " + id))
 					}
 					results[i] = s[id]
 				}
@@ -252,7 +265,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -260,7 +274,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Core.Collection("format").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var formats []*models.Format
@@ -269,7 +284,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Format
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					formats = append(formats, each)
 				}
@@ -284,7 +300,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if f[id] == nil {
-						log.Fatal(f[id])
+						logger.Error(errors.New("Format not found for " + id))
 					}
 					results[i] = f[id]
 				}
@@ -303,7 +319,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -311,7 +328,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Core.Collection("organization").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var organizations []*models.Organization
@@ -320,24 +338,25 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Organization
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					organizations = append(organizations, each)
 				}
 
-				f := make(map[string]*models.Organization, len(ids))
+				o := make(map[string]*models.Organization, len(ids))
 
 				for _, organization := range organizations {
-					f[organization.ID] = organization
+					o[organization.ID] = organization
 				}
 
 				results := make([]*models.Organization, len(ids))
 
 				for i, id := range ids {
-					if f[id] == nil {
-						log.Fatal(f[id])
+					if o[id] == nil {
+						logger.Error(errors.New("Organization not found for " + id))
 					}
-					results[i] = f[id]
+					results[i] = o[id]
 				}
 
 				return results, nil
@@ -354,7 +373,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -362,7 +382,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Factcheck.Collection("claim").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var claims []*models.Claim
@@ -371,7 +392,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Claim
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					claims = append(claims, each)
 				}
@@ -386,7 +408,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if c[id] == nil {
-						log.Fatal(c[id])
+						logger.Error(errors.New("Claim not found for " + id))
 					}
 					results[i] = c[id]
 				}
@@ -405,7 +427,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -413,7 +436,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Core.Collection("category").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var categories []*models.Category
@@ -422,7 +446,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Category
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					categories = append(categories, each)
 				}
@@ -437,7 +462,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if c[id] == nil {
-						log.Fatal(c[id])
+						logger.Error(errors.New("Category not found for " + id))
 					}
 					results[i] = c[id]
 				}
@@ -456,7 +481,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -464,7 +490,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Core.Collection("tag").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var tags []*models.Tag
@@ -473,7 +500,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.Tag
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					tags = append(tags, each)
 				}
@@ -488,7 +516,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if t[id] == nil {
-						log.Fatal(t[id])
+						logger.Error(errors.New("Tag not found for " + id))
 					}
 					results[i] = t[id]
 				}
@@ -507,7 +535,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					rid, err := primitive.ObjectIDFromHex(id)
 
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					keys = append(keys, rid)
 				}
@@ -515,7 +544,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				cursor, err := mongo.Core.Collection("dega_user").Find(ctx, bson.M{"_id": bson.M{"$in": keys}})
 
 				if err != nil {
-					log.Fatal(err)
+					logger.Error(err)
+					return nil, nil
 				}
 
 				var users []*models.User
@@ -524,7 +554,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					var each *models.User
 					err := cursor.Decode(&each)
 					if err != nil {
-						log.Fatal(err)
+						logger.Error(err)
+						return nil, nil
 					}
 					users = append(users, each)
 				}
@@ -539,7 +570,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				for i, id := range ids {
 					if u[id] == nil {
-						log.Fatal(u[id])
+						logger.Error(errors.New("User not found for " + id))
 					}
 					results[i] = u[id]
 				}
