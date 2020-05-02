@@ -129,3 +129,5 @@ fabric.properties
 /Godeps/
 
 # End of https://www.gitignore.io/api/go
+
+.env
