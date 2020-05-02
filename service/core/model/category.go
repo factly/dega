@@ -7,7 +7,7 @@ import (
 // Category model
 type Category struct {
 	gorm.Model
-	Title       string     `gorm:"column:title" json:"title"`
+	Name        string     `gorm:"column:name" json:"name"`
 	Slug        string     `gorm:"column:slug" json:"slug"`
 	Description string     `gorm:"column:description" json:"description"`
 	ParentID    uint       `gorm:"column:parent_id" json:"parent_id"`

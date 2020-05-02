@@ -8,9 +8,6 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
-
-	core "github.com/factly/dega-server/service/core/model"
-	factcheck "github.com/factly/dega-server/service/factcheck/model"
 )
 
 // DB - gorm DB
@@ -38,12 +35,4 @@ func SetupDB() {
 
 	fmt.Println("connected to database ...")
 
-	DB.AutoMigrate(
-		&factcheck.Claimant{},
-		&core.Medium{},
-		&core.Category{},
-	)
-
-	DB.Model(&factcheck.Claimant{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")
-	DB.Model(&core.Category{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")
 }

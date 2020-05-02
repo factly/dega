@@ -4,29 +4,23 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi"
-	"github.com/go-chi/chi/middleware"
-	"github.com/go-chi/cors"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/category"
 	"github.com/factly/dega-server/service/core/action/medium"
+	"github.com/factly/dega-server/service/core/model"
 )
 
 // Router - CRUD servies
 func Router() http.Handler {
 	r := chi.NewRouter()
 
-	r.Use(middleware.SetHeader("Content-Type", "application/json"))
+	config.DB.AutoMigrate(
+		&model.Medium{},
+		&model.Category{},
+	)
 
-	r.Use(cors.Handler(cors.Options{
-		// AllowedOrigins: []string{"https://foo.com"}, // Use this to allow specific origin hosts
-		AllowedOrigins: []string{"*"},
-		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
-		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
-		ExposedHeaders:   []string{"Link"},
-		AllowCredentials: false,
-		MaxAge:           300, // Maximum value not ignored by any of major browsers
-	}))
+	config.DB.Model(&model.Category{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")
 
 	r.Mount("/media", medium.Router())
 	r.Mount("/categories", category.Router())
