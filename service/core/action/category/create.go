@@ -7,21 +7,22 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util/render"
 )
 
 func create(w http.ResponseWriter, r *http.Request) {
 
-	req := &model.Category{}
+	category := &model.Category{}
 
-	json.NewDecoder(r.Body).Decode(&req)
+	json.NewDecoder(r.Body).Decode(&category)
 
-	err := config.DB.Model(&model.Category{}).Create(&req).Error
+	err := config.DB.Model(&model.Category{}).Create(&category).Error
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	config.DB.Model(&req).Association("Medium").Find(&req.Medium)
+	config.DB.Model(&category).Association("Medium").Find(&category.Medium)
 
-	json.NewEncoder(w).Encode(req)
+	render.JSON(w, http.StatusCreated, category)
 }

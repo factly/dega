@@ -26,8 +26,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	category.ID = uint(id)
 
 	config.DB.Model(&model.Category{}).Updates(model.Category{
-		Name: req.Name,
-		Slug: req.Slug,
+		Name:        req.Name,
+		Slug:        req.Slug,
+		Description: req.Description,
+		ParentID:    req.ParentID,
+		MediumID:    req.MediumID,
 	})
 
 	config.DB.First(&category)
