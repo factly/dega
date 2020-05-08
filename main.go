@@ -1,11 +1,14 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core"
 	"github.com/factly/dega-server/service/factcheck"
+	"github.com/joho/godotenv"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -13,6 +16,19 @@ import (
 )
 
 func main() {
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("error loading .env file")
+	}
+
+	port, ok := os.LookupEnv("PORT")
+	if !ok {
+		port = "8820"
+	}
+
+	port = ":" + port
+
 	// db setup
 	config.SetupDB()
 
@@ -34,5 +50,5 @@ func main() {
 	r.Mount("/factcheck", factcheck.Router())
 	r.Mount("/core", core.Router())
 
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe(port, r)
 }
