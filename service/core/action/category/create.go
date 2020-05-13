@@ -2,6 +2,7 @@ package category
 
 import (
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 
@@ -10,6 +11,17 @@ import (
 	"github.com/factly/dega-server/util/render"
 )
 
+// create - Create category
+// @Summary Create category
+// @Description Create category
+// @Tags category
+// @ID add-category
+// @Consume json
+// @Produce json
+// @Param Category body category true "Category Object"
+// @Success 201 {object} model.Category
+// @Failure 400 {array} string
+// @Router /categories [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	category := &model.Category{}
@@ -22,7 +34,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	config.DB.Model(&category).Association("Medium").Find(&category.Medium)
+	fmt.Printf("%+v", category)
+
+	/*config.DB.Model(&category).Association("Medium").Find(&category.Medium)*/
 
 	render.JSON(w, http.StatusCreated, category)
 }

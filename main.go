@@ -15,6 +15,19 @@ import (
 	"github.com/joho/godotenv"
 )
 
+// @title Dega API
+// @version 1.0
+// @description Dega server API
+
+// @contact.name API Support
+// @contact.url http://www.swagger.io/support
+// @contact.email support@swagger.io
+
+// @license.name Apache 2.0
+// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @host localhost:3000
+// @BasePath /
 func main() {
 	err := godotenv.Load()
 

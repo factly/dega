@@ -11,7 +11,6 @@ import (
 )
 
 func update(w http.ResponseWriter, r *http.Request) {
-
 	categoryID := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(categoryID)
 
@@ -25,7 +24,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	category := &model.Category{}
 	category.ID = uint(id)
 
-	config.DB.Model(&model.Category{}).Updates(model.Category{
+	config.DB.Model(&category).Updates(model.Category{
 		Name:        req.Name,
 		Slug:        req.Slug,
 		Description: req.Description,
@@ -34,6 +33,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	})
 
 	config.DB.First(&category)
+	config.DB.Model(&category).Association("Medium").Find(&category.Medium)
 
 	json.NewEncoder(w).Encode(category)
 }

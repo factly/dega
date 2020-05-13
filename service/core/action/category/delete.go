@@ -10,6 +10,15 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// delete - Delete category by id
+// @Summary Delete a category
+// @Description Delete category by ID
+// @Tags category
+// @ID delete-category-by-id
+// @Param id path string true "Category ID"
+// @Success 200
+// @Failure 400 {array} string
+// @Router /categories/{id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
 	categoryID := chi.URLParam(r, "id")
