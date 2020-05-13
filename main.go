@@ -9,10 +9,10 @@ import (
 	"github.com/factly/dega-server/service/core"
 	"github.com/factly/dega-server/service/factcheck"
 	"github.com/go-chi/chi/middleware"
+	"github.com/joho/godotenv"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
-	"github.com/joho/godotenv"
 )
 
 // @title Dega API
@@ -29,20 +29,21 @@ import (
 // @host localhost:3000
 // @BasePath /
 func main() {
+
 	err := godotenv.Load()
-
 	if err != nil {
-		log.Fatal("error loding .env file")
+		log.Fatal("error loading .env file")
 	}
-
-	// db setup
-	config.SetupDB()
 
 	port, ok := os.LookupEnv("PORT")
 	if !ok {
-		port = "3000"
+		port = "8820"
 	}
+
 	port = ":" + port
+
+	// db setup
+	config.SetupDB()
 
 	r := chi.NewRouter()
 
