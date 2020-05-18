@@ -1,13 +1,13 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
+	"github.com/factly/dega-server/config"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Medium model
 type Medium struct {
-	gorm.Model
+	config.Base
 	Name        string         `gorm:"column:name" json:"name"`
 	Slug        string         `gorm:"column:slug" json:"slug"`
 	Type        string         `gorm:"column:type" json:"type"`

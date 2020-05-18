@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/category"
 	"github.com/factly/dega-server/service/core/action/medium"
+	"github.com/factly/dega-server/service/core/action/space"
 	"github.com/factly/dega-server/service/core/model"
 )
 
@@ -24,6 +25,7 @@ func Router() http.Handler {
 
 	r.Mount("/media", medium.Router())
 	r.Mount("/categories", category.Router())
+	r.Mount("/spaces", space.Router())
 
 	return r
 }

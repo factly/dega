@@ -1,13 +1,13 @@
 package model
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/jinzhu/gorm"
 )
 
 // Rating model
 type Rating struct {
-	gorm.Model
+	config.Base
 	Name         string       `gorm:"column:name" json:"name"`
 	Slug         string       `gorm:"column:slug" json:"slug"`
 	Description  string       `gorm:"column:description" json:"description"`

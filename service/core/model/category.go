@@ -1,12 +1,12 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
+	"github.com/factly/dega-server/config"
 )
 
 // Category model
 type Category struct {
-	gorm.Model
+	config.Base
 	Name        string `gorm:"column:name" json:"name" validate:"required"`
 	Slug        string `gorm:"column:slug" json:"slug" validate:"required"`
 	Description string `gorm:"column:description" json:"description"`
