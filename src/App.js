@@ -1,13 +1,17 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'antd/dist/antd.css';
-import Dashboard from './pages/dashboard';
+import BasicLayout from './layouts/basic';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Route path="/" component={Dashboard} />
+        <BasicLayout>
+          <Switch>
+            <Route exact path={process.env.PUBLIC_URL + '/'} />
+          </Switch>
+        </BasicLayout>
       </Router>
     </div>
   );

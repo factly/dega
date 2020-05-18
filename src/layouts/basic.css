@@ -1,0 +1,31 @@
+.slider-menu {
+  height: 100vh;
+}
+
+.menu-header {
+  height: 64px;
+  line-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-logo {
+  height: 36px;
+  width: 36px;
+}
+
+.menu-company {
+  color: #ffffff;
+  font-size: 24px;
+  padding-left: 16px;
+}
+
+.layout-content {
+  padding: 16px;
+}
+
+.layout-header {
+  background-color: #ffffff;
+  padding-left: 16px;
+}

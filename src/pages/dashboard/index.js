@@ -1,22 +1,14 @@
-import React from "react";
-import { Typography } from "antd";
+import React from 'react';
+import { Typography } from 'antd';
+import ProLayout from '@ant-design/pro-layout';
+import logo from '../../assets/logo.png';
+import { shallowEqual, useSelector } from 'react-redux';
 
 function Dashboard() {
-
   const { Title } = Typography;
-
-  
-
-  return (
-    <div className="container">
-      <div className="content">
-    
-        <div >
-          <Title level={3} className="login-form-title">Dashboard</Title>  
-        </div>
-      </div>
-    </div>
-  );
+  const settings = useSelector((state) => state.settings.settings);
+  console.log(settings);
+  return <ProLayout logo={logo} {...settings} />;
 }
 
 export default Dashboard;
