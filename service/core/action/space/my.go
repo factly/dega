@@ -25,7 +25,6 @@ type orgWithSpace struct {
 }
 
 func my(w http.ResponseWriter, r *http.Request) {
-
 	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/my", nil)
 	req.Header.Set("X-User", r.Header.Get("X-User"))
 	req.Header.Set("Content-Type", "application/json")
@@ -33,7 +32,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		return
 	}
 	defer resp.Body.Close()
 	body, _ := ioutil.ReadAll(resp.Body)

@@ -19,9 +19,14 @@ func Router() http.Handler {
 	config.DB.AutoMigrate(
 		&model.Medium{},
 		&model.Category{},
+		&model.Space{},
 	)
 
 	config.DB.Model(&model.Category{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.Space{}).AddForeignKey("logo_id", "media(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.Space{}).AddForeignKey("logo_mobile_id", "media(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.Space{}).AddForeignKey("fav_icon_id", "media(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.Space{}).AddForeignKey("mobile_icon_id", "media(id)", "RESTRICT", "RESTRICT")
 
 	r.Mount("/media", medium.Router())
 	r.Mount("/categories", category.Router())

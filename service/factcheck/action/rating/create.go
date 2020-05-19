@@ -2,7 +2,6 @@ package rating
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -18,7 +17,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err := config.DB.Model(&model.Rating{}).Create(&req).Error
 
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	config.DB.Model(&req).Association("Medium").Find(&req.Medium)

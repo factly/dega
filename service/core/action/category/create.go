@@ -3,7 +3,6 @@ package category
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -31,7 +30,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err := config.DB.Model(&model.Category{}).Create(&category).Error
 
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	fmt.Printf("%+v", category)
