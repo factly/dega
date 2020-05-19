@@ -5,10 +5,7 @@ import logo from '../../assets/logo.png';
 import { shallowEqual, useSelector } from 'react-redux';
 
 function Dashboard() {
-  const { Title } = Typography;
-  const settings = useSelector((state) => state.settings.settings);
-  console.log(settings);
-  return <ProLayout logo={logo} {...settings} />;
+  return <h1>'Dashboard'</h1>;
 }
 
 export default Dashboard;

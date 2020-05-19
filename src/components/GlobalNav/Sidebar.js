@@ -3,11 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import logo from '../../assets/logo.svg';
-import { PieChartOutlined, UserOutlined } from '@ant-design/icons';
+import { PieChartOutlined, UserOutlined, ContainerOutlined } from '@ant-design/icons';
 import { toggleSider } from '../../actions/settings';
 const { Sider } = Layout;
 
 function Sidebar({ navTheme }) {
+  const { SubMenu } = Menu;
   const {
     sider: { collapsed },
   } = useSelector((state) => state.settings);
@@ -30,7 +31,7 @@ function Sidebar({ navTheme }) {
           DEGA
         </span>
       </div>
-      <Menu theme={navTheme} mode="vertical" className="slider-menu">
+      <Menu theme={navTheme} mode="inline" className="slider-menu">
         <Menu.Item key="1">
           <Link to={process.env.PUBLIC_URL + '/'}>
             <PieChartOutlined />
@@ -38,6 +39,12 @@ function Sidebar({ navTheme }) {
           </Link>
         </Menu.Item>
         <Menu.Item key="2">
+          <Link to="/spaces">
+            <UserOutlined />
+            <span>Spaces</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key="3">
           <Link to={process.env.PUBLIC_URL + '/tags'}>
             <UserOutlined />
             <span>Tags</span>
