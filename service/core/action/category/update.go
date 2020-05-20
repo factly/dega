@@ -11,8 +11,20 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// update - Update category by id
+// @Summary Update a category by id
+// @Description Update category by ID
+// @Tags Category
+// @ID update-category-by-id
+// @Produce json
+// @Consume json
+// @Param X-User header string true "User ID"
+// @Param category_id path string true "Category ID"
+// @Param Category body category false "Category"
+// @Success 200 {object} model.Category
+// @Router /core/categories/{category_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
-	categoryID := chi.URLParam(r, "id")
+	categoryID := chi.URLParam(r, "category_id")
 	id, err := strconv.Atoi(categoryID)
 
 	if err != nil {

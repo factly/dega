@@ -1,0 +1,212 @@
+basePath: /
+definitions:
+  category.category:
+    properties:
+      description:
+        type: string
+      medium_id:
+        type: integer
+      name:
+        type: string
+      parent_id:
+        type: integer
+      slug:
+        type: string
+    type: object
+  model.Category:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      medium:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      medium_id:
+        type: integer
+      name:
+        type: string
+      parent_id:
+        type: integer
+      slug:
+        type: string
+      space_id:
+        type: integer
+      updated_at:
+        type: string
+    required:
+    - name
+    - slug
+    type: object
+  model.Medium:
+    properties:
+      alt_text:
+        type: string
+      caption:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      dimensions:
+        type: string
+      file_size:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      title:
+        type: string
+      type:
+        type: string
+      updated_at:
+        type: string
+      url:
+        type: string
+    type: object
+host: localhost:8820
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: Dega server API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Dega API
+  version: "1.0"
+paths:
+  /core/categories:
+    get:
+      description: Get all categories
+      operationId: get-all-categories
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Category'
+            type: array
+      summary: Show all categories
+      tags:
+      - Category
+    post:
+      description: Create category
+      operationId: add-category
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Category Object
+        in: body
+        name: Category
+        required: true
+        schema:
+          $ref: '#/definitions/category.category'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Category'
+      summary: Create category
+      tags:
+      - Category
+  /core/categories/{category_id}:
+    delete:
+      description: Delete category by ID
+      operationId: delete-category-by-id
+      parameters:
+      - description: Category ID
+        in: path
+        name: category_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a category
+      tags:
+      - Category
+    get:
+      description: Get category by ID
+      operationId: get-category-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Category ID
+        in: path
+        name: category_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+      summary: Show a category by id
+      tags:
+      - Category
+    put:
+      description: Update category by ID
+      operationId: update-category-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Category ID
+        in: path
+        name: category_id
+        required: true
+        type: string
+      - description: Category
+        in: body
+        name: Category
+        schema:
+          $ref: '#/definitions/category.category'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Category'
+      summary: Update a category by id
+      tags:
+      - Category
+swagger: "2.0"

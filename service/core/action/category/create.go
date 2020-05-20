@@ -12,14 +12,14 @@ import (
 // create - Create category
 // @Summary Create category
 // @Description Create category
-// @Tags category
+// @Tags Category
 // @ID add-category
 // @Consume json
 // @Produce json
+// @Param X-User header string true "User ID"
 // @Param Category body category true "Category Object"
 // @Success 201 {object} model.Category
-// @Failure 400 {array} string
-// @Router /categories [post]
+// @Router /core/categories [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	category := &model.Category{}
