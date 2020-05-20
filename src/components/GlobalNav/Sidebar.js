@@ -33,7 +33,7 @@ function Sidebar({ navTheme }) {
       </div>
       <Menu theme={navTheme} mode="inline" className="slider-menu">
         <Menu.Item key="1">
-          <Link to={process.env.PUBLIC_URL + '/'}>
+          <Link to="/dashboard">
             <PieChartOutlined />
             <span>Dashboard</span>
           </Link>
@@ -45,7 +45,7 @@ function Sidebar({ navTheme }) {
           </Link>
         </Menu.Item>
         <Menu.Item key="3">
-          <Link to={process.env.PUBLIC_URL + '/tags'}>
+          <Link to="/tags">
             <UserOutlined />
             <span>Tags</span>
           </Link>

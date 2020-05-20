@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Layout, Menu, Dropdown, AutoComplete, Divider, Row, Col, PageHeader } from 'antd';
+import { Layout, Input, Menu, Dropdown, AutoComplete, Divider, Row, Col, PageHeader } from 'antd';
 import {
   MenuUnfoldOutlined,
   UserOutlined,
@@ -17,7 +17,7 @@ const mockVal = (str, repeat = 1) => ({
 });
 
 function Header() {
-  const { Header } = Layout;
+  const { Header: HeaderAnt } = Layout;
   const [options, setOptions] = React.useState([]);
   const {
     sider: { collapsed },
@@ -48,31 +48,43 @@ function Header() {
     </Menu>
   );
   return (
-    <Header className="layout-header">
+    <HeaderAnt className="layout-header">
       <Row>
-        <Col flex="100px">
-          {<MenuFoldComponent className="trigger" onClick={() => dispatch(toggleSider())} />}
+        <Col xs={2} sm={4}>
+          {
+            <MenuFoldComponent
+              style={{ fontSize: '20px' }}
+              className="trigger"
+              onClick={() => dispatch(toggleSider())}
+            />
+          }
           <Divider type="vertical" />
         </Col>
-        <Col flex="auto">
+        <Col xs={22} sm={20}>
           <PageHeader
             extra={[
-              <AutoComplete
-                options={options}
-                onSelect={onSelect}
-                onSearch={onSearch}
-                placeholder="Search....."
-              />,
-              <Dropdown.Button overlay={menu} icon={<DownOutlined />}>
-                Selected Space
-              </Dropdown.Button>,
+              //   <AutoComplete
+              //     dropdownClassName="certain-category-search-dropdown"
+              //     dropdownMatchSelectWidth={500}
+              //     style={{ width: 250 }}
+              //     options={options}
+              //   >
+              //     <Input.Search size="large" placeholder="input here" />
+              //   </AutoComplete>,
+              <Dropdown overlay={menu}>
+                <span className="ant-dropdown-link">
+                  Selected Space
+                  {` `}
+                  <DownOutlined />
+                </span>
+              </Dropdown>,
               <AccountMenu />,
               <SelectOrg />,
             ]}
           />
         </Col>
       </Row>
-    </Header>
+    </HeaderAnt>
   );
 }
 
