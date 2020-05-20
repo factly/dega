@@ -12,7 +12,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	data := []model.Tag{}
 
-	config.DB.Model(&model.Tag{}).Find(&data)
+	err := config.DB.Model(&model.Tag{}).Find(&data).Error
+
+	if err != nil {
+		return
+	}
 
 	render.JSON(w, http.StatusOK, data)
 }

@@ -4,13 +4,10 @@ import "github.com/go-chi/chi"
 
 // tag model
 type tag struct {
-	Name           string `gorm:"column:name"`
-	Slug           string `gorm:"column:slug"`
-	Description    string `gorm:"column:description"`
-	ProfileImageID uint   `gorm:"column:profile_image_id"`
-	CreatedByID    uint   `gorm:"column:created_by_id"`
-	SpaceID        uint   `gorm:"column:space_id"`
-	MetaFields     string `gorm:"column:meta_fields"`
+	Name        string `gorm:"column:name"`
+	Slug        string `gorm:"column:slug"`
+	Description string `gorm:"column:description"`
+	SpaceID     uint   `gorm:"column:space_id"`
 }
 
 // Router - Group of currency router

@@ -12,7 +12,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	result := []model.Claim{}
 
-	config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").Find(&result)
+	err := config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").Find(&result).Error
+
+	if err != nil {
+		return
+	}
 
 	render.JSON(w, http.StatusOK, result)
 }
