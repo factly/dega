@@ -10,7 +10,7 @@ import CreateSpace from './pages/spaces/create';
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <BasicLayout>
           <Switch>
             <Route exact path="/" component={Dashboard} />
