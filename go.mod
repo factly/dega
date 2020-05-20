@@ -11,9 +11,8 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/joho/godotenv v1.3.0
 	github.com/mailru/easyjson v0.7.1 // indirect
-	github.com/swaggo/swag v1.6.5 // indirect
 	github.com/urfave/cli v1.22.4 // indirect
-	golang.org/x/net v0.0.0-20200506145744-7e3656a0809f // indirect
-	golang.org/x/tools v0.0.0-20200507050207-a1532b81a28f // indirect
+	golang.org/x/net v0.0.0-20200520004742-59133d7f0dd7 // indirect
+	golang.org/x/tools v0.0.0-20200519205726-57a9e4404bf7 // indirect
 	gopkg.in/yaml.v2 v2.2.8 // indirect
 )

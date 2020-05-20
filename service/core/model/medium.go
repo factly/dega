@@ -1,13 +1,13 @@
 package model
 
 import (
-	"github.com/jinzhu/gorm"
+	"github.com/factly/dega-server/config"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Medium model
 type Medium struct {
-	gorm.Model
+	config.Base
 	Name        string         `gorm:"column:name" json:"name"`
 	Slug        string         `gorm:"column:slug" json:"slug"`
 	Type        string         `gorm:"column:type" json:"type"`
@@ -18,4 +18,5 @@ type Medium struct {
 	FileSize    int64          `gorm:"column:file_size" json:"file_size"`
 	URL         postgres.Jsonb `gorm:"column:url" json:"url"`
 	Dimensions  string         `gorm:"column:dimensions" json:"dimensions"`
+	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
 }

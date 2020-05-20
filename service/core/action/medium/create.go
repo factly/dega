@@ -2,7 +2,6 @@ package medium
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -18,7 +17,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err := config.DB.Model(&model.Medium{}).Create(&req).Error
 
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	json.NewEncoder(w).Encode(req)

@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util/render"
 	"github.com/go-chi/chi"
 )
 
@@ -30,10 +31,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Description: req.Description,
 		ParentID:    req.ParentID,
 		MediumID:    req.MediumID,
-	})
+	}).Preload("Medium").First(&category)
 
-	config.DB.First(&category)
-	config.DB.Model(&category).Association("Medium").Find(&category.Medium)
-
-	json.NewEncoder(w).Encode(category)
+	render.JSON(w, http.StatusOK, category)
 }

@@ -15,21 +15,13 @@ var DB *gorm.DB
 // SetupDB is database setuo
 func SetupDB() {
 
-	dbUser := os.Getenv("DB_USER")
-	dbPassword := os.Getenv("DB_PASSWORD")
-	dbName := os.Getenv("DB_NAME")
-	dbHost := os.Getenv("DB_HOST")
-
-	connStr := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s", dbHost, dbUser, dbName, dbPassword) //Build connection string
-
+	DSN := os.Getenv("DSN")
 	var err error
-
-	DB, err = gorm.Open("postgres", connStr)
+	DB, err = gorm.Open("postgres", DSN)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("connected to database ...")
-
 }
