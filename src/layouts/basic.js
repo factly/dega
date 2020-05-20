@@ -1,31 +1,32 @@
 import React from 'react';
-import { Layout, Row, Col } from 'antd';
+import { Layout, Space } from 'antd';
+import { withRouter } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
 import './basic.css';
-
-import { LogoutOutlined, MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
-
-const mockVal = (str, repeat = 1) => ({
-  value: str.repeat(repeat),
-});
-
+import Breadcrumb from '../components/Breadcrumb';
 function BasicLayout(props) {
+  const { location } = props;
   const { Footer, Content } = Layout;
   const { children } = props;
-  const { navTheme } = useSelector((state) => state.settings);
+  const { navTheme, routes } = useSelector((state) => state.settings);
 
   return (
     <Layout hasSider={true}>
       <Sidebar navTheme={navTheme} />
       <Layout>
         <Header />
-        <Content className="layout-content">{children}</Content>
+        <Content className="layout-content">
+          <Space direction="vertical">
+            <Breadcrumb routes={routes} location={location} />
+            {children}
+          </Space>
+        </Content>
         <Footer>Footer</Footer>
       </Layout>
     </Layout>
   );
 }
 
-export default BasicLayout;
+export default withRouter(BasicLayout);

@@ -6,7 +6,7 @@ function CreateSpace() {
     console.log('Received values of form: ', values);
   };
   return (
-    <PageHeader onBack={() => window.history.back()} title="Create Spaces" ghost={false}>
+    <PageHeader title="Create Spaces" ghost={false}>
       <Row className="justify-content-center">
         <Divider />
         <SpaceCreateForm onCreate={onCreate} />

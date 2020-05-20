@@ -9,6 +9,11 @@ const proSettings = {
   menu: {
     locale: true,
   },
+  routes: {
+    '/dashboard': 'Dashboard',
+    '/spaces': 'Spaces',
+    '/spaces/create': 'Create Space',
+  },
   title: 'Dega Admin',
   pwa: false,
   iconfontUrl: '',

@@ -5,11 +5,11 @@ import SpaceList from './components/SpaceList';
 
 import styles from './index.css';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Spaces() {
   return (
     <PageHeader
-      onBack={() => window.history.back()}
       title="Spaces"
       ghost={false}
       tags={<Tag color="blue">20</Tag>}
