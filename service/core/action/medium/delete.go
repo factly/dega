@@ -10,9 +10,18 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// delete - Delete medium by id
+// @Summary Delete a medium
+// @Description Delete medium by ID
+// @Tags Medium
+// @ID delete-medium-by-id
+// @Param X-User header string true "User ID"
+// @Param medium_id path string true "Medium ID"
+// @Success 200
+// @Router /core/media/{medium_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	mediumID := chi.URLParam(r, "id")
+	mediumID := chi.URLParam(r, "medium_id")
 	id, err := strconv.Atoi(mediumID)
 
 	medium := &model.Medium{}

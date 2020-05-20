@@ -15,6 +15,7 @@ import (
 // @Description Delete category by ID
 // @Tags Category
 // @ID delete-category-by-id
+// @Param X-User header string true "User ID"
 // @Param category_id path string true "Category ID"
 // @Success 200
 // @Failure 400 {array} string

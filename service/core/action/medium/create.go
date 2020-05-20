@@ -8,6 +8,17 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 )
 
+// create - Create medium
+// @Summary Create medium
+// @Description Create medium
+// @Tags Medium
+// @ID add-medium
+// @Consume json
+// @Produce json
+// @Param X-User header string true "User ID"
+// @Param Medium body medium true "Medium Object"
+// @Success 201 {object} model.Medium
+// @Router /core/media [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	req := &model.Medium{}

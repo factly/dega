@@ -8,6 +8,15 @@ import (
 	"github.com/factly/dega-server/util/render"
 )
 
+// list - Get all media
+// @Summary Show all media
+// @Description Get all media
+// @Tags Medium
+// @ID get-all-media
+// @Produce  json
+// @Param X-User header string true "User ID"
+// @Success 200 {array} model.Medium
+// @Router /core/media [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
 	var media []model.Medium
