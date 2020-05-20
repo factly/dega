@@ -10,9 +10,19 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// details - Get tag by id
+// @Summary Show a tag by id
+// @Description Get tag by ID
+// @Tags Tag
+// @ID get-tag-by-id
+// @Produce  json
+// @Param X-User header string true "User ID"
+// @Param tag_id path string true "Tag ID"
+// @Success 200 {object} model.Tag
+// @Router /core/tags/{tag_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	tagID := chi.URLParam(r, "id")
+	tagID := chi.URLParam(r, "tag_id")
 	id, err := strconv.Atoi(tagID)
 
 	if err != nil {

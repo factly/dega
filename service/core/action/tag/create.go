@@ -10,6 +10,16 @@ import (
 )
 
 // create - Create tag
+// @Summary Create tag
+// @Description Create tag
+// @Tags Tag
+// @ID add-tag
+// @Consume json
+// @Produce json
+// @Param X-User header string true "User ID"
+// @Param Tag body tag true "Tag Object"
+// @Success 201 {object} model.Tag
+// @Router /core/tags [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	tag := &model.Tag{}

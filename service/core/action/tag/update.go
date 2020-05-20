@@ -10,6 +10,18 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// update - Update tag by id
+// @Summary Update a tag by id
+// @Description Update tag by ID
+// @Tags Tag
+// @ID update-tag-by-id
+// @Produce json
+// @Consume json
+// @Param X-User header string true "User ID"
+// @Param tag_id path string true "Tag ID"
+// @Param Tag body tag false "Tag"
+// @Success 200 {object} model.Tag
+// @Router /core/tags/{tag_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 	tagID := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(tagID)
