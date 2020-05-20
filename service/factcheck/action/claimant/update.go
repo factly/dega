@@ -11,9 +11,21 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// update - Update claimant by id
+// @Summary Update a claimant by id
+// @Description Update claimant by ID
+// @Tags Claimant
+// @ID update-claimant-by-id
+// @Produce json
+// @Consume json
+// @Param X-User header string true "User ID"
+// @Param claimant_id path string true "Claimant ID"
+// @Param Claimant body claimant false "Claimant"
+// @Success 200 {object} model.Claimant
+// @Router /factcheck/claimants/{claimant_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	claimantID := chi.URLParam(r, "id")
+	claimantID := chi.URLParam(r, "claimant_id")
 	id, err := strconv.Atoi(claimantID)
 
 	if err != nil {

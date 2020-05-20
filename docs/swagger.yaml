@@ -40,6 +40,21 @@ definitions:
       space_id:
         type: integer
     type: object
+  claimant.claimant:
+    properties:
+      description:
+        type: string
+      medium_id:
+        type: integer
+      name:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      tag_line:
+        type: string
+    type: object
   medium.medium:
     properties:
       alt_text:
@@ -791,6 +806,126 @@ paths:
       summary: Update a tag by id
       tags:
       - Tag
+  /factcheck/claimants:
+    get:
+      description: Get all claimants
+      operationId: get-all-claimants
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Claimant'
+            type: array
+      summary: Show all claimants
+      tags:
+      - Claimant
+    post:
+      description: Create claimant
+      operationId: add-claimant
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claimant Object
+        in: body
+        name: Claimant
+        required: true
+        schema:
+          $ref: '#/definitions/claimant.claimant'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Claimant'
+      summary: Create claimant
+      tags:
+      - Claimant
+  /factcheck/claimants/{claimant_id}:
+    delete:
+      description: Delete claimant by ID
+      operationId: delete-claimant-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: claimant_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a claimant
+      tags:
+      - Claimant
+    get:
+      description: Get claimant by ID
+      operationId: get-claimant-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: claimant_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claimant'
+      summary: Show a claimant by id
+      tags:
+      - Claimant
+    put:
+      description: Update claimant by ID
+      operationId: update-claimant-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: claimant_id
+        required: true
+        type: string
+      - description: Claimant
+        in: body
+        name: Claimant
+        schema:
+          $ref: '#/definitions/claimant.claimant'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claimant'
+      summary: Update a claimant by id
+      tags:
+      - Claimant
   /factcheck/claims:
     get:
       description: Get all claims

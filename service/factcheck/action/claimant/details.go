@@ -10,8 +10,18 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// details - Get claimant by id
+// @Summary Show a claimant by id
+// @Description Get claimant by ID
+// @Tags Claimant
+// @ID get-claimant-by-id
+// @Produce  json
+// @Param X-User header string true "User ID"
+// @Param claimant_id path string true "Claimant ID"
+// @Success 200 {object} model.Claimant
+// @Router /factcheck/claimants/{claimant_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
-	claimantID := chi.URLParam(r, "id")
+	claimantID := chi.URLParam(r, "claimant_id")
 	id, err := strconv.Atoi(claimantID)
 
 	if err != nil {

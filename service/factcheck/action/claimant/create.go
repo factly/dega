@@ -9,6 +9,17 @@ import (
 	"github.com/factly/dega-server/util/render"
 )
 
+// create - Create claimant
+// @Summary Create claimant
+// @Description Create claimant
+// @Tags Claimant
+// @ID add-claimant
+// @Consume json
+// @Produce json
+// @Param X-User header string true "User ID"
+// @Param Claimant body claimant true "Claimant Object"
+// @Success 201 {object} model.Claimant
+// @Router /factcheck/claimants [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	req := &model.Claimant{}
