@@ -1,11 +1,11 @@
 package rating
 
 import (
-	"encoding/json"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/util/render"
 )
 
 func list(w http.ResponseWriter, r *http.Request) {
@@ -18,5 +18,5 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	json.NewEncoder(w).Encode(ratings)
+	render.JSON(w, http.StatusOK, ratings)
 }

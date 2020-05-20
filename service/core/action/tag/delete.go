@@ -1,4 +1,4 @@
-package medium
+package tag
 
 import (
 	"net/http"
@@ -10,23 +10,24 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// delete - Delete tag by id
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	mediumID := chi.URLParam(r, "id")
-	id, err := strconv.Atoi(mediumID)
+	tagID := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(tagID)
 
-	medium := &model.Medium{}
+	tag := &model.Tag{}
 
-	medium.ID = uint(id)
+	tag.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&medium).Error
+	err = config.DB.First(&tag).Error
 
 	if err != nil {
 		return
 	}
 
-	config.DB.Delete(&medium)
+	config.DB.Delete(&tag)
 
-	render.JSON(w, http.StatusOK, medium)
+	render.JSON(w, http.StatusOK, nil)
 }

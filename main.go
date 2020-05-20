@@ -1,13 +1,13 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"os"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core"
 	"github.com/factly/dega-server/service/factcheck"
+	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi/middleware"
 	"github.com/joho/godotenv"
 
@@ -30,10 +30,7 @@ import (
 // @BasePath /
 func main() {
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("error loading .env file")
-	}
+	godotenv.Load()
 
 	port, ok := os.LookupEnv("PORT")
 	if !ok {
@@ -52,6 +49,7 @@ func main() {
 	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/ping"))
+	r.Use(util.CheckUser)
 
 	r.Use(cors.Handler(cors.Options{
 		// AllowedOrigins: []string{"https://foo.com"}, // Use this to allow specific origin hosts

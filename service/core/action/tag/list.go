@@ -1,4 +1,4 @@
-package category
+package tag
 
 import (
 	"net/http"
@@ -10,13 +10,9 @@ import (
 
 func list(w http.ResponseWriter, r *http.Request) {
 
-	data := []model.Category{}
+	data := []model.Tag{}
 
-	err := config.DB.Model(&model.Category{}).Preload("Medium").Find(&data).Error
-
-	if err != nil {
-		return
-	}
+	config.DB.Model(&model.Tag{}).Find(&data)
 
 	render.JSON(w, http.StatusOK, data)
 }

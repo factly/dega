@@ -1,4 +1,4 @@
-package medium
+package tag
 
 import (
 	"net/http"
@@ -12,22 +12,22 @@ import (
 
 func details(w http.ResponseWriter, r *http.Request) {
 
-	mediumID := chi.URLParam(r, "id")
-	id, err := strconv.Atoi(mediumID)
+	tagID := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(tagID)
 
 	if err != nil {
 		return
 	}
 
-	req := &model.Medium{}
+	tag := &model.Tag{}
 
-	req.ID = uint(id)
+	tag.ID = uint(id)
 
-	err = config.DB.Model(&model.Medium{}).First(&req).Error
+	err = config.DB.Model(&model.Tag{}).First(&tag).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, req)
+	render.JSON(w, http.StatusOK, tag)
 }
