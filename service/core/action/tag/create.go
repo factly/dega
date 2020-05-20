@@ -2,7 +2,6 @@ package tag
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -20,7 +19,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err := config.DB.Model(&model.Tag{}).Create(&tag).Error
 
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	render.JSON(w, http.StatusCreated, tag)

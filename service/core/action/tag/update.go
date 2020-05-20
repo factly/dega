@@ -24,11 +24,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tag.ID = uint(id)
 
 	config.DB.Model(&tag).Updates(model.Tag{
-		Name:           req.Name,
-		Slug:           req.Slug,
-		Description:    req.Description,
-		ProfileImageID: req.ProfileImageID,
-		SpaceID:        req.SpaceID,
+		Name:        req.Name,
+		Slug:        req.Slug,
+		Description: req.Description,
 	})
 
 	config.DB.First(&tag)
