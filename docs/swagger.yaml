@@ -100,6 +100,111 @@ definitions:
       url:
         type: string
     type: object
+  model.Space:
+    properties:
+      contact_info:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      fav_icon_id:
+        type: integer
+      id:
+        type: integer
+      logo_id:
+        type: integer
+      logo_mobile_id:
+        type: integer
+      mobile_icon_id:
+        type: integer
+      name:
+        type: string
+      organisation_id:
+        type: integer
+      site_address:
+        type: string
+      site_title:
+        type: string
+      slug:
+        type: string
+      social_media_urls:
+        type: string
+      tag_line:
+        type: string
+      updated_at:
+        type: string
+      verification_codes:
+        type: string
+    type: object
+  space.orgWithSpace:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      permission:
+        $ref: '#/definitions/space.organizationUser'
+        type: object
+      slug:
+        type: string
+      spaces:
+        items:
+          $ref: '#/definitions/model.Space'
+        type: array
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  space.organizationUser:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      role:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  space.space:
+    properties:
+      contact_info:
+        type: string
+      description:
+        type: string
+      fav_icon_id:
+        type: integer
+      logo_id:
+        type: integer
+      logo_mobile_id:
+        type: integer
+      mobile_icon_id:
+        type: integer
+      name:
+        type: string
+      organisation_id:
+        type: integer
+      site_address:
+        type: string
+      site_title:
+        type: string
+      slug:
+        type: string
+      social_media_urls:
+        type: string
+      tag_line:
+        type: string
+      verification_codes:
+        type: string
+    type: object
 host: localhost:8820
 info:
   contact:
@@ -359,4 +464,52 @@ paths:
       summary: Update a medium by id
       tags:
       - Medium
+  /core/spaces:
+    post:
+      description: Create space
+      operationId: add-space
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space Object
+        in: body
+        name: Space
+        required: true
+        schema:
+          $ref: '#/definitions/space.space'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Space'
+      summary: Create space
+      tags:
+      - Space
+  /core/spaces/my:
+    get:
+      description: Get all spaces
+      operationId: get-all-spaces
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/space.orgWithSpace'
+            type: array
+      summary: Show all spaces
+      tags:
+      - Space
 swagger: "2.0"

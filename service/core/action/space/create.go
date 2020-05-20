@@ -13,6 +13,17 @@ import (
 	"github.com/factly/dega-server/util/render"
 )
 
+// create - Create space
+// @Summary Create space
+// @Description Create space
+// @Tags Space
+// @ID add-space
+// @Consume json
+// @Produce json
+// @Param X-User header string true "User ID"
+// @Param Space body space true "Space Object"
+// @Success 201 {object} model.Space
+// @Router /core/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
