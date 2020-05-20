@@ -7,11 +7,11 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util/render"
 	"github.com/go-chi/chi"
 )
 
 func update(w http.ResponseWriter, r *http.Request) {
-
 	categoryID := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(categoryID)
 
@@ -25,12 +25,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	category := &model.Category{}
 	category.ID = uint(id)
 
-	config.DB.Model(&model.Category{}).Updates(model.Category{
-		Name: req.Name,
-		Slug: req.Slug,
-	})
+	config.DB.Model(&category).Updates(model.Category{
+		Name:        req.Name,
+		Slug:        req.Slug,
+		Description: req.Description,
+		ParentID:    req.ParentID,
+		MediumID:    req.MediumID,
+	}).Preload("Medium").First(&category)
 
-	config.DB.First(&category)
-
-	json.NewEncoder(w).Encode(category)
+	render.JSON(w, http.StatusOK, category)
 }

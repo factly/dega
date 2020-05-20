@@ -1,12 +1,12 @@
 package rating
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/util/render"
 	"github.com/go-chi/chi"
 )
 
@@ -28,5 +28,5 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Delete(&rating)
 
-	json.NewEncoder(w).Encode(rating)
+	render.JSON(w, http.StatusOK, nil)
 }
