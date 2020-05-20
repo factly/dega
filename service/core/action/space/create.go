@@ -2,7 +2,6 @@ package space
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -10,20 +9,26 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
 )
 
 func create(w http.ResponseWriter, r *http.Request) {
-	space := &model.Space{}
-
-	if r.Header.Get("X-User") == "" {
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
 		return
 	}
 
+	space := &model.Space{}
+
 	json.NewDecoder(r.Body).Decode(&space)
 
+	if space.OrganisationID == 0 {
+		return
+	}
+
 	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+strconv.Itoa(space.OrganisationID), nil)
-	req.Header.Set("X-User", r.Header.Get("X-User"))
+	req.Header.Set("X-User", string(uID))
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -47,7 +52,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Create(&space).Error
 
 	if err != nil {
-		fmt.Println(err)
 		return
 	}
 
