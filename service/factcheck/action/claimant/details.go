@@ -1,12 +1,12 @@
 package claimant
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/util/render"
 	"github.com/go-chi/chi"
 )
 
@@ -28,5 +28,5 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	json.NewEncoder(w).Encode(req)
+	render.JSON(w, http.StatusOK, req)
 }

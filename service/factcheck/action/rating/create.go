@@ -20,7 +20,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Model(&req).Association("Medium").Find(&req.Medium)
+	config.DB.Model(&req).Preload("Medium").First(&req)
 
 	json.NewEncoder(w).Encode(req)
 }

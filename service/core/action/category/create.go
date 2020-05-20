@@ -32,7 +32,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/*config.DB.Model(&category).Association("Medium").Find(&category.Medium)*/
+	config.DB.Model(&model.Category{}).Preload("Medium").First(&category)
 
 	render.JSON(w, http.StatusCreated, category)
 }

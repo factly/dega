@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/util/render"
 )
 
 func create(w http.ResponseWriter, r *http.Request) {
@@ -20,7 +21,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Model(&req).Association("Medium").Find(&req.Medium)
+	config.DB.Model(&model.Claimant{}).Preload("Medium").First(&req)
 
-	json.NewEncoder(w).Encode(req)
+	render.JSON(w, http.StatusCreated, req)
 }

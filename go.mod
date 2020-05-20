@@ -4,7 +4,6 @@ go 1.13
 
 require (
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
-	github.com/factly/data-portal-server v0.0.0-20200513090311-bc5f55001792 // indirect
 	github.com/go-chi/chi v4.1.1+incompatible
 	github.com/go-chi/cors v1.1.1
 	github.com/go-openapi/spec v0.19.7 // indirect
