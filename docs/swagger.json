@@ -637,6 +637,183 @@
                     }
                 }
             }
+        },
+        "/factcheck/claims": {
+            "get": {
+                "description": "Get all claims",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Show all claims",
+                "operationId": "get-all-claims",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Claim"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create claim",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Create claim",
+                "operationId": "add-claim",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Claim Object",
+                        "name": "Claim",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/claim.claim"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Claim"
+                        }
+                    }
+                }
+            }
+        },
+        "/factcheck/claims/{claim_id}": {
+            "get": {
+                "description": "Get claim by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Show a claim by id",
+                "operationId": "get-claim-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Claim ID",
+                        "name": "claim_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Claim"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update claim by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Update a claim by id",
+                "operationId": "update-claim-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Claim ID",
+                        "name": "claim_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Claim",
+                        "name": "Claim",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/claim.claim"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Claim"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete claim by ID",
+                "tags": [
+                    "Claim"
+                ],
+                "summary": "Delete a claim",
+                "operationId": "delete-claim-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Claim ID",
+                        "name": "claim_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
         }
     },
     "definitions": {
@@ -657,6 +834,47 @@
                 },
                 "slug": {
                     "type": "string"
+                }
+            }
+        },
+        "claim.claim": {
+            "type": "object",
+            "properties": {
+                "checked_date": {
+                    "type": "string"
+                },
+                "claim": {
+                    "type": "string"
+                },
+                "claim_date": {
+                    "type": "string"
+                },
+                "claim_sources": {
+                    "type": "string"
+                },
+                "claimant_id": {
+                    "type": "integer"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "rating_id": {
+                    "type": "integer"
+                },
+                "review": {
+                    "type": "string"
+                },
+                "review_sources": {
+                    "type": "string"
+                },
+                "review_tag_line": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -741,6 +959,106 @@
                 }
             }
         },
+        "model.Claim": {
+            "type": "object",
+            "properties": {
+                "checked_date": {
+                    "type": "string"
+                },
+                "claim": {
+                    "type": "string"
+                },
+                "claim_date": {
+                    "type": "string"
+                },
+                "claim_sources": {
+                    "type": "string"
+                },
+                "claimant": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Claimant"
+                },
+                "claimant_id": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "rating": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Rating"
+                },
+                "rating_id": {
+                    "type": "integer"
+                },
+                "review": {
+                    "type": "string"
+                },
+                "review_sources": {
+                    "type": "string"
+                },
+                "review_tag_line": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Claimant": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "medium": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "tag_line": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
         "model.Medium": {
             "type": "object",
             "properties": {
@@ -787,6 +1105,45 @@
                     "type": "string"
                 },
                 "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Rating": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "medium": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "numeric_value": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }

@@ -13,6 +13,33 @@ definitions:
       slug:
         type: string
     type: object
+  claim.claim:
+    properties:
+      checked_date:
+        type: string
+      claim:
+        type: string
+      claim_date:
+        type: string
+      claim_sources:
+        type: string
+      claimant_id:
+        type: integer
+      description:
+        type: string
+      rating_id:
+        type: integer
+      review:
+        type: string
+      review_sources:
+        type: string
+      review_tag_line:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+    type: object
   medium.medium:
     properties:
       alt_text:
@@ -67,6 +94,73 @@ definitions:
     - name
     - slug
     type: object
+  model.Claim:
+    properties:
+      checked_date:
+        type: string
+      claim:
+        type: string
+      claim_date:
+        type: string
+      claim_sources:
+        type: string
+      claimant:
+        $ref: '#/definitions/model.Claimant'
+        type: object
+      claimant_id:
+        type: integer
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      rating:
+        $ref: '#/definitions/model.Rating'
+        type: object
+      rating_id:
+        type: integer
+      review:
+        type: string
+      review_sources:
+        type: string
+      review_tag_line:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  model.Claimant:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      medium:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      medium_id:
+        type: integer
+      name:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      tag_line:
+        type: string
+      updated_at:
+        type: string
+    type: object
   model.Medium:
     properties:
       alt_text:
@@ -98,6 +192,32 @@ definitions:
       updated_at:
         type: string
       url:
+        type: string
+    type: object
+  model.Rating:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      medium:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      medium_id:
+        type: integer
+      name:
+        type: string
+      numeric_value:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      updated_at:
         type: string
     type: object
   model.Space:
@@ -671,4 +791,124 @@ paths:
       summary: Update a tag by id
       tags:
       - Tag
+  /factcheck/claims:
+    get:
+      description: Get all claims
+      operationId: get-all-claims
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Claim'
+            type: array
+      summary: Show all claims
+      tags:
+      - Claim
+    post:
+      description: Create claim
+      operationId: add-claim
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claim Object
+        in: body
+        name: Claim
+        required: true
+        schema:
+          $ref: '#/definitions/claim.claim'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Claim'
+      summary: Create claim
+      tags:
+      - Claim
+  /factcheck/claims/{claim_id}:
+    delete:
+      description: Delete claim by ID
+      operationId: delete-claim-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claim ID
+        in: path
+        name: claim_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a claim
+      tags:
+      - Claim
+    get:
+      description: Get claim by ID
+      operationId: get-claim-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claim ID
+        in: path
+        name: claim_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claim'
+      summary: Show a claim by id
+      tags:
+      - Claim
+    put:
+      description: Update claim by ID
+      operationId: update-claim-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claim ID
+        in: path
+        name: claim_id
+        required: true
+        type: string
+      - description: Claim
+        in: body
+        name: Claim
+        schema:
+          $ref: '#/definitions/claim.claim'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claim'
+      summary: Update a claim by id
+      tags:
+      - Claim
 swagger: "2.0"
