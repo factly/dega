@@ -25,21 +25,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.ID = uint(id)
 
 	config.DB.Model(&result).Updates(model.Claim{
-		Claim:           claim.Claim,
-		Slug:            claim.Slug,
-		ClaimDate:       claim.ClaimDate,
-		CheckedDate:     claim.CheckedDate,
-		ClaimSources:    claim.ClaimSources,
-		Description:     claim.Description,
-		ClaimantID:      claim.ClaimantID,
-		RatingID:        claim.RatingID,
-		Review:          claim.Review,
-		ReviewTagLine:   claim.ReviewTagLine,
-		ReviewSources:   claim.ReviewSources,
-		LastUpdatedByID: claim.LastUpdatedByID,
-		CreatedByID:     claim.CreatedByID,
-		MetaFields:      claim.MetaFields,
-		SpaceID:         claim.SpaceID,
+		Claim:         claim.Claim,
+		Slug:          claim.Slug,
+		ClaimDate:     claim.ClaimDate,
+		CheckedDate:   claim.CheckedDate,
+		ClaimSources:  claim.ClaimSources,
+		Description:   claim.Description,
+		ClaimantID:    claim.ClaimantID,
+		RatingID:      claim.RatingID,
+		Review:        claim.Review,
+		ReviewTagLine: claim.ReviewTagLine,
+		ReviewSources: claim.ReviewSources,
 	})
 
 	config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").First(&result)

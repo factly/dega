@@ -2,7 +2,6 @@ package claim
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -35,7 +34,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err := config.DB.Model(&model.Claim{}).Create(&result).Error
 
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").Find(&result)
