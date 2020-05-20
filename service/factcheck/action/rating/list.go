@@ -8,6 +8,15 @@ import (
 	"github.com/factly/dega-server/util/render"
 )
 
+// list - Get all ratings
+// @Summary Show all ratings
+// @Description Get all ratings
+// @Tags Rating
+// @ID get-all-ratings
+// @Produce  json
+// @Param X-User header string true "User ID"
+// @Success 200 {array} model.Rating
+// @Router /factcheck/ratings [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
 	var ratings []model.Rating

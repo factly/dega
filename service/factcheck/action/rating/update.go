@@ -11,6 +11,18 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// update - Update rating by id
+// @Summary Update a rating by id
+// @Description Update rating by ID
+// @Tags Rating
+// @ID update-rating-by-id
+// @Produce json
+// @Consume json
+// @Param X-User header string true "User ID"
+// @Param rating_id path string true "Rating ID"
+// @Param Rating body rating false "Rating"
+// @Success 200 {object} model.Rating
+// @Router /factcheck/ratings/{rating_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
 	ratingID := chi.URLParam(r, "id")
