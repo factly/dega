@@ -10,24 +10,34 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// details - Get category by id
+// @Summary Show a category by id
+// @Description Get category by ID
+// @Tags Category
+// @ID get-category-by-id
+// @Produce  json
+// @Param X-User header string true "User ID"
+// @Param category_id path string true "Category ID"
+// @Success 200 {object} model.Category
+// @Router /core/categories/{category_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	categoryID := chi.URLParam(r, "id")
+	categoryID := chi.URLParam(r, "category_id")
 	id, err := strconv.Atoi(categoryID)
 
 	if err != nil {
 		return
 	}
 
-	category := &model.Category{}
+	result := &model.Category{}
 
-	category.ID = uint(id)
+	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Category{}).Preload("Medium").First(&category).Error
+	err = config.DB.Model(&model.Category{}).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, category)
+	render.JSON(w, http.StatusOK, result)
 }

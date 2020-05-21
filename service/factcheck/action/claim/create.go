@@ -10,6 +10,16 @@ import (
 )
 
 // create - Create claim
+// @Summary Create claim
+// @Description Create claim
+// @Tags Claim
+// @ID add-claim
+// @Consume json
+// @Produce json
+// @Param X-User header string true "User ID"
+// @Param Claim body claim true "Claim Object"
+// @Success 201 {object} model.Claim
+// @Router /factcheck/claims [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	claim := &claim{}
@@ -17,7 +27,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&claim)
 
 	result := &model.Claim{
-		Claim:         claim.Claim,
+		Title:         claim.Title,
 		Slug:          claim.Slug,
 		ClaimDate:     claim.ClaimDate,
 		CheckedDate:   claim.CheckedDate,

@@ -11,9 +11,17 @@ import (
 )
 
 // delete - Delete claim by id
+// @Summary Delete a claim
+// @Description Delete claim by ID
+// @Tags Claim
+// @ID delete-claim-by-id
+// @Param X-User header string true "User ID"
+// @Param claim_id path string true "Claim ID"
+// @Success 200
+// @Router /factcheck/claims/{claim_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	claimID := chi.URLParam(r, "id")
+	claimID := chi.URLParam(r, "claim_id")
 	id, err := strconv.Atoi(claimID)
 
 	result := &model.Claim{}

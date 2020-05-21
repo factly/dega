@@ -13,29 +13,30 @@ import (
 // delete - Delete category by id
 // @Summary Delete a category
 // @Description Delete category by ID
-// @Tags category
+// @Tags Category
 // @ID delete-category-by-id
-// @Param id path string true "Category ID"
+// @Param X-User header string true "User ID"
+// @Param category_id path string true "Category ID"
 // @Success 200
 // @Failure 400 {array} string
-// @Router /categories/{id} [delete]
+// @Router /core/categories/{category_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	categoryID := chi.URLParam(r, "id")
+	categoryID := chi.URLParam(r, "category_id")
 	id, err := strconv.Atoi(categoryID)
 
-	category := &model.Category{}
+	result := &model.Category{}
 
-	category.ID = uint(id)
+	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&category).Error
+	err = config.DB.First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	config.DB.Delete(&category)
+	config.DB.Delete(&result)
 
 	render.JSON(w, http.StatusOK, nil)
 }

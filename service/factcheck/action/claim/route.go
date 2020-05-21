@@ -8,7 +8,7 @@ import (
 )
 
 type claim struct {
-	Claim         string         `json:"claim"`
+	Title         string         `json:"title"`
 	Slug          string         `json:"slug"`
 	ClaimDate     time.Time      `json:"claim_date"`
 	CheckedDate   time.Time      `json:"checked_date"`
@@ -29,7 +29,7 @@ func Router() chi.Router {
 	r.Get("/", list)
 	r.Post("/", create)
 
-	r.Route("/{id}", func(r chi.Router) {
+	r.Route("/{claim_id}", func(r chi.Router) {
 		r.Get("/", details)
 		r.Put("/", update)
 		r.Delete("/", delete)

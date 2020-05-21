@@ -10,23 +10,32 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// delete - Delete claimant by id
+// @Summary Delete a claimant
+// @Description Delete claimant by ID
+// @Tags Claimant
+// @ID delete-claimant-by-id
+// @Param X-User header string true "User ID"
+// @Param claimant_id path string true "Claimant ID"
+// @Success 200
+// @Router /factcheck/claimants/{claimant_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
-	claimantID := chi.URLParam(r, "id")
+	claimantID := chi.URLParam(r, "claimant_id")
 	id, err := strconv.Atoi(claimantID)
 
-	claimant := &model.Claimant{}
+	result := &model.Claimant{}
 
-	claimant.ID = uint(id)
+	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&claimant).Error
+	err = config.DB.Model(&model.Claimant{}).First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	config.DB.Delete(&claimant)
+	config.DB.Model(&model.Claimant{}).Delete(&result)
 
 	render.JSON(w, http.StatusOK, nil)
 }

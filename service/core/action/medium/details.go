@@ -10,24 +10,34 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// details - Get medium by id
+// @Summary Show a medium by id
+// @Description Get medium by ID
+// @Tags Medium
+// @ID get-medium-by-id
+// @Produce  json
+// @Param X-User header string true "User ID"
+// @Param medium_id path string true "Medium ID"
+// @Success 200 {object} model.Medium
+// @Router /core/media/{medium_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
-	mediumID := chi.URLParam(r, "id")
+	mediumID := chi.URLParam(r, "medium_id")
 	id, err := strconv.Atoi(mediumID)
 
 	if err != nil {
 		return
 	}
 
-	req := &model.Medium{}
+	result := &model.Medium{}
 
-	req.ID = uint(id)
+	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Medium{}).First(&req).Error
+	err = config.DB.Model(&model.Medium{}).First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, req)
+	render.JSON(w, http.StatusOK, result)
 }

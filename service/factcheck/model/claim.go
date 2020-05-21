@@ -10,7 +10,7 @@ import (
 // Claim model
 type Claim struct {
 	config.Base
-	Claim         string         `gorm:"column:claim" json:"claim"`
+	Title         string         `gorm:"column:title" json:"title"`
 	Slug          string         `gorm:"column:slug" json:"slug"`
 	ClaimDate     time.Time      `gorm:"column:claim_date" json:"claim_date"`
 	CheckedDate   time.Time      `gorm:"column:checked_date" json:"checked_date"`

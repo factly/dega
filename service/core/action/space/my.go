@@ -25,6 +25,15 @@ type orgWithSpace struct {
 	Spaces     []model.Space    `json:"spaces"`
 }
 
+// list - Get all spaces for a user
+// @Summary Show all spaces
+// @Description Get all spaces
+// @Tags Space
+// @ID get-all-spaces
+// @Produce  json
+// @Param X-User header string true "User ID"
+// @Success 200 {array} orgWithSpace
+// @Router /core/spaces/my [get]
 func my(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {

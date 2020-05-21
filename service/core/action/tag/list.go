@@ -8,15 +8,24 @@ import (
 	"github.com/factly/dega-server/util/render"
 )
 
+// list - Get all tags
+// @Summary Show all tags
+// @Description Get all tags
+// @Tags Tag
+// @ID get-all-tags
+// @Produce  json
+// @Param X-User header string true "User ID"
+// @Success 200 {array} model.Tag
+// @Router /core/tags [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	data := []model.Tag{}
+	result := []model.Tag{}
 
-	err := config.DB.Model(&model.Tag{}).Find(&data).Error
+	err := config.DB.Model(&model.Tag{}).Find(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, data)
+	render.JSON(w, http.StatusOK, result)
 }
