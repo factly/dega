@@ -24,18 +24,18 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	claimantID := chi.URLParam(r, "claimant_id")
 	id, err := strconv.Atoi(claimantID)
 
-	claimant := &model.Claimant{}
+	result := &model.Claimant{}
 
-	claimant.ID = uint(id)
+	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&claimant).Error
+	err = config.DB.Model(&model.Claimant{}).First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	config.DB.Delete(&claimant)
+	config.DB.Model(&model.Claimant{}).Delete(&result)
 
 	render.JSON(w, http.StatusOK, nil)
 }

@@ -22,17 +22,26 @@ import (
 // @Router /factcheck/claimants [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	req := &model.Claimant{}
+	claimant := &claimant{}
 
-	json.NewDecoder(r.Body).Decode(&req)
+	json.NewDecoder(r.Body).Decode(&claimant)
 
-	err := config.DB.Model(&model.Claimant{}).Create(&req).Error
+	result := &model.Claimant{
+		Name:        claimant.Name,
+		Slug:        claimant.Slug,
+		Description: claimant.Description,
+		MediumID:    claimant.MediumID,
+		SpaceID:     claimant.SpaceID,
+		TagLine:     claimant.TagLine,
+	}
+
+	err := config.DB.Model(&model.Claimant{}).Create(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	config.DB.Model(&model.Claimant{}).Preload("Medium").First(&req)
+	config.DB.Model(&model.Claimant{}).Preload("Medium").First(&result)
 
-	render.JSON(w, http.StatusCreated, req)
+	render.JSON(w, http.StatusCreated, result)
 }

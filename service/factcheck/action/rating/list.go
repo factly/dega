@@ -19,13 +19,13 @@ import (
 // @Router /factcheck/ratings [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	var ratings []model.Rating
+	var result []model.Rating
 
-	err := config.DB.Model(&model.Rating{}).Preload("Medium").Find(&ratings).Error
+	err := config.DB.Model(&model.Rating{}).Preload("Medium").Find(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, ratings)
+	render.JSON(w, http.StatusOK, result)
 }

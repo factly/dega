@@ -32,18 +32,18 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req := &model.Rating{}
-	json.NewDecoder(r.Body).Decode(&req)
+	rating := &rating{}
+	json.NewDecoder(r.Body).Decode(&rating)
 
-	rating := &model.Rating{}
-	rating.ID = uint(id)
+	result := &model.Rating{}
+	result.ID = uint(id)
 
-	config.DB.Model(&model.Rating{}).Updates(model.Rating{
-		Name:        req.Name,
-		Slug:        req.Slug,
-		MediumID:    req.MediumID,
-		Description: req.Description,
-	}).Preload("Medium").First(&rating)
+	config.DB.Model(&result).Updates(model.Rating{
+		Name:        rating.Name,
+		Slug:        rating.Slug,
+		MediumID:    rating.MediumID,
+		Description: rating.Description,
+	}).Preload("Medium").First(&result)
 
-	render.JSON(w, http.StatusOK, rating)
+	render.JSON(w, http.StatusOK, result)
 }

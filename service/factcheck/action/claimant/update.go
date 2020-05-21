@@ -32,19 +32,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req := &model.Claimant{}
-	json.NewDecoder(r.Body).Decode(&req)
-
 	claimant := &model.Claimant{}
-	claimant.ID = uint(id)
+	json.NewDecoder(r.Body).Decode(&claimant)
 
-	config.DB.Model(&model.Claimant{}).Updates(model.Claimant{
-		Name:        req.Name,
-		Slug:        req.Slug,
-		MediumID:    req.MediumID,
-		TagLine:     req.TagLine,
-		Description: req.Description,
-	}).Preload("Medium").First(&claimant)
+	result := &model.Claimant{}
+	result.ID = uint(id)
 
-	render.JSON(w, http.StatusOK, claimant)
+	config.DB.Model(&result).Updates(model.Claimant{
+		Name:        claimant.Name,
+		Slug:        claimant.Slug,
+		MediumID:    claimant.MediumID,
+		TagLine:     claimant.TagLine,
+		Description: claimant.Description,
+	}).Preload("Medium").First(&result)
+
+	render.JSON(w, http.StatusOK, result)
 }

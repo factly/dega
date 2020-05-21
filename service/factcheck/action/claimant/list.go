@@ -19,13 +19,13 @@ import (
 // @Router /factcheck/claimants [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	var claimants []model.Claimant
+	var result []model.Claimant
 
-	err := config.DB.Model(&model.Claimant{}).Preload("Medium").Find(&claimants).Error
+	err := config.DB.Model(&model.Claimant{}).Preload("Medium").Find(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, claimants)
+	render.JSON(w, http.StatusOK, result)
 }

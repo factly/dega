@@ -24,18 +24,18 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	ratingID := chi.URLParam(r, "rating_id")
 	id, err := strconv.Atoi(ratingID)
 
-	rating := &model.Rating{}
+	result := &model.Rating{}
 
-	rating.ID = uint(id)
+	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&rating).Error
+	err = config.DB.Model(&model.Rating{}).First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	config.DB.Delete(&rating)
+	config.DB.Model(&model.Rating{}).Delete(&result)
 
 	render.JSON(w, http.StatusOK, nil)
 }
