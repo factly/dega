@@ -27,7 +27,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&claim)
 
 	result := &model.Claim{
-		Claim:         claim.Claim,
+		Title:         claim.Title,
 		Slug:          claim.Slug,
 		ClaimDate:     claim.ClaimDate,
 		CheckedDate:   claim.CheckedDate,

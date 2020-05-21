@@ -37,7 +37,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.ID = uint(id)
 
 	config.DB.Model(&result).Updates(model.Claim{
-		Claim:         claim.Claim,
+		Title:         claim.Title,
 		Slug:          claim.Slug,
 		ClaimDate:     claim.ClaimDate,
 		CheckedDate:   claim.CheckedDate,
