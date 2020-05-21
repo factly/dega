@@ -23,25 +23,25 @@ import (
 // @Success 200 {object} model.Tag
 // @Router /core/tags/{tag_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
-	tagID := chi.URLParam(r, "id")
+	tagID := chi.URLParam(r, "tag_id")
 	id, err := strconv.Atoi(tagID)
 
 	if err != nil {
 		return
 	}
 
-	req := &model.Tag{}
-	json.NewDecoder(r.Body).Decode(&req)
-	tag := &model.Tag{}
-	tag.ID = uint(id)
+	tag := &tag{}
+	json.NewDecoder(r.Body).Decode(&tag)
+	result := &model.Tag{}
+	result.ID = uint(id)
 
-	config.DB.Model(&tag).Updates(model.Tag{
-		Name:        req.Name,
-		Slug:        req.Slug,
-		Description: req.Description,
+	config.DB.Model(&result).Updates(model.Tag{
+		Name:        tag.Name,
+		Slug:        tag.Slug,
+		Description: tag.Description,
 	})
 
-	config.DB.First(&tag)
+	config.DB.First(&result)
 
-	json.NewEncoder(w).Encode(tag)
+	json.NewEncoder(w).Encode(result)
 }

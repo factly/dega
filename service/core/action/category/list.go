@@ -19,13 +19,13 @@ import (
 // @Router /core/categories [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	data := []model.Category{}
+	result := []model.Category{}
 
-	err := config.DB.Model(&model.Category{}).Preload("Medium").Find(&data).Error
+	err := config.DB.Model(&model.Category{}).Preload("Medium").Find(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, data)
+	render.JSON(w, http.StatusOK, result)
 }

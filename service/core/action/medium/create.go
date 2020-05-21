@@ -21,15 +21,29 @@ import (
 // @Router /core/media [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	req := &model.Medium{}
+	medium := &medium{}
 
-	json.NewDecoder(r.Body).Decode(&req)
+	json.NewDecoder(r.Body).Decode(&medium)
 
-	err := config.DB.Model(&model.Medium{}).Create(&req).Error
+	result := &model.Medium{
+		Name:        medium.Name,
+		Slug:        medium.Slug,
+		Title:       medium.Title,
+		Type:        medium.Type,
+		Description: medium.Description,
+		Caption:     medium.Caption,
+		AltText:     medium.AltText,
+		FileSize:    medium.FileSize,
+		URL:         medium.URL,
+		Dimensions:  medium.Dimensions,
+		SpaceID:     medium.SpaceID,
+	}
+
+	err := config.DB.Model(&model.Medium{}).Create(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	json.NewEncoder(w).Encode(req)
+	json.NewEncoder(w).Encode(result)
 }

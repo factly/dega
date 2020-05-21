@@ -19,13 +19,13 @@ import (
 // @Router /core/media [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	var media []model.Medium
+	var result []model.Medium
 
-	err := config.DB.Model(&model.Medium{}).Find(&media).Error
+	err := config.DB.Model(&model.Medium{}).Find(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, media)
+	render.JSON(w, http.StatusOK, result)
 }

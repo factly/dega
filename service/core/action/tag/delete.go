@@ -25,18 +25,18 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tagID := chi.URLParam(r, "tag_id")
 	id, err := strconv.Atoi(tagID)
 
-	tag := &model.Tag{}
+	result := &model.Tag{}
 
-	tag.ID = uint(id)
+	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&tag).Error
+	err = config.DB.First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	config.DB.Delete(&tag)
+	config.DB.Delete(&result)
 
 	render.JSON(w, http.StatusOK, nil)
 }

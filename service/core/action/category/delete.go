@@ -25,18 +25,18 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	categoryID := chi.URLParam(r, "category_id")
 	id, err := strconv.Atoi(categoryID)
 
-	category := &model.Category{}
+	result := &model.Category{}
 
-	category.ID = uint(id)
+	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&category).Error
+	err = config.DB.First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	config.DB.Delete(&category)
+	config.DB.Delete(&result)
 
 	render.JSON(w, http.StatusOK, nil)
 }

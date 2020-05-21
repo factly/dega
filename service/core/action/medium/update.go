@@ -25,23 +25,23 @@ import (
 // @Router /core/media/{medium_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	claimantID := chi.URLParam(r, "medium_id")
-	id, err := strconv.Atoi(claimantID)
+	mediumID := chi.URLParam(r, "medium_id")
+	id, err := strconv.Atoi(mediumID)
 
 	if err != nil {
 		return
 	}
 
-	req := &model.Medium{}
-	json.NewDecoder(r.Body).Decode(&req)
+	medium := &medium{}
+	json.NewDecoder(r.Body).Decode(&medium)
 
-	claimant := &model.Medium{}
-	claimant.ID = uint(id)
+	result := &model.Medium{}
+	result.ID = uint(id)
 
-	config.DB.Model(&model.Medium{}).Updates(model.Medium{
-		Name: req.Name,
-		Slug: req.Slug,
-	}).Preload("Medium").First(&claimant)
+	config.DB.Model(&result).Updates(model.Medium{
+		Name: medium.Name,
+		Slug: medium.Slug,
+	}).Preload("Medium").First(&result)
 
-	render.JSON(w, http.StatusOK, claimant)
+	render.JSON(w, http.StatusOK, result)
 }

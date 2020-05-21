@@ -29,15 +29,15 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req := &model.Medium{}
+	result := &model.Medium{}
 
-	req.ID = uint(id)
+	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Medium{}).First(&req).Error
+	err = config.DB.Model(&model.Medium{}).First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, req)
+	render.JSON(w, http.StatusOK, result)
 }

@@ -30,7 +30,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	space := &model.Space{}
+	space := &space{}
 
 	json.NewDecoder(r.Body).Decode(&space)
 
@@ -60,11 +60,28 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = config.DB.Create(&space).Error
+	result := &model.Space{
+		Name:              space.Name,
+		SiteTitle:         space.SiteTitle,
+		Slug:              space.Slug,
+		Description:       space.Description,
+		TagLine:           space.TagLine,
+		SiteAddress:       space.SiteAddress,
+		LogoID:            space.LogoID,
+		FavIconID:         space.FavIconID,
+		MobileIconID:      space.MobileIconID,
+		LogoMobileID:      space.LogoMobileID,
+		VerificationCodes: space.VerificationCodes,
+		SocialMediaURLs:   space.SocialMediaURLs,
+		OrganisationID:    space.OrganisationID,
+		ContactInfo:       space.ContactInfo,
+	}
+
+	err = config.DB.Create(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusCreated, space)
+	render.JSON(w, http.StatusCreated, result)
 }

@@ -19,13 +19,13 @@ import (
 // @Router /core/tags [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	data := []model.Tag{}
+	result := []model.Tag{}
 
-	err := config.DB.Model(&model.Tag{}).Find(&data).Error
+	err := config.DB.Model(&model.Tag{}).Find(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, data)
+	render.JSON(w, http.StatusOK, result)
 }

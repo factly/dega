@@ -29,15 +29,15 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tag := &model.Tag{}
+	result := &model.Tag{}
 
-	tag.ID = uint(id)
+	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Tag{}).First(&tag).Error
+	err = config.DB.Model(&model.Tag{}).First(&result).Error
 
 	if err != nil {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, tag)
+	render.JSON(w, http.StatusOK, result)
 }

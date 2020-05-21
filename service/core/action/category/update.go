@@ -31,19 +31,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req := &model.Category{}
-	json.NewDecoder(r.Body).Decode(&req)
+	category := &category{}
+	json.NewDecoder(r.Body).Decode(&category)
 
-	category := &model.Category{}
-	category.ID = uint(id)
+	result := &model.Category{}
+	result.ID = uint(id)
 
-	config.DB.Model(&category).Updates(model.Category{
-		Name:        req.Name,
-		Slug:        req.Slug,
-		Description: req.Description,
-		ParentID:    req.ParentID,
-		MediumID:    req.MediumID,
-	}).Preload("Medium").First(&category)
+	config.DB.Model(&result).Updates(model.Category{
+		Name:        category.Name,
+		Slug:        category.Slug,
+		Description: category.Description,
+		ParentID:    category.ParentID,
+		MediumID:    category.MediumID,
+	}).Preload("Medium").First(&result)
 
-	render.JSON(w, http.StatusOK, category)
+	render.JSON(w, http.StatusOK, result)
 }
