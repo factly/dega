@@ -2,6 +2,7 @@ package factcheck
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -37,6 +38,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	claims := []model.FactcheckClaim{}
 
 	json.NewDecoder(r.Body).Decode(&factcheck)
+
+	fmt.Printf("%+v", factcheck)
 
 	result := &factcheckData{}
 	result.ID = uint(id)
@@ -80,7 +83,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 				present = true
 			}
 		}
-		if !present {
+		if present == false {
 			config.DB.Where(&model.FactcheckTag{
 				TagID:       t.TagID,
 				FactcheckID: uint(id),
@@ -92,12 +95,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	for _, id := range factcheck.TagIDS {
 		present := false
 		for _, t := range tags {
-			if t.ID == id {
+			if t.TagID == id {
 				present = true
 				result.Tags = append(result.Tags, t.Tag)
 			}
 		}
-		if !present {
+		if present == false {
 			factcheckTag := &model.FactcheckTag{}
 			factcheckTag.TagID = uint(id)
 			factcheckTag.FactcheckID = result.ID
@@ -120,7 +123,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 				present = true
 			}
 		}
-		if !present {
+		if present == false {
 			config.DB.Where(&model.FactcheckCategory{
 				CategoryID:  c.CategoryID,
 				FactcheckID: uint(id),
@@ -132,12 +135,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	for _, id := range factcheck.CategoryIDS {
 		present := false
 		for _, c := range categories {
-			if c.ID == id {
+			if c.CategoryID == id {
 				present = true
 				result.Categories = append(result.Categories, c.Category)
 			}
 		}
-		if !present {
+		if present == false {
 			factcheckCategory := &model.FactcheckCategory{}
 			factcheckCategory.CategoryID = uint(id)
 			factcheckCategory.FactcheckID = result.ID
@@ -161,7 +164,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 				present = true
 			}
 		}
-		if !present {
+		if present == false {
 			config.DB.Where(&model.FactcheckClaim{
 				ClaimID:     c.ClaimID,
 				FactcheckID: uint(id),
@@ -172,13 +175,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// creating new categories
 	for _, id := range factcheck.ClaimIDS {
 		present := false
-		for _, c := range categories {
-			if c.ID == id {
+		for _, c := range claims {
+			if c.ClaimID == id {
 				present = true
-				result.Categories = append(result.Categories, c.Category)
+				result.Claims = append(result.Claims, c.Claim)
 			}
 		}
-		if !present {
+
+		if present == false {
 			factcheckClaim := &model.FactcheckClaim{}
 			factcheckClaim.ClaimID = uint(id)
 			factcheckClaim.FactcheckID = result.ID

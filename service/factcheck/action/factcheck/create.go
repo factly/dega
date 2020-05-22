@@ -25,7 +25,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	factcheck := factcheck{}
 	result := &factcheckData{}
 
-	/* Issue with decoding tag ids through swagger */
 	json.NewDecoder(r.Body).Decode(&factcheck)
 
 	result.Factcheck = model.Factcheck{
