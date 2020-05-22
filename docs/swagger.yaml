@@ -113,6 +113,24 @@ definitions:
           $ref: '#/definitions/model.Tag'
         type: array
     type: object
+  format.format:
+    properties:
+      additional_fields:
+        type: string
+      description:
+        type: string
+      is_default:
+        type: boolean
+      name:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+    required:
+    - name
+    - slug
+    type: object
   medium.medium:
     properties:
       alt_text:
@@ -233,6 +251,30 @@ definitions:
         type: string
       updated_at:
         type: string
+    type: object
+  model.Format:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      is_default:
+        type: boolean
+      name:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      updated_at:
+        type: string
+    required:
+    - name
+    - slug
     type: object
   model.Medium:
     properties:
@@ -585,6 +627,126 @@ paths:
       summary: Update a category by id
       tags:
       - Category
+  /core/formats:
+    get:
+      description: Get all formats
+      operationId: get-all-formats
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Format'
+            type: array
+      summary: Show all formats
+      tags:
+      - Format
+    post:
+      description: Create format
+      operationId: add-format
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format Object
+        in: body
+        name: Format
+        required: true
+        schema:
+          $ref: '#/definitions/format.format'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Format'
+      summary: Create format
+      tags:
+      - Format
+  /core/formats/{format_id}:
+    delete:
+      description: Delete format by ID
+      operationId: delete-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a format
+      tags:
+      - Format
+    get:
+      description: Get format by ID
+      operationId: get-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Format'
+      summary: Show a format by id
+      tags:
+      - Format
+    put:
+      description: Update format by ID
+      operationId: update-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      - description: Format
+        in: body
+        name: Format
+        schema:
+          $ref: '#/definitions/format.format'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Format'
+      summary: Update a format by id
+      tags:
+      - Format
   /core/media:
     get:
       description: Get all media
