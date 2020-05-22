@@ -34,12 +34,6 @@ type factcheckData struct {
 	Claims     []factcheckModel.Claim `json:"claims"`
 }
 
-type factcheckList struct {
-	factcheckModel.Factcheck
-	Categories []coreModel.Category `json:"categories"`
-	Tags       []coreModel.Tag      `json:"tags"`
-}
-
 // Router - Group of factcheck router
 func Router() chi.Router {
 	r := chi.NewRouter()

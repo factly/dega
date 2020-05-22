@@ -44,7 +44,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	// fetch all categories
 	config.DB.Model(&model.FactcheckCategory{}).Where(&model.FactcheckCategory{
 		FactcheckID: uint(id),
-	}).Preload("Category").Find(&categories)
+	}).Preload("Category").Preload("Category.Medium").Find(&categories)
 
 	// fetch all tags
 	config.DB.Model(&model.FactcheckTag{}).Where(&model.FactcheckTag{
@@ -54,7 +54,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	// fetch all claims
 	config.DB.Model(&model.FactcheckClaim{}).Where(&model.FactcheckClaim{
 		FactcheckID: uint(id),
-	}).Preload("Claim").Find(&claims)
+	}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&claims)
 
 	for _, c := range categories {
 		result.Categories = append(result.Categories, c.Category)

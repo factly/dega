@@ -62,7 +62,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			return
 		}
-		config.DB.Model(&model.FactcheckCategory{}).Preload("Category").First(&factcheckCategory)
+		config.DB.Model(&model.FactcheckCategory{}).Preload("Category").Preload("Category.Medium").First(&factcheckCategory)
 		result.Categories = append(result.Categories, factcheckCategory.Category)
 	}
 	// create factcheck tag & fetch tags
@@ -94,7 +94,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		config.DB.Model(&model.FactcheckClaim{}).Preload("Claim").First(&factcheckClaim)
+		config.DB.Model(&model.FactcheckClaim{}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").First(&factcheckClaim)
 		result.Claims = append(result.Claims, factcheckClaim.Claim)
 	}
 

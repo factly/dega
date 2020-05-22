@@ -63,7 +63,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// fetch all categories
 	config.DB.Model(&model.FactcheckCategory{}).Where(&model.FactcheckCategory{
 		FactcheckID: uint(id),
-	}).Preload("Category").Find(&categories)
+	}).Preload("Category").Preload("Category.Medium").Find(&categories)
 
 	// fetch all tags
 	config.DB.Model(&model.FactcheckTag{}).Where(&model.FactcheckTag{
@@ -73,7 +73,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// fetch all claims
 	config.DB.Model(&model.FactcheckClaim{}).Where(&model.FactcheckClaim{
 		FactcheckID: uint(id),
-	}).Preload("Claim").Find(&claims)
+	}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&claims)
 
 	// delete tags
 	for _, t := range tags {
@@ -151,7 +151,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			config.DB.Model(&model.FactcheckCategory{}).Preload("Category").First(&factcheckCategory)
+			config.DB.Model(&model.FactcheckCategory{}).Preload("Category").Preload("Category.Medium").First(&factcheckCategory)
 			result.Categories = append(result.Categories, factcheckCategory.Category)
 		}
 	}
@@ -193,7 +193,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			config.DB.Model(&model.FactcheckClaim{}).Preload("Claim").First(&factcheckClaim)
+			config.DB.Model(&model.FactcheckClaim{}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").First(&factcheckClaim)
 			result.Claims = append(result.Claims, factcheckClaim.Claim)
 		}
 	}
