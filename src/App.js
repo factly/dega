@@ -5,6 +5,7 @@ import BasicLayout from './layouts/basic';
 
 //Pages
 import Spaces from './pages/spaces';
+import Media from './pages/media';
 import Dashboard from './pages/dashboard';
 import CreateSpace from './pages/spaces/create';
 function App() {
@@ -16,6 +17,7 @@ function App() {
             <Route exact path="/" component={Dashboard} />
             <Route path="/dashboard" component={Dashboard} />
             <Route exact path="/spaces" component={Spaces} />
+            <Route exact path="/media" component={Media} />
             <Route path="/spaces/create" component={CreateSpace} />
           </Switch>
         </BasicLayout>
