@@ -115,12 +115,8 @@ definitions:
     type: object
   format.format:
     properties:
-      additional_fields:
-        type: string
       description:
         type: string
-      is_default:
-        type: boolean
       name:
         type: string
       slug:
@@ -262,8 +258,6 @@ definitions:
         type: string
       id:
         type: integer
-      is_default:
-        type: boolean
       name:
         type: string
       slug:
@@ -395,6 +389,98 @@ definitions:
     required:
     - name
     - slug
+    type: object
+  post.post:
+    properties:
+      category_ids:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      excerpt:
+        type: string
+      featured_medium_id:
+        type: integer
+      format_id:
+        type: integer
+      is_featured:
+        type: boolean
+      is_highlighted:
+        type: boolean
+      is_sticky:
+        type: boolean
+      published_date:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      status:
+        type: string
+      subtitle:
+        type: string
+      tag_ids:
+        items:
+          type: integer
+        type: array
+      title:
+        type: string
+      updates:
+        type: string
+    type: object
+  post.postData:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      excerpt:
+        type: string
+      featured_medium_id:
+        type: integer
+      format:
+        $ref: '#/definitions/model.Format'
+        type: object
+      format_id:
+        type: integer
+      id:
+        type: integer
+      is_featured:
+        type: boolean
+      is_highlighted:
+        type: boolean
+      is_sticky:
+        type: boolean
+      medium:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      published_date:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      status:
+        type: string
+      subtitle:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
+      title:
+        type: string
+      updated_at:
+        type: string
+      updates:
+        type: string
     type: object
   rating.rating:
     properties:
@@ -867,6 +953,126 @@ paths:
       summary: Update a medium by id
       tags:
       - Medium
+  /core/posts:
+    get:
+      description: Get all posts
+      operationId: get-all-posts
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/post.postData'
+            type: array
+      summary: Show all posts
+      tags:
+      - Post
+    post:
+      description: Create post
+      operationId: add-post
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Post Object
+        in: body
+        name: Post
+        required: true
+        schema:
+          $ref: '#/definitions/post.post'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/post.postData'
+      summary: Create post
+      tags:
+      - Post
+  /core/posts/{post_id}:
+    delete:
+      description: Delete post by ID
+      operationId: delete-post-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a post
+      tags:
+      - Post
+    get:
+      description: Get post by ID
+      operationId: get-post-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.postData'
+      summary: Show a post by id
+      tags:
+      - Post
+    put:
+      description: Update post by ID
+      operationId: update-post-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      - description: Post
+        in: body
+        name: Post
+        schema:
+          $ref: '#/definitions/post.post'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.postData'
+      summary: Update a post by id
+      tags:
+      - Post
   /core/spaces:
     post:
       description: Create space
