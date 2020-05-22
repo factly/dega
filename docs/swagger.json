@@ -991,6 +991,360 @@
                     "200": {}
                 }
             }
+        },
+        "/factcheck/factchecks": {
+            "get": {
+                "description": "Get all factchecks",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Show all factchecks",
+                "operationId": "get-all-factchecks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/factcheck.factcheckData"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create factcheck",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Create factcheck",
+                "operationId": "add-factcheck",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Factcheck Object",
+                        "name": "Factcheck",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheck"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    }
+                }
+            }
+        },
+        "/factcheck/factchecks/{factcheck_id}": {
+            "get": {
+                "description": "Get factcheck by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Show a factcheck by id",
+                "operationId": "get-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update factcheck by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Update a factcheck by id",
+                "operationId": "update-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Factcheck",
+                        "name": "Factcheck",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheck"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete factcheck by ID",
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Delete a factcheck",
+                "operationId": "delete-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/factcheck/ratings": {
+            "get": {
+                "description": "Get all ratings",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Show all ratings",
+                "operationId": "get-all-ratings",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Rating"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create rating",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Create rating",
+                "operationId": "add-rating",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Rating Object",
+                        "name": "Rating",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/rating.rating"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Rating"
+                        }
+                    }
+                }
+            }
+        },
+        "/factcheck/ratings/{rating_id}": {
+            "get": {
+                "description": "Get rating by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Claimant"
+                ],
+                "summary": "Show a rating by id",
+                "operationId": "get-rating-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Claimant ID",
+                        "name": "rating_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Claimant"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update rating by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Update a rating by id",
+                "operationId": "update-rating-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Rating ID",
+                        "name": "rating_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Rating",
+                        "name": "Rating",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/rating.rating"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Rating"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete rating by ID",
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Delete a rating",
+                "operationId": "delete-rating-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Rating ID",
+                        "name": "rating_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
         }
     },
     "definitions": {
@@ -1011,6 +1365,9 @@
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -1018,9 +1375,6 @@
             "type": "object",
             "properties": {
                 "checked_date": {
-                    "type": "string"
-                },
-                "claim": {
                     "type": "string"
                 },
                 "claim_date": {
@@ -1052,6 +1406,9 @@
                 },
                 "space_id": {
                     "type": "integer"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },
@@ -1075,6 +1432,91 @@
                 },
                 "tag_line": {
                     "type": "string"
+                }
+            }
+        },
+        "factcheck.factcheck": {
+            "type": "object",
+            "properties": {
+                "category_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "claim_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "excerpt": {
+                    "type": "string"
+                },
+                "featured_medium_id": {
+                    "type": "integer"
+                },
+                "is_featured": {
+                    "type": "boolean"
+                },
+                "is_highlighted": {
+                    "type": "boolean"
+                },
+                "is_sticky": {
+                    "type": "boolean"
+                },
+                "published_date": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subtitle": {
+                    "type": "string"
+                },
+                "tag_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updates": {
+                    "type": "string"
+                }
+            }
+        },
+        "factcheck.factcheckData": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Category"
+                    }
+                },
+                "claims": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Claim"
+                    }
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Tag"
+                    }
                 }
             }
         },
@@ -1165,9 +1607,6 @@
                 "checked_date": {
                     "type": "string"
                 },
-                "claim": {
-                    "type": "string"
-                },
                 "claim_date": {
                     "type": "string"
                 },
@@ -1214,6 +1653,9 @@
                 },
                 "space_id": {
                     "type": "integer"
+                },
+                "title": {
+                    "type": "string"
                 },
                 "updated_at": {
                     "type": "string"
@@ -1437,6 +1879,29 @@
                 },
                 "updated_at": {
                     "type": "string"
+                }
+            }
+        },
+        "rating.rating": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "numeric_value": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
                 }
             }
         },
