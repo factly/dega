@@ -57,6 +57,62 @@ definitions:
       tag_line:
         type: string
     type: object
+  factcheck.factcheck:
+    properties:
+      category_ids:
+        items:
+          type: integer
+        type: array
+      claim_ids:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      excerpt:
+        type: string
+      featured_medium_id:
+        type: integer
+      is_featured:
+        type: boolean
+      is_highlighted:
+        type: boolean
+      is_sticky:
+        type: boolean
+      published_date:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      status:
+        type: string
+      subtitle:
+        type: string
+      tag_ids:
+        items:
+          type: integer
+        type: array
+      title:
+        type: string
+      updates:
+        type: string
+    type: object
+  factcheck.factcheckData:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      claims:
+        items:
+          $ref: '#/definitions/model.Claim'
+        type: array
+      tags:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
+    type: object
   format.format:
     properties:
       additional_fields:
@@ -198,8 +254,6 @@ definitions:
     type: object
   model.Format:
     properties:
-      additional_fields:
-        type: string
       created_at:
         type: string
       deleted_at:
@@ -1227,6 +1281,126 @@ paths:
       summary: Update a claim by id
       tags:
       - Claim
+  /factcheck/factchecks:
+    get:
+      description: Get all factchecks
+      operationId: get-all-factchecks
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/factcheck.factcheckData'
+            type: array
+      summary: Show all factchecks
+      tags:
+      - Factcheck
+    post:
+      description: Create factcheck
+      operationId: add-factcheck
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Factcheck Object
+        in: body
+        name: Factcheck
+        required: true
+        schema:
+          $ref: '#/definitions/factcheck.factcheck'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+      summary: Create factcheck
+      tags:
+      - Factcheck
+  /factcheck/factchecks/{factcheck_id}:
+    delete:
+      description: Delete factcheck by ID
+      operationId: delete-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a factcheck
+      tags:
+      - Factcheck
+    get:
+      description: Get factcheck by ID
+      operationId: get-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+      summary: Show a factcheck by id
+      tags:
+      - Factcheck
+    put:
+      description: Update factcheck by ID
+      operationId: update-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      - description: Factcheck
+        in: body
+        name: Factcheck
+        schema:
+          $ref: '#/definitions/factcheck.factcheck'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+      summary: Update a factcheck by id
+      tags:
+      - Factcheck
   /factcheck/ratings:
     get:
       description: Get all ratings

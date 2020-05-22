@@ -1169,6 +1169,183 @@
                 }
             }
         },
+        "/factcheck/factchecks": {
+            "get": {
+                "description": "Get all factchecks",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Show all factchecks",
+                "operationId": "get-all-factchecks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/factcheck.factcheckData"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create factcheck",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Create factcheck",
+                "operationId": "add-factcheck",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Factcheck Object",
+                        "name": "Factcheck",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheck"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    }
+                }
+            }
+        },
+        "/factcheck/factchecks/{factcheck_id}": {
+            "get": {
+                "description": "Get factcheck by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Show a factcheck by id",
+                "operationId": "get-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update factcheck by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Update a factcheck by id",
+                "operationId": "update-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Factcheck",
+                        "name": "Factcheck",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheck"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete factcheck by ID",
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Delete a factcheck",
+                "operationId": "delete-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
         "/factcheck/ratings": {
             "get": {
                 "description": "Get all ratings",
@@ -1435,6 +1612,91 @@
                 }
             }
         },
+        "factcheck.factcheck": {
+            "type": "object",
+            "properties": {
+                "category_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "claim_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "excerpt": {
+                    "type": "string"
+                },
+                "featured_medium_id": {
+                    "type": "integer"
+                },
+                "is_featured": {
+                    "type": "boolean"
+                },
+                "is_highlighted": {
+                    "type": "boolean"
+                },
+                "is_sticky": {
+                    "type": "boolean"
+                },
+                "published_date": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subtitle": {
+                    "type": "string"
+                },
+                "tag_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updates": {
+                    "type": "string"
+                }
+            }
+        },
+        "factcheck.factcheckData": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Category"
+                    }
+                },
+                "claims": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Claim"
+                    }
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Tag"
+                    }
+                }
+            }
+        },
         "format.format": {
             "type": "object",
             "required": [
@@ -1650,9 +1912,6 @@
                 "slug"
             ],
             "properties": {
-                "additional_fields": {
-                    "type": "string"
-                },
                 "created_at": {
                     "type": "string"
                 },
