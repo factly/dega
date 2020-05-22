@@ -12,12 +12,12 @@ definitions:
         type: integer
       slug:
         type: string
+      space_id:
+        type: integer
     type: object
   claim.claim:
     properties:
       checked_date:
-        type: string
-      claim:
         type: string
       claim_date:
         type: string
@@ -39,6 +39,8 @@ definitions:
         type: string
       space_id:
         type: integer
+      title:
+        type: string
     type: object
   claimant.claimant:
     properties:
@@ -54,6 +56,71 @@ definitions:
         type: integer
       tag_line:
         type: string
+    type: object
+  factcheck.factcheck:
+    properties:
+      category_ids:
+        items:
+          type: integer
+        type: array
+      claim_ids:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      excerpt:
+        type: string
+      featured_medium_id:
+        type: integer
+      is_featured:
+        type: boolean
+      is_highlighted:
+        type: boolean
+      is_sticky:
+        type: boolean
+      published_date:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      subtitle:
+        type: string
+      tag_ids:
+        items:
+          type: integer
+        type: array
+      title:
+        type: string
+      updates:
+        type: string
+    type: object
+  factcheck.factcheckData:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      claims:
+        items:
+          $ref: '#/definitions/model.Claim'
+        type: array
+      tags:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
+    type: object
+  factcheck.factcheckList:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      tags:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
     type: object
   medium.medium:
     properties:
@@ -113,8 +180,6 @@ definitions:
     properties:
       checked_date:
         type: string
-      claim:
-        type: string
       claim_date:
         type: string
       claim_sources:
@@ -147,6 +212,8 @@ definitions:
         type: string
       space_id:
         type: integer
+      title:
+        type: string
       updated_at:
         type: string
     type: object
@@ -295,6 +362,21 @@ definitions:
     required:
     - name
     - slug
+    type: object
+  rating.rating:
+    properties:
+      description:
+        type: string
+      medium_id:
+        type: integer
+      name:
+        type: string
+      numeric_value:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
     type: object
   space.orgWithSpace:
     properties:
@@ -1046,4 +1128,244 @@ paths:
       summary: Update a claim by id
       tags:
       - Claim
+  /factcheck/factchecks:
+    get:
+      description: Get all factchecks
+      operationId: get-all-factchecks
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/factcheck.factcheckList'
+            type: array
+      summary: Show all factchecks
+      tags:
+      - Factcheck
+    post:
+      description: Create factcheck
+      operationId: add-factcheck
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Factcheck Object
+        in: body
+        name: Factcheck
+        required: true
+        schema:
+          $ref: '#/definitions/factcheck.factcheck'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+      summary: Create factcheck
+      tags:
+      - Factcheck
+  /factcheck/factchecks/{factcheck_id}:
+    delete:
+      description: Delete factcheck by ID
+      operationId: delete-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a factcheck
+      tags:
+      - Factcheck
+    get:
+      description: Get factcheck by ID
+      operationId: get-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+      summary: Show a factcheck by id
+      tags:
+      - Factcheck
+    put:
+      description: Update factcheck by ID
+      operationId: update-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      - description: Factcheck
+        in: body
+        name: Factcheck
+        schema:
+          $ref: '#/definitions/factcheck.factcheck'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+      summary: Update a factcheck by id
+      tags:
+      - Factcheck
+  /factcheck/ratings:
+    get:
+      description: Get all ratings
+      operationId: get-all-ratings
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Rating'
+            type: array
+      summary: Show all ratings
+      tags:
+      - Rating
+    post:
+      description: Create rating
+      operationId: add-rating
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Rating Object
+        in: body
+        name: Rating
+        required: true
+        schema:
+          $ref: '#/definitions/rating.rating'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Rating'
+      summary: Create rating
+      tags:
+      - Rating
+  /factcheck/ratings/{rating_id}:
+    delete:
+      description: Delete rating by ID
+      operationId: delete-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Rating ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a rating
+      tags:
+      - Rating
+    get:
+      description: Get rating by ID
+      operationId: get-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claimant'
+      summary: Show a rating by id
+      tags:
+      - Claimant
+    put:
+      description: Update rating by ID
+      operationId: update-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Rating ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      - description: Rating
+        in: body
+        name: Rating
+        schema:
+          $ref: '#/definitions/rating.rating'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Rating'
+      summary: Update a rating by id
+      tags:
+      - Rating
 swagger: "2.0"
