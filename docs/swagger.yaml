@@ -12,12 +12,12 @@ definitions:
         type: integer
       slug:
         type: string
+      space_id:
+        type: integer
     type: object
   claim.claim:
     properties:
       checked_date:
-        type: string
-      claim:
         type: string
       claim_date:
         type: string
@@ -39,6 +39,8 @@ definitions:
         type: string
       space_id:
         type: integer
+      title:
+        type: string
     type: object
   claimant.claimant:
     properties:
@@ -54,6 +56,24 @@ definitions:
         type: integer
       tag_line:
         type: string
+    type: object
+  format.format:
+    properties:
+      additional_fields:
+        type: string
+      description:
+        type: string
+      is_default:
+        type: boolean
+      name:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+    required:
+    - name
+    - slug
     type: object
   medium.medium:
     properties:
@@ -113,8 +133,6 @@ definitions:
     properties:
       checked_date:
         type: string
-      claim:
-        type: string
       claim_date:
         type: string
       claim_sources:
@@ -147,6 +165,8 @@ definitions:
         type: string
       space_id:
         type: integer
+      title:
+        type: string
       updated_at:
         type: string
     type: object
@@ -175,6 +195,32 @@ definitions:
         type: string
       updated_at:
         type: string
+    type: object
+  model.Format:
+    properties:
+      additional_fields:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      is_default:
+        type: boolean
+      name:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      updated_at:
+        type: string
+    required:
+    - name
+    - slug
     type: object
   model.Medium:
     properties:
@@ -295,6 +341,21 @@ definitions:
     required:
     - name
     - slug
+    type: object
+  rating.rating:
+    properties:
+      description:
+        type: string
+      medium_id:
+        type: integer
+      name:
+        type: string
+      numeric_value:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
     type: object
   space.orgWithSpace:
     properties:
@@ -512,6 +573,126 @@ paths:
       summary: Update a category by id
       tags:
       - Category
+  /core/formats:
+    get:
+      description: Get all formats
+      operationId: get-all-formats
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Format'
+            type: array
+      summary: Show all formats
+      tags:
+      - Format
+    post:
+      description: Create format
+      operationId: add-format
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format Object
+        in: body
+        name: Format
+        required: true
+        schema:
+          $ref: '#/definitions/format.format'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Format'
+      summary: Create format
+      tags:
+      - Format
+  /core/formats/{format_id}:
+    delete:
+      description: Delete format by ID
+      operationId: delete-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a format
+      tags:
+      - Format
+    get:
+      description: Get format by ID
+      operationId: get-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Format'
+      summary: Show a format by id
+      tags:
+      - Format
+    put:
+      description: Update format by ID
+      operationId: update-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      - description: Format
+        in: body
+        name: Format
+        schema:
+          $ref: '#/definitions/format.format'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Format'
+      summary: Update a format by id
+      tags:
+      - Format
   /core/media:
     get:
       description: Get all media
@@ -1046,4 +1227,124 @@ paths:
       summary: Update a claim by id
       tags:
       - Claim
+  /factcheck/ratings:
+    get:
+      description: Get all ratings
+      operationId: get-all-ratings
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Rating'
+            type: array
+      summary: Show all ratings
+      tags:
+      - Rating
+    post:
+      description: Create rating
+      operationId: add-rating
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Rating Object
+        in: body
+        name: Rating
+        required: true
+        schema:
+          $ref: '#/definitions/rating.rating'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Rating'
+      summary: Create rating
+      tags:
+      - Rating
+  /factcheck/ratings/{rating_id}:
+    delete:
+      description: Delete rating by ID
+      operationId: delete-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Rating ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a rating
+      tags:
+      - Rating
+    get:
+      description: Get rating by ID
+      operationId: get-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claimant'
+      summary: Show a rating by id
+      tags:
+      - Claimant
+    put:
+      description: Update rating by ID
+      operationId: update-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Rating ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      - description: Rating
+        in: body
+        name: Rating
+        schema:
+          $ref: '#/definitions/rating.rating'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Rating'
+      summary: Update a rating by id
+      tags:
+      - Rating
 swagger: "2.0"

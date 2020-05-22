@@ -203,6 +203,183 @@
                 }
             }
         },
+        "/core/formats": {
+            "get": {
+                "description": "Get all formats",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Show all formats",
+                "operationId": "get-all-formats",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Format"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create format",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Create format",
+                "operationId": "add-format",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Format Object",
+                        "name": "Format",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/format.format"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Format"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/formats/{format_id}": {
+            "get": {
+                "description": "Get format by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Show a format by id",
+                "operationId": "get-format-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Format ID",
+                        "name": "format_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Format"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update format by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Update a format by id",
+                "operationId": "update-format-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Format ID",
+                        "name": "format_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Format",
+                        "name": "Format",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/format.format"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Format"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete format by ID",
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Delete a format",
+                "operationId": "delete-format-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Format ID",
+                        "name": "format_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
         "/core/media": {
             "get": {
                 "description": "Get all media",
@@ -991,6 +1168,183 @@
                     "200": {}
                 }
             }
+        },
+        "/factcheck/ratings": {
+            "get": {
+                "description": "Get all ratings",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Show all ratings",
+                "operationId": "get-all-ratings",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Rating"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create rating",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Create rating",
+                "operationId": "add-rating",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Rating Object",
+                        "name": "Rating",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/rating.rating"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Rating"
+                        }
+                    }
+                }
+            }
+        },
+        "/factcheck/ratings/{rating_id}": {
+            "get": {
+                "description": "Get rating by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Claimant"
+                ],
+                "summary": "Show a rating by id",
+                "operationId": "get-rating-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Claimant ID",
+                        "name": "rating_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Claimant"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update rating by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Update a rating by id",
+                "operationId": "update-rating-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Rating ID",
+                        "name": "rating_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Rating",
+                        "name": "Rating",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/rating.rating"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Rating"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete rating by ID",
+                "tags": [
+                    "Rating"
+                ],
+                "summary": "Delete a rating",
+                "operationId": "delete-rating-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Rating ID",
+                        "name": "rating_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
         }
     },
     "definitions": {
@@ -1011,6 +1365,9 @@
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -1018,9 +1375,6 @@
             "type": "object",
             "properties": {
                 "checked_date": {
-                    "type": "string"
-                },
-                "claim": {
                     "type": "string"
                 },
                 "claim_date": {
@@ -1052,6 +1406,9 @@
                 },
                 "space_id": {
                     "type": "integer"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },
@@ -1075,6 +1432,33 @@
                 },
                 "tag_line": {
                     "type": "string"
+                }
+            }
+        },
+        "format.format": {
+            "type": "object",
+            "required": [
+                "name",
+                "slug"
+            ],
+            "properties": {
+                "additional_fields": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "is_default": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -1165,9 +1549,6 @@
                 "checked_date": {
                     "type": "string"
                 },
-                "claim": {
-                    "type": "string"
-                },
                 "claim_date": {
                     "type": "string"
                 },
@@ -1215,6 +1596,9 @@
                 "space_id": {
                     "type": "integer"
                 },
+                "title": {
+                    "type": "string"
+                },
                 "updated_at": {
                     "type": "string"
                 }
@@ -1253,6 +1637,45 @@
                 },
                 "tag_line": {
                     "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.Format": {
+            "type": "object",
+            "required": [
+                "name",
+                "slug"
+            ],
+            "properties": {
+                "additional_fields": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_default": {
+                    "type": "boolean"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
                 },
                 "updated_at": {
                     "type": "string"
@@ -1437,6 +1860,29 @@
                 },
                 "updated_at": {
                     "type": "string"
+                }
+            }
+        },
+        "rating.rating": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "numeric_value": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
                 }
             }
         },
