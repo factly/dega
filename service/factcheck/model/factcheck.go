@@ -13,6 +13,7 @@ type Factcheck struct {
 	Title            string       `gorm:"column:title" json:"title"`
 	Subtitle         string       `gorm:"column:subtitle" json:"subtitle"`
 	Slug             string       `gorm:"column:slug" json:"slug"`
+	Status           string       `gorm:"column:status" json:"status"`
 	Excerpt          string       `gorm:"column:excerpt" json:"excerpt"`
 	Description      string       `gorm:"column:description" json:"description"`
 	Updates          string       `gorm:"column:updates" json:"updates"`

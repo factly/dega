@@ -47,6 +47,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&result.Factcheck).Updates(model.Factcheck{
 		Title:            factcheck.Title,
 		Slug:             factcheck.Slug,
+		Status:           factcheck.Status,
 		Subtitle:         factcheck.Subtitle,
 		Excerpt:          factcheck.Excerpt,
 		Updates:          factcheck.Updates,

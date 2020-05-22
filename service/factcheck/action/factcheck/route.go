@@ -13,6 +13,7 @@ type factcheck struct {
 	Title            string    `json:"title"`
 	Subtitle         string    `json:"subtitle"`
 	Slug             string    `json:"slug"`
+	Status           string    `json:"status"`
 	Excerpt          string    `json:"excerpt"`
 	Description      string    `json:"description"`
 	Updates          string    `json:"updates"`

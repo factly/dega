@@ -1018,7 +1018,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/factcheck.factcheckList"
+                                "$ref": "#/definitions/factcheck.factcheckData"
                             }
                         }
                     }
@@ -1477,6 +1477,9 @@
                 "space_id": {
                     "type": "integer"
                 },
+                "status": {
+                    "type": "string"
+                },
                 "subtitle": {
                     "type": "string"
                 },
@@ -1507,23 +1510,6 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/model.Claim"
-                    }
-                },
-                "tags": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Tag"
-                    }
-                }
-            }
-        },
-        "factcheck.factcheckList": {
-            "type": "object",
-            "properties": {
-                "categories": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Category"
                     }
                 },
                 "tags": {

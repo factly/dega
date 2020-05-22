@@ -30,6 +30,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result.Factcheck = model.Factcheck{
 		Title:            factcheck.Title,
 		Slug:             factcheck.Slug,
+		Status:           factcheck.Status,
 		Subtitle:         factcheck.Subtitle,
 		Excerpt:          factcheck.Excerpt,
 		Updates:          factcheck.Updates,

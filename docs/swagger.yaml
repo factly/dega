@@ -85,6 +85,8 @@ definitions:
         type: string
       space_id:
         type: integer
+      status:
+        type: string
       subtitle:
         type: string
       tag_ids:
@@ -105,17 +107,6 @@ definitions:
       claims:
         items:
           $ref: '#/definitions/model.Claim'
-        type: array
-      tags:
-        items:
-          $ref: '#/definitions/model.Tag'
-        type: array
-    type: object
-  factcheck.factcheckList:
-    properties:
-      categories:
-        items:
-          $ref: '#/definitions/model.Category'
         type: array
       tags:
         items:
@@ -1145,7 +1136,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/factcheck.factcheckList'
+              $ref: '#/definitions/factcheck.factcheckData'
             type: array
       summary: Show all factchecks
       tags:
