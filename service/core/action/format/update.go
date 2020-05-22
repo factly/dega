@@ -39,7 +39,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Name:        format.Name,
 		Slug:        format.Slug,
 		Description: format.Description,
-		IsDefault:   format.IsDefault,
 	}).First(&result)
 
 	json.NewEncoder(w).Encode(result)

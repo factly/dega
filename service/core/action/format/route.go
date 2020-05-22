@@ -10,7 +10,6 @@ type format struct {
 	Name             string         `json:"name" validate:"required"`
 	Slug             string         `json:"slug" validate:"required"`
 	Description      string         `json:"description"`
-	IsDefault        bool           `json:"is_default"`
 	AdditionalFields postgres.Jsonb `json:"additional_fields"`
 	SpaceID          uint           `json:"space_id"`
 }

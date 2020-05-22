@@ -30,7 +30,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Name:        format.Name,
 		Description: format.Description,
 		Slug:        format.Slug,
-		IsDefault:   format.IsDefault,
 		SpaceID:     format.SpaceID,
 	}
 
