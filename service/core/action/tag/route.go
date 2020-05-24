@@ -4,10 +4,10 @@ import "github.com/go-chi/chi"
 
 // tag model
 type tag struct {
-	Name        string `gorm:"column:name"`
-	Slug        string `gorm:"column:slug"`
-	Description string `gorm:"column:description"`
-	SpaceID     uint   `gorm:"column:space_id"`
+	Name        string `json:"name" validate:"required"`
+	Slug        string `json:"slug" validate:"required"`
+	Description string `json:"description" validate:"required"`
+	SpaceID     uint   `json:"space_id" validate:"required"`
 }
 
 // Router - Group of tag router

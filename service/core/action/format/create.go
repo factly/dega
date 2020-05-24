@@ -7,6 +7,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
+	"github.com/go-playground/validator/v10"
 )
 
 // create - Create format
@@ -19,12 +21,23 @@ import (
 // @Param X-User header string true "User ID"
 // @Param Format body format true "Format Object"
 // @Success 201 {object} model.Format
+// @Failure 400 {array} string
 // @Router /core/formats [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	format := &format{}
 
 	json.NewDecoder(r.Body).Decode(&format)
+
+	validate := validator.New()
+
+	err := validate.Struct(format)
+
+	if err != nil {
+		msg := err.Error()
+		validation.ValidErrors(w, r, msg)
+		return
+	}
 
 	result := &model.Format{
 		Name:        format.Name,
@@ -33,7 +46,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:     format.SpaceID,
 	}
 
-	err := config.DB.Model(&model.Format{}).Create(&result).Error
+	err = config.DB.Model(&model.Format{}).Create(&result).Error
 
 	if err != nil {
 		return

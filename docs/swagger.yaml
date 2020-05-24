@@ -14,6 +14,12 @@ definitions:
         type: string
       space_id:
         type: integer
+    required:
+    - description
+    - medium_id
+    - name
+    - slug
+    - space_id
     type: object
   claim.claim:
     properties:
@@ -124,8 +130,10 @@ definitions:
       space_id:
         type: integer
     required:
+    - description
     - name
     - slug
+    - space_id
     type: object
   medium.medium:
     properties:
@@ -151,6 +159,17 @@ definitions:
         type: string
       url:
         type: string
+    required:
+    - alt_text
+    - caption
+    - description
+    - dimensions
+    - file_size
+    - name
+    - slug
+    - space_id
+    - title
+    - type
     type: object
   model.Category:
     properties:
@@ -177,9 +196,6 @@ definitions:
         type: integer
       updated_at:
         type: string
-    required:
-    - name
-    - slug
     type: object
   model.Claim:
     properties:
@@ -428,6 +444,17 @@ definitions:
         type: string
       updates:
         type: string
+    required:
+    - description
+    - excerpt
+    - featured_medium_id
+    - format_id
+    - published_date
+    - slug
+    - space_id
+    - status
+    - subtitle
+    - title
     type: object
   post.postData:
     properties:
@@ -571,8 +598,13 @@ definitions:
         type: string
       slug:
         type: string
-      spaceID:
+      space_id:
         type: integer
+    required:
+    - description
+    - name
+    - slug
+    - space_id
     type: object
 host: localhost:8820
 info:
@@ -631,6 +663,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Category'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create category
       tags:
       - Category
@@ -757,6 +795,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Format'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create format
       tags:
       - Format
@@ -877,6 +921,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Medium'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create medium
       tags:
       - Medium
@@ -1165,6 +1215,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Tag'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create tag
       tags:
       - Tag

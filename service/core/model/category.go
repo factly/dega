@@ -7,8 +7,8 @@ import (
 // Category model
 type Category struct {
 	config.Base
-	Name        string `gorm:"column:name" json:"name" validate:"required"`
-	Slug        string `gorm:"column:slug" json:"slug" validate:"required"`
+	Name        string `gorm:"column:name" json:"name"`
+	Slug        string `gorm:"column:slug" json:"slug"`
 	Description string `gorm:"column:description" json:"description"`
 	ParentID    uint   `gorm:"column:parent_id" json:"parent_id"`
 	MediumID    uint   `gorm:"column:medium_id" json:"medium_id"`

@@ -4,12 +4,12 @@ import "github.com/go-chi/chi"
 
 // category request body
 type category struct {
-	Name        string `json:"name"`
-	Slug        string `json:"slug"`
-	Description string `json:"description"`
+	Name        string `json:"name" validate:"required"`
+	Slug        string `json:"slug" validate:"required"`
+	Description string `json:"description" validate:"required"`
 	ParentID    uint   `json:"parent_id"`
-	MediumID    uint   `json:"medium_id"`
-	SpaceID     uint   `json:"space_id"`
+	MediumID    uint   `json:"medium_id" validate:"required"`
+	SpaceID     uint   `json:"space_id" validate:"required"`
 }
 
 // Router - Group of category router

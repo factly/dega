@@ -83,6 +83,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Category"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -269,6 +278,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Format"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -445,6 +463,15 @@
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.Medium"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -871,6 +898,15 @@
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.Tag"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -1704,6 +1740,13 @@
     "definitions": {
         "category.category": {
             "type": "object",
+            "required": [
+                "description",
+                "medium_id",
+                "name",
+                "slug",
+                "space_id"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -1877,8 +1920,10 @@
         "format.format": {
             "type": "object",
             "required": [
+                "description",
                 "name",
-                "slug"
+                "slug",
+                "space_id"
             ],
             "properties": {
                 "description": {
@@ -1897,6 +1942,18 @@
         },
         "medium.medium": {
             "type": "object",
+            "required": [
+                "alt_text",
+                "caption",
+                "description",
+                "dimensions",
+                "file_size",
+                "name",
+                "slug",
+                "space_id",
+                "title",
+                "type"
+            ],
             "properties": {
                 "alt_text": {
                     "type": "string"
@@ -1935,10 +1992,6 @@
         },
         "model.Category": {
             "type": "object",
-            "required": [
-                "name",
-                "slug"
-            ],
             "properties": {
                 "created_at": {
                     "type": "string"
@@ -2292,6 +2345,18 @@
         },
         "post.post": {
             "type": "object",
+            "required": [
+                "description",
+                "excerpt",
+                "featured_medium_id",
+                "format_id",
+                "published_date",
+                "slug",
+                "space_id",
+                "status",
+                "subtitle",
+                "title"
+            ],
             "properties": {
                 "category_ids": {
                     "type": "array",
@@ -2553,6 +2618,12 @@
         },
         "tag.tag": {
             "type": "object",
+            "required": [
+                "description",
+                "name",
+                "slug",
+                "space_id"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -2563,7 +2634,7 @@
                 "slug": {
                     "type": "string"
                 },
-                "spaceID": {
+                "space_id": {
                     "type": "integer"
                 }
             }

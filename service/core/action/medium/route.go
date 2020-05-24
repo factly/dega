@@ -7,17 +7,17 @@ import (
 
 // medium model
 type medium struct {
-	Name        string         `json:"name"`
-	Slug        string         `json:"slug"`
-	Type        string         `json:"type"`
-	Title       string         `json:"title"`
-	Description string         `json:"description"`
-	Caption     string         `json:"caption"`
-	AltText     string         `json:"alt_text"`
-	FileSize    int64          `json:"file_size"`
+	Name        string         `json:"name" validate:"required"`
+	Slug        string         `json:"slug" validate:"required"`
+	Type        string         `json:"type" validate:"required"`
+	Title       string         `json:"title" validate:"required"`
+	Description string         `json:"description" validate:"required"`
+	Caption     string         `json:"caption" validate:"required"`
+	AltText     string         `json:"alt_text" validate:"required"`
+	FileSize    int64          `json:"file_size" validate:"required"`
 	URL         postgres.Jsonb `json:"url"`
-	Dimensions  string         `json:"dimensions"`
-	SpaceID     uint           `json:"space_id"`
+	Dimensions  string         `json:"dimensions" validate:"required"`
+	SpaceID     uint           `json:"space_id" validate:"required"`
 }
 
 // Router - Group of medium router
