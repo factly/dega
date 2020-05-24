@@ -15,6 +15,15 @@ definitions:
       space_id:
         type: integer
     type: object
+  category.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      total:
+        type: integer
+    type: object
   claim.claim:
     properties:
       checked_date:
@@ -126,6 +135,15 @@ definitions:
     required:
     - name
     - slug
+    type: object
+  format.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Format'
+        type: array
+      total:
+        type: integer
     type: object
   medium.medium:
     properties:
@@ -597,15 +615,21 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limt per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model.Category'
-            type: array
+            $ref: '#/definitions/category.paging'
       summary: Show all categories
       tags:
       - Category
@@ -723,15 +747,21 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limt per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model.Format'
-            type: array
+            $ref: '#/definitions/format.paging'
       summary: Show all formats
       tags:
       - Format
@@ -842,6 +872,14 @@ paths:
         in: header
         name: X-User
         required: true
+        type: string
+      - description: limt per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
         type: string
       produces:
       - application/json
@@ -962,6 +1000,14 @@ paths:
         in: header
         name: X-User
         required: true
+        type: string
+      - description: limt per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
         type: string
       produces:
       - application/json
@@ -1130,6 +1176,14 @@ paths:
         in: header
         name: X-User
         required: true
+        type: string
+      - description: limt per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
         type: string
       produces:
       - application/json
