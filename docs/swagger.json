@@ -1094,6 +1094,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Claimant"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -1270,6 +1279,15 @@
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.Claim"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -1448,6 +1466,15 @@
                         "schema": {
                             "$ref": "#/definitions/factcheck.factcheckData"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -1625,6 +1652,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Rating"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -1636,7 +1672,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Claimant"
+                    "Rating"
                 ],
                 "summary": "Show a rating by id",
                 "operationId": "get-rating-by-id",
@@ -1770,6 +1806,18 @@
         },
         "claim.claim": {
             "type": "object",
+            "required": [
+                "claim_sources",
+                "claimant_id",
+                "description",
+                "rating_id",
+                "review",
+                "review_sources",
+                "review_tag_line",
+                "slug",
+                "space_id",
+                "title"
+            ],
             "properties": {
                 "checked_date": {
                     "type": "string"
@@ -1811,6 +1859,14 @@
         },
         "claimant.claimant": {
             "type": "object",
+            "required": [
+                "description",
+                "medium_id",
+                "name",
+                "slug",
+                "space_id",
+                "tag_line"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -1834,6 +1890,17 @@
         },
         "factcheck.factcheck": {
             "type": "object",
+            "required": [
+                "description",
+                "excerpt",
+                "featured_medium_id",
+                "published_date",
+                "slug",
+                "space_id",
+                "status",
+                "subtitle",
+                "title"
+            ],
             "properties": {
                 "category_ids": {
                     "type": "array",
@@ -2495,6 +2562,14 @@
         },
         "rating.rating": {
             "type": "object",
+            "required": [
+                "description",
+                "medium_id",
+                "name",
+                "numeric_value",
+                "slug",
+                "space_id"
+            ],
             "properties": {
                 "description": {
                     "type": "string"

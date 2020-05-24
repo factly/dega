@@ -47,6 +47,17 @@ definitions:
         type: integer
       title:
         type: string
+    required:
+    - claim_sources
+    - claimant_id
+    - description
+    - rating_id
+    - review
+    - review_sources
+    - review_tag_line
+    - slug
+    - space_id
+    - title
     type: object
   claimant.claimant:
     properties:
@@ -62,6 +73,13 @@ definitions:
         type: integer
       tag_line:
         type: string
+    required:
+    - description
+    - medium_id
+    - name
+    - slug
+    - space_id
+    - tag_line
     type: object
   factcheck.factcheck:
     properties:
@@ -103,6 +121,16 @@ definitions:
         type: string
       updates:
         type: string
+    required:
+    - description
+    - excerpt
+    - featured_medium_id
+    - published_date
+    - slug
+    - space_id
+    - status
+    - subtitle
+    - title
     type: object
   factcheck.factcheckData:
     properties:
@@ -523,6 +551,13 @@ definitions:
         type: string
       space_id:
         type: integer
+    required:
+    - description
+    - medium_id
+    - name
+    - numeric_value
+    - slug
+    - space_id
     type: object
   space.orgWithSpace:
     properties:
@@ -1347,6 +1382,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Claimant'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create claimant
       tags:
       - Claimant
@@ -1467,6 +1508,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Claim'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create claim
       tags:
       - Claim
@@ -1587,6 +1634,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/factcheck.factcheckData'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create factcheck
       tags:
       - Factcheck
@@ -1707,6 +1760,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Rating'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create rating
       tags:
       - Rating
@@ -1753,7 +1812,7 @@ paths:
             $ref: '#/definitions/model.Claimant'
       summary: Show a rating by id
       tags:
-      - Claimant
+      - Rating
     put:
       description: Update rating by ID
       operationId: update-rating-by-id

@@ -13,7 +13,7 @@ import (
 // details - Get rating by id
 // @Summary Show a rating by id
 // @Description Get rating by ID
-// @Tags Claimant
+// @Tags Rating
 // @ID get-rating-by-id
 // @Produce  json
 // @Param X-User header string true "User ID"
