@@ -32,7 +32,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := util.Paging(r.URL.Query())
 
-	err := config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Count(&result.Total).Order("id asc").Offset(offset).Limit(limit).Find(&posts).Error
+	err := config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts).Error
 
 	if err != nil {
 		return

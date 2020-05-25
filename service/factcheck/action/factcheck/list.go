@@ -34,7 +34,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	factchecks := []model.Factcheck{}
 
-	err := config.DB.Model(&model.Factcheck{}).Preload("Medium").Count(&result.Total).Order("id asc").Offset(offset).Limit(limit).Find(&factchecks).Error
+	err := config.DB.Model(&model.Factcheck{}).Preload("Medium").Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&factchecks).Error
 
 	if err != nil {
 		return

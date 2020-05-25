@@ -31,7 +31,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := util.Paging(r.URL.Query())
 
-	err := config.DB.Model(&model.Category{}).Preload("Medium").Count(&result.Total).Order("id asc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
+	err := config.DB.Model(&model.Category{}).Preload("Medium").Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
 
 	if err != nil {
 		return
