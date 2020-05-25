@@ -92,6 +92,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Category"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -287,6 +296,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Format"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -475,6 +493,15 @@
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.Medium"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -926,6 +953,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Tag"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -1121,6 +1157,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Claimant"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -1306,6 +1351,15 @@
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.Claim"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -1493,6 +1547,15 @@
                         "schema": {
                             "$ref": "#/definitions/factcheck.factcheckData"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -1679,6 +1742,15 @@
                         "schema": {
                             "$ref": "#/definitions/model.Rating"
                         }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
                     }
                 }
             }
@@ -1690,7 +1762,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Claimant"
+                    "Rating"
                 ],
                 "summary": "Show a rating by id",
                 "operationId": "get-rating-by-id",
@@ -1794,6 +1866,11 @@
     "definitions": {
         "category.category": {
             "type": "object",
+            "required": [
+                "name",
+                "slug",
+                "space_id"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -1831,6 +1908,16 @@
         },
         "claim.claim": {
             "type": "object",
+            "required": [
+                "claim_sources",
+                "claimant_id",
+                "rating_id",
+                "review",
+                "review_sources",
+                "slug",
+                "space_id",
+                "title"
+            ],
             "properties": {
                 "checked_date": {
                     "type": "string"
@@ -1886,6 +1973,12 @@
         },
         "claimant.claimant": {
             "type": "object",
+            "required": [
+                "name",
+                "slug",
+                "space_id",
+                "tag_line"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -1923,6 +2016,14 @@
         },
         "factcheck.factcheck": {
             "type": "object",
+            "required": [
+                "excerpt",
+                "published_date",
+                "slug",
+                "space_id",
+                "status",
+                "title"
+            ],
             "properties": {
                 "category_ids": {
                     "type": "array",
@@ -2024,7 +2125,8 @@
             "type": "object",
             "required": [
                 "name",
-                "slug"
+                "slug",
+                "space_id"
             ],
             "properties": {
                 "description": {
@@ -2057,6 +2159,15 @@
         },
         "medium.medium": {
             "type": "object",
+            "required": [
+                "dimensions",
+                "file_size",
+                "name",
+                "slug",
+                "space_id",
+                "title",
+                "type"
+            ],
             "properties": {
                 "alt_text": {
                     "type": "string"
@@ -2095,10 +2206,6 @@
         },
         "model.Category": {
             "type": "object",
-            "required": [
-                "name",
-                "slug"
-            ],
             "properties": {
                 "created_at": {
                     "type": "string"
@@ -2452,6 +2559,17 @@
         },
         "post.post": {
             "type": "object",
+            "required": [
+                "description",
+                "excerpt",
+                "format_id",
+                "published_date",
+                "slug",
+                "space_id",
+                "status",
+                "subtitle",
+                "title"
+            ],
             "properties": {
                 "category_ids": {
                     "type": "array",
@@ -2604,6 +2722,12 @@
         },
         "rating.rating": {
             "type": "object",
+            "required": [
+                "name",
+                "numeric_value",
+                "slug",
+                "space_id"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -2727,6 +2851,11 @@
         },
         "tag.tag": {
             "type": "object",
+            "required": [
+                "name",
+                "slug",
+                "space_id"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -2737,7 +2866,7 @@
                 "slug": {
                     "type": "string"
                 },
-                "spaceID": {
+                "space_id": {
                     "type": "integer"
                 }
             }

@@ -7,6 +7,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
+	"github.com/go-playground/validator/v10"
 )
 
 // create - Create claim
@@ -19,12 +21,23 @@ import (
 // @Param X-User header string true "User ID"
 // @Param Claim body claim true "Claim Object"
 // @Success 201 {object} model.Claim
+// @Failure 400 {array} string
 // @Router /factcheck/claims [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	claim := &claim{}
 
 	json.NewDecoder(r.Body).Decode(&claim)
+
+	validate := validator.New()
+
+	err := validate.Struct(claim)
+
+	if err != nil {
+		msg := err.Error()
+		validation.ValidErrors(w, r, msg)
+		return
+	}
 
 	result := &model.Claim{
 		Title:         claim.Title,
@@ -41,7 +54,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:       claim.SpaceID,
 	}
 
-	err := config.DB.Model(&model.Claim{}).Create(&result).Error
+	err = config.DB.Model(&model.Claim{}).Create(&result).Error
 
 	if err != nil {
 		return

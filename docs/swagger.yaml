@@ -14,6 +14,10 @@ definitions:
         type: string
       space_id:
         type: integer
+    required:
+    - name
+    - slug
+    - space_id
     type: object
   category.paging:
     properties:
@@ -50,6 +54,15 @@ definitions:
         type: integer
       title:
         type: string
+    required:
+    - claim_sources
+    - claimant_id
+    - rating_id
+    - review
+    - review_sources
+    - slug
+    - space_id
+    - title
     type: object
   claim.paging:
     properties:
@@ -74,6 +87,11 @@ definitions:
         type: integer
       tag_line:
         type: string
+    required:
+    - name
+    - slug
+    - space_id
+    - tag_line
     type: object
   claimant.paging:
     properties:
@@ -124,6 +142,13 @@ definitions:
         type: string
       updates:
         type: string
+    required:
+    - excerpt
+    - published_date
+    - slug
+    - space_id
+    - status
+    - title
     type: object
   factcheck.factcheckData:
     properties:
@@ -162,6 +187,7 @@ definitions:
     required:
     - name
     - slug
+    - space_id
     type: object
   format.paging:
     properties:
@@ -196,6 +222,14 @@ definitions:
         type: string
       url:
         type: string
+    required:
+    - dimensions
+    - file_size
+    - name
+    - slug
+    - space_id
+    - title
+    - type
     type: object
   model.Category:
     properties:
@@ -222,9 +256,6 @@ definitions:
         type: integer
       updated_at:
         type: string
-    required:
-    - name
-    - slug
     type: object
   model.Claim:
     properties:
@@ -473,6 +504,16 @@ definitions:
         type: string
       updates:
         type: string
+    required:
+    - description
+    - excerpt
+    - format_id
+    - published_date
+    - slug
+    - space_id
+    - status
+    - subtitle
+    - title
     type: object
   post.postData:
     properties:
@@ -550,6 +591,11 @@ definitions:
         type: string
       space_id:
         type: integer
+    required:
+    - name
+    - numeric_value
+    - slug
+    - space_id
     type: object
   space.orgWithSpace:
     properties:
@@ -625,8 +671,12 @@ definitions:
         type: string
       slug:
         type: string
-      spaceID:
+      space_id:
         type: integer
+    required:
+    - name
+    - slug
+    - space_id
     type: object
 host: localhost:8820
 info:
@@ -691,6 +741,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Category'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create category
       tags:
       - Category
@@ -823,6 +879,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Format'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create format
       tags:
       - Format
@@ -951,6 +1013,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Medium'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create medium
       tags:
       - Medium
@@ -1255,6 +1323,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Tag'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create tag
       tags:
       - Tag
@@ -1387,6 +1461,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Claimant'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create claimant
       tags:
       - Claimant
@@ -1513,6 +1593,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Claim'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create claim
       tags:
       - Claim
@@ -1639,6 +1725,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/factcheck.factcheckData'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create factcheck
       tags:
       - Factcheck
@@ -1765,6 +1857,12 @@ paths:
           description: Created
           schema:
             $ref: '#/definitions/model.Rating'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
       summary: Create rating
       tags:
       - Rating
@@ -1811,7 +1909,7 @@ paths:
             $ref: '#/definitions/model.Claimant'
       summary: Show a rating by id
       tags:
-      - Claimant
+      - Rating
     put:
       description: Update rating by ID
       operationId: update-rating-by-id

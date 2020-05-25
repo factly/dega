@@ -7,6 +7,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
+	"github.com/go-playground/validator/v10"
 )
 
 // create - Create factcheck
@@ -19,6 +21,7 @@ import (
 // @Param X-User header string true "User ID"
 // @Param Factcheck body factcheck true "Factcheck Object"
 // @Success 201 {object} factcheckData
+// @Failure 400 {array} string
 // @Router /factcheck/factchecks [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
@@ -26,6 +29,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &factcheckData{}
 
 	json.NewDecoder(r.Body).Decode(&factcheck)
+
+	validate := validator.New()
+
+	err := validate.Struct(factcheck)
+
+	if err != nil {
+		msg := err.Error()
+		validation.ValidErrors(w, r, msg)
+		return
+	}
 
 	result.Factcheck = model.Factcheck{
 		Title:            factcheck.Title,
@@ -43,7 +56,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:          factcheck.SpaceID,
 	}
 
-	err := config.DB.Model(&model.Factcheck{}).Create(&result.Factcheck).Error
+	err = config.DB.Model(&model.Factcheck{}).Create(&result.Factcheck).Error
 
 	if err != nil {
 		return

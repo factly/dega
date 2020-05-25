@@ -7,6 +7,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
+	"github.com/go-playground/validator/v10"
 )
 
 // create - Create claimant
@@ -19,12 +21,23 @@ import (
 // @Param X-User header string true "User ID"
 // @Param Claimant body claimant true "Claimant Object"
 // @Success 201 {object} model.Claimant
+// @Failure 400 {array} string
 // @Router /factcheck/claimants [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	claimant := &claimant{}
 
 	json.NewDecoder(r.Body).Decode(&claimant)
+
+	validate := validator.New()
+
+	err := validate.Struct(claimant)
+
+	if err != nil {
+		msg := err.Error()
+		validation.ValidErrors(w, r, msg)
+		return
+	}
 
 	result := &model.Claimant{
 		Name:        claimant.Name,
@@ -35,7 +48,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		TagLine:     claimant.TagLine,
 	}
 
-	err := config.DB.Model(&model.Claimant{}).Create(&result).Error
+	err = config.DB.Model(&model.Claimant{}).Create(&result).Error
 
 	if err != nil {
 		return

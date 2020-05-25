@@ -4,12 +4,12 @@ import "github.com/go-chi/chi"
 
 // rating model
 type rating struct {
-	Name         string `gorm:"column:name" json:"name"`
-	Slug         string `gorm:"column:slug" json:"slug"`
-	Description  string `gorm:"column:description" json:"description"`
-	NumericValue string `gorm:"column:numeric_value" json:"numeric_value"`
-	MediumID     uint   `gorm:"column:medium_id" json:"medium_id"`
-	SpaceID      uint   `gorm:"column:space_id" json:"space_id"`
+	Name         string `json:"name" validate:"required"`
+	Slug         string `json:"slug" validate:"required"`
+	Description  string `json:"description"`
+	NumericValue string `json:"numeric_value" validate:"required"`
+	MediumID     uint   `json:"medium_id"`
+	SpaceID      uint   `json:"space_id" validate:"required"`
 }
 
 // Router - Group of rating router

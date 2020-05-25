@@ -10,19 +10,19 @@ import (
 
 // factcheck request body
 type factcheck struct {
-	Title            string    `json:"title"`
+	Title            string    `json:"title" validate:"required"`
 	Subtitle         string    `json:"subtitle"`
-	Slug             string    `json:"slug"`
-	Status           string    `json:"status"`
-	Excerpt          string    `json:"excerpt"`
+	Slug             string    `json:"slug" validate:"required"`
+	Status           string    `json:"status" validate:"required"`
+	Excerpt          string    `json:"excerpt" validate:"required"`
 	Description      string    `json:"description"`
 	Updates          string    `json:"updates"`
 	IsFeatured       bool      `json:"is_featured"`
 	IsSticky         bool      `json:"is_sticky"`
 	IsHighlighted    bool      `json:"is_highlighted"`
 	FeaturedMediumID uint      `json:"featured_medium_id"`
-	PublishedDate    time.Time `json:"published_date"`
-	SpaceID          uint      `json:"space_id"`
+	PublishedDate    time.Time `json:"published_date" validate:"required"`
+	SpaceID          uint      `json:"space_id" validate:"required"`
 	CategoryIDS      []uint    `json:"category_ids"`
 	TagIDS           []uint    `json:"tag_ids"`
 	ClaimIDS         []uint    `json:"claim_ids"`

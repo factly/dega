@@ -7,6 +7,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
+	"github.com/go-playground/validator/v10"
 )
 
 // create - Create post
@@ -27,6 +29,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(r.Body).Decode(&post)
 
+	validate := validator.New()
+
+	err := validate.Struct(post)
+
+	if err != nil {
+		msg := err.Error()
+		validation.ValidErrors(w, r, msg)
+		return
+	}
+
 	result.Post = model.Post{
 		Title:            post.Title,
 		Slug:             post.Slug,
@@ -44,7 +56,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:          post.SpaceID,
 	}
 
-	err := config.DB.Model(&model.Post{}).Create(&result.Post).Error
+	err = config.DB.Model(&model.Post{}).Create(&result.Post).Error
 
 	if err != nil {
 		return
