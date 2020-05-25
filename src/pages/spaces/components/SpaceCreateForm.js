@@ -57,12 +57,24 @@ const SpaceCreateForm = ({ onCreate }) => {
         <Input />
       </Form.Item>
       <Form.Item
-        name="site_title"
-        label="Sub Title"
+        name="site_address"
+        label="Website"
         rules={[
           {
             required: true,
-            message: 'Please input the sub title of space!',
+            message: 'Please input the website of space!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="site_title"
+        label="Title"
+        rules={[
+          {
+            required: true,
+            message: 'Please input the title of space!',
           },
         ]}
       >
@@ -70,7 +82,7 @@ const SpaceCreateForm = ({ onCreate }) => {
       </Form.Item>
       <Form.Item
         name="tag_line"
-        label="Tag Line"
+        label="Tag line"
         rules={[
           {
             required: true,

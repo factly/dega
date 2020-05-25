@@ -1,4 +1,4 @@
-import { GET_SPACES_SUCCESS, ADD_SPACE_SUCCESS, LOADING_SPACES } from '../actions/types';
+import { GET_SPACES_SUCCESS, ADD_SPACE_SUCCESS, LOADING_SPACES } from '../constants/spaces';
 
 const initialState = {
   spaces: [],
@@ -6,6 +6,10 @@ const initialState = {
 };
 
 export default function spacesReducer(state = initialState, action = {}) {
+  if (!action.payload) {
+    return state;
+  }
+  console.log('Spaces Reducer', state, action);
   switch (action.type) {
     case LOADING_SPACES:
       return {

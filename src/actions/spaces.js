@@ -1,17 +1,20 @@
+import axios from '../utils/axios';
 import {
   GET_SPACES_SUCCESS,
   GET_SPACES_FAILURE,
   ADD_SPACE_FAILURE,
   ADD_SPACE_SUCCESS,
   LOADING_SPACES,
-} from './types';
-import axios from 'axios';
+  API_ADD_SPACES,
+  API_GET_SPACES,
+} from '../constants/spaces';
 
 export const getSpaces = () => {
+  console.log('Get Spaces');
   return async (dispatch, getState) => {
     dispatch(loadingSpaces());
     const response = await axios({
-      url: 'https://randomuser.me/api',
+      url: API_GET_SPACES,
       method: 'get',
     }).catch((error) => {
       dispatch(getSpacesFailure(error.message));
@@ -43,8 +46,9 @@ export const addSpaces = (data) => {
   return async (dispatch, getState) => {
     dispatch(loadingSpaces());
     const response = await axios({
-      url: 'https://randomuser.me/api',
-      method: 'get',
+      url: API_ADD_SPACES,
+      method: 'post',
+      data: data,
     }).catch((error) => {
       dispatch(addSpacesFailure(error.message));
     });
