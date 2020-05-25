@@ -15,11 +15,18 @@ definitions:
       space_id:
         type: integer
     required:
-    - description
-    - medium_id
     - name
     - slug
     - space_id
+    type: object
+  category.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      total:
+        type: integer
     type: object
   claim.claim:
     properties:
@@ -50,14 +57,21 @@ definitions:
     required:
     - claim_sources
     - claimant_id
-    - description
     - rating_id
     - review
     - review_sources
-    - review_tag_line
     - slug
     - space_id
     - title
+    type: object
+  claim.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Claim'
+        type: array
+      total:
+        type: integer
     type: object
   claimant.claimant:
     properties:
@@ -74,12 +88,19 @@ definitions:
       tag_line:
         type: string
     required:
-    - description
-    - medium_id
     - name
     - slug
     - space_id
     - tag_line
+    type: object
+  claimant.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Claimant'
+        type: array
+      total:
+        type: integer
     type: object
   factcheck.factcheck:
     properties:
@@ -122,14 +143,11 @@ definitions:
       updates:
         type: string
     required:
-    - description
     - excerpt
-    - featured_medium_id
     - published_date
     - slug
     - space_id
     - status
-    - subtitle
     - title
     type: object
   factcheck.factcheckData:
@@ -147,6 +165,15 @@ definitions:
           $ref: '#/definitions/model.Tag'
         type: array
     type: object
+  factcheck.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/factcheck.factcheckData'
+        type: array
+      total:
+        type: integer
+    type: object
   format.format:
     properties:
       description:
@@ -158,10 +185,18 @@ definitions:
       space_id:
         type: integer
     required:
-    - description
     - name
     - slug
     - space_id
+    type: object
+  format.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Format'
+        type: array
+      total:
+        type: integer
     type: object
   medium.medium:
     properties:
@@ -188,9 +223,6 @@ definitions:
       url:
         type: string
     required:
-    - alt_text
-    - caption
-    - description
     - dimensions
     - file_size
     - name
@@ -475,7 +507,6 @@ definitions:
     required:
     - description
     - excerpt
-    - featured_medium_id
     - format_id
     - published_date
     - slug
@@ -537,6 +568,15 @@ definitions:
       updates:
         type: string
     type: object
+  rating.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Rating'
+        type: array
+      total:
+        type: integer
+    type: object
   rating.rating:
     properties:
       description:
@@ -552,8 +592,6 @@ definitions:
       space_id:
         type: integer
     required:
-    - description
-    - medium_id
     - name
     - numeric_value
     - slug
@@ -636,7 +674,6 @@ definitions:
       space_id:
         type: integer
     required:
-    - description
     - name
     - slug
     - space_id
@@ -664,15 +701,21 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model.Category'
-            type: array
+            $ref: '#/definitions/category.paging'
       summary: Show all categories
       tags:
       - Category
@@ -796,15 +839,21 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model.Format'
-            type: array
+            $ref: '#/definitions/format.paging'
       summary: Show all formats
       tags:
       - Format
@@ -921,6 +970,14 @@ paths:
         in: header
         name: X-User
         required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
         type: string
       produces:
       - application/json
@@ -1047,6 +1104,14 @@ paths:
         in: header
         name: X-User
         required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
         type: string
       produces:
       - application/json
@@ -1216,6 +1281,14 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
@@ -1348,15 +1421,21 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model.Claimant'
-            type: array
+            $ref: '#/definitions/claimant.paging'
       summary: Show all claimants
       tags:
       - Claimant
@@ -1474,15 +1553,21 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model.Claim'
-            type: array
+            type: Object
       summary: Show all claims
       tags:
       - Claim
@@ -1600,15 +1685,21 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/factcheck.factcheckData'
-            type: array
+            $ref: '#/definitions/factcheck.paging'
       summary: Show all factchecks
       tags:
       - Factcheck
@@ -1726,15 +1817,21 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/model.Rating'
-            type: array
+            $ref: '#/definitions/rating.paging'
       summary: Show all ratings
       tags:
       - Rating

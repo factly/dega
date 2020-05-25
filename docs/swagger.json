@@ -35,16 +35,25 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Category"
-                            }
+                            "$ref": "#/definitions/category.paging"
                         }
                     }
                 }
@@ -230,16 +239,25 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Format"
-                            }
+                            "$ref": "#/definitions/format.paging"
                         }
                     }
                 }
@@ -416,6 +434,18 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -602,6 +632,18 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -851,6 +893,18 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -1046,16 +1100,25 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Claimant"
-                            }
+                            "$ref": "#/definitions/claimant.paging"
                         }
                     }
                 }
@@ -1232,16 +1295,25 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Claim"
-                            }
+                            "type": "Object"
                         }
                     }
                 }
@@ -1418,16 +1490,25 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/factcheck.factcheckData"
-                            }
+                            "$ref": "#/definitions/factcheck.paging"
                         }
                     }
                 }
@@ -1604,16 +1685,25 @@
                         "name": "X-User",
                         "in": "header",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Rating"
-                            }
+                            "$ref": "#/definitions/rating.paging"
                         }
                     }
                 }
@@ -1777,8 +1867,6 @@
         "category.category": {
             "type": "object",
             "required": [
-                "description",
-                "medium_id",
                 "name",
                 "slug",
                 "space_id"
@@ -1804,16 +1892,28 @@
                 }
             }
         },
+        "category.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Category"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "claim.claim": {
             "type": "object",
             "required": [
                 "claim_sources",
                 "claimant_id",
-                "description",
                 "rating_id",
                 "review",
                 "review_sources",
-                "review_tag_line",
                 "slug",
                 "space_id",
                 "title"
@@ -1857,11 +1957,23 @@
                 }
             }
         },
+        "claim.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Claim"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "claimant.claimant": {
             "type": "object",
             "required": [
-                "description",
-                "medium_id",
                 "name",
                 "slug",
                 "space_id",
@@ -1888,17 +2000,28 @@
                 }
             }
         },
+        "claimant.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Claimant"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "factcheck.factcheck": {
             "type": "object",
             "required": [
-                "description",
                 "excerpt",
-                "featured_medium_id",
                 "published_date",
                 "slug",
                 "space_id",
                 "status",
-                "subtitle",
                 "title"
             ],
             "properties": {
@@ -1984,10 +2107,23 @@
                 }
             }
         },
+        "factcheck.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/factcheck.factcheckData"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "format.format": {
             "type": "object",
             "required": [
-                "description",
                 "name",
                 "slug",
                 "space_id"
@@ -2007,12 +2143,23 @@
                 }
             }
         },
+        "format.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Format"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "medium.medium": {
             "type": "object",
             "required": [
-                "alt_text",
-                "caption",
-                "description",
                 "dimensions",
                 "file_size",
                 "name",
@@ -2415,7 +2562,6 @@
             "required": [
                 "description",
                 "excerpt",
-                "featured_medium_id",
                 "format_id",
                 "published_date",
                 "slug",
@@ -2560,11 +2706,23 @@
                 }
             }
         },
+        "rating.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Rating"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "rating.rating": {
             "type": "object",
             "required": [
-                "description",
-                "medium_id",
                 "name",
                 "numeric_value",
                 "slug",
@@ -2694,7 +2852,6 @@
         "tag.tag": {
             "type": "object",
             "required": [
-                "description",
                 "name",
                 "slug",
                 "space_id"

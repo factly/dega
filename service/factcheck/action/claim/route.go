@@ -13,11 +13,11 @@ type claim struct {
 	ClaimDate     time.Time      `json:"claim_date" `
 	CheckedDate   time.Time      `json:"checked_date"`
 	ClaimSources  string         `json:"claim_sources" validate:"required"`
-	Description   postgres.Jsonb `json:"description" validate:"required"`
+	Description   postgres.Jsonb `json:"description"`
 	ClaimantID    uint           `json:"claimant_id" validate:"required"`
 	RatingID      uint           `json:"rating_id" validate:"required"`
 	Review        string         `json:"review" validate:"required"`
-	ReviewTagLine string         `json:"review_tag_line" validate:"required"`
+	ReviewTagLine string         `json:"review_tag_line"`
 	ReviewSources string         `json:"review_sources" validate:"required"`
 	SpaceID       uint           `json:"space_id" validate:"required"`
 }

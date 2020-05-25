@@ -11,9 +11,9 @@ type medium struct {
 	Slug        string         `json:"slug" validate:"required"`
 	Type        string         `json:"type" validate:"required"`
 	Title       string         `json:"title" validate:"required"`
-	Description string         `json:"description" validate:"required"`
-	Caption     string         `json:"caption" validate:"required"`
-	AltText     string         `json:"alt_text" validate:"required"`
+	Description string         `json:"description"`
+	Caption     string         `json:"caption"`
+	AltText     string         `json:"alt_text"`
 	FileSize    int64          `json:"file_size" validate:"required"`
 	URL         postgres.Jsonb `json:"url"`
 	Dimensions  string         `json:"dimensions" validate:"required"`

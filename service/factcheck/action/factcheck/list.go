@@ -5,8 +5,15 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
 )
+
+// list response
+type paging struct {
+	Total int             `json:"total"`
+	Nodes []factcheckData `json:"nodes"`
+}
 
 // list - Get all factchecks
 // @Summary Show all factchecks
@@ -15,14 +22,19 @@ import (
 // @ID get-all-factchecks
 // @Produce  json
 // @Param X-User header string true "User ID"
-// @Success 200 {array} factcheckData
+// @Param limit query string false "limit per page"
+// @Param page query string false "page number"
+// @Success 200 {object} paging
 // @Router /factcheck/factchecks [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	result := []factcheckData{}
+	result := paging{}
+
+	offset, limit := util.Paging(r.URL.Query())
+
 	factchecks := []model.Factcheck{}
 
-	err := config.DB.Model(&model.Factcheck{}).Preload("Medium").Find(&factchecks).Error
+	err := config.DB.Model(&model.Factcheck{}).Preload("Medium").Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&factchecks).Error
 
 	if err != nil {
 		return
@@ -63,7 +75,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			factcheckList.Claims = append(factcheckList.Claims, c.Claim)
 		}
 
-		result = append(result, *factcheckList)
+		result.Nodes = append(result.Nodes, *factcheckList)
 	}
 
 	render.JSON(w, http.StatusOK, result)

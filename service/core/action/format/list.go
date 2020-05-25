@@ -5,8 +5,15 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
 )
+
+// list response
+type paging struct {
+	Total int            `json:"total"`
+	Nodes []model.Format `json:"nodes"`
+}
 
 // list - Get all formats
 // @Summary Show all formats
@@ -15,13 +22,17 @@ import (
 // @ID get-all-formats
 // @Produce  json
 // @Param X-User header string true "User ID"
-// @Success 200 {array} model.Format
+// @Param limit query string false "limit per page"
+// @Param page query string false "page number"
+// @Success 200 {object} paging
 // @Router /core/formats [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	result := []model.Format{}
+	result := paging{}
 
-	err := config.DB.Model(&model.Format{}).Find(&result).Error
+	offset, limit := util.Paging(r.URL.Query())
+
+	err := config.DB.Model(&model.Format{}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
 
 	if err != nil {
 		return
