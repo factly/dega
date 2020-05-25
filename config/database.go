@@ -23,5 +23,8 @@ func SetupDB() {
 		log.Fatal(err)
 	}
 
+	// Query log
+	DB.LogMode(true)
+
 	fmt.Println("connected to database ...")
 }
