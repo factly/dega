@@ -1,13 +1,9 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Menu, Dropdown } from 'antd';
 import React from 'react';
-import classNames from 'classnames';
-import HeaderDropdown from './HeaderDropdown';
 import { LogoutOutlined, DownOutlined } from '@ant-design/icons';
 
 const AccountMenu = (props) => {
-  const { className } = props;
-
   const accountMenu = (
     <Menu selectedKeys={['en-US']}>
       <Menu.Item>

@@ -1,10 +1,4 @@
-import {
-  GET_SPACES_SUCCESS,
-  GET_SPACES_FAILURE,
-  ADD_SPACE_FAILURE,
-  ADD_SPACE_SUCCESS,
-  LOADING_SPACES,
-} from '../actions/types';
+import { GET_SPACES_SUCCESS, ADD_SPACE_SUCCESS, LOADING_SPACES } from '../actions/types';
 
 const initialState = {
   spaces: [],

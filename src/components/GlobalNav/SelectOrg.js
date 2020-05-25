@@ -1,11 +1,8 @@
 import { GlobalOutlined, DownOutlined } from '@ant-design/icons';
 import { Menu, Dropdown } from 'antd';
 import React from 'react';
-import classNames from 'classnames';
 
 const SelectOrg = (props) => {
-  const { className } = props;
-
   const locales = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
   const languageLabels = {
     'zh-CN': '简体中文',

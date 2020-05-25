@@ -1,38 +1,29 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Layout, Input, Menu, Dropdown, AutoComplete, Divider, Row, Col, PageHeader } from 'antd';
-import {
-  MenuUnfoldOutlined,
-  UserOutlined,
-  MenuFoldOutlined,
-  DownOutlined,
-} from '@ant-design/icons';
+import { Layout, Menu, Dropdown, Divider, Row, Col, PageHeader } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined, DownOutlined } from '@ant-design/icons';
 import { toggleSider } from '../../actions/settings';
 import SelectOrg from './SelectOrg';
 import AccountMenu from './AccountMenu';
 import { Link } from 'react-router-dom';
 
-const mockVal = (str, repeat = 1) => ({
-  value: str.repeat(repeat),
-});
-
 function Header() {
   const { Header: HeaderAnt } = Layout;
-  const [options, setOptions] = React.useState([]);
+  // const [options, setOptions] = React.useState([]);
   const {
     sider: { collapsed },
   } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
   const MenuFoldComponent = collapsed ? MenuUnfoldOutlined : MenuFoldOutlined;
-  const onSearch = (searchText) => {
-    setOptions(
-      !searchText ? [] : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)],
-    );
-  };
+  // const onSearch = (searchText) => {
+  //   setOptions(
+  //     !searchText ? [] : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)],
+  //   );
+  // };
 
-  const onSelect = (data) => {
-    console.log('onSelect', data);
-  };
+  // const onSelect = (data) => {
+  //   console.log('onSelect', data);
+  // };
   const menu = (
     <Menu>
       <Menu.Item key="0" icon={<DownOutlined />}>

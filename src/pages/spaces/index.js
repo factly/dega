@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import { PageHeader, Divider, Tag, Button, Statistic, Row } from 'antd';
-import SpaceCreateForm from './components/SpaceCreateForm';
+import React from 'react';
+import { PageHeader, Divider, Tag, Row } from 'antd';
 import SpaceList from './components/SpaceList';
-
-import styles from './index.css';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 function Spaces() {
   return (

@@ -5,7 +5,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import configureStore from './store';
 import { Provider } from 'react-redux';
-import axios from 'axios';
 
 // axios.defaults.baseURL = 'https://hub.dega.com';
 

@@ -3,12 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import logo from '../../assets/logo.svg';
-import { PieChartOutlined, UserOutlined, ContainerOutlined } from '@ant-design/icons';
+import { PieChartOutlined, UserOutlined } from '@ant-design/icons';
 import { toggleSider } from '../../actions/settings';
 const { Sider } = Layout;
 
 function Sidebar({ navTheme }) {
-  const { SubMenu } = Menu;
   const {
     sider: { collapsed },
   } = useSelector((state) => state.settings);
