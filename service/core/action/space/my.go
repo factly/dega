@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -41,7 +42,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/my", nil)
-	req.Header.Set("X-User", string(uID))
+	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
