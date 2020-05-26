@@ -48,7 +48,7 @@ export const addSpaces = (data) => {
     const response = await axios({
       url: API_ADD_SPACES,
       method: 'post',
-      data: data,
+      data: { ...data, organisation_id: 3 },
     }).catch((error) => {
       dispatch(addSpacesFailure(error.message));
     });

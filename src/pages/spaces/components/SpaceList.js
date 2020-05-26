@@ -1,7 +1,8 @@
 import React from 'react';
-import { Popconfirm, Form } from 'antd';
+import { Popconfirm, Form, Space, Button } from 'antd';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { getSpaces, addSpaces } from '../../../actions/spaces';
 import Table from '../../../components/Table';
 
@@ -76,22 +77,21 @@ function SpaceList() {
         const editable = isEditing(record);
         return editable ? (
           <span>
-            <a
-              href="javascript:void()"
+            <Button
               onClick={() => save(record.key)}
               style={{
                 marginRight: 8,
               }}
             >
               Save
-            </a>
+            </Button>
             <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <a>Cancel</a>
+              <Button>Cancel</Button>
             </Popconfirm>
           </span>
         ) : (
           <span>
-            <a
+            <Button
               className="ant-dropdown-link"
               disabled={editingKey !== ''}
               style={{
@@ -100,10 +100,10 @@ function SpaceList() {
               onClick={() => edit(record)}
             >
               Edit
-            </a>
-            <a disabled={editingKey !== ''} className="ant-dropdown-link">
+            </Button>
+            <Button disabled={editingKey !== ''} className="ant-dropdown-link">
               Delete
-            </a>
+            </Button>
           </span>
         );
       },
@@ -137,7 +137,12 @@ function SpaceList() {
 
   return (
     <Form form={form} component={false}>
-      <Table columns={mergedColumns} data={data} loading={loading} />
+      <Space direction="vertical">
+        <Link className="ant-btn" key="1" to="/spaces/create">
+          Create New
+        </Link>
+        <Table columns={mergedColumns} data={data} loading={loading} />
+      </Space>
     </Form>
   );
 }

@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import logo from '../../assets/logo.svg';
-import { PieChartOutlined, UserOutlined } from '@ant-design/icons';
 import { toggleSider } from '../../actions/settings';
+import routes from '../../config/routesConfig';
+import _ from 'lodash';
+
 const { Sider } = Layout;
 
 function Sidebar({ navTheme }) {
@@ -12,6 +14,7 @@ function Sidebar({ navTheme }) {
     sider: { collapsed },
   } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
+  console.log('routes', routes);
   return (
     <Sider
       breakpoint="lg"
@@ -31,24 +34,17 @@ function Sidebar({ navTheme }) {
         </span>
       </div>
       <Menu theme={navTheme} mode="inline" className="slider-menu">
-        <Menu.Item key="1">
-          <Link to="/dashboard">
-            <PieChartOutlined />
-            <span>Dashboard</span>
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="2">
-          <Link to="/spaces">
-            <UserOutlined />
-            <span>Spaces</span>
-          </Link>
-        </Menu.Item>
-        <Menu.Item key="3">
-          <Link to="/tags">
-            <UserOutlined />
-            <span>Tags</span>
-          </Link>
-        </Menu.Item>
+        {_.filter(routes, { enableNavigation: true }).map((route, index) => {
+          const { Icon } = route;
+          return (
+            <Menu.Item key={index}>
+              <Link to={route.path}>
+                <Icon></Icon>
+                <span>{route.title}</span>
+              </Link>
+            </Menu.Item>
+          );
+        })}
       </Menu>
     </Sider>
   );

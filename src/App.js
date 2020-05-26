@@ -4,9 +4,11 @@ import 'antd/dist/antd.css';
 import BasicLayout from './layouts/basic';
 
 //Pages
-import Spaces from './pages/spaces';
 import Dashboard from './pages/dashboard';
-import CreateSpace from './pages/spaces/create';
+
+//Routes
+import routes from './config/routesConfig';
+
 function App() {
   return (
     <div className="App">
@@ -14,9 +16,9 @@ function App() {
         <BasicLayout>
           <Switch>
             <Route exact path="/" component={Dashboard} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route exact path="/spaces" component={Spaces} />
-            <Route path="/spaces/create" component={CreateSpace} />
+            {routes.map((route) => (
+              <Route exact path={route.path} component={route.Component} />
+            ))}
           </Switch>
         </BasicLayout>
       </Router>

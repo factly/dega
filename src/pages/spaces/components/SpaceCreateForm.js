@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
-import TextArea from 'antd/lib/input/TextArea';
+import { Button, Form, Input, Space } from 'antd';
+const { TextArea } = Input;
 
 const layout = {
   labelCol: {
@@ -12,8 +12,8 @@ const layout = {
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
-    span: 16,
+    offset: 10,
+    span: 14,
   },
 };
 
@@ -105,12 +105,14 @@ const SpaceCreateForm = ({ onCreate }) => {
         <TextArea />
       </Form.Item>
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Create
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
+        <Space>
+          <Button type="primary" htmlType="submit">
+            Create
+          </Button>
+          <Button htmlType="button" onClick={onReset}>
+            Reset
+          </Button>
+        </Space>
       </Form.Item>
     </Form>
   );

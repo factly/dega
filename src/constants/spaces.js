@@ -9,3 +9,5 @@ export const ADD_SPACE_FAILURE = 'ADD_SPACE_SUCCESS';
 //API
 export const API_GET_SPACES = '/.factly/dega/server/core/spaces/my';
 export const API_ADD_SPACES = '/.factly/dega/server/core/spaces';
+
+//Notification

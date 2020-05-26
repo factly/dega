@@ -1,7 +1,6 @@
 import React from 'react';
-import { PageHeader, Row, Divider } from 'antd';
 import SpaceCreateForm from './components/SpaceCreateForm';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addSpaces } from '../../actions/spaces';
 
 function CreateSpace() {
@@ -10,14 +9,7 @@ function CreateSpace() {
     dispatch(addSpaces(values));
     console.log('Received values of form: ', values);
   };
-  return (
-    <PageHeader title="Create Spaces" ghost={false}>
-      <Row className="justify-content-center">
-        <Divider />
-        <SpaceCreateForm onCreate={onCreate} />
-      </Row>
-    </PageHeader>
-  );
+  return <SpaceCreateForm onCreate={onCreate} />;
 }
 
 export default CreateSpace;
