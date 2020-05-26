@@ -13,7 +13,7 @@ require (
 	github.com/jinzhu/gorm v1.9.12
 	github.com/joho/godotenv v1.3.0
 	github.com/mailru/easyjson v0.7.1 // indirect
-	github.com/swaggo/http-swagger v0.0.0-20200308142732-58ac5e232fba // indirect
+	github.com/swaggo/http-swagger v0.0.0-20200308142732-58ac5e232fba
 	github.com/swaggo/swag v1.6.3
 	github.com/urfave/cli v1.22.4 // indirect
 	golang.org/x/net v0.0.0-20200520004742-59133d7f0dd7 // indirect
