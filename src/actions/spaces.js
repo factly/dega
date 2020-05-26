@@ -10,7 +10,6 @@ import {
 } from '../constants/spaces';
 
 export const getSpaces = () => {
-  console.log('Get Spaces');
   return async (dispatch, getState) => {
     dispatch(loadingSpaces());
     const response = await axios({

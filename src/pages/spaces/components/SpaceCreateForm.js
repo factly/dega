@@ -31,7 +31,15 @@ const SpaceCreateForm = ({ onCreate }) => {
   // };
 
   return (
-    <Form {...layout} form={form} name="create-space" onFinish={onCreate}>
+    <Form
+      {...layout}
+      form={form}
+      name="create-space"
+      onFinish={(values) => {
+        onCreate(values);
+        onReset();
+      }}
+    >
       <Form.Item
         name="name"
         label="Name"
