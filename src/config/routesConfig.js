@@ -4,6 +4,7 @@ import { PieChartOutlined } from '@ant-design/icons';
 import Spaces from '../pages/spaces';
 import Dashboard from '../pages/dashboard';
 import CreateSpace from '../pages/spaces/create';
+import EditSpace from '../pages/spaces/edit';
 
 export default [
   {
@@ -29,5 +30,21 @@ export default [
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Create Space',
+  },
+  {
+    path: '/spaces/edit',
+    Component: EditSpace,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Edit Space',
+  },
+  {
+    path: '/spaces/edit/:id',
+    Component: EditSpace,
+    enableNavigation: false,
+    enableBreadcrumb: false,
+    Icon: PieChartOutlined,
+    title: 'Edit Space',
   },
 ];

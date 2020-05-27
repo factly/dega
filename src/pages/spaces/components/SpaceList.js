@@ -91,19 +91,18 @@ function SpaceList() {
           </span>
         ) : (
           <span>
-            <Button
+            <Link
               className="ant-dropdown-link"
-              disabled={editingKey !== ''}
               style={{
                 marginRight: 8,
               }}
-              onClick={() => edit(record)}
+              to={`/spaces/edit/${record.id}`}
             >
               Edit
-            </Button>
-            <Button disabled={editingKey !== ''} className="ant-dropdown-link">
-              Delete
-            </Button>
+            </Link>
+            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+              <Button className="ant-dropdown-link">Delete</Button>
+            </Popconfirm>
           </span>
         );
       },
@@ -138,7 +137,7 @@ function SpaceList() {
   return (
     <Form form={form} component={false}>
       <Space direction="vertical">
-        <Link className="ant-btn" key="1" to="/spaces/create">
+        <Link className="ant-btn ant-btn-primary" key="1" to="/spaces/create">
           Create New
         </Link>
         <Table columns={mergedColumns} data={data} loading={loading} />

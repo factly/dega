@@ -17,7 +17,7 @@ const tailLayout = {
   },
 };
 
-const SpaceCreateForm = ({ onCreate }) => {
+const SpaceCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -34,6 +34,7 @@ const SpaceCreateForm = ({ onCreate }) => {
     <Form
       {...layout}
       form={form}
+      initialValues={data}
       name="create-space"
       onFinish={(values) => {
         onCreate(values);
