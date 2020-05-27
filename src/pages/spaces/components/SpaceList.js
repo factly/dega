@@ -5,91 +5,46 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces, addSpaces } from '../../../actions/spaces';
 import { Link } from 'react-router-dom';
 import Table from '../../../components/Table';
+import _ from 'lodash';
 
 function SpaceList() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const { spaces: data, loading } = useSelector((state) => state.spaces);
-  const [editingKey, setEditingKey] = useState('');
-
-  const isEditing = (record) => record.cell === editingKey;
-
-  const edit = (record) => {
-    form.setFieldsValue({
-      phone: '',
-      gender: '',
-      email: '',
-      ...record,
-    });
-    setEditingKey(record.cell);
-  };
-
-  const cancel = () => {
-    setEditingKey('');
-  };
-
-  const save = async (key) => {
-    try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex((item) => key === item.key);
-
-      if (index > -1) {
-        dispatch(addSpaces(row));
-        setEditingKey('');
-      } else {
-        dispatch(addSpaces(row));
-        setEditingKey('');
-      }
-    } catch (errInfo) {
-      console.log('Validate Failed:', errInfo);
-    }
-  };
+  const { organization = {}, loading } = useSelector((state) => {
+    console.log('state', state);
+    return {
+      loading: state.spaces.loading,
+      organization: _.find(state.spaces.spaces, { id: 3 }),
+    };
+  });
+  console.log(organization);
 
   const columns = [
     {
-      title: 'Phone',
-      dataIndex: 'phone',
+      title: 'Name',
+      dataIndex: 'name',
       width: '25%',
       sorter: true,
-      editable: true,
     },
     {
-      title: 'Gender',
-      dataIndex: 'gender',
-      filters: [
-        { text: 'Male', value: 'male' },
-        { text: 'Female', value: 'female' },
-      ],
+      title: 'Site Address',
+      dataIndex: 'site_address',
+      // filters: [
+      //   { text: 'Male', value: 'male' },
+      //   { text: 'Female', value: 'female' },
+      // ],
       width: '15%',
-      editable: true,
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
+      title: 'Title',
+      dataIndex: 'site_title',
       width: '40%',
-      editable: true,
     },
     {
       title: 'Action',
       dataIndex: 'operation',
       render: (_, record) => {
-        const editable = isEditing(record);
-        return editable ? (
-          <span>
-            <Button
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
-            >
-              Save
-            </Button>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-              <Button>Cancel</Button>
-            </Popconfirm>
-          </span>
-        ) : (
+        return (
           <span>
             <Link
               className="ant-dropdown-link"
@@ -100,7 +55,7 @@ function SpaceList() {
             >
               Edit
             </Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
+            <Popconfirm title="Sure to cancel?">
               <Button className="ant-dropdown-link">Delete</Button>
             </Popconfirm>
           </span>
@@ -117,10 +72,8 @@ function SpaceList() {
       ...col,
       onCell: (record) => ({
         record,
-        inputType: col.dataIndex === 'age' ? 'number' : 'text',
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record),
       }),
     };
   });
@@ -140,7 +93,7 @@ function SpaceList() {
         <Link className="ant-btn ant-btn-primary" key="1" to="/spaces/create">
           Create New
         </Link>
-        <Table columns={mergedColumns} data={data} loading={loading} />
+        <Table columns={mergedColumns} data={organization.spaces} loading={loading} />
       </Space>
     </Form>
   );

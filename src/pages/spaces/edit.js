@@ -5,15 +5,17 @@ import { addSpaces } from '../../actions/spaces';
 import { useHistory, useParams } from 'react-router-dom';
 import _ from 'lodash';
 
-function CreateSpace() {
+function EditSpace() {
   const history = useHistory();
   let { id } = useParams();
   console.log('Bre', id);
   const dispatch = useDispatch();
   const { space } = useSelector((state) => {
-    const { spaces: data, ...other } = state.spaces;
+    const { spaces, ...other } = state.spaces;
+    const organisation = _.find(spaces, { id: 3 });
+    if (!organisation) return [];
     return {
-      space: _.find(data, { id }),
+      space: _.find(organisation.spaces, { id: parseInt(id) }),
       ...other,
     };
   });
@@ -26,4 +28,4 @@ function CreateSpace() {
   return <SpaceCreateForm data={space} onCreate={onCreate} />;
 }
 
-export default CreateSpace;
+export default EditSpace;

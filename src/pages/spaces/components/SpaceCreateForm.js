@@ -36,7 +36,7 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
   //   });
   // };
   const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
+    <Form.Item name="organisation_id" noStyle>
       <Select
         style={{
           width: 70,
@@ -58,12 +58,11 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
 
     return e && e.fileList;
   };
-
   return (
     <Form
       {...layout}
       form={form}
-      initialValues={data}
+      initialValues={{ ...data }}
       name="create-space"
       onFinish={(values) => {
         onCreate(values);
