@@ -2,8 +2,8 @@ import React from 'react';
 import { Popconfirm, Form, Space, Button } from 'antd';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { getSpaces, addSpaces } from '../../../actions/spaces';
+import { Link } from 'react-router-dom';
 import Table from '../../../components/Table';
 
 function SpaceList() {

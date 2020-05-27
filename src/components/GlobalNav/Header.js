@@ -7,12 +7,18 @@ import SelectOrg from './SelectOrg';
 import AccountMenu from './AccountMenu';
 import { Link } from 'react-router-dom';
 
+const { SubMenu } = Menu;
+
 function Header() {
   const { Header: HeaderAnt } = Layout;
   // const [options, setOptions] = React.useState([]);
   const {
-    sider: { collapsed },
-  } = useSelector((state) => state.settings);
+    settings: {
+      sider: { collapsed },
+    },
+    spaces: { spaces },
+  } = useSelector((state) => state);
+  console.log('spaces', spaces);
   const dispatch = useDispatch();
   const MenuFoldComponent = collapsed ? MenuUnfoldOutlined : MenuFoldOutlined;
   // const onSearch = (searchText) => {
@@ -24,14 +30,16 @@ function Header() {
   // const onSelect = (data) => {
   //   console.log('onSelect', data);
   // };
+
   const menu = (
     <Menu>
-      <Menu.Item key="0" icon={<DownOutlined />}>
-        Space 1
-      </Menu.Item>
-      <Menu.Item key="1" icon={<DownOutlined />}>
-        Space 2
-      </Menu.Item>
+      {spaces.map((space) => (
+        <Menu.ItemGroup title={space.title}>
+          {space.spaces.map((s) => (
+            <Menu.Item>{s.name}</Menu.Item>
+          ))}
+        </Menu.ItemGroup>
+      ))}
       <Menu.Divider />
       <Menu.Item key="3">
         <Link to="/spaces/create">Create new space</Link>

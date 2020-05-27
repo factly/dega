@@ -1,6 +1,9 @@
 import React from 'react';
-import { Button, Form, Input, Space } from 'antd';
+import { useSelector } from 'react-redux';
+import { InboxOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Space, Divider, Select, Upload } from 'antd';
 const { TextArea } = Input;
+const { Option } = Select;
 
 const layout = {
   labelCol: {
@@ -19,6 +22,9 @@ const tailLayout = {
 
 const SpaceCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const {
+    spaces: { spaces },
+  } = useSelector((state) => state);
 
   const onReset = () => {
     form.resetFields();
@@ -29,6 +35,29 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
   //     name: 'Name',
   //   });
   // };
+  const prefixSelector = (
+    <Form.Item name="prefix" noStyle>
+      <Select
+        style={{
+          width: 70,
+        }}
+      >
+        {spaces.map((space) => (
+          <Option value={space.id}>{space.title}</Option>
+        ))}
+      </Select>
+    </Form.Item>
+  );
+
+  const normFile = (e) => {
+    console.log('Upload event:', e);
+
+    if (Array.isArray(e)) {
+      return e;
+    }
+
+    return e && e.fileList;
+  };
 
   return (
     <Form
@@ -43,15 +72,20 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
     >
       <Form.Item
         name="name"
-        label="Name"
+        label="Space Name"
         rules={[
           {
             required: true,
-            message: 'Please input the name of space!',
+            message: 'Please enter space name!',
           },
         ]}
       >
-        <Input />
+        <Input
+          addonBefore={prefixSelector}
+          style={{
+            width: '100%',
+          }}
+        />
       </Form.Item>
       <Form.Item
         name="slug"
@@ -101,6 +135,17 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
+      <Divider></Divider>
+      <strong>
+        <Form.Item label="About Space"></Form.Item>
+      </strong>
+      <Form.Item
+        name="contact_info"
+        label="Contact Info"
+        rules={[{ required: true, message: 'Please input your contact number!' }]}
+      >
+        <Input style={{ width: '100%' }} />
+      </Form.Item>
       <Form.Item
         name="description"
         label="Description"
@@ -112,6 +157,18 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
         ]}
       >
         <TextArea />
+      </Form.Item>
+      <Divider></Divider>
+      <Form.Item label="Upload Media">
+        <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
+          <Upload.Dragger name="files" action="/upload.do">
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
+          </Upload.Dragger>
+        </Form.Item>
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

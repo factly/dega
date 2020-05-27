@@ -19,8 +19,8 @@ export const getSpaces = () => {
       dispatch(getSpacesFailure(error.message));
     });
     if (response) {
-      console.log(response);
-      dispatch(getSpacesSuccess(response.data.results));
+      console.log(response.data);
+      dispatch(getSpacesSuccess(response.data));
     }
   };
 };
