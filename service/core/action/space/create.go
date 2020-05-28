@@ -39,7 +39,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+strconv.Itoa(space.OrganisationID), nil)
-	req.Header.Set("X-User", string(uID))
+	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
