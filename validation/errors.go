@@ -14,6 +14,13 @@ func InvalidID(w http.ResponseWriter, r *http.Request) {
 	render.JSON(w, http.StatusBadRequest, msg)
 }
 
+// InvalidFieldIDs - response for invalid field IDs
+func InvalidFieldIDs(w http.ResponseWriter, r *http.Request) {
+	var msg []string
+	msg = append(msg, "Invalid  field ids")
+	render.JSON(w, http.StatusBadRequest, msg)
+}
+
 // RecordNotFound - response for record not found
 func RecordNotFound(w http.ResponseWriter, r *http.Request) {
 	var msg []string
