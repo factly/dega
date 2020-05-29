@@ -4,11 +4,11 @@ import {
   GET_SPACES_FAILURE,
   ADD_SPACE_FAILURE,
   ADD_SPACE_SUCCESS,
-  LOADING_SPACES,
   API_ADD_SPACES,
   API_GET_SPACES,
   SET_SELECTED_SPACE,
 } from '../constants/spaces';
+import { LOADING_PAGE } from '../constants';
 
 export const getSpaces = () => {
   return async (dispatch, getState) => {
@@ -49,7 +49,7 @@ export const addSpaces = (data) => {
 };
 
 const loadingSpaces = () => ({
-  type: LOADING_SPACES,
+  type: LOADING_PAGE,
 });
 
 const getSpacesSuccess = (spaces) => ({

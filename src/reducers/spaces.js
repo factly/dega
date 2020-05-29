@@ -1,9 +1,5 @@
-import {
-  SET_SELECTED_SPACE,
-  GET_SPACES_SUCCESS,
-  ADD_SPACE_SUCCESS,
-  LOADING_SPACES,
-} from '../constants/spaces';
+import { SET_SELECTED_SPACE, GET_SPACES_SUCCESS, ADD_SPACE_SUCCESS } from '../constants/spaces';
+import { LOADING_PAGE } from '../constants';
 
 const initialState = {
   spaces: [],
@@ -17,7 +13,7 @@ export default function spacesReducer(state = initialState, action = {}) {
   }
   console.log('Spaces Reducer', state, action);
   switch (action.type) {
-    case LOADING_SPACES:
+    case LOADING_PAGE:
       return {
         ...state,
         loading: true,

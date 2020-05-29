@@ -1,15 +1,12 @@
 import React from 'react';
 import { Popconfirm, Form, Space, Button } from 'antd';
-import { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getSpaces, addSpaces } from '../../../actions/spaces';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Table from '../../../components/Table';
 import _ from 'lodash';
 
 function SpaceList() {
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
   const { organization = {}, loading } = useSelector((state) => {
     console.log('state', state);
     return {
@@ -78,14 +75,14 @@ function SpaceList() {
     };
   });
 
-  useEffect(() => {
-    fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   fetch();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
-  const fetch = (params = {}) => {
-    dispatch(getSpaces());
-  };
+  // const fetch = (params = {}) => {
+  //   dispatch(getSpaces());
+  // };
 
   return (
     <Form form={form} component={false}>

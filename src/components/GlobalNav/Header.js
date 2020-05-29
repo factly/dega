@@ -30,6 +30,9 @@ function Header() {
   // const onSelect = (data) => {
   //   console.log('onSelect', data);
   // };
+  const handleSpaceChange = (space) => {
+    dispatch(setSelectedSpace(space));
+  };
 
   const menu = (
     <Menu>
@@ -46,10 +49,6 @@ function Header() {
       </Menu.Item>
     </Menu>
   );
-
-  const handleSpaceChange = (space) => {
-    dispatch(setSelectedSpace(space));
-  };
   return (
     <HeaderAnt className="layout-header">
       <Row>
