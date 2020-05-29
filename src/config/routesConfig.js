@@ -13,6 +13,11 @@ import Categories from '../pages/categories';
 import CreateCategory from '../pages/categories/create';
 import EditCategory from '../pages/categories/edit';
 
+//Tags
+import Tags from '../pages/tags';
+import CreateTag from '../pages/tags/create';
+import EditTags from '../pages/tags/edit';
+
 export default [
   {
     path: '/dashboard',
@@ -69,5 +74,29 @@ export default [
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Edit Category',
+  },
+  {
+    path: '/tags',
+    Component: Tags,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Tags',
+  },
+  {
+    path: '/tags/create',
+    Component: CreateTag,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Create Tag',
+  },
+  {
+    path: '/tags/edit',
+    Component: EditTags,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Edit Tag',
   },
 ];
