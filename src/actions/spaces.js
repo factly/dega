@@ -7,6 +7,7 @@ import {
   LOADING_SPACES,
   API_ADD_SPACES,
   API_GET_SPACES,
+  SET_SELECTED_SPACE,
 } from '../constants/spaces';
 
 export const getSpaces = () => {
@@ -21,6 +22,28 @@ export const getSpaces = () => {
     if (response) {
       console.log(response.data);
       dispatch(getSpacesSuccess(response.data));
+    }
+  };
+};
+
+export const setSelectedSpace = (space) => ({
+  type: SET_SELECTED_SPACE,
+  payload: space,
+});
+
+export const addSpaces = (data) => {
+  return async (dispatch, getState) => {
+    dispatch(loadingSpaces());
+    const response = await axios({
+      url: API_ADD_SPACES,
+      method: 'post',
+      data: { ...data, organisation_id: 3 },
+    }).catch((error) => {
+      dispatch(addSpacesFailure(error.message));
+    });
+    if (response) {
+      console.log(response);
+      dispatch(addSpacesSuccess(data));
     }
   };
 };
@@ -40,23 +63,6 @@ const getSpacesFailure = (error) => ({
     error,
   },
 });
-
-export const addSpaces = (data) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-    const response = await axios({
-      url: API_ADD_SPACES,
-      method: 'post',
-      data: { ...data, organisation_id: 3 },
-    }).catch((error) => {
-      dispatch(addSpacesFailure(error.message));
-    });
-    if (response) {
-      console.log(response);
-      dispatch(addSpacesSuccess(data));
-    }
-  };
-};
 
 const addSpacesSuccess = (space) => ({
   type: ADD_SPACE_SUCCESS,

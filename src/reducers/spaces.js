@@ -1,8 +1,14 @@
-import { GET_SPACES_SUCCESS, ADD_SPACE_SUCCESS, LOADING_SPACES } from '../constants/spaces';
+import {
+  SET_SELECTED_SPACE,
+  GET_SPACES_SUCCESS,
+  ADD_SPACE_SUCCESS,
+  LOADING_SPACES,
+} from '../constants/spaces';
 
 const initialState = {
   spaces: [],
   loading: false,
+  selectedSpace: {},
 };
 
 export default function spacesReducer(state = initialState, action = {}) {
@@ -21,12 +27,18 @@ export default function spacesReducer(state = initialState, action = {}) {
         ...state,
         spaces: action.payload,
         loading: false,
+        selectedSpace: action.payload[0].spaces[0],
       };
     case ADD_SPACE_SUCCESS:
       return {
         ...state,
         spaces: [...state.spaces, action.payload],
         loading: false,
+      };
+    case SET_SELECTED_SPACE:
+      return {
+        ...state,
+        selectedSpace: action.payload,
       };
     default:
       return state;

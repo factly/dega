@@ -6,7 +6,7 @@ import { toggleSider } from '../../actions/settings';
 import SelectOrg from './SelectOrg';
 import AccountMenu from './AccountMenu';
 import { Link } from 'react-router-dom';
-
+import { setSelectedSpace } from '../../actions/spaces';
 const { SubMenu } = Menu;
 
 function Header() {
@@ -16,9 +16,9 @@ function Header() {
     settings: {
       sider: { collapsed },
     },
-    spaces: { spaces },
+    spaces: { spaces, selectedSpace },
   } = useSelector((state) => state);
-  console.log('spaces', spaces);
+  console.log('spaces', selectedSpace);
   const dispatch = useDispatch();
   const MenuFoldComponent = collapsed ? MenuUnfoldOutlined : MenuFoldOutlined;
   // const onSearch = (searchText) => {
@@ -36,7 +36,7 @@ function Header() {
       {spaces.map((space) => (
         <Menu.ItemGroup title={space.title}>
           {space.spaces.map((s) => (
-            <Menu.Item>{s.name}</Menu.Item>
+            <Menu.Item onClick={(event) => handleSpaceChange(s)}>{s.name}</Menu.Item>
           ))}
         </Menu.ItemGroup>
       ))}
@@ -46,6 +46,10 @@ function Header() {
       </Menu.Item>
     </Menu>
   );
+
+  const handleSpaceChange = (space) => {
+    dispatch(setSelectedSpace(space));
+  };
   return (
     <HeaderAnt className="layout-header">
       <Row>
@@ -72,7 +76,7 @@ function Header() {
               //   </AutoComplete>,
               <Dropdown overlay={menu}>
                 <span className="ant-dropdown-link">
-                  Selected Space
+                  {selectedSpace.name}
                   {` `}
                   <DownOutlined />
                 </span>
