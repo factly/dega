@@ -20,7 +20,7 @@ export default function tagsReducer(state = initialState, action = {}) {
     case GET_TAGS_SUCCESS:
       return {
         ...state,
-        tags: action.payload,
+        tags: action.payload.nodes,
         loading: false,
       };
     case ADD_TAG_SUCCESS:

@@ -7,7 +7,7 @@ export const ADD_TAG_SUCCESS = 'ADD_TAG_SUCCESS';
 export const ADD_TAG_FAILURE = 'ADD_TAG_FAILURE';
 
 //API
-export const API_GET_TAGS = '/.factly/dega/server/core/TAGS';
-export const API_ADD_TAG = '/.factly/dega/server/core/TAGS';
+export const API_GET_TAGS = '/.factly/dega/server/core/tags';
+export const API_ADD_TAG = '/.factly/dega/server/core/tags';
 
 //Notification

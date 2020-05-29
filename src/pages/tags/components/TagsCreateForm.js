@@ -1,7 +1,10 @@
 import React from 'react';
 import { InboxOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Space, Divider, Select, Upload } from 'antd';
+import { useSelector } from 'react-redux';
+
 const { TextArea } = Input;
+const { Option } = Select;
 
 const layout = {
   labelCol: {
@@ -20,7 +23,7 @@ const tailLayout = {
 
 const TagCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-
+  const { tags } = useSelector((state) => state.tags);
   const onReset = () => {
     form.resetFields();
   };
@@ -45,6 +48,25 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
         onReset();
       }}
     >
+      <Form.Item name="parent_id" label="Parent Tag">
+        <Select
+          showSearch
+          placeholder="Select parent tag"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
+          <Option key="0" value={0}>
+            Parent Tag
+          </Option>
+          {tags.map((tag) => (
+            <Option key={tag.id} value={tag.value}>
+              {tag.name}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
       <Form.Item
         name="name"
         label="Tag Name"

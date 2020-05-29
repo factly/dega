@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Form, Space } from 'antd';
+import { Popconfirm, Space } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../../actions/tags';
@@ -25,7 +25,7 @@ function TagsList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/spaces/edit?id=${record.id}`}
+              to={`/tags/edit?id=${record.id}`}
             >
               Edit
             </Link>
@@ -59,15 +59,7 @@ function TagsList() {
         expandable={{
           expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.description}</p>,
         }}
-        dataSource={[
-          {
-            name: 'Tags',
-            slug: 'name',
-            parent_id: 0,
-            description:
-              'ant-btn ant-btn-primaryant-btn ant-btn-primary ant-btn ant-btn-primaryant-btn ant-btn-primary',
-          },
-        ]}
+        dataSource={tags}
         loading={loading}
       />
     </Space>

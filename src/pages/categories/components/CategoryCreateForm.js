@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { InboxOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Space, Divider, Select, Upload, AutoComplete } from 'antd';
+import { Button, Form, Input, Space, Divider, Select, Upload } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
 
