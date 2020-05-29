@@ -2,13 +2,15 @@ import React from 'react';
 import SpaceCreateForm from './components/SpaceCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { addSpaces } from '../../actions/spaces';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import useQuery from '../../utils/useQuery';
 import _ from 'lodash';
 
 function EditSpace() {
   const history = useHistory();
-  let { id } = useParams();
-  console.log('Bre', id);
+  const query = useQuery();
+  const id = query.get('id');
+
   const dispatch = useDispatch();
   const { space } = useSelector((state) => {
     const { spaces, ...other } = state.spaces;

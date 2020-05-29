@@ -7,12 +7,6 @@ import _ from 'lodash';
 function PageHeader(props) {
   const location = useLocation();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
-  // let { ...params } = useParams();
-  // params = Object.keys(params);
-
-  // _.reverse(pathSnippets).splice(0, params.length, ...params)
-  // _.reverse(pathSnippets);
-  // console.log('breadcrumbItems', pathSnippets, params);
 
   const breadcrumbItems = useMemo(() => {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
@@ -38,7 +32,12 @@ function PageHeader(props) {
   }, [location, pathSnippets]);
 
   const lastItem = useMemo(() => {
-    return _.find(routes, { path: breadcrumbItems[breadcrumbItems.length - 1].path });
+    return (
+      _.find(routes, { path: breadcrumbItems[breadcrumbItems.length - 1].path }) || {
+        path: '/',
+        breadcrumbName: 'Home',
+      }
+    );
   }, [breadcrumbItems]);
 
   const itemRender = (route, params, routes, paths) => {

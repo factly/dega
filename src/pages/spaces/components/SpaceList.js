@@ -51,7 +51,7 @@ function SpaceList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/spaces/edit/${record.id}`}
+              to={`/spaces/edit?id=${record.id}`}
             >
               Edit
             </Link>
