@@ -13,12 +13,10 @@ function EditSpace() {
 
   const dispatch = useDispatch();
   const { space } = useSelector((state) => {
-    const { spaces, ...other } = state.spaces;
-    const organisation = _.find(spaces, { id: 3 });
-    if (!organisation) return [];
+    const spaces = _.flatten(_.map(state.spaces.spaces, 'spaces'));
+    if (!spaces) return [];
     return {
-      space: _.find(organisation.spaces, { id: parseInt(id) }),
-      ...other,
+      space: _.find(spaces, { id: parseInt(id) }),
     };
   });
 

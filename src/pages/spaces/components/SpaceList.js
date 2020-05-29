@@ -10,14 +10,14 @@ import _ from 'lodash';
 function SpaceList() {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const { organization = {}, loading } = useSelector((state) => {
+  const { spaces = {}, loading } = useSelector((state) => {
     console.log('state', state);
     return {
       loading: state.spaces.loading,
-      organization: _.find(state.spaces.spaces, { id: 3 }),
+      spaces: _.flatten(_.map(state.spaces.spaces, 'spaces')),
     };
   });
-  console.log(organization);
+  console.log(spaces);
 
   const columns = [
     {
@@ -93,7 +93,7 @@ function SpaceList() {
         <Link className="ant-btn ant-btn-primary" key="1" to="/spaces/create">
           Create New
         </Link>
-        <Table columns={mergedColumns} data={organization.spaces} loading={loading} />
+        <Table columns={mergedColumns} data={spaces} loading={loading} />
       </Space>
     </Form>
   );

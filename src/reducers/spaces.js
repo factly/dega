@@ -27,7 +27,7 @@ export default function spacesReducer(state = initialState, action = {}) {
         ...state,
         spaces: action.payload,
         loading: false,
-        selectedSpace: action.payload[0].spaces[0],
+        selectedSpace: action.payload[0].spaces.length > 0 ? action.payload[0].spaces[0] : {},
       };
     case ADD_SPACE_SUCCESS:
       return {
