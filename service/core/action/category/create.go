@@ -51,6 +51,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Model(&model.Category{}).Create(&result).Error
 
 	if err != nil {
+		validation.InvalidFieldIDs(w, r)
 		return
 	}
 
