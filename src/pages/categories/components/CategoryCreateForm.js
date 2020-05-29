@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { InboxOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Space, Divider, Select, Upload } from 'antd';
+import { Button, Form, Input, Space, Divider, Select, Upload, AutoComplete } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -22,7 +22,7 @@ const tailLayout = {
 
 const CategoryCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-
+  const { categories } = useSelector((state) => state.categories);
   const onReset = () => {
     form.resetFields();
   };
@@ -47,6 +47,25 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
         onReset();
       }}
     >
+      <Form.Item name="parent_id" label="Parent Category">
+        <Select
+          showSearch
+          placeholder="Select parent category"
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
+          <Option key="0" value={0}>
+            Parent Category
+          </Option>
+          {categories.map((category) => (
+            <Option key={category.id} value={category.value}>
+              {category.name}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
       <Form.Item
         name="name"
         label="Category Name"

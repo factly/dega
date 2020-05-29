@@ -20,7 +20,7 @@ export default function categoriesReducer(state = initialState, action = {}) {
     case GET_CATEGORIES_SUCCESS:
       return {
         ...state,
-        categories: action.payload,
+        categories: action.payload.nodes,
         loading: false,
       };
     case ADD_CATEGORY_SUCCESS:

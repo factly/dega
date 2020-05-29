@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryCreateForm from './components/CategoryCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSpaces } from '../../actions/spaces';
+import { addCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
 import useQuery from '../../utils/useQuery';
 import _ from 'lodash';
@@ -12,22 +12,21 @@ function EditSpace() {
   const id = query.get('id');
 
   const dispatch = useDispatch();
-  const { space } = useSelector((state) => {
-    const { spaces, ...other } = state.spaces;
-    const organisation = _.find(spaces, { id: 3 });
-    if (!organisation) return [];
+  const { category } = useSelector((state) => {
+    const { categories, ...other } = state.categories;
+    const category = _.find(categories, { id: parseInt(id) });
     return {
-      space: _.find(organisation.spaces, { id: parseInt(id) }),
+      category,
       ...other,
     };
   });
 
   const onCreate = (values) => {
-    dispatch(addSpaces(values));
-    history.push('/spaces');
+    dispatch(addCategory(values));
+    history.push('/categories');
     console.log('Received values of form: ', values);
   };
-  return <CategoryCreateForm data={space} onCreate={onCreate} />;
+  return <CategoryCreateForm data={category} onCreate={onCreate} />;
 }
 
 export default EditSpace;

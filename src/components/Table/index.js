@@ -11,6 +11,7 @@ function Table({ columns, data, loading, ...props }) {
         },
       }}
       bordered
+      rowKey="id"
       columns={columns}
       dataSource={data}
       loading={loading}

@@ -27,7 +27,7 @@ function CategoriesList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/spaces/edit?id=${record.id}`}
+              to={`/categories/edit?id=${record.id}`}
             >
               Edit
             </Link>
@@ -60,16 +60,9 @@ function CategoriesList() {
         columns={columns}
         expandable={{
           expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.description}</p>,
+          rowExpandable: (record) => record.name !== 'Not Expandable',
         }}
-        dataSource={[
-          {
-            name: 'Category',
-            slug: 'name',
-            parent_id: 0,
-            description:
-              'ant-btn ant-btn-primaryant-btn ant-btn-primary ant-btn ant-btn-primaryant-btn ant-btn-primary',
-          },
-        ]}
+        dataSource={categories}
         loading={loading}
       />
     </Space>
