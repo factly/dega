@@ -12,12 +12,9 @@ definitions:
         type: integer
       slug:
         type: string
-      space_id:
-        type: integer
     required:
     - name
     - slug
-    - space_id
     type: object
   category.paging:
     properties:
@@ -55,11 +52,8 @@ definitions:
       title:
         type: string
     required:
-    - claim_sources
     - claimant_id
     - rating_id
-    - review
-    - review_sources
     - slug
     - space_id
     - title
@@ -91,7 +85,6 @@ definitions:
     - name
     - slug
     - space_id
-    - tag_line
     type: object
   claimant.paging:
     properties:
@@ -214,8 +207,6 @@ definitions:
         type: string
       slug:
         type: string
-      space_id:
-        type: integer
       title:
         type: string
       type:
@@ -227,7 +218,6 @@ definitions:
     - file_size
     - name
     - slug
-    - space_id
     - title
     - type
     type: object
@@ -691,7 +681,7 @@ info:
   title: Dega API
   version: "1.0"
 paths:
-  /core/categories:
+  /{space_id}/core/categories:
     get:
       description: Get all categories
       operationId: get-all-categories
@@ -699,6 +689,11 @@ paths:
       - description: User ID
         in: header
         name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
         required: true
         type: string
       - description: limit per page
@@ -728,6 +723,11 @@ paths:
         name: X-User
         required: true
         type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
       - description: Category Object
         in: body
         name: Category
@@ -750,7 +750,7 @@ paths:
       summary: Create category
       tags:
       - Category
-  /core/categories/{category_id}:
+  /{space_id}/core/categories/{category_id}:
     delete:
       description: Delete category by ID
       operationId: delete-category-by-id
@@ -763,6 +763,11 @@ paths:
       - description: Category ID
         in: path
         name: category_id
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
         required: true
         type: string
       responses:
@@ -783,6 +788,11 @@ paths:
       - description: User ID
         in: header
         name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
         required: true
         type: string
       - description: Category ID
@@ -814,6 +824,11 @@ paths:
         name: category_id
         required: true
         type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
       - description: Category
         in: body
         name: Category
@@ -829,6 +844,165 @@ paths:
       summary: Update a category by id
       tags:
       - Category
+  /{space_id}/core/media:
+    get:
+      description: Get all media
+      operationId: get-all-media
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Medium'
+            type: array
+      summary: Show all media
+      tags:
+      - Medium
+    post:
+      description: Create medium
+      operationId: add-medium
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Medium Object
+        in: body
+        name: Medium
+        required: true
+        schema:
+          $ref: '#/definitions/medium.medium'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Medium'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create medium
+      tags:
+      - Medium
+  /{space_id}/core/media/{medium_id}:
+    delete:
+      description: Delete medium by ID
+      operationId: delete-medium-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Medium ID
+        in: path
+        name: medium_id
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a medium
+      tags:
+      - Medium
+    get:
+      description: Get medium by ID
+      operationId: get-medium-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Medium ID
+        in: path
+        name: medium_id
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Medium'
+      summary: Show a medium by id
+      tags:
+      - Medium
+    put:
+      description: Update medium by ID
+      operationId: update-medium-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Medium ID
+        in: path
+        name: medium_id
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Medium
+        in: body
+        name: Medium
+        schema:
+          $ref: '#/definitions/medium.medium'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Medium'
+      summary: Update a medium by id
+      tags:
+      - Medium
   /core/formats:
     get:
       description: Get all formats
@@ -961,140 +1135,6 @@ paths:
       summary: Update a format by id
       tags:
       - Format
-  /core/media:
-    get:
-      description: Get all media
-      operationId: get-all-media
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: limit per page
-        in: query
-        name: limit
-        type: string
-      - description: page number
-        in: query
-        name: page
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/model.Medium'
-            type: array
-      summary: Show all media
-      tags:
-      - Medium
-    post:
-      description: Create medium
-      operationId: add-medium
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Medium Object
-        in: body
-        name: Medium
-        required: true
-        schema:
-          $ref: '#/definitions/medium.medium'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.Medium'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create medium
-      tags:
-      - Medium
-  /core/media/{medium_id}:
-    delete:
-      description: Delete medium by ID
-      operationId: delete-medium-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Medium ID
-        in: path
-        name: medium_id
-        required: true
-        type: string
-      responses:
-        "200": {}
-      summary: Delete a medium
-      tags:
-      - Medium
-    get:
-      description: Get medium by ID
-      operationId: get-medium-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Medium ID
-        in: path
-        name: medium_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Medium'
-      summary: Show a medium by id
-      tags:
-      - Medium
-    put:
-      description: Update medium by ID
-      operationId: update-medium-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Medium ID
-        in: path
-        name: medium_id
-        required: true
-        type: string
-      - description: Medium
-        in: body
-        name: Medium
-        schema:
-          $ref: '#/definitions/medium.medium'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Medium'
-      summary: Update a medium by id
-      tags:
-      - Medium
   /core/posts:
     get:
       description: Get all posts

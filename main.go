@@ -69,7 +69,7 @@ func main() {
 
 	r.With(util.CheckUser).Group(func(r chi.Router) {
 		r.Mount("/factcheck", factcheck.Router())
-		r.Mount("/core", core.Router())
+		r.Mount("/{space_id}/core", core.Router())
 	})
 
 	http.ListenAndServe(port, r)

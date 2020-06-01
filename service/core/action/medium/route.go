@@ -17,7 +17,6 @@ type medium struct {
 	FileSize    int64          `json:"file_size" validate:"required"`
 	URL         postgres.Jsonb `json:"url"`
 	Dimensions  string         `json:"dimensions" validate:"required"`
-	SpaceID     uint           `json:"space_id" validate:"required"`
 }
 
 // Router - Group of medium router
