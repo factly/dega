@@ -47,15 +47,12 @@ definitions:
         type: string
       slug:
         type: string
-      space_id:
-        type: integer
       title:
         type: string
     required:
     - claimant_id
     - rating_id
     - slug
-    - space_id
     - title
     type: object
   claim.paging:
@@ -1470,6 +1467,163 @@ paths:
       summary: Update a claimant by id
       tags:
       - Claimant
+  /{space_id}/factcheck/claims:
+    get:
+      description: Get all claims
+      operationId: get-all-claims
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: Object
+      summary: Show all claims
+      tags:
+      - Claim
+    post:
+      description: Create claim
+      operationId: add-claim
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claim Object
+        in: body
+        name: Claim
+        required: true
+        schema:
+          $ref: '#/definitions/claim.claim'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Claim'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create claim
+      tags:
+      - Claim
+  /{space_id}/factcheck/claims/{claim_id}:
+    delete:
+      description: Delete claim by ID
+      operationId: delete-claim-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claim ID
+        in: path
+        name: claim_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a claim
+      tags:
+      - Claim
+    get:
+      description: Get claim by ID
+      operationId: get-claim-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claim ID
+        in: path
+        name: claim_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claim'
+      summary: Show a claim by id
+      tags:
+      - Claim
+    put:
+      description: Update claim by ID
+      operationId: update-claim-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claim ID
+        in: path
+        name: claim_id
+        required: true
+        type: string
+      - description: Claim
+        in: body
+        name: Claim
+        schema:
+          $ref: '#/definitions/claim.claim'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claim'
+      summary: Update a claim by id
+      tags:
+      - Claim
   /{space_id}/factcheck/ratings:
     get:
       description: Get all ratings
@@ -1803,138 +1957,6 @@ paths:
       summary: Show all spaces
       tags:
       - Space
-  /factcheck/claims:
-    get:
-      description: Get all claims
-      operationId: get-all-claims
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: limit per page
-        in: query
-        name: limit
-        type: string
-      - description: page number
-        in: query
-        name: page
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            type: Object
-      summary: Show all claims
-      tags:
-      - Claim
-    post:
-      description: Create claim
-      operationId: add-claim
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claim Object
-        in: body
-        name: Claim
-        required: true
-        schema:
-          $ref: '#/definitions/claim.claim'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.Claim'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create claim
-      tags:
-      - Claim
-  /factcheck/claims/{claim_id}:
-    delete:
-      description: Delete claim by ID
-      operationId: delete-claim-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claim ID
-        in: path
-        name: claim_id
-        required: true
-        type: string
-      responses:
-        "200": {}
-      summary: Delete a claim
-      tags:
-      - Claim
-    get:
-      description: Get claim by ID
-      operationId: get-claim-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claim ID
-        in: path
-        name: claim_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Claim'
-      summary: Show a claim by id
-      tags:
-      - Claim
-    put:
-      description: Update claim by ID
-      operationId: update-claim-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claim ID
-        in: path
-        name: claim_id
-        required: true
-        type: string
-      - description: Claim
-        in: body
-        name: Claim
-        schema:
-          $ref: '#/definitions/claim.claim'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Claim'
-      summary: Update a claim by id
-      tags:
-      - Claim
   /factcheck/factchecks:
     get:
       description: Get all factchecks

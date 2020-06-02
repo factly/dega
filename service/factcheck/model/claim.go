@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/config"
+	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -24,4 +25,28 @@ type Claim struct {
 	ReviewTagLine string         `gorm:"column:review_tag_line" json:"review_tag_line"`
 	ReviewSources string         `gorm:"column:review_sources" json:"review_sources"`
 	SpaceID       uint           `gorm:"column:space_id" json:"space_id"`
+}
+
+// BeforeCreate - validation for rating & claimant
+func (c *Claim) BeforeCreate(tx *gorm.DB) (e error) {
+	claimant := Claimant{}
+	claimant.ID = c.ClaimantID
+
+	err := tx.Model(&Claimant{}).Where(Claimant{
+		SpaceID: c.SpaceID,
+	}).First(&claimant).Error
+
+	if err != nil {
+		return err
+	}
+
+	rating := Rating{}
+	rating.ID = c.RatingID
+
+	err = tx.Model(&Rating{}).Where(Rating{
+		SpaceID: c.SpaceID,
+	}).First(&rating).Error
+
+	return err
+
 }
