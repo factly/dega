@@ -17,195 +17,6 @@
     "host": "localhost:8820",
     "basePath": "/",
     "paths": {
-        "/core/posts": {
-            "get": {
-                "description": "Get all posts",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Show all posts",
-                "operationId": "get-all-posts",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "limit per page",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "page number",
-                        "name": "page",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/post.postData"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create post",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Create post",
-                "operationId": "add-post",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Post Object",
-                        "name": "Post",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/post.post"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            }
-        },
-        "/core/posts/{post_id}": {
-            "get": {
-                "description": "Get post by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Show a post by id",
-                "operationId": "get-post-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update post by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Update a post by id",
-                "operationId": "update-post-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Post",
-                        "name": "Post",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/post.post"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete post by ID",
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Delete a post",
-                "operationId": "delete-post-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {}
-                }
-            }
-        },
         "/core/spaces": {
             "post": {
                 "description": "Create space",
@@ -1166,6 +977,230 @@
                         "type": "string",
                         "description": "Space ID",
                         "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/{space_id}/core/posts": {
+            "get": {
+                "description": "Get all posts",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Show all posts",
+                "operationId": "get-all-posts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/post.postData"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create post",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Create post",
+                "operationId": "add-post",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Post Object",
+                        "name": "Post",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/post.post"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            }
+        },
+        "/{space_id}/core/posts/{post_id}": {
+            "get": {
+                "description": "Get post by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Show a post by id",
+                "operationId": "get-post-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update post by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Update a post by id",
+                "operationId": "update-post-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Post",
+                        "name": "Post",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/post.post"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete post by ID",
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Delete a post",
+                "operationId": "delete-post-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
                         "in": "path",
                         "required": true
                     }

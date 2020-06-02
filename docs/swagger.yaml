@@ -1145,6 +1145,159 @@ paths:
       summary: Update a medium by id
       tags:
       - Medium
+  /{space_id}/core/posts:
+    get:
+      description: Get all posts
+      operationId: get-all-posts
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/post.postData'
+            type: array
+      summary: Show all posts
+      tags:
+      - Post
+    post:
+      description: Create post
+      operationId: add-post
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Post Object
+        in: body
+        name: Post
+        required: true
+        schema:
+          $ref: '#/definitions/post.post'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/post.postData'
+      summary: Create post
+      tags:
+      - Post
+  /{space_id}/core/posts/{post_id}:
+    delete:
+      description: Delete post by ID
+      operationId: delete-post-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a post
+      tags:
+      - Post
+    get:
+      description: Get post by ID
+      operationId: get-post-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.postData'
+      summary: Show a post by id
+      tags:
+      - Post
+    put:
+      description: Update post by ID
+      operationId: update-post-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      - description: Post
+        in: body
+        name: Post
+        schema:
+          $ref: '#/definitions/post.post'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.postData'
+      summary: Update a post by id
+      tags:
+      - Post
   /{space_id}/core/tags:
     get:
       description: Get all tags
@@ -1781,134 +1934,6 @@ paths:
       summary: Update a rating by id
       tags:
       - Rating
-  /core/posts:
-    get:
-      description: Get all posts
-      operationId: get-all-posts
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: limit per page
-        in: query
-        name: limit
-        type: string
-      - description: page number
-        in: query
-        name: page
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/post.postData'
-            type: array
-      summary: Show all posts
-      tags:
-      - Post
-    post:
-      description: Create post
-      operationId: add-post
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Post Object
-        in: body
-        name: Post
-        required: true
-        schema:
-          $ref: '#/definitions/post.post'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Create post
-      tags:
-      - Post
-  /core/posts/{post_id}:
-    delete:
-      description: Delete post by ID
-      operationId: delete-post-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Post ID
-        in: path
-        name: post_id
-        required: true
-        type: string
-      responses:
-        "200": {}
-      summary: Delete a post
-      tags:
-      - Post
-    get:
-      description: Get post by ID
-      operationId: get-post-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Post ID
-        in: path
-        name: post_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Show a post by id
-      tags:
-      - Post
-    put:
-      description: Update post by ID
-      operationId: update-post-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Post ID
-        in: path
-        name: post_id
-        required: true
-        type: string
-      - description: Post
-        in: body
-        name: Post
-        schema:
-          $ref: '#/definitions/post.post'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Update a post by id
-      tags:
-      - Post
   /core/spaces:
     post:
       description: Create space
