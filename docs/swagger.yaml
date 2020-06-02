@@ -77,14 +77,11 @@ definitions:
         type: string
       slug:
         type: string
-      space_id:
-        type: integer
       tag_line:
         type: string
     required:
     - name
     - slug
-    - space_id
     type: object
   claimant.paging:
     properties:
@@ -384,7 +381,7 @@ definitions:
       name:
         type: string
       numeric_value:
-        type: string
+        type: integer
       slug:
         type: string
       space_id:
@@ -573,16 +570,13 @@ definitions:
       name:
         type: string
       numeric_value:
-        type: string
+        type: integer
       slug:
         type: string
-      space_id:
-        type: integer
     required:
     - name
     - numeric_value
     - slug
-    - space_id
     type: object
   space.orgWithSpace:
     properties:
@@ -1319,6 +1313,320 @@ paths:
       summary: Update a tag by id
       tags:
       - Tag
+  /{space_id}/factcheck/claimants:
+    get:
+      description: Get all claimants
+      operationId: get-all-claimants
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/claimant.paging'
+      summary: Show all claimants
+      tags:
+      - Claimant
+    post:
+      description: Create claimant
+      operationId: add-claimant
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claimant Object
+        in: body
+        name: Claimant
+        required: true
+        schema:
+          $ref: '#/definitions/claimant.claimant'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Claimant'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create claimant
+      tags:
+      - Claimant
+  /{space_id}/factcheck/claimants/{claimant_id}:
+    delete:
+      description: Delete claimant by ID
+      operationId: delete-claimant-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: claimant_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a claimant
+      tags:
+      - Claimant
+    get:
+      description: Get claimant by ID
+      operationId: get-claimant-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: claimant_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claimant'
+      summary: Show a claimant by id
+      tags:
+      - Claimant
+    put:
+      description: Update claimant by ID
+      operationId: update-claimant-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: claimant_id
+        required: true
+        type: string
+      - description: Claimant
+        in: body
+        name: Claimant
+        schema:
+          $ref: '#/definitions/claimant.claimant'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claimant'
+      summary: Update a claimant by id
+      tags:
+      - Claimant
+  /{space_id}/factcheck/ratings:
+    get:
+      description: Get all ratings
+      operationId: get-all-ratings
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rating.paging'
+      summary: Show all ratings
+      tags:
+      - Rating
+    post:
+      description: Create rating
+      operationId: add-rating
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Rating Object
+        in: body
+        name: Rating
+        required: true
+        schema:
+          $ref: '#/definitions/rating.rating'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Rating'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create rating
+      tags:
+      - Rating
+  /{space_id}/factcheck/ratings/{rating_id}:
+    delete:
+      description: Delete rating by ID
+      operationId: delete-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Rating ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a rating
+      tags:
+      - Rating
+    get:
+      description: Get rating by ID
+      operationId: get-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Claimant ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Claimant'
+      summary: Show a rating by id
+      tags:
+      - Rating
+    put:
+      description: Update rating by ID
+      operationId: update-rating-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Rating ID
+        in: path
+        name: rating_id
+        required: true
+        type: string
+      - description: Rating
+        in: body
+        name: Rating
+        schema:
+          $ref: '#/definitions/rating.rating'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Rating'
+      summary: Update a rating by id
+      tags:
+      - Rating
   /core/posts:
     get:
       description: Get all posts
@@ -1495,138 +1803,6 @@ paths:
       summary: Show all spaces
       tags:
       - Space
-  /factcheck/claimants:
-    get:
-      description: Get all claimants
-      operationId: get-all-claimants
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: limit per page
-        in: query
-        name: limit
-        type: string
-      - description: page number
-        in: query
-        name: page
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/claimant.paging'
-      summary: Show all claimants
-      tags:
-      - Claimant
-    post:
-      description: Create claimant
-      operationId: add-claimant
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claimant Object
-        in: body
-        name: Claimant
-        required: true
-        schema:
-          $ref: '#/definitions/claimant.claimant'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.Claimant'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create claimant
-      tags:
-      - Claimant
-  /factcheck/claimants/{claimant_id}:
-    delete:
-      description: Delete claimant by ID
-      operationId: delete-claimant-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claimant ID
-        in: path
-        name: claimant_id
-        required: true
-        type: string
-      responses:
-        "200": {}
-      summary: Delete a claimant
-      tags:
-      - Claimant
-    get:
-      description: Get claimant by ID
-      operationId: get-claimant-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claimant ID
-        in: path
-        name: claimant_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Claimant'
-      summary: Show a claimant by id
-      tags:
-      - Claimant
-    put:
-      description: Update claimant by ID
-      operationId: update-claimant-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claimant ID
-        in: path
-        name: claimant_id
-        required: true
-        type: string
-      - description: Claimant
-        in: body
-        name: Claimant
-        schema:
-          $ref: '#/definitions/claimant.claimant'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Claimant'
-      summary: Update a claimant by id
-      tags:
-      - Claimant
   /factcheck/claims:
     get:
       description: Get all claims
@@ -1891,136 +2067,4 @@ paths:
       summary: Update a factcheck by id
       tags:
       - Factcheck
-  /factcheck/ratings:
-    get:
-      description: Get all ratings
-      operationId: get-all-ratings
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: limit per page
-        in: query
-        name: limit
-        type: string
-      - description: page number
-        in: query
-        name: page
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/rating.paging'
-      summary: Show all ratings
-      tags:
-      - Rating
-    post:
-      description: Create rating
-      operationId: add-rating
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Rating Object
-        in: body
-        name: Rating
-        required: true
-        schema:
-          $ref: '#/definitions/rating.rating'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.Rating'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create rating
-      tags:
-      - Rating
-  /factcheck/ratings/{rating_id}:
-    delete:
-      description: Delete rating by ID
-      operationId: delete-rating-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Rating ID
-        in: path
-        name: rating_id
-        required: true
-        type: string
-      responses:
-        "200": {}
-      summary: Delete a rating
-      tags:
-      - Rating
-    get:
-      description: Get rating by ID
-      operationId: get-rating-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Claimant ID
-        in: path
-        name: rating_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Claimant'
-      summary: Show a rating by id
-      tags:
-      - Rating
-    put:
-      description: Update rating by ID
-      operationId: update-rating-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Rating ID
-        in: path
-        name: rating_id
-        required: true
-        type: string
-      - description: Rating
-        in: body
-        name: Rating
-        schema:
-          $ref: '#/definitions/rating.rating'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Rating'
-      summary: Update a rating by id
-      tags:
-      - Rating
 swagger: "2.0"

@@ -3,11 +3,13 @@ package rating
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
+	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -19,11 +21,15 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
+// @Param space_id path string true "Space ID"
 // @Param Rating body rating true "Rating Object"
 // @Success 201 {object} model.Rating
 // @Failure 400 {array} string
-// @Router /factcheck/ratings [post]
+// @Router /{space_id}/factcheck/ratings [post]
 func create(w http.ResponseWriter, r *http.Request) {
+
+	spaceID := chi.URLParam(r, "space_id")
+	sid, err := strconv.Atoi(spaceID)
 
 	rating := &rating{}
 
@@ -31,7 +37,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	validate := validator.New()
 
-	err := validate.Struct(rating)
+	err = validate.Struct(rating)
 
 	if err != nil {
 		msg := err.Error()
@@ -44,8 +50,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Slug:         rating.Slug,
 		Description:  rating.Description,
 		MediumID:     rating.MediumID,
-		SpaceID:      rating.SpaceID,
+		SpaceID:      uint(sid),
 		NumericValue: rating.NumericValue,
+	}
+
+	// check medium belongs to same space or not
+	err = result.BeforeCreate(config.DB)
+
+	if err != nil {
+		validation.Error(w, r, err.Error())
+		return
 	}
 
 	err = config.DB.Model(&model.Rating{}).Create(&result).Error

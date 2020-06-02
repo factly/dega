@@ -38,9 +38,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := util.Paging(r.URL.Query())
 
-	err = config.DB.Model(&model.Medium{}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Where(&model.Medium{
+	err = config.DB.Model(&model.Medium{}).Where(&model.Medium{
 		SpaceID: uint(sid),
-	}).Find(&result.Nodes).Error
+	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
 
 	if err != nil {
 		return
