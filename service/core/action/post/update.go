@@ -2,7 +2,6 @@ package post
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -37,8 +36,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tags := []model.PostTag{}
 
 	json.NewDecoder(r.Body).Decode(&post)
-
-	fmt.Printf("%+v", post)
 
 	result := &postData{}
 	result.ID = uint(id)

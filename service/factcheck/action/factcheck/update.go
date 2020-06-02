@@ -2,7 +2,6 @@ package factcheck
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
@@ -38,8 +37,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	claims := []model.FactcheckClaim{}
 
 	json.NewDecoder(r.Body).Decode(&factcheck)
-
-	fmt.Printf("%+v", factcheck)
 
 	result := &factcheckData{}
 	result.ID = uint(id)
