@@ -3,11 +3,13 @@ package factcheck
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
+	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -19,11 +21,15 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
+// @Param space_id path string true "Space ID"
 // @Param Factcheck body factcheck true "Factcheck Object"
 // @Success 201 {object} factcheckData
 // @Failure 400 {array} string
-// @Router /factcheck/factchecks [post]
+// @Router /{space_id}/factcheck/factchecks [post]
 func create(w http.ResponseWriter, r *http.Request) {
+
+	spaceID := chi.URLParam(r, "space_id")
+	sid, err := strconv.Atoi(spaceID)
 
 	factcheck := factcheck{}
 	result := &factcheckData{}
@@ -32,13 +38,15 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	validate := validator.New()
 
-	err := validate.Struct(factcheck)
+	err = validate.Struct(factcheck)
 
 	if err != nil {
 		msg := err.Error()
 		validation.ValidErrors(w, r, msg)
 		return
 	}
+
+	factcheck.SpaceID = uint(sid)
 
 	result.Factcheck = model.Factcheck{
 		Title:            factcheck.Title,
@@ -54,6 +62,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		FeaturedMediumID: factcheck.FeaturedMediumID,
 		PublishedDate:    factcheck.PublishedDate,
 		SpaceID:          factcheck.SpaceID,
+	}
+
+	// check claims, categories, tags & medium belong to same space or not
+	err = factcheck.BeforeCreate(config.DB)
+	if err != nil {
+		validation.Error(w, r, err.Error())
+		return
 	}
 
 	err = config.DB.Model(&model.Factcheck{}).Create(&result.Factcheck).Error

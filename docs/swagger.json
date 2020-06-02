@@ -89,201 +89,6 @@
                 }
             }
         },
-        "/factcheck/factchecks": {
-            "get": {
-                "description": "Get all factchecks",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Factcheck"
-                ],
-                "summary": "Show all factchecks",
-                "operationId": "get-all-factchecks",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "limit per page",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "page number",
-                        "name": "page",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/factcheck.paging"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create factcheck",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Factcheck"
-                ],
-                "summary": "Create factcheck",
-                "operationId": "add-factcheck",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Factcheck Object",
-                        "name": "Factcheck",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/factcheck.factcheck"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/factcheck.factcheckData"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/factcheck/factchecks/{factcheck_id}": {
-            "get": {
-                "description": "Get factcheck by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Factcheck"
-                ],
-                "summary": "Show a factcheck by id",
-                "operationId": "get-factcheck-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Factcheck ID",
-                        "name": "factcheck_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/factcheck.factcheckData"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update factcheck by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Factcheck"
-                ],
-                "summary": "Update a factcheck by id",
-                "operationId": "update-factcheck-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Factcheck ID",
-                        "name": "factcheck_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Factcheck",
-                        "name": "Factcheck",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/factcheck.factcheck"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/factcheck.factcheckData"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete factcheck by ID",
-                "tags": [
-                    "Factcheck"
-                ],
-                "summary": "Delete a factcheck",
-                "operationId": "delete-factcheck-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Factcheck ID",
-                        "name": "factcheck_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {}
-                }
-            }
-        },
         "/{space_id}/core/categories": {
             "get": {
                 "description": "Get all categories",
@@ -1903,6 +1708,236 @@
                         "type": "string",
                         "description": "Claim ID",
                         "name": "claim_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/{space_id}/factcheck/factchecks": {
+            "get": {
+                "description": "Get all factchecks",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Show all factchecks",
+                "operationId": "get-all-factchecks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.paging"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create factcheck",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Create factcheck",
+                "operationId": "add-factcheck",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Factcheck Object",
+                        "name": "Factcheck",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheck"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{space_id}/factcheck/factchecks/{factcheck_id}": {
+            "get": {
+                "description": "Get factcheck by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Show a factcheck by id",
+                "operationId": "get-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update factcheck by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Update a factcheck by id",
+                "operationId": "update-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Factcheck",
+                        "name": "Factcheck",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheck"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/factcheck.factcheckData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete factcheck by ID",
+                "tags": [
+                    "Factcheck"
+                ],
+                "summary": "Delete a factcheck",
+                "operationId": "delete-factcheck-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Factcheck ID",
+                        "name": "factcheck_id",
                         "in": "path",
                         "required": true
                     }

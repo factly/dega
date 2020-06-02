@@ -1777,6 +1777,163 @@ paths:
       summary: Update a claim by id
       tags:
       - Claim
+  /{space_id}/factcheck/factchecks:
+    get:
+      description: Get all factchecks
+      operationId: get-all-factchecks
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/factcheck.paging'
+      summary: Show all factchecks
+      tags:
+      - Factcheck
+    post:
+      description: Create factcheck
+      operationId: add-factcheck
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Factcheck Object
+        in: body
+        name: Factcheck
+        required: true
+        schema:
+          $ref: '#/definitions/factcheck.factcheck'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create factcheck
+      tags:
+      - Factcheck
+  /{space_id}/factcheck/factchecks/{factcheck_id}:
+    delete:
+      description: Delete factcheck by ID
+      operationId: delete-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a factcheck
+      tags:
+      - Factcheck
+    get:
+      description: Get factcheck by ID
+      operationId: get-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+      summary: Show a factcheck by id
+      tags:
+      - Factcheck
+    put:
+      description: Update factcheck by ID
+      operationId: update-factcheck-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Factcheck ID
+        in: path
+        name: factcheck_id
+        required: true
+        type: string
+      - description: Factcheck
+        in: body
+        name: Factcheck
+        schema:
+          $ref: '#/definitions/factcheck.factcheck'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/factcheck.factcheckData'
+      summary: Update a factcheck by id
+      tags:
+      - Factcheck
   /{space_id}/factcheck/ratings:
     get:
       description: Get all ratings
@@ -1982,136 +2139,4 @@ paths:
       summary: Show all spaces
       tags:
       - Space
-  /factcheck/factchecks:
-    get:
-      description: Get all factchecks
-      operationId: get-all-factchecks
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: limit per page
-        in: query
-        name: limit
-        type: string
-      - description: page number
-        in: query
-        name: page
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/factcheck.paging'
-      summary: Show all factchecks
-      tags:
-      - Factcheck
-    post:
-      description: Create factcheck
-      operationId: add-factcheck
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Factcheck Object
-        in: body
-        name: Factcheck
-        required: true
-        schema:
-          $ref: '#/definitions/factcheck.factcheck'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/factcheck.factcheckData'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create factcheck
-      tags:
-      - Factcheck
-  /factcheck/factchecks/{factcheck_id}:
-    delete:
-      description: Delete factcheck by ID
-      operationId: delete-factcheck-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Factcheck ID
-        in: path
-        name: factcheck_id
-        required: true
-        type: string
-      responses:
-        "200": {}
-      summary: Delete a factcheck
-      tags:
-      - Factcheck
-    get:
-      description: Get factcheck by ID
-      operationId: get-factcheck-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Factcheck ID
-        in: path
-        name: factcheck_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/factcheck.factcheckData'
-      summary: Show a factcheck by id
-      tags:
-      - Factcheck
-    put:
-      description: Update factcheck by ID
-      operationId: update-factcheck-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Factcheck ID
-        in: path
-        name: factcheck_id
-        required: true
-        type: string
-      - description: Factcheck
-        in: body
-        name: Factcheck
-        schema:
-          $ref: '#/definitions/factcheck.factcheck'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/factcheck.factcheckData'
-      summary: Update a factcheck by id
-      tags:
-      - Factcheck
 swagger: "2.0"

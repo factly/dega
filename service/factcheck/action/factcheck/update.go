@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
 )
 
@@ -19,13 +20,18 @@ import (
 // @Produce json
 // @Consume json
 // @Param X-User header string true "User ID"
+// @Param space_id path string true "Space ID"
 // @Param factcheck_id path string true "Factcheck ID"
 // @Param Factcheck body factcheck false "Factcheck"
 // @Success 200 {object} factcheckData
-// @Router /factcheck/factchecks/{factcheck_id} [put]
+// @Router /{space_id}/factcheck/factchecks/{factcheck_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
+
 	factcheckID := chi.URLParam(r, "factcheck_id")
 	id, err := strconv.Atoi(factcheckID)
+
+	spaceID := chi.URLParam(r, "space_id")
+	sid, err := strconv.Atoi(spaceID)
 
 	if err != nil {
 		return
@@ -40,6 +46,25 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	result := &factcheckData{}
 	result.ID = uint(id)
+
+	// check record exists or not
+	err = config.DB.Where(&model.Factcheck{
+		SpaceID: uint(sid),
+	}).First(&result.Factcheck).Error
+
+	if err != nil {
+		validation.RecordNotFound(w, r)
+		return
+	}
+
+	factcheck.SpaceID = result.SpaceID
+
+	err = factcheck.BeforeCreate(config.DB)
+
+	if err != nil {
+		validation.Error(w, r, err.Error())
+		return
+	}
 
 	config.DB.Model(&result.Factcheck).Updates(model.Factcheck{
 		Title:            factcheck.Title,

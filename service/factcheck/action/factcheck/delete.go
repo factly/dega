@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
 )
 
@@ -16,22 +17,29 @@ import (
 // @Tags Factcheck
 // @ID delete-factcheck-by-id
 // @Param X-User header string true "User ID"
+// @Param space_id path string true "Space ID"
 // @Param factcheck_id path string true "Factcheck ID"
 // @Success 200
-// @Router /factcheck/factchecks/{factcheck_id} [delete]
+// @Router /{space_id}/factcheck/factchecks/{factcheck_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
 	factcheckID := chi.URLParam(r, "factcheck_id")
 	id, err := strconv.Atoi(factcheckID)
+
+	spaceID := chi.URLParam(r, "space_id")
+	sid, err := strconv.Atoi(spaceID)
 
 	result := &model.Factcheck{}
 
 	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&result).Error
+	err = config.DB.Where(&model.Factcheck{
+		SpaceID: uint(sid),
+	}).First(&result).Error
 
 	if err != nil {
+		validation.RecordNotFound(w, r)
 		return
 	}
 
