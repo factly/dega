@@ -175,12 +175,9 @@ definitions:
         type: string
       slug:
         type: string
-      space_id:
-        type: integer
     required:
     - name
     - slug
-    - space_id
     type: object
   format.paging:
     properties:
@@ -661,12 +658,9 @@ definitions:
         type: string
       slug:
         type: string
-      space_id:
-        type: integer
     required:
     - name
     - slug
-    - space_id
     type: object
 host: localhost:8820
 info:
@@ -844,6 +838,163 @@ paths:
       summary: Update a category by id
       tags:
       - Category
+  /{space_id}/core/formats:
+    get:
+      description: Get all formats
+      operationId: get-all-formats
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/format.paging'
+      summary: Show all formats
+      tags:
+      - Format
+    post:
+      description: Create format
+      operationId: add-format
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Format Object
+        in: body
+        name: Format
+        required: true
+        schema:
+          $ref: '#/definitions/format.format'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Format'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create format
+      tags:
+      - Format
+  /{space_id}/core/formats/{format_id}:
+    delete:
+      description: Delete format by ID
+      operationId: delete-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+      summary: Delete a format
+      tags:
+      - Format
+    get:
+      description: Get format by ID
+      operationId: get-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Format'
+      summary: Show a format by id
+      tags:
+      - Format
+    put:
+      description: Update format by ID
+      operationId: update-format-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Format ID
+        in: path
+        name: format_id
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Format
+        in: body
+        name: Format
+        schema:
+          $ref: '#/definitions/format.format'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Format'
+      summary: Update a format by id
+      tags:
+      - Format
   /{space_id}/core/media:
     get:
       description: Get all media
@@ -1003,14 +1154,19 @@ paths:
       summary: Update a medium by id
       tags:
       - Medium
-  /core/formats:
+  /{space_id}/core/tags:
     get:
-      description: Get all formats
-      operationId: get-all-formats
+      description: Get all tags
+      operationId: get-all-tags
       parameters:
       - description: User ID
         in: header
         name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
         required: true
         type: string
       - description: limit per page
@@ -1027,73 +1183,96 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/format.paging'
-      summary: Show all formats
+            items:
+              $ref: '#/definitions/model.Tag'
+            type: array
+      summary: Show all tags
       tags:
-      - Format
+      - Tag
     post:
-      description: Create format
-      operationId: add-format
+      description: Create tag
+      operationId: add-tag
       parameters:
       - description: User ID
         in: header
         name: X-User
         required: true
         type: string
-      - description: Format Object
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Tag Object
         in: body
-        name: Format
+        name: Tag
         required: true
         schema:
-          $ref: '#/definitions/format.format'
+          $ref: '#/definitions/tag.tag'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/model.Format'
+            $ref: '#/definitions/model.Tag'
         "400":
           description: Bad Request
           schema:
             items:
               type: string
             type: array
-      summary: Create format
+      summary: Create tag
       tags:
-      - Format
-  /core/formats/{format_id}:
+      - Tag
+  /{space_id}/core/tags/{tag_id}:
     delete:
-      description: Delete format by ID
-      operationId: delete-format-by-id
+      description: Delete tag by ID
+      operationId: delete-tag-by-id
       parameters:
       - description: User ID
         in: header
         name: X-User
         required: true
         type: string
-      - description: Format ID
+      - description: Tag ID
         in: path
-        name: format_id
+        name: tag_id
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
         required: true
         type: string
       responses:
         "200": {}
-      summary: Delete a format
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a tag
       tags:
-      - Format
+      - Tag
     get:
-      description: Get format by ID
-      operationId: get-format-by-id
+      description: Get tag by ID
+      operationId: get-tag-by-id
       parameters:
       - description: User ID
         in: header
         name: X-User
         required: true
         type: string
-      - description: Format ID
+      - description: Tag ID
         in: path
-        name: format_id
+        name: tag_id
+        required: true
+        type: string
+      - description: Space ID
+        in: path
+        name: space_id
         required: true
         type: string
       produces:
@@ -1102,39 +1281,44 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Format'
-      summary: Show a format by id
+            $ref: '#/definitions/model.Tag'
+      summary: Show a tag by id
       tags:
-      - Format
+      - Tag
     put:
-      description: Update format by ID
-      operationId: update-format-by-id
+      description: Update tag by ID
+      operationId: update-tag-by-id
       parameters:
       - description: User ID
         in: header
         name: X-User
         required: true
         type: string
-      - description: Format ID
+      - description: Tag ID
         in: path
-        name: format_id
+        name: tag_id
         required: true
         type: string
-      - description: Format
+      - description: Space ID
+        in: path
+        name: space_id
+        required: true
+        type: string
+      - description: Tag
         in: body
-        name: Format
+        name: Tag
         schema:
-          $ref: '#/definitions/format.format'
+          $ref: '#/definitions/tag.tag'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/model.Format'
-      summary: Update a format by id
+            $ref: '#/definitions/model.Tag'
+      summary: Update a tag by id
       tags:
-      - Format
+      - Tag
   /core/posts:
     get:
       description: Get all posts
@@ -1311,146 +1495,6 @@ paths:
       summary: Show all spaces
       tags:
       - Space
-  /core/tags:
-    get:
-      description: Get all tags
-      operationId: get-all-tags
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: limit per page
-        in: query
-        name: limit
-        type: string
-      - description: page number
-        in: query
-        name: page
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/model.Tag'
-            type: array
-      summary: Show all tags
-      tags:
-      - Tag
-    post:
-      description: Create tag
-      operationId: add-tag
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Tag Object
-        in: body
-        name: Tag
-        required: true
-        schema:
-          $ref: '#/definitions/tag.tag'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.Tag'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create tag
-      tags:
-      - Tag
-  /core/tags/{tag_id}:
-    delete:
-      description: Delete tag by ID
-      operationId: delete-tag-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Tag ID
-        in: path
-        name: tag_id
-        required: true
-        type: string
-      responses:
-        "200": {}
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Delete a tag
-      tags:
-      - Tag
-    get:
-      description: Get tag by ID
-      operationId: get-tag-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Tag ID
-        in: path
-        name: tag_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Tag'
-      summary: Show a tag by id
-      tags:
-      - Tag
-    put:
-      description: Update tag by ID
-      operationId: update-tag-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Tag ID
-        in: path
-        name: tag_id
-        required: true
-        type: string
-      - description: Tag
-        in: body
-        name: Tag
-        schema:
-          $ref: '#/definitions/tag.tag'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Tag'
-      summary: Update a tag by id
-      tags:
-      - Tag
   /factcheck/claimants:
     get:
       description: Get all claimants

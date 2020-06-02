@@ -32,6 +32,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		validation.InvalidID(w, r)
+		return
 	}
 
 	result := &model.Category{}
