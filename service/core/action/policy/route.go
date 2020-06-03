@@ -18,12 +18,11 @@ type policy struct {
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Route("/{space_id}", func(r chi.Router) {
-		r.Post("/", create)
-		r.Get("/", list)
-		r.Route("/{policy_id}", func(r chi.Router) {
-			r.Put("/", update)
-		})
+	r.Post("/", create)
+	r.Get("/", list)
+	r.Route("/{policy_id}", func(r chi.Router) {
+		r.Put("/", update)
+		r.Delete("/", delete)
 	})
 
 	return r

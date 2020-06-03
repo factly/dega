@@ -22,7 +22,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	policyID = "id:org:" + organisationID + ":app:dega:space:" + spaceID + ":" + policyID
 
-	req, err := http.NewRequest("DELETE", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies"+policyID, nil)
+	req, err := http.NewRequest("DELETE", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies/"+policyID, nil)
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
