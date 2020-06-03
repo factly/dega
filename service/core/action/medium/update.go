@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
 )
 
@@ -20,15 +21,20 @@ import (
 // @Consume json
 // @Param X-User header string true "User ID"
 // @Param medium_id path string true "Medium ID"
+// @Param space_id path string true "Space ID"
 // @Param Medium body medium false "Medium"
 // @Success 200 {object} model.Medium
-// @Router /core/media/{medium_id} [put]
+// @Router /{space_id}/core/media/{medium_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
 	mediumID := chi.URLParam(r, "medium_id")
 	id, err := strconv.Atoi(mediumID)
 
+	spaceID := chi.URLParam(r, "space_id")
+	sid, err := strconv.Atoi(spaceID)
+
 	if err != nil {
+		validation.InvalidID(w, r)
 		return
 	}
 
@@ -38,10 +44,28 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result := &model.Medium{}
 	result.ID = uint(id)
 
+	// check record exists or not
+	err = config.DB.Where(&model.Medium{
+		SpaceID: uint(sid),
+	}).First(&result).Error
+
+	if err != nil {
+		validation.RecordNotFound(w, r)
+		return
+	}
+
 	config.DB.Model(&result).Updates(model.Medium{
-		Name: medium.Name,
-		Slug: medium.Slug,
-	}).Preload("Medium").First(&result)
+		Name:        medium.Name,
+		Slug:        medium.Slug,
+		Title:       medium.Title,
+		Type:        medium.Title,
+		Description: medium.Description,
+		AltText:     medium.AltText,
+		Caption:     medium.Caption,
+		FileSize:    medium.FileSize,
+		URL:         medium.URL,
+		Dimensions:  medium.Dimensions,
+	}).First(&result)
 
 	render.JSON(w, http.StatusOK, result)
 }

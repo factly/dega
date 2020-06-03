@@ -7,9 +7,8 @@ type rating struct {
 	Name         string `json:"name" validate:"required"`
 	Slug         string `json:"slug" validate:"required"`
 	Description  string `json:"description"`
-	NumericValue string `json:"numeric_value" validate:"required"`
+	NumericValue int    `json:"numeric_value" validate:"required"`
 	MediumID     uint   `json:"medium_id"`
-	SpaceID      uint   `json:"space_id" validate:"required"`
 }
 
 // Router - Group of rating router

@@ -17,792 +17,6 @@
     "host": "localhost:8820",
     "basePath": "/",
     "paths": {
-        "/core/categories": {
-            "get": {
-                "description": "Get all categories",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Show all categories",
-                "operationId": "get-all-categories",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "limit per page",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "page number",
-                        "name": "page",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/category.paging"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create category",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Create category",
-                "operationId": "add-category",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Category Object",
-                        "name": "Category",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/category.category"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.Category"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/core/categories/{category_id}": {
-            "get": {
-                "description": "Get category by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Show a category by id",
-                "operationId": "get-category-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Category ID",
-                        "name": "category_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Category"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update category by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Update a category by id",
-                "operationId": "update-category-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Category ID",
-                        "name": "category_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Category",
-                        "name": "Category",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/category.category"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Category"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete category by ID",
-                "tags": [
-                    "Category"
-                ],
-                "summary": "Delete a category",
-                "operationId": "delete-category-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Category ID",
-                        "name": "category_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {},
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/core/formats": {
-            "get": {
-                "description": "Get all formats",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Format"
-                ],
-                "summary": "Show all formats",
-                "operationId": "get-all-formats",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "limit per page",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "page number",
-                        "name": "page",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/format.paging"
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create format",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Format"
-                ],
-                "summary": "Create format",
-                "operationId": "add-format",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Format Object",
-                        "name": "Format",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/format.format"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.Format"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/core/formats/{format_id}": {
-            "get": {
-                "description": "Get format by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Format"
-                ],
-                "summary": "Show a format by id",
-                "operationId": "get-format-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Format ID",
-                        "name": "format_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Format"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update format by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Format"
-                ],
-                "summary": "Update a format by id",
-                "operationId": "update-format-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Format ID",
-                        "name": "format_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Format",
-                        "name": "Format",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/format.format"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Format"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete format by ID",
-                "tags": [
-                    "Format"
-                ],
-                "summary": "Delete a format",
-                "operationId": "delete-format-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Format ID",
-                        "name": "format_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {}
-                }
-            }
-        },
-        "/core/media": {
-            "get": {
-                "description": "Get all media",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Medium"
-                ],
-                "summary": "Show all media",
-                "operationId": "get-all-media",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "limit per page",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "page number",
-                        "name": "page",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Medium"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create medium",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Medium"
-                ],
-                "summary": "Create medium",
-                "operationId": "add-medium",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Medium Object",
-                        "name": "Medium",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/medium.medium"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.Medium"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/core/media/{medium_id}": {
-            "get": {
-                "description": "Get medium by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Medium"
-                ],
-                "summary": "Show a medium by id",
-                "operationId": "get-medium-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Medium ID",
-                        "name": "medium_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Medium"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update medium by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Medium"
-                ],
-                "summary": "Update a medium by id",
-                "operationId": "update-medium-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Medium ID",
-                        "name": "medium_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Medium",
-                        "name": "Medium",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/medium.medium"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Medium"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete medium by ID",
-                "tags": [
-                    "Medium"
-                ],
-                "summary": "Delete a medium",
-                "operationId": "delete-medium-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Medium ID",
-                        "name": "medium_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {}
-                }
-            }
-        },
-        "/core/posts": {
-            "get": {
-                "description": "Get all posts",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Show all posts",
-                "operationId": "get-all-posts",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "limit per page",
-                        "name": "limit",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "page number",
-                        "name": "page",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/post.postData"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create post",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Create post",
-                "operationId": "add-post",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Post Object",
-                        "name": "Post",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/post.post"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            }
-        },
-        "/core/posts/{post_id}": {
-            "get": {
-                "description": "Get post by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Show a post by id",
-                "operationId": "get-post-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update post by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Update a post by id",
-                "operationId": "update-post-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "description": "Post",
-                        "name": "Post",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/post.post"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete post by ID",
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Delete a post",
-                "operationId": "delete-post-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {}
-                }
-            }
-        },
         "/core/spaces": {
             "post": {
                 "description": "Create space",
@@ -875,7 +89,933 @@
                 }
             }
         },
-        "/core/tags": {
+        "/{space_id}/core/categories": {
+            "get": {
+                "description": "Get all categories",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Show all categories",
+                "operationId": "get-all-categories",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/category.paging"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create category",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Create category",
+                "operationId": "add-category",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Category Object",
+                        "name": "Category",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/category.category"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{space_id}/core/categories/{category_id}": {
+            "get": {
+                "description": "Get category by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Show a category by id",
+                "operationId": "get-category-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "category_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update category by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Update a category by id",
+                "operationId": "update-category-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "category_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Category",
+                        "name": "Category",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/category.category"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Category"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete category by ID",
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Delete a category",
+                "operationId": "delete-category-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Category ID",
+                        "name": "category_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{space_id}/core/formats": {
+            "get": {
+                "description": "Get all formats",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Show all formats",
+                "operationId": "get-all-formats",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/format.paging"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create format",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Create format",
+                "operationId": "add-format",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Format Object",
+                        "name": "Format",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/format.format"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Format"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{space_id}/core/formats/{format_id}": {
+            "get": {
+                "description": "Get format by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Show a format by id",
+                "operationId": "get-format-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Format ID",
+                        "name": "format_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Format"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update format by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Update a format by id",
+                "operationId": "update-format-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Format ID",
+                        "name": "format_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Format",
+                        "name": "Format",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/format.format"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Format"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete format by ID",
+                "tags": [
+                    "Format"
+                ],
+                "summary": "Delete a format",
+                "operationId": "delete-format-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Format ID",
+                        "name": "format_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/{space_id}/core/media": {
+            "get": {
+                "description": "Get all media",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Medium"
+                ],
+                "summary": "Show all media",
+                "operationId": "get-all-media",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Medium"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create medium",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Medium"
+                ],
+                "summary": "Create medium",
+                "operationId": "add-medium",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Medium Object",
+                        "name": "Medium",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/medium.medium"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Medium"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{space_id}/core/media/{medium_id}": {
+            "get": {
+                "description": "Get medium by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Medium"
+                ],
+                "summary": "Show a medium by id",
+                "operationId": "get-medium-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Medium ID",
+                        "name": "medium_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Medium"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update medium by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Medium"
+                ],
+                "summary": "Update a medium by id",
+                "operationId": "update-medium-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Medium ID",
+                        "name": "medium_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Medium",
+                        "name": "Medium",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/medium.medium"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Medium"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete medium by ID",
+                "tags": [
+                    "Medium"
+                ],
+                "summary": "Delete a medium",
+                "operationId": "delete-medium-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Medium ID",
+                        "name": "medium_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/{space_id}/core/posts": {
+            "get": {
+                "description": "Get all posts",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Show all posts",
+                "operationId": "get-all-posts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/post.postData"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create post",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Create post",
+                "operationId": "add-post",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Post Object",
+                        "name": "Post",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/post.post"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            }
+        },
+        "/{space_id}/core/posts/{post_id}": {
+            "get": {
+                "description": "Get post by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Show a post by id",
+                "operationId": "get-post-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update post by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Update a post by id",
+                "operationId": "update-post-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Post",
+                        "name": "Post",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/post.post"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete post by ID",
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Delete a post",
+                "operationId": "delete-post-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/{space_id}/core/tags": {
             "get": {
                 "description": "Get all tags",
                 "produces": [
@@ -892,6 +1032,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -938,6 +1085,13 @@
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "Tag Object",
                         "name": "Tag",
                         "in": "body",
@@ -966,7 +1120,7 @@
                 }
             }
         },
-        "/core/tags/{tag_id}": {
+        "/{space_id}/core/tags/{tag_id}": {
             "get": {
                 "description": "Get tag by ID",
                 "produces": [
@@ -989,6 +1143,13 @@
                         "type": "string",
                         "description": "Tag ID",
                         "name": "tag_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
                         "in": "path",
                         "required": true
                     }
@@ -1024,6 +1185,13 @@
                         "type": "string",
                         "description": "Tag ID",
                         "name": "tag_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
                         "in": "path",
                         "required": true
                     },
@@ -1066,6 +1234,13 @@
                         "name": "tag_id",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -1082,7 +1257,7 @@
                 }
             }
         },
-        "/factcheck/claimants": {
+        "/{space_id}/factcheck/claimants": {
             "get": {
                 "description": "Get all claimants",
                 "produces": [
@@ -1099,6 +1274,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1142,6 +1324,13 @@
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "Claimant Object",
                         "name": "Claimant",
                         "in": "body",
@@ -1170,7 +1359,7 @@
                 }
             }
         },
-        "/factcheck/claimants/{claimant_id}": {
+        "/{space_id}/factcheck/claimants/{claimant_id}": {
             "get": {
                 "description": "Get claimant by ID",
                 "produces": [
@@ -1187,6 +1376,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1222,6 +1418,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1266,6 +1469,13 @@
                     },
                     {
                         "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Claimant ID",
                         "name": "claimant_id",
                         "in": "path",
@@ -1277,7 +1487,7 @@
                 }
             }
         },
-        "/factcheck/claims": {
+        "/{space_id}/factcheck/claims": {
             "get": {
                 "description": "Get all claims",
                 "produces": [
@@ -1294,6 +1504,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1337,6 +1554,13 @@
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "Claim Object",
                         "name": "Claim",
                         "in": "body",
@@ -1365,7 +1589,7 @@
                 }
             }
         },
-        "/factcheck/claims/{claim_id}": {
+        "/{space_id}/factcheck/claims/{claim_id}": {
             "get": {
                 "description": "Get claim by ID",
                 "produces": [
@@ -1382,6 +1606,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1417,6 +1648,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1461,6 +1699,13 @@
                     },
                     {
                         "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Claim ID",
                         "name": "claim_id",
                         "in": "path",
@@ -1472,7 +1717,7 @@
                 }
             }
         },
-        "/factcheck/factchecks": {
+        "/{space_id}/factcheck/factchecks": {
             "get": {
                 "description": "Get all factchecks",
                 "produces": [
@@ -1489,6 +1734,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1532,6 +1784,13 @@
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "Factcheck Object",
                         "name": "Factcheck",
                         "in": "body",
@@ -1560,7 +1819,7 @@
                 }
             }
         },
-        "/factcheck/factchecks/{factcheck_id}": {
+        "/{space_id}/factcheck/factchecks/{factcheck_id}": {
             "get": {
                 "description": "Get factcheck by ID",
                 "produces": [
@@ -1577,6 +1836,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1612,6 +1878,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1656,6 +1929,13 @@
                     },
                     {
                         "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Factcheck ID",
                         "name": "factcheck_id",
                         "in": "path",
@@ -1667,7 +1947,7 @@
                 }
             }
         },
-        "/factcheck/ratings": {
+        "/{space_id}/factcheck/ratings": {
             "get": {
                 "description": "Get all ratings",
                 "produces": [
@@ -1684,6 +1964,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1727,6 +2014,13 @@
                         "required": true
                     },
                     {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
                         "description": "Rating Object",
                         "name": "Rating",
                         "in": "body",
@@ -1755,7 +2049,7 @@
                 }
             }
         },
-        "/factcheck/ratings/{rating_id}": {
+        "/{space_id}/factcheck/ratings/{rating_id}": {
             "get": {
                 "description": "Get rating by ID",
                 "produces": [
@@ -1772,6 +2066,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1807,6 +2108,13 @@
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -1851,6 +2159,13 @@
                     },
                     {
                         "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Rating ID",
                         "name": "rating_id",
                         "in": "path",
@@ -1868,8 +2183,7 @@
             "type": "object",
             "required": [
                 "name",
-                "slug",
-                "space_id"
+                "slug"
             ],
             "properties": {
                 "description": {
@@ -1886,9 +2200,6 @@
                 },
                 "slug": {
                     "type": "string"
-                },
-                "space_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -1909,13 +2220,9 @@
         "claim.claim": {
             "type": "object",
             "required": [
-                "claim_sources",
                 "claimant_id",
                 "rating_id",
-                "review",
-                "review_sources",
                 "slug",
-                "space_id",
                 "title"
             ],
             "properties": {
@@ -1949,9 +2256,6 @@
                 "slug": {
                     "type": "string"
                 },
-                "space_id": {
-                    "type": "integer"
-                },
                 "title": {
                     "type": "string"
                 }
@@ -1975,9 +2279,7 @@
             "type": "object",
             "required": [
                 "name",
-                "slug",
-                "space_id",
-                "tag_line"
+                "slug"
             ],
             "properties": {
                 "description": {
@@ -1991,9 +2293,6 @@
                 },
                 "slug": {
                     "type": "string"
-                },
-                "space_id": {
-                    "type": "integer"
                 },
                 "tag_line": {
                     "type": "string"
@@ -2125,8 +2424,7 @@
             "type": "object",
             "required": [
                 "name",
-                "slug",
-                "space_id"
+                "slug"
             ],
             "properties": {
                 "description": {
@@ -2137,9 +2435,6 @@
                 },
                 "slug": {
                     "type": "string"
-                },
-                "space_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -2164,7 +2459,6 @@
                 "file_size",
                 "name",
                 "slug",
-                "space_id",
                 "title",
                 "type"
             ],
@@ -2189,9 +2483,6 @@
                 },
                 "slug": {
                     "type": "string"
-                },
-                "space_id": {
-                    "type": "integer"
                 },
                 "title": {
                     "type": "string"
@@ -2452,7 +2743,7 @@
                     "type": "string"
                 },
                 "numeric_value": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "slug": {
                     "type": "string"
@@ -2725,8 +3016,7 @@
             "required": [
                 "name",
                 "numeric_value",
-                "slug",
-                "space_id"
+                "slug"
             ],
             "properties": {
                 "description": {
@@ -2739,13 +3029,10 @@
                     "type": "string"
                 },
                 "numeric_value": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "slug": {
                     "type": "string"
-                },
-                "space_id": {
-                    "type": "integer"
                 }
             }
         },
@@ -2853,8 +3140,7 @@
             "type": "object",
             "required": [
                 "name",
-                "slug",
-                "space_id"
+                "slug"
             ],
             "properties": {
                 "description": {
@@ -2865,9 +3151,6 @@
                 },
                 "slug": {
                     "type": "string"
-                },
-                "space_id": {
-                    "type": "integer"
                 }
             }
         }

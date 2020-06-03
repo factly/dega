@@ -9,7 +9,6 @@ type format struct {
 	Name        string `json:"name" validate:"required"`
 	Slug        string `json:"slug" validate:"required"`
 	Description string `json:"description"`
-	SpaceID     uint   `json:"space_id" validate:"required"`
 }
 
 // Router - Group of tag router

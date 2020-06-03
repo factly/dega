@@ -3,11 +3,13 @@ package claimant
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
+	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -19,11 +21,15 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
+// @Param space_id path string true "Space ID"
 // @Param Claimant body claimant true "Claimant Object"
 // @Success 201 {object} model.Claimant
 // @Failure 400 {array} string
-// @Router /factcheck/claimants [post]
+// @Router /{space_id}/factcheck/claimants [post]
 func create(w http.ResponseWriter, r *http.Request) {
+
+	spaceID := chi.URLParam(r, "space_id")
+	sid, err := strconv.Atoi(spaceID)
 
 	claimant := &claimant{}
 
@@ -31,7 +37,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	validate := validator.New()
 
-	err := validate.Struct(claimant)
+	err = validate.Struct(claimant)
 
 	if err != nil {
 		msg := err.Error()
@@ -44,8 +50,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Slug:        claimant.Slug,
 		Description: claimant.Description,
 		MediumID:    claimant.MediumID,
-		SpaceID:     claimant.SpaceID,
+		SpaceID:     uint(sid),
 		TagLine:     claimant.TagLine,
+	}
+
+	// check medium belongs to same space or not
+	err = result.BeforeCreate(config.DB)
+
+	if err != nil {
+		validation.Error(w, r, err.Error())
+		return
 	}
 
 	err = config.DB.Model(&model.Claimant{}).Create(&result).Error

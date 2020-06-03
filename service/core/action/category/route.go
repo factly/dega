@@ -9,7 +9,6 @@ type category struct {
 	Description string `json:"description"`
 	ParentID    uint   `json:"parent_id"`
 	MediumID    uint   `json:"medium_id"`
-	SpaceID     uint   `json:"space_id" validate:"required"`
 }
 
 // Router - Group of category router
