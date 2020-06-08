@@ -54,15 +54,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:     uint(sid),
 	}
 
-	// check medium belongs to same space or not
-
-	err = result.BeforeCreate(config.DB)
-
-	if err != nil {
-		validation.Error(w, r, err.Error())
-		return
-	}
-
 	err = config.DB.Model(&model.Category{}).Create(&result).Error
 
 	if err != nil {

@@ -54,14 +54,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		TagLine:     claimant.TagLine,
 	}
 
-	// check medium belongs to same space or not
-	err = result.BeforeCreate(config.DB)
-
-	if err != nil {
-		validation.Error(w, r, err.Error())
-		return
-	}
-
 	err = config.DB.Model(&model.Claimant{}).Create(&result).Error
 
 	if err != nil {

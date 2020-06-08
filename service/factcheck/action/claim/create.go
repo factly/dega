@@ -60,14 +60,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:       uint(sid),
 	}
 
-	// check rating & claimant belongs to same space or not
-	err = result.BeforeCreate(config.DB)
-
-	if err != nil {
-		validation.Error(w, r, err.Error())
-		return
-	}
-
 	err = config.DB.Model(&model.Claim{}).Create(&result).Error
 
 	if err != nil {
