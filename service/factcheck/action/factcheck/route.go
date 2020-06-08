@@ -37,8 +37,8 @@ type factcheckData struct {
 	Claims     []factcheckModel.Claim `json:"claims"`
 }
 
-// BeforeCreate - validation for medium, format, categories & tags
-func (p *factcheck) BeforeCreate(tx *gorm.DB) (e error) {
+// CheckSpace - validation for medium, format, categories & tags
+func (p *factcheck) CheckSpace(tx *gorm.DB) (e error) {
 	medium := coreModel.Medium{}
 	medium.ID = p.FeaturedMediumID
 

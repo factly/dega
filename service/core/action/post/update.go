@@ -58,7 +58,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = result.SpaceID
 
-	err = post.BeforeCreate(config.DB)
+	err = post.CheckSpace(config.DB)
 
 	if err != nil {
 		validation.Error(w, r, err.Error())

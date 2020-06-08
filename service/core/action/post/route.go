@@ -35,8 +35,8 @@ type postData struct {
 	Tags       []model.Tag      `json:"tags"`
 }
 
-// BeforeCreate - validation for medium, format, categories & tags
-func (p *post) BeforeCreate(tx *gorm.DB) (e error) {
+// CheckSpace - validation for medium, format, categories & tags
+func (p *post) CheckSpace(tx *gorm.DB) (e error) {
 	medium := model.Medium{}
 	medium.ID = p.FeaturedMediumID
 

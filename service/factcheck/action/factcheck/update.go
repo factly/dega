@@ -59,7 +59,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	factcheck.SpaceID = result.SpaceID
 
-	err = factcheck.BeforeCreate(config.DB)
+	err = factcheck.CheckSpace(config.DB)
 
 	if err != nil {
 		validation.Error(w, r, err.Error())

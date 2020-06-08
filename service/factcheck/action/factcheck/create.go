@@ -65,7 +65,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check claims, categories, tags & medium belong to same space or not
-	err = factcheck.BeforeCreate(config.DB)
+	err = factcheck.CheckSpace(config.DB)
 	if err != nil {
 		validation.Error(w, r, err.Error())
 		return

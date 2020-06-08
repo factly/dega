@@ -65,7 +65,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check categories, tags & medium belong to same space or not
-	err = post.BeforeCreate(config.DB)
+	err = post.CheckSpace(config.DB)
 	if err != nil {
 		validation.Error(w, r, err.Error())
 		return
