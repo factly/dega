@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
@@ -20,18 +21,20 @@ import (
 // @Produce json
 // @Consume json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param rating_id path string true "Rating ID"
 // @Param Rating body rating false "Rating"
 // @Success 200 {object} model.Rating
-// @Router /{space_id}/factcheck/ratings/{rating_id} [put]
+// @Router /factcheck/ratings/{rating_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
+
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	ratingID := chi.URLParam(r, "id")
 	id, err := strconv.Atoi(ratingID)
-
-	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
 
 	if err != nil {
 		return
@@ -45,7 +48,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Rating{
-		SpaceID: uint(sid),
+		SpaceID: uint(sID),
 	}).First(&result).Error
 
 	if err != nil {

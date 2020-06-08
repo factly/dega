@@ -2,13 +2,11 @@ package factcheck
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
-	"github.com/go-chi/chi"
 )
 
 // list response
@@ -24,15 +22,17 @@ type paging struct {
 // @ID get-all-factchecks
 // @Produce  json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Success 200 {object} paging
-// @Router /{space_id}/factcheck/factchecks [get]
+// @Router /factcheck/factchecks [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	result := paging{}
 
@@ -41,7 +41,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	factchecks := []model.Factcheck{}
 
 	err = config.DB.Model(&model.Factcheck{}).Preload("Medium").Where(&model.Factcheck{
-		SpaceID: uint(sid),
+		SpaceID: uint(sID),
 	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&factchecks).Error
 
 	if err != nil {

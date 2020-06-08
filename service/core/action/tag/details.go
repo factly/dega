@@ -19,23 +19,23 @@ import (
 // @Produce  json
 // @Param X-User header string true "User ID"
 // @Param tag_id path string true "Tag ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Success 200 {object} model.Tag
-// @Router /{space_id}/core/tags/{tag_id} [get]
+// @Router /core/tags/{tag_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
 	tagID := chi.URLParam(r, "tag_id")
 	id, err := strconv.Atoi(tagID)
 
 	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := strconv.Atoi(spaceID)
 
 	result := &model.Tag{}
 
 	result.ID = uint(id)
 
 	err = config.DB.Model(&model.Tag{}).Where(&model.Tag{
-		SpaceID: uint(sid),
+		SpaceID: uint(sID),
 	}).First(&result).Error
 
 	if err != nil {

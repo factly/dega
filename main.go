@@ -67,9 +67,9 @@ func main() {
 	/* disable swagger in production */
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
-	r.With(util.CheckUser).Group(func(r chi.Router) {
-		r.Mount("/{space_id}/factcheck", factcheck.Router())
-		r.Mount("/{space_id}/core", core.Router())
+	r.With(util.CheckUser, util.CheckSpace).Group(func(r chi.Router) {
+		r.Mount("/factcheck", factcheck.Router())
+		r.Mount("/core", core.Router())
 	})
 
 	http.ListenAndServe(port, r)

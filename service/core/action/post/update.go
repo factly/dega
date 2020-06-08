@@ -20,18 +20,18 @@ import (
 // @Produce json
 // @Consume json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param post_id path string true "Post ID"
 // @Param Post body post false "Post"
 // @Success 200 {object} postData
-// @Router /{space_id}/core/posts/{post_id} [put]
+// @Router /core/posts/{post_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
 
 	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := strconv.Atoi(spaceID)
 
 	if err != nil {
 		return
@@ -48,7 +48,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
-		SpaceID: uint(sid),
+		SpaceID: uint(sID),
 	}).First(&result.Post).Error
 
 	if err != nil {

@@ -21,15 +21,15 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param Tag body tag true "Tag Object"
 // @Success 201 {object} model.Tag
 // @Failure 400 {array} string
-// @Router /{space_id}/core/tags [post]
+// @Router /core/tags [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := strconv.Atoi(spaceID)
 
 	tag := &tag{}
 
@@ -49,7 +49,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Name:        tag.Name,
 		Slug:        tag.Slug,
 		Description: tag.Description,
-		SpaceID:     uint(sid),
+		SpaceID:     uint(sID),
 	}
 
 	err = config.DB.Model(&model.Tag{}).Create(&result).Error

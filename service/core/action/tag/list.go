@@ -24,22 +24,22 @@ type paging struct {
 // @ID get-all-tags
 // @Produce  json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Success 200 {array} model.Tag
-// @Router /{space_id}/core/tags [get]
+// @Router /core/tags [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
 	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := strconv.Atoi(spaceID)
 
 	result := paging{}
 
 	offset, limit := util.Paging(r.URL.Query())
 
 	err = config.DB.Model(&model.Tag{}).Where(&model.Tag{
-		SpaceID: uint(sid),
+		SpaceID: uint(sID),
 	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
 
 	if err != nil {
