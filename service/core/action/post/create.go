@@ -7,9 +7,9 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
-	"github.com/go-playground/validator/v10"
+	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 )
 
 // create - Create post
@@ -36,13 +36,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(r.Body).Decode(&post)
 
-	validate := validator.New()
+	validationError := validationx.Check(post)
 
-	err = validate.Struct(post)
-
-	if err != nil {
-		msg := err.Error()
-		validation.ValidErrors(w, r, msg)
+	if validationError != nil {
+		renderx.JSON(w, http.StatusBadRequest, validationError)
 		return
 	}
 
@@ -112,5 +109,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 		result.Tags = append(result.Tags, postTag.Tag)
 	}
 
-	render.JSON(w, http.StatusCreated, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }

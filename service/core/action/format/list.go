@@ -6,8 +6,9 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
+	"github.com/factly/x/paginationx"
+	"github.com/factly/x/renderx"
 )
 
 // list response
@@ -37,7 +38,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	result := paging{}
 
-	offset, limit := util.Paging(r.URL.Query())
+	offset, limit := paginationx.Parse(r.URL.Query())
 
 	err = config.DB.Model(&model.Format{}).Where(&model.Format{
 		SpaceID: uint(sID),
@@ -48,5 +49,5 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	render.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusOK, result)
 }

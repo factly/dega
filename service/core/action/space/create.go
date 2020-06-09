@@ -10,7 +10,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/render"
+	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 )
 
 // create - Create space
@@ -34,6 +35,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 	space := &space{}
 
 	json.NewDecoder(r.Body).Decode(&space)
+
+	validationError := validationx.Check(space)
+
+	if validationError != nil {
+		renderx.JSON(w, http.StatusBadRequest, validationError)
+		return
+	}
 
 	if space.OrganisationID == 0 {
 		return
@@ -84,5 +92,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	render.JSON(w, http.StatusCreated, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/service/core"
 	"github.com/factly/dega-server/service/factcheck"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/loggerx"
 	"github.com/go-chi/chi/middleware"
 	"github.com/joho/godotenv"
 
@@ -45,11 +46,16 @@ func main() {
 	// db setup
 	config.SetupDB()
 
+	// open log file
+	file, err := os.OpenFile("logrus.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
+	if err == nil {
+		r.Use(loggerx.NewLogger(file))
+	}
 	r.Use(middleware.RealIP)
-	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/ping"))
 
