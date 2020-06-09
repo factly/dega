@@ -7,8 +7,8 @@ import (
 
 // space request body
 type space struct {
-	Name              string         `json:"name"`
-	Slug              string         `json:"slug"`
+	Name              string         `json:"name" validate:"required"`
+	Slug              string         `json:"slug" validate:"required"`
 	SiteTitle         string         `json:"site_title"`
 	TagLine           string         `json:"tag_line"`
 	Description       string         `json:"description"`
@@ -20,7 +20,7 @@ type space struct {
 	VerificationCodes postgres.Jsonb `json:"verification_codes"`
 	SocialMediaURLs   postgres.Jsonb `json:"social_media_urls"`
 	ContactInfo       postgres.Jsonb `json:"contact_info"`
-	OrganisationID    int            `json:"organisation_id"`
+	OrganisationID    int            `json:"organisation_id" validate:"required"`
 }
 
 // Router - Group of currency router
