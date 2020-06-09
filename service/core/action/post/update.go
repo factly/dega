@@ -2,13 +2,13 @@ package post
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
 )
 
@@ -20,13 +20,18 @@ import (
 // @Produce json
 // @Consume json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Param post_id path string true "Post ID"
 // @Param Post body post false "Post"
 // @Success 200 {object} postData
 // @Router /core/posts/{post_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
+
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
+
+	spaceID := chi.URLParam(r, "space_id")
+	sID, err := strconv.Atoi(spaceID)
 
 	if err != nil {
 		return
@@ -38,10 +43,27 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(r.Body).Decode(&post)
 
-	fmt.Printf("%+v", post)
-
 	result := &postData{}
 	result.ID = uint(id)
+
+	// check record exists or not
+	err = config.DB.Where(&model.Post{
+		SpaceID: uint(sID),
+	}).First(&result.Post).Error
+
+	if err != nil {
+		validation.RecordNotFound(w, r)
+		return
+	}
+
+	post.SpaceID = result.SpaceID
+
+	err = post.CheckSpace(config.DB)
+
+	if err != nil {
+		validation.Error(w, r, err.Error())
+		return
+	}
 
 	config.DB.Model(&result.Post).Updates(model.Post{
 		Title:            post.Title,

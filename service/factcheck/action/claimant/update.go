@@ -7,7 +7,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
 )
 
@@ -19,11 +21,17 @@ import (
 // @Produce json
 // @Consume json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Param claimant_id path string true "Claimant ID"
 // @Param Claimant body claimant false "Claimant"
 // @Success 200 {object} model.Claimant
 // @Router /factcheck/claimants/{claimant_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
+
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	claimantID := chi.URLParam(r, "claimant_id")
 	id, err := strconv.Atoi(claimantID)
@@ -37,6 +45,16 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Claimant{}
 	result.ID = uint(id)
+
+	// check record exists or not
+	err = config.DB.Where(&model.Claimant{
+		SpaceID: uint(sID),
+	}).First(&result).Error
+
+	if err != nil {
+		validation.RecordNotFound(w, r)
+		return
+	}
 
 	config.DB.Model(&result).Updates(model.Claimant{
 		Name:        claimant.Name,

@@ -22,17 +22,25 @@ type paging struct {
 // @ID get-all-claimants
 // @Produce  json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Success 200 {object} paging
 // @Router /factcheck/claimants [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
+
 	result := paging{}
 
 	offset, limit := util.Paging(r.URL.Query())
 
-	err := config.DB.Model(&model.Claimant{}).Preload("Medium").Count(&result.Total).Offset(offset).Order("id desc").Limit(limit).Find(&result.Nodes).Error
+	err = config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
+		SpaceID: uint(sID),
+	}).Count(&result.Total).Offset(offset).Order("id desc").Limit(limit).Find(&result.Nodes).Error
 
 	if err != nil {
 		return

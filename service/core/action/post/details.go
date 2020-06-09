@@ -6,7 +6,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
 )
 
@@ -17,10 +19,17 @@ import (
 // @ID get-post-by-id
 // @Produce  json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Param post_id path string true "Post ID"
 // @Success 200 {object} postData
 // @Router /core/posts/{post_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
+
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
+
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
 
@@ -34,9 +43,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post).Error
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Where(&model.Post{
+		SpaceID: uint(sID),
+	}).First(&result.Post).Error
 
 	if err != nil {
+		validation.RecordNotFound(w, r)
 		return
 	}
 

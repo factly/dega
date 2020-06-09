@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
 )
 
@@ -18,6 +19,7 @@ import (
 // @Produce  json
 // @Param X-User header string true "User ID"
 // @Param tag_id path string true "Tag ID"
+// @Param X-Space header string true "Space ID"
 // @Success 200 {object} model.Tag
 // @Router /core/tags/{tag_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
@@ -25,17 +27,19 @@ func details(w http.ResponseWriter, r *http.Request) {
 	tagID := chi.URLParam(r, "tag_id")
 	id, err := strconv.Atoi(tagID)
 
-	if err != nil {
-		return
-	}
+	spaceID := chi.URLParam(r, "space_id")
+	sID, err := strconv.Atoi(spaceID)
 
 	result := &model.Tag{}
 
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Tag{}).First(&result).Error
+	err = config.DB.Model(&model.Tag{}).Where(&model.Tag{
+		SpaceID: uint(sID),
+	}).First(&result).Error
 
 	if err != nil {
+		validation.RecordNotFound(w, r)
 		return
 	}
 

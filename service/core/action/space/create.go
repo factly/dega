@@ -21,6 +21,7 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Param Space body space true "Space Object"
 // @Success 201 {object} model.Space
 // @Router /core/spaces [post]

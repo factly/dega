@@ -6,7 +6,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/validation"
 	"github.com/go-chi/chi"
 )
 
@@ -17,10 +19,17 @@ import (
 // @ID get-factcheck-by-id
 // @Produce  json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Param factcheck_id path string true "Factcheck ID"
 // @Success 200 {object} factcheckData
 // @Router /factcheck/factchecks/{factcheck_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
+
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
+
 	factcheckID := chi.URLParam(r, "factcheck_id")
 	id, err := strconv.Atoi(factcheckID)
 
@@ -35,9 +44,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Factcheck{}).Preload("Medium").First(&result.Factcheck).Error
+	err = config.DB.Model(&model.Factcheck{}).Preload("Medium").Where(&model.Factcheck{
+		SpaceID: uint(sID),
+	}).First(&result.Factcheck).Error
 
 	if err != nil {
+		validation.RecordNotFound(w, r)
 		return
 	}
 

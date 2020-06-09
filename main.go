@@ -67,7 +67,7 @@ func main() {
 	/* disable swagger in production */
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
-	r.With(util.CheckUser).Group(func(r chi.Router) {
+	r.With(util.CheckUser, util.CheckSpace).Group(func(r chi.Router) {
 		r.Mount("/factcheck", factcheck.Router())
 		r.Mount("/core", core.Router())
 	})

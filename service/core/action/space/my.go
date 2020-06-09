@@ -33,6 +33,7 @@ type orgWithSpace struct {
 // @ID get-all-spaces
 // @Produce  json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Success 200 {array} orgWithSpace
 // @Router /core/spaces/my [get]
 func my(w http.ResponseWriter, r *http.Request) {

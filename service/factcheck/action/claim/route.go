@@ -19,7 +19,6 @@ type claim struct {
 	Review        string         `json:"review"`
 	ReviewTagLine string         `json:"review_tag_line"`
 	ReviewSources string         `json:"review_sources"`
-	SpaceID       uint           `json:"space_id" validate:"required"`
 }
 
 // Router - Group of claim router

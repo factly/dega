@@ -33,3 +33,10 @@ func ValidErrors(w http.ResponseWriter, r *http.Request, msg string) {
 	err := strings.Split(msg, "\n")
 	render.JSON(w, http.StatusBadRequest, err)
 }
+
+// Error - errors
+func Error(w http.ResponseWriter, r *http.Request, m string) {
+	var msg []string
+	msg = append(msg, m)
+	render.JSON(w, http.StatusBadRequest, msg)
+}

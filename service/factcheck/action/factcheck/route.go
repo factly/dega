@@ -1,11 +1,13 @@
 package factcheck
 
 import (
+	"errors"
 	"time"
 
 	coreModel "github.com/factly/dega-server/service/core/model"
 	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm"
 )
 
 // factcheck request body
@@ -33,6 +35,49 @@ type factcheckData struct {
 	Categories []coreModel.Category   `json:"categories"`
 	Tags       []coreModel.Tag        `json:"tags"`
 	Claims     []factcheckModel.Claim `json:"claims"`
+}
+
+// CheckSpace - validation for medium, format, categories & tags
+func (p *factcheck) CheckSpace(tx *gorm.DB) (e error) {
+	medium := coreModel.Medium{}
+	medium.ID = p.FeaturedMediumID
+
+	err := tx.Model(&coreModel.Medium{}).Where(coreModel.Medium{
+		SpaceID: p.SpaceID,
+	}).First(&medium).Error
+
+	if err != nil {
+		return errors.New("medium do not belong to same space")
+	}
+
+	categories := []coreModel.Category{}
+	err = tx.Model(&coreModel.Category{}).Where(coreModel.Category{
+		SpaceID: p.SpaceID,
+	}).Where(p.CategoryIDS).Find(&categories).Error
+
+	if err != nil || (len(p.CategoryIDS) != len(categories)) {
+		return errors.New("some categories do not belong to same space")
+	}
+
+	tags := []coreModel.Tag{}
+	err = tx.Model(&coreModel.Tag{}).Where(coreModel.Tag{
+		SpaceID: p.SpaceID,
+	}).Where(p.TagIDS).Find(&tags).Error
+
+	if err != nil || (len(p.TagIDS) != len(tags)) {
+		return errors.New("some tags do not belong to same space")
+	}
+
+	claims := []factcheckModel.Claim{}
+	err = tx.Model(&factcheckModel.Claim{}).Where(factcheckModel.Claim{
+		SpaceID: p.SpaceID,
+	}).Where(p.ClaimIDS).Find(&claims).Error
+
+	if err != nil || (len(p.ClaimIDS) != len(claims)) {
+		return errors.New("some claims do not belong to same space")
+	}
+
+	return err
 }
 
 // Router - Group of factcheck router

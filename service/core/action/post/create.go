@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
 	"github.com/go-playground/validator/v10"
@@ -19,10 +20,16 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Param Post body post true "Post Object"
 // @Success 201 {object} postData
 // @Router /core/posts [post]
 func create(w http.ResponseWriter, r *http.Request) {
+
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	post := post{}
 	result := &postData{}
@@ -31,13 +38,15 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	validate := validator.New()
 
-	err := validate.Struct(post)
+	err = validate.Struct(post)
 
 	if err != nil {
 		msg := err.Error()
 		validation.ValidErrors(w, r, msg)
 		return
 	}
+
+	post.SpaceID = uint(sID)
 
 	result.Post = model.Post{
 		Title:            post.Title,
@@ -54,6 +63,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		FormatID:         post.FormatID,
 		PublishedDate:    post.PublishedDate,
 		SpaceID:          post.SpaceID,
+	}
+
+	// check categories, tags & medium belong to same space or not
+	err = post.CheckSpace(config.DB)
+	if err != nil {
+		validation.Error(w, r, err.Error())
+		return
 	}
 
 	err = config.DB.Model(&model.Post{}).Create(&result.Post).Error
@@ -79,6 +95,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		config.DB.Model(&model.PostCategory{}).Preload("Category").Preload("Category.Medium").First(&postCategory)
 		result.Categories = append(result.Categories, postCategory.Category)
 	}
+
 	// create post tag & fetch tags
 	for _, id := range post.TagIDS {
 		postTag := &model.PostTag{}

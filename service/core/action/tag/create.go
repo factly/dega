@@ -3,11 +3,13 @@ package tag
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
+	"github.com/go-chi/chi"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -19,11 +21,15 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Param Tag body tag true "Tag Object"
 // @Success 201 {object} model.Tag
 // @Failure 400 {array} string
 // @Router /core/tags [post]
 func create(w http.ResponseWriter, r *http.Request) {
+
+	spaceID := chi.URLParam(r, "space_id")
+	sID, err := strconv.Atoi(spaceID)
 
 	tag := &tag{}
 
@@ -31,7 +37,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	validate := validator.New()
 
-	err := validate.Struct(tag)
+	err = validate.Struct(tag)
 
 	if err != nil {
 		msg := err.Error()
@@ -43,7 +49,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Name:        tag.Name,
 		Slug:        tag.Slug,
 		Description: tag.Description,
-		SpaceID:     tag.SpaceID,
+		SpaceID:     uint(sID),
 	}
 
 	err = config.DB.Model(&model.Tag{}).Create(&result).Error
