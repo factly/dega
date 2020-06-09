@@ -8,8 +8,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
+	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
 
@@ -70,5 +70,5 @@ func update(w http.ResponseWriter, r *http.Request) {
 		ReviewSources: claim.ReviewSources,
 	}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").First(&result)
 
-	render.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusOK, result)
 }

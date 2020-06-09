@@ -6,7 +6,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/render"
+	"github.com/factly/x/renderx"
 )
 
 // list response
@@ -86,5 +86,5 @@ func list(w http.ResponseWriter, r *http.Request) {
 		result.Nodes = append(result.Nodes, *factcheckList)
 	}
 
-	render.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusOK, result)
 }

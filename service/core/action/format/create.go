@@ -7,8 +7,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
+	"github.com/factly/x/renderx"
 	"github.com/go-playground/validator/v10"
 )
 
@@ -59,5 +59,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	render.JSON(w, http.StatusCreated, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }

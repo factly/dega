@@ -7,8 +7,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/render"
 	"github.com/factly/dega-server/validation"
+	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
 
@@ -70,5 +70,5 @@ func details(w http.ResponseWriter, r *http.Request) {
 		result.Tags = append(result.Tags, t.Tag)
 	}
 
-	render.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusOK, result)
 }
