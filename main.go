@@ -56,7 +56,6 @@ func main() {
 		r.Use(loggerx.NewLogger(file))
 	}
 	r.Use(middleware.RealIP)
-	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/ping"))
 
