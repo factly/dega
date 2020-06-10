@@ -1,24 +1,47 @@
+import axios from '../utils/axios';
 import {
   GET_SPACES_SUCCESS,
   GET_SPACES_FAILURE,
   ADD_SPACE_FAILURE,
   ADD_SPACE_SUCCESS,
   LOADING_SPACES,
-} from './types';
-import axios from 'axios';
+  API_ADD_SPACES,
+  API_GET_SPACES,
+  SET_SELECTED_SPACE,
+} from '../constants/spaces';
 
 export const getSpaces = () => {
   return async (dispatch, getState) => {
     dispatch(loadingSpaces());
     const response = await axios({
-      url: 'https://randomuser.me/api',
+      url: API_GET_SPACES,
       method: 'get',
     }).catch((error) => {
       dispatch(getSpacesFailure(error.message));
     });
     if (response) {
-      console.log(response);
-      dispatch(getSpacesSuccess(response.data.results));
+      dispatch(getSpacesSuccess(response.data));
+    }
+  };
+};
+
+export const setSelectedSpace = (space) => ({
+  type: SET_SELECTED_SPACE,
+  payload: space,
+});
+
+export const addSpaces = (data) => {
+  return async (dispatch, getState) => {
+    dispatch(loadingSpaces());
+    const response = await axios({
+      url: API_ADD_SPACES,
+      method: 'post',
+      data: { ...data },
+    }).catch((error) => {
+      dispatch(addSpacesFailure(error.message));
+    });
+    if (response) {
+      dispatch(addSpacesSuccess(data));
     }
   };
 };
@@ -38,22 +61,6 @@ const getSpacesFailure = (error) => ({
     error,
   },
 });
-
-export const addSpaces = (data) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-    const response = await axios({
-      url: 'https://randomuser.me/api',
-      method: 'get',
-    }).catch((error) => {
-      dispatch(addSpacesFailure(error.message));
-    });
-    if (response) {
-      console.log(response);
-      dispatch(addSpacesSuccess(data));
-    }
-  };
-};
 
 const addSpacesSuccess = (space) => ({
   type: ADD_SPACE_SUCCESS,

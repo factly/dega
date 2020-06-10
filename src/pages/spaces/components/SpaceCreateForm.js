@@ -1,6 +1,8 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
-import TextArea from 'antd/lib/input/TextArea';
+import { useSelector } from 'react-redux';
+import { Button, Form, Input, Space, Divider, Select } from 'antd';
+const { TextArea } = Input;
+const { Option } = Select;
 
 const layout = {
   labelCol: {
@@ -12,37 +14,51 @@ const layout = {
 };
 const tailLayout = {
   wrapperCol: {
-    offset: 8,
-    span: 16,
+    offset: 10,
+    span: 14,
   },
 };
 
-const SpaceCreateForm = ({ onCreate }) => {
+const SpaceCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const {
+    spaces: { spaces },
+  } = useSelector((state) => state);
 
   const onReset = () => {
     form.resetFields();
   };
 
-  // const onFill = () => {
-  //   form.setFieldsValue({
-  //     name: 'Name',
-  //   });
-  // };
-
   return (
-    <Form {...layout} form={form} name="create-space" onFinish={onCreate}>
-      <Form.Item
-        name="name"
-        label="Name"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the name of space!',
-          },
-        ]}
-      >
-        <Input />
+    <Form
+      {...layout}
+      form={form}
+      initialValues={data}
+      name="create-space"
+      onFinish={(values) => {
+        onCreate(values);
+        onReset();
+      }}
+    >
+      <Form.Item label="Address">
+        <Input.Group compact>
+          <Form.Item
+            name="organazation"
+            noStyle
+            rules={[{ required: true, message: 'Organazation is required' }]}
+          >
+            <Select style={{ width: '40%' }} placeholder="Select organazation">
+              {spaces.map((space) => (
+                <Option key={space.id} value={space.id}>
+                  {space.title}
+                </Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Form.Item name="name" noStyle rules={[{ required: true, message: 'Name is required' }]}>
+            <Input style={{ width: '60%' }} placeholder="Input name" />
+          </Form.Item>
+        </Input.Group>
       </Form.Item>
       <Form.Item
         name="slug"
@@ -57,12 +73,24 @@ const SpaceCreateForm = ({ onCreate }) => {
         <Input />
       </Form.Item>
       <Form.Item
-        name="site_title"
-        label="Sub Title"
+        name="site_address"
+        label="Website"
         rules={[
           {
             required: true,
-            message: 'Please input the sub title of space!',
+            message: 'Please input the website of space!',
+          },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item
+        name="site_title"
+        label="Title"
+        rules={[
+          {
+            required: true,
+            message: 'Please input the title of space!',
           },
         ]}
       >
@@ -70,7 +98,7 @@ const SpaceCreateForm = ({ onCreate }) => {
       </Form.Item>
       <Form.Item
         name="tag_line"
-        label="Tag Line"
+        label="Tag line"
         rules={[
           {
             required: true,
@@ -79,6 +107,17 @@ const SpaceCreateForm = ({ onCreate }) => {
         ]}
       >
         <Input />
+      </Form.Item>
+      <Divider></Divider>
+      <strong>
+        <Form.Item label="About Space"></Form.Item>
+      </strong>
+      <Form.Item
+        name="contact_info"
+        label="Contact Info"
+        rules={[{ required: true, message: 'Please input your contact number!' }]}
+      >
+        <Input style={{ width: '100%' }} />
       </Form.Item>
       <Form.Item
         name="description"
@@ -93,12 +132,14 @@ const SpaceCreateForm = ({ onCreate }) => {
         <TextArea />
       </Form.Item>
       <Form.Item {...tailLayout}>
-        <Button type="primary" htmlType="submit">
-          Create
-        </Button>
-        <Button htmlType="button" onClick={onReset}>
-          Reset
-        </Button>
+        <Space>
+          <Button type="primary" htmlType="submit">
+            Create
+          </Button>
+          <Button htmlType="button" onClick={onReset}>
+            Reset
+          </Button>
+        </Space>
       </Form.Item>
     </Form>
   );

@@ -1,27 +1,30 @@
-import React from 'react';
-import { Layout, Space } from 'antd';
+import React, { useEffect } from 'react';
+import { Layout, Card } from 'antd';
 import { withRouter } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
 import './basic.css';
-import { useSelector } from 'react-redux';
-import Breadcrumb from '../components/Breadcrumb';
+import PageHeader from '../components/PageHeader';
+import { useDispatch } from 'react-redux';
+import { getSpaces } from '../actions/spaces';
+
 function BasicLayout(props) {
   const { location } = props;
   const { Footer, Content } = Layout;
   const { children } = props;
-  const { navTheme, routes } = useSelector((state) => state.settings);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getSpaces());
+  }, [dispatch]);
   return (
     <Layout hasSider={true}>
-      <Sidebar navTheme={navTheme} />
+      <Sidebar />
       <Layout>
         <Header />
         <Content className="layout-content">
-          <Space direction="vertical">
-            <Breadcrumb routes={routes} location={location} />
-            {children}
-          </Space>
+          <PageHeader location={location} />
+          <Card className="wrap-children-content">{children}</Card>
         </Content>
         <Footer>Footer</Footer>
       </Layout>

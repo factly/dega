@@ -1,18 +1,18 @@
 import React from 'react';
-import { PageHeader, Row, Divider } from 'antd';
 import SpaceCreateForm from './components/SpaceCreateForm';
+import { useDispatch } from 'react-redux';
+import { addSpaces } from '../../actions/spaces';
+import { useHistory } from 'react-router-dom';
+
 function CreateSpace() {
+  const history = useHistory();
+
+  const dispatch = useDispatch();
   const onCreate = (values) => {
-    console.log('Received values of form: ', values);
+    dispatch(addSpaces(values));
+    history.push('/spaces');
   };
-  return (
-    <PageHeader title="Create Spaces" ghost={false}>
-      <Row className="justify-content-center">
-        <Divider />
-        <SpaceCreateForm onCreate={onCreate} />
-      </Row>
-    </PageHeader>
-  );
+  return <SpaceCreateForm onCreate={onCreate} />;
 }
 
 export default CreateSpace;

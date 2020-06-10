@@ -1,5 +1,5 @@
 import defaultSettings from '../config/defaultSettings';
-import { TOGGLE_SIDER } from '../actions/types';
+import { TOGGLE_SIDER } from '../constants/settings';
 
 const initialState = {
   ...defaultSettings,
