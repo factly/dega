@@ -29,7 +29,7 @@ function PageHeader(props) {
         breadcrumbName: 'Home',
       },
     ].concat(_.filter(urlBreadcrumbItems));
-  }, [location, pathSnippets]);
+  }, [pathSnippets]);
 
   const lastItem = useMemo(() => {
     return (

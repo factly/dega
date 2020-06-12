@@ -9,6 +9,7 @@ function CreateSpace() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
+    console.log(values);
     dispatch(addSpaces(values));
     history.push('/spaces');
   };

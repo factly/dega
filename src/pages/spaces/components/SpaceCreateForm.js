@@ -1,147 +1,179 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Form, Input, Space, Divider, Select } from 'antd';
+import { Button, Form, Input, Steps, Select } from 'antd';
+import MediaSelector from '../../../components/MediaSelector';
 const { TextArea } = Input;
 const { Option } = Select;
 
 const layout = {
   labelCol: {
-    span: 10,
+    span: 8,
   },
   wrapperCol: {
-    span: 14,
+    span: 16,
   },
 };
+
 const tailLayout = {
-  wrapperCol: {
-    offset: 10,
-    span: 14,
-  },
+  wrapperCol: { offset: 8, span: 16 },
 };
 
 const SpaceCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const {
-    spaces: { spaces },
+    spaces: { orgs },
   } = useSelector((state) => state);
 
   const onReset = () => {
     form.resetFields();
   };
 
+  const [current, setCurrent] = React.useState(1);
+  const [icon, setIcon] = React.useState(true);
   return (
-    <Form
-      {...layout}
-      form={form}
-      initialValues={data}
-      name="create-space"
-      onFinish={(values) => {
-        onCreate(values);
-        onReset();
-      }}
-    >
-      <Form.Item label="Address">
-        <Input.Group compact>
+    <div>
+      <Steps current={current} onChange={(value) => setCurrent(value)}>
+        <Steps.Step title="Basic" />
+        <Steps.Step title="Media" />
+        <Steps.Step title="Contact" />
+      </Steps>
+      <Form
+        {...layout}
+        form={form}
+        initialValues={data}
+        name="create-space"
+        onFinish={(values) => {
+          onCreate(values);
+          onReset();
+        }}
+        style={{
+          paddingTop: '24px',
+        }}
+      >
+        <div style={current === 0 ? { display: 'block' } : { display: 'none' }}>
+          <Form.Item label="Name">
+            <Input.Group compact>
+              <Form.Item
+                name="organisation_id"
+                noStyle
+                rules={[{ required: true, message: 'Organazation is required' }]}
+              >
+                <Select style={{ width: '40%' }} placeholder="Select organazation">
+                  {orgs.map((org) => (
+                    <Option key={org.id} value={org.id}>
+                      {org.title}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+              <Form.Item
+                name="name"
+                noStyle
+                rules={[{ required: true, message: 'Name is required' }]}
+              >
+                <Input style={{ width: '60%' }} placeholder="Input name" />
+              </Form.Item>
+            </Input.Group>
+          </Form.Item>
           <Form.Item
-            name="organazation"
-            noStyle
-            rules={[{ required: true, message: 'Organazation is required' }]}
+            name="slug"
+            label="Slug"
+            rules={[
+              {
+                required: true,
+                message: 'Please input the slug of space!',
+              },
+            ]}
           >
-            <Select style={{ width: '40%' }} placeholder="Select organazation">
-              {spaces.map((space) => (
-                <Option key={space.id} value={space.id}>
-                  {space.title}
-                </Option>
-              ))}
-            </Select>
+            <Input />
           </Form.Item>
-          <Form.Item name="name" noStyle rules={[{ required: true, message: 'Name is required' }]}>
-            <Input style={{ width: '60%' }} placeholder="Input name" />
+          <Form.Item
+            name="site_title"
+            label="Title"
+            rules={[
+              {
+                required: true,
+                message: 'Please input the title of space!',
+              },
+            ]}
+          >
+            <Input />
           </Form.Item>
-        </Input.Group>
-      </Form.Item>
-      <Form.Item
-        name="slug"
-        label="Slug"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the slug of space!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="site_address"
-        label="Website"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the website of space!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="site_title"
-        label="Title"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the title of space!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="tag_line"
-        label="Tag line"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the tag line of space!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Divider></Divider>
-      <strong>
-        <Form.Item label="About Space"></Form.Item>
-      </strong>
-      <Form.Item
-        name="contact_info"
-        label="Contact Info"
-        rules={[{ required: true, message: 'Please input your contact number!' }]}
-      >
-        <Input style={{ width: '100%' }} />
-      </Form.Item>
-      <Form.Item
-        name="description"
-        label="Description"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the description of space!',
-          },
-        ]}
-      >
-        <TextArea />
-      </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Space>
-          <Button type="primary" htmlType="submit">
-            Create
+          <Form.Item
+            name="tag_line"
+            label="Tag line"
+            rules={[
+              {
+                required: true,
+                message: 'Please input the tag line of space!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            name="description"
+            label="Description"
+            rules={[
+              {
+                required: true,
+                message: 'Please input the description of space!',
+              },
+            ]}
+          >
+            <TextArea />
+          </Form.Item>
+          <Form.Item
+            name="site_address"
+            label="Website"
+            rules={[
+              {
+                required: true,
+                message: 'Please input the website of space!',
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+        </div>
+        <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>
+          <Button onClick={() => setIcon(true)}>Select</Button>
+          <MediaSelector
+            show={icon}
+            handleCancel={() => setIcon(false)}
+            handleSelect={() => console.log('OKAY')}
+          />
+        </div>
+        <div style={current === 2 ? { display: 'block' } : { display: 'none' }}>
+          <Form.Item name="facebook" label={<span>Facebook;</span>}>
+            <Input style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item name="twitetr" label="Twitter">
+            <Input style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item name="pintrest" label="Pintrest">
+            <Input style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item name="instagram" label="Instagram">
+            <Input style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </div>
+        <Form.Item>
+          <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>
+            Back
           </Button>
-          <Button htmlType="button" onClick={onReset}>
-            Reset
+          <Button disabled={current === 2} onClick={() => setCurrent(current + 1)}>
+            Next
           </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 

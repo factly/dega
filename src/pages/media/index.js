@@ -8,26 +8,27 @@ import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/url/dist/style.css';
 
+import { addMedium } from '../../actions/media';
+
+const uppy = Uppy({
+  id: 'uppy-media',
+  meta: { type: 'avatar' },
+  restrictions: { maxNumberOfFiles: 1 },
+  autoProceed: false,
+})
+  .use(AwsS3, { companionUrl: 'http://localhost:3020' })
+  .use(Url, { companionUrl: 'http://localhost:3020' })
+  .use(GoogleDrive, { companionUrl: 'http://localhost:3020' });
+
+uppy.on('complete', (result) => {
+  addMedium(result);
+});
+
 function Media() {
-  const uppy = React.useRef(
-    Uppy({ id: 'uppy1', autoProceed: true, debug: true })
-      .use(AwsS3, { companionUrl: 'http://localhost:3020' })
-      .use(Url, { companionUrl: 'http://localhost:3020' })
-      .use(GoogleDrive, { companionUrl: 'http://localhost:3020' }),
-  );
-
-  React.useEffect(() => {
-    return () => uppy.current.close();
-  }, []);
-
-  uppy.current.on('complete', (result) => {
-    console.log('Upload complete! We’ve uploaded these files:', result);
-  });
-
   return (
     <div>
       <Dashboard
-        uppy={uppy.current}
+        uppy={uppy}
         plugins={['GoogleDrive', 'Url']}
         metaFields={[{ id: 'name', name: 'Name', placeholder: 'File name' }]}
       />

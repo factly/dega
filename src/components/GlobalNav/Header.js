@@ -1,10 +1,9 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Layout, Menu, Divider, Row, Col, Select } from 'antd';
-import { MenuUnfoldOutlined, MenuFoldOutlined, DownOutlined } from '@ant-design/icons';
+import { Layout, Divider, Row, Col, Select } from 'antd';
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { toggleSider } from '../../actions/settings';
 import AccountMenu from './AccountMenu';
-import { Link } from 'react-router-dom';
 import { setSelectedSpace } from '../../actions/spaces';
 
 const { Option, OptGroup } = Select;
@@ -16,7 +15,7 @@ function Header() {
     settings: {
       sider: { collapsed },
     },
-    spaces: { spaces, selected },
+    spaces: { orgs, details, selected },
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -40,11 +39,11 @@ function Header() {
         </Col>
         <Col xs={22} sm={20}>
           <Select style={{ width: 200 }} value={selected} onChange={handleSpaceChange}>
-            {spaces.map((organazation) => (
+            {orgs.map((organazation) => (
               <OptGroup key={'org-' + organazation.id} label={organazation.title}>
                 {organazation.spaces.map((space) => (
-                  <Option key={'space-' + space.slug} value={space.id}>
-                    {space.name}
+                  <Option key={'space-' + details[space].slug} value={details[space].id}>
+                    {details[space].name}
                   </Option>
                 ))}
               </OptGroup>
