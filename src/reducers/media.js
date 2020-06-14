@@ -24,12 +24,22 @@ export default function mediaReducer(state = initialState, action = {}) {
         },
       };
     case GET_MEDIA_SUCCESS:
-      const local = state.req;
-      local.push({ data: action.payload.data.nodes, query: action.payload.query });
+      const localReq = state.req;
+      localReq.push({
+        data: action.payload.data.nodes.map((item) => item.id),
+        query: action.payload.query,
+      });
+
+      const localDetails = state.details;
+      action.payload.data.nodes.forEach((element) => {
+        localDetails[element.id] = element;
+      });
+
       return {
         ...state,
         loading: false,
-        req: local,
+        req: localReq,
+        details: localDetails,
         total: action.payload.data.total,
       };
     default:

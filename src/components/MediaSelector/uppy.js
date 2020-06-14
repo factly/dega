@@ -22,7 +22,7 @@ const uppy = Uppy({
   .use(Url, { companionUrl: 'http://localhost:3020' })
   .use(GoogleDrive, { companionUrl: 'http://localhost:3020' });
 
-function UppyUploader() {
+function UppyUploader({ onUpload }) {
   const dispatch = useDispatch();
 
   uppy.on('complete', (result) => {
@@ -39,7 +39,7 @@ function UppyUploader() {
     upload['title'] = successful.meta.caption;
     upload['type'] = successful.meta.type;
     upload['url'] = successful.uploadURL;
-
+    onUpload(upload);
     dispatch(addMedium(upload));
   });
   return (

@@ -32,9 +32,6 @@ function Media() {
         plugins={['GoogleDrive', 'Url']}
         metaFields={[{ id: 'name', name: 'Name', placeholder: 'File name' }]}
       />
-
-      <h2>Progress Bar</h2>
-      <ProgressBar uppy={uppy.current} hideAfterFinish={false} />
     </div>
   );
 }
