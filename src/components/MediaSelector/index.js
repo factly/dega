@@ -1,6 +1,6 @@
 import React from 'react';
-import { Modal, Button, Tabs, List, Avatar, Badge, Typography, Row, Col, Space, Input } from 'antd';
-import UppyUploader from './uppy';
+import { Modal, Button, Tabs } from 'antd';
+import MediaUploader from './uploader';
 import MediaList from './list';
 
 const { TabPane } = Tabs;
@@ -29,7 +29,7 @@ function MediaSelector({ show, handleCancel, handleSelect }) {
           <MediaList onSelect={setSelected} selected={selected} />
         </TabPane>
         <TabPane tab="Upload" key="2">
-          <UppyUploader onUpload={setSelected} />
+          <MediaUploader onUpload={setSelected} />
         </TabPane>
       </Tabs>
     </Modal>

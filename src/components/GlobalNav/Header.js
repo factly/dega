@@ -17,7 +17,6 @@ function Header() {
     },
     spaces: { orgs, details, selected },
   } = useSelector((state) => state);
-
   const dispatch = useDispatch();
   const MenuFoldComponent = collapsed ? MenuUnfoldOutlined : MenuFoldOutlined;
 

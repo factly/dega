@@ -6,9 +6,16 @@ import Table from '../../../components/Table';
 
 function SpaceList() {
   const { spaces = {}, loading } = useSelector((state) => {
+    const selectedOrg = state.spaces.orgs.find((item) =>
+      item.spaces.includes(state.spaces.selected),
+    );
+    let spaces = [];
+    if (selectedOrg) {
+      spaces = selectedOrg.spaces.map((s) => state.spaces.details[s]);
+    }
     return {
       loading: state.spaces.loading,
-      spaces: state.spaces.list.map((s) => state.spaces.details[s]),
+      spaces: spaces,
     };
   });
 

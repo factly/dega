@@ -36,12 +36,12 @@ export const addSpaces = (data) => {
     const response = await axios({
       url: API_ADD_SPACES,
       method: 'post',
-      data: { ...data },
+      data: data,
     }).catch((error) => {
       dispatch(addSpacesFailure(error.message));
     });
     if (response) {
-      dispatch(addSpacesSuccess(data));
+      dispatch(addSpacesSuccess(response.data));
     }
   };
 };
@@ -64,9 +64,7 @@ const getSpacesFailure = (error) => ({
 
 const addSpacesSuccess = (space) => ({
   type: ADD_SPACE_SUCCESS,
-  payload: {
-    ...space,
-  },
+  payload: space,
 });
 
 const addSpacesFailure = (error) => ({

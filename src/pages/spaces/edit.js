@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 
-import SpaceCreateForm from './components/SpaceCreateForm';
+import SpaceEditForm from './components/SpaceEditForm';
 import { addSpaces } from '../../actions/spaces';
 import useQuery from '../../utils/useQuery';
 
@@ -27,7 +27,7 @@ function EditSpace() {
 
   if (loading) return <Skeleton />;
 
-  return <SpaceCreateForm onCreate={onCreate} data={space} />;
+  return <SpaceEditForm onCreate={onCreate} data={space} />;
 }
 
 export default EditSpace;

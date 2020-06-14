@@ -28,8 +28,8 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
-  const [current, setCurrent] = React.useState(1);
-  const [icon, setIcon] = React.useState(true);
+  const [current, setCurrent] = React.useState(0);
+  const [icon, setIcon] = React.useState(null);
   return (
     <div>
       <Steps current={current} onChange={(value) => setCurrent(value)}>
@@ -87,75 +87,41 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            name="site_title"
-            label="Title"
-            rules={[
-              {
-                required: true,
-                message: 'Please input the title of space!',
-              },
-            ]}
-          >
+          <Form.Item name="site_title" label="Title">
             <Input />
           </Form.Item>
-          <Form.Item
-            name="tag_line"
-            label="Tag line"
-            rules={[
-              {
-                required: true,
-                message: 'Please input the tag line of space!',
-              },
-            ]}
-          >
+          <Form.Item name="tag_line" label="Tag line">
             <Input />
           </Form.Item>
 
-          <Form.Item
-            name="description"
-            label="Description"
-            rules={[
-              {
-                required: true,
-                message: 'Please input the description of space!',
-              },
-            ]}
-          >
+          <Form.Item name="description" label="Description">
             <TextArea />
           </Form.Item>
-          <Form.Item
-            name="site_address"
-            label="Website"
-            rules={[
-              {
-                required: true,
-                message: 'Please input the website of space!',
-              },
-            ]}
-          >
+          <Form.Item name="site_address" label="Website">
             <Input />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>
           <Button onClick={() => setIcon(true)}>Select</Button>
-          <MediaSelector
-            show={icon}
-            handleCancel={() => setIcon(false)}
-            handleSelect={() => console.log('OKAY')}
-          />
+          {icon ? (
+            <MediaSelector
+              show={icon}
+              handleCancel={() => setIcon(false)}
+              handleSelect={() => console.log('OKAY')}
+            />
+          ) : null}
         </div>
         <div style={current === 2 ? { display: 'block' } : { display: 'none' }}>
-          <Form.Item name="facebook" label={<span>Facebook;</span>}>
+          <Form.Item name={['social_media_urls', 'facebook']} label="Facebook">
             <Input style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="twitetr" label="Twitter">
+          <Form.Item name={['social_media_urls', 'twitetr']} label="Twitter">
             <Input style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="pintrest" label="Pintrest">
+          <Form.Item name={['social_media_urls', 'pintrest']} label="Pintrest">
             <Input style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="instagram" label="Instagram">
+          <Form.Item name={['social_media_urls', 'instagram']} label="Instagram">
             <Input style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item {...tailLayout}>
