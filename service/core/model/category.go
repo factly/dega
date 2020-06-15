@@ -19,12 +19,16 @@ type Category struct {
 
 // BeforeCreate - validation for medium
 func (c *Category) BeforeCreate(tx *gorm.DB) (e error) {
-	medium := Medium{}
-	medium.ID = c.MediumID
+	if c.MediumID > 0 {
+		medium := Medium{}
+		medium.ID = c.MediumID
 
-	err := tx.Model(&Medium{}).Where(Medium{
-		SpaceID: c.SpaceID,
-	}).First(&medium).Error
+		err := tx.Model(&Medium{}).Where(Medium{
+			SpaceID: c.SpaceID,
+		}).First(&medium).Error
 
-	return err
+		return err
+	}
+
+	return nil
 }
