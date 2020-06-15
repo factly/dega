@@ -1,6 +1,6 @@
 //API
-export const API_GET_MEDIA = '/.factly/dega/server/core/media';
-export const API_ADD_MEDIA = '/.factly/dega/server/core/media';
+export const API_GET_MEDIA = '/core/media';
+export const API_ADD_MEDIA = '/core/media';
 
 //STORE
 export const GET_MEDIA_SUCCESS = 'GET_MEDIA_SUCCESS';

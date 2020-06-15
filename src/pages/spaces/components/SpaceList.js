@@ -1,10 +1,11 @@
 import React from 'react';
 import { Popconfirm, Space, Button } from 'antd';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Table from '../../../components/Table';
-
+import { deleteSpace } from './../../../actions/spaces';
 function SpaceList() {
+  const dispatch = useDispatch();
   const { spaces = {}, loading } = useSelector((state) => {
     const selectedOrg = state.spaces.orgs.find((item) =>
       item.spaces.includes(state.spaces.selected),
@@ -54,11 +55,11 @@ function SpaceList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/spaces/edit?id=${record.id}`}
+              to={`/spaces/${record.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to cancel?">
+            <Popconfirm title="Sure to cancel?" onConfirm={() => dispatch(deleteSpace(record.id))}>
               <Button>Delete</Button>
             </Popconfirm>
           </span>

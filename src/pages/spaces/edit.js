@@ -1,16 +1,16 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 
 import SpaceEditForm from './components/SpaceEditForm';
-import { addSpaces } from '../../actions/spaces';
+import { addSpace } from '../../actions/spaces';
 import useQuery from '../../utils/useQuery';
 
-function EditSpace() {
+function SpaceEdit() {
   const history = useHistory();
   const query = useQuery();
-  const id = query.get('id');
+  const { id } = useParams();
   const dispatch = useDispatch();
 
   const { space, loading } = useSelector((state) => {
@@ -21,7 +21,7 @@ function EditSpace() {
   });
 
   const onCreate = (values) => {
-    dispatch(addSpaces(values));
+    dispatch(addSpace(values));
     history.push('/spaces');
   };
 
@@ -30,4 +30,4 @@ function EditSpace() {
   return <SpaceEditForm onCreate={onCreate} data={space} />;
 }
 
-export default EditSpace;
+export default SpaceEdit;

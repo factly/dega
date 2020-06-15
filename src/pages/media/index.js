@@ -9,6 +9,7 @@ import '@uppy/dashboard/dist/style.css';
 import '@uppy/url/dist/style.css';
 
 import { addMedium } from '../../actions/media';
+import MediaList from './components/MediaList';
 
 const uppy = Uppy({
   id: 'uppy-media',
@@ -27,11 +28,7 @@ uppy.on('complete', (result) => {
 function Media() {
   return (
     <div>
-      <Dashboard
-        uppy={uppy}
-        plugins={['GoogleDrive', 'Url']}
-        metaFields={[{ id: 'name', name: 'Name', placeholder: 'File name' }]}
-      />
+      <MediaList />
     </div>
   );
 }
