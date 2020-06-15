@@ -29,24 +29,31 @@ type Claim struct {
 
 // BeforeCreate - validation for rating & claimant
 func (c *Claim) BeforeCreate(tx *gorm.DB) (e error) {
-	claimant := Claimant{}
-	claimant.ID = c.ClaimantID
+	if c.ClaimantID > 0 {
+		claimant := Claimant{}
+		claimant.ID = c.ClaimantID
 
-	err := tx.Model(&Claimant{}).Where(Claimant{
-		SpaceID: c.SpaceID,
-	}).First(&claimant).Error
+		err := tx.Model(&Claimant{}).Where(Claimant{
+			SpaceID: c.SpaceID,
+		}).First(&claimant).Error
 
-	if err != nil {
-		return err
+		if err != nil {
+			return err
+		}
 	}
 
-	rating := Rating{}
-	rating.ID = c.RatingID
+	if c.RatingID > 0 {
+		rating := Rating{}
+		rating.ID = c.RatingID
 
-	err = tx.Model(&Rating{}).Where(Rating{
-		SpaceID: c.SpaceID,
-	}).First(&rating).Error
+		err := tx.Model(&Rating{}).Where(Rating{
+			SpaceID: c.SpaceID,
+		}).First(&rating).Error
 
-	return err
+		if err != nil {
+			return err
+		}
+	}
 
+	return nil
 }
