@@ -1,8 +1,7 @@
 import React from 'react';
-import { Popconfirm, Avatar, Button } from 'antd';
+import { Popconfirm, Avatar, Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getMedia } from '../../../actions/media';
-import Table from '../../../components/Table';
+import { getMedia, deleteMedium } from '../../../actions/media';
 import { Link } from 'react-router-dom';
 
 function MediaList() {
@@ -11,10 +10,8 @@ function MediaList() {
   const [page, setPage] = React.useState(1);
 
   const { media, total, loading } = useSelector((state) => {
-    if (state.media.total === 0) return { media: [], total: 0, loading: state.media.loading };
-
     const node = state.media.req.find((item) => {
-      return item.query.page === 1;
+      return item.query.page === page;
     });
 
     if (node)
@@ -28,47 +25,41 @@ function MediaList() {
   });
 
   React.useEffect(() => {
-    dispatch(getMedia({ page: 1 }));
-  }, [dispatch]);
+    dispatch(getMedia({ page: page }));
+  }, [dispatch, page]);
 
   const columns = [
     {
       title: 'Display',
       key: 'display',
-      render: (_, record) => (
-        <Avatar
-          style={{ border: '1px solid black', cursor: 'pointer' }}
-          shape="square"
-          size={174}
-          src={record.url}
-        />
-      ),
+      render: (_, record) => <Avatar shape="square" size={174} src={record.url} />,
       width: '15%',
     },
     {
-      title: 'name',
+      title: 'Name',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'file_size',
+      title: 'File size',
       dataIndex: 'file_size',
       key: 'file_size',
       render: (_, record) => record.file_size + ' KB',
     },
     {
-      title: 'caption',
+      title: 'Caption',
       dataIndex: 'caption',
       key: 'caption',
     },
     {
-      title: 'description',
+      title: 'Description',
       dataIndex: 'description',
       key: 'description',
     },
     {
       title: 'Action',
-      dataIndex: 'operation',
+      key: 'operation',
+      width: '15%',
       render: (_, record) => {
         return (
           <span>
@@ -80,7 +71,13 @@ function MediaList() {
             >
               <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={() => dispatch(deleteSpace(record.id))}>
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => {
+                dispatch(deleteMedium(record.id));
+                dispatch(getMedia({ page: 1 }));
+              }}
+            >
               <Button>Delete</Button>
             </Popconfirm>
           </span>
@@ -89,7 +86,21 @@ function MediaList() {
     },
   ];
 
-  return <Table data={media} columns={columns} loading={loading} />;
+  return (
+    <Table
+      bordered
+      dataSource={media}
+      columns={columns}
+      loading={loading}
+      rowKey={'id'}
+      pagination={{
+        total: total,
+        current: page,
+        pageSize: 5,
+        onChange: (page, pageSize) => setPage(page),
+      }}
+    />
+  );
 }
 
 export default MediaList;

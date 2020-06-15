@@ -1,4 +1,11 @@
-import { ADD_MEDIUM, LOADING_MEDIA, GET_MEDIA_SUCCESS } from '../constants/media';
+import {
+  ADD_MEDIUM,
+  LOADING_MEDIA,
+  GET_MEDIA_SUCCESS,
+  GET_MEDIUM_SUCCESS,
+  UPDATE_MEDIUM_SUCCESS,
+  DELETE_MEDIUM_SUCCESS,
+} from '../constants/media';
 
 const initialState = {
   req: [],
@@ -12,7 +19,7 @@ export default function mediaReducer(state = initialState, action = {}) {
     case LOADING_MEDIA:
       return {
         ...state,
-        loading: false,
+        loading: true,
       };
     case ADD_MEDIUM:
       return {
@@ -42,6 +49,26 @@ export default function mediaReducer(state = initialState, action = {}) {
         details: localDetails,
         total: action.payload.data.total,
       };
+    case GET_MEDIUM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
+      };
+    case UPDATE_MEDIUM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
+      };
+    case DELETE_MEDIUM_SUCCESS:
+      return initialState;
     default:
       return state;
   }

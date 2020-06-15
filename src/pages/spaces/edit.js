@@ -5,11 +5,9 @@ import { Skeleton } from 'antd';
 
 import SpaceEditForm from './components/SpaceEditForm';
 import { addSpace } from '../../actions/spaces';
-import useQuery from '../../utils/useQuery';
 
 function SpaceEdit() {
   const history = useHistory();
-  const query = useQuery();
   const { id } = useParams();
   const dispatch = useDispatch();
 
