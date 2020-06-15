@@ -12,7 +12,6 @@ function PageHeader(props) {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
 
-      console.log(url, location, 'breadcrumbItems');
       const route = _.find(routes, { path: url });
 
       if (route) {
@@ -47,8 +46,6 @@ function PageHeader(props) {
     }
     return <Link to={route.path}>{route.breadcrumbName}</Link>;
   };
-
-  console.log('pathSnippets', lastItem, breadcrumbItems);
 
   return (
     <AntPageHeader

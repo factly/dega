@@ -20,7 +20,6 @@ export const getSpaces = () => {
       dispatch(getSpacesFailure(error.message));
     });
     if (response) {
-      console.log(response.data);
       dispatch(getSpacesSuccess(response.data));
     }
   };
@@ -42,7 +41,6 @@ export const addSpaces = (data) => {
       dispatch(addSpacesFailure(error.message));
     });
     if (response) {
-      console.log(response);
       dispatch(addSpacesSuccess(data));
     }
   };

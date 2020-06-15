@@ -4,7 +4,8 @@ export default axios.create({
   baseURL: '/',
   headers: {
     common: {
-      'X-User': '1',
+      'X-User': '2',
+      'X-Space': '2',
     },
   },
 });

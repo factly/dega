@@ -20,7 +20,6 @@ export const getCategories = () => {
       dispatch(getCategoriesFailure(error.message));
     });
     if (response) {
-      console.log(response.data);
       dispatch(getCategoriesSuccess(response.data));
     }
   };
@@ -38,7 +37,6 @@ export const addCategory = (data) => {
       dispatch(addCategoryFailure(error.message));
     });
     if (response) {
-      console.log(response);
       dispatch(addCategorySuccess(data));
     }
   };

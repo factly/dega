@@ -23,14 +23,14 @@ const tailLayout = {
 
 const TagCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const { tags } = useSelector((state) => state.tags);
+  const { details } = useSelector((state) => state.tags);
+  const tags = Object.keys(details).map((key, index) => details[key]);
+
   const onReset = () => {
     form.resetFields();
   };
 
   const normFile = (e) => {
-    console.log('Upload event:', e);
-
     if (Array.isArray(e)) {
       return e;
     }

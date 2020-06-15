@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Popconfirm, Space } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTags } from '../../../actions/tags';
+import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
 import Table from '../../../components/Table';
 
 function TagsList() {
   const dispatch = useDispatch();
-  const { tags, loading } = useSelector((state) => state.tags);
+  const { details, loading, req, total } = useSelector((state) => state.tags);
+
+  const [pagination, setPagination] = useState({
+    current: 1,
+    defaultPageSize: 5,
+    pageSize: 5,
+    total,
+  });
+
+  var data = [];
+
+  // map data based on query
+  req.forEach((each) => {
+    const { limit, page } = each.query;
+    const { current, pageSize } = pagination;
+
+    if (page == current && limit == pageSize) {
+      data = each.ids.map((id) => details[id]);
+    }
+  });
+
+  const onConfirm = (id) => dispatch(deleteTag(id));
 
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -29,7 +50,7 @@ function TagsList() {
             >
               Edit
             </Link>
-            <Popconfirm title="Sure to cancel?">
+            <Popconfirm title="Sure to cancel?" onConfirm={() => onConfirm(record.id)}>
               <Link to="" className="ant-dropdown-link">
                 Delete
               </Link>
@@ -41,12 +62,12 @@ function TagsList() {
   ];
 
   useEffect(() => {
-    fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    handleTableChange(pagination);
+  }, [total]);
 
-  const fetch = (params = {}) => {
-    dispatch(getTags());
+  const handleTableChange = ({ current, pageSize }) => {
+    dispatch(getTags({ page: current, limit: pageSize }));
+    setPagination({ ...pagination, current, pageSize, total });
   };
 
   return (
@@ -59,8 +80,10 @@ function TagsList() {
         expandable={{
           expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.description}</p>,
         }}
-        dataSource={tags}
+        dataSource={data}
+        onChange={handleTableChange}
         loading={loading}
+        pagination={pagination}
       />
     </Space>
   );

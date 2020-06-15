@@ -11,7 +11,6 @@ function CreateTag() {
   const onCreate = (values) => {
     dispatch(addTag(values));
     history.push('/tags');
-    console.log('Received values of form: ', values);
   };
   return <TagCreateForm onCreate={onCreate} />;
 }

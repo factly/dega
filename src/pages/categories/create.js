@@ -11,7 +11,6 @@ function CreateCategory() {
   const onCreate = (values) => {
     dispatch(addCategory(values));
     history.push('/categories');
-    console.log('Received values of form: ', values);
   };
   return <CategoryCreateForm onCreate={onCreate} />;
 }

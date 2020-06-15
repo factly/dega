@@ -25,7 +25,6 @@ function EditSpace() {
   const onCreate = (values) => {
     dispatch(addSpaces(values));
     history.push('/spaces');
-    console.log('Received values of form: ', values);
   };
   return <SpaceCreateForm data={space} onCreate={onCreate} />;
 }

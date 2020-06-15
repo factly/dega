@@ -1,8 +1,8 @@
 import React from 'react';
-import CategoriesList from './components/TagsList';
+import TagsList from './components/TagsList';
 
 function Tags() {
-  return <CategoriesList />;
+  return <TagsList />;
 }
 
 export default Tags;

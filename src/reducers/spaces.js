@@ -11,7 +11,6 @@ export default function spacesReducer(state = initialState, action = {}) {
   if (!action.payload) {
     return state;
   }
-  console.log('Spaces Reducer', state, action);
   switch (action.type) {
     case LOADING_PAGE:
       return {

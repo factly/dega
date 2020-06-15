@@ -10,7 +10,6 @@ export default function categoriesReducer(state = initialState, action = {}) {
   if (!action.payload) {
     return state;
   }
-  console.log('Categories Reducer', state, action);
   switch (action.type) {
     case LOADING_PAGE:
       return {

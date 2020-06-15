@@ -14,7 +14,7 @@ function Sidebar({ navTheme }) {
     sider: { collapsed },
   } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
-  console.log('routes', routes);
+
   return (
     <Sider
       breakpoint="lg"

@@ -18,7 +18,6 @@ function Header() {
     },
     spaces: { spaces, selectedSpace },
   } = useSelector((state) => state);
-  console.log('spaces', selectedSpace);
   const dispatch = useDispatch();
   const MenuFoldComponent = collapsed ? MenuUnfoldOutlined : MenuFoldOutlined;
   // const onSearch = (searchText) => {

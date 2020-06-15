@@ -8,13 +8,11 @@ import _ from 'lodash';
 function SpaceList() {
   const [form] = Form.useForm();
   const { organization = {}, loading } = useSelector((state) => {
-    console.log('state', state);
     return {
       loading: state.spaces.loading,
       organization: _.find(state.spaces.spaces, { id: 3 }),
     };
   });
-  console.log(organization);
 
   const columns = [
     {

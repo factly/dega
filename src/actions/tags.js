@@ -6,22 +6,42 @@ import {
   ADD_TAG_SUCCESS,
   API_ADD_TAG,
   API_GET_TAGS,
+  UPDATE_TAG_FAILURE,
+  UPDATE_TAG_SUCCESS,
+  DELETE_TAG_SUCCESS,
+  DELETE_TAG_FAILURE,
 } from '../constants/tags';
 
 import { LOADING_PAGE } from '../constants';
 
-export const getTags = () => {
+export const getTags = (query) => {
   return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-    const response = await axios({
-      url: API_GET_TAGS,
-      method: 'get',
-    }).catch((error) => {
-      dispatch(getTagsFailure(error.message));
+    let found = false;
+    const {
+      tags: { req },
+    } = getState();
+
+    // map data based on query
+    req.forEach((each) => {
+      const { limit, page } = each.query;
+      if (page === query.page && limit === query.limit) {
+        found = true;
+        return;
+      }
     });
-    if (response) {
-      console.log(response.data);
-      dispatch(getTagsSuccess(response.data));
+
+    if (!found) {
+      dispatch(loadingSpaces());
+      const response = await axios({
+        url: API_GET_TAGS,
+        method: 'get',
+        params: query,
+      }).catch((error) => {
+        dispatch(getTagsFailure(error.message));
+      });
+      if (response) {
+        dispatch(getTagsSuccess(response.data, query));
+      }
     }
   };
 };
@@ -38,8 +58,40 @@ export const addTag = (data) => {
       dispatch(addTagFailure(error.message));
     });
     if (response) {
-      console.log(response);
       dispatch(addTagSuccess(data));
+    }
+  };
+};
+
+export const updateTag = (data) => {
+  return async (dispatch, getState) => {
+    dispatch(loadingSpaces());
+
+    const response = await axios({
+      url: API_ADD_TAG + `/${data.id}`,
+      method: 'put',
+      data: { ...data },
+    }).catch((error) => {
+      dispatch(updateTagFailure(error.message));
+    });
+    if (response) {
+      dispatch(updateTagSuccess(data));
+    }
+  };
+};
+
+export const deleteTag = (id) => {
+  return async (dispatch, getState) => {
+    dispatch(loadingSpaces());
+
+    const response = await axios({
+      url: API_ADD_TAG + `/${id}`,
+      method: 'delete',
+    }).catch((error) => {
+      dispatch(deleteTagFailure(error.message));
+    });
+    if (response) {
+      dispatch(deleteTagSuccess(id));
     }
   };
 };
@@ -48,9 +100,9 @@ const loadingSpaces = () => ({
   type: LOADING_PAGE,
 });
 
-const getTagsSuccess = (TAGS) => ({
+const getTagsSuccess = (data, query) => ({
   type: GET_TAGS_SUCCESS,
-  payload: TAGS,
+  payload: { data, query },
 });
 
 const getTagsFailure = (error) => ({
@@ -60,15 +112,41 @@ const getTagsFailure = (error) => ({
   },
 });
 
-const addTagSuccess = (TAG) => ({
+const addTagSuccess = (data) => ({
   type: ADD_TAG_SUCCESS,
   payload: {
-    ...TAG,
+    ...data,
   },
 });
 
 const addTagFailure = (error) => ({
   type: ADD_TAG_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const updateTagSuccess = (data) => ({
+  type: UPDATE_TAG_SUCCESS,
+  payload: {
+    ...data,
+  },
+});
+
+const updateTagFailure = (error) => ({
+  type: UPDATE_TAG_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const deleteTagSuccess = (id) => ({
+  type: DELETE_TAG_SUCCESS,
+  payload: id,
+});
+
+const deleteTagFailure = (error) => ({
+  type: DELETE_TAG_FAILURE,
   payload: {
     error,
   },
