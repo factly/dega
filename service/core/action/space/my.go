@@ -35,7 +35,7 @@ type orgWithSpace struct {
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Success 200 {array} orgWithSpace
-// @Router /core/spaces/my [get]
+// @Router /core/spaces [get]
 func my(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
@@ -67,7 +67,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 
 	var allSpaces []model.Space
 
-	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Find(&allSpaces)
+	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
 
 	result := []orgWithSpace{}
 

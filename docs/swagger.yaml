@@ -396,14 +396,26 @@ definitions:
         type: string
       description:
         type: string
+      fav_icon:
+        $ref: '#/definitions/model.Medium'
+        type: object
       fav_icon_id:
         type: integer
       id:
         type: integer
+      logo:
+        $ref: '#/definitions/model.Medium'
+        type: object
       logo_id:
         type: integer
+      logo_mobile:
+        $ref: '#/definitions/model.Medium'
+        type: object
       logo_mobile_id:
         type: integer
+      mobile_icon:
+        $ref: '#/definitions/model.Medium'
+        type: object
       mobile_icon_id:
         type: integer
       name:
@@ -640,6 +652,10 @@ definitions:
         type: string
       verification_codes:
         type: string
+    required:
+    - name
+    - organisation_id
+    - slug
     type: object
   tag.tag:
     properties:
@@ -1299,6 +1315,32 @@ paths:
       tags:
       - Post
   /core/spaces:
+    get:
+      description: Get all spaces
+      operationId: get-all-spaces
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/space.orgWithSpace'
+            type: array
+      summary: Show all spaces
+      tags:
+      - Space
     post:
       description: Create space
       operationId: add-space
@@ -1329,10 +1371,10 @@ paths:
       summary: Create space
       tags:
       - Space
-  /core/spaces/my:
-    get:
-      description: Get all spaces
-      operationId: get-all-spaces
+  /core/spaces/{space_id}:
+    delete:
+      description: Delete space
+      operationId: delete-space
       parameters:
       - description: User ID
         in: header
@@ -1344,16 +1386,51 @@ paths:
         name: X-Space
         required: true
         type: string
+      - description: Space ID
+        in: header
+        name: space_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: Delete space
+      tags:
+      - Space
+    put:
+      description: Update space
+      operationId: update-space
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: space_id
+        required: true
+        type: string
+      - description: Space Object
+        in: body
+        name: Space
+        required: true
+        schema:
+          $ref: '#/definitions/space.space'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/space.orgWithSpace'
-            type: array
-      summary: Show all spaces
+            $ref: '#/definitions/model.Space'
+      summary: Update space
       tags:
       - Space
   /core/tags:
