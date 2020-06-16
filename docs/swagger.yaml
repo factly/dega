@@ -1315,6 +1315,32 @@ paths:
       tags:
       - Post
   /core/spaces:
+    get:
+      description: Get all spaces
+      operationId: get-all-spaces
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/space.orgWithSpace'
+            type: array
+      summary: Show all spaces
+      tags:
+      - Space
     post:
       description: Create space
       operationId: add-space
@@ -1343,33 +1369,6 @@ paths:
           schema:
             $ref: '#/definitions/model.Space'
       summary: Create space
-      tags:
-      - Space
-  /core/spaces/:
-    get:
-      description: Get all spaces
-      operationId: get-all-spaces
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/space.orgWithSpace'
-            type: array
-      summary: Show all spaces
       tags:
       - Space
   /core/spaces/{space_id}:
