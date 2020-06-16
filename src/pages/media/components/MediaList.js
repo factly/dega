@@ -20,13 +20,20 @@ function MediaList() {
         total: state.media.total,
         loading: state.media.loading,
       };
-
     return { media: [], total: 0, loading: state.media.loading };
   });
 
   React.useEffect(() => {
+    fetchMedia();
+  }, [page]);
+
+  const fetchMedia = () => {
     dispatch(getMedia({ page: page }));
-  }, [dispatch, page]);
+  };
+
+  const deleteMedia = async (id) => {
+    dispatch(deleteMedium(id)).then(() => fetchMedia());
+  };
 
   const columns = [
     {
@@ -71,13 +78,7 @@ function MediaList() {
             >
               <Button>Edit</Button>
             </Link>
-            <Popconfirm
-              title="Sure to cancel?"
-              onConfirm={() => {
-                dispatch(deleteMedium(record.id));
-                dispatch(getMedia({ page: 1 }));
-              }}
-            >
+            <Popconfirm title="Sure to cancel?" onConfirm={() => deleteMedia(record.id)}>
               <Button>Delete</Button>
             </Popconfirm>
           </span>
