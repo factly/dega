@@ -68,14 +68,7 @@ function SpaceList() {
     },
   ];
 
-  return (
-    <Space direction="vertical">
-      <Link className="ant-btn ant-btn-primary" key="1" to="/spaces/create">
-        Create New
-      </Link>
-      <Table data={spaces} columns={columns} loading={loading} />
-    </Space>
-  );
+  return <Table data={spaces} columns={columns} loading={loading} />;
 }
 
 export default SpaceList;

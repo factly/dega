@@ -1,14 +1,15 @@
 import React from 'react';
-import { Modal, Button } from 'antd';
+import { Space } from 'antd';
+
 import MediaList from './components/MediaList';
 import MediaUploader from './components/MediaUpload';
 
 function Media() {
   return (
-    <div>
+    <Space direction="vertical">
       <MediaUploader />
       <MediaList />
-    </div>
+    </Space>
   );
 }
 
