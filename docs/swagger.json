@@ -989,7 +989,7 @@
                 }
             }
         },
-        "/core/spaces/my": {
+        "/core/spaces/": {
             "get": {
                 "description": "Get all spaces",
                 "produces": [
@@ -1029,7 +1029,7 @@
                 }
             }
         },
-        "/core/spaces/my/{space_id}": {
+        "/core/spaces/{space_id}": {
             "put": {
                 "description": "Update space",
                 "produces": [
@@ -2875,17 +2875,33 @@
                 "description": {
                     "type": "string"
                 },
+                "fav_icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
                 "fav_icon_id": {
                     "type": "integer"
                 },
                 "id": {
                     "type": "integer"
                 },
+                "logo": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
                 "logo_id": {
                     "type": "integer"
                 },
+                "logo_mobile": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "mobile_icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
                     "type": "integer"

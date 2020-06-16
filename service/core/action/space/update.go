@@ -26,7 +26,7 @@ import (
 // @Param space_id header string true "Space ID"
 // @Param Space body space true "Space Object"
 // @Success 200 {object} model.Space
-// @Router /core/spaces/my/{space_id} [put]
+// @Router /core/spaces/{space_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
@@ -90,7 +90,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
 		ContactInfo:       space.ContactInfo,
-	}).First(&result).Error
+	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
 
 	if err != nil {
 		renderx.JSON(w, http.StatusInternalServerError, err)

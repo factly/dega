@@ -87,13 +87,6 @@ func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Post("/", create)
-	r.Mount("/my", myRouter())
-	return r
-}
-
-func myRouter() chi.Router {
-	r := chi.NewRouter()
-
 	r.Get("/", my)
 	r.Route("/{space_id}", func(r chi.Router) {
 		r.Put("/", update)

@@ -25,7 +25,7 @@ import (
 // @Param X-Space header string true "Space ID"
 // @Param space_id header string true "Space ID"
 // @Success 200
-// @Router /core/spaces/my/{space_id} [delete]
+// @Router /core/spaces/{space_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {

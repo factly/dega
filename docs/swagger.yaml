@@ -396,14 +396,26 @@ definitions:
         type: string
       description:
         type: string
+      fav_icon:
+        $ref: '#/definitions/model.Medium'
+        type: object
       fav_icon_id:
         type: integer
       id:
         type: integer
+      logo:
+        $ref: '#/definitions/model.Medium'
+        type: object
       logo_id:
         type: integer
+      logo_mobile:
+        $ref: '#/definitions/model.Medium'
+        type: object
       logo_mobile_id:
         type: integer
+      mobile_icon:
+        $ref: '#/definitions/model.Medium'
+        type: object
       mobile_icon_id:
         type: integer
       name:
@@ -1333,7 +1345,7 @@ paths:
       summary: Create space
       tags:
       - Space
-  /core/spaces/my:
+  /core/spaces/:
     get:
       description: Get all spaces
       operationId: get-all-spaces
@@ -1360,7 +1372,7 @@ paths:
       summary: Show all spaces
       tags:
       - Space
-  /core/spaces/my/{space_id}:
+  /core/spaces/{space_id}:
     delete:
       description: Delete space
       operationId: delete-space
