@@ -10,7 +10,7 @@ export const DELETE_SPACE_SUCCESS = 'DELETE_SPACE_SUCCESS';
 export const DELETE_SPACE_FAILURE = 'DELETE_SPACE_SUCCESS';
 
 //API
-export const API_GET_SPACES = '/core/spaces/my';
+export const API_GET_SPACES = '/core/spaces';
 export const API_ADD_SPACE = '/core/spaces';
 export const API_DELETE_SPACE = '/core/spaces';
 

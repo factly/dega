@@ -1,12 +1,12 @@
 import React from 'react';
-import { Popconfirm, Space, Button } from 'antd';
+import { Popconfirm, Button, Table } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Table from '../../../components/Table';
-import { deleteSpace } from './../../../actions/spaces';
+import { deleteSpace, getSpaces } from './../../../actions/spaces';
+
 function SpaceList() {
   const dispatch = useDispatch();
-  const { spaces = {}, loading } = useSelector((state) => {
+  const { spaces, loading } = useSelector((state) => {
     const selectedOrg = state.spaces.orgs.find((item) =>
       item.spaces.includes(state.spaces.selected),
     );
@@ -19,6 +19,10 @@ function SpaceList() {
       spaces: spaces,
     };
   });
+
+  const fetchSpaces = () => {
+    dispatch(getSpaces());
+  };
 
   const columns = [
     {
@@ -59,7 +63,10 @@ function SpaceList() {
             >
               <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={() => dispatch(deleteSpace(record.id))}>
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
+            >
               <Button>Delete</Button>
             </Popconfirm>
           </span>
@@ -68,7 +75,7 @@ function SpaceList() {
     },
   ];
 
-  return <Table data={spaces} columns={columns} loading={loading} />;
+  return <Table rowKey={'id'} bordered dataSource={spaces} columns={columns} loading={loading} />;
 }
 
 export default SpaceList;

@@ -9,12 +9,10 @@ function PageHeader(props) {
   const pathSnippets = location.pathname.split('/').filter((i) => i);
 
   const breadcrumbItems = useMemo(() => {
-    console.log(pathSnippets);
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-      console.log(url);
       const route = _.find(routes, { path: url });
-      console.log(route);
+
       if (route) {
         return {
           path: route.path,

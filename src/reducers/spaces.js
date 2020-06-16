@@ -3,13 +3,14 @@ import {
   GET_SPACES_SUCCESS,
   ADD_SPACE_SUCCESS,
   LOADING_SPACES,
+  DELETE_SPACE_SUCCESS,
 } from '../constants/spaces';
 
 const initialState = {
   orgs: [],
   details: {},
   loading: true,
-  selected: 0,
+  selected: null,
 };
 
 export default function spacesReducer(state = initialState, action = {}) {
@@ -38,7 +39,7 @@ export default function spacesReducer(state = initialState, action = {}) {
         }),
         details: space_details,
         loading: false,
-        selected: action.payload[0].spaces.length > 0 ? action.payload[0].spaces[0].id : null,
+        selected: space_details[state.selected] ? state.selected : action.payload[0].spaces[0].id,
       };
     case ADD_SPACE_SUCCESS:
       let org_index = state.orgs.findIndex(
@@ -65,6 +66,8 @@ export default function spacesReducer(state = initialState, action = {}) {
         ...state,
         selected: action.payload,
       };
+    case DELETE_SPACE_SUCCESS:
+      return state;
     default:
       return state;
   }

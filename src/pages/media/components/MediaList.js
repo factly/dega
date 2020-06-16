@@ -31,10 +31,6 @@ function MediaList() {
     dispatch(getMedia({ page: page }));
   };
 
-  const deleteMedia = async (id) => {
-    dispatch(deleteMedium(id)).then(() => fetchMedia());
-  };
-
   const columns = [
     {
       title: 'Display',
@@ -78,7 +74,10 @@ function MediaList() {
             >
               <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={() => deleteMedia(record.id)}>
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => dispatch(deleteMedium(record.id)).then(() => fetchMedia())}
+            >
               <Button>Delete</Button>
             </Popconfirm>
           </span>

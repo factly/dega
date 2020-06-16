@@ -3,10 +3,10 @@ import { Layout, Card } from 'antd';
 import { withRouter } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
-import './basic.css';
 import PageHeader from '../components/PageHeader';
 import { useDispatch } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
+import './basic.css';
 
 function BasicLayout(props) {
   const { location } = props;
