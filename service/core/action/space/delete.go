@@ -14,10 +14,6 @@ import (
 	"github.com/go-chi/chi"
 )
 
-type req struct {
-	OrgID int `json:"org_id" `
-}
-
 // delete - Delete space
 // @Summary Delete space
 // @Description Delete space
