@@ -640,6 +640,10 @@ definitions:
         type: string
       verification_codes:
         type: string
+    required:
+    - name
+    - organisation_id
+    - slug
     type: object
   tag.tag:
     properties:
@@ -1354,6 +1358,68 @@ paths:
               $ref: '#/definitions/space.orgWithSpace'
             type: array
       summary: Show all spaces
+      tags:
+      - Space
+  /core/spaces/my/{space_id}:
+    delete:
+      description: Delete space
+      operationId: delete-space
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: space_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: Delete space
+      tags:
+      - Space
+    put:
+      description: Update space
+      operationId: update-space
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: space_id
+        required: true
+        type: string
+      - description: Space Object
+        in: body
+        name: Space
+        required: true
+        schema:
+          $ref: '#/definitions/space.space'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Space'
+      summary: Update space
       tags:
       - Space
   /core/tags:

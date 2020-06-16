@@ -1029,6 +1029,96 @@
                 }
             }
         },
+        "/core/spaces/my/{space_id}": {
+            "put": {
+                "description": "Update space",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space"
+                ],
+                "summary": "Update space",
+                "operationId": "update-space",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Space Object",
+                        "name": "Space",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/space.space"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Space"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete space",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space"
+                ],
+                "summary": "Delete space",
+                "operationId": "delete-space",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
         "/core/tags": {
             "get": {
                 "description": "Get all tags",
@@ -3105,6 +3195,11 @@
         },
         "space.space": {
             "type": "object",
+            "required": [
+                "name",
+                "organisation_id",
+                "slug"
+            ],
             "properties": {
                 "contact_info": {
                     "type": "string"
