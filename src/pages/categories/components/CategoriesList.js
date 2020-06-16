@@ -1,16 +1,36 @@
 import React from 'react';
-import { Popconfirm, Form, Space, Button } from 'antd';
+import { Popconfirm, Space } from 'antd';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories } from '../../../actions/categories';
+import { getCategories, deleteCategory } from '../../../actions/categories';
 import { Link } from 'react-router-dom';
 import Table from '../../../components/Table';
 import _ from 'lodash';
 
 function CategoriesList() {
-  const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const { categories, loading } = useSelector((state) => state.categories);
+  const { details, loading, req, total } = useSelector((state) => state.categories);
+
+  const [pagination, setPagination] = useState({
+    current: 1,
+    defaultPageSize: 5,
+    pageSize: 5,
+    total,
+  });
+
+  var data = [];
+
+  // map data based on query
+  req.forEach((each) => {
+    const { limit, page } = each.query;
+    const { current, pageSize } = pagination;
+
+    if (page == current && limit == pageSize) {
+      data = each.ids.map((id) => details[id]);
+    }
+  });
+
+  const onConfirm = (id) => dispatch(deleteCategory(id));
 
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -31,7 +51,7 @@ function CategoriesList() {
             >
               Edit
             </Link>
-            <Popconfirm title="Sure to cancel?">
+            <Popconfirm title="Sure to cancel?" onConfirm={() => onConfirm(record.id)}>
               <Link to="" className="ant-dropdown-link">
                 Delete
               </Link>
@@ -43,12 +63,12 @@ function CategoriesList() {
   ];
 
   useEffect(() => {
-    fetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    handleTableChange(pagination);
+  }, [total]);
 
-  const fetch = (params = {}) => {
-    dispatch(getCategories());
+  const handleTableChange = ({ current, pageSize }) => {
+    dispatch(getCategories({ page: current, limit: pageSize }));
+    setPagination({ ...pagination, current, pageSize, total });
   };
 
   return (
@@ -61,8 +81,10 @@ function CategoriesList() {
         expandable={{
           expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.description}</p>,
         }}
-        dataSource={categories}
+        dataSource={data}
+        onChange={handleTableChange}
         loading={loading}
+        pagination={pagination}
       />
     </Space>
   );

@@ -1,10 +1,9 @@
 import React from 'react';
 import CategoryCreateForm from './components/CategoryCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCategory } from '../../actions/categories';
+import { updateCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
 import useQuery from '../../utils/useQuery';
-import _ from 'lodash';
 
 function EditSpace() {
   const history = useHistory();
@@ -13,16 +12,15 @@ function EditSpace() {
 
   const dispatch = useDispatch();
   const { category } = useSelector((state) => {
-    const { categories, ...other } = state.categories;
-    const category = _.find(categories, { id: parseInt(id) });
+    const { details } = state.categories;
+    const category = details[id];
     return {
       category,
-      ...other,
     };
   });
 
   const onCreate = (values) => {
-    dispatch(addCategory(values));
+    dispatch(updateCategory({ ...category, ...values }));
     history.push('/categories');
   };
   return <CategoryCreateForm data={category} onCreate={onCreate} />;

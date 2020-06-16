@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
 import useQuery from '../../utils/useQuery';
-import _ from 'lodash';
 
 function EditTag() {
   const history = useHistory();

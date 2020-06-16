@@ -7,7 +7,7 @@ export const ADD_SPACE_FAILURE = 'ADD_SPACE_SUCCESS';
 export const SET_SELECTED_SPACE = 'SET_SELECTED_SPACE';
 
 //API
-export const API_GET_SPACES = '/.factly/dega/server/core/spaces/my';
+export const API_GET_SPACES = '/.factly/dega/server/core/spaces';
 export const API_ADD_SPACES = '/.factly/dega/server/core/spaces';
 
 //Notification

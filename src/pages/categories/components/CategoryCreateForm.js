@@ -22,7 +22,9 @@ const tailLayout = {
 
 const CategoryCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const { categories } = useSelector((state) => state.categories);
+  const { details } = useSelector((state) => state.categories);
+  const categories = Object.keys(details).map((key, index) => details[key]);
+
   const onReset = () => {
     form.resetFields();
   };
