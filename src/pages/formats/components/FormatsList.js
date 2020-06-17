@@ -34,7 +34,17 @@ function FormatsList() {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    { title: 'Description', dataIndex: 'description', key: 'description' },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      width: '50%',
+      render: (_, record) => {
+        return (
+          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+        );
+      },
+    },
     {
       title: 'Action',
       dataIndex: 'operation',
