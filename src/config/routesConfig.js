@@ -5,8 +5,6 @@ import Dashboard from '../pages/dashboard';
 
 //Spaces
 import Spaces from '../pages/spaces';
-import CreateSpace from '../pages/spaces/create';
-import EditSpace from '../pages/spaces/edit';
 import SpaceCreate from '../pages/spaces/create';
 import SpaceEdit from '../pages/spaces/edit';
 import Media from '../pages/media';
