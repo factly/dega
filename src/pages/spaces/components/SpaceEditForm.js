@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Form, Input, Steps, Select } from 'antd';
+import { Button, Form, Input, Steps, Select, Space } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
 const { TextArea } = Input;
 const { Option } = Select;
@@ -20,16 +20,23 @@ const tailLayout = {
 
 const SpaceCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const {
-    spaces: { orgs },
-  } = useSelector((state) => state);
+  const orgs = useSelector((state) => state.spaces.orgs);
 
   const onReset = () => {
     form.resetFields();
   };
 
   const [current, setCurrent] = React.useState(0);
-  const [icon, setIcon] = React.useState(null);
+
+  const [mediaSelector, setMediaSelector] = React.useState(null);
+
+  const setMediumValues = (key, prop, value) => {
+    return form.setFieldsValue({
+      [key]: value,
+      [prop]: value.id,
+    });
+  };
+
   return (
     <div>
       <Steps current={current} onChange={(value) => setCurrent(value)}>
@@ -93,7 +100,6 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
           <Form.Item name="tag_line" label="Tag line">
             <Input />
           </Form.Item>
-
           <Form.Item name="description" label="Description">
             <TextArea />
           </Form.Item>
@@ -102,14 +108,80 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>
-          <Button onClick={() => setIcon(true)}>Select</Button>
-          {icon ? (
-            <MediaSelector
-              show={icon}
-              handleCancel={() => setIcon(false)}
-              handleSelect={() => console.log('OKAY')}
-            />
-          ) : null}
+          <MediaSelector
+            show={mediaSelector !== null}
+            handleCancel={() => setMediaSelector(null)}
+            handleSelect={(value) => {
+              setMediaSelector(null);
+              setMediumValues(mediaSelector, mediaSelector + '_id', value);
+            }}
+          />
+          <Form.Item
+            shouldUpdate={(prevValues, currentValues) => prevValues.logo !== currentValues.logo}
+            label="Logo"
+          >
+            {({ getFieldValue }) => {
+              return (
+                <Space direction="vertical">
+                  {getFieldValue('logo') ? (
+                    <img src={getFieldValue('logo').url} width="100%" />
+                  ) : null}
+                  <Button onClick={() => setMediaSelector('logo')}>Select</Button>
+                </Space>
+              );
+            }}
+          </Form.Item>
+          <Form.Item
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.logo_mobile !== currentValues.logo_mobile
+            }
+            label="Logo Mobile"
+          >
+            {({ getFieldValue }) => {
+              return (
+                <Space direction="vertical">
+                  {getFieldValue('logo_mobile') ? (
+                    <img src={getFieldValue('logo_mobile').url} width="100%" />
+                  ) : null}
+                  <Button onClick={() => setMediaSelector('logo_mobile')}>Select</Button>
+                </Space>
+              );
+            }}
+          </Form.Item>
+          <Form.Item
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.fav_icon !== currentValues.fav_icon
+            }
+            label="Fav Icon"
+          >
+            {({ getFieldValue }) => {
+              return (
+                <Space direction="vertical">
+                  {getFieldValue('fav_icon') ? (
+                    <img src={getFieldValue('fav_icon').url} width="100%" />
+                  ) : null}
+                  <Button onClick={() => setMediaSelector('fav_icon')}>Select</Button>
+                </Space>
+              );
+            }}
+          </Form.Item>
+          <Form.Item
+            shouldUpdate={(prevValues, currentValues) =>
+              prevValues.mobile_icon !== currentValues.mobile_icon
+            }
+            label="Mobile Icon"
+          >
+            {({ getFieldValue }) => {
+              return (
+                <Space direction="vertical">
+                  {getFieldValue('mobile_icon') ? (
+                    <img src={getFieldValue('mobile_icon').url} width="100%" />
+                  ) : null}
+                  <Button onClick={() => setMediaSelector('mobile_icon')}>Select</Button>
+                </Space>
+              );
+            }}
+          </Form.Item>
         </div>
         <div style={current === 2 ? { display: 'block' } : { display: 'none' }}>
           <Form.Item name={['social_media_urls', 'facebook']} label="Facebook">
