@@ -30,7 +30,7 @@ export default function mediaReducer(state = initialState, action = {}) {
         return item.query.page === action.payload.query.page;
       });
 
-      if (nodeIndex > -1) delete localReq.splice(nodeIndex, 1);
+      if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
         data: action.payload.data.nodes.map((item) => item.id),
