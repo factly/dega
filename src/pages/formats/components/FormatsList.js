@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
-import { Popconfirm, Space } from 'antd';
-import { useEffect } from 'react';
+import React from 'react';
+import { Popconfirm, Space, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link } from 'react-router-dom';
-import Table from '../../../components/Table';
 
 function FormatsList() {
   const dispatch = useDispatch();
-  const { details, loading, req, total } = useSelector((state) => state.formats);
+  const [page, setPage] = React.useState(1);
 
-  const [pagination, setPagination] = useState({
-    current: 1,
-    defaultPageSize: 5,
-    pageSize: 5,
-    total,
+  const { formats, total, loading } = useSelector((state) => {
+    const node = state.formats.req.find((item) => {
+      return item.query.page === page;
+    });
+
+    if (node)
+      return {
+        formats: node.ids.map((element) => state.formats.details[element]),
+        total: state.formats.total,
+        loading: state.formats.loading,
+      };
+    return { formats: [], total: 0, loading: state.formats.loading };
   });
 
-  var data = [];
+  React.useEffect(() => {
+    fetchFormats();
+  }, [page]);
 
-  // map data based on query
-  req.forEach((each) => {
-    const { limit, page } = each.query;
-    const { current, pageSize } = pagination;
-
-    if (page == current && limit == pageSize) {
-      data = each.ids.map((id) => details[id]);
-    }
-  });
+  const fetchFormats = () => {
+    dispatch(getFormats({ page: page }));
+  };
 
   const onConfirm = (id) => dispatch(deleteFormat(id));
 
@@ -56,13 +57,16 @@ function FormatsList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/formats/edit?id=${record.id}`}
+              to={`/formats/${record.id}/edit`}
             >
-              Edit
+              <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={() => onConfirm(record.id)}>
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
+            >
               <Link to="" className="ant-dropdown-link">
-                Delete
+                <Button>Delete</Button>
               </Link>
             </Popconfirm>
           </span>
@@ -71,28 +75,20 @@ function FormatsList() {
     },
   ];
 
-  useEffect(() => {
-    handleTableChange(pagination);
-  }, [total]);
-
-  const handleTableChange = ({ current, pageSize }) => {
-    dispatch(getFormats({ page: current, limit: pageSize }));
-    setPagination({ ...pagination, current, pageSize, total });
-  };
-
   return (
-    <Space direction="vertical">
-      <Link className="ant-btn ant-btn-primary" key="1" to="/formats/create">
-        Create New
-      </Link>
-      <Table
-        columns={columns}
-        dataSource={data}
-        onChange={handleTableChange}
-        loading={loading}
-        pagination={pagination}
-      />
-    </Space>
+    <Table
+      bordered
+      columns={columns}
+      dataSource={formats}
+      loading={loading}
+      rowKey={'id'}
+      pagination={{
+        total: total,
+        current: page,
+        pageSize: 5,
+        onChange: (page, pageSize) => setPage(page),
+      }}
+    />
   );
 }
 

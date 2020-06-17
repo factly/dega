@@ -101,7 +101,7 @@ export default [
     title: 'Create Format',
   },
   {
-    path: '/formats/edit',
+    path: '/formats/:id/edit',
     Component: EditFormats,
     enableNavigation: false,
     enableBreadcrumb: true,

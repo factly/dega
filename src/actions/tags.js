@@ -48,7 +48,7 @@ export const getTags = (query) => {
 export const addTag = (data) => {
   return async (dispatch, getState) => {
     dispatch(loadingSpaces());
-    const spaceId = getState().spaces.selectedSpace.id;
+    const spaceId = 2;
     const response = await axios({
       url: API_ADD_TAG,
       method: 'post',

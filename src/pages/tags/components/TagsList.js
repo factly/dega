@@ -30,8 +30,6 @@ function TagsList() {
     dispatch(getTags({ page: page }));
   };
 
-  const onConfirm = (id) => dispatch(deleteTag(id));
-
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name', width: '15%' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug', width: '15%' },
@@ -61,7 +59,10 @@ function TagsList() {
             >
               <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={() => onConfirm(record.id)}>
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
+            >
               <Link to="" className="ant-dropdown-link">
                 <Button>Delete</Button>
               </Link>

@@ -31,8 +31,6 @@ function CategoriesList() {
     dispatch(getCategories({ page: page }));
   };
 
-  const onConfirm = (id) => dispatch(deleteCategory(id));
-
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
@@ -63,7 +61,10 @@ function CategoriesList() {
             >
               <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to cancel?" onConfirm={() => onConfirm(record.id)}>
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
+            >
               <Link to="" className="ant-dropdown-link">
                 <Button>Delete</Button>
               </Link>

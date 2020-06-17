@@ -3,8 +3,8 @@ import {
   ADD_FORMAT_SUCCESS,
   UPDATE_FORMAT_SUCCESS,
   DELETE_FORMAT_SUCCESS,
+  LOADING_FORMATS,
 } from '../constants/formats';
-import { LOADING_PAGE } from '../constants';
 
 const initialState = {
   req: [],
@@ -18,7 +18,7 @@ export default function formatsReducer(state = initialState, action = {}) {
     return state;
   }
   switch (action.type) {
-    case LOADING_PAGE:
+    case LOADING_FORMATS:
       return {
         ...state,
         loading: false,

@@ -1,30 +1,34 @@
 import React from 'react';
 import FormatsCreateForm from './components/FormatsCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFormat } from '../../actions/formats';
+import { updateFormat, getFormats } from '../../actions/formats';
 import { useHistory } from 'react-router-dom';
-import useQuery from '../../utils/useQuery';
+import { useParams } from 'react-router-dom';
+import { Skeleton } from 'antd';
 
 function EditFormat() {
   const history = useHistory();
-  const query = useQuery();
-  const id = query.get('id');
+  const { id } = useParams();
 
   const dispatch = useDispatch();
-  const { format } = useSelector((state) => {
-    const { details } = state.formats;
-    const format = details[id];
-
+  const { format, loading } = useSelector((state) => {
     return {
-      format,
+      format: state.formats.details[id] ? state.formats.details[id] : null,
+      loading: state.formats.loading,
     };
   });
 
-  const onCreate = (values) => {
+  React.useEffect(() => {
+    dispatch(getFormats(id));
+  }, [dispatch, id]);
+
+  if (loading) return <Skeleton />;
+
+  const onUpdate = (values) => {
     dispatch(updateFormat({ ...format, ...values }));
     history.push('/formats');
   };
-  return <FormatsCreateForm data={format} onCreate={onCreate} />;
+  return <FormatsCreateForm data={format} onCreate={onUpdate} />;
 }
 
 export default EditFormat;

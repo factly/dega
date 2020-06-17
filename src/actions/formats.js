@@ -10,9 +10,8 @@ import {
   UPDATE_FORMAT_SUCCESS,
   DELETE_FORMAT_SUCCESS,
   DELETE_FORMAT_FAILURE,
+  LOADING_FORMATS,
 } from '../constants/formats';
-
-import { LOADING_PAGE } from '../constants';
 
 export const getFormats = (query) => {
   return async (dispatch, getState) => {
@@ -49,7 +48,7 @@ export const getFormats = (query) => {
 export const addFormat = (data) => {
   return async (dispatch, getState) => {
     dispatch(loadingSpaces());
-    const spaceId = getState().spaces.selectedSpace.id;
+    const spaceId = 2;
     const response = await axios({
       url: API_ADD_FORMAT,
       method: 'post',
@@ -97,7 +96,7 @@ export const deleteFormat = (id) => {
 };
 
 const loadingSpaces = () => ({
-  type: LOADING_PAGE,
+  type: LOADING_FORMATS,
 });
 
 const getFormatsSuccess = (data, query) => ({

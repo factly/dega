@@ -1,9 +1,7 @@
 import React from 'react';
-import { Button, Form, Input, Space, Select, Upload } from 'antd';
-import { useSelector } from 'react-redux';
+import { Button, Form, Input, Space } from 'antd';
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 const layout = {
   labelCol: {
@@ -22,8 +20,6 @@ const tailLayout = {
 
 const FormatCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const { details } = useSelector((state) => state.formats);
-  const formats = Object.keys(details).map((key, index) => details[key]);
 
   const onReset = () => {
     form.resetFields();
