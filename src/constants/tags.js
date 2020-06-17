@@ -11,7 +11,7 @@ export const DELETE_TAG_SUCCESS = 'DELETE_TAG_SUCCESS';
 export const DELETE_TAG_FAILURE = 'DELETE_TAG_FAILURE';
 
 //API
-export const API_GET_TAGS = '/.factly/dega/server/core/tags';
-export const API_ADD_TAG = '/.factly/dega/server/core/tags';
+export const API_GET_TAGS = '/core/tags';
+export const API_ADD_TAG = '/core/tags';
 
 //Notification

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Popconfirm, Space, Typography } from 'antd';
+import { Popconfirm, Button, Typography } from 'antd';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags, deleteTag } from '../../../actions/tags';
@@ -8,26 +8,29 @@ import Table from '../../../components/Table';
 
 function TagsList() {
   const dispatch = useDispatch();
-  const { details, loading, req, total } = useSelector((state) => state.tags);
+  const [page, setPage] = React.useState(1);
 
-  const [pagination, setPagination] = useState({
-    current: 1,
-    defaultPageSize: 5,
-    pageSize: 5,
-    total,
+  const { tags, total, loading } = useSelector((state) => {
+    const node = state.tags.req.find((item) => {
+      return item.query.page === page;
+    });
+
+    if (node)
+      return {
+        tags: node.ids.map((element) => state.tags.details[element]),
+        total: state.tags.total,
+        loading: state.tags.loading,
+      };
+    return { tags: [], total: 0, loading: state.tags.loading };
   });
 
-  var data = [];
+  React.useEffect(() => {
+    fetchTags();
+  }, [page]);
 
-  // map data based on query
-  req.forEach((each) => {
-    const { limit, page } = each.query;
-    const { current, pageSize } = pagination;
-
-    if (page == current && limit == pageSize) {
-      data = each.ids.map((id) => details[id]);
-    }
-  });
+  const fetchTags = () => {
+    dispatch(getTags({ page: page }));
+  };
 
   const onConfirm = (id) => dispatch(deleteTag(id));
 
@@ -56,13 +59,13 @@ function TagsList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/tags/edit?id=${record.id}`}
+              to={`/tags/${record.id}/edit`}
             >
-              Edit
+              <Button>Edit</Button>
             </Link>
             <Popconfirm title="Sure to cancel?" onConfirm={() => onConfirm(record.id)}>
               <Link to="" className="ant-dropdown-link">
-                Delete
+                <Button>Delete</Button>
               </Link>
             </Popconfirm>
           </span>
@@ -72,28 +75,18 @@ function TagsList() {
     },
   ];
 
-  useEffect(() => {
-    handleTableChange(pagination);
-  }, [total]);
-
-  const handleTableChange = ({ current, pageSize }) => {
-    dispatch(getTags({ page: current, limit: pageSize }));
-    setPagination({ ...pagination, current, pageSize, total });
-  };
-
   return (
-    <Space direction="vertical">
-      <Link className="ant-btn ant-btn-primary" key="1" to="/tags/create">
-        Create New
-      </Link>
-      <Table
-        columns={columns}
-        dataSource={data}
-        onChange={handleTableChange}
-        loading={loading}
-        pagination={pagination}
-      />
-    </Space>
+    <Table
+      columns={columns}
+      dataSource={tags}
+      loading={loading}
+      pagination={{
+        total: total,
+        current: page,
+        pageSize: 5,
+        onChange: (page, pageSize) => setPage(page),
+      }}
+    />
   );
 }
 

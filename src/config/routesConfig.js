@@ -72,7 +72,7 @@ export default [
     title: 'Create Category',
   },
   {
-    path: '/categories/edit',
+    path: '/categories/:id/edit',
     Component: EditCategory,
     enableNavigation: false,
     enableBreadcrumb: true,
@@ -96,12 +96,14 @@ export default [
     title: 'Create Tag',
   },
   {
-    path: '/tags/edit',
+    path: '/tags/:id/edit',
     Component: EditTags,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Edit Tag',
+  },
+  {
     path: '/media',
     Component: Media,
     enableNavigation: true,

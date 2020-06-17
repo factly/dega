@@ -4,7 +4,7 @@ export default axios.create({
   baseURL: process.env.REACT_APP_API_URL,
   headers: {
     common: {
-      'X-Space': '1',
+      'X-Space': '2',
     },
   },
 });

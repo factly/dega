@@ -10,7 +10,7 @@ export const UPDATE_CATEGORY_FAILURE = 'UPDATE_CATEGORY_FAILURE';
 export const DELETE_CATEGORY_SUCCESS = 'DELETE_CATEGORY_SUCCESS';
 export const DELETE_CATEGORY_FAILURE = 'DELETE_CATEGORY_FAILURE';
 //API
-export const API_GET_CATEGORIES = '/.factly/dega/server/core/categories';
-export const API_ADD_CATEGORY = '/.factly/dega/server/core/categories';
+export const API_GET_CATEGORIES = '/core/categories';
+export const API_ADD_CATEGORY = '/core/categories';
 
 //Notification
