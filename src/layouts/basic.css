@@ -1,0 +1,58 @@
+.slider-menu {
+  height: 100vh;
+}
+
+.menu-header {
+  height: 64px;
+  line-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-logo {
+  height: 36px;
+  width: 36px;
+}
+
+.menu-company {
+  color: #ffffff;
+  font-size: 24px;
+  padding-left: 16px;
+}
+
+.layout-content {
+  padding: 0.2rem;
+}
+
+.layout-header {
+  background-color: #ffffff;
+  padding-left: 16px;
+}
+
+/* Add In Ant Style */
+.ant-row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+
+.ant-space {
+  width: 100%;
+}
+
+.site-page-header {
+  background-color: #fff;
+}
+
+.wrap-children-content {
+  margin: 24px 24px 0;
+}
+
+.ant-form {
+  max-width: 600px;
+}

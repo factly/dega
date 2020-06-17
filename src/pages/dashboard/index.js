@@ -1,22 +1,8 @@
-import React from "react";
-import { Typography } from "antd";
+import React from 'react';
+import { Typography } from 'antd';
 
 function Dashboard() {
-
-  const { Title } = Typography;
-
-  
-
-  return (
-    <div className="container">
-      <div className="content">
-    
-        <div >
-          <Title level={3} className="login-form-title">Dashboard</Title>  
-        </div>
-      </div>
-    </div>
-  );
+  return <Typography.Title>Dashboard</Typography.Title>;
 }
 
 export default Dashboard;
