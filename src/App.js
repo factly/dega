@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import BasicLayout from './layouts/basic';
-
 //Routes
 import routes from './config/routesConfig';
 

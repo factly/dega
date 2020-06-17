@@ -11,7 +11,6 @@ function PageHeader(props) {
   const breadcrumbItems = useMemo(() => {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-
       const route = _.find(routes, { path: url });
 
       if (route) {

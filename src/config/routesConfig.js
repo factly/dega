@@ -7,6 +7,8 @@ import Dashboard from '../pages/dashboard';
 import Spaces from '../pages/spaces';
 import SpaceCreate from '../pages/spaces/create';
 import SpaceEdit from '../pages/spaces/edit';
+
+//Media
 import Media from '../pages/media';
 import MediaEdit from '../pages/media/edit';
 

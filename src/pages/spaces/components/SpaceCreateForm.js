@@ -1,183 +1,103 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { InboxOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Space, Divider, Select, Upload } from 'antd';
+import { Button, Form, Input, Select } from 'antd';
 const { TextArea } = Input;
 const { Option } = Select;
 
 const layout = {
   labelCol: {
-    span: 10,
+    span: 8,
   },
   wrapperCol: {
-    span: 14,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 10,
-    span: 14,
+    span: 16,
   },
 };
 
-const SpaceCreateForm = ({ onCreate, data = {} }) => {
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
+
+const SpaceCreateForm = ({ onCreate }) => {
   const [form] = Form.useForm();
   const {
-    spaces: { spaces },
+    spaces: { orgs },
   } = useSelector((state) => state);
 
   const onReset = () => {
     form.resetFields();
   };
 
-  // const onFill = () => {
-  //   form.setFieldsValue({
-  //     name: 'Name',
-  //   });
-  // };
-  const prefixSelector = (
-    <Form.Item name="organisation_id" noStyle>
-      <Select
+  return (
+    <div>
+      <Form
+        {...layout}
+        form={form}
+        name="create-space"
+        onFinish={(values) => {
+          onCreate(values);
+          onReset();
+        }}
         style={{
-          width: 70,
+          paddingTop: '24px',
         }}
       >
-        {spaces.map((space) => (
-          <Option value={space.id}>{space.title}</Option>
-        ))}
-      </Select>
-    </Form.Item>
-  );
-
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-
-    return e && e.fileList;
-  };
-  return (
-    <Form
-      {...layout}
-      form={form}
-      initialValues={{ ...data }}
-      name="create-space"
-      onFinish={(values) => {
-        onCreate(values);
-        onReset();
-      }}
-    >
-      <Form.Item
-        name="name"
-        label="Space Name"
-        rules={[
-          {
-            required: true,
-            message: 'Please enter space name!',
-          },
-        ]}
-      >
-        <Input
-          addonBefore={prefixSelector}
-          style={{
-            width: '100%',
-          }}
-        />
-      </Form.Item>
-      <Form.Item
-        name="slug"
-        label="Slug"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the slug of space!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="site_address"
-        label="Website"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the website of space!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="site_title"
-        label="Title"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the title of space!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Form.Item
-        name="tag_line"
-        label="Tag line"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the tag line of space!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-      <Divider></Divider>
-      <strong>
-        <Form.Item label="About Space"></Form.Item>
-      </strong>
-      <Form.Item
-        name="contact_info"
-        label="Contact Info"
-        rules={[{ required: true, message: 'Please input your contact number!' }]}
-      >
-        <Input style={{ width: '100%' }} />
-      </Form.Item>
-      <Form.Item
-        name="description"
-        label="Description"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the description of space!',
-          },
-        ]}
-      >
-        <TextArea />
-      </Form.Item>
-      <Divider></Divider>
-      <Form.Item label="Upload Media">
-        <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-          <Upload.Dragger name="files" action="/upload.do">
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-          </Upload.Dragger>
+        <Form.Item label="Name">
+          <Input.Group compact>
+            <Form.Item
+              name="organisation_id"
+              noStyle
+              rules={[{ required: true, message: 'Organazation is required' }]}
+            >
+              <Select style={{ width: '40%' }} placeholder="Select organazation">
+                {orgs.map((org) => (
+                  <Option key={org.id} value={org.id}>
+                    {org.title}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="name"
+              noStyle
+              rules={[{ required: true, message: 'Name is required' }]}
+            >
+              <Input style={{ width: '60%' }} placeholder="Input name" />
+            </Form.Item>
+          </Input.Group>
         </Form.Item>
-      </Form.Item>
-      <Form.Item {...tailLayout}>
-        <Space>
+        <Form.Item
+          name="slug"
+          label="Slug"
+          rules={[
+            {
+              required: true,
+              message: 'Please input the slug of space!',
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="site_title" label="Title">
+          <Input />
+        </Form.Item>
+        <Form.Item name="tag_line" label="Tag line">
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="description" label="Description">
+          <TextArea />
+        </Form.Item>
+        <Form.Item name="site_address" label="Website">
+          <Input />
+        </Form.Item>
+
+        <Form.Item {...tailLayout}>
           <Button type="primary" htmlType="submit">
-            Create
+            Submit
           </Button>
-          <Button htmlType="button" onClick={onReset}>
-            Reset
-          </Button>
-        </Space>
-      </Form.Item>
-    </Form>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 

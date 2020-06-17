@@ -15,7 +15,6 @@ function Sidebar() {
     navTheme,
   } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
-
   return (
     <Sider
       breakpoint="lg"
