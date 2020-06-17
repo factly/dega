@@ -51,7 +51,7 @@ export const addCategory = (data) => {
     const response = await axios({
       url: API_ADD_CATEGORY,
       method: 'post',
-      data: { ...data },
+      data: data,
     }).catch((error) => {
       dispatch(addCategoryFailure(error.message));
     });

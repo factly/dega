@@ -43,30 +43,14 @@ export default function tagsReducer(state = initialState, action = {}) {
         total: action.payload.data.total,
       };
     case ADD_TAG_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: { ...state.details, [action.payload.id]: action.payload },
-        loading: false,
-        total: state.total + 1,
-      };
+      return initialState;
     case UPDATE_TAG_SUCCESS:
       return {
         ...state,
         details: { ...state.details, [action.payload.id]: action.payload },
       };
     case DELETE_TAG_SUCCESS:
-      const id = action.payload;
-      const details = { ...state.details };
-      delete details[id];
-      return {
-        ...state,
-        loading: false,
-        req: [],
-        ids: [],
-        details,
-        total: state.total - 1,
-      };
+      return initialState;
     default:
       return state;
   }

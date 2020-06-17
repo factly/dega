@@ -43,30 +43,14 @@ export default function formatsReducer(state = initialState, action = {}) {
         total: action.payload.data.total,
       };
     case ADD_FORMAT_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: { ...state.details, [action.payload.id]: action.payload },
-        loading: false,
-        total: state.total + 1,
-      };
+      return initialState;
     case UPDATE_FORMAT_SUCCESS:
       return {
         ...state,
         details: { ...state.details, [action.payload.id]: action.payload },
       };
     case DELETE_FORMAT_SUCCESS:
-      const id = action.payload;
-      const details = { ...state.details };
-      delete details[id];
-      return {
-        ...state,
-        loading: false,
-        req: [],
-        ids: [],
-        details,
-        total: state.total - 1,
-      };
+      return initialState;
     default:
       return state;
   }

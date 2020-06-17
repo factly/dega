@@ -51,7 +51,7 @@ export const addFormat = (data) => {
     const response = await axios({
       url: API_ADD_FORMAT,
       method: 'post',
-      data: { ...data },
+      data: data,
     }).catch((error) => {
       dispatch(addFormatFailure(error.message));
     });

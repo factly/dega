@@ -51,7 +51,7 @@ export const addTag = (data) => {
     const response = await axios({
       url: API_ADD_TAG,
       method: 'post',
-      data: { ...data },
+      data: data,
     }).catch((error) => {
       dispatch(addTagFailure(error.message));
     });
