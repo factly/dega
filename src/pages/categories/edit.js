@@ -1,29 +1,35 @@
 import React from 'react';
 import CategoryCreateForm from './components/CategoryCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateCategory } from '../../actions/categories';
+import { Skeleton } from 'antd';
+import { updateCategory, getCategories } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
-import useQuery from '../../utils/useQuery';
+import { useParams } from 'react-router-dom';
 
 function EditSpace() {
   const history = useHistory();
-  const query = useQuery();
-  const id = query.get('id');
+  const { id } = useParams();
 
   const dispatch = useDispatch();
-  const { category } = useSelector((state) => {
-    const { details } = state.categories;
-    const category = details[id];
+
+  const { category, loading } = useSelector((state) => {
     return {
-      category,
+      category: state.categories.details[id] ? state.categories.details[id] : null,
+      loading: state.categories.loading,
     };
   });
 
-  const onCreate = (values) => {
+  React.useEffect(() => {
+    dispatch(getCategories(id));
+  }, [dispatch, id]);
+
+  if (loading) return <Skeleton />;
+
+  const onUpdate = (values) => {
     dispatch(updateCategory({ ...category, ...values }));
     history.push('/categories');
   };
-  return <CategoryCreateForm data={category} onCreate={onCreate} />;
+  return <CategoryCreateForm data={category} onCreate={onUpdate} />;
 }
 
 export default EditSpace;

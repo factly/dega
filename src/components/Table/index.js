@@ -2,7 +2,7 @@ import React from 'react';
 import EditableCell from './EditableCell';
 import { Table as AntTable } from 'antd';
 
-function Table({ columns, data, loading, ...props }) {
+function Table({ columns, data, loading }) {
   return (
     <AntTable
       components={{
@@ -11,12 +11,10 @@ function Table({ columns, data, loading, ...props }) {
         },
       }}
       bordered
-      rowKey="id"
       columns={columns}
       dataSource={data}
       loading={loading}
       rowClassName="editable-row"
-      {...props}
     />
   );
 }

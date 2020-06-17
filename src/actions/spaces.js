@@ -4,11 +4,14 @@ import {
   GET_SPACES_FAILURE,
   ADD_SPACE_FAILURE,
   ADD_SPACE_SUCCESS,
-  API_ADD_SPACES,
+  LOADING_SPACES,
+  API_ADD_SPACE,
   API_GET_SPACES,
+  API_DELETE_SPACE,
   SET_SELECTED_SPACE,
+  DELETE_SPACE_SUCCESS,
+  DELETE_SPACE_FAILURE,
 } from '../constants/spaces';
-import { LOADING_PAGE } from '../constants';
 
 export const getSpaces = () => {
   return async (dispatch, getState) => {
@@ -30,24 +33,39 @@ export const setSelectedSpace = (space) => ({
   payload: space,
 });
 
-export const addSpaces = (data) => {
+export const addSpace = (data) => {
   return async (dispatch, getState) => {
     dispatch(loadingSpaces());
     const response = await axios({
-      url: API_ADD_SPACES,
+      url: API_ADD_SPACE,
       method: 'post',
-      data: { ...data, organisation_id: 3 },
+      data: data,
     }).catch((error) => {
-      dispatch(addSpacesFailure(error.message));
+      dispatch(addSpaceFailure(error.message));
     });
     if (response) {
-      dispatch(addSpacesSuccess(data));
+      dispatch(addSpaceSuccess(response.data));
+    }
+  };
+};
+
+export const deleteSpace = (id) => {
+  return async (dispatch, getState) => {
+    dispatch(loadingSpaces());
+    const response = await axios({
+      url: API_DELETE_SPACE + '/' + id,
+      method: 'delete',
+    }).catch((error) => {
+      dispatch(deleteSpaceFailure(error.message));
+    });
+    if (response) {
+      dispatch(deleteSpaceSuccess(id));
     }
   };
 };
 
 const loadingSpaces = () => ({
-  type: LOADING_PAGE,
+  type: LOADING_SPACES,
 });
 
 const getSpacesSuccess = (spaces) => ({
@@ -62,15 +80,25 @@ const getSpacesFailure = (error) => ({
   },
 });
 
-const addSpacesSuccess = (space) => ({
+const addSpaceSuccess = (space) => ({
   type: ADD_SPACE_SUCCESS,
+  payload: space,
+});
+
+const addSpaceFailure = (error) => ({
+  type: ADD_SPACE_FAILURE,
   payload: {
-    ...space,
+    error,
   },
 });
 
-const addSpacesFailure = (error) => ({
-  type: ADD_SPACE_FAILURE,
+const deleteSpaceSuccess = (id) => ({
+  type: DELETE_SPACE_SUCCESS,
+  payload: id,
+});
+
+const deleteSpaceFailure = (error) => ({
+  type: DELETE_SPACE_FAILURE,
   payload: {
     error,
   },

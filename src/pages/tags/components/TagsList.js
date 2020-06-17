@@ -1,40 +1,51 @@
-import React, { useState } from 'react';
-import { Popconfirm, Space } from 'antd';
-import { useEffect } from 'react';
+import React from 'react';
+import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
-import Table from '../../../components/Table';
 
 function TagsList() {
   const dispatch = useDispatch();
-  const { details, loading, req, total } = useSelector((state) => state.tags);
+  const [page, setPage] = React.useState(1);
 
-  const [pagination, setPagination] = useState({
-    current: 1,
-    defaultPageSize: 5,
-    pageSize: 5,
-    total,
+  const { tags, total, loading } = useSelector((state) => {
+    const node = state.tags.req.find((item) => {
+      return item.query.page === page;
+    });
+
+    if (node)
+      return {
+        tags: node.ids.map((element) => state.tags.details[element]),
+        total: state.tags.total,
+        loading: state.tags.loading,
+      };
+    return { tags: [], total: 0, loading: state.tags.loading };
   });
 
-  var data = [];
+  React.useEffect(() => {
+    fetchTags();
+  }, [page]);
 
-  // map data based on query
-  req.forEach((each) => {
-    const { limit, page } = each.query;
-    const { current, pageSize } = pagination;
-
-    if (page == current && limit == pageSize) {
-      data = each.ids.map((id) => details[id]);
-    }
-  });
+  const fetchTags = () => {
+    dispatch(getTags({ page: page }));
+  };
 
   const onConfirm = (id) => dispatch(deleteTag(id));
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    { title: 'Parent Tags', dataIndex: 'parent_id', key: 'parent_id' },
+    { title: 'Name', dataIndex: 'name', key: 'name', width: '15%' },
+    { title: 'Slug', dataIndex: 'slug', key: 'slug', width: '15%' },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      width: '50%',
+      render: (_, record) => {
+        return (
+          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+        );
+      },
+    },
     {
       title: 'Action',
       dataIndex: 'operation',
@@ -46,46 +57,35 @@ function TagsList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/tags/edit?id=${record.id}`}
+              to={`/tags/${record.id}/edit`}
             >
-              Edit
+              <Button>Edit</Button>
             </Link>
             <Popconfirm title="Sure to cancel?" onConfirm={() => onConfirm(record.id)}>
               <Link to="" className="ant-dropdown-link">
-                Delete
+                <Button>Delete</Button>
               </Link>
             </Popconfirm>
           </span>
         );
       },
+      width: '20%',
     },
   ];
 
-  useEffect(() => {
-    handleTableChange(pagination);
-  }, [total]);
-
-  const handleTableChange = ({ current, pageSize }) => {
-    dispatch(getTags({ page: current, limit: pageSize }));
-    setPagination({ ...pagination, current, pageSize, total });
-  };
-
   return (
-    <Space direction="vertical">
-      <Link className="ant-btn ant-btn-primary" key="1" to="/tags/create">
-        Create New
-      </Link>
-      <Table
-        columns={columns}
-        expandable={{
-          expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.description}</p>,
-        }}
-        dataSource={data}
-        onChange={handleTableChange}
-        loading={loading}
-        pagination={pagination}
-      />
-    </Space>
+    <Table
+      bordered
+      columns={columns}
+      dataSource={tags}
+      loading={loading}
+      pagination={{
+        total: total,
+        current: page,
+        pageSize: 5,
+        onChange: (page, pageSize) => setPage(page),
+      }}
+    />
   );
 }
 

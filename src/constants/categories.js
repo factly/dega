@@ -1,6 +1,4 @@
 //Actions
-export const GET_CATEGORIES = 'GET_CATEGORIES';
-export const ADD_CATEGORY = 'ADD_CATEGORY';
 export const GET_CATEGORIES_SUCCESS = 'GET_CATEGORIES_SUCCESS';
 export const GET_CATEGORIES_FAILURE = 'GET_CATEGORIES_FAILURE';
 export const ADD_CATEGORY_SUCCESS = 'ADD_CATEGORY_SUCCESS';
@@ -9,8 +7,10 @@ export const UPDATE_CATEGORY_SUCCESS = 'UPDATE_CATEGORY_SUCCESS';
 export const UPDATE_CATEGORY_FAILURE = 'UPDATE_CATEGORY_FAILURE';
 export const DELETE_CATEGORY_SUCCESS = 'DELETE_CATEGORY_SUCCESS';
 export const DELETE_CATEGORY_FAILURE = 'DELETE_CATEGORY_FAILURE';
+export const LOADING_CATEGORIES = 'LOADING_CATEGORIES';
+
 //API
-export const API_GET_CATEGORIES = '/.factly/dega/server/core/categories';
-export const API_ADD_CATEGORY = '/.factly/dega/server/core/categories';
+export const API_GET_CATEGORIES = '/core/categories';
+export const API_ADD_CATEGORY = '/core/categories';
 
 //Notification

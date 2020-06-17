@@ -1,12 +1,16 @@
-import { PieChartOutlined } from '@ant-design/icons';
+import { PieChartOutlined, FileImageOutlined } from '@ant-design/icons';
 
 //Pages
 import Dashboard from '../pages/dashboard';
 
 //Spaces
 import Spaces from '../pages/spaces';
-import CreateSpace from '../pages/spaces/create';
-import EditSpace from '../pages/spaces/edit';
+import SpaceCreate from '../pages/spaces/create';
+import SpaceEdit from '../pages/spaces/edit';
+
+//Media
+import Media from '../pages/media';
+import MediaEdit from '../pages/media/edit';
 
 //Categories
 import Categories from '../pages/categories';
@@ -42,15 +46,15 @@ export default [
   },
   {
     path: '/spaces/create',
-    Component: CreateSpace,
+    Component: SpaceCreate,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Create Space',
   },
   {
-    path: '/spaces/edit',
-    Component: EditSpace,
+    path: '/spaces/:id/edit',
+    Component: SpaceEdit,
     enableNavigation: false,
     enableBreadcrumb: false,
     Icon: PieChartOutlined,
@@ -73,7 +77,7 @@ export default [
     title: 'Create Category',
   },
   {
-    path: '/categories/edit',
+    path: '/categories/:id/edit',
     Component: EditCategory,
     enableNavigation: false,
     enableBreadcrumb: true,
@@ -121,11 +125,27 @@ export default [
     title: 'Create Tag',
   },
   {
-    path: '/tags/edit',
+    path: '/tags/:id/edit',
     Component: EditTags,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Edit Tag',
+  },
+  {
+    path: '/media',
+    Component: Media,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: FileImageOutlined,
+    title: 'Media',
+  },
+  {
+    path: '/media/:id/edit',
+    Component: MediaEdit,
+    enableNavigation: false,
+    enableBreadcrumb: false,
+    Icon: FileImageOutlined,
+    title: 'Edit Media',
   },
 ];

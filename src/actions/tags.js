@@ -10,9 +10,8 @@ import {
   UPDATE_TAG_SUCCESS,
   DELETE_TAG_SUCCESS,
   DELETE_TAG_FAILURE,
+  LOADING_TAGS,
 } from '../constants/tags';
-
-import { LOADING_PAGE } from '../constants';
 
 export const getTags = (query) => {
   return async (dispatch, getState) => {
@@ -97,7 +96,7 @@ export const deleteTag = (id) => {
 };
 
 const loadingSpaces = () => ({
-  type: LOADING_PAGE,
+  type: LOADING_TAGS,
 });
 
 const getTagsSuccess = (data, query) => ({

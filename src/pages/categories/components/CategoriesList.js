@@ -1,40 +1,52 @@
 import React from 'react';
-import { Popconfirm, Space } from 'antd';
-import { useState, useEffect } from 'react';
+import { Popconfirm, Button, Typography, Table } from 'antd';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, deleteCategory } from '../../../actions/categories';
 import { Link } from 'react-router-dom';
-import Table from '../../../components/Table';
-import _ from 'lodash';
 
 function CategoriesList() {
   const dispatch = useDispatch();
-  const { details, loading, req, total } = useSelector((state) => state.categories);
+  const [page, setPage] = React.useState(1);
 
-  const [pagination, setPagination] = useState({
-    current: 1,
-    defaultPageSize: 5,
-    pageSize: 5,
-    total,
+  const { categories, total, loading } = useSelector((state) => {
+    const node = state.categories.req.find((item) => {
+      return item.query.page === page;
+    });
+
+    if (node)
+      return {
+        categories: node.ids.map((element) => state.categories.details[element]),
+        total: state.categories.total,
+        loading: state.categories.loading,
+      };
+    return { categories: [], total: 0, loading: state.categories.loading };
   });
 
-  var data = [];
+  React.useEffect(() => {
+    fetchCategories();
+  }, [page]);
 
-  // map data based on query
-  req.forEach((each) => {
-    const { limit, page } = each.query;
-    const { current, pageSize } = pagination;
-
-    if (page == current && limit == pageSize) {
-      data = each.ids.map((id) => details[id]);
-    }
-  });
+  const fetchCategories = () => {
+    dispatch(getCategories({ page: page }));
+  };
 
   const onConfirm = (id) => dispatch(deleteCategory(id));
 
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      width: '50%',
+      render: (_, record) => {
+        return (
+          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+        );
+      },
+    },
     { title: 'Parent Category', dataIndex: 'parent_id', key: 'parent_id' },
     {
       title: 'Action',
@@ -47,13 +59,13 @@ function CategoriesList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/categories/edit?id=${record.id}`}
+              to={`/categories/${record.id}/edit`}
             >
-              Edit
+              <Button>Edit</Button>
             </Link>
             <Popconfirm title="Sure to cancel?" onConfirm={() => onConfirm(record.id)}>
               <Link to="" className="ant-dropdown-link">
-                Delete
+                <Button>Delete</Button>
               </Link>
             </Popconfirm>
           </span>
@@ -62,31 +74,20 @@ function CategoriesList() {
     },
   ];
 
-  useEffect(() => {
-    handleTableChange(pagination);
-  }, [total]);
-
-  const handleTableChange = ({ current, pageSize }) => {
-    dispatch(getCategories({ page: current, limit: pageSize }));
-    setPagination({ ...pagination, current, pageSize, total });
-  };
-
   return (
-    <Space direction="vertical">
-      <Link className="ant-btn ant-btn-primary" key="1" to="/categories/create">
-        Create New
-      </Link>
-      <Table
-        columns={columns}
-        expandable={{
-          expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.description}</p>,
-        }}
-        dataSource={data}
-        onChange={handleTableChange}
-        loading={loading}
-        pagination={pagination}
-      />
-    </Space>
+    <Table
+      bordered
+      columns={columns}
+      dataSource={categories}
+      loading={loading}
+      rowKey={'id'}
+      pagination={{
+        total: total,
+        current: page,
+        pageSize: 5,
+        onChange: (page, pageSize) => setPage(page),
+      }}
+    />
   );
 }
 

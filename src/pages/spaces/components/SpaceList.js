@@ -1,39 +1,53 @@
 import React from 'react';
-import { Popconfirm, Form, Space, Button } from 'antd';
-import { useSelector } from 'react-redux';
+import { Popconfirm, Button, Table } from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Table from '../../../components/Table';
-import _ from 'lodash';
+import { deleteSpace, getSpaces } from './../../../actions/spaces';
 
 function SpaceList() {
-  const [form] = Form.useForm();
-  const { organization = {}, loading } = useSelector((state) => {
+  const dispatch = useDispatch();
+  const { spaces, loading } = useSelector((state) => {
+    const selectedOrg = state.spaces.orgs.find((item) =>
+      item.spaces.includes(state.spaces.selected),
+    );
+    let spaces = [];
+    if (selectedOrg) {
+      spaces = selectedOrg.spaces.map((s) => state.spaces.details[s]);
+    }
     return {
       loading: state.spaces.loading,
-      organization: _.find(state.spaces.spaces, { id: 3 }),
+      spaces: spaces,
     };
   });
+
+  const fetchSpaces = () => {
+    dispatch(getSpaces());
+  };
 
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
-      width: '25%',
-      sorter: true,
+      key: 'name',
+      width: '20%',
     },
     {
       title: 'Site Address',
       dataIndex: 'site_address',
-      // filters: [
-      //   { text: 'Male', value: 'male' },
-      //   { text: 'Female', value: 'female' },
-      // ],
-      width: '15%',
+      key: 'site_address',
+      width: '20%',
     },
     {
-      title: 'Title',
+      title: 'Site Title',
       dataIndex: 'site_title',
-      width: '40%',
+      key: 'site_title',
+      width: '20%',
+    },
+    {
+      title: 'Tag line',
+      dataIndex: 'tag_line',
+      key: 'tag_line',
+      width: '20%',
     },
     {
       title: 'Action',
@@ -42,56 +56,26 @@ function SpaceList() {
         return (
           <span>
             <Link
-              className="ant-dropdown-link"
               style={{
                 marginRight: 8,
               }}
-              to={`/spaces/edit?id=${record.id}`}
+              to={`/spaces/${record.id}/edit`}
             >
-              Edit
+              <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to cancel?">
-              <Button className="ant-dropdown-link">Delete</Button>
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
+            >
+              <Button>Delete</Button>
             </Popconfirm>
           </span>
         );
       },
     },
   ];
-  const mergedColumns = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
 
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        dataIndex: col.dataIndex,
-        title: col.title,
-      }),
-    };
-  });
-
-  // useEffect(() => {
-  //   fetch();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // const fetch = (params = {}) => {
-  //   dispatch(getSpaces());
-  // };
-
-  return (
-    <Form form={form} component={false}>
-      <Space direction="vertical">
-        <Link className="ant-btn ant-btn-primary" key="1" to="/spaces/create">
-          Create New
-        </Link>
-        <Table columns={mergedColumns} data={organization.spaces} loading={loading} />
-      </Space>
-    </Form>
-  );
+  return <Table rowKey={'id'} bordered dataSource={spaces} columns={columns} loading={loading} />;
 }
 
 export default SpaceList;

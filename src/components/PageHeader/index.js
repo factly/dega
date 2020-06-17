@@ -11,7 +11,6 @@ function PageHeader(props) {
   const breadcrumbItems = useMemo(() => {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-
       const route = _.find(routes, { path: url });
 
       if (route) {
@@ -20,6 +19,7 @@ function PageHeader(props) {
           breadcrumbName: route.title,
         };
       } else {
+        return null;
       }
     });
     return [
@@ -28,7 +28,7 @@ function PageHeader(props) {
         breadcrumbName: 'Home',
       },
     ].concat(_.filter(urlBreadcrumbItems));
-  }, [location, pathSnippets]);
+  }, [pathSnippets]);
 
   const lastItem = useMemo(() => {
     return (

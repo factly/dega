@@ -1,30 +1,34 @@
 import React from 'react';
 import TagsCreateForm from './components/TagsCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateTag } from '../../actions/tags';
+import { Skeleton } from 'antd';
+import { updateTag, getTags } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
-import useQuery from '../../utils/useQuery';
+import { useParams } from 'react-router-dom';
 
 function EditTag() {
   const history = useHistory();
-  const query = useQuery();
-  const id = query.get('id');
+  const { id } = useParams();
 
   const dispatch = useDispatch();
-  const { tag } = useSelector((state) => {
-    const { details } = state.tags;
-    const tag = details[id];
-
+  const { tag, loading } = useSelector((state) => {
     return {
-      tag,
+      tag: state.tags.details[id] ? state.tags.details[id] : null,
+      loading: state.tags.loading,
     };
   });
 
-  const onCreate = (values) => {
+  React.useEffect(() => {
+    dispatch(getTags(id));
+  }, [dispatch, id]);
+
+  if (loading) return <Skeleton />;
+
+  const onUpdate = (values) => {
     dispatch(updateTag({ ...tag, ...values }));
     history.push('/tags');
   };
-  return <TagsCreateForm data={tag} onCreate={onCreate} />;
+  return <TagsCreateForm data={tag} onCreate={onUpdate} />;
 }
 
 export default EditTag;
