@@ -11,15 +11,17 @@ import {
   UPDATE_MEDIUM_SUCCESS,
   DELETE_MEDIUM_FAILURE,
   DELETE_MEDIUM_SUCCESS,
+  ADD_MEDIUM_SUCCESS,
+  ADD_MEDIUM_FAILURE,
 } from '../constants/media';
 
 export const addMedium = (data) => {
   return async (dispatch, getState) => {
     const response = await axios.post(API_ADD_MEDIA, data).catch((error) => {
-      console.log(error.message);
+      addMediumFailure(error.message);
     });
     if (response) {
-      console.log(response);
+      addMediumSuccess(response.data);
     }
   };
 };
@@ -125,5 +127,17 @@ const deleteMediumFailure = (error) => ({
 
 const deleteMediumSuccess = (data) => ({
   type: DELETE_MEDIUM_SUCCESS,
+  payload: data,
+});
+
+const addMediumFailure = (error) => ({
+  type: ADD_MEDIUM_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const addMediumSuccess = (data) => ({
+  type: ADD_MEDIUM_SUCCESS,
   payload: data,
 });

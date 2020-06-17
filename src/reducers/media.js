@@ -1,5 +1,5 @@
 import {
-  ADD_MEDIUM,
+  ADD_MEDIUM_SUCCESS,
   LOADING_MEDIA,
   GET_MEDIA_SUCCESS,
   GET_MEDIUM_SUCCESS,
@@ -21,15 +21,8 @@ export default function mediaReducer(state = initialState, action = {}) {
         ...state,
         loading: true,
       };
-    case ADD_MEDIUM:
-      return {
-        ...state,
-        loading: false,
-        details: {
-          ...state.details,
-          [action.payload.id]: action.payload,
-        },
-      };
+    case ADD_MEDIUM_SUCCESS:
+      return initialState;
     case GET_MEDIA_SUCCESS:
       const localReq = state.req;
 
