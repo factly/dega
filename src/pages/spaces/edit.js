@@ -1,32 +1,31 @@
 import React from 'react';
-import SpaceCreateForm from './components/SpaceCreateForm';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addSpaces } from '../../actions/spaces';
-import { useHistory } from 'react-router-dom';
-import useQuery from '../../utils/useQuery';
-import _ from 'lodash';
+import { Skeleton } from 'antd';
 
-function EditSpace() {
+import SpaceEditForm from './components/SpaceEditForm';
+import { addSpace } from '../../actions/spaces';
+
+function SpaceEdit() {
   const history = useHistory();
-  const query = useQuery();
-  const id = query.get('id');
-
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const { space } = useSelector((state) => {
-    const { spaces, ...other } = state.spaces;
-    const organisation = _.find(spaces, { id: 3 });
-    if (!organisation) return [];
+
+  const { space, loading } = useSelector((state) => {
     return {
-      space: _.find(organisation.spaces, { id: parseInt(id) }),
-      ...other,
+      space: state.spaces.details[id],
+      loading: state.spaces.loading,
     };
   });
 
   const onCreate = (values) => {
-    dispatch(addSpaces(values));
+    dispatch(addSpace(values));
     history.push('/spaces');
   };
-  return <SpaceCreateForm data={space} onCreate={onCreate} />;
+
+  if (loading) return <Skeleton />;
+
+  return <SpaceEditForm onCreate={onCreate} data={space} />;
 }
 
-export default EditSpace;
+export default SpaceEdit;

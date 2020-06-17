@@ -5,9 +5,6 @@ import BasicLayout from './layouts/basic';
 import { useDispatch } from 'react-redux';
 import { getSpaces } from './actions/spaces';
 
-//Pages
-import Dashboard from './pages/dashboard';
-
 //Routes
 import routes from './config/routesConfig';
 
@@ -23,9 +20,8 @@ function App() {
       <Router basename={process.env.PUBLIC_URL}>
         <BasicLayout>
           <Switch>
-            <Route exact path="/" component={Dashboard} />
             {routes.map((route) => (
-              <Route exact path={route.path} component={route.Component} />
+              <Route key={route.path} exact path={route.path} component={route.Component} />
             ))}
           </Switch>
         </BasicLayout>
