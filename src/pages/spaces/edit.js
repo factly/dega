@@ -19,8 +19,7 @@ function SpaceEdit() {
   });
 
   const onCreate = (values) => {
-    dispatch(addSpace(values));
-    history.push('/spaces');
+    console.log(values);
   };
 
   if (loading) return <Skeleton />;

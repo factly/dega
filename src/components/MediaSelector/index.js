@@ -19,7 +19,12 @@ function MediaSelector({ show, handleCancel, handleSelect }) {
         <Button key="back" onClick={handleCancel}>
           Return
         </Button>,
-        <Button key="submit" type="primary" disabled={!selected} onClick={handleSelect}>
+        <Button
+          key="submit"
+          type="primary"
+          disabled={!selected}
+          onClick={() => handleSelect(selected)}
+        >
           {selected ? selected.name : null} Select
         </Button>,
       ]}
