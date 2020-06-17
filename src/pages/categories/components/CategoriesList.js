@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Space } from 'antd';
+import { Popconfirm, Space, Typography } from 'antd';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, deleteCategory } from '../../../actions/categories';
@@ -35,6 +35,17 @@ function CategoriesList() {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      width: '50%',
+      render: (_, record) => {
+        return (
+          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+        );
+      },
+    },
     { title: 'Parent Category', dataIndex: 'parent_id', key: 'parent_id' },
     {
       title: 'Action',
@@ -78,9 +89,6 @@ function CategoriesList() {
       </Link>
       <Table
         columns={columns}
-        expandable={{
-          expandedRowRender: (record) => <p style={{ margin: 0 }}>{record.description}</p>,
-        }}
         dataSource={data}
         onChange={handleTableChange}
         loading={loading}
