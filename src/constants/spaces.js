@@ -1,5 +1,4 @@
 //Actions
-export const ADD_SPACE = 'ADD_SPACE';
 export const LOADING_SPACES = 'LOADING_SPACES';
 export const SET_SELECTED_SPACE = 'SET_SELECTED_SPACE';
 export const GET_SPACES_SUCCESS = 'GET_SPACES_SUCCESS';

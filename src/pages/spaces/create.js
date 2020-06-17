@@ -1,5 +1,5 @@
 import React from 'react';
-import SpaceCreateForm from './components/SpaceCreateFrom';
+import SpaceCreateForm from './components/SpaceCreateForm';
 import { useDispatch } from 'react-redux';
 import { addSpace } from '../../actions/spaces';
 import { useHistory } from 'react-router-dom';

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Layout, Card } from 'antd';
 import { withRouter } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
@@ -14,7 +14,7 @@ function BasicLayout(props) {
   const { children } = props;
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  React.useEffect(() => {
     dispatch(getSpaces());
   }, [dispatch]);
   return (

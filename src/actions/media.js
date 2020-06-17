@@ -18,10 +18,10 @@ import {
 export const addMedium = (data) => {
   return async (dispatch, getState) => {
     const response = await axios.post(API_ADD_MEDIA, data).catch((error) => {
-      addMediumFailure(error.message);
+      dispatch(addMediumFailure(error.message));
     });
     if (response) {
-      addMediumSuccess(response.data);
+      dispatch(addMediumSuccess(response.data));
     }
   };
 };
