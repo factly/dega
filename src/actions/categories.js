@@ -48,11 +48,10 @@ export const getCategories = (query) => {
 export const addCategory = (data) => {
   return async (dispatch, getState) => {
     dispatch(loadingSpaces());
-    const spaceId = 2;
     const response = await axios({
       url: API_ADD_CATEGORY,
       method: 'post',
-      data: { ...data, space_id: spaceId },
+      data: { ...data },
     }).catch((error) => {
       dispatch(addCategoryFailure(error.message));
     });

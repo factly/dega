@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Space, Button, Typography, Table } from 'antd';
+import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link } from 'react-router-dom';
@@ -29,8 +29,6 @@ function FormatsList() {
   const fetchFormats = () => {
     dispatch(getFormats({ page: page }));
   };
-
-  const onConfirm = (id) => dispatch(deleteFormat(id));
 
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },

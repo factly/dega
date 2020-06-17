@@ -9,7 +9,7 @@ function Formats() {
       <Link key="1" to="/formats/create">
         <Button>Create New</Button>
       </Link>
-      <FormatsList />;
+      <FormatsList />
     </Space>
   );
 }
