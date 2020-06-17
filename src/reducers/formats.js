@@ -1,10 +1,10 @@
 import {
-  GET_TAGS_SUCCESS,
-  ADD_TAG_SUCCESS,
-  UPDATE_TAG_SUCCESS,
-  DELETE_TAG_SUCCESS,
-  LOADING_TAGS,
-} from '../constants/tags';
+  GET_FORMATS_SUCCESS,
+  ADD_FORMAT_SUCCESS,
+  UPDATE_FORMAT_SUCCESS,
+  DELETE_FORMAT_SUCCESS,
+  LOADING_FORMATS,
+} from '../constants/formats';
 
 const initialState = {
   req: [],
@@ -13,17 +13,17 @@ const initialState = {
   total: 0,
 };
 
-export default function tagsReducer(state = initialState, action = {}) {
+export default function formatsReducer(state = initialState, action = {}) {
   if (!action.payload) {
     return state;
   }
   switch (action.type) {
-    case LOADING_TAGS:
+    case LOADING_FORMATS:
       return {
         ...state,
         loading: false,
       };
-    case GET_TAGS_SUCCESS:
+    case GET_FORMATS_SUCCESS:
       const localReq = state.req;
       localReq.push({
         ids: action.payload.data.nodes.map((item) => item.id),
@@ -42,14 +42,14 @@ export default function tagsReducer(state = initialState, action = {}) {
         details: localDetails,
         total: action.payload.data.total,
       };
-    case ADD_TAG_SUCCESS:
+    case ADD_FORMAT_SUCCESS:
       return initialState;
-    case UPDATE_TAG_SUCCESS:
+    case UPDATE_FORMAT_SUCCESS:
       return {
         ...state,
         details: { ...state.details, [action.payload.id]: action.payload },
       };
-    case DELETE_TAG_SUCCESS:
+    case DELETE_FORMAT_SUCCESS:
       return initialState;
     default:
       return state;

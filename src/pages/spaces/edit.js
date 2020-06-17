@@ -1,15 +1,12 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 
 import SpaceEditForm from './components/SpaceEditForm';
-import { addSpace } from '../../actions/spaces';
 
 function SpaceEdit() {
-  const history = useHistory();
   const { id } = useParams();
-  const dispatch = useDispatch();
 
   const { space, loading } = useSelector((state) => {
     return {

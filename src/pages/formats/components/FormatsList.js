@@ -1,34 +1,33 @@
 import React from 'react';
 import { Popconfirm, Button, Typography, Table } from 'antd';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories, deleteCategory } from '../../../actions/categories';
+import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link } from 'react-router-dom';
 
-function CategoriesList() {
+function FormatsList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { categories, total, loading } = useSelector((state) => {
-    const node = state.categories.req.find((item) => {
+  const { formats, total, loading } = useSelector((state) => {
+    const node = state.formats.req.find((item) => {
       return item.query.page === page;
     });
 
     if (node)
       return {
-        categories: node.ids.map((element) => state.categories.details[element]),
-        total: state.categories.total,
-        loading: state.categories.loading,
+        formats: node.ids.map((element) => state.formats.details[element]),
+        total: state.formats.total,
+        loading: state.formats.loading,
       };
-    return { categories: [], total: 0, loading: state.categories.loading };
+    return { formats: [], total: 0, loading: state.formats.loading };
   });
 
   React.useEffect(() => {
-    fetchCategories();
+    fetchFormats();
   }, [page]);
 
-  const fetchCategories = () => {
-    dispatch(getCategories({ page: page }));
+  const fetchFormats = () => {
+    dispatch(getFormats({ page: page }));
   };
 
   const columns = [
@@ -45,7 +44,6 @@ function CategoriesList() {
         );
       },
     },
-    { title: 'Parent Category', dataIndex: 'parent_id', key: 'parent_id' },
     {
       title: 'Action',
       dataIndex: 'operation',
@@ -57,13 +55,13 @@ function CategoriesList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/categories/${record.id}/edit`}
+              to={`/formats/${record.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
-              onConfirm={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
+              onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
             >
               <Link to="" className="ant-dropdown-link">
                 <Button>Delete</Button>
@@ -79,7 +77,7 @@ function CategoriesList() {
     <Table
       bordered
       columns={columns}
-      dataSource={categories}
+      dataSource={formats}
       loading={loading}
       rowKey={'id'}
       pagination={{
@@ -92,4 +90,4 @@ function CategoriesList() {
   );
 }
 
-export default CategoriesList;
+export default FormatsList;

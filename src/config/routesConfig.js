@@ -22,6 +22,11 @@ import Tags from '../pages/tags';
 import CreateTag from '../pages/tags/create';
 import EditTags from '../pages/tags/edit';
 
+//Formats
+import Formats from '../pages/formats';
+import CreateFormat from '../pages/formats/create';
+import EditFormats from '../pages/formats/edit';
+
 export default [
   {
     path: '/dashboard',
@@ -78,6 +83,30 @@ export default [
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Edit Category',
+  },
+  {
+    path: '/formats',
+    Component: Formats,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Formats',
+  },
+  {
+    path: '/formats/create',
+    Component: CreateFormat,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Create Format',
+  },
+  {
+    path: '/formats/:id/edit',
+    Component: EditFormats,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Edit Format',
   },
   {
     path: '/tags',
