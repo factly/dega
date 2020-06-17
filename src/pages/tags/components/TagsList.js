@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import { Popconfirm, Button, Typography } from 'antd';
-import { useEffect } from 'react';
+import React from 'react';
+import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
-import Table from '../../../components/Table';
 
 function TagsList() {
   const dispatch = useDispatch();
@@ -77,6 +75,7 @@ function TagsList() {
 
   return (
     <Table
+      bordered
       columns={columns}
       dataSource={tags}
       loading={loading}

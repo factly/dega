@@ -3,8 +3,8 @@ import {
   ADD_CATEGORY_SUCCESS,
   UPDATE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_SUCCESS,
+  LOADING_CATEGORIES,
 } from '../constants/categories';
-import { LOADING_PAGE } from '../constants';
 
 const initialState = {
   req: [],
@@ -18,7 +18,7 @@ export default function categoriesReducer(state = initialState, action = {}) {
     return state;
   }
   switch (action.type) {
-    case LOADING_PAGE:
+    case LOADING_CATEGORIES:
       return {
         ...state,
         loading: false,

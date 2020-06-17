@@ -1,11 +1,9 @@
 import React from 'react';
-import { Popconfirm, Button, Typography } from 'antd';
+import { Popconfirm, Button, Typography, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, deleteCategory } from '../../../actions/categories';
 import { Link } from 'react-router-dom';
-import Table from '../../../components/Table';
-import _ from 'lodash';
 
 function CategoriesList() {
   const dispatch = useDispatch();

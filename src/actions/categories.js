@@ -10,9 +10,8 @@ import {
   UPDATE_CATEGORY_FAILURE,
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_FAILURE,
+  LOADING_CATEGORIES,
 } from '../constants/categories';
-
-import { LOADING_PAGE } from '../constants';
 
 export const getCategories = (query) => {
   return async (dispatch, getState) => {
@@ -97,7 +96,7 @@ export const deleteCategory = (id) => {
 };
 
 const loadingSpaces = () => ({
-  type: LOADING_PAGE,
+  type: LOADING_CATEGORIES,
 });
 
 const getCategoriesSuccess = (data, query) => ({

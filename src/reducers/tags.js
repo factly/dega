@@ -3,8 +3,8 @@ import {
   ADD_TAG_SUCCESS,
   UPDATE_TAG_SUCCESS,
   DELETE_TAG_SUCCESS,
+  LOADING_TAGS,
 } from '../constants/tags';
-import { LOADING_PAGE } from '../constants';
 
 const initialState = {
   req: [],
@@ -18,7 +18,7 @@ export default function tagsReducer(state = initialState, action = {}) {
     return state;
   }
   switch (action.type) {
-    case LOADING_PAGE:
+    case LOADING_TAGS:
       return {
         ...state,
         loading: false,
