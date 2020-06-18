@@ -10,7 +10,7 @@ const initialState = {
   orgs: [],
   details: {},
   loading: true,
-  selected: null,
+  selected: 0,
 };
 
 export default function spacesReducer(state = initialState, action = {}) {

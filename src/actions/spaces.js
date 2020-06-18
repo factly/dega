@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from 'axios';
 import {
   GET_SPACES_SUCCESS,
   GET_SPACES_FAILURE,

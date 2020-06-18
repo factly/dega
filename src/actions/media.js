@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from 'axios';
 import {
   API_ADD_MEDIA,
   LOADING_MEDIA,

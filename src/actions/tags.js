@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from 'axios';
 import {
   GET_TAGS_SUCCESS,
   GET_TAGS_FAILURE,

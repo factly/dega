@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from 'axios';
 import {
   GET_CATEGORIES_SUCCESS,
   GET_CATEGORIES_FAILURE,

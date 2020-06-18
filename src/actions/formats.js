@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from 'axios';
 import {
   GET_FORMATS_SUCCESS,
   GET_FORMATS_FAILURE,
