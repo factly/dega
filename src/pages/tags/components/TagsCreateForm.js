@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
+import { maker, checker } from './../../../utils/sluger';
 
 const { TextArea } = Input;
 
@@ -27,15 +28,7 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
 
   const onTitleChange = (string) => {
     form.setFieldsValue({
-      slug: string
-        .toString()
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-z0-9 -]/g, '')
-        .replace(/\s+/g, '-')
-        .replace(/-+/g, '-')
-        .replace(/^-+/, '')
-        .replace(/-+$/, ''),
+      slug: maker(string),
     });
   };
 
@@ -71,7 +64,7 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
             message: 'Please input the slug of tag',
           },
           {
-            pattern: new RegExp('^[a-z0-9]+(?:-[a-z0-9]+)*$'),
+            pattern: checker,
             message: 'Slug can not have whitespace!',
           },
         ]}

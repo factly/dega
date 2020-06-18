@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
+import { maker, checker } from './../../../utils/sluger';
 
 const { TextArea } = Input;
 
@@ -25,6 +26,12 @@ const FormatCreateForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
+  const onTitleChange = (string) => {
+    form.setFieldsValue({
+      slug: maker(string),
+    });
+  };
+
   return (
     <Form
       {...layout}
@@ -42,11 +49,11 @@ const FormatCreateForm = ({ onCreate, data = {} }) => {
         rules={[
           {
             required: true,
-            message: 'Please enter format name!',
+            message: 'Please enter name!',
           },
         ]}
       >
-        <Input />
+        <Input onChange={(e) => onTitleChange(e.target.value)} />
       </Form.Item>
       <Form.Item
         name="slug"
@@ -54,7 +61,11 @@ const FormatCreateForm = ({ onCreate, data = {} }) => {
         rules={[
           {
             required: true,
-            message: 'Please input the slug of space!',
+            message: 'Please input the slug!',
+          },
+          {
+            pattern: checker,
+            message: 'Please enter valid slug!',
           },
         ]}
       >
@@ -66,7 +77,7 @@ const FormatCreateForm = ({ onCreate, data = {} }) => {
         rules={[
           {
             required: true,
-            message: 'Please input the description of category!',
+            message: 'Please enter the description!',
           },
         ]}
       >
