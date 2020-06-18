@@ -75,7 +75,7 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
       <Form.Item {...tailLayout}>
         <Space>
           <Button type="primary" htmlType="submit">
-            Create
+            Submit
           </Button>
           <Button htmlType="button" onClick={onReset}>
             Reset

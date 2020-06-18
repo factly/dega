@@ -9,8 +9,7 @@ function CreateFormat() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addFormat(values));
-    history.push('/formats');
+    dispatch(addFormat(values)).then(() => history.push('/formats'));
   };
   return <FormatCreateForm onCreate={onCreate} />;
 }

@@ -14,17 +14,16 @@ import {
 } from '../constants/spaces';
 
 export const getSpaces = () => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch(loadingSpaces());
-    const response = await axios({
-      url: API_GET_SPACES,
-      method: 'get',
-    }).catch((error) => {
-      dispatch(getSpacesFailure(error.message));
-    });
-    if (response) {
-      dispatch(getSpacesSuccess(response.data));
-    }
+    return axios
+      .get(API_GET_SPACES)
+      .then((response) => {
+        dispatch(getSpacesSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getSpacesFailure(error.message));
+      });
   };
 };
 
@@ -34,33 +33,30 @@ export const setSelectedSpace = (space) => ({
 });
 
 export const addSpace = (data) => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch(loadingSpaces());
-    const response = await axios({
-      url: API_ADD_SPACE,
-      method: 'post',
-      data: data,
-    }).catch((error) => {
-      dispatch(addSpaceFailure(error.message));
-    });
-    if (response) {
-      dispatch(addSpaceSuccess(response.data));
-    }
+    return axios
+      .post(API_ADD_SPACE, data)
+      .then((response) => {
+        dispatch(addSpaceSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(addSpaceFailure(error.message));
+      });
   };
 };
 
 export const deleteSpace = (id) => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch(loadingSpaces());
-    const response = await axios({
-      url: API_DELETE_SPACE + '/' + id,
-      method: 'delete',
-    }).catch((error) => {
-      dispatch(deleteSpaceFailure(error.message));
-    });
-    if (response) {
-      dispatch(deleteSpaceSuccess(id));
-    }
+    return axios
+      .delete(API_DELETE_SPACE + '/' + id)
+      .then(() => {
+        dispatch(deleteSpaceSuccess(id));
+      })
+      .catch((error) => {
+        dispatch(deleteSpaceFailure(error.message));
+      });
   };
 };
 

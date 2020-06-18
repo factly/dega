@@ -16,65 +16,73 @@ import {
 } from '../constants/media';
 
 export const addMedium = (data) => {
-  return async (dispatch, getState) => {
-    const response = await axios.post(API_ADD_MEDIA, data).catch((error) => {
-      dispatch(addMediumFailure(error.message));
-    });
-    if (response) {
-      dispatch(addMediumSuccess(response.data));
-    }
+  return (dispatch, getState) => {
+    return axios
+      .post(API_ADD_MEDIA, data)
+      .then((response) => {
+        dispatch(addMediumSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(addMediumFailure(error.message));
+      });
   };
 };
 
 export const getMedia = (query) => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch(loadingMedia());
-    const response = await axios
+    return axios
       .get(API_GET_MEDIA, {
         params: query,
+      })
+      .then((response) => {
+        dispatch(getMediaSuccess(query, response.data));
       })
       .catch((error) => {
         dispatch(getMediaFailure(error.message));
       });
-    if (response) {
-      dispatch(getMediaSuccess(query, response.data));
-    }
   };
 };
 
 export const getMedium = (id) => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch(loadingMedia());
-    const response = await axios.get(API_GET_MEDIA + '/' + id).catch((error) => {
-      dispatch(getMediumFailure(error.message));
-    });
-    if (response) {
-      dispatch(getMediumSuccess(response.data));
-    }
+    return axios
+      .get(API_GET_MEDIA + '/' + id)
+      .then((response) => {
+        dispatch(getMediumSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getMediumFailure(error.message));
+      });
   };
 };
 
 export const updateMedium = (data) => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch(loadingMedia());
-    const response = await axios.put(API_GET_MEDIA + '/' + data.id, data).catch((error) => {
-      dispatch(updateMediumFailure(error.message));
-    });
-    if (response) {
-      dispatch(updateMediumSuccess(response.data));
-    }
+    return axios
+      .put(API_GET_MEDIA + '/' + data.id, data)
+      .then((response) => {
+        dispatch(updateMediumSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(updateMediumFailure(error.message));
+      });
   };
 };
 
 export const deleteMedium = (id) => {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     dispatch(loadingMedia());
-    const response = await axios.delete(API_GET_MEDIA + '/' + id).catch((error) => {
-      dispatch(deleteMediumFailure(error.message));
-    });
-    if (response) {
-      dispatch(deleteMediumSuccess(id));
-    }
+    return axios
+      .delete(API_GET_MEDIA + '/' + id)
+      .then(() => {
+        dispatch(deleteMediumSuccess(id));
+      })
+      .catch((error) => {
+        dispatch(deleteMediumFailure(error.message));
+      });
   };
 };
 

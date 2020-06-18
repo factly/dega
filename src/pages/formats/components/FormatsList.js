@@ -15,7 +15,7 @@ function FormatsList() {
 
     if (node)
       return {
-        formats: node.ids.map((element) => state.formats.details[element]),
+        formats: node.data.map((element) => state.formats.details[element]),
         total: state.formats.total,
         loading: state.formats.loading,
       };

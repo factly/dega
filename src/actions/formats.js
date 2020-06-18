@@ -14,87 +14,64 @@ import {
 } from '../constants/formats';
 
 export const getFormats = (query) => {
-  return async (dispatch, getState) => {
-    let found = false;
-    const {
-      formats: { req },
-    } = getState();
-
-    // map data based on query
-    req.forEach((each) => {
-      const { limit, page } = each.query;
-      if (page === query.page && limit === query.limit) {
-        found = true;
-        return;
-      }
-    });
-
-    if (!found) {
-      dispatch(loadingSpaces());
-      const response = await axios({
-        url: API_GET_FORMATS,
-        method: 'get',
+  return (dispatch, getState) => {
+    dispatch(loadingFormats());
+    return axios
+      .get(API_GET_FORMATS, {
         params: query,
-      }).catch((error) => {
+      })
+      .then((response) => {
+        dispatch(getFormatsSuccess(response.data, query));
+      })
+      .catch((error) => {
         dispatch(getFormatsFailure(error.message));
       });
-      if (response) {
-        dispatch(getFormatsSuccess(response.data, query));
-      }
-    }
   };
 };
 
 export const addFormat = (data) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-    const response = await axios({
-      url: API_ADD_FORMAT,
-      method: 'post',
-      data: data,
-    }).catch((error) => {
-      dispatch(addFormatFailure(error.message));
-    });
-    if (response) {
-      dispatch(addFormatSuccess(data));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingFormats());
+    return axios
+      .post(API_ADD_FORMAT, data)
+      .then((response) => {
+        dispatch(addFormatSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(addFormatFailure(error.message));
+      });
   };
 };
 
 export const updateFormat = (data) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-
-    const response = await axios({
-      url: API_ADD_FORMAT + `/${data.id}`,
-      method: 'put',
-      data: { ...data },
-    }).catch((error) => {
-      dispatch(updateFormatFailure(error.message));
-    });
-    if (response) {
-      dispatch(updateFormatSuccess(data));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingFormats());
+    return axios
+      .put(API_ADD_FORMAT + '/' + data.id, data)
+      .then((response) => {
+        dispatch(updateFormatSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(updateFormatFailure(error.message));
+      });
   };
 };
 
 export const deleteFormat = (id) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-
-    const response = await axios({
-      url: API_ADD_FORMAT + `/${id}`,
-      method: 'delete',
-    }).catch((error) => {
-      dispatch(deleteFormatFailure(error.message));
-    });
-    if (response) {
-      dispatch(deleteFormatSuccess(id));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingFormats());
+    return axios
+      .delete(API_ADD_FORMAT + '/' + id)
+      .then(() => {
+        dispatch(deleteFormatSuccess(id));
+      })
+      .catch((error) => {
+        dispatch(deleteFormatFailure(error.message));
+      });
   };
 };
 
-const loadingSpaces = () => ({
+const loadingFormats = () => ({
   type: LOADING_FORMATS,
 });
 

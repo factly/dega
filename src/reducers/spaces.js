@@ -32,6 +32,8 @@ export default function spacesReducer(state = initialState, action = {}) {
         });
       });
 
+      const defaultSpace = action.payload[0].spaces.length > 0 ? action.payload[0].spaces[0].id : 0;
+
       return {
         ...state,
         orgs: action.payload.map((each) => {
@@ -39,7 +41,7 @@ export default function spacesReducer(state = initialState, action = {}) {
         }),
         details: space_details,
         loading: false,
-        selected: space_details[state.selected] ? state.selected : action.payload[0].spaces[0].id,
+        selected: space_details[state.selected] ? state.selected : defaultSpace,
       };
     case ADD_SPACE_SUCCESS:
       let org_index = state.orgs.findIndex(
@@ -60,6 +62,7 @@ export default function spacesReducer(state = initialState, action = {}) {
           [action.payload.id]: action.payload,
         },
         orgs: org_copy,
+        selected: action.payload.id,
       };
     case SET_SELECTED_SPACE:
       return {

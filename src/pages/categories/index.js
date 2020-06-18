@@ -9,7 +9,7 @@ function Categories() {
       <Link key="1" to="/categories/create">
         <Button>Create New</Button>
       </Link>
-      <CategoriesList />;
+      <CategoriesList />
     </Space>
   );
 }

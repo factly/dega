@@ -25,8 +25,15 @@ export default function categoriesReducer(state = initialState, action = {}) {
       };
     case GET_CATEGORIES_SUCCESS:
       const localReq = state.req;
+
+      const nodeIndex = state.req.findIndex((item) => {
+        return item.query.page === action.payload.query.page;
+      });
+
+      if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
+
       localReq.push({
-        ids: action.payload.data.nodes.map((item) => item.id),
+        data: action.payload.data.nodes.map((item) => item.id),
         query: action.payload.query,
       });
 
@@ -43,14 +50,26 @@ export default function categoriesReducer(state = initialState, action = {}) {
         total: action.payload.data.total,
       };
     case ADD_CATEGORY_SUCCESS:
-      return initialState;
+      return {
+        ...state,
+        req: [],
+        details: {},
+        loading: true,
+        total: 0,
+      };
     case UPDATE_CATEGORY_SUCCESS:
       return {
         ...state,
         details: { ...state.details, [action.payload.id]: action.payload },
       };
     case DELETE_CATEGORY_SUCCESS:
-      return initialState;
+      return {
+        ...state,
+        req: [],
+        details: {},
+        loading: true,
+        total: 0,
+      };
     default:
       return state;
   }

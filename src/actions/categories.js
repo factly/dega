@@ -14,87 +14,64 @@ import {
 } from '../constants/categories';
 
 export const getCategories = (query) => {
-  return async (dispatch, getState) => {
-    let found = false;
-    const {
-      categories: { req },
-    } = getState();
-
-    // map data based on query
-    req.forEach((each) => {
-      const { limit, page } = each.query;
-      if (page === query.page && limit === query.limit) {
-        found = true;
-        return;
-      }
-    });
-
-    if (!found) {
-      dispatch(loadingSpaces());
-      const response = await axios({
-        url: API_GET_CATEGORIES,
-        method: 'get',
+  return (dispatch, getState) => {
+    dispatch(loadingCategories());
+    return axios
+      .get(API_GET_CATEGORIES, {
         params: query,
-      }).catch((error) => {
+      })
+      .then((response) => {
+        dispatch(getCategoriesSuccess(response.data, query));
+      })
+      .catch((error) => {
         dispatch(getCategoriesFailure(error.message));
       });
-      if (response) {
-        dispatch(getCategoriesSuccess(response.data, query));
-      }
-    }
   };
 };
 
 export const addCategory = (data) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-    const response = await axios({
-      url: API_ADD_CATEGORY,
-      method: 'post',
-      data: data,
-    }).catch((error) => {
-      dispatch(addCategoryFailure(error.message));
-    });
-    if (response) {
-      dispatch(addCategorySuccess(data));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingCategories());
+    return axios
+      .post(API_ADD_CATEGORY, data)
+      .then((response) => {
+        dispatch(addCategorySuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(addCategoryFailure(error.message));
+      });
   };
 };
 
 export const updateCategory = (data) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-
-    const response = await axios({
-      url: API_ADD_CATEGORY + `/${data.id}`,
-      method: 'put',
-      data: { ...data },
-    }).catch((error) => {
-      dispatch(updateCategoryFailure(error.message));
-    });
-    if (response) {
-      dispatch(updateCategorySuccess(data));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingCategories());
+    return axios
+      .put(API_ADD_CATEGORY + '/' + data.id, data)
+      .then((response) => {
+        dispatch(updateCategorySuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(updateCategoryFailure(error.message));
+      });
   };
 };
 
 export const deleteCategory = (id) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-
-    const response = await axios({
-      url: API_ADD_CATEGORY + `/${id}`,
-      method: 'delete',
-    }).catch((error) => {
-      dispatch(deleteCategoryFailure(error.message));
-    });
-    if (response) {
-      dispatch(deleteCategorySuccess(id));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingCategories());
+    return axios
+      .delete(API_ADD_CATEGORY + '/' + id)
+      .then(() => {
+        dispatch(deleteCategorySuccess(id));
+      })
+      .catch((error) => {
+        dispatch(deleteCategoryFailure(error.message));
+      });
   };
 };
 
-const loadingSpaces = () => ({
+const loadingCategories = () => ({
   type: LOADING_CATEGORIES,
 });
 
