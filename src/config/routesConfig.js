@@ -27,6 +27,9 @@ import Formats from '../pages/formats';
 import CreateFormat from '../pages/formats/create';
 import EditFormats from '../pages/formats/edit';
 
+//Post
+import CreatePost from '../pages/posts/create';
+
 export default [
   {
     path: '/dashboard',
@@ -147,5 +150,13 @@ export default [
     enableBreadcrumb: false,
     Icon: FileImageOutlined,
     title: 'Edit Media',
+  },
+  {
+    path: '/posts',
+    Component: CreatePost,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: FileImageOutlined,
+    title: 'Posts',
   },
 ];
