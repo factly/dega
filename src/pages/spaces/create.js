@@ -9,8 +9,7 @@ function CreateSpace() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addSpace(values));
-    history.push('/spaces');
+    dispatch(addSpace(values)).then(() => history.push('/spaces'));
   };
   return <SpaceCreateForm onCreate={onCreate} />;
 }

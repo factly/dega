@@ -9,7 +9,7 @@ function Tags() {
       <Link key="1" to="/tags/create">
         <Button>Create New</Button>
       </Link>
-      <TagsList />;
+      <TagsList />
     </Space>
   );
 }

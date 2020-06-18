@@ -9,8 +9,7 @@ function CreateTag() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addTag(values));
-    history.push('/tags');
+    dispatch(addTag(values)).then(() => history.push('/tags'));
   };
   return <TagCreateForm onCreate={onCreate} />;
 }

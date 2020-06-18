@@ -9,8 +9,7 @@ function CreateCategory() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addCategory(values));
-    history.push('/categories');
+    dispatch(addCategory(values)).then(() => history.push('/categories'));
   };
   return <CategoryCreateForm onCreate={onCreate} />;
 }

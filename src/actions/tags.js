@@ -1,4 +1,4 @@
-import axios from '../utils/axios';
+import axios from 'axios';
 import {
   GET_TAGS_SUCCESS,
   GET_TAGS_FAILURE,
@@ -10,92 +10,69 @@ import {
   UPDATE_TAG_SUCCESS,
   DELETE_TAG_SUCCESS,
   DELETE_TAG_FAILURE,
-  LOADING_TAGS,
 } from '../constants/tags';
+import { LOADING_SPACES } from '../constants/spaces';
 
 export const getTags = (query) => {
-  return async (dispatch, getState) => {
-    let found = false;
-    const {
-      tags: { req },
-    } = getState();
-
-    // map data based on query
-    req.forEach((each) => {
-      const { limit, page } = each.query;
-      if (page === query.page && limit === query.limit) {
-        found = true;
-        return;
-      }
-    });
-
-    if (!found) {
-      dispatch(loadingSpaces());
-      const response = await axios({
-        url: API_GET_TAGS,
-        method: 'get',
+  return (dispatch, getState) => {
+    dispatch(loadingTags());
+    return axios
+      .get(API_GET_TAGS, {
         params: query,
-      }).catch((error) => {
+      })
+      .then((response) => {
+        dispatch(getTagsSuccess(response.data, query));
+      })
+      .catch((error) => {
         dispatch(getTagsFailure(error.message));
       });
-      if (response) {
-        dispatch(getTagsSuccess(response.data, query));
-      }
-    }
   };
 };
 
 export const addTag = (data) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-    const response = await axios({
-      url: API_ADD_TAG,
-      method: 'post',
-      data: data,
-    }).catch((error) => {
-      dispatch(addTagFailure(error.message));
-    });
-    if (response) {
-      dispatch(addTagSuccess(data));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingTags());
+    return axios
+      .post(API_ADD_TAG, data)
+      .then((response) => {
+        dispatch(addTagSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(addTagFailure(error.message));
+      });
   };
 };
 
 export const updateTag = (data) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-
-    const response = await axios({
-      url: API_ADD_TAG + `/${data.id}`,
-      method: 'put',
-      data: { ...data },
-    }).catch((error) => {
-      dispatch(updateTagFailure(error.message));
-    });
-    if (response) {
-      dispatch(updateTagSuccess(data));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingTags());
+    return axios
+      .put(API_ADD_TAG + '/' + data.id, data)
+      .then((response) => {
+        dispatch(updateTagSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(updateTagFailure(error.message));
+      });
   };
 };
 
 export const deleteTag = (id) => {
-  return async (dispatch, getState) => {
-    dispatch(loadingSpaces());
-
-    const response = await axios({
-      url: API_ADD_TAG + `/${id}`,
-      method: 'delete',
-    }).catch((error) => {
-      dispatch(deleteTagFailure(error.message));
-    });
-    if (response) {
-      dispatch(deleteTagSuccess(id));
-    }
+  return (dispatch, getState) => {
+    dispatch(loadingTags());
+    return axios
+      .delete(API_ADD_TAG + '/' + id)
+      .then(() => {
+        dispatch(deleteTagSuccess(id));
+      })
+      .catch((error) => {
+        dispatch(deleteTagFailure(error.message));
+      });
   };
 };
 
-const loadingSpaces = () => ({
-  type: LOADING_TAGS,
+const loadingTags = () => ({
+  type: LOADING_SPACES,
 });
 
 const getTagsSuccess = (data, query) => ({

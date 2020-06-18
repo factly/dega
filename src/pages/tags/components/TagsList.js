@@ -15,7 +15,7 @@ function TagsList() {
 
     if (node)
       return {
-        tags: node.ids.map((element) => state.tags.details[element]),
+        tags: node.data.map((element) => state.tags.details[element]),
         total: state.tags.total,
         loading: state.tags.loading,
       };
