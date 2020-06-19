@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form, Input, Select } from 'antd';
+import { maker, checker } from './../../../utils/sluger';
+
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -25,6 +27,12 @@ const SpaceCreateForm = ({ onCreate }) => {
 
   const onReset = () => {
     form.resetFields();
+  };
+
+  const onTitleChange = (string) => {
+    form.setFieldsValue({
+      slug: maker(string),
+    });
   };
 
   return (
@@ -61,7 +69,11 @@ const SpaceCreateForm = ({ onCreate }) => {
               noStyle
               rules={[{ required: true, message: 'Name is required' }]}
             >
-              <Input style={{ width: '60%' }} placeholder="Input name" />
+              <Input
+                style={{ width: '60%' }}
+                placeholder="Input name"
+                onChange={(e) => onTitleChange(e.target.value)}
+              />
             </Form.Item>
           </Input.Group>
         </Form.Item>
@@ -71,7 +83,12 @@ const SpaceCreateForm = ({ onCreate }) => {
           rules={[
             {
               required: true,
-              message: 'Please input the slug of space!',
+              message: 'Please input the slug of!',
+            },
+
+            {
+              pattern: checker,
+              message: 'Please enter valid slug!',
             },
           ]}
         >

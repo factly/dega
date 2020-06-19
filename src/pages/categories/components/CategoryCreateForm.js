@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { InboxOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Space, Divider, Select, Upload } from 'antd';
-
+import { maker, checker } from './../../../utils/sluger';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -37,6 +37,13 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
 
     return e && e.fileList;
   };
+
+  const onTitleChange = (string) => {
+    form.setFieldsValue({
+      slug: maker(string),
+    });
+  };
+
   return (
     <Form
       {...layout}
@@ -70,11 +77,11 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
         rules={[
           {
             required: true,
-            message: 'Please enter category name!',
+            message: 'Please enter the name!',
           },
         ]}
       >
-        <Input />
+        <Input onChange={(e) => onTitleChange(e.target.value)} />
       </Form.Item>
       <Form.Item
         name="slug"
@@ -82,7 +89,11 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
         rules={[
           {
             required: true,
-            message: 'Please input the slug of space!',
+            message: 'Please input the slug!',
+          },
+          {
+            pattern: checker,
+            message: 'Slug can not have whitespaces!',
           },
         ]}
       >
@@ -94,7 +105,7 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
         rules={[
           {
             required: true,
-            message: 'Please input the description of category!',
+            message: 'Please input the description!',
           },
         ]}
       >
