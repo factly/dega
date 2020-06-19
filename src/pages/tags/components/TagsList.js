@@ -80,6 +80,7 @@ function TagsList() {
       columns={columns}
       dataSource={tags}
       loading={loading}
+      rowKey={'id'}
       pagination={{
         total: total,
         current: page,
