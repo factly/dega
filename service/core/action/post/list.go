@@ -2,13 +2,12 @@ package post
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
-	"github.com/go-chi/chi"
 )
 
 // list response
@@ -31,8 +30,7 @@ type paging struct {
 // @Router /core/posts [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	spaceID := chi.URLParam(r, "space_id")
-	sID, err := strconv.Atoi(spaceID)
+	sID, err := util.GetSpace(r.Context())
 
 	result := paging{}
 	posts := []model.Post{}
