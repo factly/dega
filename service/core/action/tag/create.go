@@ -28,6 +28,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 
+	if err != nil {
+		return
+	}
+
 	tag := &tag{}
 
 	json.NewDecoder(r.Body).Decode(&tag)
@@ -39,9 +43,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var tagSlug string
+	if tag.Slug != "" && util.SlugChecker(tag.Slug) {
+		tagSlug = tag.Slug
+	} else {
+		tagSlug = util.SlugMaker(tag.Name)
+	}
+
 	result := &model.Tag{
 		Name:        tag.Name,
-		Slug:        tag.Slug,
+		Slug:        util.SlugApprover(tagSlug, sID, config.DB.NewScope(&model.Tag{}).TableName()),
 		Description: tag.Description,
 		SpaceID:     uint(sID),
 	}
