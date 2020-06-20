@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -44,15 +45,15 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var tagSlug string
-	if tag.Slug != "" && util.SlugChecker(tag.Slug) {
+	if tag.Slug != "" && slug.Check(tag.Slug) {
 		tagSlug = tag.Slug
 	} else {
-		tagSlug = util.SlugMaker(tag.Name)
+		tagSlug = slug.Make(tag.Name)
 	}
 
 	result := &model.Tag{
 		Name:        tag.Name,
-		Slug:        util.SlugApprover(tagSlug, sID, config.DB.NewScope(&model.Tag{}).TableName()),
+		Slug:        slug.Approve(tagSlug, sID, config.DB.NewScope(&model.Tag{}).TableName()),
 		Description: tag.Description,
 		SpaceID:     uint(sID),
 	}
