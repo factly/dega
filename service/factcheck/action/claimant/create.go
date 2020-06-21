@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -42,9 +43,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var claimantSlug string
+	if claimant.Slug != "" && slug.Check(claimant.Slug) {
+		claimantSlug = claimant.Slug
+	} else {
+		claimantSlug = slug.Make(claimant.Name)
+	}
+
 	result := &model.Claimant{
 		Name:        claimant.Name,
-		Slug:        claimant.Slug,
+		Slug:        slug.Approve(claimantSlug, sID, config.DB.NewScope(&model.Claimant{}).TableName()),
 		Description: claimant.Description,
 		MediumID:    claimant.MediumID,
 		SpaceID:     uint(sID),
