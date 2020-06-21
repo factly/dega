@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -69,10 +70,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var spaceSlug string
+	if space.Slug != "" && slug.Check(space.Slug) {
+		spaceSlug = space.Slug
+	} else {
+		spaceSlug = slug.Make(space.Name)
+	}
+
 	result := &model.Space{
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
-		Slug:              space.Slug,
+		Slug:              slug.Approve(spaceSlug, 0, config.DB.NewScope(&model.Space{}).TableName()),
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
