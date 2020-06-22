@@ -23,18 +23,18 @@ type permission struct {
 	User model.Author `json:"user"`
 }
 
-// list - Get all categories
-// @Summary Show all categories
-// @Description Get all categories
-// @Tags Category
-// @ID get-all-categories
+// list - Get all authors
+// @Summary Show all authors
+// @Description Get all authors
+// @Tags Authors
+// @ID get-all-authors
 // @Produce  json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Success 200 {object} paging
-// @Router /core/categories [get]
+// @Router /core/authors [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
