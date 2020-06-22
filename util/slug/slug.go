@@ -1,7 +1,6 @@
 package slug
 
 import (
-	"fmt"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
@@ -37,6 +36,5 @@ func Approve(slug string, space int, table string) string {
 	if count != 0 {
 		temp = temp + "-" + strconv.Itoa(count)
 	}
-	fmt.Printf(temp)
 	return temp
 }
