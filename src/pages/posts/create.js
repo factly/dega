@@ -1,13 +1,16 @@
 import React from 'react';
-import { Row, Col, Form, Input, Select, Typography } from 'antd';
+import { Row, Col, Form, Input, Button, Typography } from 'antd';
 import EditorJS from '@editorjs/editorjs';
 import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Paragraph from '@editorjs/paragraph';
 import Quote from '@editorjs/quote';
 import Table from '@editorjs/table';
+import Selector from '../../components/Selector';
 
 function CreatePost() {
+  const [form] = Form.useForm();
+
   const editor = new EditorJS({
     /**
      * Id of Element that should contain the Editor
@@ -29,50 +32,36 @@ function CreatePost() {
     },
   });
 
+  const onFinish = (values) => console.log(values)
+
   return (
-    <Form style={{ maxWidth: '100%', width: '100%' }}>
+    <Form form={form} style={{ maxWidth: '100%', width: '100%' }} onFinish={onFinish}>
       <Row gutter={16}>
         <Col span={18}>
-          <Form.Item>
+          <Form.Item name="title" label="Title"> 
             <Input placeholder="title" />
           </Form.Item>
-          <Form.Item>
+          <Form.Item name="excerpt" label="Excerpt">
             <Input.TextArea rows={4} placeholder="excerpt" />
           </Form.Item>
           <div id="editorjs"></div>
         </Col>
         <Col span={6}>
-          <Form.Item>
-            <Select
-              defaultValue={['lucy']}
-              mode="multiple"
-              onPopupScroll={(e) =>
-                console.log(e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight)
-              }
-            >
-              <Select.Option value="jack">Jack</Select.Option>
-              <Select.Option value="lucy">Lucy</Select.Option>
-              <Select.Option value="Yiminghe">yiminghe</Select.Option>
-              <Select.Option value="jack1">Jack</Select.Option>
-              <Select.Option value="lucy1">Lucy</Select.Option>
-              <Select.Option value="Yiminghe1">yiminghe</Select.Option>
-              <Select.Option value="jack2">Jack</Select.Option>
-              <Select.Option value="lucy2">Lucy</Select.Option>
-              <Select.Option value="Yiminghe2">yiminghe</Select.Option>
-              <Select.Option value="jack3">Jack</Select.Option>
-              <Select.Option value="lucy3">Lucy</Select.Option>
-              <Select.Option value="Yiminghe3">yiminghe</Select.Option>
-              <Select.Option value="jack4">Jack</Select.Option>
-              <Select.Option value="lucy4">Lucy</Select.Option>
-              <Select.Option value="Yiminghe4">yiminghe</Select.Option>
-              <Select.Option value="jack5">Jack</Select.Option>
-              <Select.Option value="lucy5">Lucy</Select.Option>
-              <Select.Option value="Yiminghe5">yiminghe</Select.Option>
-              <Select.Option value="jack6">Jack</Select.Option>
-              <Select.Option value="lucy6">Lucy</Select.Option>
-              <Select.Option value="Yiminghe6">yiminghe</Select.Option>
-            </Select>
+          <Form.Item name="categories">
+            <Typography.Text> Categories</Typography.Text>
+            <Selector mode="multiple" action="Categories" onBlur={(values) => form.setFieldsValue({tags:values})}/>
           </Form.Item>
+          <Form.Item name="tags">
+            <Typography.Text> Tags</Typography.Text>
+            <Selector mode="multiple" action="Tags" onBlur={(values) => form.setFieldsValue({categories:values})}/>
+          </Form.Item>
+          <Form.Item name="formats">
+            <Typography.Text> Formats </Typography.Text>
+            <Selector action="Formats" onBlur={(values) => form.setFieldsValue({formats:values})}/>
+          </Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
         </Col>
       </Row>
     </Form>
