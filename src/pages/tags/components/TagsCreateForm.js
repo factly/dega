@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
+import { maker, checker } from './../../../utils/sluger';
 
 const { TextArea } = Input;
 
@@ -25,6 +26,12 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
+  const onTitleChange = (string) => {
+    form.setFieldsValue({
+      slug: maker(string),
+    });
+  };
+
   return (
     <Form
       {...layout}
@@ -46,7 +53,7 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
           },
         ]}
       >
-        <Input />
+        <Input onChange={(e) => onTitleChange(e.target.value)} />
       </Form.Item>
       <Form.Item
         name="slug"
@@ -54,7 +61,11 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
         rules={[
           {
             required: true,
-            message: 'Please input the slug of space!',
+            message: 'Please input the slug of tag',
+          },
+          {
+            pattern: checker,
+            message: 'Slug can not have whitespace!',
           },
         ]}
       >
