@@ -23,7 +23,10 @@ function Selector({ mode, defaultIds = [], onBlur, action, display = 'name' }) {
     }
 
     details = ids.map((id) => state[entity].details[id]);
-    defaultValues = defaultIds.map((id) => state[entity].details[id]);
+    defaultValues = defaultIds
+      .filter((id) => state[entity].details[id])
+      .map((id) => state[entity].details[id]);
+
     total = state[entity].total;
     return { details, total, defaultValues, loading: state[entity].loading };
   });
@@ -36,14 +39,13 @@ function Selector({ mode, defaultIds = [], onBlur, action, display = 'name' }) {
     dispatch(selectorType['get' + action]({ page: page }));
   };
 
-  console.log(defaultValues);
-
   return (
     <Select
       bordered
       listHeight={128}
       loading={loading}
       mode={mode}
+      defaultValue={defaultIds}
       placeholder={`Add ${entity}`}
       onChange={(values) => setSelected(values)}
       onBlur={() => onBlur(selected)}
