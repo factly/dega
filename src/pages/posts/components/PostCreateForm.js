@@ -39,9 +39,13 @@ function CreatePost({ onCreate, data = {} }) {
     editor
       .save()
       .then((outputData) => {
+        values.category_ids = values.categories || [];
+        values.tag_ids = values.tags || [];
+        values.format_id = values.format || 0;
         onCreate({
           ...values,
           description: outputData,
+          featured_medium_id: values.medium ? values.medium.id : 0,
         });
       })
       .catch((error) => {
@@ -55,11 +59,11 @@ function CreatePost({ onCreate, data = {} }) {
     });
   };
 
-  const [mediaSelector, setMediaSelector] = React.useState(null);
+  const [mediaSelector, setMediaSelector] = React.useState(false);
 
   const setMediumValues = (value) => {
     form.setFieldsValue({
-      feat: value,
+      medium: value,
     });
   };
 
@@ -85,19 +89,19 @@ function CreatePost({ onCreate, data = {} }) {
         </Col>
         <Col span={6}>
           <MediaSelector
-            show={mediaSelector !== null}
-            handleCancel={() => setMediaSelector(null)}
+            show={mediaSelector}
+            handleCancel={() => setMediaSelector(false)}
             handleSelect={(value) => {
               setMediumValues(value);
-              setMediaSelector(null);
+              setMediaSelector(false);
             }}
           />
-          <Form.Item name="feat" label="Image">
+          <Form.Item name="medium" label="Image">
             <Space direction="vertical">
-              {form.getFieldValue('feat') ? (
-                <img src={form.getFieldValue('feat').url} width="100%" />
+              {form.getFieldValue('medium') ? (
+                <img src={form.getFieldValue('medium').url} width="100%" />
               ) : null}
-              <Button onClick={() => setMediaSelector('feat')}>Select</Button>
+              <Button onClick={() => setMediaSelector(true)}>Select</Button>
             </Space>
           </Form.Item>
           <Form.Item
@@ -121,20 +125,20 @@ function CreatePost({ onCreate, data = {} }) {
               mode="multiple"
               action="Categories"
               defaultIds={data.categories}
-              onBlur={(values) => form.setFieldsValue({ category: values })}
+              onBlur={(values) => form.setFieldsValue({ categories: values })}
             />
           </Form.Item>
           <Form.Item name="tags" label="Tags">
             <Selector
               mode="multiple"
               action="Tags"
-              defaultIds={data.tags.map((item) => item.id)}
-              onBlur={(values) => form.setFieldsValue({ tag: values })}
+              defaultIds={data.tags}
+              onBlur={(values) => form.setFieldsValue({ tags: values })}
             />
           </Form.Item>
           <Form.Item name="format" label="Formats">
             <Selector
-              defaultIds={data.format}
+              defaultIds={[data.format]}
               action="Formats"
               onBlur={(values) => form.setFieldsValue({ format: values })}
             />

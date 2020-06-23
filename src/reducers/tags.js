@@ -5,6 +5,7 @@ import {
   DELETE_TAG_SUCCESS,
   LOADING_TAGS,
   GET_TAG_SUCCESS,
+  ADD_TAGS,
 } from '../constants/tags';
 
 const initialState = {
@@ -66,6 +67,15 @@ export default function tagsReducer(state = initialState, action = {}) {
         details: {},
         loading: true,
         total: 0,
+      };
+    case ADD_TAGS:
+      let details = state.details;
+      action.payload.data.forEach((element) => {
+        details[element.id] = element;
+      });
+      return {
+        ...state,
+        details: details,
       };
     case UPDATE_TAG_SUCCESS:
       return {

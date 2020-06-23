@@ -17,7 +17,6 @@ import { LOADING_SPACES } from '../constants/spaces';
 import { ADD_TAGS } from '../constants/tags';
 import { ADD_CATEGORIES } from '../constants/categories';
 import { ADD_FORMATS } from '../constants/formats';
-import { ADD_AUTHORS } from '../constants/authors';
 
 export const getPosts = (query) => {
   return (dispatch, getState) => {
@@ -27,20 +26,22 @@ export const getPosts = (query) => {
         params: query,
       })
       .then((response) => {
-        let posts = response.data.nodes.map((post) => {
-          if (post.tags) dispatch(addTags(post.tags));
-          if (post.categories) dispatch(addCategories(post.categories));
-          if (post.format) {
-            dispatch(addFormat(post.format));
-          }
+        let posts = response.data.nodes
+          ? response.data.nodes.map((post) => {
+              if (post.tags) dispatch(addTags(post.tags));
+              if (post.categories) dispatch(addCategories(post.categories));
+              if (post.format) {
+                dispatch(addFormat(post.format));
+              }
 
-          return {
-            ...post,
-            categories: post.categories.map((category) => category.id),
-            tags: post.tags.map((tag) => tag.id),
-            format: post.format.id,
-          };
-        });
+              return {
+                ...post,
+                categories: post.categories.map((category) => category.id),
+                tags: post.tags.map((tag) => tag.id),
+                format: post.format.id,
+              };
+            })
+          : [];
 
         dispatch(getPostsSuccess({ ...response.data, nodes: posts }, query));
       })
@@ -203,10 +204,5 @@ const addCategories = (data) => ({
 
 const addFormat = (data) => ({
   type: ADD_FORMATS,
-  payload: { data },
-});
-
-const addAuthors = (data) => ({
-  type: ADD_AUTHORS,
   payload: { data },
 });
