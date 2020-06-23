@@ -71,7 +71,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Status:           post.Status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
-		Updates:          post.Updates,
 		Description:      post.Description,
 		IsFeatured:       post.IsFeatured,
 		IsHighlighted:    post.IsHighlighted,

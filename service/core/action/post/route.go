@@ -7,26 +7,26 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // post request body
 type post struct {
-	Title            string    `json:"title" validate:"required"`
-	Subtitle         string    `json:"subtitle" validate:"required"`
-	Slug             string    `json:"slug" validate:"required"`
-	Status           string    `json:"status" validate:"required"`
-	Excerpt          string    `json:"excerpt" validate:"required"`
-	Description      string    `json:"description" validate:"required"`
-	Updates          string    `json:"updates" `
-	IsFeatured       bool      `json:"is_featured"`
-	IsSticky         bool      `json:"is_sticky"`
-	IsHighlighted    bool      `json:"is_highlighted"`
-	FeaturedMediumID uint      `json:"featured_medium_id"`
-	FormatID         uint      `json:"format_id" validate:"required"`
-	PublishedDate    time.Time `json:"published_date" validate:"required"`
-	SpaceID          uint      `json:"space_id" validate:"required"`
-	CategoryIDS      []uint    `json:"category_ids"`
-	TagIDS           []uint    `json:"tag_ids"`
+	Title            string         `json:"title" validate:"required"`
+	Subtitle         string         `json:"subtitle"`
+	Slug             string         `json:"slug" validate:"required"`
+	Status           string         `json:"status" `
+	Excerpt          string         `json:"excerpt" validate:"required"`
+	Description      postgres.Jsonb `json:"description" validate:"required"`
+	IsFeatured       bool           `json:"is_featured"`
+	IsSticky         bool           `json:"is_sticky"`
+	IsHighlighted    bool           `json:"is_highlighted"`
+	FeaturedMediumID uint           `json:"featured_medium_id"`
+	FormatID         uint           `json:"format_id"`
+	PublishedDate    time.Time      `json:"published_date"`
+	SpaceID          uint           `json:"space_id"`
+	CategoryIDS      []uint         `json:"category_ids"`
+	TagIDS           []uint         `json:"tag_ids"`
 }
 
 type postData struct {
