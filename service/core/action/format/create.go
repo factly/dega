@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -42,10 +43,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var formatSlug string
+	if format.Slug != "" && slug.Check(format.Slug) {
+		formatSlug = format.Slug
+	} else {
+		formatSlug = slug.Make(format.Name)
+	}
+
 	result := &model.Format{
 		Name:        format.Name,
 		Description: format.Description,
-		Slug:        format.Slug,
+		Slug:        slug.Approve(formatSlug, sID, config.DB.NewScope(&model.Format{}).TableName()),
 		SpaceID:     uint(sID),
 	}
 

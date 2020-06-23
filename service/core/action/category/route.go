@@ -5,7 +5,7 @@ import "github.com/go-chi/chi"
 // category request body
 type category struct {
 	Name        string `json:"name" validate:"required"`
-	Slug        string `json:"slug" validate:"required"`
+	Slug        string `json:"slug"`
 	Description string `json:"description"`
 	ParentID    uint   `json:"parent_id"`
 	MediumID    uint   `json:"medium_id"`

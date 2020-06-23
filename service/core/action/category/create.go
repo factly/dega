@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
@@ -43,10 +44,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var categorySlug string
+	if category.Slug != "" && slug.Check(category.Slug) {
+		categorySlug = category.Slug
+	} else {
+		categorySlug = slug.Make(category.Name)
+	}
+
 	result := &model.Category{
 		Name:        category.Name,
 		Description: category.Description,
-		Slug:        category.Slug,
+		Slug:        slug.Approve(categorySlug, sID, config.DB.NewScope(&model.Category{}).TableName()),
 		ParentID:    category.ParentID,
 		MediumID:    category.MediumID,
 		SpaceID:     uint(sID),

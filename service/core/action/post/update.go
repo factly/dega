@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -45,6 +46,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	result := &postData{}
 	result.ID = uint(id)
+	result.Tags = make([]model.Tag, 0)
+	result.Categories = make([]model.Category, 0)
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
@@ -65,9 +68,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var postSlug string
+
+	if result.Slug == post.Slug {
+		postSlug = result.Slug
+	} else if post.Slug != "" && slug.Check(post.Slug) {
+		postSlug = slug.Approve(post.Slug, sID, config.DB.NewScope(&model.Post{}).TableName())
+	} else {
+		postSlug = slug.Approve(slug.Make(post.Title), sID, config.DB.NewScope(&model.Post{}).TableName())
+	}
+
 	config.DB.Model(&result.Post).Updates(model.Post{
 		Title:            post.Title,
-		Slug:             post.Slug,
+		Slug:             postSlug,
 		Status:           post.Status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,

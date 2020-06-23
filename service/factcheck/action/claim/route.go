@@ -9,7 +9,7 @@ import (
 
 type claim struct {
 	Title         string         `json:"title" validate:"required"`
-	Slug          string         `json:"slug" validate:"required"`
+	Slug          string         `json:"slug"`
 	ClaimDate     time.Time      `json:"claim_date" `
 	CheckedDate   time.Time      `json:"checked_date"`
 	ClaimSources  string         `json:"claim_sources"`

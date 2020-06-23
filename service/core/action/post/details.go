@@ -62,6 +62,9 @@ func details(w http.ResponseWriter, r *http.Request) {
 		PostID: uint(id),
 	}).Preload("Tag").Find(&tags)
 
+	result.Categories = make([]model.Category, 0)
+	result.Tags = make([]model.Tag, 0)
+
 	for _, c := range categories {
 		result.Categories = append(result.Categories, c.Category)
 	}

@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
@@ -46,9 +47,15 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	factcheck.SpaceID = uint(sID)
 
+	var factcheckSlug string
+	if factcheck.Slug != "" && slug.Check(factcheck.Slug) {
+		factcheckSlug = factcheck.Slug
+	} else {
+		factcheckSlug = slug.Make(factcheck.Title)
+	}
 	result.Factcheck = model.Factcheck{
 		Title:            factcheck.Title,
-		Slug:             factcheck.Slug,
+		Slug:             slug.Approve(factcheckSlug, sID, config.DB.NewScope(&model.Factcheck{}).TableName()),
 		Status:           factcheck.Status,
 		Subtitle:         factcheck.Subtitle,
 		Excerpt:          factcheck.Excerpt,

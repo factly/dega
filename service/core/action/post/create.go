@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
@@ -33,6 +34,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	post := post{}
 	result := &postData{}
+	result.Categories = make([]model.Category, 0)
+	result.Tags = make([]model.Tag, 0)
 
 	json.NewDecoder(r.Body).Decode(&post)
 
@@ -45,9 +48,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = uint(sID)
 
+	var postSlug string
+	if post.Slug != "" && slug.Check(post.Slug) {
+		postSlug = post.Slug
+	} else {
+		postSlug = slug.Make(post.Title)
+	}
+
 	result.Post = model.Post{
 		Title:            post.Title,
-		Slug:             post.Slug,
+		Slug:             slug.Approve(postSlug, sID, config.DB.NewScope(&model.Post{}).TableName()),
 		Status:           post.Status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,

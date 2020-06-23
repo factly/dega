@@ -33,7 +33,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 
 	result := paging{}
-	posts := []model.Post{}
+	posts := make([]model.Post, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
@@ -49,6 +49,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 		postList := &postData{}
 		categories := []model.PostCategory{}
 		tags := []model.PostTag{}
+		postList.Categories = make([]model.Category, 0)
+		postList.Tags = make([]model.Tag, 0)
 
 		postList.Post = post
 

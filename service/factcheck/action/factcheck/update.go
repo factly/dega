@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -69,9 +70,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var factcheckSlug string
+
+	if result.Slug == factcheck.Slug {
+		factcheckSlug = result.Slug
+	} else if factcheck.Slug != "" && slug.Check(factcheck.Slug) {
+		factcheckSlug = slug.Approve(factcheck.Slug, sID, config.DB.NewScope(&model.Factcheck{}).TableName())
+	} else {
+		factcheckSlug = slug.Approve(slug.Make(factcheck.Title), sID, config.DB.NewScope(&model.Factcheck{}).TableName())
+	}
+
 	config.DB.Model(&result.Factcheck).Updates(model.Factcheck{
 		Title:            factcheck.Title,
-		Slug:             factcheck.Slug,
+		Slug:             factcheckSlug,
 		Status:           factcheck.Status,
 		Subtitle:         factcheck.Subtitle,
 		Excerpt:          factcheck.Excerpt,

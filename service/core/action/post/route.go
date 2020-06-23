@@ -14,10 +14,10 @@ import (
 type post struct {
 	Title            string         `json:"title" validate:"required"`
 	Subtitle         string         `json:"subtitle"`
-	Slug             string         `json:"slug" validate:"required"`
+	Slug             string         `json:"slug"`
 	Status           string         `json:"status" `
 	Excerpt          string         `json:"excerpt" validate:"required"`
-	Description      postgres.Jsonb `json:"description" validate:"required"`
+	Description      postgres.Jsonb `json:"description"`
 	IsFeatured       bool           `json:"is_featured"`
 	IsSticky         bool           `json:"is_sticky"`
 	IsHighlighted    bool           `json:"is_highlighted"`

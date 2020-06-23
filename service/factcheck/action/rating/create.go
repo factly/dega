@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -42,9 +43,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var ratingSlug string
+	if rating.Slug != "" && slug.Check(rating.Slug) {
+		ratingSlug = rating.Slug
+	} else {
+		ratingSlug = slug.Make(rating.Name)
+	}
+
 	result := &model.Rating{
 		Name:         rating.Name,
-		Slug:         rating.Slug,
+		Slug:         slug.Approve(ratingSlug, sID, config.DB.NewScope(&model.Rating{}).TableName()),
 		Description:  rating.Description,
 		MediumID:     rating.MediumID,
 		SpaceID:      uint(sID),

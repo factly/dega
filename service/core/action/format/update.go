@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -55,9 +56,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var formatSlug string
+
+	if result.Slug == format.Slug {
+		formatSlug = result.Slug
+	} else if format.Slug != "" && slug.Check(format.Slug) {
+		formatSlug = slug.Approve(format.Slug, sID, config.DB.NewScope(&model.Format{}).TableName())
+	} else {
+		formatSlug = slug.Approve(slug.Make(format.Name), sID, config.DB.NewScope(&model.Format{}).TableName())
+	}
+
 	config.DB.Model(&result).Updates(model.Format{
 		Name:        format.Name,
-		Slug:        format.Slug,
+		Slug:        formatSlug,
 		Description: format.Description,
 	}).First(&result)
 
