@@ -11,6 +11,8 @@ import {
   DELETE_FORMAT_SUCCESS,
   DELETE_FORMAT_FAILURE,
   LOADING_FORMATS,
+  GET_FORMAT_SUCCESS,
+  GET_FORMAT_FAILURE,
 } from '../constants/formats';
 
 export const getFormats = (query) => {
@@ -25,6 +27,20 @@ export const getFormats = (query) => {
       })
       .catch((error) => {
         dispatch(getFormatsFailure(error.message));
+      });
+  };
+};
+
+export const getFormat = (id) => {
+  return (dispatch, getState) => {
+    dispatch(loadingFormats());
+    return axios
+      .get(API_GET_FORMATS + '/' + id)
+      .then((response) => {
+        dispatch(getFormatSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getFormatFailure(error.message));
       });
   };
 };
@@ -82,6 +98,18 @@ const getFormatsSuccess = (data, query) => ({
 
 const getFormatsFailure = (error) => ({
   type: GET_FORMATS_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const getFormatSuccess = (data) => ({
+  type: GET_FORMAT_SUCCESS,
+  payload: data,
+});
+
+const getFormatFailure = (error) => ({
+  type: GET_FORMAT_FAILURE,
   payload: {
     error,
   },

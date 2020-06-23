@@ -1,7 +1,7 @@
 import React from 'react';
 import FormatsCreateForm from './components/FormatsCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateFormat, getFormats } from '../../actions/formats';
+import { updateFormat, getFormats, getFormat } from '../../actions/formats';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
@@ -19,7 +19,7 @@ function EditFormat() {
   });
 
   React.useEffect(() => {
-    dispatch(getFormats(id));
+    dispatch(getFormat(id));
   }, [dispatch, id]);
 
   if (loading) return <Skeleton />;

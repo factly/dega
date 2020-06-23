@@ -32,7 +32,6 @@ function EditPost() {
     dispatch(updatePost({ ...post, ...values }));
     history.push('/posts');
   };
-  console.log(post);
   return <PostCreateForm data={post} onCreate={onUpdate} />;
 }
 

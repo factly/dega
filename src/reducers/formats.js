@@ -4,6 +4,7 @@ import {
   UPDATE_FORMAT_SUCCESS,
   DELETE_FORMAT_SUCCESS,
   LOADING_FORMATS,
+  GET_FORMAT_SUCCESS,
 } from '../constants/formats';
 
 const initialState = {
@@ -48,6 +49,15 @@ export default function formatsReducer(state = initialState, action = {}) {
         req: localReq,
         details: localDetails,
         total: action.payload.data.total,
+      };
+    case GET_FORMAT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
       };
     case ADD_FORMAT_SUCCESS:
       return {

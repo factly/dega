@@ -36,8 +36,6 @@ function Selector({ mode, defaultIds = [], onBlur, action, display = 'name' }) {
     dispatch(selectorType['get' + action]({ page: page }));
   };
 
-  console.log(defaultValues);
-
   return (
     <Select
       bordered

@@ -45,7 +45,6 @@ export const getPosts = (query) => {
         dispatch(getPostsSuccess({ ...response.data, nodes: posts }, query));
       })
       .catch((error) => {
-        console.log(error);
         dispatch(getPostsFailure(error.message));
       });
   };

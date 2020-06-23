@@ -11,6 +11,8 @@ import {
   DELETE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_FAILURE,
   LOADING_CATEGORIES,
+  GET_CATEGORY_SUCCESS,
+  GET_CATEGORY_FAILURE,
 } from '../constants/categories';
 
 export const getCategories = (query) => {
@@ -25,6 +27,20 @@ export const getCategories = (query) => {
       })
       .catch((error) => {
         dispatch(getCategoriesFailure(error.message));
+      });
+  };
+};
+
+export const getCategory = (id) => {
+  return (dispatch, getState) => {
+    dispatch(loadingCategories());
+    return axios
+      .get(API_GET_CATEGORIES + '/' + id)
+      .then((response) => {
+        dispatch(getCategorySuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getCategoryFailure(error.message));
       });
   };
 };
@@ -82,6 +98,18 @@ const getCategoriesSuccess = (data, query) => ({
 
 const getCategoriesFailure = (error) => ({
   type: GET_CATEGORIES_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const getCategorySuccess = (data, query) => ({
+  type: GET_CATEGORY_SUCCESS,
+  payload: data,
+});
+
+const getCategoryFailure = (error) => ({
+  type: GET_CATEGORY_FAILURE,
   payload: {
     error,
   },

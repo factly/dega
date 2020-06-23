@@ -36,7 +36,6 @@ function CreatePost({ onCreate, data = {} }) {
   });
 
   const onSave = (values) => {
-    console.log(values);
     editor
       .save()
       .then((outputData) => {
