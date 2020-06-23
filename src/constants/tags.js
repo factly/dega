@@ -1,6 +1,8 @@
 //Actions
 export const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';
 export const GET_TAGS_FAILURE = 'GET_TAGS_FAILURE';
+export const GET_TAG_SUCCESS = 'GET_TAG_SUCCESS';
+export const GET_TAG_FAILURE = 'GET_TAG_FAILURE';
 export const ADD_TAG_SUCCESS = 'ADD_TAG_SUCCESS';
 export const ADD_TAG_FAILURE = 'ADD_TAG_FAILURE';
 export const UPDATE_TAG_SUCCESS = 'UPDATE_TAG_SUCCESS';

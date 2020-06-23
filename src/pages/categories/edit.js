@@ -2,7 +2,7 @@ import React from 'react';
 import CategoryCreateForm from './components/CategoryCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
-import { updateCategory, getCategories, getCategory } from '../../actions/categories';
+import { updateCategory, getCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 

@@ -1,12 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Button, Form, Input, Space, Select } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import { maker, checker } from './../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Selector from '../../../components/Selector';
 
 const { TextArea } = Input;
-const { Option } = Select;
 
 const layout = {
   labelCol: {
@@ -113,7 +111,11 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
       <Form.Item label="Upload Media" name="medium">
         <Space direction="vertical">
           {form.getFieldValue('medium') ? (
-            <img src={form.getFieldValue('medium').url} width="100%" />
+            <img
+              src={form.getFieldValue('medium').url}
+              alt={form.getFieldValue('medium').alt_text}
+              width="100%"
+            />
           ) : null}
           <Button onClick={() => setMediaSelector(true)}>Select</Button>
         </Space>

@@ -4,6 +4,7 @@ import {
   UPDATE_TAG_SUCCESS,
   DELETE_TAG_SUCCESS,
   LOADING_TAGS,
+  GET_TAG_SUCCESS,
 } from '../constants/tags';
 
 const initialState = {
@@ -48,6 +49,15 @@ export default function tagsReducer(state = initialState, action = {}) {
         req: localReq,
         details: localDetails,
         total: action.payload.data.total,
+      };
+    case GET_TAG_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
       };
     case ADD_TAG_SUCCESS:
       return {

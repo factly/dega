@@ -10,6 +10,8 @@ import {
   UPDATE_TAG_SUCCESS,
   DELETE_TAG_SUCCESS,
   DELETE_TAG_FAILURE,
+  GET_TAG_SUCCESS,
+  GET_TAG_FAILURE,
 } from '../constants/tags';
 import { LOADING_SPACES } from '../constants/spaces';
 
@@ -25,6 +27,20 @@ export const getTags = (query) => {
       })
       .catch((error) => {
         dispatch(getTagsFailure(error.message));
+      });
+  };
+};
+
+export const getTag = (id) => {
+  return (dispatch, getState) => {
+    dispatch(loadingTags());
+    return axios
+      .get(API_GET_TAGS + '/' + id)
+      .then((response) => {
+        dispatch(getTagSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(getTagFailure(error.message));
       });
   };
 };
@@ -82,6 +98,18 @@ const getTagsSuccess = (data, query) => ({
 
 const getTagsFailure = (error) => ({
   type: GET_TAGS_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const getTagSuccess = (data) => ({
+  type: GET_TAG_SUCCESS,
+  payload: data,
+});
+
+const getTagFailure = (error) => ({
+  type: GET_TAG_FAILURE,
   payload: {
     error,
   },

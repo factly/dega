@@ -103,7 +103,7 @@ const getCategoriesFailure = (error) => ({
   },
 });
 
-const getCategorySuccess = (data, query) => ({
+const getCategorySuccess = (data) => ({
   type: GET_CATEGORY_SUCCESS,
   payload: data,
 });
