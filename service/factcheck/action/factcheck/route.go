@@ -14,7 +14,7 @@ import (
 type factcheck struct {
 	Title            string    `json:"title" validate:"required"`
 	Subtitle         string    `json:"subtitle"`
-	Slug             string    `json:"slug" validate:"required"`
+	Slug             string    `json:"slug"`
 	Status           string    `json:"status" validate:"required"`
 	Excerpt          string    `json:"excerpt" validate:"required"`
 	Description      string    `json:"description"`
