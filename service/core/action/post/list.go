@@ -33,6 +33,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 
 	result := paging{}
+	result.Nodes = make([]postData, 0)
+
 	posts := make([]model.Post, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
@@ -65,11 +67,15 @@ func list(w http.ResponseWriter, r *http.Request) {
 		}).Preload("Tag").Find(&tags)
 
 		for _, c := range categories {
-			postList.Categories = append(postList.Categories, c.Category)
+			if c.Category.ID != 0 {
+				postList.Categories = append(postList.Categories, c.Category)
+			}
 		}
 
 		for _, t := range tags {
-			postList.Tags = append(postList.Tags, t.Tag)
+			if t.Tag.ID != 0 {
+				postList.Tags = append(postList.Tags, t.Tag)
+			}
 		}
 
 		result.Nodes = append(result.Nodes, *postList)

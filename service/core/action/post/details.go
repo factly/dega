@@ -38,6 +38,9 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &postData{}
+	result.Categories = make([]model.Category, 0)
+	result.Tags = make([]model.Tag, 0)
+
 	categories := []model.PostCategory{}
 	tags := []model.PostTag{}
 
@@ -62,15 +65,16 @@ func details(w http.ResponseWriter, r *http.Request) {
 		PostID: uint(id),
 	}).Preload("Tag").Find(&tags)
 
-	result.Categories = make([]model.Category, 0)
-	result.Tags = make([]model.Tag, 0)
-
 	for _, c := range categories {
-		result.Categories = append(result.Categories, c.Category)
+		if c.Category.ID != 0 {
+			result.Categories = append(result.Categories, c.Category)
+		}
 	}
 
 	for _, t := range tags {
-		result.Tags = append(result.Tags, t.Tag)
+		if t.Tag.ID != 0 {
+			result.Tags = append(result.Tags, t.Tag)
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
