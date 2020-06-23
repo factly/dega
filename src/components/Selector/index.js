@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select } from 'antd';
 
-function Selector({ mode, defaultIds = [], onBlur, action }) {
+function Selector({ mode, defaultIds = [], onBlur, action, display = 'name' }) {
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
   const [page, setPage] = React.useState(1);
@@ -36,6 +36,8 @@ function Selector({ mode, defaultIds = [], onBlur, action }) {
     dispatch(selectorType['get' + action]({ page: page }));
   };
 
+  console.log(defaultValues);
+
   return (
     <Select
       bordered
@@ -68,7 +70,7 @@ function Selector({ mode, defaultIds = [], onBlur, action }) {
             .filter((item) => !defaultValues.includes(item))
             .map((item) => (
               <Select.Option value={item.id} key={entity + item.id}>
-                {item.name}
+                {item[display]}
               </Select.Option>
             ))
         : null}
@@ -77,4 +79,3 @@ function Selector({ mode, defaultIds = [], onBlur, action }) {
 }
 
 export default Selector;
-

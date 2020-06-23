@@ -12,20 +12,20 @@ import '@uppy/url/dist/style.css';
 import { addMedium } from '../../../actions/media';
 import { Button } from 'antd';
 
-const uppy = Uppy({
-  id: 'uppy-media',
-  meta: { type: 'avatar' },
-  allowedFileTypes: ['image/*'],
-  autoProceed: false,
-})
-  .use(AwsS3, { companionUrl: 'http://localhost:3020' })
-  .use(Url, { companionUrl: 'http://localhost:3020' })
-  .use(GoogleDrive, { companionUrl: 'http://localhost:3020' });
-
 function MediaUploader() {
   const dispatch = useDispatch();
 
   const [show, setShow] = React.useState(false);
+
+  const uppy = Uppy({
+    id: 'uppy-media',
+    meta: { type: 'avatar' },
+    allowedFileTypes: ['image/*'],
+    autoProceed: false,
+  })
+    .use(AwsS3, { companionUrl: 'http://localhost:3020' })
+    .use(Url, { companionUrl: 'http://localhost:3020' })
+    .use(GoogleDrive, { companionUrl: 'http://localhost:3020' });
 
   uppy.on('complete', (result) => {
     const successful = result.successful[0];
