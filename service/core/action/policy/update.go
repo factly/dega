@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util/render"
+	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
 
@@ -72,5 +72,5 @@ func update(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 	ioutil.ReadAll(resp.Body)
 
-	render.JSON(w, http.StatusOK, policy)
+	renderx.JSON(w, http.StatusOK, policy)
 }

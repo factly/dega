@@ -10,7 +10,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/render"
+	"github.com/factly/x/renderx"
 )
 
 type organizationUser struct {
@@ -33,8 +33,9 @@ type orgWithSpace struct {
 // @ID get-all-spaces
 // @Produce  json
 // @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
 // @Success 200 {array} orgWithSpace
-// @Router /core/spaces/my [get]
+// @Router /core/spaces [get]
 func my(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
@@ -66,7 +67,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 
 	var allSpaces []model.Space
 
-	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Find(&allSpaces)
+	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
 
 	result := []orgWithSpace{}
 
@@ -81,5 +82,5 @@ func my(w http.ResponseWriter, r *http.Request) {
 		result = append(result, each)
 	}
 
-	render.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusOK, result)
 }

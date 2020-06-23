@@ -3,14 +3,13 @@ package format
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util/render"
-	"github.com/factly/dega-server/validation"
-	"github.com/go-chi/chi"
-	"github.com/go-playground/validator/v10"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
+	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 )
 
 // create - Create format
@@ -21,35 +20,41 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param Format body format true "Format Object"
 // @Success 201 {object} model.Format
 // @Failure 400 {array} string
-// @Router /{space_id}/core/formats [post]
+// @Router /core/formats [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	format := &format{}
 
 	json.NewDecoder(r.Body).Decode(&format)
 
-	validate := validator.New()
+	validationError := validationx.Check(format)
 
-	err = validate.Struct(format)
-
-	if err != nil {
-		msg := err.Error()
-		validation.ValidErrors(w, r, msg)
+	if validationError != nil {
+		renderx.JSON(w, http.StatusBadRequest, validationError)
 		return
+	}
+
+	var formatSlug string
+	if format.Slug != "" && slug.Check(format.Slug) {
+		formatSlug = format.Slug
+	} else {
+		formatSlug = slug.Make(format.Name)
 	}
 
 	result := &model.Format{
 		Name:        format.Name,
 		Description: format.Description,
-		Slug:        format.Slug,
-		SpaceID:     uint(sid),
+		Slug:        slug.Approve(formatSlug, sID, config.DB.NewScope(&model.Format{}).TableName()),
+		SpaceID:     uint(sID),
 	}
 
 	err = config.DB.Model(&model.Format{}).Create(&result).Error
@@ -58,5 +63,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	render.JSON(w, http.StatusCreated, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }

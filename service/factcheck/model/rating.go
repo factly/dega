@@ -19,13 +19,19 @@ type Rating struct {
 }
 
 // BeforeCreate - validation for medium
-func (c *Rating) BeforeCreate(tx *gorm.DB) (e error) {
-	medium := model.Medium{}
-	medium.ID = c.MediumID
+func (r *Rating) BeforeCreate(tx *gorm.DB) (e error) {
+	
+	if r.MediumID > 0 {
+		medium := model.Medium{}
+		medium.ID = r.MediumID
 
-	err := tx.Model(&model.Medium{}).Where(model.Medium{
-		SpaceID: c.SpaceID,
-	}).First(&medium).Error
+		err := tx.Model(&model.Medium{}).Where(model.Medium{
+			SpaceID: r.SpaceID,
+		}).First(&medium).Error
 
-	return err
+		if err != nil{
+			return err
+		}
+	}
+	return nil
 }

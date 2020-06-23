@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/service/core"
 	"github.com/factly/dega-server/service/factcheck"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/loggerx"
 	"github.com/go-chi/chi/middleware"
 	"github.com/joho/godotenv"
 
@@ -45,11 +46,16 @@ func main() {
 	// db setup
 	config.SetupDB()
 
+	// open log file
+	file, err := os.OpenFile("logrus.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
+	if err == nil {
+		r.Use(loggerx.NewLogger(file))
+	}
 	r.Use(middleware.RealIP)
-	r.Use(middleware.Logger)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/ping"))
 
@@ -58,7 +64,7 @@ func main() {
 		AllowedOrigins: []string{"*"},
 		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token", "X-User", "X-Space"},
 		ExposedHeaders:   []string{"Link"},
 		AllowCredentials: false,
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
@@ -67,9 +73,9 @@ func main() {
 	/* disable swagger in production */
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
-	r.With(util.CheckUser).Group(func(r chi.Router) {
-		r.Mount("/{space_id}/factcheck", factcheck.Router())
-		r.Mount("/{space_id}/core", core.Router())
+	r.With(util.CheckUser, util.CheckSpace).Group(func(r chi.Router) {
+		r.Mount("/factcheck", factcheck.Router())
+		r.Mount("/core", core.Router())
 	})
 
 	http.ListenAndServe(port, r)

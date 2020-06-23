@@ -5,7 +5,7 @@ import "github.com/go-chi/chi"
 // claimant model
 type claimant struct {
 	Name        string `json:"name" validate:"required"`
-	Slug        string `json:"slug" validate:"required"`
+	Slug        string `json:"slug"`
 	Description string `json:"description"`
 	TagLine     string `json:"tag_line"`
 	MediumID    uint   `json:"medium_id"`

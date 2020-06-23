@@ -3,14 +3,13 @@ package claimant
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
-	"github.com/factly/dega-server/util/render"
-	"github.com/factly/dega-server/validation"
-	"github.com/go-chi/chi"
-	"github.com/go-playground/validator/v10"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
+	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 )
 
 // create - Create claimant
@@ -21,45 +20,43 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param Claimant body claimant true "Claimant Object"
 // @Success 201 {object} model.Claimant
 // @Failure 400 {array} string
-// @Router /{space_id}/factcheck/claimants [post]
+// @Router /factcheck/claimants [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	claimant := &claimant{}
 
 	json.NewDecoder(r.Body).Decode(&claimant)
 
-	validate := validator.New()
+	validationError := validationx.Check(claimant)
 
-	err = validate.Struct(claimant)
-
-	if err != nil {
-		msg := err.Error()
-		validation.ValidErrors(w, r, msg)
+	if validationError != nil {
+		renderx.JSON(w, http.StatusBadRequest, validationError)
 		return
+	}
+
+	var claimantSlug string
+	if claimant.Slug != "" && slug.Check(claimant.Slug) {
+		claimantSlug = claimant.Slug
+	} else {
+		claimantSlug = slug.Make(claimant.Name)
 	}
 
 	result := &model.Claimant{
 		Name:        claimant.Name,
-		Slug:        claimant.Slug,
+		Slug:        slug.Approve(claimantSlug, sID, config.DB.NewScope(&model.Claimant{}).TableName()),
 		Description: claimant.Description,
 		MediumID:    claimant.MediumID,
-		SpaceID:     uint(sid),
+		SpaceID:     uint(sID),
 		TagLine:     claimant.TagLine,
-	}
-
-	// check medium belongs to same space or not
-	err = result.BeforeCreate(config.DB)
-
-	if err != nil {
-		validation.Error(w, r, err.Error())
-		return
 	}
 
 	err = config.DB.Model(&model.Claimant{}).Create(&result).Error
@@ -70,5 +67,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Model(&model.Claimant{}).Preload("Medium").First(&result)
 
-	render.JSON(w, http.StatusCreated, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }

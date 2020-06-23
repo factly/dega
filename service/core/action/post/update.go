@@ -7,8 +7,10 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/dega-server/validation"
+	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
 
@@ -20,18 +22,17 @@ import (
 // @Produce json
 // @Consume json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param post_id path string true "Post ID"
 // @Param Post body post false "Post"
 // @Success 200 {object} postData
-// @Router /{space_id}/core/posts/{post_id} [put]
+// @Router /core/posts/{post_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
 
-	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := util.GetSpace(r.Context())
 
 	if err != nil {
 		return
@@ -48,7 +49,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
-		SpaceID: uint(sid),
+		SpaceID: uint(sID),
 	}).First(&result.Post).Error
 
 	if err != nil {
@@ -58,16 +59,26 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = result.SpaceID
 
-	err = post.BeforeCreate(config.DB)
+	err = post.CheckSpace(config.DB)
 
 	if err != nil {
 		validation.Error(w, r, err.Error())
 		return
 	}
 
+	var postSlug string
+
+	if result.Slug == post.Slug {
+		postSlug = result.Slug
+	} else if post.Slug != "" && slug.Check(post.Slug) {
+		postSlug = slug.Approve(post.Slug, sID, config.DB.NewScope(&model.Post{}).TableName())
+	} else {
+		postSlug = slug.Approve(slug.Make(post.Title), sID, config.DB.NewScope(&model.Post{}).TableName())
+	}
+
 	config.DB.Model(&result.Post).Updates(model.Post{
 		Title:            post.Title,
-		Slug:             post.Slug,
+		Slug:             postSlug,
 		Status:           post.Status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
@@ -174,5 +185,5 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	render.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusOK, result)
 }

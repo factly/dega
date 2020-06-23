@@ -6,8 +6,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/validation"
+	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
 
@@ -17,17 +18,19 @@ import (
 // @Tags Post
 // @ID delete-post-by-id
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param post_id path string true "Post ID"
 // @Success 200
-// @Router /{space_id}/core/posts/{post_id} [delete]
+// @Router /core/posts/{post_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
+
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
-
-	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
 
 	result := &model.Post{}
 
@@ -35,7 +38,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
-		SpaceID: uint(sid),
+		SpaceID: uint(sID),
 	}).First(&result).Error
 
 	if err != nil {
@@ -55,5 +58,5 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Model(&model.Post{}).Delete(&result)
 
-	render.JSON(w, http.StatusOK, nil)
+	renderx.JSON(w, http.StatusOK, nil)
 }

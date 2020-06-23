@@ -3,14 +3,14 @@ package factcheck
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
-	"github.com/factly/dega-server/util/render"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/dega-server/validation"
-	"github.com/go-chi/chi"
-	"github.com/go-playground/validator/v10"
+	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 )
 
 // create - Create factcheck
@@ -21,36 +21,41 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param Factcheck body factcheck true "Factcheck Object"
 // @Success 201 {object} factcheckData
 // @Failure 400 {array} string
-// @Router /{space_id}/factcheck/factchecks [post]
+// @Router /factcheck/factchecks [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	factcheck := factcheck{}
 	result := &factcheckData{}
 
 	json.NewDecoder(r.Body).Decode(&factcheck)
 
-	validate := validator.New()
+	validationError := validationx.Check(factcheck)
 
-	err = validate.Struct(factcheck)
-
-	if err != nil {
-		msg := err.Error()
-		validation.ValidErrors(w, r, msg)
+	if validationError != nil {
+		renderx.JSON(w, http.StatusBadRequest, validationError)
 		return
 	}
 
-	factcheck.SpaceID = uint(sid)
+	factcheck.SpaceID = uint(sID)
 
+	var factcheckSlug string
+	if factcheck.Slug != "" && slug.Check(factcheck.Slug) {
+		factcheckSlug = factcheck.Slug
+	} else {
+		factcheckSlug = slug.Make(factcheck.Title)
+	}
 	result.Factcheck = model.Factcheck{
 		Title:            factcheck.Title,
-		Slug:             factcheck.Slug,
+		Slug:             slug.Approve(factcheckSlug, sID, config.DB.NewScope(&model.Factcheck{}).TableName()),
 		Status:           factcheck.Status,
 		Subtitle:         factcheck.Subtitle,
 		Excerpt:          factcheck.Excerpt,
@@ -65,7 +70,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check claims, categories, tags & medium belong to same space or not
-	err = factcheck.BeforeCreate(config.DB)
+	err = factcheck.CheckSpace(config.DB)
 	if err != nil {
 		validation.Error(w, r, err.Error())
 		return
@@ -127,5 +132,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 		result.Claims = append(result.Claims, factcheckClaim.Claim)
 	}
 
-	render.JSON(w, http.StatusCreated, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }

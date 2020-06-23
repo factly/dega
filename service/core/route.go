@@ -6,6 +6,7 @@ import (
 	"github.com/go-chi/chi"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/action/category"
 	"github.com/factly/dega-server/service/core/action/format"
 	"github.com/factly/dega-server/service/core/action/medium"
@@ -48,6 +49,7 @@ func Router() http.Handler {
 	r.Mount("/spaces", space.Router())
 	r.Mount("/posts", post.Router())
 	r.Mount("/policies", policy.Router())
+	r.Mount("/authors", author.Router())
 
 	return r
 }

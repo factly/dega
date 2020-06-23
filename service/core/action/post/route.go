@@ -13,7 +13,7 @@ import (
 type post struct {
 	Title            string    `json:"title" validate:"required"`
 	Subtitle         string    `json:"subtitle" validate:"required"`
-	Slug             string    `json:"slug" validate:"required"`
+	Slug             string    `json:"slug"`
 	Status           string    `json:"status" validate:"required"`
 	Excerpt          string    `json:"excerpt" validate:"required"`
 	Description      string    `json:"description" validate:"required"`
@@ -35,8 +35,8 @@ type postData struct {
 	Tags       []model.Tag      `json:"tags"`
 }
 
-// BeforeCreate - validation for medium, format, categories & tags
-func (p *post) BeforeCreate(tx *gorm.DB) (e error) {
+// CheckSpace - validation for medium, format, categories & tags
+func (p *post) CheckSpace(tx *gorm.DB) (e error) {
 	medium := model.Medium{}
 	medium.ID = p.FeaturedMediumID
 

@@ -10,39 +10,35 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/validationx"
+	"github.com/go-chi/chi"
 )
 
-// create - Create space
-// @Summary Create space
-// @Description Create space
+// update - Update space
+// @Summary Update space
+// @Description Update space
 // @Tags Space
-// @ID add-space
+// @ID update-space
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
+// @Param space_id header string true "Space ID"
 // @Param Space body space true "Space Object"
-// @Success 201 {object} model.Space
-// @Router /core/spaces [post]
-func create(w http.ResponseWriter, r *http.Request) {
+// @Success 200 {object} model.Space
+// @Router /core/spaces/{space_id} [put]
+func update(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		return
 	}
 
+	spaceID := chi.URLParam(r, "space_id")
+	id, err := strconv.Atoi(spaceID)
+
 	space := &space{}
 
 	json.NewDecoder(r.Body).Decode(&space)
-
-	validationError := validationx.Check(space)
-
-	if validationError != nil {
-		renderx.JSON(w, http.StatusBadRequest, validationError)
-		return
-	}
 
 	if space.OrganisationID == 0 {
 		return
@@ -70,17 +66,20 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var spaceSlug string
-	if space.Slug != "" && slug.Check(space.Slug) {
-		spaceSlug = space.Slug
-	} else {
-		spaceSlug = slug.Make(space.Name)
+	result := &model.Space{}
+	result.ID = uint(id)
+
+	err = space.CheckSpaceUpdate(config.DB, uint(id))
+
+	if err != nil {
+		renderx.JSON(w, http.StatusBadRequest, err.Error)
+		return
 	}
 
-	result := &model.Space{
+	err = config.DB.Model(&result).Updates(model.Space{
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
-		Slug:              slug.Approve(spaceSlug, 0, config.DB.NewScope(&model.Space{}).TableName()),
+		Slug:              space.Slug,
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
@@ -90,13 +89,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		LogoMobileID:      space.LogoMobileID,
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
-		OrganisationID:    space.OrganisationID,
 		ContactInfo:       space.ContactInfo,
-	}
-
-	err = config.DB.Create(&result).Error
+	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
 
 	if err != nil {
+		renderx.JSON(w, http.StatusInternalServerError, err)
 		return
 	}
 

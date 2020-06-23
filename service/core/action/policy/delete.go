@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/factly/dega-server/util/render"
+	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
 
@@ -30,5 +30,5 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	defer resp.Body.Close()
 
-	render.JSON(w, http.StatusOK, nil)
+	renderx.JSON(w, http.StatusOK, nil)
 }

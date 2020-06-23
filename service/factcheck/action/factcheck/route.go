@@ -14,7 +14,7 @@ import (
 type factcheck struct {
 	Title            string    `json:"title" validate:"required"`
 	Subtitle         string    `json:"subtitle"`
-	Slug             string    `json:"slug" validate:"required"`
+	Slug             string    `json:"slug"`
 	Status           string    `json:"status" validate:"required"`
 	Excerpt          string    `json:"excerpt" validate:"required"`
 	Description      string    `json:"description"`
@@ -37,8 +37,8 @@ type factcheckData struct {
 	Claims     []factcheckModel.Claim `json:"claims"`
 }
 
-// BeforeCreate - validation for medium, format, categories & tags
-func (p *factcheck) BeforeCreate(tx *gorm.DB) (e error) {
+// CheckSpace - validation for medium, format, categories & tags
+func (p *factcheck) CheckSpace(tx *gorm.DB) (e error) {
 	medium := coreModel.Medium{}
 	medium.ID = p.FeaturedMediumID
 

@@ -17,79 +17,7 @@
     "host": "localhost:8820",
     "basePath": "/",
     "paths": {
-        "/core/spaces": {
-            "post": {
-                "description": "Create space",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Space"
-                ],
-                "summary": "Create space",
-                "operationId": "add-space",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Space Object",
-                        "name": "Space",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/space.space"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.Space"
-                        }
-                    }
-                }
-            }
-        },
-        "/core/spaces/my": {
-            "get": {
-                "description": "Get all spaces",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Space"
-                ],
-                "summary": "Show all spaces",
-                "operationId": "get-all-spaces",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/space.orgWithSpace"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/{space_id}/core/categories": {
+        "/core/categories": {
             "get": {
                 "description": "Get all categories",
                 "produces": [
@@ -111,8 +39,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -158,8 +86,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -191,7 +119,7 @@
                 }
             }
         },
-        "/{space_id}/core/categories/{category_id}": {
+        "/core/categories/{category_id}": {
             "get": {
                 "description": "Get category by ID",
                 "produces": [
@@ -213,8 +141,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -262,8 +190,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -309,8 +237,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -328,7 +256,7 @@
                 }
             }
         },
-        "/{space_id}/core/formats": {
+        "/core/formats": {
             "get": {
                 "description": "Get all formats",
                 "produces": [
@@ -350,8 +278,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -397,8 +325,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -430,7 +358,7 @@
                 }
             }
         },
-        "/{space_id}/core/formats/{format_id}": {
+        "/core/formats/{format_id}": {
             "get": {
                 "description": "Get format by ID",
                 "produces": [
@@ -452,8 +380,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -501,8 +429,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -541,8 +469,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -558,7 +486,7 @@
                 }
             }
         },
-        "/{space_id}/core/media": {
+        "/core/media": {
             "get": {
                 "description": "Get all media",
                 "produces": [
@@ -580,8 +508,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -630,8 +558,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -663,7 +591,7 @@
                 }
             }
         },
-        "/{space_id}/core/media/{medium_id}": {
+        "/core/media/{medium_id}": {
             "get": {
                 "description": "Get medium by ID",
                 "produces": [
@@ -692,8 +620,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -734,8 +662,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -781,8 +709,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -791,7 +719,7 @@
                 }
             }
         },
-        "/{space_id}/core/posts": {
+        "/core/posts": {
             "get": {
                 "description": "Get all posts",
                 "produces": [
@@ -813,8 +741,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -863,8 +791,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -887,7 +815,7 @@
                 }
             }
         },
-        "/{space_id}/core/posts/{post_id}": {
+        "/core/posts/{post_id}": {
             "get": {
                 "description": "Get post by ID",
                 "produces": [
@@ -909,8 +837,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -951,8 +879,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -998,8 +926,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1015,7 +943,181 @@
                 }
             }
         },
-        "/{space_id}/core/tags": {
+        "/core/spaces": {
+            "get": {
+                "description": "Get all spaces",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space"
+                ],
+                "summary": "Show all spaces",
+                "operationId": "get-all-spaces",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/space.orgWithSpace"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create space",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space"
+                ],
+                "summary": "Create space",
+                "operationId": "add-space",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Space Object",
+                        "name": "Space",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/space.space"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Space"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/spaces/{space_id}": {
+            "put": {
+                "description": "Update space",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space"
+                ],
+                "summary": "Update space",
+                "operationId": "update-space",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Space Object",
+                        "name": "Space",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/space.space"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Space"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete space",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space"
+                ],
+                "summary": "Delete space",
+                "operationId": "delete-space",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "space_id",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
+        "/core/tags": {
             "get": {
                 "description": "Get all tags",
                 "produces": [
@@ -1037,8 +1139,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1087,8 +1189,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1120,7 +1222,7 @@
                 }
             }
         },
-        "/{space_id}/core/tags/{tag_id}": {
+        "/core/tags/{tag_id}": {
             "get": {
                 "description": "Get tag by ID",
                 "produces": [
@@ -1149,8 +1251,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -1191,8 +1293,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1238,8 +1340,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     }
                 ],
@@ -1257,7 +1359,7 @@
                 }
             }
         },
-        "/{space_id}/factcheck/claimants": {
+        "/factcheck/claimants": {
             "get": {
                 "description": "Get all claimants",
                 "produces": [
@@ -1279,8 +1381,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1326,8 +1428,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1359,7 +1461,7 @@
                 }
             }
         },
-        "/{space_id}/factcheck/claimants/{claimant_id}": {
+        "/factcheck/claimants/{claimant_id}": {
             "get": {
                 "description": "Get claimant by ID",
                 "produces": [
@@ -1381,8 +1483,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1423,8 +1525,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1470,8 +1572,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1487,7 +1589,7 @@
                 }
             }
         },
-        "/{space_id}/factcheck/claims": {
+        "/factcheck/claims": {
             "get": {
                 "description": "Get all claims",
                 "produces": [
@@ -1509,8 +1611,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1556,8 +1658,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1589,7 +1691,7 @@
                 }
             }
         },
-        "/{space_id}/factcheck/claims/{claim_id}": {
+        "/factcheck/claims/{claim_id}": {
             "get": {
                 "description": "Get claim by ID",
                 "produces": [
@@ -1611,8 +1713,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1653,8 +1755,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1700,8 +1802,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1717,7 +1819,7 @@
                 }
             }
         },
-        "/{space_id}/factcheck/factchecks": {
+        "/factcheck/factchecks": {
             "get": {
                 "description": "Get all factchecks",
                 "produces": [
@@ -1739,8 +1841,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1786,8 +1888,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1819,7 +1921,7 @@
                 }
             }
         },
-        "/{space_id}/factcheck/factchecks/{factcheck_id}": {
+        "/factcheck/factchecks/{factcheck_id}": {
             "get": {
                 "description": "Get factcheck by ID",
                 "produces": [
@@ -1841,8 +1943,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1883,8 +1985,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1930,8 +2032,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -1947,7 +2049,7 @@
                 }
             }
         },
-        "/{space_id}/factcheck/ratings": {
+        "/factcheck/ratings": {
             "get": {
                 "description": "Get all ratings",
                 "produces": [
@@ -1969,8 +2071,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -2016,8 +2118,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -2049,7 +2151,7 @@
                 }
             }
         },
-        "/{space_id}/factcheck/ratings/{rating_id}": {
+        "/factcheck/ratings/{rating_id}": {
             "get": {
                 "description": "Get rating by ID",
                 "produces": [
@@ -2071,8 +2173,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -2113,8 +2215,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -2160,8 +2262,8 @@
                     {
                         "type": "string",
                         "description": "Space ID",
-                        "name": "space_id",
-                        "in": "path",
+                        "name": "X-Space",
+                        "in": "header",
                         "required": true
                     },
                     {
@@ -2771,17 +2873,33 @@
                 "description": {
                     "type": "string"
                 },
+                "fav_icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
                 "fav_icon_id": {
                     "type": "integer"
                 },
                 "id": {
                     "type": "integer"
                 },
+                "logo": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
                 "logo_id": {
                     "type": "integer"
                 },
+                "logo_mobile": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "mobile_icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
                     "type": "integer"
@@ -3091,6 +3209,11 @@
         },
         "space.space": {
             "type": "object",
+            "required": [
+                "name",
+                "organisation_id",
+                "slug"
+            ],
             "properties": {
                 "contact_info": {
                     "type": "string"

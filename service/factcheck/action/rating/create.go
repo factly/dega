@@ -3,14 +3,13 @@ package rating
 import (
 	"encoding/json"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/factcheck/model"
-	"github.com/factly/dega-server/util/render"
-	"github.com/factly/dega-server/validation"
-	"github.com/go-chi/chi"
-	"github.com/go-playground/validator/v10"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
+	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 )
 
 // create - Create rating
@@ -21,45 +20,43 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
-// @Param space_id path string true "Space ID"
+// @Param X-Space header string true "Space ID"
 // @Param Rating body rating true "Rating Object"
 // @Success 201 {object} model.Rating
 // @Failure 400 {array} string
-// @Router /{space_id}/factcheck/ratings [post]
+// @Router /factcheck/ratings [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	spaceID := chi.URLParam(r, "space_id")
-	sid, err := strconv.Atoi(spaceID)
+	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		return
+	}
 
 	rating := &rating{}
 
 	json.NewDecoder(r.Body).Decode(&rating)
 
-	validate := validator.New()
+	validationError := validationx.Check(rating)
 
-	err = validate.Struct(rating)
-
-	if err != nil {
-		msg := err.Error()
-		validation.ValidErrors(w, r, msg)
+	if validationError != nil {
+		renderx.JSON(w, http.StatusBadRequest, validationError)
 		return
+	}
+
+	var ratingSlug string
+	if rating.Slug != "" && slug.Check(rating.Slug) {
+		ratingSlug = rating.Slug
+	} else {
+		ratingSlug = slug.Make(rating.Name)
 	}
 
 	result := &model.Rating{
 		Name:         rating.Name,
-		Slug:         rating.Slug,
+		Slug:         slug.Approve(ratingSlug, sID, config.DB.NewScope(&model.Rating{}).TableName()),
 		Description:  rating.Description,
 		MediumID:     rating.MediumID,
-		SpaceID:      uint(sid),
+		SpaceID:      uint(sID),
 		NumericValue: rating.NumericValue,
-	}
-
-	// check medium belongs to same space or not
-	err = result.BeforeCreate(config.DB)
-
-	if err != nil {
-		validation.Error(w, r, err.Error())
-		return
 	}
 
 	err = config.DB.Model(&model.Rating{}).Create(&result).Error
@@ -70,5 +67,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Model(&model.Rating{}).Preload("Medium").First(&result)
 
-	render.JSON(w, http.StatusCreated, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }
