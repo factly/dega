@@ -4,24 +4,47 @@ import AwsS3 from '@uppy/aws-s3';
 import GoogleDrive from '@uppy/google-drive';
 import Url from '@uppy/url';
 import { DashboardModal } from '@uppy/react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/url/dist/style.css';
 
-import { addMedium } from '../../../actions/media';
+import { addMedium, getMedia } from '../../../actions/media';
 import { Button } from 'antd';
 
 function MediaUploader() {
   const dispatch = useDispatch();
 
+  const space_slug = useSelector((state) => state.spaces.details[state.spaces.selected].slug);
   const [show, setShow] = React.useState(false);
-
   const uppy = Uppy({
     id: 'uppy-media',
     meta: { type: 'avatar' },
     allowedFileTypes: ['image/*'],
     autoProceed: false,
+    onBeforeUpload: (files) => {
+      const updatedFiles = {};
+      Object.keys(files).forEach((fileID) => {
+        updatedFiles[fileID] = {
+          ...files[fileID],
+          meta: {
+            ...files[fileID].meta,
+            name:
+              'uppy/' +
+              space_slug +
+              '/' +
+              new Date().getFullYear() +
+              '/' +
+              new Date().getMonth() +
+              '/' +
+              Date.now().toString() +
+              '_' +
+              files[fileID].meta.name,
+          },
+        };
+      });
+      return updatedFiles;
+    },
   })
     .use(AwsS3, { companionUrl: 'http://localhost:3020' })
     .use(Url, { companionUrl: 'http://localhost:3020' })
@@ -41,7 +64,8 @@ function MediaUploader() {
     upload['title'] = successful.meta.caption;
     upload['type'] = successful.meta.type;
     upload['url'] = successful.uploadURL;
-    dispatch(addMedium(upload));
+    setShow(false);
+    dispatch(addMedium(upload)).then(dispatch(getMedia({ page: 1 })));
   });
   return (
     <div>
