@@ -7,6 +7,7 @@ import formats from './formats';
 import media from './media';
 import authors from './authors';
 import posts from './posts';
+import ratings from './ratings';
 
 export default combineReducers({
   settings,
@@ -17,4 +18,5 @@ export default combineReducers({
   media,
   authors,
   posts,
+  ratings,
 });

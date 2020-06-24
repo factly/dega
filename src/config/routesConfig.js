@@ -32,6 +32,11 @@ import Posts from '../pages/posts';
 import CreatePost from '../pages/posts/create';
 import EditPost from '../pages/posts/edit';
 
+//Ratings
+import Ratings from '../pages/ratings';
+import CreateRating from '../pages/ratings/create';
+import EditRating from '../pages/ratings/edit';
+
 export default [
   {
     path: '/dashboard',
@@ -176,5 +181,29 @@ export default [
     enableBreadcrumb: false,
     Icon: FileImageOutlined,
     title: 'Edit Post',
+  },
+  {
+    path: '/ratings',
+    Component: Ratings,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Ratings',
+  },
+  {
+    path: '/ratings/create',
+    Component: CreateRating,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Create Rating',
+  },
+  {
+    path: '/ratings/:id/edit',
+    Component: EditRating,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Edit Rating',
   },
 ];
