@@ -1,31 +1,40 @@
 import {
-  GET_TAGS_SUCCESS,
-  ADD_TAG_SUCCESS,
-  UPDATE_TAG_SUCCESS,
-  DELETE_TAG_SUCCESS,
-  LOADING_TAGS,
-  ADD_TAGS,
-} from '../constants/tags';
-import { each } from 'lodash';
+  GET_POSTS_SUCCESS,
+  GET_POST_SUCCESS,
+  ADD_POST_SUCCESS,
+  UPDATE_POST_SUCCESS,
+  DELETE_POST_SUCCESS,
+  LOADING_POSTS,
+} from '../constants/posts';
 
 const initialState = {
   req: [],
+  post: {},
   details: {},
   loading: true,
   total: 0,
 };
 
-export default function tagsReducer(state = initialState, action = {}) {
+export default function postsReducer(state = initialState, action = {}) {
   if (!action.payload) {
     return state;
   }
   switch (action.type) {
-    case LOADING_TAGS:
+    case LOADING_POSTS:
       return {
         ...state,
         loading: false,
       };
-    case GET_TAGS_SUCCESS:
+    case GET_POST_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
+      };
+    case GET_POSTS_SUCCESS:
       const localReq = state.req;
 
       const nodeIndex = state.req.findIndex((item) => {
@@ -51,7 +60,7 @@ export default function tagsReducer(state = initialState, action = {}) {
         details: localDetails,
         total: action.payload.data.total,
       };
-    case ADD_TAG_SUCCESS:
+    case ADD_POST_SUCCESS:
       return {
         ...state,
         req: [],
@@ -59,21 +68,12 @@ export default function tagsReducer(state = initialState, action = {}) {
         loading: true,
         total: 0,
       };
-    case ADD_TAGS:
-      let details = state.details;
-      action.payload.data.forEach((element) => {
-        details[element.id] = element;
-      });
-      return {
-        ...state,
-        details: details,
-      };
-    case UPDATE_TAG_SUCCESS:
+    case UPDATE_POST_SUCCESS:
       return {
         ...state,
         details: { ...state.details, [action.payload.id]: action.payload },
       };
-    case DELETE_TAG_SUCCESS:
+    case DELETE_POST_SUCCESS:
       return {
         ...state,
         req: [],
