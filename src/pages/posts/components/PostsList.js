@@ -1,5 +1,6 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
+import { Popconfirm, Button, Skeleton, List, Space } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, deletePost } from '../../../actions/posts';
 import { Link } from 'react-router-dom';
@@ -31,63 +32,45 @@ function PostsList() {
     dispatch(getPosts({ page: page }));
   };
 
-  const columns = [
-    {
-      title: 'Title',
-      dataIndex: 'title',
-      key: 'title',
-      width: '15%',
-    },
-    {
-      title: 'Slug',
-      dataIndex: 'slug',
-      key: 'slug',
-    },
-    {
-      title: 'Excerpt',
-      dataIndex: 'excerpt',
-      key: 'excerpt',
-    },
-    {
-      title: 'Action',
-      key: 'operation',
-      width: '15%',
-      render: (_, record) => {
-        return (
-          <span>
-            <Link
-              style={{
-                marginRight: 8,
-              }}
-              to={`/posts/${record.id}/edit`}
-            >
-              <Button>Edit</Button>
-            </Link>
-            <Popconfirm
-              title="Sure to cancel?"
-              onConfirm={() => dispatch(deletePost(record.id)).then(() => fetchPosts())}
-            >
-              <Button>Delete</Button>
-            </Popconfirm>
-          </span>
-        );
-      },
-    },
-  ];
-
   return (
-    <Table
+    <List
       bordered
-      dataSource={posts}
-      columns={columns}
+      className="post-list"
       loading={loading}
-      rowKey={'id'}
+      itemLayout="vertical"
+      dataSource={posts}
       pagination={{
         total: total,
         current: page,
         pageSize: 5,
         onChange: (page, pageSize) => setPage(page),
       }}
+      renderItem={(item) => (
+        <List.Item
+          actions={[
+            <Link
+              style={{
+                marginRight: 8,
+              }}
+              to={`/posts/${item.id}/edit`}
+            >
+              <Button icon={<EditOutlined />}>Edit</Button>
+            </Link>,
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => dispatch(deletePost(item.id)).then(() => fetchPosts())}
+            >
+              <Button icon={<DeleteOutlined />}>Delete</Button>
+            </Popconfirm>,
+          ]}
+          extra={item.medium ? <img width={272} alt={item.alt_text} src={item.medium.url} /> : null}
+        >
+          <List.Item.Meta
+            title={<Link to={`/posts/${item.id}/edit`}>{item.title}</Link>}
+            description={item.excerpt}
+          />
+        </List.Item>
+      )}
     />
   );
 }
