@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Form, Input, Steps, Select, Space } from 'antd';
+import { Button, Form, Input, Steps, Select } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
 const { TextArea } = Input;
 const { Option } = Select;
@@ -27,15 +27,6 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
   };
 
   const [current, setCurrent] = React.useState(0);
-
-  const [mediaSelector, setMediaSelector] = React.useState(null);
-
-  const setMediumValues = (key, prop, value) => {
-    return form.setFieldsValue({
-      [key]: value,
-      [prop]: value.id,
-    });
-  };
 
   return (
     <div>
