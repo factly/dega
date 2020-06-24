@@ -45,6 +45,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := paging{}
+	result.Nodes = make([]model.Author, 0)
 
 	space := &model.Space{}
 	space.ID = uint(sID)

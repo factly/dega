@@ -65,11 +65,11 @@ func my(w http.ResponseWriter, r *http.Request) {
 		allOrgIDs = append(allOrgIDs, int(each.ID))
 	}
 
-	var allSpaces []model.Space
+	var allSpaces = make([]model.Space, 0)
 
 	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
 
-	result := []orgWithSpace{}
+	result := make([]orgWithSpace, 0)
 
 	for _, each := range allOrg {
 		eachOrgWithAllSpaces := []model.Space{}

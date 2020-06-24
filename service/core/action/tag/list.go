@@ -33,6 +33,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 
 	result := paging{}
+	result.Nodes = make([]model.Tag, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 

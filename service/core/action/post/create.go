@@ -34,6 +34,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	post := post{}
 	result := &postData{}
+	result.Categories = make([]model.Category, 0)
+	result.Tags = make([]model.Tag, 0)
 
 	json.NewDecoder(r.Body).Decode(&post)
 
@@ -59,7 +61,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Status:           post.Status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
-		Updates:          post.Updates,
 		Description:      post.Description,
 		IsFeatured:       post.IsFeatured,
 		IsHighlighted:    post.IsHighlighted,
@@ -83,7 +84,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Find(&result.Post)
+	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
 
 	// create post category & fetch categories
 	for _, id := range post.CategoryIDS {

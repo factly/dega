@@ -46,6 +46,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	result := &postData{}
 	result.ID = uint(id)
+	result.Tags = make([]model.Tag, 0)
+	result.Categories = make([]model.Category, 0)
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
@@ -82,7 +84,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Status:           post.Status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
-		Updates:          post.Updates,
 		Description:      post.Description,
 		IsFeatured:       post.IsFeatured,
 		IsHighlighted:    post.IsHighlighted,

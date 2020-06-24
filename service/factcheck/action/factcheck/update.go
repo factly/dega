@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
@@ -50,6 +51,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	result := &factcheckData{}
 	result.ID = uint(id)
+	result.Categories = make([]coreModel.Category, 0)
+	result.Tags = make([]coreModel.Tag, 0)
+	result.Claims = make([]model.Claim, 0)
 
 	// check record exists or not
 	err = config.DB.Where(&model.Factcheck{
