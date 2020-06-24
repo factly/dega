@@ -46,11 +46,7 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
       }}
     >
       <Form.Item name="parent_id" label="Parent Category">
-        <Selector
-          action="Categories"
-          defaultIds={[]}
-          onBlur={(values) => form.setFieldsValue({ parent_id: values })}
-        />
+        <Selector action="Categories" />
       </Form.Item>
       <Form.Item
         name="name"

@@ -89,35 +89,16 @@ function CreatePost({ onCreate, data = {} }) {
             <Input />
           </Form.Item>
           <Form.Item name="categories" label="Categories">
-            <Selector
-              mode="multiple"
-              action="Categories"
-              defaultIds={data.categories}
-              onBlur={(values) => form.setFieldsValue({ categories: values })}
-            />
+            <Selector mode="multiple" action="Categories" />
           </Form.Item>
           <Form.Item name="tags" label="Tags">
-            <Selector
-              mode="multiple"
-              action="Tags"
-              defaultIds={data.tags}
-              onBlur={(values) => form.setFieldsValue({ tags: values })}
-            />
+            <Selector mode="multiple" action="Tags" />
           </Form.Item>
           <Form.Item name="format" label="Formats">
-            <Selector
-              defaultIds={[data.format]}
-              action="Formats"
-              onBlur={(values) => form.setFieldsValue({ format: values })}
-            />
+            <Selector action="Formats" />
           </Form.Item>
           <Form.Item name="authors" label="Authors">
-            <Selector
-              mode="multiple"
-              display={'email'}
-              action="Authors"
-              onBlur={(values) => form.setFieldsValue({ authors: values })}
-            />
+            <Selector mode="multiple" display={'email'} action="Authors" />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
