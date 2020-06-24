@@ -14,17 +14,7 @@ function CreatePost({ onCreate, data = {} }) {
   const [form] = Form.useForm();
 
   const editor = new EditorJS({
-    /**
-     * Id of Element that should contain the Editor
-     */
-
     holder: 'editorjs',
-
-    /**
-     * Available Tools list.
-     * Pass Tool's class or Settings object for each Tool you want to use
-     */
-
     tools: {
       header: Header,
       list: List,
@@ -45,7 +35,6 @@ function CreatePost({ onCreate, data = {} }) {
         onCreate({
           ...values,
           description: outputData,
-          featured_medium_id: values.medium ? values.medium.id : 0,
         });
       })
       .catch((error) => {
@@ -56,14 +45,6 @@ function CreatePost({ onCreate, data = {} }) {
   const onTitleChange = (string) => {
     form.setFieldsValue({
       slug: maker(string),
-    });
-  };
-
-  const [mediaSelector, setMediaSelector] = React.useState(false);
-
-  const setMediumValues = (value) => {
-    form.setFieldsValue({
-      medium: value,
     });
   };
 
@@ -88,21 +69,8 @@ function CreatePost({ onCreate, data = {} }) {
           </Form.Item>
         </Col>
         <Col span={6}>
-          <MediaSelector
-            show={mediaSelector}
-            handleCancel={() => setMediaSelector(false)}
-            handleSelect={(value) => {
-              setMediumValues(value);
-              setMediaSelector(false);
-            }}
-          />
-          <Form.Item name="medium" label="Image">
-            <Space direction="vertical">
-              {form.getFieldValue('medium') ? (
-                <img src={form.getFieldValue('medium').url} width="100%" />
-              ) : null}
-              <Button onClick={() => setMediaSelector(true)}>Select</Button>
-            </Space>
+          <Form.Item name="featured_medium_id" label="Image">
+            <MediaSelector />
           </Form.Item>
           <Form.Item
             name="slug"

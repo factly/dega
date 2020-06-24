@@ -29,6 +29,7 @@ function EditPost() {
   if (loading) return <Skeleton />;
 
   const onUpdate = (values) => {
+    console.log(values);
     dispatch(updatePost({ ...post, ...values })).then(() => history.push('/posts'));
   };
   return <PostCreateForm data={post} onCreate={onUpdate} />;

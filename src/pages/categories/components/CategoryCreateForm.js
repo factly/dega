@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
 import { maker, checker } from './../../../utils/sluger';
-import MediaSelector from '../../../components/MediaSelector';
 import Selector from '../../../components/Selector';
+import MediaSelector from '../../../components/MediaSelector';
 
 const { TextArea } = Input;
 
@@ -34,14 +34,6 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
     });
   };
 
-  const [mediaSelector, setMediaSelector] = React.useState(false);
-
-  const setMediumValues = (value) => {
-    form.setFieldsValue({
-      medium: value,
-    });
-  };
-
   return (
     <Form
       {...layout}
@@ -49,7 +41,7 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
-        onCreate({ ...values, medium_id: values.medium ? values.medium.id : null });
+        onCreate(values);
         onReset();
       }}
     >
@@ -100,25 +92,8 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
       >
         <TextArea />
       </Form.Item>
-      <MediaSelector
-        show={mediaSelector}
-        handleCancel={() => setMediaSelector(false)}
-        handleSelect={(value) => {
-          setMediumValues(value);
-          setMediaSelector(false);
-        }}
-      />
-      <Form.Item label="Upload Media" name="medium">
-        <Space direction="vertical">
-          {form.getFieldValue('medium') ? (
-            <img
-              src={form.getFieldValue('medium').url}
-              alt={form.getFieldValue('medium').alt_text}
-              width="100%"
-            />
-          ) : null}
-          <Button onClick={() => setMediaSelector(true)}>Select</Button>
-        </Space>
+      <Form.Item label="Upload Media" name="medium_id">
+        <MediaSelector />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

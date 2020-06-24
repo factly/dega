@@ -26,7 +26,7 @@ function EditSpace() {
   if (loading) return <Skeleton />;
 
   const onUpdate = (values) => {
-    dispatch(updateCategory(values)).then(() => history.push('/categories'));
+    dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));
   };
 
   return <CategoryCreateForm data={category} onCreate={onUpdate} />;
