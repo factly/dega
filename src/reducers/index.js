@@ -8,6 +8,7 @@ import media from './media';
 import authors from './authors';
 import posts from './posts';
 import ratings from './ratings';
+import claimants from './claimants';
 
 export default combineReducers({
   settings,
@@ -19,4 +20,5 @@ export default combineReducers({
   authors,
   posts,
   ratings,
+  claimants,
 });

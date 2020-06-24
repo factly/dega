@@ -37,6 +37,11 @@ import Ratings from '../pages/ratings';
 import CreateRating from '../pages/ratings/create';
 import EditRating from '../pages/ratings/edit';
 
+//Claimants
+import Claimants from '../pages/claimants';
+import CreateClaimant from '../pages/claimants/create';
+import EditClaimant from '../pages/claimants/edit';
+
 export default [
   {
     path: '/dashboard',
@@ -205,5 +210,29 @@ export default [
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Edit Rating',
+  },
+  {
+    path: '/claimants',
+    Component: Claimants,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Claimants',
+  },
+  {
+    path: '/claimants/create',
+    Component: CreateClaimant,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Create Claimant',
+  },
+  {
+    path: '/claimants/:id/edit',
+    Component: EditClaimant,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Edit Claimant',
   },
 ];
