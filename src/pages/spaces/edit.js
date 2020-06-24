@@ -1,12 +1,14 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useParams, useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { Skeleton } from 'antd';
-
+import { updateSpace } from './../../actions/spaces';
 import SpaceEditForm from './components/SpaceEditForm';
 
 function SpaceEdit() {
+  const history = useHistory();
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   const { space, loading } = useSelector((state) => {
     return {
@@ -16,7 +18,7 @@ function SpaceEdit() {
   });
 
   const onCreate = (values) => {
-    console.log(values);
+    dispatch(updateSpace({ ...space, ...values })).then(() => history.push('/spaces'));
   };
 
   if (loading) return <Skeleton />;

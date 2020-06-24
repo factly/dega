@@ -4,6 +4,7 @@ import {
   ADD_SPACE_SUCCESS,
   LOADING_SPACES,
   DELETE_SPACE_SUCCESS,
+  UPDATE_SPACE_SUCCESS,
 } from '../constants/spaces';
 
 const initialState = {
@@ -68,6 +69,14 @@ export default function spacesReducer(state = initialState, action = {}) {
       return {
         ...state,
         selected: action.payload,
+      };
+    case UPDATE_SPACE_SUCCESS:
+      return {
+        ...state,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
       };
     case DELETE_SPACE_SUCCESS:
       return state;

@@ -37,7 +37,6 @@ function MediaSelector({ value = null, onChange }) {
             type="primary"
             disabled={!selected}
             onClick={() => {
-              console.log(selected);
               setShow(false);
               onChange(selected.id);
             }}

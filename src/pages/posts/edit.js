@@ -5,7 +5,6 @@ import { Skeleton } from 'antd';
 import { updatePost, getPost } from '../../actions/posts';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { each } from 'lodash';
 
 function EditPost() {
   const history = useHistory();
@@ -29,7 +28,6 @@ function EditPost() {
   if (loading) return <Skeleton />;
 
   const onUpdate = (values) => {
-    console.log(values);
     dispatch(updatePost({ ...post, ...values })).then(() => history.push('/posts'));
   };
   return <PostCreateForm data={post} onCreate={onUpdate} />;
