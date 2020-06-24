@@ -4,6 +4,7 @@ import {
   UPDATE_CATEGORY_SUCCESS,
   DELETE_CATEGORY_SUCCESS,
   LOADING_CATEGORIES,
+  GET_CATEGORY_SUCCESS,
   ADD_CATEGORIES,
 } from '../constants/categories';
 
@@ -49,6 +50,15 @@ export default function categoriesReducer(state = initialState, action = {}) {
         req: localReq,
         details: localDetails,
         total: action.payload.data.total,
+      };
+    case GET_CATEGORY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
       };
     case ADD_CATEGORIES:
       let details = state.details;

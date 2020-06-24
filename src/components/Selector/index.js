@@ -2,18 +2,23 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select } from 'antd';
 
-function Selector({ mode, defaultIds = [], onBlur, action, display = 'name' }) {
+function Selector({ mode, value, onChange, action, display = 'name' }) {
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
   const [page, setPage] = React.useState(1);
-  const [selected, setSelected] = React.useState([]);
   const dispatch = useDispatch();
 
-  const { details, total, defaultValues, loading } = useSelector((state) => {
+  if (!value) {
+    value = [];
+  }
+
+  if (!mode && value) {
+    value = [value];
+  }
+
+  const { details, total, loading } = useSelector((state) => {
     let details = [];
-    let total = 0;
     let ids = [];
-    let defaultValues = [];
 
     for (var i = 1; i <= page; i++) {
       let j = state[entity].req.findIndex((item) => item.query.page === i);
@@ -22,13 +27,15 @@ function Selector({ mode, defaultIds = [], onBlur, action, display = 'name' }) {
       }
     }
 
-    details = ids.map((id) => state[entity].details[id]);
-    defaultValues = defaultIds
+    details = value
       .filter((id) => state[entity].details[id])
       .map((id) => state[entity].details[id]);
 
-    total = state[entity].total;
-    return { details, total, defaultValues, loading: state[entity].loading };
+    details = details.concat(
+      ids.filter((id) => !value.includes(id)).map((id) => state[entity].details[id]),
+    );
+
+    return { details, total: state[entity].total, loading: state[entity].loading };
   });
 
   React.useEffect(() => {
@@ -45,10 +52,9 @@ function Selector({ mode, defaultIds = [], onBlur, action, display = 'name' }) {
       listHeight={128}
       loading={loading}
       mode={mode}
-      defaultValue={defaultIds}
+      defaultValue={value}
       placeholder={`Add ${entity}`}
-      onChange={(values) => setSelected(values)}
-      onBlur={() => onBlur(selected)}
+      onChange={(values) => onChange(values)}
       filterOption={(input, option) =>
         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
@@ -60,22 +66,11 @@ function Selector({ mode, defaultIds = [], onBlur, action, display = 'name' }) {
         }
       }}
     >
-      {defaultValues.length > 0
-        ? defaultValues.map((item) => (
-            <Select.Option value={item.id} key={entity + item.id}>
-              {item.name}
-            </Select.Option>
-          ))
-        : null}
-      {total > 0
-        ? details
-            .filter((item) => !defaultValues.includes(item))
-            .map((item) => (
-              <Select.Option value={item.id} key={entity + item.id}>
-                {item[display]}
-              </Select.Option>
-            ))
-        : null}
+      {details.map((item) => (
+        <Select.Option value={item.id} key={entity + item.id}>
+          {item[display]}
+        </Select.Option>
+      ))}
     </Select>
   );
 }

@@ -4,9 +4,9 @@ import {
   UPDATE_FORMAT_SUCCESS,
   DELETE_FORMAT_SUCCESS,
   LOADING_FORMATS,
+  GET_FORMAT_SUCCESS,
   ADD_FORMATS,
 } from '../constants/formats';
-import Axios from 'axios';
 
 const initialState = {
   req: [],
@@ -50,6 +50,15 @@ export default function formatsReducer(state = initialState, action = {}) {
         req: localReq,
         details: localDetails,
         total: action.payload.data.total,
+      };
+    case GET_FORMAT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
       };
     case ADD_FORMATS:
       return {

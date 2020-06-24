@@ -1,10 +1,10 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { InboxOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Space, Divider, Select, Upload } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import { maker, checker } from './../../../utils/sluger';
+import Selector from '../../../components/Selector';
+import MediaSelector from '../../../components/MediaSelector';
+
 const { TextArea } = Input;
-const { Option } = Select;
 
 const layout = {
   labelCol: {
@@ -23,19 +23,9 @@ const tailLayout = {
 
 const CategoryCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const { details } = useSelector((state) => state.categories);
-  const categories = Object.keys(details).map((key, index) => details[key]);
 
   const onReset = () => {
     form.resetFields();
-  };
-
-  const normFile = (e) => {
-    if (Array.isArray(e)) {
-      return e;
-    }
-
-    return e && e.fileList;
   };
 
   const onTitleChange = (string) => {
@@ -56,20 +46,7 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
       }}
     >
       <Form.Item name="parent_id" label="Parent Category">
-        <Select
-          showSearch
-          placeholder="Select parent category"
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
-        >
-          {categories.map((category) => (
-            <Option key={category.id} value={category.value}>
-              {category.name}
-            </Option>
-          ))}
-        </Select>
+        <Selector action="Categories" />
       </Form.Item>
       <Form.Item
         name="name"
@@ -111,17 +88,8 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
       >
         <TextArea />
       </Form.Item>
-      <Divider></Divider>
-      <Form.Item label="Upload Media">
-        <Form.Item name="dragger" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-          <Upload.Dragger name="files" action="/upload.do">
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined />
-            </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">Support for a single or bulk upload.</p>
-          </Upload.Dragger>
-        </Form.Item>
+      <Form.Item label="Upload Media" name="medium_id">
+        <MediaSelector />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

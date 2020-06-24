@@ -5,7 +5,6 @@ import { Skeleton } from 'antd';
 import { updatePost, getPost } from '../../actions/posts';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { each } from 'lodash';
 
 function EditPost() {
   const history = useHistory();

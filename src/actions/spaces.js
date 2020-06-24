@@ -8,9 +8,12 @@ import {
   API_ADD_SPACE,
   API_GET_SPACES,
   API_DELETE_SPACE,
+  API_UPDATE_SPACE,
   SET_SELECTED_SPACE,
   DELETE_SPACE_SUCCESS,
   DELETE_SPACE_FAILURE,
+  UPDATE_SPACE_SUCCESS,
+  UPDATE_SPACE_FAILURE,
 } from '../constants/spaces';
 
 export const getSpaces = () => {
@@ -60,6 +63,20 @@ export const deleteSpace = (id) => {
   };
 };
 
+export const updateSpace = (data) => {
+  return (dispatch, getState) => {
+    dispatch(loadingSpaces());
+    return axios
+      .put(API_UPDATE_SPACE + '/' + data.id, data)
+      .then((response) => {
+        dispatch(updateSpaceSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(updateSpaceFailure(error.message));
+      });
+  };
+};
+
 const loadingSpaces = () => ({
   type: LOADING_SPACES,
 });
@@ -83,6 +100,18 @@ const addSpaceSuccess = (space) => ({
 
 const addSpaceFailure = (error) => ({
   type: ADD_SPACE_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const updateSpaceSuccess = (data) => ({
+  type: UPDATE_SPACE_SUCCESS,
+  payload: data,
+});
+
+const updateSpaceFailure = (error) => ({
+  type: UPDATE_SPACE_FAILURE,
   payload: {
     error,
   },

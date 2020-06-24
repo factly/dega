@@ -11,19 +11,19 @@ import '@uppy/url/dist/style.css';
 
 import { addMedium } from '../../actions/media';
 
-const uppy = Uppy({
-  id: 'uppy-media',
-  meta: { type: 'avatar' },
-  restrictions: { maxNumberOfFiles: 1 },
-  allowedFileTypes: ['image/*'],
-  autoProceed: false,
-})
-  .use(AwsS3, { companionUrl: 'http://localhost:3020' })
-  .use(Url, { companionUrl: 'http://localhost:3020' })
-  .use(GoogleDrive, { companionUrl: 'http://localhost:3020' });
-
 function UppyUploader({ onUpload }) {
   const dispatch = useDispatch();
+
+  const uppy = Uppy({
+    id: 'uppy-media',
+    meta: { type: 'avatar' },
+    restrictions: { maxNumberOfFiles: 1 },
+    allowedFileTypes: ['image/*'],
+    autoProceed: false,
+  })
+    .use(AwsS3, { companionUrl: 'http://localhost:3020' })
+    .use(Url, { companionUrl: 'http://localhost:3020' })
+    .use(GoogleDrive, { companionUrl: 'http://localhost:3020' });
 
   uppy.on('complete', (result) => {
     const successful = result.successful[0];
@@ -39,9 +39,9 @@ function UppyUploader({ onUpload }) {
     upload['title'] = successful.meta.caption;
     upload['type'] = successful.meta.type;
     upload['url'] = successful.uploadURL;
-    onUpload(upload);
     dispatch(addMedium(upload));
   });
+
   return (
     <div>
       <Dashboard

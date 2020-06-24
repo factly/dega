@@ -2,7 +2,7 @@ import React from 'react';
 import TagsCreateForm from './components/TagsCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
-import { updateTag, getTags } from '../../actions/tags';
+import { updateTag, getTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -19,7 +19,7 @@ function EditTag() {
   });
 
   React.useEffect(() => {
-    dispatch(getTags(id));
+    dispatch(getTag(id));
   }, [dispatch, id]);
 
   if (loading) return <Skeleton />;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button, Skeleton, List, Space } from 'antd';
+import { Popconfirm, Button, List } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, deletePost } from '../../../actions/posts';
