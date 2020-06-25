@@ -9,6 +9,7 @@ import authors from './authors';
 import posts from './posts';
 import ratings from './ratings';
 import claimants from './claimants';
+import claims from './claims';
 
 export default combineReducers({
   settings,
@@ -21,4 +22,5 @@ export default combineReducers({
   posts,
   ratings,
   claimants,
+  claims,
 });

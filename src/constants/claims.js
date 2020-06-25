@@ -1,0 +1,17 @@
+//Actions
+export const GET_CLAIMS_SUCCESS = 'GET_CLAIMS_SUCCESS';
+export const GET_CLAIMS_FAILURE = 'GET_CLAIMS_FAILURE';
+export const GET_CLAIM_SUCCESS = 'GET_CLAIM_SUCCESS';
+export const GET_CLAIM_FAILURE = 'GET_CLAIM_FAILURE';
+export const ADD_CLAIM_SUCCESS = 'ADD_CLAIM_SUCCESS';
+export const ADD_CLAIM_FAILURE = 'ADD_CLAIM_FAILURE';
+export const UPDATE_CLAIM_SUCCESS = 'UPDATE_CLAIM_SUCCESS';
+export const UPDATE_CLAIM_FAILURE = 'UPDATE_CLAIM_FAILURE';
+export const DELETE_CLAIM_SUCCESS = 'DELETE_CLAIM_SUCCESS';
+export const DELETE_CLAIM_FAILURE = 'DELETE_CLAIM_FAILURE';
+export const LOADING_CLAIMS = 'LOADING_CLAIMS';
+export const ADD_CLAIMS = 'ADD_CLAIMS';
+
+//API
+export const API_GET_CLAIMS = '/factcheck/claims';
+export const API_ADD_CLAIM = '/factcheck/claims';

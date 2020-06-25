@@ -9,7 +9,6 @@ import {
 
 const initialState = {
   req: [],
-  post: {},
   details: {},
   loading: true,
   total: 0,
