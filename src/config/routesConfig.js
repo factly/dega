@@ -48,6 +48,11 @@ import Claims from '../pages/claims';
 import CreateClaim from '../pages/claims/create';
 import EditClaim from '../pages/claims/edit';
 
+//FactChecks
+import FactChecks from '../pages/factChecks';
+import CreateFactCheck from '../pages/factChecks/create';
+import EditFactCheck from '../pages/factChecks/edit';
+
 export default [
   {
     path: '/dashboard',
@@ -200,6 +205,30 @@ export default [
     enableBreadcrumb: false,
     Icon: FileImageOutlined,
     title: 'Edit Post',
+  },
+  {
+    path: '/fact-checks',
+    Component: FactChecks,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: FileImageOutlined,
+    title: 'Fact Checks',
+  },
+  {
+    path: '/fact-checks/create',
+    Component: CreateFactCheck,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: FileImageOutlined,
+    title: 'Add Fact Check',
+  },
+  {
+    path: '/fact-checks/:id/edit',
+    Component: EditFactCheck,
+    enableNavigation: false,
+    enableBreadcrumb: false,
+    Icon: FileImageOutlined,
+    title: 'Edit Fact Check',
   },
   {
     path: '/ratings',

@@ -10,6 +10,7 @@ import posts from './posts';
 import ratings from './ratings';
 import claimants from './claimants';
 import claims from './claims';
+import factChecks from './factChecks';
 
 export default combineReducers({
   settings,
@@ -23,4 +24,5 @@ export default combineReducers({
   ratings,
   claimants,
   claims,
+  factChecks,
 });
