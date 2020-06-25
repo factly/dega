@@ -1,16 +1,14 @@
 import React from 'react';
-import { Modal, Button, Tabs, Space } from 'antd';
+import { Modal, Button, Radio, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import MediaUploader from './uploader';
 import MediaList from './list';
 import { getMedium } from '../../actions/media';
 
-const { TabPane } = Tabs;
-
 function MediaSelector({ value = null, onChange }) {
   const [show, setShow] = React.useState(false);
   const [selected, setSelected] = React.useState(null);
-
+  const [tab, setTab] = React.useState('list');
   const dispatch = useDispatch();
 
   const medium = useSelector((state) => {
@@ -45,14 +43,17 @@ function MediaSelector({ value = null, onChange }) {
           </Button>,
         ]}
       >
-        <Tabs defaultActiveKey="1">
-          <TabPane tab="Select" key="1">
+        <Space direction="vertical">
+          <Radio.Group buttonStyle="solid" value={tab} onChange={(e) => setTab(e.target.value)}>
+            <Radio.Button value="list">List</Radio.Button>
+            <Radio.Button value="upload">Upload</Radio.Button>
+          </Radio.Group>
+          {tab === 'list' ? (
             <MediaList onSelect={setSelected} selected={selected} />
-          </TabPane>
-          <TabPane tab="Upload" key="2">
+          ) : tab === 'upload' ? (
             <MediaUploader />
-          </TabPane>
-        </Tabs>
+          ) : null}
+        </Space>
       </Modal>
       <Space direction="vertical">
         {medium ? <img src={medium.url} alt={medium.alt_text} width="100%" /> : null}

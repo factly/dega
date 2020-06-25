@@ -17,6 +17,7 @@ import {
 
 export const addMedium = (data) => {
   return (dispatch, getState) => {
+    dispatch(loadingMedia());
     return axios
       .post(API_ADD_MEDIA, data)
       .then((response) => {

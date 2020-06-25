@@ -9,18 +9,25 @@ function ClaimsList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { claims, total, loading } = useSelector((state) => {
-    const node = state.claims.req.find((item) => {
+  const { claims, total, loading } = useSelector(({ claims, claimants, ratings }) => {
+    const node = claims.req.find((item) => {
       return item.query.page === page;
     });
 
-    if (node)
+    if (node) {
+      const list = node.data.map((element) => {
+        let claim = claims.details[element];
+        claim.claimant = claimants.details[claim.claimant_id].name;
+        claim.rating = ratings.details[claim.rating_id].name;
+        return claim;
+      });
       return {
-        claims: node.data.map((element) => state.claims.details[element]),
-        total: state.claims.total,
-        loading: state.claims.loading,
+        claims: list,
+        total: claims.total,
+        loading: claims.loading,
       };
-    return { claims: [], total: 0, loading: state.claims.loading };
+    }
+    return { claims: [], total: 0, loading: claims.loading };
   });
 
   React.useEffect(() => {
@@ -32,8 +39,9 @@ function ClaimsList() {
   };
 
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title', width: '15%' },
-    { title: 'Slug', dataIndex: 'slug', key: 'slug', width: '15%' },
+    { title: 'Title', dataIndex: 'title', key: 'title', width: '20%' },
+    { title: 'Claimant', dataIndex: 'claimant', key: 'claimant', width: '20%' },
+    { title: 'Rating', dataIndex: 'rating', key: 'rating', width: '20%' },
     {
       title: 'Claim Date',
       dataIndex: 'claim_date',
@@ -41,18 +49,6 @@ function ClaimsList() {
       render: (_, record) => {
         return (
           <span title={record.claim_date}>{moment(record.claim_date).format('MMMM Do YYYY')}</span>
-        );
-      },
-    },
-    {
-      title: 'Checked Date',
-      dataIndex: 'checked_date',
-      width: '20%',
-      render: (_, record) => {
-        return (
-          <span title={record.checked_date}>
-            {moment(record.checked_date).format('MMMM Do YYYY')}
-          </span>
         );
       },
     },

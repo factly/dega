@@ -22,7 +22,13 @@ export default function mediaReducer(state = initialState, action = {}) {
         loading: true,
       };
     case ADD_MEDIUM_SUCCESS:
-      return initialState;
+      return {
+        ...state,
+        req: [],
+        details: {},
+        loading: true,
+        total: 0,
+      };
     case GET_MEDIA_SUCCESS:
       const localReq = state.req;
 
