@@ -10,6 +10,7 @@ import SpaceEdit from '../pages/spaces/edit';
 
 //Media
 import Media from '../pages/media';
+import MediaUploader from '../pages/media/upload';
 import MediaEdit from '../pages/media/edit';
 
 //Categories
@@ -154,6 +155,14 @@ export default [
     enableBreadcrumb: true,
     Icon: FileImageOutlined,
     title: 'Media',
+  },
+  {
+    path: '/media/upload',
+    Component: MediaUploader,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: FileImageOutlined,
+    title: 'Medium Upload',
   },
   {
     path: '/media/:id/edit',
