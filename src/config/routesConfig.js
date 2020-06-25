@@ -42,6 +42,11 @@ import Claimants from '../pages/claimants';
 import CreateClaimant from '../pages/claimants/create';
 import EditClaimant from '../pages/claimants/edit';
 
+//Claims
+import Claims from '../pages/claims';
+import CreateClaim from '../pages/claims/create';
+import EditClaim from '../pages/claims/edit';
+
 export default [
   {
     path: '/dashboard',
@@ -234,5 +239,29 @@ export default [
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Edit Claimant',
+  },
+  {
+    path: '/claims',
+    Component: Claims,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Claims',
+  },
+  {
+    path: '/claims/create',
+    Component: CreateClaim,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Create Claim',
+  },
+  {
+    path: '/claims/:id/edit',
+    Component: EditClaim,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Edit Claim',
   },
 ];

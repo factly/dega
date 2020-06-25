@@ -62,7 +62,7 @@ export default function ratingsReducer(state = initialState, action = {}) {
       };
     case ADD_RATINGS:
       let details = state.details;
-      action.payload.data.forEach((element) => {
+      action.payload.forEach((element) => {
         details[element.id] = element;
       });
       return {
