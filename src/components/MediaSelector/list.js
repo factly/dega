@@ -9,10 +9,8 @@ function MediaList({ onSelect, selected }) {
   const [page, setPage] = React.useState(1);
 
   const { media, total } = useSelector((state) => {
-    if (state.media.total === 0) return { media: [], total: 0 };
-
     const node = state.media.req.find((item) => {
-      return item.query.page === 1;
+      return item.query.page === page;
     });
 
     if (node)
@@ -25,8 +23,8 @@ function MediaList({ onSelect, selected }) {
   });
 
   React.useEffect(() => {
-    dispatch(getMedia({ page: 1 }));
-  }, [dispatch]);
+    dispatch(getMedia({ page: page }));
+  }, [dispatch, page]);
 
   return (
     <Space direction={'vertical'}>
@@ -42,7 +40,7 @@ function MediaList({ onSelect, selected }) {
             setPage(page);
           },
           total: total,
-          pageSize: 12,
+          pageSize: 5,
         }}
         dataSource={media}
         renderItem={(item) => (

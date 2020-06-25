@@ -1,13 +1,15 @@
 import React from 'react';
-import { Space } from 'antd';
+import { Space, Button } from 'antd';
 
 import MediaList from './components/MediaList';
-import MediaUploader from './components/MediaUpload';
+import { Link } from 'react-router-dom';
 
 function Media() {
   return (
     <Space direction="vertical">
-      <MediaUploader />
+      <Link to="/media/upload">
+        <Button>Upload</Button>
+      </Link>
       <MediaList />
     </Space>
   );
