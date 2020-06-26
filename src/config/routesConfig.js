@@ -52,6 +52,8 @@ import EditClaim from '../pages/claims/edit';
 import FactChecks from '../pages/factChecks';
 import CreateFactCheck from '../pages/factChecks/create';
 import EditFactCheck from '../pages/factChecks/edit';
+import Policies from '../pages/policies';
+import CreatePolicy from '../pages/policies/create';
 
 export default [
   {
@@ -109,6 +111,22 @@ export default [
     enableBreadcrumb: true,
     Icon: PieChartOutlined,
     title: 'Edit Category',
+  },
+  {
+    path: '/policies',
+    Component: Policies,
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Policies',
+  },
+  {
+    path: '/policies/create',
+    Component: CreatePolicy,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: PieChartOutlined,
+    title: 'Create Policies',
   },
   {
     path: '/formats',
