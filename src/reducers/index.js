@@ -9,6 +9,8 @@ import authors from './authors';
 import posts from './posts';
 import ratings from './ratings';
 import claimants from './claimants';
+import claims from './claims';
+import factChecks from './factChecks';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
 
 const appReducer = combineReducers({
@@ -22,6 +24,8 @@ const appReducer = combineReducers({
   posts,
   ratings,
   claimants,
+  claims,
+  factChecks,
 });
 
 const rootReducer = (state, action) => {

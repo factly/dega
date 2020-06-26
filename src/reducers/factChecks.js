@@ -1,12 +1,11 @@
 import {
-  GET_CLAIMANTS_SUCCESS,
-  ADD_CLAIMANT_SUCCESS,
-  UPDATE_CLAIMANT_SUCCESS,
-  DELETE_CLAIMANT_SUCCESS,
-  LOADING_CLAIMANTS,
-  GET_CLAIMANT_SUCCESS,
-  ADD_CLAIMANTS,
-} from '../constants/claimants';
+  GET_FACT_CHECKS_SUCCESS,
+  GET_FACT_CHECK_SUCCESS,
+  ADD_FACT_CHECK_SUCCESS,
+  UPDATE_FACT_CHECK_SUCCESS,
+  DELETE_FACT_CHECK_SUCCESS,
+  LOADING_FACT_CHECKS,
+} from '../constants/factChecks';
 
 const initialState = {
   req: [],
@@ -15,17 +14,26 @@ const initialState = {
   total: 0,
 };
 
-export default function claimantsReducer(state = initialState, action = {}) {
+export default function factChecksReducer(state = initialState, action = {}) {
   if (!action.payload) {
     return state;
   }
   switch (action.type) {
-    case LOADING_CLAIMANTS:
+    case LOADING_FACT_CHECKS:
       return {
         ...state,
         loading: false,
       };
-    case GET_CLAIMANTS_SUCCESS:
+    case GET_FACT_CHECK_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
+      };
+    case GET_FACT_CHECKS_SUCCESS:
       const localReq = state.req;
 
       const nodeIndex = state.req.findIndex((item) => {
@@ -51,25 +59,7 @@ export default function claimantsReducer(state = initialState, action = {}) {
         details: localDetails,
         total: action.payload.data.total,
       };
-    case GET_CLAIMANT_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        details: {
-          ...state.details,
-          [action.payload.id]: action.payload,
-        },
-      };
-    case ADD_CLAIMANTS:
-      let details = state.details;
-      action.payload.forEach((element) => {
-        details[element.id] = element;
-      });
-      return {
-        ...state,
-        details: details,
-      };
-    case ADD_CLAIMANT_SUCCESS:
+    case ADD_FACT_CHECK_SUCCESS:
       return {
         ...state,
         req: [],
@@ -77,12 +67,12 @@ export default function claimantsReducer(state = initialState, action = {}) {
         loading: true,
         total: 0,
       };
-    case UPDATE_CLAIMANT_SUCCESS:
+    case UPDATE_FACT_CHECK_SUCCESS:
       return {
         ...state,
         details: { ...state.details, [action.payload.id]: action.payload },
       };
-    case DELETE_CLAIMANT_SUCCESS:
+    case DELETE_FACT_CHECK_SUCCESS:
       return {
         ...state,
         req: [],

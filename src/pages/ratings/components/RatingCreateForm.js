@@ -84,7 +84,7 @@ const RatingCreateForm = ({ onCreate, data = {} }) => {
       >
         <TextArea />
       </Form.Item>
-      <Form.Item name="numeric_value" label="numeric_value">
+      <Form.Item name="Numeric value" label="numeric_value">
         <InputNumber min={1} max={5} defaultValue={3} />
       </Form.Item>
       <Form.Item label="Upload Media" name="medium_id">
