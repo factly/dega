@@ -8,19 +8,9 @@ const options = [
   { label: 'Delete', value: 'delete' },
 ];
 
-function Permission({ value, onChange, type }) {
-  const middleChange = (actions) => {
-    onChange({
-      resource: type,
-      actions: actions,
-    });
-  };
+function Permission({ value, onChange }) {
   return (
-    <Checkbox.Group
-      value={value ? value.actions : []}
-      options={options}
-      onChange={(actions) => middleChange(actions)}
-    />
+    <Checkbox.Group value={value} options={options} onChange={(actions) => onChange(actions)} />
   );
 }
 

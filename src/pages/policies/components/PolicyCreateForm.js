@@ -26,7 +26,14 @@ function PolicyCreateForm({ data = {}, onCreate }) {
       initialValues={data}
       name="create-policy"
       style={{ maxWidth: '100%', width: '100%' }}
-      onFinish={(values) => onCreate(values)}
+      onFinish={(values) =>
+        onCreate({
+          ...values,
+          permissions: Object.keys(values.permissions)
+            .filter((key) => values.permissions[key] && values.permissions[key].length > 0)
+            .map((key) => ({ resource: key, actions: values.permissions[key] })),
+        })
+      }
     >
       <Row gutter={16}>
         <Col span={12}>
@@ -37,7 +44,7 @@ function PolicyCreateForm({ data = {}, onCreate }) {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="description" label="Introduction">
+          <Form.Item name="description" label="Description">
             <Input.TextArea />
           </Form.Item>
         </Col>
@@ -47,36 +54,11 @@ function PolicyCreateForm({ data = {}, onCreate }) {
           </Form.Item>
         </Col>
       </Row>
-      <Form.Item name={['permissions', 0]} label="Categories">
-        <Permission type="categories" />
-      </Form.Item>
-      <Form.Item name={['permissions', 1]} label="Tags">
-        <Permission type="tags" />
-      </Form.Item>
-      <Form.Item name={['permissions', 3]} label="Formats">
-        <Permission type="formats" />
-      </Form.Item>
-      <Form.Item name={['permissions', 4]} label="Media">
-        <Permission type="media" />
-      </Form.Item>
-      <Form.Item name={['permissions', 5]} label="Posts">
-        <Permission type="posts" />
-      </Form.Item>
-      <Form.Item name={['permissions', 6]} label="Claimants">
-        <Permission type="claimants" />
-      </Form.Item>
-      <Form.Item name={['permissions', 7]} label="Ratings">
-        <Permission type="ratings" />
-      </Form.Item>
-      <Form.Item name={['permissions', 8]} label="Claims">
-        <Permission type="claims" />
-      </Form.Item>
-      <Form.Item name={['permissions', 9]} label="Fact Checks">
-        <Permission type="factchecks" />
-      </Form.Item>
-      <Form.Item name={['permissions', 10]} label="Policies">
-        <Permission type="policies" />
-      </Form.Item>
+      {entities.map((item) => (
+        <Form.Item key={'permissions-' + item} name={['permissions', item]} label={item}>
+          <Permission />
+        </Form.Item>
+      ))}
       <Button type="primary" htmlType="submit">
         Submit
       </Button>

@@ -2,7 +2,7 @@ import React from 'react';
 import PolicyCreateForm from './components/PolicyCreateForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
-import { getPolicy } from '../../actions/policies';
+import { getPolicy, updatePolicy } from '../../actions/policies';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -13,8 +13,20 @@ function EditPolicy() {
   const dispatch = useDispatch();
 
   const { policy, loading } = useSelector((state) => {
+    if (!state.policies.details[id])
+      return {
+        policy: null,
+        loading: state.policies.loading,
+      };
+
     return {
-      policy: state.policies.details[id] ? state.policies.details[id] : null,
+      policy: {
+        ...state.policies.details[id],
+        permissions: state.policies.details[id].permissions.reduce(
+          (obj, item) => Object.assign(obj, { [item.resource]: item.actions }),
+          {},
+        ),
+      },
       loading: state.policies.loading,
     };
   });
@@ -26,8 +38,7 @@ function EditPolicy() {
   if (loading) return <Skeleton />;
 
   const onUpdate = (values) => {
-    console.log(values);
-    //dispatch(updateCategory(values)).then(() => history.push('/categories'));
+    dispatch(updatePolicy(values)).then(() => history.push('/policies'));
   };
 
   return <PolicyCreateForm data={policy} onCreate={onUpdate} />;

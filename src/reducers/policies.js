@@ -3,6 +3,8 @@ import {
   ADD_POLICY_SUCCESS,
   GET_POLICIES_SUCCESS,
   GET_POLICY_SUCCESS,
+  DELETE_POLICY_SUCCESS,
+  UPDATE_POLICY_SUCCESS,
 } from '../constants/policies';
 
 const initialState = {
@@ -57,7 +59,20 @@ export default function policiesReducer(state = initialState, action = {}) {
           [action.payload.name]: action.payload,
         },
       };
+    case UPDATE_POLICY_SUCCESS:
+      return {
+        ...state,
+        details: { ...state.details, [action.payload.name]: action.payload },
+      };
     case ADD_POLICY_SUCCESS:
+      return {
+        ...state,
+        req: [],
+        details: {},
+        loading: true,
+        total: 0,
+      };
+    case DELETE_POLICY_SUCCESS:
       return {
         ...state,
         req: [],
