@@ -2,7 +2,6 @@ package policy
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -55,7 +54,6 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(resp.Body).Decode(&ketoPolicy)
 
-	fmt.Printf("%+v", ketoPolicy)
 	var permissions []permission
 	for _, resource := range ketoPolicy.Resources {
 		var eachRule permission
@@ -69,7 +67,6 @@ func details(w http.ResponseWriter, r *http.Request) {
 				eachRule.Actions = append(eachRule.Actions, actionSplitAll[len(actionSplitAll)-1])
 			}
 		}
-		fmt.Printf("%+v", eachRule)
 
 		permissions = append(permissions, eachRule)
 	}
