@@ -37,6 +37,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := paging{}
+	result.Nodes = make([]model.Format, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 

@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/paginationx"
@@ -36,6 +37,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := paging{}
+	result.Nodes = make([]factcheckData, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
@@ -51,6 +53,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	for _, factcheck := range factchecks {
 		factcheckList := &factcheckData{}
+		factcheckList.Categories = make([]coreModel.Category, 0)
+		factcheckList.Tags = make([]coreModel.Tag, 0)
+		factcheckList.Claims = make([]model.Claim, 0)
 		categories := []model.FactcheckCategory{}
 		tags := []model.FactcheckTag{}
 		claims := []model.FactcheckClaim{}
