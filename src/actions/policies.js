@@ -7,6 +7,8 @@ import {
   API_GET_POLICIES,
   GET_POLICIES_SUCCESS,
   GET_POLICIES_FAILURE,
+  DELETE_POLICY_SUCCESS,
+  DELETE_POLICY_FAILURE,
 } from '../constants/policies';
 
 export const getPolicies = (query) => {
@@ -39,6 +41,20 @@ export const addPolicy = (data) => {
   };
 };
 
+export const deletePolicy = (id) => {
+  return (dispatch, getState) => {
+    dispatch(loadingPolicies());
+    return axios
+      .delete(API_GET_POLICIES + '/' + id)
+      .then(() => {
+        dispatch(deletePolicySuccess(id));
+      })
+      .catch((error) => {
+        dispatch(deletePolicyFailure(error.message));
+      });
+  };
+};
+
 const loadingPolicies = () => ({
   type: LOADING_POLICIES,
 });
@@ -62,6 +78,18 @@ const addPolicySuccess = (data) => ({
 
 const addPolicyFailure = (error) => ({
   type: ADD_POLICY_FAILURE,
+  payload: {
+    error,
+  },
+});
+
+const deletePolicySuccess = (id) => ({
+  type: DELETE_POLICY_SUCCESS,
+  payload: id,
+});
+
+const deletePolicyFailure = (error) => ({
+  type: DELETE_POLICY_FAILURE,
   payload: {
     error,
   },

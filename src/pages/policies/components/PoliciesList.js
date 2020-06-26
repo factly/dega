@@ -1,8 +1,9 @@
 import React from 'react';
-import { Typography, Table } from 'antd';
+import { Popconfirm, Button, Typography, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getPolicies } from '../../../actions/policies';
+import { getPolicies, deletePolicy } from '../../../actions/policies';
+import { Link } from 'react-router-dom';
 
 function PoliciesList() {
   const dispatch = useDispatch();
@@ -40,6 +41,30 @@ function PoliciesList() {
       render: (_, record) => {
         return (
           <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+        );
+      },
+    },
+    {
+      title: 'Action',
+      dataIndex: 'operation',
+      render: (_, record) => {
+        return (
+          <span>
+            <Link
+              style={{
+                marginRight: 8,
+              }}
+              to={`/policies/${record.name}/edit`}
+            >
+              <Button>Edit</Button>
+            </Link>
+            <Popconfirm
+              title="Sure to cancel?"
+              onConfirm={() => dispatch(deletePolicy(record.name)).then(() => fetchPolicies())}
+            >
+              <Button>Delete</Button>
+            </Popconfirm>
+          </span>
         );
       },
     },
