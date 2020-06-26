@@ -6,16 +6,32 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strconv"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/renderx"
-	"github.com/go-chi/chi"
 )
 
 func create(w http.ResponseWriter, r *http.Request) {
-	spaceID := chi.URLParam(r, "space_id")
+	spaceID, err := util.GetSpace(r.Context())
 
-	oid := r.Header.Get("X-Organisation")
+	if err != nil {
+		return
+	}
+
+	space := &model.Space{}
+	space.ID = uint(spaceID)
+
+	err = config.DB.First(&space).Error
+
+	if err != nil {
+		return
+	}
+
+	oID := strconv.Itoa(space.OrganisationID)
+	sID := strconv.Itoa(spaceID)
 
 	policy := &policy{}
 
@@ -23,12 +39,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Policy{}
 
-	result.ID = "id:org:" + oid + ":app:dega:space:" + spaceID + ":" + policy.Name
+	result.ID = "id:org:" + oID + ":app:dega:space:" + sID + ":" + policy.Name
 	result.Description = policy.Description
 	result.Effect = "allow"
 
 	for _, each := range policy.Permissions {
-		resourceName := "org:" + oid + ":app:dega:space:" + spaceID + ":" + each.Resource
+		resourceName := "org:" + oID + ":app:dega:space:" + sID + ":" + each.Resource
 		result.Resources = append(result.Resources, "resources:"+resourceName)
 		var eachActions []string
 		for _, action := range each.Actions {
