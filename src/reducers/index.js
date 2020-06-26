@@ -11,8 +11,9 @@ import ratings from './ratings';
 import claimants from './claimants';
 import claims from './claims';
 import factChecks from './factChecks';
+import { SET_SELECTED_SPACE } from '../constants/spaces';
 
-export default combineReducers({
+const appReducer = combineReducers({
   settings,
   spaces,
   categories,
@@ -26,3 +27,14 @@ export default combineReducers({
   claims,
   factChecks,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === SET_SELECTED_SPACE) {
+    const { spaces, settings } = state;
+
+    state = { spaces, settings };
+  }
+  return appReducer(state, action);
+};
+
+export default rootReducer;

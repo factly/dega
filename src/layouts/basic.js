@@ -34,7 +34,9 @@ function BasicLayout(props) {
           {selected > 0 ||
           location.pathname === '/spaces' ||
           location.pathname === '/spaces/create' ? (
-            <Card className="wrap-children-content">{children}</Card>
+            <Card key={selected.toString()} className="wrap-children-content">
+              {children}
+            </Card>
           ) : (
             <Skeleton />
           )}
