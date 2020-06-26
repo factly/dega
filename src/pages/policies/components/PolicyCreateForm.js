@@ -3,13 +3,27 @@ import { Row, Col, Form, Input, Button } from 'antd';
 import Selector from '../../../components/Selector';
 import Permission from '../../../components/Permission';
 
-function PolicyCreateForm({ onCreate }) {
+const entities = [
+  'categories',
+  'tags',
+  'formats',
+  'media',
+  'posts',
+  'claimants',
+  'ratings',
+  'claims',
+  'factchecks',
+  'policies',
+];
+
+function PolicyCreateForm({ data = {}, onCreate }) {
   const [form] = Form.useForm();
 
   return (
     <Form
       layout="vertical"
       form={form}
+      initialValues={data}
       name="create-policy"
       style={{ maxWidth: '100%', width: '100%' }}
       onFinish={(values) => onCreate(values)}

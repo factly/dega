@@ -1,4 +1,9 @@
-import { LOADING_POLICIES, ADD_POLICY_SUCCESS, GET_POLICIES_SUCCESS } from '../constants/policies';
+import {
+  LOADING_POLICIES,
+  ADD_POLICY_SUCCESS,
+  GET_POLICIES_SUCCESS,
+  GET_POLICY_SUCCESS,
+} from '../constants/policies';
 
 const initialState = {
   req: [],
@@ -42,6 +47,15 @@ export default function policiesReducer(state = initialState, action = {}) {
         req: localReq,
         details: localDetails,
         total: action.payload.data.total,
+      };
+    case GET_POLICY_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        details: {
+          ...state.details,
+          [action.payload.name]: action.payload,
+        },
       };
     case ADD_POLICY_SUCCESS:
       return {
