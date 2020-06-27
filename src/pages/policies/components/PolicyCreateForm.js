@@ -32,6 +32,7 @@ function PolicyCreateForm({ data = {}, onCreate }) {
           permissions: Object.keys(values.permissions)
             .filter((key) => values.permissions[key] && values.permissions[key].length > 0)
             .map((key) => ({ resource: key, actions: values.permissions[key] })),
+          users: values.users.map((item) => item.toString()),
         })
       }
     >
