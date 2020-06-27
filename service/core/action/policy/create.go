@@ -3,6 +3,7 @@ package policy
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -21,6 +22,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	userID, err := util.GetUser(r.Context())
+
+	if err != nil {
+		return
+	}
+
 	space := &model.Space{}
 	space.ID = uint(spaceID)
 
@@ -30,33 +37,34 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uID := strconv.Itoa(userID)
 	oID := strconv.Itoa(space.OrganisationID)
 	sID := strconv.Itoa(spaceID)
 
-	policy := &policy{}
+	policyReq := &policyReq{}
 
-	json.NewDecoder(r.Body).Decode(&policy)
+	json.NewDecoder(r.Body).Decode(&policyReq)
 
-	result := &model.Policy{}
+	ketoPolicy := &model.Policy{}
 
-	result.ID = "id:org:" + oID + ":app:dega:space:" + sID + ":" + policy.Name
-	result.Description = policy.Description
-	result.Effect = "allow"
+	ketoPolicy.ID = "id:org:" + oID + ":app:dega:space:" + sID + ":" + policyReq.Name
+	ketoPolicy.Description = policyReq.Description
+	ketoPolicy.Effect = "allow"
 
-	for _, each := range policy.Permissions {
+	for _, each := range policyReq.Permissions {
 		resourceName := "org:" + oID + ":app:dega:space:" + sID + ":" + each.Resource
-		result.Resources = append(result.Resources, "resources:"+resourceName)
+		ketoPolicy.Resources = append(ketoPolicy.Resources, "resources:"+resourceName)
 		var eachActions []string
 		for _, action := range each.Actions {
 			eachActions = append(eachActions, "actions:"+resourceName+":"+action)
 		}
-		result.Actions = append(result.Actions, eachActions...)
+		ketoPolicy.Actions = append(ketoPolicy.Actions, eachActions...)
 	}
 
-	result.Subjects = policy.Users
+	ketoPolicy.Subjects = policyReq.Users
 
 	buf := new(bytes.Buffer)
-	json.NewEncoder(buf).Encode(&result)
+	json.NewEncoder(buf).Encode(&ketoPolicy)
 	req, err := http.NewRequest("PUT", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies", buf)
 	req.Header.Set("Content-Type", "application/json")
 
@@ -70,5 +78,44 @@ func create(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 	ioutil.ReadAll(resp.Body)
 
-	renderx.JSON(w, http.StatusOK, policy)
+	/* User req */
+	req, err = http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+oID+"/users", nil)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-User", uID)
+	client = &http.Client{}
+	resp, err = client.Do(req)
+
+	if err != nil {
+		return
+	}
+
+	defer resp.Body.Close()
+
+	users := []model.Author{}
+	json.NewDecoder(resp.Body).Decode(&users)
+
+	userMap := make(map[string]model.Author)
+
+	for _, u := range users {
+		userMap[fmt.Sprint(u.ID)] = u
+	}
+
+	result := policy{}
+
+	result.Name = policyReq.Name
+	result.Description = policyReq.Description
+	result.Permissions = policyReq.Permissions
+
+	var authors []model.Author
+
+	for _, user := range ketoPolicy.Subjects {
+		val, exists := userMap[user]
+		if exists {
+			authors = append(authors, val)
+		}
+	}
+
+	result.Users = authors
+
+	renderx.JSON(w, http.StatusOK, result)
 }

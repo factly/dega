@@ -2,6 +2,7 @@ package policy
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -16,6 +17,12 @@ import (
 
 func details(w http.ResponseWriter, r *http.Request) {
 	spaceID, err := util.GetSpace(r.Context())
+
+	if err != nil {
+		return
+	}
+
+	userID, err := util.GetUser(r.Context())
 
 	if err != nil {
 		return
@@ -49,10 +56,31 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	defer resp.Body.Close()
 
-	/* create new policy */
 	ketoPolicy := &model.Policy{}
 
 	json.NewDecoder(resp.Body).Decode(&ketoPolicy)
+
+	/* User req */
+	req, err = http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+strconv.Itoa(space.OrganisationID)+"/users", nil)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-User", strconv.Itoa(userID))
+	client = &http.Client{}
+	resp, err = client.Do(req)
+
+	if err != nil {
+		return
+	}
+
+	defer resp.Body.Close()
+
+	users := []model.Author{}
+	json.NewDecoder(resp.Body).Decode(&users)
+
+	userMap := make(map[string]model.Author)
+
+	for _, u := range users {
+		userMap[fmt.Sprint(u.ID)] = u
+	}
 
 	var permissions []permission
 	for _, resource := range ketoPolicy.Resources {
@@ -71,12 +99,21 @@ func details(w http.ResponseWriter, r *http.Request) {
 		permissions = append(permissions, eachRule)
 	}
 
-	var result policy
+	var authors []model.Author
 
-	result.Name = ketoPolicy.ID
+	for _, user := range ketoPolicy.Subjects {
+		val, exists := userMap[user]
+		if exists {
+			authors = append(authors, val)
+		}
+	}
+
+	var result policy
+	nameAll := strings.Split(ketoPolicy.ID, ":")
+	result.Name = nameAll[len(nameAll)-1]
 	result.Description = ketoPolicy.Description
 	result.Permissions = permissions
-	result.Users = ketoPolicy.Subjects
+	result.Users = authors
 
 	renderx.JSON(w, http.StatusOK, result)
 }

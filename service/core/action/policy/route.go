@@ -1,6 +1,9 @@
 package policy
 
-import "github.com/go-chi/chi"
+import (
+	"github.com/factly/dega-server/service/core/model"
+	"github.com/go-chi/chi"
+)
 
 type permission struct {
 	Resource string   `json:"resource"`
@@ -8,6 +11,13 @@ type permission struct {
 }
 
 type policy struct {
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Permissions []permission   `json:"permissions"`
+	Users       []model.Author `json:"users"`
+}
+
+type policyReq struct {
 	Name        string       `json:"name"`
 	Description string       `json:"description"`
 	Permissions []permission `json:"permissions"`

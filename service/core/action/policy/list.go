@@ -2,6 +2,7 @@ package policy
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
@@ -36,6 +37,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(resp.Body).Decode(&polices)
 
+	uID, err := util.GetUser(r.Context())
+
+	if err != nil {
+		return
+	}
+
 	sID, err := util.GetSpace(r.Context())
 
 	if err != nil {
@@ -60,6 +67,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	for i, j := 0, len(onlyOrgPolicy)-1; i < j; i, j = i+1, j-1 {
+		onlyOrgPolicy[i], onlyOrgPolicy[j] = onlyOrgPolicy[j], onlyOrgPolicy[i]
+	}
+
 	offset, limit := paginationx.Parse(r.URL.Query())
 
 	total := len(onlyOrgPolicy)
@@ -73,9 +84,29 @@ func list(w http.ResponseWriter, r *http.Request) {
 		upperLimit = total
 	}
 
-	total = len(onlyOrgPolicy)
-
 	onlyOrgPolicy = onlyOrgPolicy[lowerLimit:upperLimit]
+
+	/* User req */
+	req, err = http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+strconv.Itoa(space.OrganisationID)+"/users", nil)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-User", strconv.Itoa(uID))
+	client = &http.Client{}
+	resp, err = client.Do(req)
+
+	if err != nil {
+		return
+	}
+
+	defer resp.Body.Close()
+
+	users := []model.Author{}
+	json.NewDecoder(resp.Body).Decode(&users)
+
+	userMap := make(map[string]model.Author)
+
+	for _, u := range users {
+		userMap[fmt.Sprint(u.ID)] = u
+	}
 
 	var pagePolicies []policy
 
@@ -97,12 +128,20 @@ func list(w http.ResponseWriter, r *http.Request) {
 			eachPermissions = append(eachPermissions, eachRule)
 		}
 
+		var authors []model.Author
+		for _, user := range each.Subjects {
+			val, exists := userMap[user]
+			if exists {
+				authors = append(authors, val)
+			}
+		}
+
 		var eachPolicy policy
 		nameAll := strings.Split(each.ID, ":")
 		eachPolicy.Name = nameAll[len(nameAll)-1]
 		eachPolicy.Description = each.Description
 		eachPolicy.Permissions = eachPermissions
-		eachPolicy.Users = each.Subjects
+		eachPolicy.Users = authors
 
 		pagePolicies = append(pagePolicies, eachPolicy)
 	}
