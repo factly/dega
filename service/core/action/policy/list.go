@@ -108,10 +108,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 		userMap[fmt.Sprint(u.ID)] = u
 	}
 
-	var pagePolicies []policy
+	pagePolicies := make([]policy, 0)
 
 	for _, each := range onlyOrgPolicy {
-		var eachPermissions []permission
+		eachPermissions := make([]permission, 0)
 		for _, resource := range each.Resources {
 			var eachRule permission
 
@@ -128,7 +128,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			eachPermissions = append(eachPermissions, eachRule)
 		}
 
-		var authors []model.Author
+		authors := make([]model.Author, 0)
 		for _, user := range each.Subjects {
 			val, exists := userMap[user]
 			if exists {

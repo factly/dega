@@ -43,9 +43,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	sID := strconv.Itoa(spaceID)
 
 	/* delete old policy */
+
+	commanPolicyString := ":org:" + oID + ":app:dega:space:" + sID + ":"
 	policyID := chi.URLParam(r, "policy_id")
 
-	policyID = "id:org:" + oID + ":app:dega:space:" + sID + ":" + policyID
+	policyID = "id" + commanPolicyString + policyID
 
 	req, err := http.NewRequest("DELETE", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies/"+policyID, nil)
 	req.Header.Set("Content-Type", "application/json")
@@ -66,16 +68,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	ketoPolicy := &model.Policy{}
 
-	ketoPolicy.ID = "id:org:" + oID + ":app:dega:space:" + sID + ":" + policyReq.Name
+	ketoPolicy.ID = "id" + commanPolicyString + policyReq.Name
 	ketoPolicy.Description = policyReq.Description
 	ketoPolicy.Effect = "allow"
 
 	for _, each := range policyReq.Permissions {
-		resourceName := "org:" + oID + ":app:dega:space:" + sID + ":" + each.Resource
-		ketoPolicy.Resources = append(ketoPolicy.Resources, "resources:"+resourceName)
+		ketoPolicy.Resources = append(ketoPolicy.Resources, "resources"+commanPolicyString+each.Resource)
 		var eachActions []string
 		for _, action := range each.Actions {
-			eachActions = append(eachActions, "actions:"+resourceName+":"+action)
+			eachActions = append(eachActions, "actions"+commanPolicyString+each.Resource+":"+action)
 		}
 		ketoPolicy.Actions = append(ketoPolicy.Actions, eachActions...)
 	}
@@ -125,7 +126,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Description = policyReq.Description
 	result.Permissions = policyReq.Permissions
 
-	var authors []model.Author
+	authors := make([]model.Author, 0)
 
 	for _, user := range ketoPolicy.Subjects {
 		val, exists := userMap[user]

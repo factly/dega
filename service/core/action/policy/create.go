@@ -47,16 +47,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	ketoPolicy := &model.Policy{}
 
-	ketoPolicy.ID = "id:org:" + oID + ":app:dega:space:" + sID + ":" + policyReq.Name
+	commanPolicyString := ":org:" + oID + ":app:dega:space:" + sID + ":"
+	ketoPolicy.ID = "id" + commanPolicyString + policyReq.Name
 	ketoPolicy.Description = policyReq.Description
 	ketoPolicy.Effect = "allow"
 
 	for _, each := range policyReq.Permissions {
-		resourceName := "org:" + oID + ":app:dega:space:" + sID + ":" + each.Resource
-		ketoPolicy.Resources = append(ketoPolicy.Resources, "resources:"+resourceName)
+		ketoPolicy.Resources = append(ketoPolicy.Resources, "resources"+commanPolicyString+each.Resource)
 		var eachActions []string
 		for _, action := range each.Actions {
-			eachActions = append(eachActions, "actions:"+resourceName+":"+action)
+			eachActions = append(eachActions, "actions"+commanPolicyString+each.Resource+":"+action)
 		}
 		ketoPolicy.Actions = append(ketoPolicy.Actions, eachActions...)
 	}
@@ -106,7 +106,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result.Description = policyReq.Description
 	result.Permissions = policyReq.Permissions
 
-	var authors []model.Author
+	authors := make([]model.Author, 0)
 
 	for _, user := range ketoPolicy.Subjects {
 		val, exists := userMap[user]

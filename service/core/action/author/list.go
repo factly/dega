@@ -64,7 +64,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	defer resp.Body.Close()
 
-	users := []model.Author{}
+	users := make([]model.Author, 0)
 	json.NewDecoder(resp.Body).Decode(&users)
 
 	offset, limit := paginationx.Parse(r.URL.Query())

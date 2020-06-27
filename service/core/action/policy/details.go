@@ -82,7 +82,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		userMap[fmt.Sprint(u.ID)] = u
 	}
 
-	var permissions []permission
+	permissions := make([]permission, 0)
 	for _, resource := range ketoPolicy.Resources {
 		var eachRule permission
 
@@ -99,8 +99,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		permissions = append(permissions, eachRule)
 	}
 
-	var authors []model.Author
-
+	authors := make([]model.Author, 0)
 	for _, user := range ketoPolicy.Subjects {
 		val, exists := userMap[user]
 		if exists {
