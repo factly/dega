@@ -1,12 +1,10 @@
 import {
-  GET_CATEGORIES_SUCCESS,
-  ADD_CATEGORY_SUCCESS,
-  UPDATE_CATEGORY_SUCCESS,
-  DELETE_CATEGORY_SUCCESS,
-  LOADING_CATEGORIES,
-  GET_CATEGORY_SUCCESS,
+  ADD_CATEGORY,
   ADD_CATEGORIES,
-} from '../constants/categories';
+  ADD_CATEGORIES_REQUEST,
+  SET_CATEGORIES_LOADING,
+  RESET_CATEGORIES,
+} from '../constants/categoriess';
 
 const initialState = {
   req: [],
@@ -15,80 +13,57 @@ const initialState = {
   total: 0,
 };
 
-export default function categoriesReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
+export default function categoriessReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case LOADING_CATEGORIES:
+    case RESET_CATEGORIES:
       return {
         ...state,
-        loading: false,
+        req: [],
+        details: {},
+        loading: true,
+        total: 0,
       };
-    case GET_CATEGORIES_SUCCESS:
+    case SET_CATEGORIES_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case ADD_CATEGORIES_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
+        data: data,
+        query: query,
       });
 
+      return {
+        ...state,
+        req: localReq,
+        total: total,
+      };
+    case ADD_CATEGORIES:
       const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
+      action.payload.data.forEach((element) => {
         localDetails[element.id] = element;
       });
-
       return {
         ...state,
-        loading: false,
-        req: localReq,
         details: localDetails,
-        total: action.payload.data.total,
       };
-    case GET_CATEGORY_SUCCESS:
+    case ADD_CATEGORY:
       return {
         ...state,
-        loading: false,
         details: {
           ...state.details,
           [action.payload.id]: action.payload,
         },
-      };
-    case ADD_CATEGORIES:
-      let details = state.details;
-      action.payload.data.forEach((element) => {
-        details[element.id] = element;
-      });
-      return {
-        ...state,
-        details: details,
-      };
-    case ADD_CATEGORY_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
-      };
-    case UPDATE_CATEGORY_SUCCESS:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload.id]: action.payload },
-      };
-    case DELETE_CATEGORY_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
       };
     default:
       return state;

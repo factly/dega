@@ -1,46 +1,35 @@
 import axios from 'axios';
 import {
-  API_ADD_MEDIA,
-  LOADING_MEDIA,
-  API_GET_MEDIA,
-  GET_MEDIA_FAILURE,
-  GET_MEDIA_SUCCESS,
-  GET_MEDIUM_FAILURE,
-  GET_MEDIUM_SUCCESS,
-  UPDATE_MEDIUM_FAILURE,
-  UPDATE_MEDIUM_SUCCESS,
-  DELETE_MEDIUM_FAILURE,
-  DELETE_MEDIUM_SUCCESS,
-  ADD_MEDIUM_SUCCESS,
-  ADD_MEDIUM_FAILURE,
+  ADD_MEDIUM,
+  ADD_MEDIA,
+  ADD_MEDIA_REQUEST,
+  SET_MEDIA_LOADING,
+  RESET_MEDIA,
+  MEDIA_API,
 } from '../constants/media';
-
-export const addMedium = (data) => {
-  return (dispatch, getState) => {
-    dispatch(loadingMedia());
-    return axios
-      .post(API_ADD_MEDIA, data)
-      .then((response) => {
-        dispatch(addMediumSuccess(response.data));
-      })
-      .catch((error) => {
-        dispatch(addMediumFailure(error.message));
-      });
-  };
-};
+import { addErrors } from './notifications';
 
 export const getMedia = (query) => {
   return (dispatch, getState) => {
     dispatch(loadingMedia());
     return axios
-      .get(API_GET_MEDIA, {
+      .get(MEDIA_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getMediaSuccess(query, response.data));
+        dispatch(addMediaList(response.data.nodes));
+        dispatch(
+          addMediaRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopMediaLoading());
       })
       .catch((error) => {
-        dispatch(getMediaFailure(error.message));
+        console.log(error.message);
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -49,12 +38,27 @@ export const getMedium = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingMedia());
     return axios
-      .get(API_GET_MEDIA + '/' + id)
+      .get(MEDIA_API + '/' + id)
       .then((response) => {
-        dispatch(getMediumSuccess(response.data));
+        dispatch(getMediumByID(response.data));
+        dispatch(stopMediaLoading());
       })
       .catch((error) => {
-        dispatch(getMediumFailure(error.message));
+        dispatch(addErrors(error.message));
+      });
+  };
+};
+
+export const addMedium = (data) => {
+  return (dispatch, getState) => {
+    dispatch(loadingMedia());
+    return axios
+      .post(MEDIA_API, data)
+      .then(() => {
+        dispatch(resetMedia());
+      })
+      .catch((error) => {
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -63,12 +67,13 @@ export const updateMedium = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingMedia());
     return axios
-      .put(API_GET_MEDIA + '/' + data.id, data)
+      .put(MEDIA_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updateMediumSuccess(response.data));
+        dispatch(getMediumByID(response.data));
+        dispatch(stopMediaLoading());
       })
       .catch((error) => {
-        dispatch(updateMediumFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -77,76 +82,51 @@ export const deleteMedium = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingMedia());
     return axios
-      .delete(API_GET_MEDIA + '/' + id)
+      .delete(MEDIA_API + '/' + id)
       .then(() => {
-        dispatch(deleteMediumSuccess(id));
+        dispatch(resetMedia());
       })
       .catch((error) => {
-        dispatch(deleteMediumFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
+export const addMedia = (media) => {
+  return (dispatch, getState) => {
+    return dispatch(addMediaList(media));
+  };
+};
+
 const loadingMedia = () => ({
-  type: LOADING_MEDIA,
+  type: SET_MEDIA_LOADING,
+  payload: true,
 });
 
-const getMediaSuccess = (query, data) => ({
-  type: GET_MEDIA_SUCCESS,
-  payload: { query, data },
+const stopMediaLoading = () => ({
+  type: SET_MEDIA_LOADING,
+  payload: false,
 });
 
-const getMediaFailure = (error) => ({
-  type: GET_MEDIA_FAILURE,
+const getMediumByID = (data) => ({
+  type: ADD_MEDIUM,
   payload: {
-    error,
+    ...data,
   },
 });
 
-const getMediumSuccess = (data) => ({
-  type: GET_MEDIUM_SUCCESS,
-  payload: data,
+const addMediaList = (data) => ({
+  type: ADD_MEDIA,
+  payload: { data },
 });
 
-const getMediumFailure = (error) => ({
-  type: GET_MEDIUM_FAILURE,
+const addMediaRequest = (data) => ({
+  type: ADD_MEDIA_REQUEST,
   payload: {
-    error,
+    ...data,
   },
 });
 
-const updateMediumFailure = (error) => ({
-  type: UPDATE_MEDIUM_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const updateMediumSuccess = (data) => ({
-  type: UPDATE_MEDIUM_SUCCESS,
-  payload: data,
-});
-
-const deleteMediumFailure = (error) => ({
-  type: DELETE_MEDIUM_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteMediumSuccess = (data) => ({
-  type: DELETE_MEDIUM_SUCCESS,
-  payload: data,
-});
-
-const addMediumFailure = (error) => ({
-  type: ADD_MEDIUM_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addMediumSuccess = (data) => ({
-  type: ADD_MEDIUM_SUCCESS,
-  payload: data,
+const resetMedia = () => ({
+  type: RESET_MEDIA,
 });

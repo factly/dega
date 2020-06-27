@@ -1,32 +1,35 @@
 import axios from 'axios';
 import {
-  GET_CATEGORIES_SUCCESS,
-  GET_CATEGORIES_FAILURE,
-  ADD_CATEGORY_FAILURE,
-  ADD_CATEGORY_SUCCESS,
-  API_ADD_CATEGORY,
-  API_GET_CATEGORIES,
-  UPDATE_CATEGORY_SUCCESS,
-  UPDATE_CATEGORY_FAILURE,
-  DELETE_CATEGORY_SUCCESS,
-  DELETE_CATEGORY_FAILURE,
-  LOADING_CATEGORIES,
-  GET_CATEGORY_SUCCESS,
-  GET_CATEGORY_FAILURE,
+  ADD_CATEGORY,
+  ADD_CATEGORIES,
+  ADD_CATEGORIES_REQUEST,
+  SET_CATEGORIES_LOADING,
+  RESET_CATEGORIES,
+  CATEGORIES_API,
 } from '../constants/categories';
+import { addErrors } from './notifications';
 
 export const getCategories = (query) => {
   return (dispatch, getState) => {
     dispatch(loadingCategories());
     return axios
-      .get(API_GET_CATEGORIES, {
+      .get(CATEGORIES_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getCategoriesSuccess(response.data, query));
+        dispatch(addCategoriesList(response.data.nodes));
+        dispatch(
+          addCategoriesRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        dispatch(getCategoriesFailure(error.message));
+        console.log(error.message);
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -35,12 +38,17 @@ export const getCategory = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingCategories());
     return axios
-      .get(API_GET_CATEGORIES + '/' + id)
+      .get(CATEGORIES_API + '/' + id)
       .then((response) => {
-        dispatch(getCategorySuccess(response.data));
+        let category = response.data;
+        if (category.medium_id > 0) dispatch(addMedia([medium]));
+        delete category.medium;
+
+        dispatch(getCategoryByID(category));
+        dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        dispatch(getCategoryFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -49,12 +57,14 @@ export const addCategory = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingCategories());
     return axios
-      .post(API_ADD_CATEGORY, data)
-      .then((response) => {
-        dispatch(addCategorySuccess(response.data));
+      .post(CATEGORIES_API, data)
+      .then(() => {
+        let category = response.data;
+        if (category.medium_id > 0) dispatch(addMedia([medium]));
+        dispatch(resetCategories());
       })
       .catch((error) => {
-        dispatch(addCategoryFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -63,12 +73,13 @@ export const updateCategory = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingCategories());
     return axios
-      .put(API_ADD_CATEGORY + '/' + data.id, data)
+      .put(CATEGORIES_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updateCategorySuccess(response.data));
+        dispatch(getCategoryByID(response.data));
+        dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        dispatch(updateCategoryFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -77,80 +88,51 @@ export const deleteCategory = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingCategories());
     return axios
-      .delete(API_ADD_CATEGORY + '/' + id)
+      .delete(CATEGORIES_API + '/' + id)
       .then(() => {
-        dispatch(deleteCategorySuccess(id));
+        dispatch(resetCategories());
       })
       .catch((error) => {
-        dispatch(deleteCategoryFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
+export const addCategories = (categories) => {
+  return (dispatch, getState) => {
+    return dispatch(addCategoriesList(categories));
+  };
+};
+
 const loadingCategories = () => ({
-  type: LOADING_CATEGORIES,
+  type: SET_CATEGORIES_LOADING,
+  payload: true,
 });
 
-const getCategoriesSuccess = (data, query) => ({
-  type: GET_CATEGORIES_SUCCESS,
-  payload: { data, query },
+const stopCategoriesLoading = () => ({
+  type: SET_CATEGORIES_LOADING,
+  payload: false,
 });
 
-const getCategoriesFailure = (error) => ({
-  type: GET_CATEGORIES_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const getCategorySuccess = (data) => ({
-  type: GET_CATEGORY_SUCCESS,
-  payload: data,
-});
-
-const getCategoryFailure = (error) => ({
-  type: GET_CATEGORY_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addCategorySuccess = (data) => ({
-  type: ADD_CATEGORY_SUCCESS,
+const getCategoryByID = (data) => ({
+  type: ADD_CATEGORY,
   payload: {
     ...data,
   },
 });
 
-const addCategoryFailure = (error) => ({
-  type: ADD_CATEGORY_FAILURE,
-  payload: {
-    error,
-  },
+const addCategoriesList = (data) => ({
+  type: ADD_CATEGORIES,
+  payload: { data },
 });
 
-const updateCategorySuccess = (data) => ({
-  type: UPDATE_CATEGORY_SUCCESS,
+const addCategoriesRequest = (data) => ({
+  type: ADD_CATEGORIES_REQUEST,
   payload: {
     ...data,
   },
 });
 
-const updateCategoryFailure = (error) => ({
-  type: UPDATE_CATEGORY_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteCategorySuccess = (id) => ({
-  type: DELETE_CATEGORY_SUCCESS,
-  payload: id,
-});
-
-const deleteCategoryFailure = (error) => ({
-  type: DELETE_CATEGORY_FAILURE,
-  payload: {
-    error,
-  },
+const resetCategories = () => ({
+  type: RESET_CATEGORIES,
 });

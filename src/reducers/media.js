@@ -1,10 +1,9 @@
 import {
-  ADD_MEDIUM_SUCCESS,
-  LOADING_MEDIA,
-  GET_MEDIA_SUCCESS,
-  GET_MEDIUM_SUCCESS,
-  UPDATE_MEDIUM_SUCCESS,
-  DELETE_MEDIUM_SUCCESS,
+  ADD_MEDIUM,
+  ADD_MEDIA,
+  ADD_MEDIA_REQUEST,
+  SET_MEDIA_LOADING,
+  RESET_MEDIA,
 } from '../constants/media';
 
 const initialState = {
@@ -16,12 +15,7 @@ const initialState = {
 
 export default function mediaReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case LOADING_MEDIA:
-      return {
-        ...state,
-        loading: true,
-      };
-    case ADD_MEDIUM_SUCCESS:
+    case RESET_MEDIA:
       return {
         ...state,
         req: [],
@@ -29,52 +23,48 @@ export default function mediaReducer(state = initialState, action = {}) {
         loading: true,
         total: 0,
       };
-    case GET_MEDIA_SUCCESS:
+    case SET_MEDIA_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case ADD_MEDIA_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
+        data: data,
+        query: query,
       });
 
+      return {
+        ...state,
+        req: localReq,
+        total: total,
+      };
+    case ADD_MEDIA:
       const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
+      action.payload.data.forEach((element) => {
         localDetails[element.id] = element;
       });
-
       return {
         ...state,
-        loading: false,
-        req: localReq,
         details: localDetails,
-        total: action.payload.data.total,
       };
-    case GET_MEDIUM_SUCCESS:
+    case ADD_MEDIUM:
       return {
         ...state,
-        loading: false,
         details: {
           ...state.details,
           [action.payload.id]: action.payload,
         },
       };
-    case UPDATE_MEDIUM_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        details: {
-          ...state.details,
-          [action.payload.id]: action.payload,
-        },
-      };
-    case DELETE_MEDIUM_SUCCESS:
-      return initialState;
     default:
       return state;
   }

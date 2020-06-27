@@ -11,6 +11,7 @@ import ratings from './ratings';
 import claimants from './claimants';
 import claims from './claims';
 import factChecks from './factChecks';
+import notifications from './notifications';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
 
 const appReducer = combineReducers({
@@ -26,6 +27,7 @@ const appReducer = combineReducers({
   claimants,
   claims,
   factChecks,
+  notifications,
 });
 
 const rootReducer = (state, action) => {

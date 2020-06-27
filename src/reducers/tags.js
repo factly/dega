@@ -1,11 +1,9 @@
 import {
-  GET_TAGS_SUCCESS,
-  ADD_TAG_SUCCESS,
-  UPDATE_TAG_SUCCESS,
-  DELETE_TAG_SUCCESS,
-  LOADING_TAGS,
-  GET_TAG_SUCCESS,
+  ADD_TAG,
   ADD_TAGS,
+  ADD_TAGS_REQUEST,
+  SET_TAGS_LOADING,
+  RESET_TAGS,
 } from '../constants/tags';
 
 const initialState = {
@@ -16,79 +14,56 @@ const initialState = {
 };
 
 export default function tagsReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
   switch (action.type) {
-    case LOADING_TAGS:
+    case RESET_TAGS:
       return {
         ...state,
-        loading: false,
+        req: [],
+        details: {},
+        loading: true,
+        total: 0,
       };
-    case GET_TAGS_SUCCESS:
+    case SET_TAGS_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case ADD_TAGS_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
+        data: data,
+        query: query,
       });
 
+      return {
+        ...state,
+        req: localReq,
+        total: total,
+      };
+    case ADD_TAGS:
       const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
+      action.payload.data.forEach((element) => {
         localDetails[element.id] = element;
       });
-
       return {
         ...state,
-        loading: false,
-        req: localReq,
         details: localDetails,
-        total: action.payload.data.total,
       };
-    case GET_TAG_SUCCESS:
+    case ADD_TAG:
       return {
         ...state,
-        loading: false,
         details: {
           ...state.details,
           [action.payload.id]: action.payload,
         },
-      };
-    case ADD_TAG_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
-      };
-    case ADD_TAGS:
-      let details = state.details;
-      action.payload.data.forEach((element) => {
-        details[element.id] = element;
-      });
-      return {
-        ...state,
-        details: details,
-      };
-    case UPDATE_TAG_SUCCESS:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload.id]: action.payload },
-      };
-    case DELETE_TAG_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
       };
     default:
       return state;
