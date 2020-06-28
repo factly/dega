@@ -44,7 +44,7 @@ function CreateFactCheck({ onCreate, data = {} }) {
           <Form.Item name="claims" label="Claims">
             <Selector mode="multiple" display={'title'} action="Claims" />
           </Form.Item>
-          <Form.Item label="Description">
+          <Form.Item name="description" label="Description">
             <Editor />
           </Form.Item>
         </Col>
