@@ -1,12 +1,7 @@
 import React from 'react';
 import { Button, Form, Input, Steps, DatePicker } from 'antd';
-import EditorJS from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import Paragraph from '@editorjs/paragraph';
-import Quote from '@editorjs/quote';
-import Table from '@editorjs/table';
 import Selector from '../../../components/Selector';
+import Editor from '../../../components/Editor';
 import { maker, checker } from '../../../utils/sluger';
 import moment from 'moment';
 
@@ -30,39 +25,17 @@ const ClaimCreateForm = ({ onCreate, data = {} }) => {
 
   const [current, setCurrent] = React.useState(0);
 
-  const editor = new EditorJS({
-    holder: 'editorjs',
-    tools: {
-      header: Header,
-      list: List,
-      paragraph: Paragraph,
-      quote: Quote,
-      table: Table,
-    },
-    data: data.description,
-  });
-
   const onSave = (values) => {
-    editor
-      .save()
-      .then((outputData) => {
-        values.claimant_id = values.claimant || [];
-        values.rating_id = values.rating || 0;
-        values.claim_date = values.claim_date
-          ? moment(values.claim_date).format('YYYY-MM-DDTHH:mm:ssZ')
-          : null;
-        values.checked_date = values.checked_date
-          ? moment(values.checked_date).format('YYYY-MM-DDTHH:mm:ssZ')
-          : null;
+    values.claimant_id = values.claimant || [];
+    values.rating_id = values.rating || 0;
+    values.claim_date = values.claim_date
+      ? moment(values.claim_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      : null;
+    values.checked_date = values.checked_date
+      ? moment(values.checked_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      : null;
 
-        onCreate({
-          ...values,
-          description: outputData,
-        });
-      })
-      .catch((error) => {
-        console.log('Saving failed: ', error);
-      });
+    onCreate(values);
   };
 
   const onTitleChange = (string) => {
@@ -122,8 +95,8 @@ const ClaimCreateForm = ({ onCreate, data = {} }) => {
           <Form.Item name="rating" label="Ratings">
             <Selector action="Ratings" />
           </Form.Item>
-          <Form.Item label="Description">
-            <div id="editorjs" style={{ border: '1px solid black', width: '800px' }}></div>
+          <Form.Item name="description" label="Description">
+            <Editor />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>

@@ -1,4 +1,17 @@
-import { PieChartOutlined, FileImageOutlined } from '@ant-design/icons';
+import {
+  DashboardOutlined,
+  BorderlessTableOutlined,
+  UnorderedListOutlined,
+  IdcardOutlined,
+  FileExclamationOutlined,
+  TagsOutlined,
+  PictureOutlined,
+  FileDoneOutlined,
+  FileProtectOutlined,
+  CheckCircleOutlined,
+  StarOutlined,
+  EyeOutlined,
+} from '@ant-design/icons';
 
 //Pages
 import Dashboard from '../pages/dashboard';
@@ -64,7 +77,7 @@ export default [
     Component: Dashboard,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: DashboardOutlined,
     title: 'Dashboard',
   },
   {
@@ -72,7 +85,7 @@ export default [
     Component: Spaces,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: BorderlessTableOutlined,
     title: 'Spaces',
   },
   {
@@ -80,7 +93,7 @@ export default [
     Component: SpaceCreate,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: BorderlessTableOutlined,
     title: 'Create Space',
   },
   {
@@ -88,7 +101,7 @@ export default [
     Component: SpaceEdit,
     enableNavigation: false,
     enableBreadcrumb: false,
-    Icon: PieChartOutlined,
+    Icon: BorderlessTableOutlined,
     title: 'Edit Space',
   },
   {
@@ -96,7 +109,7 @@ export default [
     Component: Categories,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: UnorderedListOutlined,
     title: 'Categories',
   },
   {
@@ -104,7 +117,7 @@ export default [
     Component: CreateCategory,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: UnorderedListOutlined,
     title: 'Create Category',
   },
   {
@@ -112,7 +125,7 @@ export default [
     Component: EditCategory,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: UnorderedListOutlined,
     title: 'Edit Category',
   },
   {
@@ -120,7 +133,7 @@ export default [
     Component: Policies,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: IdcardOutlined,
     title: 'Policies',
   },
   {
@@ -128,7 +141,7 @@ export default [
     Component: CreatePolicy,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: IdcardOutlined,
     title: 'Create Policies',
   },
   {
@@ -136,7 +149,7 @@ export default [
     Component: EditPolicy,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: IdcardOutlined,
     title: 'Edit Policies',
   },
   {
@@ -144,7 +157,7 @@ export default [
     Component: Formats,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: FileExclamationOutlined,
     title: 'Formats',
   },
   {
@@ -152,7 +165,7 @@ export default [
     Component: CreateFormat,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: FileExclamationOutlined,
     title: 'Create Format',
   },
   {
@@ -160,7 +173,7 @@ export default [
     Component: EditFormats,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: FileExclamationOutlined,
     title: 'Edit Format',
   },
   {
@@ -168,7 +181,7 @@ export default [
     Component: Tags,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: TagsOutlined,
     title: 'Tags',
   },
   {
@@ -176,7 +189,7 @@ export default [
     Component: CreateTag,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: TagsOutlined,
     title: 'Create Tag',
   },
   {
@@ -184,7 +197,7 @@ export default [
     Component: EditTags,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: TagsOutlined,
     title: 'Edit Tag',
   },
   {
@@ -192,7 +205,7 @@ export default [
     Component: Media,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: FileImageOutlined,
+    Icon: PictureOutlined,
     title: 'Media',
   },
   {
@@ -200,7 +213,7 @@ export default [
     Component: MediaUploader,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: FileImageOutlined,
+    Icon: PictureOutlined,
     title: 'Medium Upload',
   },
   {
@@ -208,7 +221,7 @@ export default [
     Component: MediaEdit,
     enableNavigation: false,
     enableBreadcrumb: false,
-    Icon: FileImageOutlined,
+    Icon: PictureOutlined,
     title: 'Edit Media',
   },
   {
@@ -216,7 +229,7 @@ export default [
     Component: Posts,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: FileImageOutlined,
+    Icon: FileDoneOutlined,
     title: 'Posts',
   },
   {
@@ -224,7 +237,7 @@ export default [
     Component: CreatePost,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: FileImageOutlined,
+    Icon: FileDoneOutlined,
     title: 'Add Posts',
   },
   {
@@ -232,7 +245,7 @@ export default [
     Component: EditPost,
     enableNavigation: false,
     enableBreadcrumb: false,
-    Icon: FileImageOutlined,
+    Icon: FileDoneOutlined,
     title: 'Edit Post',
   },
   {
@@ -240,7 +253,7 @@ export default [
     Component: FactChecks,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: FileImageOutlined,
+    Icon: FileProtectOutlined,
     title: 'Fact Checks',
   },
   {
@@ -248,7 +261,7 @@ export default [
     Component: CreateFactCheck,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: FileImageOutlined,
+    Icon: FileProtectOutlined,
     title: 'Add Fact Check',
   },
   {
@@ -256,7 +269,7 @@ export default [
     Component: EditFactCheck,
     enableNavigation: false,
     enableBreadcrumb: false,
-    Icon: FileImageOutlined,
+    Icon: FileProtectOutlined,
     title: 'Edit Fact Check',
   },
   {
@@ -264,7 +277,7 @@ export default [
     Component: Ratings,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: StarOutlined,
     title: 'Ratings',
   },
   {
@@ -272,7 +285,7 @@ export default [
     Component: CreateRating,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: StarOutlined,
     title: 'Create Rating',
   },
   {
@@ -280,7 +293,7 @@ export default [
     Component: EditRating,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: StarOutlined,
     title: 'Edit Rating',
   },
   {
@@ -288,7 +301,7 @@ export default [
     Component: Claimants,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: EyeOutlined,
     title: 'Claimants',
   },
   {
@@ -296,7 +309,7 @@ export default [
     Component: CreateClaimant,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: EyeOutlined,
     title: 'Create Claimant',
   },
   {
@@ -304,7 +317,7 @@ export default [
     Component: EditClaimant,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: EyeOutlined,
     title: 'Edit Claimant',
   },
   {
@@ -312,7 +325,7 @@ export default [
     Component: Claims,
     enableNavigation: true,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: CheckCircleOutlined,
     title: 'Claims',
   },
   {
@@ -320,7 +333,7 @@ export default [
     Component: CreateClaim,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: CheckCircleOutlined,
     title: 'Create Claim',
   },
   {
@@ -328,7 +341,7 @@ export default [
     Component: EditClaim,
     enableNavigation: false,
     enableBreadcrumb: true,
-    Icon: PieChartOutlined,
+    Icon: CheckCircleOutlined,
     title: 'Edit Claim',
   },
 ];

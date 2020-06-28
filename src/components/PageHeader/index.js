@@ -39,17 +39,13 @@ function PageHeader(props) {
     );
   }, [breadcrumbItems]);
 
-  const itemRender = (route, params, routes, paths) => {
-    const last = routes.indexOf(route) === routes.length - 1;
-    if (last) {
-      return <span>{route.breadcrumbName}</span>;
-    }
+  const itemRender = (route) => {
     return <Link to={route.path}>{route.breadcrumbName}</Link>;
   };
 
   return (
     <AntPageHeader
-      className="site-page-header"
+      ghost={false}
       title={lastItem.title}
       breadcrumb={{ itemRender, routes: breadcrumbItems }}
     />
