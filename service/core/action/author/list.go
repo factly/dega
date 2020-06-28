@@ -19,10 +19,6 @@ type paging struct {
 	Nodes []model.Author `json:"nodes"`
 }
 
-type permission struct {
-	User model.Author `json:"user"`
-}
-
 // list - Get all authors
 // @Summary Show all authors
 // @Description Get all authors
@@ -68,13 +64,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	defer resp.Body.Close()
 
-	usersWithPermission := []permission{}
-	json.NewDecoder(resp.Body).Decode(&usersWithPermission)
-	users := []model.Author{}
-
-	for _, each := range usersWithPermission {
-		users = append(users, each.User)
-	}
+	users := make([]model.Author, 0)
+	json.NewDecoder(resp.Body).Decode(&users)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
