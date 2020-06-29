@@ -1,11 +1,9 @@
 import {
-  GET_CLAIMANTS_SUCCESS,
-  ADD_CLAIMANT_SUCCESS,
-  UPDATE_CLAIMANT_SUCCESS,
-  DELETE_CLAIMANT_SUCCESS,
-  LOADING_CLAIMANTS,
-  GET_CLAIMANT_SUCCESS,
+  ADD_CLAIMANT,
   ADD_CLAIMANTS,
+  ADD_CLAIMANTS_REQUEST,
+  SET_CLAIMANTS_LOADING,
+  RESET_CLAIMANTS,
 } from '../constants/claimants';
 
 const initialState = {
@@ -16,79 +14,56 @@ const initialState = {
 };
 
 export default function claimantsReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
   switch (action.type) {
-    case LOADING_CLAIMANTS:
+    case RESET_CLAIMANTS:
       return {
         ...state,
-        loading: false,
+        req: [],
+        details: {},
+        loading: true,
+        total: 0,
       };
-    case GET_CLAIMANTS_SUCCESS:
+    case SET_CLAIMANTS_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case ADD_CLAIMANTS_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
+        data: data,
+        query: query,
       });
 
+      return {
+        ...state,
+        req: localReq,
+        total: total,
+      };
+    case ADD_CLAIMANTS:
       const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
+      action.payload.data.forEach((element) => {
         localDetails[element.id] = element;
       });
-
       return {
         ...state,
-        loading: false,
-        req: localReq,
         details: localDetails,
-        total: action.payload.data.total,
       };
-    case GET_CLAIMANT_SUCCESS:
+    case ADD_CLAIMANT:
       return {
         ...state,
-        loading: false,
         details: {
           ...state.details,
           [action.payload.id]: action.payload,
         },
-      };
-    case ADD_CLAIMANTS:
-      let details = state.details;
-      action.payload.forEach((element) => {
-        details[element.id] = element;
-      });
-      return {
-        ...state,
-        details: details,
-      };
-    case ADD_CLAIMANT_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
-      };
-    case UPDATE_CLAIMANT_SUCCESS:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload.id]: action.payload },
-      };
-    case DELETE_CLAIMANT_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
       };
     default:
       return state;

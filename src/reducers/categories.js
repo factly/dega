@@ -4,7 +4,7 @@ import {
   ADD_CATEGORIES_REQUEST,
   SET_CATEGORIES_LOADING,
   RESET_CATEGORIES,
-} from '../constants/categoriess';
+} from '../constants/categories';
 
 const initialState = {
   req: [],
@@ -13,7 +13,7 @@ const initialState = {
   total: 0,
 };
 
-export default function categoriessReducer(state = initialState, action = {}) {
+export default function categoriesReducer(state = initialState, action = {}) {
   switch (action.type) {
     case RESET_CATEGORIES:
       return {

@@ -1,32 +1,41 @@
 import axios from 'axios';
 import {
-  GET_RATINGS_SUCCESS,
-  GET_RATINGS_FAILURE,
-  ADD_RATING_FAILURE,
-  ADD_RATING_SUCCESS,
-  API_ADD_RATING,
-  API_GET_RATINGS,
-  UPDATE_RATING_SUCCESS,
-  UPDATE_RATING_FAILURE,
-  DELETE_RATING_SUCCESS,
-  DELETE_RATING_FAILURE,
-  LOADING_RATINGS,
-  GET_RATING_SUCCESS,
-  GET_RATING_FAILURE,
+  ADD_RATING,
+  ADD_RATINGS,
+  ADD_RATINGS_REQUEST,
+  SET_RATINGS_LOADING,
+  RESET_RATINGS,
+  RATINGS_API,
 } from '../constants/ratings';
+import { addErrors } from './notifications';
+import { addMediaList } from './media';
 
 export const getRatings = (query) => {
   return (dispatch, getState) => {
     dispatch(loadingRatings());
     return axios
-      .get(API_GET_RATINGS, {
+      .get(RATINGS_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getRatingsSuccess(response.data, query));
+        const media = [];
+        response.data.nodes.forEach((rating) => {
+          if (rating.medium_id > 0) media.push(rating.medium);
+        });
+        dispatch(addMediaList(media));
+        dispatch(addRatingsList(response.data.nodes));
+        dispatch(
+          addRatingsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopRatingsLoading());
       })
       .catch((error) => {
-        dispatch(getRatingsFailure(error.message));
+        console.log(error.message);
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -35,12 +44,13 @@ export const getRating = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingRatings());
     return axios
-      .get(API_GET_RATINGS + '/' + id)
+      .get(RATINGS_API + '/' + id)
       .then((response) => {
-        dispatch(getRatingSuccess(response.data));
+        dispatch(getRatingByID(response.data));
+        dispatch(stopRatingsLoading());
       })
       .catch((error) => {
-        dispatch(getRatingFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -49,12 +59,12 @@ export const addRating = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingRatings());
     return axios
-      .post(API_ADD_RATING, data)
-      .then((response) => {
-        dispatch(addRatingSuccess(response.data));
+      .post(RATINGS_API, data)
+      .then(() => {
+        dispatch(resetRatings());
       })
       .catch((error) => {
-        dispatch(addRatingFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -63,12 +73,13 @@ export const updateRating = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingRatings());
     return axios
-      .put(API_ADD_RATING + '/' + data.id, data)
+      .put(RATINGS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updateRatingSuccess(response.data));
+        dispatch(getRatingByID(response.data));
+        dispatch(stopRatingsLoading());
       })
       .catch((error) => {
-        dispatch(updateRatingFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -77,80 +88,56 @@ export const deleteRating = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingRatings());
     return axios
-      .delete(API_ADD_RATING + '/' + id)
+      .delete(RATINGS_API + '/' + id)
       .then(() => {
-        dispatch(deleteRatingSuccess(id));
+        dispatch(resetRatings());
       })
       .catch((error) => {
-        dispatch(deleteRatingFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
+export const addRatings = (ratings) => {
+  return (dispatch, getState) => {
+    const media = [];
+    ratings.forEach((rating) => {
+      if (rating.medium_id > 0) media.push(rating.medium);
+    });
+    dispatch(addMediaList(media));
+    return dispatch(addRatingsList(ratings));
+  };
+};
+
 const loadingRatings = () => ({
-  type: LOADING_RATINGS,
+  type: SET_RATINGS_LOADING,
+  payload: true,
 });
 
-const getRatingsSuccess = (data, query) => ({
-  type: GET_RATINGS_SUCCESS,
-  payload: { data, query },
+const stopRatingsLoading = () => ({
+  type: SET_RATINGS_LOADING,
+  payload: false,
 });
 
-const getRatingsFailure = (error) => ({
-  type: GET_RATINGS_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const getRatingSuccess = (data) => ({
-  type: GET_RATING_SUCCESS,
-  payload: data,
-});
-
-const getRatingFailure = (error) => ({
-  type: GET_RATING_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addRatingSuccess = (data) => ({
-  type: ADD_RATING_SUCCESS,
+const getRatingByID = (data) => ({
+  type: ADD_RATING,
   payload: {
     ...data,
   },
 });
 
-const addRatingFailure = (error) => ({
-  type: ADD_RATING_FAILURE,
-  payload: {
-    error,
-  },
+const addRatingsList = (data) => ({
+  type: ADD_RATINGS,
+  payload: { data },
 });
 
-const updateRatingSuccess = (data) => ({
-  type: UPDATE_RATING_SUCCESS,
+const addRatingsRequest = (data) => ({
+  type: ADD_RATINGS_REQUEST,
   payload: {
     ...data,
   },
 });
 
-const updateRatingFailure = (error) => ({
-  type: UPDATE_RATING_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteRatingSuccess = (id) => ({
-  type: DELETE_RATING_SUCCESS,
-  payload: id,
-});
-
-const deleteRatingFailure = (error) => ({
-  type: DELETE_RATING_FAILURE,
-  payload: {
-    error,
-  },
+const resetRatings = () => ({
+  type: RESET_RATINGS,
 });

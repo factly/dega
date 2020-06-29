@@ -40,11 +40,7 @@ export const getCategory = (id) => {
     return axios
       .get(CATEGORIES_API + '/' + id)
       .then((response) => {
-        let category = response.data;
-        if (category.medium_id > 0) dispatch(addMedia([medium]));
-        delete category.medium;
-
-        dispatch(getCategoryByID(category));
+        dispatch(getCategoryByID(response.data));
         dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
@@ -59,8 +55,6 @@ export const addCategory = (data) => {
     return axios
       .post(CATEGORIES_API, data)
       .then(() => {
-        let category = response.data;
-        if (category.medium_id > 0) dispatch(addMedia([medium]));
         dispatch(resetCategories());
       })
       .catch((error) => {

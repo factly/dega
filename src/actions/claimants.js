@@ -1,32 +1,41 @@
 import axios from 'axios';
 import {
-  GET_CLAIMANTS_SUCCESS,
-  GET_CLAIMANTS_FAILURE,
-  ADD_CLAIMANT_FAILURE,
-  ADD_CLAIMANT_SUCCESS,
-  API_ADD_CLAIMANT,
-  API_GET_CLAIMANTS,
-  UPDATE_CLAIMANT_SUCCESS,
-  UPDATE_CLAIMANT_FAILURE,
-  DELETE_CLAIMANT_SUCCESS,
-  DELETE_CLAIMANT_FAILURE,
-  LOADING_CLAIMANTS,
-  GET_CLAIMANT_SUCCESS,
-  GET_CLAIMANT_FAILURE,
+  ADD_CLAIMANT,
+  ADD_CLAIMANTS,
+  ADD_CLAIMANTS_REQUEST,
+  SET_CLAIMANTS_LOADING,
+  RESET_CLAIMANTS,
+  CLAIMANTS_API,
 } from '../constants/claimants';
+import { addErrors } from './notifications';
+import { addMediaList } from './media';
 
 export const getClaimants = (query) => {
   return (dispatch, getState) => {
     dispatch(loadingClaimants());
     return axios
-      .get(API_GET_CLAIMANTS, {
+      .get(CLAIMANTS_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getClaimantsSuccess(response.data, query));
+        const media = [];
+        response.data.nodes.forEach((claimant) => {
+          if (claimant.medium_id > 0) media.push(claimant.medium);
+        });
+        dispatch(addMediaList(media));
+        dispatch(addClaimantsList(response.data.nodes));
+        dispatch(
+          addClaimantsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
-        dispatch(getClaimantsFailure(error.message));
+        console.log(error.message);
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -35,12 +44,13 @@ export const getClaimant = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingClaimants());
     return axios
-      .get(API_GET_CLAIMANTS + '/' + id)
+      .get(CLAIMANTS_API + '/' + id)
       .then((response) => {
-        dispatch(getClaimantSuccess(response.data));
+        dispatch(getClaimantByID(response.data));
+        dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
-        dispatch(getClaimantFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -49,12 +59,12 @@ export const addClaimant = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingClaimants());
     return axios
-      .post(API_ADD_CLAIMANT, data)
-      .then((response) => {
-        dispatch(addClaimantSuccess(response.data));
+      .post(CLAIMANTS_API, data)
+      .then(() => {
+        dispatch(resetClaimants());
       })
       .catch((error) => {
-        dispatch(addClaimantFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -63,12 +73,13 @@ export const updateClaimant = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingClaimants());
     return axios
-      .put(API_ADD_CLAIMANT + '/' + data.id, data)
+      .put(CLAIMANTS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updateClaimantSuccess(response.data));
+        dispatch(getClaimantByID(response.data));
+        dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
-        dispatch(updateClaimantFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -77,80 +88,56 @@ export const deleteClaimant = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingClaimants());
     return axios
-      .delete(API_ADD_CLAIMANT + '/' + id)
+      .delete(CLAIMANTS_API + '/' + id)
       .then(() => {
-        dispatch(deleteClaimantSuccess(id));
+        dispatch(resetClaimants());
       })
       .catch((error) => {
-        dispatch(deleteClaimantFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
+export const addClaimants = (claimants) => {
+  return (dispatch, getState) => {
+    const media = [];
+    claimants.forEach((claimant) => {
+      if (claimant.medium_id > 0) media.push(claimant.medium);
+    });
+    dispatch(addMediaList(media));
+    return dispatch(addClaimantsList(claimants));
+  };
+};
+
 const loadingClaimants = () => ({
-  type: LOADING_CLAIMANTS,
+  type: SET_CLAIMANTS_LOADING,
+  payload: true,
 });
 
-const getClaimantsSuccess = (data, query) => ({
-  type: GET_CLAIMANTS_SUCCESS,
-  payload: { data, query },
+const stopClaimantsLoading = () => ({
+  type: SET_CLAIMANTS_LOADING,
+  payload: false,
 });
 
-const getClaimantsFailure = (error) => ({
-  type: GET_CLAIMANTS_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const getClaimantSuccess = (data) => ({
-  type: GET_CLAIMANT_SUCCESS,
-  payload: data,
-});
-
-const getClaimantFailure = (error) => ({
-  type: GET_CLAIMANT_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addClaimantSuccess = (data) => ({
-  type: ADD_CLAIMANT_SUCCESS,
+const getClaimantByID = (data) => ({
+  type: ADD_CLAIMANT,
   payload: {
     ...data,
   },
 });
 
-const addClaimantFailure = (error) => ({
-  type: ADD_CLAIMANT_FAILURE,
-  payload: {
-    error,
-  },
+const addClaimantsList = (data) => ({
+  type: ADD_CLAIMANTS,
+  payload: { data },
 });
 
-const updateClaimantSuccess = (data) => ({
-  type: UPDATE_CLAIMANT_SUCCESS,
+const addClaimantsRequest = (data) => ({
+  type: ADD_CLAIMANTS_REQUEST,
   payload: {
     ...data,
   },
 });
 
-const updateClaimantFailure = (error) => ({
-  type: UPDATE_CLAIMANT_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteClaimantSuccess = (id) => ({
-  type: DELETE_CLAIMANT_SUCCESS,
-  payload: id,
-});
-
-const deleteClaimantFailure = (error) => ({
-  type: DELETE_CLAIMANT_FAILURE,
-  payload: {
-    error,
-  },
+const resetClaimants = () => ({
+  type: RESET_CLAIMANTS,
 });

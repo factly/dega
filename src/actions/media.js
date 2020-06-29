@@ -115,7 +115,7 @@ const getMediumByID = (data) => ({
   },
 });
 
-const addMediaList = (data) => ({
+export const addMediaList = (data) => ({
   type: ADD_MEDIA,
   payload: { data },
 });

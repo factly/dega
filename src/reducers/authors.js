@@ -1,4 +1,4 @@
-import { GET_AUTHORS_SUCCESS, LOADING_AUTHORS } from '../constants/authors';
+import { SET_AUTHORS_LOADING, ADD_AUTHORS, ADD_AUTHORS_REQUEST } from '../constants/authors';
 
 const initialState = {
   req: [],
@@ -7,41 +7,41 @@ const initialState = {
   total: 0,
 };
 
-export default function authorsReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
+export default function tagsReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case LOADING_AUTHORS:
+    case SET_AUTHORS_LOADING:
       return {
         ...state,
-        loading: false,
+        loading: action.payload,
       };
-    case GET_AUTHORS_SUCCESS:
+    case ADD_AUTHORS_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
-      });
-
-      const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
-        localDetails[element.id] = element;
+        data: data,
+        query: query,
       });
 
       return {
         ...state,
-        loading: false,
         req: localReq,
+        total: total,
+      };
+    case ADD_AUTHORS:
+      const localDetails = state.details;
+      action.payload.data.forEach((element) => {
+        localDetails[element.id] = element;
+      });
+      return {
+        ...state,
         details: localDetails,
-        total: action.payload.data.total,
       };
     default:
       return state;

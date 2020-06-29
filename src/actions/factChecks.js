@@ -1,71 +1,87 @@
 import axios from 'axios';
 import {
-  GET_FACT_CHECKS_SUCCESS,
-  GET_FACT_CHECKS_FAILURE,
-  GET_FACT_CHECK_SUCCESS,
-  GET_FACT_CHECK_FAILURE,
-  ADD_FACT_CHECK_FAILURE,
-  ADD_FACT_CHECK_SUCCESS,
-  API_ADD_FACT_CHECK,
-  API_GET_FACT_CHECKS,
-  UPDATE_FACT_CHECK_FAILURE,
-  UPDATE_FACT_CHECK_SUCCESS,
-  DELETE_FACT_CHECK_SUCCESS,
-  DELETE_FACT_CHECK_FAILURE,
+  ADD_FACT_CHECK,
+  ADD_FACT_CHECKS,
+  ADD_FACT_CHECKS_REQUEST,
+  SET_FACT_CHECKS_LOADING,
+  RESET_FACT_CHECKS,
+  FACT_CHECKS_API,
 } from '../constants/factChecks';
-import { LOADING_SPACES } from '../constants/spaces';
-import { ADD_TAGS } from '../constants/tags';
-import { ADD_CATEGORIES } from '../constants/categories';
-import { ADD_CLAIMS } from '../constants/claims';
+import { addErrors } from './notifications';
+import { addCategories } from './categories';
+import { addTags } from './tags';
+import { addClaims } from './claims';
+import { addMediaList } from './media';
 
 export const getFactChecks = (query) => {
   return (dispatch, getState) => {
     dispatch(loadingFactChecks());
     return axios
-      .get(API_GET_FACT_CHECKS, {
+      .get(FACT_CHECKS_API, {
         params: query,
       })
       .then((response) => {
-        let factChecks = response.data.nodes
-          ? response.data.nodes.map((factCheck) => {
-              if (factCheck.tags) dispatch(addTags(factCheck.tags));
-              if (factCheck.categories) dispatch(addCategories(factCheck.categories));
-              if (factCheck.claims) dispatch(addClaims(factCheck.claims));
+        let tags = [];
+        let categories = [];
+        let claims = [];
+        let media = [];
 
-              return {
-                ...factCheck,
-                categories: factCheck.categories.map((category) => category.id),
-                tags: factCheck.tags.map((tag) => tag.id),
-                claims: factCheck.claims.map((claim) => claim.id),
-              };
-            })
-          : [];
+        let factChecks = response.data.nodes.map((factCheck) => {
+          if (factCheck.tags) tags.push(...factCheck.tags);
+          if (factCheck.categories) categories.push(...factCheck.categories);
+          if (factCheck.claims) claims.push(...factCheck.claims);
+          if (factCheck.medium) media.push(factCheck.medium);
+          return {
+            ...factCheck,
+            categories: factCheck.categories.map((category) => category.id),
+            tags: factCheck.tags.map((tag) => tag.id),
+            claims: factCheck.claims.map((claim) => claim.id),
+          };
+        });
 
-        dispatch(getFactChecksSuccess({ ...response.data, nodes: factChecks }, query));
+        dispatch(addTags(tags));
+        dispatch(addCategories(categories));
+        dispatch(addClaims(claims));
+        dispatch(addMediaList(media));
+        dispatch(addFactChecksList(factChecks));
+        dispatch(
+          addFactChecksRequest({
+            data: factChecks.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
-        dispatch(getFactChecksFailure(error.message));
+        console.log(error.message);
+        dispatch(addErrors(error.message));
       });
   };
 };
+
 export const getFactCheck = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingFactChecks());
     return axios
-      .get(API_GET_FACT_CHECKS + '/' + id)
+      .get(FACT_CHECKS_API + '/' + id)
       .then((response) => {
         let factCheck = response.data;
-        if (factCheck.tags) dispatch(addTags(factCheck.tags));
-        if (factCheck.categories) dispatch(addCategories(factCheck.categories));
-        if (factCheck.format) dispatch(addClaims(factCheck.format));
+
+        dispatch(addTags(factCheck.tags));
+        dispatch(addCategories(factCheck.categories));
+        dispatch(addClaims(factCheck.claims));
+        if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
 
         factCheck.categories = factCheck.categories.map((category) => category.id);
         factCheck.tags = factCheck.tags.map((tag) => tag.id);
         factCheck.claims = factCheck.claims.map((claim) => claim.id);
-        dispatch(getFactCheckSuccess(factCheck));
+
+        dispatch(getFactCheckByID(factCheck));
+        dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
-        dispatch(getFactCheckFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -74,20 +90,17 @@ export const addFactCheck = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingFactChecks());
     return axios
-      .post(API_ADD_FACT_CHECK, data)
+      .post(FACT_CHECKS_API, data)
       .then((response) => {
         let factCheck = response.data;
-        if (factCheck.tags) dispatch(addTags(factCheck.tags));
-        if (factCheck.categories) dispatch(addCategories(factCheck.categories));
-        if (factCheck.claims) dispatch(addClaims(factCheck.claims));
-
-        factCheck.categories = factCheck.categories.map((category) => category.id);
-        factCheck.tags = factCheck.tags.map((tag) => tag.id);
-        factCheck.claims = factCheck.claims.map((claim) => claim.id);
-        dispatch(addFactCheckSuccess(factCheck));
+        dispatch(addTags(factCheck.tags));
+        dispatch(addCategories(factCheck.categories));
+        dispatch(addClaims(factCheck.claims));
+        if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
+        dispatch(resetFactChecks());
       })
       .catch((error) => {
-        dispatch(addFactCheckFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -96,20 +109,21 @@ export const updateFactCheck = (data) => {
   return (dispatch, getState) => {
     dispatch(loadingFactChecks());
     return axios
-      .put(API_ADD_FACT_CHECK + '/' + data.id, data)
+      .put(FACT_CHECKS_API + '/' + data.id, data)
       .then((response) => {
         let factCheck = response.data;
-        if (factCheck.tags) dispatch(addTags(factCheck.tags));
-        if (factCheck.categories) dispatch(addCategories(factCheck.categories));
-        if (factCheck.claims) dispatch(addClaims(factCheck.claims));
-
+        dispatch(addTags(factCheck.tags));
+        dispatch(addCategories(factCheck.categories));
+        dispatch(addClaims(factCheck.claims));
         factCheck.categories = factCheck.categories.map((category) => category.id);
         factCheck.tags = factCheck.tags.map((tag) => tag.id);
         factCheck.claims = factCheck.claims.map((claim) => claim.id);
-        dispatch(updateFactCheckSuccess(factCheck));
+        if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
+        dispatch(getFactCheckByID(factCheck));
+        dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
-        dispatch(updateFactCheckFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
@@ -118,95 +132,45 @@ export const deleteFactCheck = (id) => {
   return (dispatch, getState) => {
     dispatch(loadingFactChecks());
     return axios
-      .delete(API_ADD_FACT_CHECK + '/' + id)
+      .delete(FACT_CHECKS_API + '/' + id)
       .then(() => {
-        dispatch(deleteFactCheckSuccess(id));
+        dispatch(resetFactChecks());
       })
       .catch((error) => {
-        dispatch(deleteFactCheckFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 const loadingFactChecks = () => ({
-  type: LOADING_SPACES,
+  type: SET_FACT_CHECKS_LOADING,
+  payload: true,
 });
 
-const getFactChecksSuccess = (data, query) => ({
-  type: GET_FACT_CHECKS_SUCCESS,
-  payload: { data, query },
+const stopFactChecksLoading = () => ({
+  type: SET_FACT_CHECKS_LOADING,
+  payload: false,
 });
 
-const getFactChecksFailure = (error) => ({
-  type: GET_FACT_CHECKS_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const getFactCheckSuccess = (data) => ({
-  type: GET_FACT_CHECK_SUCCESS,
-  payload: { ...data },
-});
-
-const getFactCheckFailure = (error) => ({
-  type: GET_FACT_CHECK_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addFactCheckSuccess = (data) => ({
-  type: ADD_FACT_CHECK_SUCCESS,
+const getFactCheckByID = (data) => ({
+  type: ADD_FACT_CHECK,
   payload: {
     ...data,
   },
 });
 
-const addFactCheckFailure = (error) => ({
-  type: ADD_FACT_CHECK_FAILURE,
-  payload: {
-    error,
-  },
+const addFactChecksList = (data) => ({
+  type: ADD_FACT_CHECKS,
+  payload: { data },
 });
 
-const updateFactCheckSuccess = (data) => ({
-  type: UPDATE_FACT_CHECK_SUCCESS,
+const addFactChecksRequest = (data) => ({
+  type: ADD_FACT_CHECKS_REQUEST,
   payload: {
     ...data,
   },
 });
 
-const updateFactCheckFailure = (error) => ({
-  type: UPDATE_FACT_CHECK_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteFactCheckSuccess = (id) => ({
-  type: DELETE_FACT_CHECK_SUCCESS,
-  payload: id,
-});
-
-const deleteFactCheckFailure = (error) => ({
-  type: DELETE_FACT_CHECK_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addTags = (data) => ({
-  type: ADD_TAGS,
-  payload: { data },
-});
-
-const addCategories = (data) => ({
-  type: ADD_CATEGORIES,
-  payload: { data },
-});
-
-const addClaims = (data) => ({
-  type: ADD_CLAIMS,
-  payload: { data },
+const resetFactChecks = () => ({
+  type: RESET_FACT_CHECKS,
 });

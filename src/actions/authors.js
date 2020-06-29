@@ -1,39 +1,54 @@
 import axios from 'axios';
 import {
-  GET_AUTHORS_SUCCESS,
-  GET_AUTHORS_FAILURE,
-  API_GET_AUTHORS,
-  LOADING_AUTHORS,
+  SET_AUTHORS_LOADING,
+  ADD_AUTHORS,
+  AUTHORS_API,
+  ADD_AUTHORS_REQUEST,
 } from '../constants/authors';
+import { addErrors } from './notifications';
 
 export const getAuthors = (query) => {
   return (dispatch, getState) => {
     dispatch(loadingAuthors());
     return axios
-      .get(API_GET_AUTHORS, {
+      .get(AUTHORS_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getAuthorsSuccess(response.data, query));
+        dispatch(addAuthorsList(response.data.nodes));
+        dispatch(
+          addAuthorsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopAuthorsLoading());
       })
       .catch((error) => {
-        dispatch(getAuthorsFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 const loadingAuthors = () => ({
-  type: LOADING_AUTHORS,
+  type: SET_AUTHORS_LOADING,
+  payload: true,
 });
 
-const getAuthorsSuccess = (data, query) => ({
-  type: GET_AUTHORS_SUCCESS,
-  payload: { data, query },
+const stopAuthorsLoading = () => ({
+  type: SET_AUTHORS_LOADING,
+  payload: false,
 });
 
-const getAuthorsFailure = (error) => ({
-  type: GET_AUTHORS_FAILURE,
+const addAuthorsList = (data) => ({
+  type: ADD_AUTHORS,
+  payload: { data },
+});
+
+const addAuthorsRequest = (data) => ({
+  type: ADD_AUTHORS_REQUEST,
   payload: {
-    error,
+    ...data,
   },
 });
