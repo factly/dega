@@ -1,11 +1,6 @@
 import React from 'react';
 import { Row, Col, Form, Input, Button } from 'antd';
-import EditorJS from '@editorjs/editorjs';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import Paragraph from '@editorjs/paragraph';
-import Quote from '@editorjs/quote';
-import Table from '@editorjs/table';
+import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
@@ -13,33 +8,11 @@ import MediaSelector from '../../../components/MediaSelector';
 function CreatePost({ onCreate, data = {} }) {
   const [form] = Form.useForm();
 
-  const editor = new EditorJS({
-    holder: 'editorjs',
-    tools: {
-      header: Header,
-      list: List,
-      paragraph: Paragraph,
-      quote: Quote,
-      table: Table,
-    },
-    data: data.description,
-  });
-
   const onSave = (values) => {
-    editor
-      .save()
-      .then((outputData) => {
-        values.category_ids = values.categories || [];
-        values.tag_ids = values.tags || [];
-        values.format_id = values.format || 0;
-        onCreate({
-          ...values,
-          description: outputData,
-        });
-      })
-      .catch((error) => {
-        console.log('Saving failed: ', error);
-      });
+    values.category_ids = values.categories || [];
+    values.tag_ids = values.tags || [];
+    values.format_id = values.format || 0;
+    onCreate(values);
   };
 
   const onTitleChange = (string) => {
@@ -64,8 +37,8 @@ function CreatePost({ onCreate, data = {} }) {
           <Form.Item name="excerpt" label="Excerpt">
             <Input.TextArea rows={4} placeholder="excerpt" />
           </Form.Item>
-          <Form.Item label="Description">
-            <div id="editorjs" style={{ border: '1px solid black' }}></div>
+          <Form.Item name="description" label="Description">
+            <Editor />
           </Form.Item>
         </Col>
         <Col span={6}>
