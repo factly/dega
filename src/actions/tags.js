@@ -10,7 +10,7 @@ import {
 import { addErrors } from './notifications';
 
 export const getTags = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
       .get(TAGS_API, {
@@ -35,7 +35,7 @@ export const getTags = (query) => {
 };
 
 export const getTag = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
       .get(TAGS_API + '/' + id)
@@ -50,7 +50,7 @@ export const getTag = (id) => {
 };
 
 export const addTag = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
       .post(TAGS_API, data)
@@ -64,7 +64,7 @@ export const addTag = (data) => {
 };
 
 export const updateTag = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
       .put(TAGS_API + '/' + data.id, data)
@@ -79,7 +79,7 @@ export const updateTag = (data) => {
 };
 
 export const deleteTag = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
       .delete(TAGS_API + '/' + id)
@@ -93,7 +93,7 @@ export const deleteTag = (id) => {
 };
 
 export const addTags = (tags) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return dispatch(addTagsList(tags));
   };
 };

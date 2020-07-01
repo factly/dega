@@ -8,7 +8,7 @@ import {
 import { addErrors } from './notifications';
 
 export const getAuthors = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingAuthors());
     return axios
       .get(AUTHORS_API, {

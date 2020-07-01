@@ -8,19 +8,28 @@ import {
   CATEGORIES_API,
 } from '../constants/categories';
 import { addErrors } from './notifications';
+import { addMediaList } from './media';
 
 export const getCategories = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
       .get(CATEGORIES_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(addCategoriesList(response.data.nodes));
+        const media = [];
+        const categories = response.data.nodes.map((category) => {
+          if (category.medium) media.push(category.medium);
+          delete category.medium;
+          return category;
+        });
+
+        dispatch(addMediaList(media));
+        dispatch(addCategoriesList(categories));
         dispatch(
           addCategoriesRequest({
-            data: response.data.nodes.map((item) => item.id),
+            data: categories.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -28,19 +37,22 @@ export const getCategories = (query) => {
         dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };
 };
 
 export const getCategory = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
       .get(CATEGORIES_API + '/' + id)
       .then((response) => {
-        dispatch(getCategoryByID(response.data));
+        const category = response.data;
+        if (category.medium) dispatch(addMediaList([category.medium]));
+        delete category.medium;
+
+        dispatch(getCategoryByID(category));
         dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
@@ -50,7 +62,7 @@ export const getCategory = (id) => {
 };
 
 export const addCategory = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
       .post(CATEGORIES_API, data)
@@ -64,12 +76,16 @@ export const addCategory = (data) => {
 };
 
 export const updateCategory = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
       .put(CATEGORIES_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getCategoryByID(response.data));
+        const category = response.data;
+        if (category.medium) dispatch(addMediaList([category.medium]));
+        delete category.medium;
+
+        dispatch(getCategoryByID(category));
         dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
@@ -79,7 +95,7 @@ export const updateCategory = (data) => {
 };
 
 export const deleteCategory = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
       .delete(CATEGORIES_API + '/' + id)
@@ -93,8 +109,16 @@ export const deleteCategory = (id) => {
 };
 
 export const addCategories = (categories) => {
-  return (dispatch, getState) => {
-    return dispatch(addCategoriesList(categories));
+  return (dispatch) => {
+    const media = [];
+    const categoriesList = categories.map((category) => {
+      if (category.medium) media.push(category.medium);
+      delete category.medium;
+      return category;
+    });
+
+    dispatch(addMediaList(media));
+    return dispatch(addCategoriesList(categoriesList));
   };
 };
 

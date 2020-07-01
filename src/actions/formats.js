@@ -10,7 +10,7 @@ import {
 import { addErrors } from './notifications';
 
 export const getFormats = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
       .get(FORMATS_API, {
@@ -35,7 +35,7 @@ export const getFormats = (query) => {
 };
 
 export const getFormat = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
       .get(FORMATS_API + '/' + id)
@@ -50,7 +50,7 @@ export const getFormat = (id) => {
 };
 
 export const addFormat = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
       .post(FORMATS_API, data)
@@ -64,7 +64,7 @@ export const addFormat = (data) => {
 };
 
 export const updateFormat = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
       .put(FORMATS_API + '/' + data.id, data)
@@ -79,7 +79,7 @@ export const updateFormat = (data) => {
 };
 
 export const deleteFormat = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
       .delete(FORMATS_API + '/' + id)

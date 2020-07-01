@@ -14,7 +14,7 @@ import { addFormats } from './formats';
 import { addMediaList } from './media';
 
 export const getPosts = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
       .get(POSTS_API, {
@@ -61,7 +61,7 @@ export const getPosts = (query) => {
 };
 
 export const getPost = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
       .get(POSTS_API + '/' + id)
@@ -87,7 +87,7 @@ export const getPost = (id) => {
 };
 
 export const addPost = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
       .post(POSTS_API, data)
@@ -106,7 +106,7 @@ export const addPost = (data) => {
 };
 
 export const updatePost = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
       .put(POSTS_API + '/' + data.id, data)
@@ -129,7 +129,7 @@ export const updatePost = (data) => {
 };
 
 export const deletePost = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
       .delete(POSTS_API + '/' + id)

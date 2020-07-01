@@ -12,7 +12,7 @@ import { addRatings } from './ratings';
 import { addClaimants } from './claimants';
 
 export const getClaims = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
       .get(CLAIMS_API, {
@@ -51,7 +51,7 @@ export const getClaims = (query) => {
 };
 
 export const getClaim = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
       .get(CLAIMS_API + '/' + id)
@@ -76,7 +76,7 @@ export const getClaim = (id) => {
 };
 
 export const addClaim = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
       .post(CLAIMS_API, data)
@@ -99,7 +99,7 @@ export const addClaim = (data) => {
 };
 
 export const updateClaim = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
       .put(CLAIMS_API + '/' + data.id, data)
@@ -123,7 +123,7 @@ export const updateClaim = (data) => {
 };
 
 export const deleteClaim = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
       .delete(CLAIMS_API + '/' + id)

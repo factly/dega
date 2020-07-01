@@ -14,7 +14,7 @@ import { addClaims } from './claims';
 import { addMediaList } from './media';
 
 export const getFactChecks = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFactChecks());
     return axios
       .get(FACT_CHECKS_API, {
@@ -61,7 +61,7 @@ export const getFactChecks = (query) => {
 };
 
 export const getFactCheck = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFactChecks());
     return axios
       .get(FACT_CHECKS_API + '/' + id)
@@ -87,7 +87,7 @@ export const getFactCheck = (id) => {
 };
 
 export const addFactCheck = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFactChecks());
     return axios
       .post(FACT_CHECKS_API, data)
@@ -106,7 +106,7 @@ export const addFactCheck = (data) => {
 };
 
 export const updateFactCheck = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFactChecks());
     return axios
       .put(FACT_CHECKS_API + '/' + data.id, data)
@@ -129,7 +129,7 @@ export const updateFactCheck = (data) => {
 };
 
 export const deleteFactCheck = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFactChecks());
     return axios
       .delete(FACT_CHECKS_API + '/' + id)

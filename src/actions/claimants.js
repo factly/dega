@@ -11,7 +11,7 @@ import { addErrors } from './notifications';
 import { addMediaList } from './media';
 
 export const getClaimants = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaimants());
     return axios
       .get(CLAIMANTS_API, {
@@ -19,14 +19,16 @@ export const getClaimants = (query) => {
       })
       .then((response) => {
         const media = [];
-        response.data.nodes.forEach((claimant) => {
+        const claimants = response.data.nodes.map((claimant) => {
           if (claimant.medium_id > 0) media.push(claimant.medium);
+          delete claimant.medium;
+          return claimant;
         });
         dispatch(addMediaList(media));
-        dispatch(addClaimantsList(response.data.nodes));
+        dispatch(addClaimantsList(claimants));
         dispatch(
           addClaimantsRequest({
-            data: response.data.nodes.map((item) => item.id),
+            data: claimants.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -41,12 +43,16 @@ export const getClaimants = (query) => {
 };
 
 export const getClaimant = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaimants());
     return axios
       .get(CLAIMANTS_API + '/' + id)
       .then((response) => {
-        dispatch(getClaimantByID(response.data));
+        const claimant = response.data;
+        if (claimant.medium) dispatch(addMediaList([claimant.medium]));
+        delete claimant.medium;
+
+        dispatch(getClaimantByID(claimant));
         dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
@@ -56,7 +62,7 @@ export const getClaimant = (id) => {
 };
 
 export const addClaimant = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaimants());
     return axios
       .post(CLAIMANTS_API, data)
@@ -70,12 +76,16 @@ export const addClaimant = (data) => {
 };
 
 export const updateClaimant = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaimants());
     return axios
       .put(CLAIMANTS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getClaimantByID(response.data));
+        const claimant = response.data;
+        if (claimant.medium) dispatch(addMediaList([claimant.medium]));
+        delete claimant.medium;
+
+        dispatch(getClaimantByID(claimant));
         dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
@@ -85,7 +95,7 @@ export const updateClaimant = (data) => {
 };
 
 export const deleteClaimant = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaimants());
     return axios
       .delete(CLAIMANTS_API + '/' + id)
@@ -99,10 +109,12 @@ export const deleteClaimant = (id) => {
 };
 
 export const addClaimants = (claimants) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const media = [];
-    claimants.forEach((claimant) => {
+    const claimantsList = claimants.map((claimant) => {
       if (claimant.medium_id > 0) media.push(claimant.medium);
+      delete claimant.medium;
+      return claimant;
     });
     dispatch(addMediaList(media));
     return dispatch(addClaimantsList(claimants));

@@ -11,7 +11,7 @@ import { addErrors } from './notifications';
 import { addMediaList } from './media';
 
 export const getRatings = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingRatings());
     return axios
       .get(RATINGS_API, {
@@ -19,14 +19,16 @@ export const getRatings = (query) => {
       })
       .then((response) => {
         const media = [];
-        response.data.nodes.forEach((rating) => {
+        const ratings = response.data.nodes.map((rating) => {
           if (rating.medium_id > 0) media.push(rating.medium);
+          delete rating.medium;
+          return rating;
         });
         dispatch(addMediaList(media));
-        dispatch(addRatingsList(response.data.nodes));
+        dispatch(addRatingsList(ratings));
         dispatch(
           addRatingsRequest({
-            data: response.data.nodes.map((item) => item.id),
+            data: ratings.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -34,19 +36,22 @@ export const getRatings = (query) => {
         dispatch(stopRatingsLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };
 };
 
 export const getRating = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingRatings());
     return axios
       .get(RATINGS_API + '/' + id)
       .then((response) => {
-        dispatch(getRatingByID(response.data));
+        const rating = response.data;
+        if (rating.medium) dispatch(addMediaList([rating.medium]));
+        delete rating.medium;
+
+        dispatch(getRatingByID(rating));
         dispatch(stopRatingsLoading());
       })
       .catch((error) => {
@@ -56,7 +61,7 @@ export const getRating = (id) => {
 };
 
 export const addRating = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingRatings());
     return axios
       .post(RATINGS_API, data)
@@ -70,12 +75,16 @@ export const addRating = (data) => {
 };
 
 export const updateRating = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingRatings());
     return axios
       .put(RATINGS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getRatingByID(response.data));
+        const rating = response.data;
+        if (rating.medium) dispatch(addMediaList([rating.medium]));
+        delete rating.medium;
+
+        dispatch(getRatingByID(rating));
         dispatch(stopRatingsLoading());
       })
       .catch((error) => {
@@ -85,7 +94,7 @@ export const updateRating = (data) => {
 };
 
 export const deleteRating = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingRatings());
     return axios
       .delete(RATINGS_API + '/' + id)
@@ -99,13 +108,15 @@ export const deleteRating = (id) => {
 };
 
 export const addRatings = (ratings) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const media = [];
-    ratings.forEach((rating) => {
+    const ratingsList = ratings.map((rating) => {
       if (rating.medium_id > 0) media.push(rating.medium);
+      delete rating.medium;
+      return rating;
     });
     dispatch(addMediaList(media));
-    return dispatch(addRatingsList(ratings));
+    return dispatch(addRatingsList(ratingsList));
   };
 };
 

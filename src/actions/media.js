@@ -10,7 +10,7 @@ import {
 import { addErrors } from './notifications';
 
 export const getMedia = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingMedia());
     return axios
       .get(MEDIA_API, {
@@ -35,7 +35,7 @@ export const getMedia = (query) => {
 };
 
 export const getMedium = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingMedia());
     return axios
       .get(MEDIA_API + '/' + id)
@@ -50,7 +50,7 @@ export const getMedium = (id) => {
 };
 
 export const addMedium = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingMedia());
     return axios
       .post(MEDIA_API, data)
@@ -64,7 +64,7 @@ export const addMedium = (data) => {
 };
 
 export const updateMedium = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingMedia());
     return axios
       .put(MEDIA_API + '/' + data.id, data)
@@ -79,7 +79,7 @@ export const updateMedium = (data) => {
 };
 
 export const deleteMedium = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingMedia());
     return axios
       .delete(MEDIA_API + '/' + id)
@@ -93,7 +93,7 @@ export const deleteMedium = (id) => {
 };
 
 export const addMedia = (media) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     return dispatch(addMediaList(media));
   };
 };
