@@ -21,32 +21,57 @@ export const getPosts = (query) => {
         params: query,
       })
       .then((response) => {
-        let tags = [];
-        let categories = [];
-        let formats = [];
-        let media = [];
-
-        let posts = response.data.nodes.map((post) => {
-          if (post.tags) tags.push(...post.tags);
-          if (post.categories) categories.push(...post.categories);
-          if (post.format) formats.push(post.format);
-          if (post.medium) media.push(post.medium);
-          return {
-            ...post,
-            categories: post.categories.map((category) => category.id),
-            tags: post.tags.map((tag) => tag.id),
-            format: post.format.id,
-          };
-        });
-
-        dispatch(addTags(tags));
-        dispatch(addCategories(categories));
-        dispatch(addFormats(formats));
-        dispatch(addMediaList(media));
-        dispatch(addPostsList(posts));
+        dispatch(
+          addTags(
+            response.data.nodes
+              .filter((post) => post.tags.length > 0)
+              .map((post) => {
+                return { ...post.tags };
+              }),
+          ),
+        );
+        dispatch(
+          addCategories(
+            response.data.nodes
+              .filter((post) => post.categories.length > 0)
+              .map((post) => {
+                return { ...post.categories };
+              }),
+          ),
+        );
+        dispatch(
+          addFormats(
+            response.data.nodes
+              .filter((post) => post.format)
+              .map((post) => {
+                return post.format;
+              }),
+          ),
+        );
+        dispatch(
+          addMediaList(
+            response.data.nodes
+              .filter((post) => post.medium)
+              .map((post) => {
+                return post.medium;
+              }),
+          ),
+        );
+        dispatch(
+          addPostsList(
+            response.data.nodes.map((post) => {
+              return {
+                ...post,
+                categories: post.categories.map((category) => category.id),
+                tags: post.tags.map((tag) => tag.id),
+                format: post.format.id,
+              };
+            }),
+          ),
+        );
         dispatch(
           addPostsRequest({
-            data: posts.map((item) => item.id),
+            data: response.data.nodes.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -70,14 +95,17 @@ export const getPost = (id) => {
 
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
-        dispatch(addFormats([post.format]));
+        if (post.format) dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
 
-        post.categories = post.categories.map((category) => category.id);
-        post.tags = post.tags.map((tag) => tag.id);
-        post.format = post.format.id;
-
-        dispatch(getPostByID(post));
+        dispatch(
+          getPostByID({
+            ...post,
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format?.id,
+          }),
+        );
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
@@ -95,7 +123,7 @@ export const addPost = (data) => {
         let post = response.data;
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
-        dispatch(addFormats([post.format]));
+        if (post.format) dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
         dispatch(resetPosts());
       })
@@ -114,12 +142,17 @@ export const updatePost = (data) => {
         let post = response.data;
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
-        dispatch(addFormats([post.format]));
-        post.categories = post.categories.map((category) => category.id);
-        post.tags = post.tags.map((tag) => tag.id);
-        post.format = post.format.id;
+        if (post.format) dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
-        dispatch(getPostByID(post));
+
+        dispatch(
+          getPostByID({
+            ...post,
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format?.id,
+          }),
+        );
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
@@ -154,21 +187,17 @@ const stopPostsLoading = () => ({
 
 const getPostByID = (data) => ({
   type: ADD_POST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const addPostsList = (data) => ({
   type: ADD_POSTS,
-  payload: { data },
+  payload: data,
 });
 
 const addPostsRequest = (data) => ({
   type: ADD_POSTS_REQUEST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const resetPosts = () => ({

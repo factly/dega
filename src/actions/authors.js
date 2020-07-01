@@ -43,7 +43,7 @@ const stopAuthorsLoading = () => ({
 
 const addAuthorsList = (data) => ({
   type: ADD_AUTHORS,
-  payload: { data },
+  payload: data,
 });
 
 const addAuthorsRequest = (data) => ({

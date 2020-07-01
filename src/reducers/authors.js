@@ -36,7 +36,7 @@ export default function tagsReducer(state = initialState, action = {}) {
       };
     case ADD_AUTHORS:
       const localDetails = state.details;
-      action.payload.data.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
       return {

@@ -48,7 +48,7 @@ export default function factChecksReducer(state = initialState, action = {}) {
       };
     case ADD_FACT_CHECKS:
       const localDetails = state.details;
-      action.payload.data.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
       return {

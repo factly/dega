@@ -48,7 +48,7 @@ export default function mediaReducer(state = initialState, action = {}) {
       };
     case ADD_MEDIA:
       const localDetails = state.details;
-      action.payload.data.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
       return {

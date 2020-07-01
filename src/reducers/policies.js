@@ -1,10 +1,10 @@
 import {
-  ADD_CLAIMANT,
-  ADD_CLAIMANTS,
-  ADD_CLAIMANTS_REQUEST,
-  SET_CLAIMANTS_LOADING,
-  RESET_CLAIMANTS,
-} from '../constants/claimants';
+  ADD_POLICY,
+  ADD_POLICIES,
+  ADD_POLICIES_REQUEST,
+  SET_POLICIES_LOADING,
+  RESET_POLICIES,
+} from '../constants/policies';
 
 const initialState = {
   req: [],
@@ -12,21 +12,21 @@ const initialState = {
   loading: true,
 };
 
-export default function claimantsReducer(state = initialState, action = {}) {
+export default function policiesReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case RESET_CLAIMANTS:
+    case RESET_POLICIES:
       return {
         ...state,
         req: [],
         details: {},
         loading: true,
       };
-    case SET_CLAIMANTS_LOADING:
+    case SET_POLICIES_LOADING:
       return {
         ...state,
         loading: action.payload,
       };
-    case ADD_CLAIMANTS_REQUEST:
+    case ADD_POLICIES_REQUEST:
       const localReq = state.req;
       const { query, data, total } = action.payload;
 
@@ -46,21 +46,21 @@ export default function claimantsReducer(state = initialState, action = {}) {
         ...state,
         req: localReq,
       };
-    case ADD_CLAIMANTS:
+    case ADD_POLICIES:
       const localDetails = state.details;
       action.payload.forEach((element) => {
-        localDetails[element.id] = element;
+        localDetails[element.name] = element;
       });
       return {
         ...state,
         details: localDetails,
       };
-    case ADD_CLAIMANT:
+    case ADD_POLICY:
       return {
         ...state,
         details: {
           ...state.details,
-          [action.payload.id]: action.payload,
+          [action.payload.name]: action.payload,
         },
       };
     default:

@@ -48,7 +48,7 @@ export default function categoriesReducer(state = initialState, action = {}) {
       };
     case ADD_CATEGORIES:
       const localDetails = state.details;
-      action.payload.data.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
       return {

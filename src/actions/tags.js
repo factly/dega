@@ -110,21 +110,17 @@ const stopTagsLoading = () => ({
 
 const getTagByID = (data) => ({
   type: ADD_TAG,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const addTagsList = (data) => ({
   type: ADD_TAGS,
-  payload: { data },
+  payload: data,
 });
 
 const addTagsRequest = (data) => ({
   type: ADD_TAGS_REQUEST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const resetTags = () => ({
