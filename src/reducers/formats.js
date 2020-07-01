@@ -10,7 +10,6 @@ const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 export default function formatsReducer(state = initialState, action = {}) {
@@ -21,7 +20,6 @@ export default function formatsReducer(state = initialState, action = {}) {
         req: [],
         details: {},
         loading: true,
-        total: 0,
       };
     case SET_FORMATS_LOADING:
       return {
@@ -41,12 +39,12 @@ export default function formatsReducer(state = initialState, action = {}) {
       localReq.push({
         data: data,
         query: query,
+        total: total,
       });
 
       return {
         ...state,
         req: localReq,
-        total: total,
       };
     case ADD_FORMATS:
       const localDetails = state.details;

@@ -17,7 +17,7 @@ function MediaList() {
     if (node)
       return {
         media: node.data.map((element) => state.media.details[element]),
-        total: state.media.total,
+        total: node.total,
         loading: state.media.loading,
       };
     return { media: [], total: 0, loading: state.media.loading };

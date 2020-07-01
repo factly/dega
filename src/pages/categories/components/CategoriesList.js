@@ -17,7 +17,7 @@ function CategoriesList() {
     if (node)
       return {
         categories: node.data.map((element) => state.categories.details[element]),
-        total: state.categories.total,
+        total: node.total,
         loading: state.categories.loading,
       };
     return { categories: [], total: 0, loading: state.categories.loading };

@@ -44,6 +44,7 @@ export const getClaims = (query) => {
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
+        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };
@@ -56,15 +57,19 @@ export const getClaim = (id) => {
       .get(CLAIMS_API + '/' + id)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) claim.claimant = claim.claimant.id;
-        if (claim.rating) claim.rating = claim.rating.id;
-
-        dispatch(addClaimants(claimants));
-        dispatch(addRatings(ratings));
+        if (claim.claimant) {
+          dispatch(addClaimants([claim.claimant]));
+          claim.claimant = claim.claimant.id;
+        }
+        if (claim.rating) {
+          dispatch(addRatings([claim.rating]));
+          claim.rating = claim.rating.id;
+        }
         dispatch(getClaimByID(claim));
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
+        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };
@@ -77,11 +82,14 @@ export const addClaim = (data) => {
       .post(CLAIMS_API, data)
       .then(() => {
         let claim = response.data;
-        if (claim.claimant) claim.claimant = claim.claimant.id;
-        if (claim.rating) claim.rating = claim.rating.id;
-
-        dispatch(addClaimants(claimants));
-        dispatch(addRatings(ratings));
+        if (claim.claimant) {
+          dispatch(addClaimants([claim.claimant]));
+          claim.claimant = claim.claimant.id;
+        }
+        if (claim.rating) {
+          dispatch(addRatings([claim.rating]));
+          claim.rating = claim.rating.id;
+        }
         dispatch(resetClaims());
       })
       .catch((error) => {
@@ -97,11 +105,14 @@ export const updateClaim = (data) => {
       .put(CLAIMS_API + '/' + data.id, data)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) claim.claimant = claim.claimant.id;
-        if (claim.rating) claim.rating = claim.rating.id;
-
-        dispatch(addClaimants(claimants));
-        dispatch(addRatings(ratings));
+        if (claim.claimant) {
+          dispatch(addClaimants([claim.claimant]));
+          claim.claimant = claim.claimant.id;
+        }
+        if (claim.rating) {
+          dispatch(addRatings([claim.rating]));
+          claim.rating = claim.rating.id;
+        }
         dispatch(getClaimByID(claim));
         dispatch(stopClaimsLoading());
       })
