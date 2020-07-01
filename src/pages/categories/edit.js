@@ -23,7 +23,7 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  if (loading && !category) return <Skeleton />;
 
   const onUpdate = (values) => {
     dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));
