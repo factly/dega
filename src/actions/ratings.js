@@ -18,17 +18,21 @@ export const getRatings = (query) => {
         params: query,
       })
       .then((response) => {
-        const media = [];
-        const ratings = response.data.nodes.map((rating) => {
-          if (rating.medium_id > 0) media.push(rating.medium);
-          delete rating.medium;
-          return rating;
-        });
-        dispatch(addMediaList(media));
-        dispatch(addRatingsList(ratings));
+        dispatch(
+          addMediaList(
+            response.data.nodes.filter((rating) => rating.medium).map((rating) => rating.medium),
+          ),
+        );
+        dispatch(
+          addRatingsList(
+            response.data.nodes.map((rating) => {
+              return { ...rating, medium: rating.medium?.id };
+            }),
+          ),
+        );
         dispatch(
           addRatingsRequest({
-            data: ratings.map((item) => item.id),
+            data: response.data.nodes.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -47,11 +51,9 @@ export const getRating = (id) => {
     return axios
       .get(RATINGS_API + '/' + id)
       .then((response) => {
-        const rating = response.data;
-        if (rating.medium) dispatch(addMediaList([rating.medium]));
-        delete rating.medium;
+        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
-        dispatch(getRatingByID(rating));
+        dispatch(getRatingByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(stopRatingsLoading());
       })
       .catch((error) => {
@@ -81,10 +83,9 @@ export const updateRating = (data) => {
       .put(RATINGS_API + '/' + data.id, data)
       .then((response) => {
         const rating = response.data;
-        if (rating.medium) dispatch(addMediaList([rating.medium]));
-        delete rating.medium;
+        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
-        dispatch(getRatingByID(rating));
+        dispatch(getRatingByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(stopRatingsLoading());
       })
       .catch((error) => {
@@ -109,14 +110,16 @@ export const deleteRating = (id) => {
 
 export const addRatings = (ratings) => {
   return (dispatch) => {
-    const media = [];
-    const ratingsList = ratings.map((rating) => {
-      if (rating.medium_id > 0) media.push(rating.medium);
-      delete rating.medium;
-      return rating;
-    });
-    dispatch(addMediaList(media));
-    return dispatch(addRatingsList(ratingsList));
+    dispatch(
+      addMediaList(ratings.filter((rating) => rating.medium).map((rating) => rating.medium)),
+    );
+    dispatch(
+      addRatingsList(
+        ratings.map((rating) => {
+          return { ...rating, medium: rating.medium?.id };
+        }),
+      ),
+    );
   };
 };
 
@@ -132,21 +135,17 @@ const stopRatingsLoading = () => ({
 
 const getRatingByID = (data) => ({
   type: ADD_RATING,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const addRatingsList = (data) => ({
   type: ADD_RATINGS,
-  payload: { data },
+  payload: data,
 });
 
 const addRatingsRequest = (data) => ({
   type: ADD_RATINGS_REQUEST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const resetRatings = () => ({

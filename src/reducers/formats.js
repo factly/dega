@@ -48,7 +48,7 @@ export default function formatsReducer(state = initialState, action = {}) {
       };
     case ADD_FORMATS:
       const localDetails = state.details;
-      action.payload.data.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
       return {

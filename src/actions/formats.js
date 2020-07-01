@@ -104,21 +104,17 @@ const stopFormatsLoading = () => ({
 
 const getFormatByID = (data) => ({
   type: ADD_FORMAT,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 export const addFormats = (data) => ({
   type: ADD_FORMATS,
-  payload: { data },
+  payload: data,
 });
 
 const addFormatsRequest = (data) => ({
   type: ADD_FORMATS_REQUEST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const resetFormats = () => ({

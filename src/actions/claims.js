@@ -19,21 +19,23 @@ export const getClaims = (query) => {
         params: query,
       })
       .then((response) => {
-        let claimants = [];
-        let ratings = [];
-        let claims = response.data.nodes.map((claim) => {
-          if (claim.claimant) claimants.push(claim.claimant);
-          if (claim.rating) ratings.push(claim.rating);
-
-          return {
-            ...claim,
-            claimant: claim.claimant.id,
-            rating: claim.rating.id,
-          };
-        });
-        dispatch(addClaimants(claimants));
-        dispatch(addRatings(ratings));
-        dispatch(addClaimsList(claims));
+        dispatch(
+          addClaimants(
+            response.data.nodes.filter((claim) => claim.claimant).map((claim) => claim.claimant),
+          ),
+        );
+        dispatch(
+          addRatings(
+            response.data.nodes.filter((claim) => claim.rating).map((claim) => claim.rating),
+          ),
+        );
+        dispatch(
+          addClaimsList(
+            response.data.nodes.map((claim) => {
+              return { ...claim, claimant: claim.claimant?.id, rating: claim.rating?.id };
+            }),
+          ),
+        );
         dispatch(
           addClaimsRequest({
             data: response.data.nodes.map((item) => item.id),
@@ -44,7 +46,6 @@ export const getClaims = (query) => {
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };
@@ -57,15 +58,10 @@ export const getClaim = (id) => {
       .get(CLAIMS_API + '/' + id)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) {
-          dispatch(addClaimants([claim.claimant]));
-          claim.claimant = claim.claimant.id;
-        }
-        if (claim.rating) {
-          dispatch(addRatings([claim.rating]));
-          claim.rating = claim.rating.id;
-        }
-        dispatch(getClaimByID(claim));
+        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
+        if (claim.rating) dispatch(addRatings([claim.rating]));
+
+        dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
@@ -80,16 +76,11 @@ export const addClaim = (data) => {
     dispatch(loadingClaims());
     return axios
       .post(CLAIMS_API, data)
-      .then(() => {
+      .then((response) => {
         let claim = response.data;
-        if (claim.claimant) {
-          dispatch(addClaimants([claim.claimant]));
-          claim.claimant = claim.claimant.id;
-        }
-        if (claim.rating) {
-          dispatch(addRatings([claim.rating]));
-          claim.rating = claim.rating.id;
-        }
+        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
+        if (claim.rating) dispatch(addRatings([claim.rating]));
+
         dispatch(resetClaims());
       })
       .catch((error) => {
@@ -105,15 +96,10 @@ export const updateClaim = (data) => {
       .put(CLAIMS_API + '/' + data.id, data)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) {
-          dispatch(addClaimants([claim.claimant]));
-          claim.claimant = claim.claimant.id;
-        }
-        if (claim.rating) {
-          dispatch(addRatings([claim.rating]));
-          claim.rating = claim.rating.id;
-        }
-        dispatch(getClaimByID(claim));
+        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
+        if (claim.rating) dispatch(addRatings([claim.rating]));
+
+        dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
@@ -137,22 +123,16 @@ export const deleteClaim = (id) => {
 };
 
 export const addClaims = (claims) => {
-  return (dispatch, getState) => {
-    let claimants = [];
-    let ratings = [];
-    let claimsList = claims.map((claim) => {
-      if (claim.claimant) claimants.push(claim.claimant);
-      if (claim.rating) ratings.push(claim.rating);
-
-      return {
-        ...claim,
-        claimant: claim.claimant.id,
-        rating: claim.rating.id,
-      };
-    });
-    dispatch(addClaimants(claimants));
-    dispatch(addRatings(ratings));
-    return dispatch(addClaimsList(claimsList));
+  return (dispatch) => {
+    dispatch(addClaimants(claims.filter((claim) => claim.claimant).map((claim) => claim.claimant)));
+    dispatch(addRatings(claims.filter((claim) => claim.rating).map((claim) => claim.rating)));
+    dispatch(
+      addClaimsList(
+        claims.map((claim) => {
+          return { ...claim, claimant: claim.claimant?.id, rating: claim.rating?.id };
+        }),
+      ),
+    );
   };
 };
 
@@ -168,21 +148,17 @@ const stopClaimsLoading = () => ({
 
 const getClaimByID = (data) => ({
   type: ADD_CLAIM,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const addClaimsList = (data) => ({
   type: ADD_CLAIMS,
-  payload: { data },
+  payload: data,
 });
 
 const addClaimsRequest = (data) => ({
   type: ADD_CLAIMS_REQUEST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const resetClaims = () => ({

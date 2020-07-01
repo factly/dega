@@ -94,7 +94,7 @@ export const deleteMedium = (id) => {
 
 export const addMedia = (media) => {
   return (dispatch) => {
-    return dispatch(addMediaList(media));
+    dispatch(addMediaList(media));
   };
 };
 
@@ -110,21 +110,17 @@ const stopMediaLoading = () => ({
 
 const getMediumByID = (data) => ({
   type: ADD_MEDIUM,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 export const addMediaList = (data) => ({
   type: ADD_MEDIA,
-  payload: { data },
+  payload: data,
 });
 
 const addMediaRequest = (data) => ({
   type: ADD_MEDIA_REQUEST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const resetMedia = () => ({

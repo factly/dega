@@ -18,18 +18,23 @@ export const getCategories = (query) => {
         params: query,
       })
       .then((response) => {
-        const media = [];
-        const categories = response.data.nodes.map((category) => {
-          if (category.medium) media.push(category.medium);
-          delete category.medium;
-          return category;
-        });
-
-        dispatch(addMediaList(media));
-        dispatch(addCategoriesList(categories));
+        dispatch(
+          addMediaList(
+            response.data.nodes
+              .filter((category) => category.medium)
+              .map((category) => category.medium),
+          ),
+        );
+        dispatch(
+          addCategoriesList(
+            response.data.nodes.map((category) => {
+              return { ...category, medium: category.medium?.id };
+            }),
+          ),
+        );
         dispatch(
           addCategoriesRequest({
-            data: categories.map((item) => item.id),
+            data: response.data.nodes.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -48,11 +53,9 @@ export const getCategory = (id) => {
     return axios
       .get(CATEGORIES_API + '/' + id)
       .then((response) => {
-        const category = response.data;
-        if (category.medium) dispatch(addMediaList([category.medium]));
-        delete category.medium;
+        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
-        dispatch(getCategoryByID(category));
+        dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
@@ -81,11 +84,9 @@ export const updateCategory = (data) => {
     return axios
       .put(CATEGORIES_API + '/' + data.id, data)
       .then((response) => {
-        const category = response.data;
-        if (category.medium) dispatch(addMediaList([category.medium]));
-        delete category.medium;
+        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
-        dispatch(getCategoryByID(category));
+        dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
@@ -110,15 +111,18 @@ export const deleteCategory = (id) => {
 
 export const addCategories = (categories) => {
   return (dispatch) => {
-    const media = [];
-    const categoriesList = categories.map((category) => {
-      if (category.medium) media.push(category.medium);
-      delete category.medium;
-      return category;
-    });
-
-    dispatch(addMediaList(media));
-    return dispatch(addCategoriesList(categoriesList));
+    dispatch(
+      addMediaList(
+        categories.filter((category) => category.medium).map((category) => category.medium),
+      ),
+    );
+    dispatch(
+      addCategoriesList(
+        categories.map((category) => {
+          return { ...category, medium: category.medium?.id };
+        }),
+      ),
+    );
   };
 };
 
@@ -134,21 +138,17 @@ const stopCategoriesLoading = () => ({
 
 const getCategoryByID = (data) => ({
   type: ADD_CATEGORY,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const addCategoriesList = (data) => ({
   type: ADD_CATEGORIES,
-  payload: { data },
+  payload: data,
 });
 
 const addCategoriesRequest = (data) => ({
   type: ADD_CATEGORIES_REQUEST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const resetCategories = () => ({

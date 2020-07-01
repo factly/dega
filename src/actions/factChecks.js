@@ -21,32 +21,57 @@ export const getFactChecks = (query) => {
         params: query,
       })
       .then((response) => {
-        let tags = [];
-        let categories = [];
-        let claims = [];
-        let media = [];
-
-        let factChecks = response.data.nodes.map((factCheck) => {
-          if (factCheck.tags) tags.push(...factCheck.tags);
-          if (factCheck.categories) categories.push(...factCheck.categories);
-          if (factCheck.claims) claims.push(...factCheck.claims);
-          if (factCheck.medium) media.push(factCheck.medium);
-          return {
-            ...factCheck,
-            categories: factCheck.categories.map((category) => category.id),
-            tags: factCheck.tags.map((tag) => tag.id),
-            claims: factCheck.claims.map((claim) => claim.id),
-          };
-        });
-
-        dispatch(addTags(tags));
-        dispatch(addCategories(categories));
-        dispatch(addClaims(claims));
-        dispatch(addMediaList(media));
-        dispatch(addFactChecksList(factChecks));
+        dispatch(
+          addTags(
+            response.data.nodes
+              .filter((factCheck) => factCheck.tags.length > 0)
+              .map((factCheck) => {
+                return { ...factCheck.tags };
+              }),
+          ),
+        );
+        dispatch(
+          addCategories(
+            response.data.nodes
+              .filter((factCheck) => factCheck.categories.length > 0)
+              .map((factCheck) => {
+                return { ...factCheck.categories };
+              }),
+          ),
+        );
+        dispatch(
+          addClaims(
+            response.data.nodes
+              .filter((factCheck) => factCheck.claims.length > 0)
+              .map((factCheck) => {
+                return { ...factCheck.claims };
+              }),
+          ),
+        );
+        dispatch(
+          addMediaList(
+            response.data.nodes
+              .filter((factCheck) => factCheck.medium.id)
+              .map((factCheck) => {
+                return factCheck.medium;
+              }),
+          ),
+        );
+        dispatch(
+          addFactChecksList(
+            response.data.nodes.map((factCheck) => {
+              return {
+                ...factCheck,
+                categories: factCheck.categories.map((category) => category.id),
+                tags: factCheck.tags.map((tag) => tag.id),
+                claims: factCheck.claims.map((claim) => claim.id),
+              };
+            }),
+          ),
+        );
         dispatch(
           addFactChecksRequest({
-            data: factChecks.map((item) => item.id),
+            data: response.data.nodes.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -73,11 +98,14 @@ export const getFactCheck = (id) => {
         dispatch(addClaims(factCheck.claims));
         if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
 
-        factCheck.categories = factCheck.categories.map((category) => category.id);
-        factCheck.tags = factCheck.tags.map((tag) => tag.id);
-        factCheck.claims = factCheck.claims.map((claim) => claim.id);
-
-        dispatch(getFactCheckByID(factCheck));
+        dispatch(
+          getFactCheckByID({
+            ...factCheck,
+            categories: factCheck.categories.map((category) => category.id),
+            tags: factCheck.tags.map((tag) => tag.id),
+            claims: factCheck.claims.map((claim) => claim.id),
+          }),
+        );
         dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
@@ -115,11 +143,15 @@ export const updateFactCheck = (data) => {
         dispatch(addTags(factCheck.tags));
         dispatch(addCategories(factCheck.categories));
         dispatch(addClaims(factCheck.claims));
-        factCheck.categories = factCheck.categories.map((category) => category.id);
-        factCheck.tags = factCheck.tags.map((tag) => tag.id);
-        factCheck.claims = factCheck.claims.map((claim) => claim.id);
         if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
-        dispatch(getFactCheckByID(factCheck));
+        dispatch(
+          getFactCheckByID({
+            ...factCheck,
+            categories: factCheck.categories.map((category) => category.id),
+            tags: factCheck.tags.map((tag) => tag.id),
+            claims: factCheck.claims.map((claim) => claim.id),
+          }),
+        );
         dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
@@ -154,21 +186,17 @@ const stopFactChecksLoading = () => ({
 
 const getFactCheckByID = (data) => ({
   type: ADD_FACT_CHECK,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const addFactChecksList = (data) => ({
   type: ADD_FACT_CHECKS,
-  payload: { data },
+  payload: data,
 });
 
 const addFactChecksRequest = (data) => ({
   type: ADD_FACT_CHECKS_REQUEST,
-  payload: {
-    ...data,
-  },
+  payload: data,
 });
 
 const resetFactChecks = () => ({
