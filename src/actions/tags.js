@@ -7,7 +7,7 @@ import {
   RESET_TAGS,
   TAGS_API,
 } from '../constants/tags';
-import { addErrors } from './notifications';
+import { addErrorNotification } from './notifications';
 
 export const getTags = (query) => {
   return (dispatch) => {
@@ -29,7 +29,7 @@ export const getTags = (query) => {
       })
       .catch((error) => {
         console.log(error.message);
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -44,7 +44,7 @@ export const getTag = (id) => {
         dispatch(stopTagsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -58,7 +58,7 @@ export const addTag = (data) => {
         dispatch(resetTags());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -73,7 +73,7 @@ export const updateTag = (data) => {
         dispatch(stopTagsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -87,7 +87,7 @@ export const deleteTag = (id) => {
         dispatch(resetTags());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

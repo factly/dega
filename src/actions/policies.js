@@ -7,7 +7,7 @@ import {
   RESET_POLICIES,
   POLICIES_API,
 } from '../constants/policies';
-import { addErrors } from './notifications';
+import { addErrorNotification } from './notifications';
 
 export const getPolicies = (query) => {
   return (dispatch) => {
@@ -29,7 +29,7 @@ export const getPolicies = (query) => {
       })
       .catch((error) => {
         console.log(error.message);
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -44,7 +44,7 @@ export const getPolicy = (id) => {
         dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -58,7 +58,7 @@ export const addPolicy = (data) => {
         dispatch(resetPolicies());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -73,7 +73,7 @@ export const updatePolicy = (data) => {
         dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -87,7 +87,7 @@ export const deletePolicy = (id) => {
         dispatch(resetPolicies());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

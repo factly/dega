@@ -7,7 +7,7 @@ import {
   RESET_CLAIMS,
   CLAIMS_API,
 } from '../constants/claims';
-import { addErrors } from './notifications';
+import { addErrorNotification } from './notifications';
 import { addRatings } from './ratings';
 import { addClaimants } from './claimants';
 
@@ -46,7 +46,7 @@ export const getClaims = (query) => {
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -66,7 +66,7 @@ export const getClaim = (id) => {
       })
       .catch((error) => {
         console.log(error.message);
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -84,7 +84,7 @@ export const addClaim = (data) => {
         dispatch(resetClaims());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -103,7 +103,7 @@ export const updateClaim = (data) => {
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -117,7 +117,7 @@ export const deleteClaim = (id) => {
         dispatch(resetClaims());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

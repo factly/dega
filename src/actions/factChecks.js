@@ -7,7 +7,7 @@ import {
   RESET_FACT_CHECKS,
   FACT_CHECKS_API,
 } from '../constants/factChecks';
-import { addErrors } from './notifications';
+import { addErrorNotification } from './notifications';
 import { addCategories } from './categories';
 import { addTags } from './tags';
 import { addClaims } from './claims';
@@ -80,7 +80,7 @@ export const getFactChecks = (query) => {
       })
       .catch((error) => {
         console.log(error.message);
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -109,7 +109,7 @@ export const getFactCheck = (id) => {
         dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -128,7 +128,7 @@ export const addFactCheck = (data) => {
         dispatch(resetFactChecks());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -155,7 +155,7 @@ export const updateFactCheck = (data) => {
         dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -169,7 +169,7 @@ export const deleteFactCheck = (id) => {
         dispatch(resetFactChecks());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

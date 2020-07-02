@@ -7,7 +7,7 @@ import {
   RESET_CATEGORIES,
   CATEGORIES_API,
 } from '../constants/categories';
-import { addErrors, addSuccess } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
 
 export const getCategories = (query) => {
@@ -42,7 +42,7 @@ export const getCategories = (query) => {
         dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -59,7 +59,7 @@ export const getCategory = (id) => {
         dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -71,10 +71,10 @@ export const addCategory = (data) => {
       .post(CATEGORIES_API, data)
       .then(() => {
         dispatch(resetCategories());
-        dispatch(addSuccess(`${data.name} category added`));
+        dispatch(addSuccessNotification('Category added'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -89,9 +89,10 @@ export const updateCategory = (data) => {
 
         dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(stopCategoriesLoading());
+        dispatch(addSuccessNotification('Category updated'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -103,9 +104,10 @@ export const deleteCategory = (id) => {
       .delete(CATEGORIES_API + '/' + id)
       .then(() => {
         dispatch(resetCategories());
+        dispatch(addSuccessNotification('Category deleted'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

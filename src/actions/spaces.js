@@ -15,6 +15,7 @@ import {
   UPDATE_SPACE_SUCCESS,
   UPDATE_SPACE_FAILURE,
 } from '../constants/spaces';
+import { addErrorNotification } from './notifications';
 
 export const getSpaces = () => {
   return (dispatch) => {
@@ -25,7 +26,7 @@ export const getSpaces = () => {
         dispatch(getSpacesSuccess(response.data));
       })
       .catch((error) => {
-        dispatch(getSpacesFailure(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

@@ -1,6 +1,6 @@
 import { ADD_NOTIFICATION } from '../constants/notifications';
 
-export const addErrors = (data) => ({
+export const addErrorNotification = (data) => ({
   type: ADD_NOTIFICATION,
   payload: {
     type: 'error',
@@ -9,7 +9,7 @@ export const addErrors = (data) => ({
   },
 });
 
-export const addSuccess = (data) => ({
+export const addSuccessNotification = (data) => ({
   type: ADD_NOTIFICATION,
   payload: {
     type: 'success',

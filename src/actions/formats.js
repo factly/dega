@@ -7,7 +7,7 @@ import {
   RESET_FORMATS,
   FORMATS_API,
 } from '../constants/formats';
-import { addErrors } from './notifications';
+import { addErrorNotification } from './notifications';
 
 export const getFormats = (query) => {
   return (dispatch) => {
@@ -29,7 +29,7 @@ export const getFormats = (query) => {
       })
       .catch((error) => {
         console.log(error.message);
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -44,7 +44,7 @@ export const getFormat = (id) => {
         dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -58,7 +58,7 @@ export const addFormat = (data) => {
         dispatch(resetFormats());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -73,7 +73,7 @@ export const updateFormat = (data) => {
         dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -87,7 +87,7 @@ export const deleteFormat = (id) => {
         dispatch(resetFormats());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

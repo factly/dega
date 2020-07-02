@@ -5,7 +5,7 @@ import {
   AUTHORS_API,
   ADD_AUTHORS_REQUEST,
 } from '../constants/authors';
-import { addErrors } from './notifications';
+import { addErrorNotification } from './notifications';
 
 export const getAuthors = (query) => {
   return (dispatch) => {
@@ -26,7 +26,7 @@ export const getAuthors = (query) => {
         dispatch(stopAuthorsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

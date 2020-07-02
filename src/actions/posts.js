@@ -7,7 +7,7 @@ import {
   RESET_POSTS,
   POSTS_API,
 } from '../constants/posts';
-import { addErrors } from './notifications';
+import { addErrorNotification } from './notifications';
 import { addCategories } from './categories';
 import { addTags } from './tags';
 import { addFormats } from './formats';
@@ -80,7 +80,7 @@ export const getPosts = (query) => {
       })
       .catch((error) => {
         console.log(error.message);
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -109,7 +109,7 @@ export const getPost = (id) => {
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -128,7 +128,7 @@ export const addPost = (data) => {
         dispatch(resetPosts());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -156,7 +156,7 @@ export const updatePost = (data) => {
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -170,7 +170,7 @@ export const deletePost = (id) => {
         dispatch(resetPosts());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

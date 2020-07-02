@@ -7,7 +7,7 @@ import {
   RESET_MEDIA,
   MEDIA_API,
 } from '../constants/media';
-import { addErrors } from './notifications';
+import { addErrorNotification } from './notifications';
 
 export const getMedia = (query) => {
   return (dispatch) => {
@@ -29,7 +29,7 @@ export const getMedia = (query) => {
       })
       .catch((error) => {
         console.log(error.message);
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -44,7 +44,7 @@ export const getMedium = (id) => {
         dispatch(stopMediaLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -58,7 +58,7 @@ export const addMedium = (data) => {
         dispatch(resetMedia());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -73,7 +73,7 @@ export const updateMedium = (data) => {
         dispatch(stopMediaLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -87,7 +87,7 @@ export const deleteMedium = (id) => {
         dispatch(resetMedia());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
