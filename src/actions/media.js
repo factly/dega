@@ -7,7 +7,7 @@ import {
   RESET_MEDIA,
   MEDIA_API,
 } from '../constants/media';
-import { addErrorNotification } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 
 export const getMedia = (query) => {
   return (dispatch) => {
@@ -56,6 +56,7 @@ export const addMedium = (data) => {
       .post(MEDIA_API, data)
       .then(() => {
         dispatch(resetMedia());
+        dispatch(addSuccessNotification('Medium added'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
@@ -71,6 +72,7 @@ export const updateMedium = (data) => {
       .then((response) => {
         dispatch(getMediumByID(response.data));
         dispatch(stopMediaLoading());
+        dispatch(addSuccessNotification('Medium updated'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
@@ -85,6 +87,7 @@ export const deleteMedium = (id) => {
       .delete(MEDIA_API + '/' + id)
       .then(() => {
         dispatch(resetMedia());
+        dispatch(addSuccessNotification('Medium deleted'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));

@@ -7,7 +7,7 @@ import {
   RESET_FACT_CHECKS,
   FACT_CHECKS_API,
 } from '../constants/factChecks';
-import { addErrorNotification } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addCategories } from './categories';
 import { addTags } from './tags';
 import { addClaims } from './claims';
@@ -126,6 +126,7 @@ export const addFactCheck = (data) => {
         dispatch(addClaims(factCheck.claims));
         if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
         dispatch(resetFactChecks());
+        dispatch(addSuccessNotification('Factcheck added'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
@@ -153,6 +154,7 @@ export const updateFactCheck = (data) => {
           }),
         );
         dispatch(stopFactChecksLoading());
+        dispatch(addSuccessNotification('Factcheck updated'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
@@ -167,6 +169,7 @@ export const deleteFactCheck = (id) => {
       .delete(FACT_CHECKS_API + '/' + id)
       .then(() => {
         dispatch(resetFactChecks());
+        dispatch(addSuccessNotification('Factcheck deleted'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));

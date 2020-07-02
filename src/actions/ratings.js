@@ -7,7 +7,7 @@ import {
   RESET_RATINGS,
   RATINGS_API,
 } from '../constants/ratings';
-import { addErrorNotification } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
 
 export const getRatings = (query) => {
@@ -69,6 +69,7 @@ export const addRating = (data) => {
       .post(RATINGS_API, data)
       .then(() => {
         dispatch(resetRatings());
+        dispatch(addSuccessNotification('Rating added'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
@@ -87,6 +88,7 @@ export const updateRating = (data) => {
 
         dispatch(getRatingByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(stopRatingsLoading());
+        dispatch(addSuccessNotification('Rating updated'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));

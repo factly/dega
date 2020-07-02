@@ -15,7 +15,7 @@ import {
   UPDATE_SPACE_SUCCESS,
   UPDATE_SPACE_FAILURE,
 } from '../constants/spaces';
-import { addErrorNotification } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 
 export const getSpaces = () => {
   return (dispatch) => {
@@ -43,9 +43,10 @@ export const addSpace = (data) => {
       .post(API_ADD_SPACE, data)
       .then((response) => {
         dispatch(addSpaceSuccess(response.data));
+        dispatch(addSuccessNotification('Space added'));
       })
       .catch((error) => {
-        dispatch(addSpaceFailure(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -57,9 +58,10 @@ export const deleteSpace = (id) => {
       .delete(API_DELETE_SPACE + '/' + id)
       .then(() => {
         dispatch(deleteSpaceSuccess(id));
+        dispatch(addSuccessNotification('Space deleted'));
       })
       .catch((error) => {
-        dispatch(deleteSpaceFailure(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -71,9 +73,10 @@ export const updateSpace = (data) => {
       .put(API_UPDATE_SPACE + '/' + data.id, data)
       .then((response) => {
         dispatch(updateSpaceSuccess(response.data));
+        dispatch(addSuccessNotification('Space updated'));
       })
       .catch((error) => {
-        dispatch(updateSpaceFailure(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -87,23 +90,9 @@ const getSpacesSuccess = (spaces) => ({
   payload: spaces,
 });
 
-const getSpacesFailure = (error) => ({
-  type: GET_SPACES_FAILURE,
-  payload: {
-    error,
-  },
-});
-
 const addSpaceSuccess = (space) => ({
   type: ADD_SPACE_SUCCESS,
   payload: space,
-});
-
-const addSpaceFailure = (error) => ({
-  type: ADD_SPACE_FAILURE,
-  payload: {
-    error,
-  },
 });
 
 const updateSpaceSuccess = (data) => ({
@@ -111,21 +100,7 @@ const updateSpaceSuccess = (data) => ({
   payload: data,
 });
 
-const updateSpaceFailure = (error) => ({
-  type: UPDATE_SPACE_FAILURE,
-  payload: {
-    error,
-  },
-});
-
 const deleteSpaceSuccess = (id) => ({
   type: DELETE_SPACE_SUCCESS,
   payload: id,
-});
-
-const deleteSpaceFailure = (error) => ({
-  type: DELETE_SPACE_FAILURE,
-  payload: {
-    error,
-  },
 });
