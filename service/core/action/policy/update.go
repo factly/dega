@@ -1,7 +1,6 @@
 package policy
 
 import (
-	"bytes"
 	"encoding/json"
 	"net/http"
 	"os"
@@ -61,48 +60,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	/* create new policy */
-	policyReq := &policyReq{}
+	policyReq := policyReq{}
 
 	json.NewDecoder(r.Body).Decode(&policyReq)
 
-	ketoPolicy := &model.KetoPolicy{}
-
-	ketoPolicy.ID = "id" + commanPolicyString + policyReq.Name
-	ketoPolicy.Description = policyReq.Description
-	ketoPolicy.Effect = "allow"
-
-	for _, each := range policyReq.Permissions {
-		ketoPolicy.Resources = append(ketoPolicy.Resources, "resources"+commanPolicyString+each.Resource)
-		var eachActions []string
-		for _, action := range each.Actions {
-			eachActions = append(eachActions, "actions"+commanPolicyString+each.Resource+":"+action)
-		}
-		ketoPolicy.Actions = append(ketoPolicy.Actions, eachActions...)
-	}
-
-	ketoPolicy.Subjects = policyReq.Users
-
-	buf := new(bytes.Buffer)
-	json.NewEncoder(buf).Encode(&ketoPolicy)
-	req, err = http.NewRequest("PUT", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies", buf)
-	req.Header.Set("Content-Type", "application/json")
-
-	client = &http.Client{}
-	resp, err = client.Do(req)
-
-	if err != nil {
-		return
-	}
-
-	defer resp.Body.Close()
-	updateKetoPolicy := model.KetoPolicy{}
-
-	json.NewDecoder(resp.Body).Decode(&updateKetoPolicy)
-
 	/* User req */
-	userMap := author.Mapper(oID, uID)
 
-	result := Mapper(updateKetoPolicy, userMap)
+	result := Mapper(Composer(oID, sID, policyReq), author.Mapper(oID, uID))
 
 	renderx.JSON(w, http.StatusOK, result)
 }
