@@ -1,156 +1,156 @@
 import axios from 'axios';
 import {
-  GET_CATEGORIES_SUCCESS,
-  GET_CATEGORIES_FAILURE,
-  ADD_CATEGORY_FAILURE,
-  ADD_CATEGORY_SUCCESS,
-  API_ADD_CATEGORY,
-  API_GET_CATEGORIES,
-  UPDATE_CATEGORY_SUCCESS,
-  UPDATE_CATEGORY_FAILURE,
-  DELETE_CATEGORY_SUCCESS,
-  DELETE_CATEGORY_FAILURE,
-  LOADING_CATEGORIES,
-  GET_CATEGORY_SUCCESS,
-  GET_CATEGORY_FAILURE,
+  ADD_CATEGORY,
+  ADD_CATEGORIES,
+  ADD_CATEGORIES_REQUEST,
+  SET_CATEGORIES_LOADING,
+  RESET_CATEGORIES,
+  CATEGORIES_API,
 } from '../constants/categories';
+import { addErrors } from './notifications';
+import { addMediaList } from './media';
 
 export const getCategories = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
-      .get(API_GET_CATEGORIES, {
+      .get(CATEGORIES_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getCategoriesSuccess(response.data, query));
+        dispatch(
+          addMediaList(
+            response.data.nodes
+              .filter((category) => category.medium)
+              .map((category) => category.medium),
+          ),
+        );
+        dispatch(
+          addCategoriesList(
+            response.data.nodes.map((category) => {
+              return { ...category, medium: category.medium?.id };
+            }),
+          ),
+        );
+        dispatch(
+          addCategoriesRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        dispatch(getCategoriesFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const getCategory = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
-      .get(API_GET_CATEGORIES + '/' + id)
+      .get(CATEGORIES_API + '/' + id)
       .then((response) => {
-        dispatch(getCategorySuccess(response.data));
+        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+
+        dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
+        dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        dispatch(getCategoryFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const addCategory = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
-      .post(API_ADD_CATEGORY, data)
-      .then((response) => {
-        dispatch(addCategorySuccess(response.data));
+      .post(CATEGORIES_API, data)
+      .then(() => {
+        dispatch(resetCategories());
       })
       .catch((error) => {
-        dispatch(addCategoryFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const updateCategory = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
-      .put(API_ADD_CATEGORY + '/' + data.id, data)
+      .put(CATEGORIES_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updateCategorySuccess(response.data));
+        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+
+        dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
+        dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
-        dispatch(updateCategoryFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const deleteCategory = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingCategories());
     return axios
-      .delete(API_ADD_CATEGORY + '/' + id)
+      .delete(CATEGORIES_API + '/' + id)
       .then(() => {
-        dispatch(deleteCategorySuccess(id));
+        dispatch(resetCategories());
       })
       .catch((error) => {
-        dispatch(deleteCategoryFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
+export const addCategories = (categories) => {
+  return (dispatch) => {
+    dispatch(
+      addMediaList(
+        categories.filter((category) => category.medium).map((category) => category.medium),
+      ),
+    );
+    dispatch(
+      addCategoriesList(
+        categories.map((category) => {
+          return { ...category, medium: category.medium?.id };
+        }),
+      ),
+    );
+  };
+};
+
 const loadingCategories = () => ({
-  type: LOADING_CATEGORIES,
+  type: SET_CATEGORIES_LOADING,
+  payload: true,
 });
 
-const getCategoriesSuccess = (data, query) => ({
-  type: GET_CATEGORIES_SUCCESS,
-  payload: { data, query },
+const stopCategoriesLoading = () => ({
+  type: SET_CATEGORIES_LOADING,
+  payload: false,
 });
 
-const getCategoriesFailure = (error) => ({
-  type: GET_CATEGORIES_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const getCategorySuccess = (data) => ({
-  type: GET_CATEGORY_SUCCESS,
+const getCategoryByID = (data) => ({
+  type: ADD_CATEGORY,
   payload: data,
 });
 
-const getCategoryFailure = (error) => ({
-  type: GET_CATEGORY_FAILURE,
-  payload: {
-    error,
-  },
+const addCategoriesList = (data) => ({
+  type: ADD_CATEGORIES,
+  payload: data,
 });
 
-const addCategorySuccess = (data) => ({
-  type: ADD_CATEGORY_SUCCESS,
-  payload: {
-    ...data,
-  },
+const addCategoriesRequest = (data) => ({
+  type: ADD_CATEGORIES_REQUEST,
+  payload: data,
 });
 
-const addCategoryFailure = (error) => ({
-  type: ADD_CATEGORY_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const updateCategorySuccess = (data) => ({
-  type: UPDATE_CATEGORY_SUCCESS,
-  payload: {
-    ...data,
-  },
-});
-
-const updateCategoryFailure = (error) => ({
-  type: UPDATE_CATEGORY_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteCategorySuccess = (id) => ({
-  type: DELETE_CATEGORY_SUCCESS,
-  payload: id,
-});
-
-const deleteCategoryFailure = (error) => ({
-  type: DELETE_CATEGORY_FAILURE,
-  payload: {
-    error,
-  },
+const resetCategories = () => ({
+  type: RESET_CATEGORIES,
 });

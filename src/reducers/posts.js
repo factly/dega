@@ -1,84 +1,67 @@
 import {
-  GET_POSTS_SUCCESS,
-  GET_POST_SUCCESS,
-  ADD_POST_SUCCESS,
-  UPDATE_POST_SUCCESS,
-  DELETE_POST_SUCCESS,
-  LOADING_POSTS,
+  ADD_POST,
+  ADD_POSTS,
+  ADD_POSTS_REQUEST,
+  SET_POSTS_LOADING,
+  RESET_POSTS,
 } from '../constants/posts';
 
 const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 export default function postsReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
   switch (action.type) {
-    case LOADING_POSTS:
+    case RESET_POSTS:
       return {
         ...state,
-        loading: false,
+        req: [],
+        details: {},
+        loading: true,
       };
-    case GET_POST_SUCCESS:
+    case SET_POSTS_LOADING:
       return {
         ...state,
-        loading: false,
-        details: {
-          ...state.details,
-          [action.payload.id]: action.payload,
-        },
+        loading: action.payload,
       };
-    case GET_POSTS_SUCCESS:
+    case ADD_POSTS_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
+        data: data,
+        query: query,
+        total: total,
       });
 
+      return {
+        ...state,
+        req: localReq,
+      };
+    case ADD_POSTS:
       const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
-
       return {
         ...state,
-        loading: false,
-        req: localReq,
         details: localDetails,
-        total: action.payload.data.total,
       };
-    case ADD_POST_SUCCESS:
+    case ADD_POST:
       return {
         ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
-      };
-    case UPDATE_POST_SUCCESS:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload.id]: action.payload },
-      };
-    case DELETE_POST_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
       };
     default:
       return state;

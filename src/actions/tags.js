@@ -1,156 +1,127 @@
 import axios from 'axios';
 import {
-  GET_TAGS_SUCCESS,
-  GET_TAGS_FAILURE,
-  ADD_TAG_FAILURE,
-  ADD_TAG_SUCCESS,
-  API_ADD_TAG,
-  API_GET_TAGS,
-  UPDATE_TAG_FAILURE,
-  UPDATE_TAG_SUCCESS,
-  DELETE_TAG_SUCCESS,
-  DELETE_TAG_FAILURE,
-  GET_TAG_SUCCESS,
-  GET_TAG_FAILURE,
+  ADD_TAG,
+  ADD_TAGS,
+  ADD_TAGS_REQUEST,
+  SET_TAGS_LOADING,
+  RESET_TAGS,
+  TAGS_API,
 } from '../constants/tags';
-import { LOADING_SPACES } from '../constants/spaces';
+import { addErrors } from './notifications';
 
 export const getTags = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
-      .get(API_GET_TAGS, {
+      .get(TAGS_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getTagsSuccess(response.data, query));
+        dispatch(addTagsList(response.data.nodes));
+        dispatch(
+          addTagsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopTagsLoading());
       })
       .catch((error) => {
-        dispatch(getTagsFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const getTag = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
-      .get(API_GET_TAGS + '/' + id)
+      .get(TAGS_API + '/' + id)
       .then((response) => {
-        dispatch(getTagSuccess(response.data));
+        dispatch(getTagByID(response.data));
+        dispatch(stopTagsLoading());
       })
       .catch((error) => {
-        dispatch(getTagFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const addTag = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
-      .post(API_ADD_TAG, data)
-      .then((response) => {
-        dispatch(addTagSuccess(response.data));
+      .post(TAGS_API, data)
+      .then(() => {
+        dispatch(resetTags());
       })
       .catch((error) => {
-        dispatch(addTagFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const updateTag = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
-      .put(API_ADD_TAG + '/' + data.id, data)
+      .put(TAGS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updateTagSuccess(response.data));
+        dispatch(getTagByID(response.data));
+        dispatch(stopTagsLoading());
       })
       .catch((error) => {
-        dispatch(updateTagFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const deleteTag = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingTags());
     return axios
-      .delete(API_ADD_TAG + '/' + id)
+      .delete(TAGS_API + '/' + id)
       .then(() => {
-        dispatch(deleteTagSuccess(id));
+        dispatch(resetTags());
       })
       .catch((error) => {
-        dispatch(deleteTagFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
+export const addTags = (tags) => {
+  return (dispatch) => {
+    dispatch(addTagsList(tags));
+  };
+};
+
 const loadingTags = () => ({
-  type: LOADING_SPACES,
+  type: SET_TAGS_LOADING,
+  payload: true,
 });
 
-const getTagsSuccess = (data, query) => ({
-  type: GET_TAGS_SUCCESS,
-  payload: { data, query },
+const stopTagsLoading = () => ({
+  type: SET_TAGS_LOADING,
+  payload: false,
 });
 
-const getTagsFailure = (error) => ({
-  type: GET_TAGS_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const getTagSuccess = (data) => ({
-  type: GET_TAG_SUCCESS,
+const getTagByID = (data) => ({
+  type: ADD_TAG,
   payload: data,
 });
 
-const getTagFailure = (error) => ({
-  type: GET_TAG_FAILURE,
-  payload: {
-    error,
-  },
+const addTagsList = (data) => ({
+  type: ADD_TAGS,
+  payload: data,
 });
 
-const addTagSuccess = (data) => ({
-  type: ADD_TAG_SUCCESS,
-  payload: {
-    ...data,
-  },
+const addTagsRequest = (data) => ({
+  type: ADD_TAGS_REQUEST,
+  payload: data,
 });
 
-const addTagFailure = (error) => ({
-  type: ADD_TAG_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const updateTagSuccess = (data) => ({
-  type: UPDATE_TAG_SUCCESS,
-  payload: {
-    ...data,
-  },
-});
-
-const updateTagFailure = (error) => ({
-  type: UPDATE_TAG_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteTagSuccess = (id) => ({
-  type: DELETE_TAG_SUCCESS,
-  payload: id,
-});
-
-const deleteTagFailure = (error) => ({
-  type: DELETE_TAG_FAILURE,
-  payload: {
-    error,
-  },
+const resetTags = () => ({
+  type: RESET_TAGS,
 });

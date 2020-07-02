@@ -1,94 +1,67 @@
 import {
-  GET_RATINGS_SUCCESS,
-  ADD_RATING_SUCCESS,
-  UPDATE_RATING_SUCCESS,
-  DELETE_RATING_SUCCESS,
-  LOADING_RATINGS,
-  GET_RATING_SUCCESS,
+  ADD_RATING,
   ADD_RATINGS,
+  ADD_RATINGS_REQUEST,
+  SET_RATINGS_LOADING,
+  RESET_RATINGS,
 } from '../constants/ratings';
 
 const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 export default function ratingsReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
   switch (action.type) {
-    case LOADING_RATINGS:
+    case RESET_RATINGS:
       return {
         ...state,
-        loading: false,
+        req: [],
+        details: {},
+        loading: true,
       };
-    case GET_RATINGS_SUCCESS:
+    case SET_RATINGS_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case ADD_RATINGS_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
+        data: data,
+        query: query,
+        total: total,
       });
 
+      return {
+        ...state,
+        req: localReq,
+      };
+    case ADD_RATINGS:
       const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
-
       return {
         ...state,
-        loading: false,
-        req: localReq,
         details: localDetails,
-        total: action.payload.data.total,
       };
-    case GET_RATING_SUCCESS:
+    case ADD_RATING:
       return {
         ...state,
-        loading: false,
         details: {
           ...state.details,
           [action.payload.id]: action.payload,
         },
-      };
-    case ADD_RATINGS:
-      let details = state.details;
-      action.payload.forEach((element) => {
-        details[element.id] = element;
-      });
-      return {
-        ...state,
-        details: details,
-      };
-    case ADD_RATING_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
-      };
-    case UPDATE_RATING_SUCCESS:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload.id]: action.payload },
-      };
-    case DELETE_RATING_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
       };
     default:
       return state;

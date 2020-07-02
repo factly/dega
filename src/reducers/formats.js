@@ -1,93 +1,67 @@
 import {
-  GET_FORMATS_SUCCESS,
-  ADD_FORMAT_SUCCESS,
-  UPDATE_FORMAT_SUCCESS,
-  DELETE_FORMAT_SUCCESS,
-  LOADING_FORMATS,
-  GET_FORMAT_SUCCESS,
+  ADD_FORMAT,
   ADD_FORMATS,
+  ADD_FORMATS_REQUEST,
+  SET_FORMATS_LOADING,
+  RESET_FORMATS,
 } from '../constants/formats';
 
 const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 export default function formatsReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
   switch (action.type) {
-    case LOADING_FORMATS:
+    case RESET_FORMATS:
       return {
         ...state,
-        loading: false,
+        req: [],
+        details: {},
+        loading: true,
       };
-    case GET_FORMATS_SUCCESS:
+    case SET_FORMATS_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case ADD_FORMATS_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
+        data: data,
+        query: query,
+        total: total,
       });
 
+      return {
+        ...state,
+        req: localReq,
+      };
+    case ADD_FORMATS:
       const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
-
       return {
         ...state,
-        loading: false,
-        req: localReq,
         details: localDetails,
-        total: action.payload.data.total,
       };
-    case GET_FORMAT_SUCCESS:
+    case ADD_FORMAT:
       return {
         ...state,
-        loading: false,
         details: {
           ...state.details,
           [action.payload.id]: action.payload,
         },
-      };
-    case ADD_FORMATS:
-      return {
-        ...state,
-        details: {
-          ...state.details,
-          [action.payload.data.id]: action.payload.data,
-        },
-      };
-    case ADD_FORMAT_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
-      };
-    case UPDATE_FORMAT_SUCCESS:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload.id]: action.payload },
-      };
-    case DELETE_FORMAT_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
       };
     default:
       return state;

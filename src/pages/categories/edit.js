@@ -6,7 +6,7 @@ import { updateCategory, getCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-function EditSpace() {
+function EditCategory() {
   const history = useHistory();
   const { id } = useParams();
 
@@ -23,7 +23,7 @@ function EditSpace() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  if (loading && !category) return <Skeleton />;
 
   const onUpdate = (values) => {
     dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));
@@ -32,4 +32,4 @@ function EditSpace() {
   return <CategoryCreateForm data={category} onCreate={onUpdate} />;
 }
 
-export default EditSpace;
+export default EditCategory;

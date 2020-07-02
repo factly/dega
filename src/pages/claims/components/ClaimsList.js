@@ -23,7 +23,7 @@ function ClaimsList() {
       });
       return {
         claims: list,
-        total: claims.total,
+        total: node.total,
         loading: claims.loading,
       };
     }

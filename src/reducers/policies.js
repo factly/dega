@@ -1,84 +1,67 @@
 import {
-  LOADING_POLICIES,
-  ADD_POLICY_SUCCESS,
-  GET_POLICIES_SUCCESS,
-  GET_POLICY_SUCCESS,
-  DELETE_POLICY_SUCCESS,
-  UPDATE_POLICY_SUCCESS,
+  ADD_POLICY,
+  ADD_POLICIES,
+  ADD_POLICIES_REQUEST,
+  SET_POLICIES_LOADING,
+  RESET_POLICIES,
 } from '../constants/policies';
 
 const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 export default function policiesReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
   switch (action.type) {
-    case LOADING_POLICIES:
+    case RESET_POLICIES:
       return {
         ...state,
-        loading: false,
+        req: [],
+        details: {},
+        loading: true,
       };
-    case GET_POLICIES_SUCCESS:
+    case SET_POLICIES_LOADING:
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    case ADD_POLICIES_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.name),
-        query: action.payload.query,
-      });
-
-      const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
-        localDetails[element.name] = element;
+        data: data,
+        query: query,
+        total: total,
       });
 
       return {
         ...state,
-        loading: false,
         req: localReq,
-        details: localDetails,
-        total: action.payload.data.total,
       };
-    case GET_POLICY_SUCCESS:
+    case ADD_POLICIES:
+      const localDetails = state.details;
+      action.payload.forEach((element) => {
+        localDetails[element.id] = element;
+      });
       return {
         ...state,
-        loading: false,
+        details: localDetails,
+      };
+    case ADD_POLICY:
+      return {
+        ...state,
         details: {
           ...state.details,
-          [action.payload.name]: action.payload,
+          [action.payload.id]: action.payload,
         },
-      };
-    case UPDATE_POLICY_SUCCESS:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload.name]: action.payload },
-      };
-    case ADD_POLICY_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
-      };
-    case DELETE_POLICY_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
       };
     default:
       return state;

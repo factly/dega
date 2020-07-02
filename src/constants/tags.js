@@ -1,19 +1,9 @@
 //Actions
-export const GET_TAGS_SUCCESS = 'GET_TAGS_SUCCESS';
-export const GET_TAGS_FAILURE = 'GET_TAGS_FAILURE';
-export const GET_TAG_SUCCESS = 'GET_TAG_SUCCESS';
-export const GET_TAG_FAILURE = 'GET_TAG_FAILURE';
-export const ADD_TAG_SUCCESS = 'ADD_TAG_SUCCESS';
-export const ADD_TAG_FAILURE = 'ADD_TAG_FAILURE';
-export const UPDATE_TAG_SUCCESS = 'UPDATE_TAG_SUCCESS';
-export const UPDATE_TAG_FAILURE = 'UPDATE_TAG_FAILURE';
-export const DELETE_TAG_SUCCESS = 'DELETE_TAG_SUCCESS';
-export const DELETE_TAG_FAILURE = 'DELETE_TAG_FAILURE';
-export const LOADING_TAGS = 'LOADING_TAGS';
+export const ADD_TAG = 'ADD_TAG';
 export const ADD_TAGS = 'ADD_TAGS';
+export const ADD_TAGS_REQUEST = 'ADD_TAGS_REQUEST';
+export const RESET_TAGS = 'RESET_TAGS';
+export const SET_TAGS_LOADING = 'SET_TAGS_LOADING';
 
 //API
-export const API_GET_TAGS = '/core/tags';
-export const API_ADD_TAG = '/core/tags';
-
-//Notification
+export const TAGS_API = '/core/tags';

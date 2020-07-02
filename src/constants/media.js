@@ -1,16 +1,9 @@
-//API
-export const API_GET_MEDIA = '/core/media';
-export const API_ADD_MEDIA = '/core/media';
+//Actions
+export const ADD_MEDIUM = 'ADD_MEDIUM';
+export const ADD_MEDIA = 'ADD_MEDIA';
+export const ADD_MEDIA_REQUEST = 'ADD_MEDIA_REQUEST';
+export const RESET_MEDIA = 'RESET_MEDIA';
+export const SET_MEDIA_LOADING = 'SET_MEDIA_LOADING';
 
-//STORE
-export const GET_MEDIA_SUCCESS = 'GET_MEDIA_SUCCESS';
-export const GET_MEDIA_FAILURE = 'GET_MEDIA_FAILURE';
-export const GET_MEDIUM_SUCCESS = 'GET_MEDIUM_SUCCESS';
-export const GET_MEDIUM_FAILURE = 'GET_MEDIUM_FAILURE';
-export const UPDATE_MEDIUM_SUCCESS = 'UPDATE_MEDIUM_SUCCESS';
-export const UPDATE_MEDIUM_FAILURE = 'UPDATE_MEDIUM_FAILURE';
-export const DELETE_MEDIUM_SUCCESS = 'DELETE_MEDIUM_SUCCESS';
-export const DELETE_MEDIUM_FAILURE = 'DELETE_MEDIUM_FAILURE';
-export const ADD_MEDIUM_SUCCESS = 'ADD_MEDIUM_SUCCESS';
-export const ADD_MEDIUM_FAILURE = 'ADD_MEDIUM_FAILURE';
-export const LOADING_MEDIA = 'LOADING_MEDIA';
+//API
+export const MEDIA_API = '/core/media';

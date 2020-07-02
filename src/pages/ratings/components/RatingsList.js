@@ -17,7 +17,7 @@ function RatingsList() {
     if (node)
       return {
         ratings: node.data.map((element) => state.ratings.details[element]),
-        total: state.ratings.total,
+        total: node.total,
         loading: state.ratings.loading,
       };
     return { ratings: [], total: 0, loading: state.ratings.loading };

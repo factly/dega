@@ -1,156 +1,121 @@
 import axios from 'axios';
 import {
-  GET_FORMATS_SUCCESS,
-  GET_FORMATS_FAILURE,
-  ADD_FORMAT_FAILURE,
-  ADD_FORMAT_SUCCESS,
-  API_ADD_FORMAT,
-  API_GET_FORMATS,
-  UPDATE_FORMAT_FAILURE,
-  UPDATE_FORMAT_SUCCESS,
-  DELETE_FORMAT_SUCCESS,
-  DELETE_FORMAT_FAILURE,
-  LOADING_FORMATS,
-  GET_FORMAT_SUCCESS,
-  GET_FORMAT_FAILURE,
+  ADD_FORMAT,
+  ADD_FORMATS,
+  ADD_FORMATS_REQUEST,
+  SET_FORMATS_LOADING,
+  RESET_FORMATS,
+  FORMATS_API,
 } from '../constants/formats';
+import { addErrors } from './notifications';
 
 export const getFormats = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
-      .get(API_GET_FORMATS, {
+      .get(FORMATS_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getFormatsSuccess(response.data, query));
+        dispatch(addFormats(response.data.nodes));
+        dispatch(
+          addFormatsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(getFormatsFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const getFormat = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
-      .get(API_GET_FORMATS + '/' + id)
+      .get(FORMATS_API + '/' + id)
       .then((response) => {
-        dispatch(getFormatSuccess(response.data));
+        dispatch(getFormatByID(response.data));
+        dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(getFormatFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const addFormat = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
-      .post(API_ADD_FORMAT, data)
-      .then((response) => {
-        dispatch(addFormatSuccess(response.data));
+      .post(FORMATS_API, data)
+      .then(() => {
+        dispatch(resetFormats());
       })
       .catch((error) => {
-        dispatch(addFormatFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const updateFormat = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
-      .put(API_ADD_FORMAT + '/' + data.id, data)
+      .put(FORMATS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updateFormatSuccess(response.data));
+        dispatch(getFormatByID(response.data));
+        dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(updateFormatFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const deleteFormat = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingFormats());
     return axios
-      .delete(API_ADD_FORMAT + '/' + id)
+      .delete(FORMATS_API + '/' + id)
       .then(() => {
-        dispatch(deleteFormatSuccess(id));
+        dispatch(resetFormats());
       })
       .catch((error) => {
-        dispatch(deleteFormatFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 const loadingFormats = () => ({
-  type: LOADING_FORMATS,
+  type: SET_FORMATS_LOADING,
+  payload: true,
 });
 
-const getFormatsSuccess = (data, query) => ({
-  type: GET_FORMATS_SUCCESS,
-  payload: { data, query },
+const stopFormatsLoading = () => ({
+  type: SET_FORMATS_LOADING,
+  payload: false,
 });
 
-const getFormatsFailure = (error) => ({
-  type: GET_FORMATS_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const getFormatSuccess = (data) => ({
-  type: GET_FORMAT_SUCCESS,
+const getFormatByID = (data) => ({
+  type: ADD_FORMAT,
   payload: data,
 });
 
-const getFormatFailure = (error) => ({
-  type: GET_FORMAT_FAILURE,
-  payload: {
-    error,
-  },
+export const addFormats = (data) => ({
+  type: ADD_FORMATS,
+  payload: data,
 });
 
-const addFormatSuccess = (data) => ({
-  type: ADD_FORMAT_SUCCESS,
-  payload: {
-    ...data,
-  },
+const addFormatsRequest = (data) => ({
+  type: ADD_FORMATS_REQUEST,
+  payload: data,
 });
 
-const addFormatFailure = (error) => ({
-  type: ADD_FORMAT_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const updateFormatSuccess = (data) => ({
-  type: UPDATE_FORMAT_SUCCESS,
-  payload: {
-    ...data,
-  },
-});
-
-const updateFormatFailure = (error) => ({
-  type: UPDATE_FORMAT_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteFormatSuccess = (id) => ({
-  type: DELETE_FORMAT_SUCCESS,
-  payload: id,
-});
-
-const deleteFormatFailure = (error) => ({
-  type: DELETE_FORMAT_FAILURE,
-  payload: {
-    error,
-  },
+const resetFormats = () => ({
+  type: RESET_FORMATS,
 });

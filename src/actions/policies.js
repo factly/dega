@@ -1,152 +1,127 @@
 import axios from 'axios';
 import {
-  LOADING_POLICIES,
-  ADD_POLICY_SUCCESS,
-  ADD_POLICY_FAILURE,
-  API_ADD_POLICY,
-  API_GET_POLICIES,
-  GET_POLICIES_SUCCESS,
-  GET_POLICIES_FAILURE,
-  DELETE_POLICY_SUCCESS,
-  DELETE_POLICY_FAILURE,
-  GET_POLICY_SUCCESS,
-  GET_POLICY_FAILURE,
-  UPDATE_POLICY_SUCCESS,
-  UPDATE_POLICY_FAILURE,
+  ADD_POLICY,
+  ADD_POLICIES,
+  ADD_POLICIES_REQUEST,
+  SET_POLICIES_LOADING,
+  RESET_POLICIES,
+  POLICIES_API,
 } from '../constants/policies';
+import { addErrors } from './notifications';
 
 export const getPolicies = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
-      .get(API_GET_POLICIES, {
+      .get(POLICIES_API, {
         params: query,
       })
       .then((response) => {
-        dispatch(getPoliciesSuccess(response.data, query));
+        dispatch(addPoliciesList(response.data.nodes));
+        dispatch(
+          addPoliciesRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        dispatch(getPoliciesFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const getPolicy = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
-      .get(API_GET_POLICIES + '/' + id)
+      .get(POLICIES_API + '/' + id)
       .then((response) => {
-        dispatch(getPolicySuccess(response.data));
+        dispatch(getPolicyByID(response.data));
+        dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        dispatch(getPolicyFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const addPolicy = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
-      .post(API_ADD_POLICY, data)
-      .then((response) => {
-        dispatch(addPolicySuccess(response.data));
-      })
-      .catch((error) => {
-        dispatch(addPolicyFailure(error.message));
-      });
-  };
-};
-
-export const deletePolicy = (id) => {
-  return (dispatch, getState) => {
-    dispatch(loadingPolicies());
-    return axios
-      .delete(API_GET_POLICIES + '/' + id)
+      .post(POLICIES_API, data)
       .then(() => {
-        dispatch(deletePolicySuccess(id));
+        dispatch(resetPolicies());
       })
       .catch((error) => {
-        dispatch(deletePolicyFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const updatePolicy = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
-      .put(API_GET_POLICIES + '/' + data.name, data)
+      .put(POLICIES_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updatePolicySuccess(response.data));
+        dispatch(getPolicyByID(response.data));
+        dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        dispatch(updatePolicyFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
+export const deletePolicy = (id) => {
+  return (dispatch) => {
+    dispatch(loadingPolicies());
+    return axios
+      .delete(POLICIES_API + '/' + id)
+      .then(() => {
+        dispatch(resetPolicies());
+      })
+      .catch((error) => {
+        dispatch(addErrors(error.message));
+      });
+  };
+};
+
+export const addPolicies = (policies) => {
+  return (dispatch) => {
+    dispatch(addPoliciesList(policies));
+  };
+};
+
 const loadingPolicies = () => ({
-  type: LOADING_POLICIES,
+  type: SET_POLICIES_LOADING,
+  payload: true,
 });
 
-const getPoliciesSuccess = (data, query) => ({
-  type: GET_POLICIES_SUCCESS,
-  payload: { data, query },
+const stopPoliciesLoading = () => ({
+  type: SET_POLICIES_LOADING,
+  payload: false,
 });
 
-const getPoliciesFailure = (error) => ({
-  type: GET_POLICIES_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const getPolicySuccess = (data) => ({
-  type: GET_POLICY_SUCCESS,
+const getPolicyByID = (data) => ({
+  type: ADD_POLICY,
   payload: data,
 });
 
-const getPolicyFailure = (error) => ({
-  type: GET_POLICY_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addPolicySuccess = (data) => ({
-  type: ADD_POLICY_SUCCESS,
+const addPoliciesList = (data) => ({
+  type: ADD_POLICIES,
   payload: data,
 });
 
-const addPolicyFailure = (error) => ({
-  type: ADD_POLICY_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const updatePolicySuccess = (data) => ({
-  type: UPDATE_POLICY_SUCCESS,
+const addPoliciesRequest = (data) => ({
+  type: ADD_POLICIES_REQUEST,
   payload: data,
 });
 
-const updatePolicyFailure = (error) => ({
-  type: UPDATE_POLICY_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deletePolicySuccess = (id) => ({
-  type: DELETE_POLICY_SUCCESS,
-  payload: id,
-});
-
-const deletePolicyFailure = (error) => ({
-  type: DELETE_POLICY_FAILURE,
-  payload: {
-    error,
-  },
+const resetPolicies = () => ({
+  type: RESET_POLICIES,
 });

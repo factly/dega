@@ -17,7 +17,7 @@ import {
 } from '../constants/spaces';
 
 export const getSpaces = () => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingSpaces());
     return axios
       .get(API_GET_SPACES)
@@ -36,7 +36,7 @@ export const setSelectedSpace = (space) => ({
 });
 
 export const addSpace = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingSpaces());
     return axios
       .post(API_ADD_SPACE, data)
@@ -50,7 +50,7 @@ export const addSpace = (data) => {
 };
 
 export const deleteSpace = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingSpaces());
     return axios
       .delete(API_DELETE_SPACE + '/' + id)
@@ -64,7 +64,7 @@ export const deleteSpace = (id) => {
 };
 
 export const updateSpace = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingSpaces());
     return axios
       .put(API_UPDATE_SPACE + '/' + data.id, data)

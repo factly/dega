@@ -1,84 +1,67 @@
 import {
-  GET_FACT_CHECKS_SUCCESS,
-  GET_FACT_CHECK_SUCCESS,
-  ADD_FACT_CHECK_SUCCESS,
-  UPDATE_FACT_CHECK_SUCCESS,
-  DELETE_FACT_CHECK_SUCCESS,
-  LOADING_FACT_CHECKS,
+  ADD_FACT_CHECK,
+  ADD_FACT_CHECKS,
+  ADD_FACT_CHECKS_REQUEST,
+  SET_FACT_CHECKS_LOADING,
+  RESET_FACT_CHECKS,
 } from '../constants/factChecks';
 
 const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 export default function factChecksReducer(state = initialState, action = {}) {
-  if (!action.payload) {
-    return state;
-  }
   switch (action.type) {
-    case LOADING_FACT_CHECKS:
+    case RESET_FACT_CHECKS:
       return {
         ...state,
-        loading: false,
+        req: [],
+        details: {},
+        loading: true,
       };
-    case GET_FACT_CHECK_SUCCESS:
+    case SET_FACT_CHECKS_LOADING:
       return {
         ...state,
-        loading: false,
-        details: {
-          ...state.details,
-          [action.payload.id]: action.payload,
-        },
+        loading: action.payload,
       };
-    case GET_FACT_CHECKS_SUCCESS:
+    case ADD_FACT_CHECKS_REQUEST:
       const localReq = state.req;
+      const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === action.payload.query.page;
+        return item.query.page === query.page;
       });
 
       if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
 
       localReq.push({
-        data: action.payload.data.nodes.map((item) => item.id),
-        query: action.payload.query,
+        data: data,
+        query: query,
+        total: total,
       });
 
+      return {
+        ...state,
+        req: localReq,
+      };
+    case ADD_FACT_CHECKS:
       const localDetails = state.details;
-      action.payload.data.nodes.forEach((element) => {
+      action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
-
       return {
         ...state,
-        loading: false,
-        req: localReq,
         details: localDetails,
-        total: action.payload.data.total,
       };
-    case ADD_FACT_CHECK_SUCCESS:
+    case ADD_FACT_CHECK:
       return {
         ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
-      };
-    case UPDATE_FACT_CHECK_SUCCESS:
-      return {
-        ...state,
-        details: { ...state.details, [action.payload.id]: action.payload },
-      };
-    case DELETE_FACT_CHECK_SUCCESS:
-      return {
-        ...state,
-        req: [],
-        details: {},
-        loading: true,
-        total: 0,
+        details: {
+          ...state.details,
+          [action.payload.id]: action.payload,
+        },
       };
     default:
       return state;

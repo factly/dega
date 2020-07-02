@@ -1,198 +1,165 @@
 import axios from 'axios';
 import {
-  GET_CLAIMS_SUCCESS,
-  GET_CLAIMS_FAILURE,
-  GET_CLAIM_SUCCESS,
-  GET_CLAIM_FAILURE,
-  ADD_CLAIM_FAILURE,
-  ADD_CLAIM_SUCCESS,
-  API_ADD_CLAIM,
-  API_GET_CLAIMS,
-  UPDATE_CLAIM_FAILURE,
-  UPDATE_CLAIM_SUCCESS,
-  DELETE_CLAIM_SUCCESS,
-  DELETE_CLAIM_FAILURE,
+  ADD_CLAIM,
+  ADD_CLAIMS,
+  ADD_CLAIMS_REQUEST,
+  SET_CLAIMS_LOADING,
+  RESET_CLAIMS,
+  CLAIMS_API,
 } from '../constants/claims';
-import { LOADING_SPACES } from '../constants/spaces';
-import { ADD_CLAIMANTS } from '../constants/claimants';
-import { ADD_RATINGS } from '../constants/ratings';
+import { addErrors } from './notifications';
+import { addRatings } from './ratings';
+import { addClaimants } from './claimants';
 
 export const getClaims = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
-      .get(API_GET_CLAIMS, {
+      .get(CLAIMS_API, {
         params: query,
       })
       .then((response) => {
-        let claims = response.data.nodes
-          ? response.data.nodes.map((claim) => {
-              if (claim.claimant) dispatch(addClaimant(claim.claimant));
-              if (claim.rating) dispatch(addRating(claim.rating));
-
-              return {
-                ...claim,
-                claimant: claim.claimant.id,
-                rating: claim.rating.id,
-              };
-            })
-          : [];
-
-        dispatch(getClaimsSuccess({ ...response.data, nodes: claims }, query));
+        dispatch(
+          addClaimants(
+            response.data.nodes.filter((claim) => claim.claimant).map((claim) => claim.claimant),
+          ),
+        );
+        dispatch(
+          addRatings(
+            response.data.nodes.filter((claim) => claim.rating).map((claim) => claim.rating),
+          ),
+        );
+        dispatch(
+          addClaimsList(
+            response.data.nodes.map((claim) => {
+              return { ...claim, claimant: claim.claimant?.id, rating: claim.rating?.id };
+            }),
+          ),
+        );
+        dispatch(
+          addClaimsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        dispatch(getClaimsFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
+
 export const getClaim = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
-      .get(API_GET_CLAIMS + '/' + id)
+      .get(CLAIMS_API + '/' + id)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) dispatch(addClaimant(claim.claimant));
-        if (claim.rating) dispatch(addRating(claim.rating));
+        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
+        if (claim.rating) dispatch(addRatings([claim.rating]));
 
-        claim.claimant = claim.claimant.id;
-        claim.rating = claim.rating.id;
-        dispatch(getClaimSuccess(claim));
+        dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
+        dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        dispatch(getClaimFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const addClaim = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
-      .post(API_ADD_CLAIM, data)
+      .post(CLAIMS_API, data)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) dispatch(addClaimant(claim.claimant));
-        if (claim.rating) dispatch(addRating(claim.rating));
+        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
+        if (claim.rating) dispatch(addRatings([claim.rating]));
 
-        claim.claimant = claim.claimant.id;
-        claim.rating = claim.rating.id;
-        dispatch(addClaimSuccess(claim));
+        dispatch(resetClaims());
       })
       .catch((error) => {
-        dispatch(addClaimFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const updateClaim = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
-      .put(API_ADD_CLAIM + '/' + data.id, data)
+      .put(CLAIMS_API + '/' + data.id, data)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) dispatch(addClaimant(claim.claimant));
-        if (claim.rating) dispatch(addRating(claim.rating));
+        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
+        if (claim.rating) dispatch(addRatings([claim.rating]));
 
-        claim.claimant = claim.claimant.id;
-        claim.rating = claim.rating.id;
-        dispatch(updateClaimSuccess(claim));
+        dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
+        dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        dispatch(updateClaimFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const deleteClaim = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingClaims());
     return axios
-      .delete(API_ADD_CLAIM + '/' + id)
+      .delete(CLAIMS_API + '/' + id)
       .then(() => {
-        dispatch(deleteClaimSuccess(id));
+        dispatch(resetClaims());
       })
       .catch((error) => {
-        dispatch(deleteClaimFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
+export const addClaims = (claims) => {
+  return (dispatch) => {
+    dispatch(addClaimants(claims.filter((claim) => claim.claimant).map((claim) => claim.claimant)));
+    dispatch(addRatings(claims.filter((claim) => claim.rating).map((claim) => claim.rating)));
+    dispatch(
+      addClaimsList(
+        claims.map((claim) => {
+          return { ...claim, claimant: claim.claimant?.id, rating: claim.rating?.id };
+        }),
+      ),
+    );
+  };
+};
+
 const loadingClaims = () => ({
-  type: LOADING_SPACES,
+  type: SET_CLAIMS_LOADING,
+  payload: true,
 });
 
-const getClaimsSuccess = (data, query) => ({
-  type: GET_CLAIMS_SUCCESS,
-  payload: { data, query },
+const stopClaimsLoading = () => ({
+  type: SET_CLAIMS_LOADING,
+  payload: false,
 });
 
-const getClaimsFailure = (error) => ({
-  type: GET_CLAIMS_FAILURE,
-  payload: {
-    error,
-  },
+const getClaimByID = (data) => ({
+  type: ADD_CLAIM,
+  payload: data,
 });
 
-const getClaimSuccess = (data) => ({
-  type: GET_CLAIM_SUCCESS,
-  payload: { ...data },
+const addClaimsList = (data) => ({
+  type: ADD_CLAIMS,
+  payload: data,
 });
 
-const getClaimFailure = (error) => ({
-  type: GET_CLAIM_FAILURE,
-  payload: {
-    error,
-  },
+const addClaimsRequest = (data) => ({
+  type: ADD_CLAIMS_REQUEST,
+  payload: data,
 });
 
-const addClaimSuccess = (data) => ({
-  type: ADD_CLAIM_SUCCESS,
-  payload: {
-    ...data,
-  },
-});
-
-const addClaimFailure = (error) => ({
-  type: ADD_CLAIM_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const updateClaimSuccess = (data) => ({
-  type: UPDATE_CLAIM_SUCCESS,
-  payload: {
-    ...data,
-  },
-});
-
-const updateClaimFailure = (error) => ({
-  type: UPDATE_CLAIM_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deleteClaimSuccess = (id) => ({
-  type: DELETE_CLAIM_SUCCESS,
-  payload: id,
-});
-
-const deleteClaimFailure = (error) => ({
-  type: DELETE_CLAIM_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addClaimant = (data) => ({
-  type: ADD_CLAIMANTS,
-  payload: [data],
-});
-
-const addRating = (data) => ({
-  type: ADD_RATINGS,
-  payload: [data],
+const resetClaims = () => ({
+  type: RESET_CLAIMS,
 });

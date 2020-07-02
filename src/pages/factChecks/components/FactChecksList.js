@@ -18,7 +18,7 @@ function FactChecksList() {
     if (node)
       return {
         factChecks: node.data.map((element) => state.factChecks.details[element]),
-        total: state.factChecks.total,
+        total: node.total,
         loading: state.factChecks.loading,
       };
     return { factChecks: [], total: 0, loading: state.factChecks.loading };

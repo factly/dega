@@ -18,7 +18,7 @@ function PostsList() {
     if (node)
       return {
         posts: node.data.map((element) => state.posts.details[element]),
-        total: state.posts.total,
+        total: node.total,
         loading: state.posts.loading,
       };
     return { posts: [], total: 0, loading: state.posts.loading };

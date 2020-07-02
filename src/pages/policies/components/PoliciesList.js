@@ -17,7 +17,7 @@ function PoliciesList() {
     if (node)
       return {
         policies: node.data.map((element) => state.policies.details[element]),
-        total: state.policies.total,
+        total: node.total,
         loading: state.policies.loading,
       };
     return { policies: [], total: 0, loading: state.policies.loading };
@@ -54,7 +54,7 @@ function PoliciesList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/policies/${record.name}/edit`}
+              to={`/policies/${record.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>

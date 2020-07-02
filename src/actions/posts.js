@@ -1,208 +1,220 @@
 import axios from 'axios';
 import {
-  GET_POSTS_SUCCESS,
-  GET_POSTS_FAILURE,
-  GET_POST_SUCCESS,
-  GET_POST_FAILURE,
-  ADD_POST_FAILURE,
-  ADD_POST_SUCCESS,
-  API_ADD_POST,
-  API_GET_POSTS,
-  UPDATE_POST_FAILURE,
-  UPDATE_POST_SUCCESS,
-  DELETE_POST_SUCCESS,
-  DELETE_POST_FAILURE,
+  ADD_POST,
+  ADD_POSTS,
+  ADD_POSTS_REQUEST,
+  SET_POSTS_LOADING,
+  RESET_POSTS,
+  POSTS_API,
 } from '../constants/posts';
-import { LOADING_SPACES } from '../constants/spaces';
-import { ADD_TAGS } from '../constants/tags';
-import { ADD_CATEGORIES } from '../constants/categories';
-import { ADD_FORMATS } from '../constants/formats';
+import { addErrors } from './notifications';
+import { addCategories } from './categories';
+import { addTags } from './tags';
+import { addFormats } from './formats';
+import { addMediaList } from './media';
+import { addAuthors } from './authors';
 
 export const getPosts = (query) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
-      .get(API_GET_POSTS, {
+      .get(POSTS_API, {
         params: query,
       })
       .then((response) => {
-        let posts = response.data.nodes
-          ? response.data.nodes.map((post) => {
-              if (post.tags) dispatch(addTags(post.tags));
-              if (post.categories) dispatch(addCategories(post.categories));
-              if (post.format) {
-                dispatch(addFormat(post.format));
-              }
-
+        dispatch(
+          addAuthors(
+            response.data.nodes
+              .filter((post) => post.authors.length > 0)
+              .map((post) => {
+                return { ...post.authors };
+              }),
+          ),
+        );
+        dispatch(
+          addTags(
+            response.data.nodes
+              .filter((post) => post.tags.length > 0)
+              .map((post) => {
+                return { ...post.tags };
+              }),
+          ),
+        );
+        dispatch(
+          addCategories(
+            response.data.nodes
+              .filter((post) => post.categories.length > 0)
+              .map((post) => {
+                return { ...post.categories };
+              }),
+          ),
+        );
+        dispatch(
+          addFormats(
+            response.data.nodes
+              .filter((post) => post.format)
+              .map((post) => {
+                return post.format;
+              }),
+          ),
+        );
+        dispatch(
+          addMediaList(
+            response.data.nodes
+              .filter((post) => post.medium)
+              .map((post) => {
+                return post.medium;
+              }),
+          ),
+        );
+        dispatch(
+          addPostsList(
+            response.data.nodes.map((post) => {
               return {
                 ...post,
                 categories: post.categories.map((category) => category.id),
                 tags: post.tags.map((tag) => tag.id),
-                format: post.format.id,
+                authors: post.authors.map((author) => author.id),
+                format: post.format?.id,
               };
-            })
-          : [];
-
-        dispatch(getPostsSuccess({ ...response.data, nodes: posts }, query));
+            }),
+          ),
+        );
+        dispatch(
+          addPostsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(getPostsFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
+
 export const getPost = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
-      .get(API_GET_POSTS + '/' + id)
+      .get(POSTS_API + '/' + id)
       .then((response) => {
         let post = response.data;
-        if (post.tags) dispatch(addTags(post.tags));
-        if (post.categories) dispatch(addCategories(post.categories));
-        if (post.format) {
-          dispatch(addFormat(post.format));
-        }
-        post.categories = post.categories.map((category) => category.id);
-        post.tags = post.tags.map((tag) => tag.id);
-        post.format = post.format.id;
-        dispatch(getPostSuccess(post));
+
+        dispatch(addTags(post.tags));
+        dispatch(addAuthors(post.authors));
+        dispatch(addCategories(post.categories));
+        if (post.format) dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMediaList([post.medium]));
+
+        dispatch(
+          getPostByID({
+            ...post,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format?.id,
+          }),
+        );
+        dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(getPostFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const addPost = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
-      .post(API_ADD_POST, data)
+      .post(POSTS_API, data)
       .then((response) => {
         let post = response.data;
-        if (post.tags) dispatch(addTags(post.tags));
-        if (post.categories) dispatch(addCategories(post.categories));
-        if (post.format) {
-          dispatch(addFormat(post.format));
-        }
-        post.categories = post.categories.map((category) => category.id);
-        post.tags = post.tags.map((tag) => tag.id);
-        post.format = post.format.id;
-        dispatch(addPostSuccess(response.data));
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        if (post.format) dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMediaList([post.medium]));
+        dispatch(resetPosts());
       })
       .catch((error) => {
-        dispatch(addPostFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const updatePost = (data) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
-      .put(API_ADD_POST + '/' + data.id, data)
+      .put(POSTS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(updatePostSuccess(response.data));
+        let post = response.data;
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        if (post.format) dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMediaList([post.medium]));
+
+        dispatch(
+          getPostByID({
+            ...post,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format?.id,
+          }),
+        );
+        dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(updatePostFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 export const deletePost = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     dispatch(loadingPosts());
     return axios
-      .delete(API_ADD_POST + '/' + id)
+      .delete(POSTS_API + '/' + id)
       .then(() => {
-        dispatch(deletePostSuccess(id));
+        dispatch(resetPosts());
       })
       .catch((error) => {
-        dispatch(deletePostFailure(error.message));
+        dispatch(addErrors(error.message));
       });
   };
 };
 
 const loadingPosts = () => ({
-  type: LOADING_SPACES,
+  type: SET_POSTS_LOADING,
+  payload: true,
 });
 
-const getPostsSuccess = (data, query) => ({
-  type: GET_POSTS_SUCCESS,
-  payload: { data, query },
+const stopPostsLoading = () => ({
+  type: SET_POSTS_LOADING,
+  payload: false,
 });
 
-const getPostsFailure = (error) => ({
-  type: GET_POSTS_FAILURE,
-  payload: {
-    error,
-  },
+const getPostByID = (data) => ({
+  type: ADD_POST,
+  payload: data,
 });
 
-const getPostSuccess = (data) => ({
-  type: GET_POST_SUCCESS,
-  payload: { ...data },
+const addPostsList = (data) => ({
+  type: ADD_POSTS,
+  payload: data,
 });
 
-const getPostFailure = (error) => ({
-  type: GET_POST_FAILURE,
-  payload: {
-    error,
-  },
+const addPostsRequest = (data) => ({
+  type: ADD_POSTS_REQUEST,
+  payload: data,
 });
 
-const addPostSuccess = (data) => ({
-  type: ADD_POST_SUCCESS,
-  payload: {
-    ...data,
-  },
-});
-
-const addPostFailure = (error) => ({
-  type: ADD_POST_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const updatePostSuccess = (data) => ({
-  type: UPDATE_POST_SUCCESS,
-  payload: {
-    ...data,
-  },
-});
-
-const updatePostFailure = (error) => ({
-  type: UPDATE_POST_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const deletePostSuccess = (id) => ({
-  type: DELETE_POST_SUCCESS,
-  payload: id,
-});
-
-const deletePostFailure = (error) => ({
-  type: DELETE_POST_FAILURE,
-  payload: {
-    error,
-  },
-});
-
-const addTags = (data) => ({
-  type: ADD_TAGS,
-  payload: { data },
-});
-
-const addCategories = (data) => ({
-  type: ADD_CATEGORIES,
-  payload: { data },
-});
-
-const addFormat = (data) => ({
-  type: ADD_FORMATS,
-  payload: { data },
+const resetPosts = () => ({
+  type: RESET_POSTS,
 });

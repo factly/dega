@@ -19,10 +19,12 @@ function Selector({ mode, value, onChange, action, display = 'name' }) {
   const { details, total, loading } = useSelector((state) => {
     let details = [];
     let ids = [];
+    let total = 0;
 
     for (var i = 1; i <= page; i++) {
       let j = state[entity].req.findIndex((item) => item.query.page === i);
       if (j > -1) {
+        total = state[entity].req[j].total;
         ids = ids.concat(state[entity].req[j].data);
       }
     }
@@ -35,7 +37,7 @@ function Selector({ mode, value, onChange, action, display = 'name' }) {
       ids.filter((id) => !value.includes(id)).map((id) => state[entity].details[id]),
     );
 
-    return { details, total: state[entity].total, loading: state[entity].loading };
+    return { details, total: total, loading: state[entity].loading };
   });
 
   React.useEffect(() => {

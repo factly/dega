@@ -17,7 +17,7 @@ function ClaimantsList() {
     if (node)
       return {
         claimants: node.data.map((element) => state.claimants.details[element]),
-        total: state.claimants.total,
+        total: node.total,
         loading: state.claimants.loading,
       };
     return { claimants: [], total: 0, loading: state.claimants.loading };
