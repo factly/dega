@@ -20,8 +20,8 @@ func contains(s []string, e string) bool {
 
 // Composer create keto policy
 func Composer(oID string, sID string, inputPolicy policyReq) model.KetoPolicy {
-	r := []string{"authors", "categories", "formats", "media", "policies", "posts", "tags", "claims", "claimants", "factchecks", "ratings"}
-	a := []string{"get", "create", "update", "delete"}
+	allowedResources := []string{"authors", "categories", "formats", "media", "policies", "posts", "tags", "claims", "claimants", "factchecks", "ratings"}
+	allowedActions := []string{"get", "create", "update", "delete"}
 	result := model.KetoPolicy{}
 
 	commanPolicyString := ":org:" + oID + ":app:dega:space:" + sID + ":"
@@ -32,11 +32,11 @@ func Composer(oID string, sID string, inputPolicy policyReq) model.KetoPolicy {
 	result.Actions = make([]string, 0)
 
 	for _, each := range inputPolicy.Permissions {
-		if contains(r, each.Resource) {
+		if contains(allowedResources, each.Resource) {
 			result.Resources = append(result.Resources, "resources"+commanPolicyString+each.Resource)
 			var eachActions []string
 			for _, action := range each.Actions {
-				if contains(a, action) {
+				if contains(allowedActions, action) {
 					eachActions = append(eachActions, "actions"+commanPolicyString+each.Resource+":"+action)
 				}
 			}
