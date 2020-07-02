@@ -25,6 +25,7 @@ func Router() http.Handler {
 		&model.FactcheckCategory{},
 		&model.FactcheckClaim{},
 		&model.FactcheckTag{},
+		&model.FactcheckAuthor{},
 	)
 
 	config.DB.Model(&model.Claimant{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")

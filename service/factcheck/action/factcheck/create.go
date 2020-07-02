@@ -2,9 +2,11 @@ package factcheck
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
@@ -33,12 +35,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		return
+	}
 
 	factcheck := factcheck{}
 	result := &factcheckData{}
 	result.Categories = make([]coreModel.Category, 0)
 	result.Tags = make([]coreModel.Tag, 0)
 	result.Claims = make([]model.Claim, 0)
+	result.Authors = make([]coreModel.Author, 0)
 
 	json.NewDecoder(r.Body).Decode(&factcheck)
 
@@ -134,6 +141,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 		config.DB.Model(&model.FactcheckClaim{}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").First(&factcheckClaim)
 		result.Claims = append(result.Claims, factcheckClaim.Claim)
+	}
+
+	// Adding author
+	authors, err := author.All(sID, uID)
+	for _, id := range factcheck.AuthorIDS {
+		aID := fmt.Sprint(id)
+		if authors[aID].Email != "" {
+			author := model.FactcheckAuthor{
+				AuthorID:    id,
+				FactcheckID: result.Factcheck.ID,
+			}
+			err := config.DB.Model(&model.FactcheckAuthor{}).Create(&author).Error
+			if err == nil {
+				result.Authors = append(result.Authors, authors[aID])
+			}
+		}
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)

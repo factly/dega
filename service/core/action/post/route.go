@@ -27,12 +27,14 @@ type post struct {
 	SpaceID          uint           `json:"space_id"`
 	CategoryIDS      []uint         `json:"category_ids"`
 	TagIDS           []uint         `json:"tag_ids"`
+	AuthorIDS        []uint         `json:"author_ids"`
 }
 
 type postData struct {
 	model.Post
 	Categories []model.Category `json:"categories"`
 	Tags       []model.Tag      `json:"tags"`
+	Authors    []model.Author   `json:"authors"`
 }
 
 // CheckSpace - validation for medium, format, categories & tags

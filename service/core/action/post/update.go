@@ -2,10 +2,12 @@ package post
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
@@ -33,6 +35,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(postID)
 
 	sID, err := util.GetSpace(r.Context())
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		return
+	}
 
 	if err != nil {
 		return
@@ -41,6 +47,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	post := &post{}
 	categories := []model.PostCategory{}
 	tags := []model.PostTag{}
+	postAuthors := []model.PostAuthor{}
 
 	json.NewDecoder(r.Body).Decode(&post)
 
@@ -48,6 +55,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.ID = uint(id)
 	result.Tags = make([]model.Tag, 0)
 	result.Categories = make([]model.Category, 0)
+	result.Authors = make([]model.Author, 0)
+
+	// fetch all authors
+	authors, err := author.All(sID, uID)
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
@@ -104,6 +115,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
 		PostID: uint(id),
 	}).Preload("Tag").Find(&tags)
+
+	// fetch all authors
+	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+		PostID: uint(id),
+	}).Find(&postAuthors)
 
 	// delete tags
 	for _, t := range tags {
@@ -183,6 +199,53 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 			config.DB.Model(&model.PostCategory{}).Preload("Category").Preload("Category.Medium").First(&postCategory)
 			result.Categories = append(result.Categories, postCategory.Category)
+		}
+	}
+
+	// delete post authors
+	for _, a := range postAuthors {
+		present := false
+		for _, id := range post.AuthorIDS {
+			if a.AuthorID == id {
+				present = true
+			}
+		}
+		if present == false {
+			config.DB.Where(&model.PostAuthor{
+				AuthorID: a.AuthorID,
+				PostID:   uint(id),
+			}).Delete(model.PostAuthor{})
+		}
+	}
+
+	// creating new post authors
+	for _, id := range post.AuthorIDS {
+		present := false
+		for _, postAuthor := range postAuthors {
+			if postAuthor.AuthorID == id {
+				present = true
+				aID := fmt.Sprint(postAuthor.AuthorID)
+
+				if authors[aID].Email != "" {
+					result.Authors = append(result.Authors, authors[aID])
+				}
+			}
+		}
+		if present == false {
+			postAuthor := &model.PostAuthor{}
+			postAuthor.AuthorID = uint(id)
+			postAuthor.PostID = result.ID
+
+			err = config.DB.Model(&model.PostAuthor{}).Create(&postAuthor).Error
+
+			if err != nil {
+				return
+			}
+			aID := fmt.Sprint(postAuthor.AuthorID)
+
+			if authors[aID].Email != "" {
+				result.Authors = append(result.Authors, authors[aID])
+			}
 		}
 	}
 

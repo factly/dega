@@ -30,6 +30,7 @@ func Router() http.Handler {
 		&model.Post{},
 		&model.PostCategory{},
 		&model.PostTag{},
+		&model.PostAuthor{},
 	)
 
 	config.DB.Model(&model.Category{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")
