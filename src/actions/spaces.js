@@ -31,10 +31,15 @@ export const getSpaces = () => {
   };
 };
 
-export const setSelectedSpace = (space) => ({
-  type: SET_SELECTED_SPACE,
-  payload: space,
-});
+export const setSelectedSpace = (space) => {
+  return (dispatch) => {
+    dispatch({
+      type: SET_SELECTED_SPACE,
+      payload: space,
+    });
+    dispatch(addSuccessNotification('Space changed'));
+  };
+};
 
 export const addSpace = (data) => {
   return (dispatch) => {
