@@ -1,10 +1,12 @@
 package post
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/validation"
@@ -29,6 +31,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		return
+	}
 
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
@@ -40,9 +46,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 	result := &postData{}
 	result.Categories = make([]model.Category, 0)
 	result.Tags = make([]model.Tag, 0)
+	result.Authors = make([]model.Author, 0)
 
 	categories := []model.PostCategory{}
 	tags := []model.PostTag{}
+	postAuthors := []model.PostAuthor{}
 
 	result.ID = uint(id)
 
@@ -65,6 +73,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 		PostID: uint(id),
 	}).Preload("Tag").Find(&tags)
 
+	// fetch all authors
+	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+		PostID: uint(id),
+	}).Find(&postAuthors)
+
 	for _, c := range categories {
 		if c.Category.ID != 0 {
 			result.Categories = append(result.Categories, c.Category)
@@ -74,6 +87,15 @@ func details(w http.ResponseWriter, r *http.Request) {
 	for _, t := range tags {
 		if t.Tag.ID != 0 {
 			result.Tags = append(result.Tags, t.Tag)
+		}
+	}
+
+	// Adding author
+	authors, err := author.All(sID, uID)
+	for _, postAuthor := range postAuthors {
+		aID := fmt.Sprint(postAuthor.AuthorID)
+		if authors[aID].Email != "" {
+			result.Authors = append(result.Authors, authors[aID])
 		}
 	}
 

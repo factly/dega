@@ -8,26 +8,28 @@ import (
 	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // factcheck request body
 type factcheck struct {
-	Title            string    `json:"title" validate:"required"`
-	Subtitle         string    `json:"subtitle"`
-	Slug             string    `json:"slug"`
-	Status           string    `json:"status" validate:"required"`
-	Excerpt          string    `json:"excerpt" validate:"required"`
-	Description      string    `json:"description"`
-	Updates          string    `json:"updates"`
-	IsFeatured       bool      `json:"is_featured"`
-	IsSticky         bool      `json:"is_sticky"`
-	IsHighlighted    bool      `json:"is_highlighted"`
-	FeaturedMediumID uint      `json:"featured_medium_id"`
-	PublishedDate    time.Time `json:"published_date" validate:"required"`
-	SpaceID          uint      `json:"space_id" validate:"required"`
-	CategoryIDS      []uint    `json:"category_ids"`
-	TagIDS           []uint    `json:"tag_ids"`
-	ClaimIDS         []uint    `json:"claim_ids"`
+	Title            string         `json:"title" validate:"required"`
+	Subtitle         string         `json:"subtitle"`
+	Slug             string         `json:"slug"`
+	Status           string         `json:"status"`
+	Excerpt          string         `json:"excerpt" validate:"required"`
+	Description      postgres.Jsonb `json:"description"`
+	Updates          string         `json:"updates"`
+	IsFeatured       bool           `json:"is_featured"`
+	IsSticky         bool           `json:"is_sticky"`
+	IsHighlighted    bool           `json:"is_highlighted"`
+	FeaturedMediumID uint           `json:"featured_medium_id"`
+	PublishedDate    time.Time      `json:"published_date"`
+	SpaceID          uint           `json:"space_id"`
+	CategoryIDS      []uint         `json:"category_ids"`
+	TagIDS           []uint         `json:"tag_ids"`
+	ClaimIDS         []uint         `json:"claim_ids"`
+	AuthorIDS        []uint         `json:"author_ids"`
 }
 
 type factcheckData struct {
@@ -35,6 +37,7 @@ type factcheckData struct {
 	Categories []coreModel.Category   `json:"categories"`
 	Tags       []coreModel.Tag        `json:"tags"`
 	Claims     []factcheckModel.Claim `json:"claims"`
+	Authors    []coreModel.Author     `json:"authors"`
 }
 
 // CheckSpace - validation for medium, format, categories & tags

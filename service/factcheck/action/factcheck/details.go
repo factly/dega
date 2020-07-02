@@ -1,10 +1,12 @@
 package factcheck
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
@@ -30,6 +32,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		return
+	}
 
 	factcheckID := chi.URLParam(r, "factcheck_id")
 	id, err := strconv.Atoi(factcheckID)
@@ -42,10 +48,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 	result.Categories = make([]coreModel.Category, 0)
 	result.Tags = make([]coreModel.Tag, 0)
 	result.Claims = make([]model.Claim, 0)
+	result.Authors = make([]coreModel.Author, 0)
 
 	categories := []model.FactcheckCategory{}
 	tags := []model.FactcheckTag{}
 	claims := []model.FactcheckClaim{}
+	factCheckAuthors := []model.FactcheckAuthor{}
 
 	result.ID = uint(id)
 
@@ -73,6 +81,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 		FactcheckID: uint(id),
 	}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&claims)
 
+	// fetch all authors
+	config.DB.Model(&model.FactcheckAuthor{}).Where(&model.FactcheckAuthor{
+		FactcheckID: uint(id),
+	}).Find(&factCheckAuthors)
+
 	for _, c := range categories {
 		result.Categories = append(result.Categories, c.Category)
 	}
@@ -83,6 +96,15 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	for _, c := range claims {
 		result.Claims = append(result.Claims, c.Claim)
+	}
+
+	// Adding author
+	authors, err := author.All(sID, uID)
+	for _, postAuthor := range factCheckAuthors {
+		aID := fmt.Sprint(postAuthor.AuthorID)
+		if authors[aID].Email != "" {
+			result.Authors = append(result.Authors, authors[aID])
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

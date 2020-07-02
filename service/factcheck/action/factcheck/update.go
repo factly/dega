@@ -2,10 +2,12 @@ package factcheck
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
@@ -34,6 +36,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		return
+	}
 
 	factcheckID := chi.URLParam(r, "factcheck_id")
 	id, err := strconv.Atoi(factcheckID)
@@ -46,6 +52,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	categories := []model.FactcheckCategory{}
 	tags := []model.FactcheckTag{}
 	claims := []model.FactcheckClaim{}
+	factcheckAuthors := []model.FactcheckAuthor{}
 
 	json.NewDecoder(r.Body).Decode(&factcheck)
 
@@ -54,6 +61,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Categories = make([]coreModel.Category, 0)
 	result.Tags = make([]coreModel.Tag, 0)
 	result.Claims = make([]model.Claim, 0)
+	result.Authors = make([]coreModel.Author, 0)
+
+	// fetch all authors
+	authors, err := author.All(sID, uID)
 
 	// check record exists or not
 	err = config.DB.Where(&model.Factcheck{
@@ -115,6 +126,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.FactcheckClaim{}).Where(&model.FactcheckClaim{
 		FactcheckID: uint(id),
 	}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&claims)
+
+	// fetch all authors
+	config.DB.Model(&model.FactcheckAuthor{}).Where(&model.FactcheckAuthor{
+		FactcheckID: uint(id),
+	}).Find(&factcheckAuthors)
 
 	// delete tags
 	for _, t := range tags {
@@ -236,6 +252,53 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 			config.DB.Model(&model.FactcheckClaim{}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").First(&factcheckClaim)
 			result.Claims = append(result.Claims, factcheckClaim.Claim)
+		}
+	}
+
+	// delete factCheck authors
+	for _, a := range factcheckAuthors {
+		present := false
+		for _, id := range factcheck.AuthorIDS {
+			if a.AuthorID == id {
+				present = true
+			}
+		}
+		if present == false {
+			config.DB.Where(&model.FactcheckAuthor{
+				AuthorID:    a.AuthorID,
+				FactcheckID: uint(id),
+			}).Delete(model.FactcheckAuthor{})
+		}
+	}
+
+	// creating new factCheck authors
+	for _, id := range factcheck.AuthorIDS {
+		present := false
+		for _, factCheckAuthor := range factcheckAuthors {
+			if factCheckAuthor.AuthorID == id {
+				present = true
+				aID := fmt.Sprint(factCheckAuthor.AuthorID)
+
+				if authors[aID].Email != "" {
+					result.Authors = append(result.Authors, authors[aID])
+				}
+			}
+		}
+		if present == false {
+			factCheckAuthor := &model.FactcheckAuthor{}
+			factCheckAuthor.AuthorID = uint(id)
+			factCheckAuthor.FactcheckID = result.ID
+
+			err = config.DB.Model(&model.FactcheckAuthor{}).Create(&factCheckAuthor).Error
+
+			if err != nil {
+				return
+			}
+			aID := fmt.Sprint(factCheckAuthor.AuthorID)
+
+			if authors[aID].Email != "" {
+				result.Authors = append(result.Authors, authors[aID])
+			}
 		}
 	}
 

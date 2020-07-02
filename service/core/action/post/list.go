@@ -1,9 +1,11 @@
 package post
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/paginationx"
@@ -32,6 +34,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		return
+	}
+
 	result := paging{}
 	result.Nodes = make([]postData, 0)
 
@@ -47,12 +54,18 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// fetch all authors
+	authors, err := author.All(sID, uID)
+
 	for _, post := range posts {
 		postList := &postData{}
 		categories := []model.PostCategory{}
 		tags := []model.PostTag{}
+		postAuthors := []model.PostAuthor{}
+
 		postList.Categories = make([]model.Category, 0)
 		postList.Tags = make([]model.Tag, 0)
+		postList.Authors = make([]model.Author, 0)
 
 		postList.Post = post
 
@@ -66,6 +79,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 			PostID: post.ID,
 		}).Preload("Tag").Find(&tags)
 
+		// fetch all post authors
+		config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+			PostID: post.ID,
+		}).Find(&postAuthors)
+
 		for _, c := range categories {
 			if c.Category.ID != 0 {
 				postList.Categories = append(postList.Categories, c.Category)
@@ -75,6 +93,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 		for _, t := range tags {
 			if t.Tag.ID != 0 {
 				postList.Tags = append(postList.Tags, t.Tag)
+			}
+		}
+
+		for _, postAuthor := range postAuthors {
+			aID := fmt.Sprint(postAuthor.AuthorID)
+			if authors[aID].Email != "" {
+				postList.Authors = append(postList.Authors, authors[aID])
 			}
 		}
 

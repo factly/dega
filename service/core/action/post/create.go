@@ -2,9 +2,11 @@ package post
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
@@ -31,11 +33,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		return
+	}
 
 	post := post{}
 	result := &postData{}
 	result.Categories = make([]model.Category, 0)
 	result.Tags = make([]model.Tag, 0)
+	result.Authors = make([]model.Author, 0)
 
 	json.NewDecoder(r.Body).Decode(&post)
 
@@ -116,6 +123,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 		config.DB.Model(&model.PostTag{}).Preload("Tag").First(&postTag)
 		result.Tags = append(result.Tags, postTag.Tag)
+	}
+
+	// Adding author
+	authors, err := author.All(sID, uID)
+	for _, id := range post.AuthorIDS {
+		aID := fmt.Sprint(id)
+		if authors[aID].Email != "" {
+			author := model.PostAuthor{
+				AuthorID: id,
+				PostID:   result.Post.ID,
+			}
+			err := config.DB.Model(&model.PostAuthor{}).Create(&author).Error
+			if err == nil {
+				result.Authors = append(result.Authors, authors[aID])
+			}
+		}
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)

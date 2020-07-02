@@ -21,8 +21,8 @@ type Post struct {
 	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`
 	FeaturedMediumID uint           `gorm:"column:featured_medium_id" json:"featured_medium_id" sql:"DEFAULT:NULL"`
 	Medium           *Medium        `gorm:"foreignkey:featured_medium_id;association_foreignkey:id" json:"medium"`
-	FormatID         uint           `gorm:"column:format_id" json:"format_id"`
-	Format           Format         `gorm:"foreignkey:format_id;association_foreignkey:id" json:"format"`
+	FormatID         uint           `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
+	Format           *Format        `gorm:"foreignkey:format_id;association_foreignkey:id" json:"format"`
 	PublishedDate    time.Time      `gorm:"column:published_date" json:"published_date"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 }
@@ -41,4 +41,11 @@ type PostCategory struct {
 	CategoryID uint     `gorm:"column:category_id" json:"category_id"`
 	Category   Category `gorm:"foreignkey:category_id;association_foreignkey:id"`
 	PostID     uint     `gorm:"column:post_id" json:"post_id"`
+}
+
+// PostAuthor model
+type PostAuthor struct {
+	config.Base
+	AuthorID uint `gorm:"column:author_id" json:"author_id"`
+	PostID   uint `gorm:"column:post_id" json:"post_id"`
 }

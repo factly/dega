@@ -1,9 +1,11 @@
 package factcheck
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
@@ -36,6 +38,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		return
+	}
+
 	result := paging{}
 	result.Nodes = make([]factcheckData, 0)
 
@@ -51,14 +58,20 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// fetch all authors
+	authors, err := author.All(sID, uID)
+
 	for _, factcheck := range factchecks {
 		factcheckList := &factcheckData{}
 		factcheckList.Categories = make([]coreModel.Category, 0)
 		factcheckList.Tags = make([]coreModel.Tag, 0)
 		factcheckList.Claims = make([]model.Claim, 0)
+		factcheckList.Authors = make([]coreModel.Author, 0)
+
 		categories := []model.FactcheckCategory{}
 		tags := []model.FactcheckTag{}
 		claims := []model.FactcheckClaim{}
+		factCheckAuthors := []model.FactcheckAuthor{}
 
 		factcheckList.Factcheck = factcheck
 
@@ -77,6 +90,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 			FactcheckID: factcheck.ID,
 		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&claims)
 
+		// fetch all post authors
+		config.DB.Model(&model.FactcheckAuthor{}).Where(&model.FactcheckAuthor{
+			FactcheckID: factcheck.ID,
+		}).Find(&factCheckAuthors)
+
 		for _, c := range categories {
 			factcheckList.Categories = append(factcheckList.Categories, c.Category)
 		}
@@ -87,6 +105,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		for _, c := range claims {
 			factcheckList.Claims = append(factcheckList.Claims, c.Claim)
+		}
+
+		for _, factCheckAuthor := range factCheckAuthors {
+			aID := fmt.Sprint(factCheckAuthor.AuthorID)
+			if authors[aID].Email != "" {
+				factcheckList.Authors = append(factcheckList.Authors, authors[aID])
+			}
 		}
 
 		result.Nodes = append(result.Nodes, *factcheckList)
