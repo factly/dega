@@ -5,23 +5,11 @@ import (
 	"github.com/go-chi/chi"
 )
 
-type permission struct {
-	Resource string   `json:"resource"`
-	Actions  []string `json:"actions"`
-}
-
-type policy struct {
-	Name        string         `json:"name"`
-	Description string         `json:"description"`
-	Permissions []permission   `json:"permissions"`
-	Users       []model.Author `json:"users"`
-}
-
 type policyReq struct {
-	Name        string       `json:"name"`
-	Description string       `json:"description"`
-	Permissions []permission `json:"permissions"`
-	Users       []string     `json:"users"`
+	Name        string             `json:"name"`
+	Description string             `json:"description"`
+	Permissions []model.Permission `json:"permissions"`
+	Users       []string           `json:"users"`
 }
 
 // Router - Group of medium router

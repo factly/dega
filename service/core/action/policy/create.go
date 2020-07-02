@@ -3,13 +3,12 @@ package policy
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
-	"io/ioutil"
 	"net/http"
 	"os"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/renderx"
@@ -45,7 +44,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(r.Body).Decode(&policyReq)
 
-	ketoPolicy := &model.Policy{}
+	ketoPolicy := &model.KetoPolicy{}
 
 	commanPolicyString := ":org:" + oID + ":app:dega:space:" + sID + ":"
 	ketoPolicy.ID = "id" + commanPolicyString + policyReq.Name
@@ -76,46 +75,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer resp.Body.Close()
-	ioutil.ReadAll(resp.Body)
+	createKetoPolicy := model.KetoPolicy{}
+
+	json.NewDecoder(resp.Body).Decode(&createKetoPolicy)
 
 	/* User req */
-	req, err = http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+oID+"/users", nil)
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-User", uID)
-	client = &http.Client{}
-	resp, err = client.Do(req)
+	userMap := author.Mapper(oID, uID)
 
-	if err != nil {
-		return
-	}
-
-	defer resp.Body.Close()
-
-	users := []model.Author{}
-	json.NewDecoder(resp.Body).Decode(&users)
-
-	userMap := make(map[string]model.Author)
-
-	for _, u := range users {
-		userMap[fmt.Sprint(u.ID)] = u
-	}
-
-	result := policy{}
-
-	result.Name = policyReq.Name
-	result.Description = policyReq.Description
-	result.Permissions = policyReq.Permissions
-
-	authors := make([]model.Author, 0)
-
-	for _, user := range ketoPolicy.Subjects {
-		val, exists := userMap[user]
-		if exists {
-			authors = append(authors, val)
-		}
-	}
-
-	result.Users = authors
+	result := Mapper(createKetoPolicy, userMap)
 
 	renderx.JSON(w, http.StatusOK, result)
 }
