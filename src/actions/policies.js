@@ -20,7 +20,7 @@ export const getPolicies = (query) => {
         dispatch(addPoliciesList(response.data.nodes));
         dispatch(
           addPoliciesRequest({
-            data: response.data.nodes.map((item) => item.name),
+            data: response.data.nodes.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -28,7 +28,6 @@ export const getPolicies = (query) => {
         dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };

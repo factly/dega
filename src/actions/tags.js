@@ -28,7 +28,6 @@ export const getTags = (query) => {
         dispatch(stopTagsLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };

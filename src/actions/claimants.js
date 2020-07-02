@@ -42,7 +42,6 @@ export const getClaimants = (query) => {
         dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };

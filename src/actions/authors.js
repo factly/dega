@@ -31,6 +31,12 @@ export const getAuthors = (query) => {
   };
 };
 
+export const addAuthors = (authors) => {
+  return (dispatch) => {
+    dispatch(addAuthorsList(authors));
+  };
+};
+
 const loadingAuthors = () => ({
   type: SET_AUTHORS_LOADING,
   payload: true,

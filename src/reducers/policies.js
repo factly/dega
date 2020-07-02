@@ -49,7 +49,7 @@ export default function policiesReducer(state = initialState, action = {}) {
     case ADD_POLICIES:
       const localDetails = state.details;
       action.payload.forEach((element) => {
-        localDetails[element.name] = element;
+        localDetails[element.id] = element;
       });
       return {
         ...state,
@@ -60,7 +60,7 @@ export default function policiesReducer(state = initialState, action = {}) {
         ...state,
         details: {
           ...state.details,
-          [action.payload.name]: action.payload,
+          [action.payload.id]: action.payload,
         },
       };
     default:

@@ -12,6 +12,7 @@ import { addCategories } from './categories';
 import { addTags } from './tags';
 import { addFormats } from './formats';
 import { addMediaList } from './media';
+import { addAuthors } from './authors';
 
 export const getPosts = (query) => {
   return (dispatch) => {
@@ -21,6 +22,15 @@ export const getPosts = (query) => {
         params: query,
       })
       .then((response) => {
+        dispatch(
+          addAuthors(
+            response.data.nodes
+              .filter((post) => post.authors.length > 0)
+              .map((post) => {
+                return { ...post.authors };
+              }),
+          ),
+        );
         dispatch(
           addTags(
             response.data.nodes
@@ -64,7 +74,8 @@ export const getPosts = (query) => {
                 ...post,
                 categories: post.categories.map((category) => category.id),
                 tags: post.tags.map((tag) => tag.id),
-                format: post.format.id,
+                authors: post.authors.map((author) => author.id),
+                format: post.format?.id,
               };
             }),
           ),
@@ -79,7 +90,6 @@ export const getPosts = (query) => {
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrors(error.message));
       });
   };
@@ -94,6 +104,7 @@ export const getPost = (id) => {
         let post = response.data;
 
         dispatch(addTags(post.tags));
+        dispatch(addAuthors(post.authors));
         dispatch(addCategories(post.categories));
         if (post.format) dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
@@ -101,6 +112,7 @@ export const getPost = (id) => {
         dispatch(
           getPostByID({
             ...post,
+            authors: post.authors.map((author) => author.id),
             categories: post.categories.map((category) => category.id),
             tags: post.tags.map((tag) => tag.id),
             format: post.format?.id,
@@ -123,6 +135,7 @@ export const addPost = (data) => {
         let post = response.data;
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
         if (post.format) dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
         dispatch(resetPosts());
@@ -142,12 +155,14 @@ export const updatePost = (data) => {
         let post = response.data;
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
         if (post.format) dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
 
         dispatch(
           getPostByID({
             ...post,
+            authors: post.authors.map((author) => author.id),
             categories: post.categories.map((category) => category.id),
             tags: post.tags.map((tag) => tag.id),
             format: post.format?.id,

@@ -41,7 +41,7 @@ function EditPolicy() {
   if (loading) return <Skeleton />;
 
   const onUpdate = (values) => {
-    dispatch(updatePolicy(values)).then(() => history.push('/policies'));
+    dispatch(updatePolicy({ ...policy, ...values })).then(() => history.push('/policies'));
   };
 
   return <PolicyCreateForm data={policy} onCreate={onUpdate} />;
