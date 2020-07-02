@@ -7,7 +7,7 @@ import {
   RESET_CATEGORIES,
   CATEGORIES_API,
 } from '../constants/categories';
-import { addErrors } from './notifications';
+import { addErrors, addSuccess } from './notifications';
 import { addMediaList } from './media';
 
 export const getCategories = (query) => {
@@ -71,6 +71,7 @@ export const addCategory = (data) => {
       .post(CATEGORIES_API, data)
       .then(() => {
         dispatch(resetCategories());
+        dispatch(addSuccess(`${data.name} category added`));
       })
       .catch((error) => {
         dispatch(addErrors(error.message));
