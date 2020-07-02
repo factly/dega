@@ -7,7 +7,7 @@ import {
   RESET_FACT_CHECKS,
   FACT_CHECKS_API,
 } from '../constants/factChecks';
-import { addErrors } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addCategories } from './categories';
 import { addTags } from './tags';
 import { addClaims } from './claims';
@@ -90,7 +90,7 @@ export const getFactChecks = (query) => {
         dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -121,7 +121,7 @@ export const getFactCheck = (id) => {
         dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -139,9 +139,10 @@ export const addFactCheck = (data) => {
         dispatch(addAuthors(factCheck.authors));
         if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
         dispatch(resetFactChecks());
+        dispatch(addSuccessNotification('Factcheck added'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -168,9 +169,10 @@ export const updateFactCheck = (data) => {
           }),
         );
         dispatch(stopFactChecksLoading());
+        dispatch(addSuccessNotification('Factcheck updated'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -182,9 +184,10 @@ export const deleteFactCheck = (id) => {
       .delete(FACT_CHECKS_API + '/' + id)
       .then(() => {
         dispatch(resetFactChecks());
+        dispatch(addSuccessNotification('Factcheck deleted'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

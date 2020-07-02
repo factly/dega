@@ -7,7 +7,7 @@ import {
   RESET_CLAIMS,
   CLAIMS_API,
 } from '../constants/claims';
-import { addErrors } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addRatings } from './ratings';
 import { addClaimants } from './claimants';
 
@@ -46,7 +46,7 @@ export const getClaims = (query) => {
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -65,7 +65,7 @@ export const getClaim = (id) => {
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -81,9 +81,10 @@ export const addClaim = (data) => {
         if (claim.rating) dispatch(addRatings([claim.rating]));
 
         dispatch(resetClaims());
+        dispatch(addSuccessNotification('Claim added'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -100,9 +101,10 @@ export const updateClaim = (data) => {
 
         dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
         dispatch(stopClaimsLoading());
+        dispatch(addSuccessNotification('Claim updated'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -114,9 +116,10 @@ export const deleteClaim = (id) => {
       .delete(CLAIMS_API + '/' + id)
       .then(() => {
         dispatch(resetClaims());
+        dispatch(addSuccessNotification('Claim deleted'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

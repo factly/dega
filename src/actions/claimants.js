@@ -7,7 +7,7 @@ import {
   RESET_CLAIMANTS,
   CLAIMANTS_API,
 } from '../constants/claimants';
-import { addErrors } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
 
 export const getClaimants = (query) => {
@@ -42,7 +42,7 @@ export const getClaimants = (query) => {
         dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -59,7 +59,7 @@ export const getClaimant = (id) => {
         dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -71,9 +71,10 @@ export const addClaimant = (data) => {
       .post(CLAIMANTS_API, data)
       .then(() => {
         dispatch(resetClaimants());
+        dispatch(addSuccessNotification('Claimant added'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -88,9 +89,10 @@ export const updateClaimant = (data) => {
 
         dispatch(getClaimantByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(stopClaimantsLoading());
+        dispatch(addSuccessNotification('Claimant updated'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -102,9 +104,10 @@ export const deleteClaimant = (id) => {
       .delete(CLAIMANTS_API + '/' + id)
       .then(() => {
         dispatch(resetClaimants());
+        dispatch(addSuccessNotification('Claimant deleted'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

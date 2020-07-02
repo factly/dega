@@ -7,7 +7,7 @@ import {
   RESET_POLICIES,
   POLICIES_API,
 } from '../constants/policies';
-import { addErrors } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 
 export const getPolicies = (query) => {
   return (dispatch) => {
@@ -28,7 +28,7 @@ export const getPolicies = (query) => {
         dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -43,7 +43,7 @@ export const getPolicy = (id) => {
         dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -55,9 +55,10 @@ export const addPolicy = (data) => {
       .post(POLICIES_API, data)
       .then(() => {
         dispatch(resetPolicies());
+        dispatch(addSuccessNotification('Policy added'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -70,9 +71,10 @@ export const updatePolicy = (data) => {
       .then((response) => {
         dispatch(getPolicyByID(response.data));
         dispatch(stopPoliciesLoading());
+        dispatch(addSuccessNotification('Policy updated'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -84,9 +86,10 @@ export const deletePolicy = (id) => {
       .delete(POLICIES_API + '/' + id)
       .then(() => {
         dispatch(resetPolicies());
+        dispatch(addSuccessNotification('Policy deleted'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

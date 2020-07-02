@@ -7,7 +7,7 @@ import {
   RESET_FORMATS,
   FORMATS_API,
 } from '../constants/formats';
-import { addErrors } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 
 export const getFormats = (query) => {
   return (dispatch) => {
@@ -28,7 +28,7 @@ export const getFormats = (query) => {
         dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -43,7 +43,7 @@ export const getFormat = (id) => {
         dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -55,9 +55,10 @@ export const addFormat = (data) => {
       .post(FORMATS_API, data)
       .then(() => {
         dispatch(resetFormats());
+        dispatch(addSuccessNotification('Format added'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -70,9 +71,10 @@ export const updateFormat = (data) => {
       .then((response) => {
         dispatch(getFormatByID(response.data));
         dispatch(stopFormatsLoading());
+        dispatch(addSuccessNotification('Format updated'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -84,9 +86,10 @@ export const deleteFormat = (id) => {
       .delete(FORMATS_API + '/' + id)
       .then(() => {
         dispatch(resetFormats());
+        dispatch(addSuccessNotification('Format deleted'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

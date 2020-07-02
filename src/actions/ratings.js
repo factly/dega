@@ -7,7 +7,7 @@ import {
   RESET_RATINGS,
   RATINGS_API,
 } from '../constants/ratings';
-import { addErrors } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
 
 export const getRatings = (query) => {
@@ -40,7 +40,7 @@ export const getRatings = (query) => {
         dispatch(stopRatingsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -57,7 +57,7 @@ export const getRating = (id) => {
         dispatch(stopRatingsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -69,9 +69,10 @@ export const addRating = (data) => {
       .post(RATINGS_API, data)
       .then(() => {
         dispatch(resetRatings());
+        dispatch(addSuccessNotification('Rating added'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -87,9 +88,10 @@ export const updateRating = (data) => {
 
         dispatch(getRatingByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(stopRatingsLoading());
+        dispatch(addSuccessNotification('Rating updated'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -103,7 +105,7 @@ export const deleteRating = (id) => {
         dispatch(resetRatings());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

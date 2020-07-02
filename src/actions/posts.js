@@ -7,7 +7,7 @@ import {
   RESET_POSTS,
   POSTS_API,
 } from '../constants/posts';
-import { addErrors } from './notifications';
+import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addCategories } from './categories';
 import { addTags } from './tags';
 import { addFormats } from './formats';
@@ -90,7 +90,7 @@ export const getPosts = (query) => {
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -121,7 +121,7 @@ export const getPost = (id) => {
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -139,9 +139,10 @@ export const addPost = (data) => {
         if (post.format) dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
         dispatch(resetPosts());
+        dispatch(addSuccessNotification('Post added'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -169,9 +170,10 @@ export const updatePost = (data) => {
           }),
         );
         dispatch(stopPostsLoading());
+        dispatch(addSuccessNotification('Post updated'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };
@@ -183,9 +185,10 @@ export const deletePost = (id) => {
       .delete(POSTS_API + '/' + id)
       .then(() => {
         dispatch(resetPosts());
+        dispatch(addSuccessNotification('Post deleted'));
       })
       .catch((error) => {
-        dispatch(addErrors(error.message));
+        dispatch(addErrorNotification(error.message));
       });
   };
 };

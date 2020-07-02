@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Card, Skeleton } from 'antd';
+import { Layout, Card, Skeleton, notification } from 'antd';
 import { withRouter, useHistory } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
@@ -15,10 +15,20 @@ function BasicLayout(props) {
   const { children } = props;
   const dispatch = useDispatch();
   const { selected, orgs } = useSelector((state) => state.spaces);
+  const { type, message, description } = useSelector((state) => state.notifications);
 
   React.useEffect(() => {
     dispatch(getSpaces());
   }, [dispatch]);
+
+  React.useEffect(() => {
+    if (type && message && description) {
+      notification[type]({
+        message: message,
+        description: description,
+      });
+    }
+  }, [description]);
 
   React.useEffect(() => {
     if (orgs.length > 0 && selected === 0) history.push('/spaces/create');
