@@ -9,22 +9,39 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 )
 
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
+}
+
 // Composer create keto policy
 func Composer(oID string, sID string, inputPolicy policyReq) model.KetoPolicy {
+	r := []string{"authors", "categories", "formats", "media", "policies", "posts", "tags", "claims", "claimants", "factchecks", "ratings"}
+	a := []string{"get", "create", "update", "delete"}
 	result := model.KetoPolicy{}
 
 	commanPolicyString := ":org:" + oID + ":app:dega:space:" + sID + ":"
 	result.ID = "id" + commanPolicyString + inputPolicy.Name
 	result.Description = inputPolicy.Description
 	result.Effect = "allow"
+	result.Resources = make([]string, 0)
+	result.Actions = make([]string, 0)
 
 	for _, each := range inputPolicy.Permissions {
-		result.Resources = append(result.Resources, "resources"+commanPolicyString+each.Resource)
-		var eachActions []string
-		for _, action := range each.Actions {
-			eachActions = append(eachActions, "actions"+commanPolicyString+each.Resource+":"+action)
+		if contains(r, each.Resource) {
+			result.Resources = append(result.Resources, "resources"+commanPolicyString+each.Resource)
+			var eachActions []string
+			for _, action := range each.Actions {
+				if contains(a, action) {
+					eachActions = append(eachActions, "actions"+commanPolicyString+each.Resource+":"+action)
+				}
+			}
+			result.Actions = append(result.Actions, eachActions...)
 		}
-		result.Actions = append(result.Actions, eachActions...)
 	}
 
 	result.Subjects = inputPolicy.Users
