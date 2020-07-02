@@ -129,7 +129,7 @@ export const addClaims = (claims) => {
   return (dispatch) => {
     dispatch(addClaimants(claims.filter((claim) => claim.claimant).map((claim) => claim.claimant)));
     dispatch(addRatings(claims.filter((claim) => claim.rating).map((claim) => claim.rating)));
-    return dispatch(
+    dispatch(
       addClaimsList(
         claims.map((claim) => {
           return { ...claim, claimant: claim.claimant?.id, rating: claim.rating?.id };

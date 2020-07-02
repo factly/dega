@@ -20,7 +20,7 @@ export const getPolicies = (query) => {
         dispatch(addPoliciesList(response.data.nodes));
         dispatch(
           addPoliciesRequest({
-            data: response.data.nodes.map((item) => item.name),
+            data: response.data.nodes.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -97,7 +97,7 @@ export const deletePolicy = (id) => {
 
 export const addPolicies = (policies) => {
   return (dispatch) => {
-    return dispatch(addPoliciesList(policies));
+    dispatch(addPoliciesList(policies));
   };
 };
 

@@ -54,7 +54,7 @@ function PoliciesList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/policies/${record.name}/edit`}
+              to={`/policies/${record.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>

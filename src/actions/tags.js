@@ -97,7 +97,7 @@ export const deleteTag = (id) => {
 
 export const addTags = (tags) => {
   return (dispatch) => {
-    return dispatch(addTagsList(tags));
+    dispatch(addTagsList(tags));
   };
 };
 

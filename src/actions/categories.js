@@ -119,7 +119,7 @@ export const addCategories = (categories) => {
         categories.filter((category) => category.medium).map((category) => category.medium),
       ),
     );
-    return dispatch(
+    dispatch(
       addCategoriesList(
         categories.map((category) => {
           return { ...category, medium: category.medium?.id };

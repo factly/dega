@@ -7,11 +7,11 @@ import MediaSelector from '../../../components/MediaSelector';
 
 function CreatePost({ onCreate, data = {} }) {
   const [form] = Form.useForm();
-
   const onSave = (values) => {
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
     values.format_id = values.format || 0;
+    values.author_ids = values.authors || [];
     onCreate(values);
   };
 

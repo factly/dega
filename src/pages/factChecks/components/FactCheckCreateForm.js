@@ -10,6 +10,7 @@ function CreateFactCheck({ onCreate, data = {} }) {
   const [form] = Form.useForm();
 
   const onSave = (values) => {
+    values.author_ids = values.authors || [];
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
     values.claim_ids = values.claims || [];

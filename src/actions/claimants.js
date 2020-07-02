@@ -120,7 +120,7 @@ export const addClaimants = (claimants) => {
         claimants.filter((claimant) => claimant.medium).map((claimant) => claimant.medium),
       ),
     );
-    return dispatch(
+    dispatch(
       addClaimantsList(
         claimants.map((claimant) => {
           return { ...claimant, medium: claimant.medium?.id };

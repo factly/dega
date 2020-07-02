@@ -115,7 +115,7 @@ export const addRatings = (ratings) => {
     dispatch(
       addMediaList(ratings.filter((rating) => rating.medium).map((rating) => rating.medium)),
     );
-    return dispatch(
+    dispatch(
       addRatingsList(
         ratings.map((rating) => {
           return { ...rating, medium: rating.medium?.id };

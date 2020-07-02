@@ -12,6 +12,7 @@ import { addCategories } from './categories';
 import { addTags } from './tags';
 import { addClaims } from './claims';
 import { addMediaList } from './media';
+import { addAuthors } from './authors';
 
 export const getFactChecks = (query) => {
   return (dispatch) => {
@@ -21,6 +22,15 @@ export const getFactChecks = (query) => {
         params: query,
       })
       .then((response) => {
+        dispatch(
+          addAuthors(
+            response.data.nodes
+              .filter((factCheck) => factCheck.authors.length > 0)
+              .map((factCheck) => {
+                return { ...factCheck.authors };
+              }),
+          ),
+        );
         dispatch(
           addTags(
             response.data.nodes
@@ -51,7 +61,7 @@ export const getFactChecks = (query) => {
         dispatch(
           addMediaList(
             response.data.nodes
-              .filter((factCheck) => factCheck.medium.id)
+              .filter((factCheck) => factCheck.medium)
               .map((factCheck) => {
                 return factCheck.medium;
               }),
@@ -62,6 +72,7 @@ export const getFactChecks = (query) => {
             response.data.nodes.map((factCheck) => {
               return {
                 ...factCheck,
+                authors: factCheck.authors.map((author) => author.id),
                 categories: factCheck.categories.map((category) => category.id),
                 tags: factCheck.tags.map((tag) => tag.id),
                 claims: factCheck.claims.map((claim) => claim.id),
@@ -96,11 +107,13 @@ export const getFactCheck = (id) => {
         dispatch(addTags(factCheck.tags));
         dispatch(addCategories(factCheck.categories));
         dispatch(addClaims(factCheck.claims));
+        dispatch(addAuthors(factCheck.authors));
         if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
 
         dispatch(
           getFactCheckByID({
             ...factCheck,
+            authors: factCheck.authors.map((author) => author.id),
             categories: factCheck.categories.map((category) => category.id),
             tags: factCheck.tags.map((tag) => tag.id),
             claims: factCheck.claims.map((claim) => claim.id),
@@ -124,6 +137,7 @@ export const addFactCheck = (data) => {
         dispatch(addTags(factCheck.tags));
         dispatch(addCategories(factCheck.categories));
         dispatch(addClaims(factCheck.claims));
+        dispatch(addAuthors(factCheck.authors));
         if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
         dispatch(resetFactChecks());
         dispatch(addSuccessNotification('Factcheck added'));
@@ -144,10 +158,12 @@ export const updateFactCheck = (data) => {
         dispatch(addTags(factCheck.tags));
         dispatch(addCategories(factCheck.categories));
         dispatch(addClaims(factCheck.claims));
+        dispatch(addAuthors(factCheck.authors));
         if (factCheck.medium) dispatch(addMediaList([factCheck.medium]));
         dispatch(
           getFactCheckByID({
             ...factCheck,
+            authors: factCheck.authors.map((author) => author.id),
             categories: factCheck.categories.map((category) => category.id),
             tags: factCheck.tags.map((tag) => tag.id),
             claims: factCheck.claims.map((claim) => claim.id),
