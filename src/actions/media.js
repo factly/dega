@@ -28,7 +28,6 @@ export const getMedia = (query) => {
         dispatch(stopMediaLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrorNotification(error.message));
       });
   };

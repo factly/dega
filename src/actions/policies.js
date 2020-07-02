@@ -28,7 +28,6 @@ export const getPolicies = (query) => {
         dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrorNotification(error.message));
       });
   };

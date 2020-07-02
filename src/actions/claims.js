@@ -65,7 +65,6 @@ export const getClaim = (id) => {
         dispatch(stopClaimsLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrorNotification(error.message));
       });
   };

@@ -90,7 +90,6 @@ export const getFactChecks = (query) => {
         dispatch(stopFactChecksLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrorNotification(error.message));
       });
   };

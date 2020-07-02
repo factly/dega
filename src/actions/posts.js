@@ -90,7 +90,6 @@ export const getPosts = (query) => {
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrorNotification(error.message));
       });
   };

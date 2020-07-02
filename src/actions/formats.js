@@ -28,7 +28,6 @@ export const getFormats = (query) => {
         dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        console.log(error.message);
         dispatch(addErrorNotification(error.message));
       });
   };
