@@ -36,10 +36,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		return
-	}
 
 	factcheckID := chi.URLParam(r, "factcheck_id")
 	id, err := strconv.Atoi(factcheckID)
@@ -64,7 +60,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Authors = make([]coreModel.Author, 0)
 
 	// fetch all authors
-	authors, err := author.All(sID, uID)
+	authors, err := author.All(r.Context())
 
 	// check record exists or not
 	err = config.DB.Where(&model.Factcheck{

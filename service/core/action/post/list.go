@@ -34,7 +34,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 
-	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		return
 	}
@@ -55,7 +54,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all authors
-	authors, err := author.All(sID, uID)
+	authors, err := author.All(r.Context())
 
 	for _, post := range posts {
 		postList := &postData{}

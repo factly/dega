@@ -2,13 +2,11 @@ package policy
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
-	"strconv"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
-	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -27,22 +25,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	space := &model.Space{}
-	space.ID = uint(spaceID)
-
-	err = config.DB.First(&space).Error
+	organisationID, err := util.GetOrganization(r.Context())
 
 	if err != nil {
 		return
 	}
 
-	uID := strconv.Itoa(userID)
-	oID := strconv.Itoa(space.OrganisationID)
-	sID := strconv.Itoa(spaceID)
-
 	/* delete old policy */
 
-	commanPolicyString := ":org:" + oID + ":app:dega:space:" + sID + ":"
+	commanPolicyString := fmt.Sprint(":org:", organisationID, ":app:dega:space:", spaceID, ":")
 	policyID := chi.URLParam(r, "policy_id")
 
 	policyID = "id" + commanPolicyString + policyID
@@ -66,7 +57,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	/* User req */
 
-	result := Mapper(Composer(oID, sID, policyReq), author.Mapper(oID, uID))
+	result := Mapper(Composer(organisationID, spaceID, policyReq), author.Mapper(organisationID, userID))
 
 	renderx.JSON(w, http.StatusOK, result)
 }

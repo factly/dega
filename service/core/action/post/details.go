@@ -31,10 +31,6 @@ func details(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		return
-	}
 
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
@@ -91,7 +87,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Adding author
-	authors, err := author.All(sID, uID)
+	authors, err := author.All(r.Context())
 	for _, postAuthor := range postAuthors {
 		aID := fmt.Sprint(postAuthor.AuthorID)
 		if authors[aID].Email != "" {

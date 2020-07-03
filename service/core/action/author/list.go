@@ -2,11 +2,11 @@ package author
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/paginationx"
@@ -33,8 +33,8 @@ type paging struct {
 // @Router /core/authors [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
 	uID, err := util.GetUser(r.Context())
+	oID, err := util.GetOrganization(r.Context())
 
 	if err != nil {
 		return
@@ -43,16 +43,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.Author, 0)
 
-	space := &model.Space{}
-	space.ID = uint(sID)
+	url := fmt.Sprint(os.Getenv("KAVACH_URL"), "/organizations/", oID, "/users")
 
-	err = config.DB.First(&space).Error
-
-	if err != nil {
-		return
-	}
-
-	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+strconv.Itoa(space.OrganisationID)+"/users", nil)
+	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	client := &http.Client{}

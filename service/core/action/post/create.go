@@ -33,10 +33,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		return
 	}
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		return
-	}
 
 	post := post{}
 	result := &postData{}
@@ -126,7 +122,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Adding author
-	authors, err := author.All(sID, uID)
+	authors, err := author.All(r.Context())
 	for _, id := range post.AuthorIDS {
 		aID := fmt.Sprint(id)
 		if authors[aID].Email != "" {

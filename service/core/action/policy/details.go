@@ -2,11 +2,10 @@ package policy
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
-	"strconv"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -27,21 +26,15 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	space := &model.Space{}
-	space.ID = uint(spaceID)
-
-	err = config.DB.First(&space).Error
+	organisationID, err := util.GetOrganization(r.Context())
 
 	if err != nil {
 		return
 	}
 
-	oID := strconv.Itoa(space.OrganisationID)
-	sID := strconv.Itoa(spaceID)
-
 	policyID := chi.URLParam(r, "policy_id")
 
-	ketoPolicyID := "id:org:" + oID + ":app:dega:space:" + sID + ":" + policyID
+	ketoPolicyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":", policyID)
 
 	req, err := http.NewRequest("GET", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies/"+ketoPolicyID, nil)
 	req.Header.Set("Content-Type", "application/json")
@@ -60,7 +53,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(resp.Body).Decode(&ketoPolicy)
 
 	/* User req */
-	userMap := author.Mapper(strconv.Itoa(space.OrganisationID), strconv.Itoa(userID))
+	userMap := author.Mapper(organisationID, userID)
 
 	result := Mapper(ketoPolicy, userMap)
 

@@ -2,12 +2,11 @@ package policy
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
-	"strconv"
 	"strings"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -37,28 +36,25 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	json.NewDecoder(resp.Body).Decode(&polices)
 
-	uID, err := util.GetUser(r.Context())
+	userID, err := util.GetUser(r.Context())
 
 	if err != nil {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
+	spaceID, err := util.GetSpace(r.Context())
 
 	if err != nil {
 		return
 	}
 
-	space := &model.Space{}
-	space.ID = uint(sID)
-
-	err = config.DB.First(&space).Error
+	organisationID, err := util.GetOrganization(r.Context())
 
 	if err != nil {
 		return
 	}
 
-	prefixName := "id:org:" + strconv.Itoa(space.OrganisationID) + ":app:dega:space:" + strconv.Itoa(sID) + ":"
+	prefixName := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":")
 	var onlyOrgPolicy []model.KetoPolicy
 
 	for _, each := range polices {
@@ -87,7 +83,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	onlyOrgPolicy = onlyOrgPolicy[lowerLimit:upperLimit]
 
 	/* User req */
-	userMap := author.Mapper(strconv.Itoa(space.OrganisationID), strconv.Itoa(uID))
+	userMap := author.Mapper(organisationID, userID)
 
 	pagePolicies := make([]model.Policy, 0)
 
