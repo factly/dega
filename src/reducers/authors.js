@@ -15,7 +15,7 @@ export default function tagsReducer(state = initialState, action = {}) {
         loading: action.payload,
       };
     case ADD_AUTHORS_REQUEST:
-      const localReq = state.req;
+      const localReq = [...state.req];
       const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
@@ -35,7 +35,7 @@ export default function tagsReducer(state = initialState, action = {}) {
         total: total,
       };
     case ADD_AUTHORS:
-      const localDetails = state.details;
+      const localDetails = { ...state.details };
       action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });

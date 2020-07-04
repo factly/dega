@@ -37,22 +37,22 @@ export const addAuthors = (authors) => {
   };
 };
 
-const loadingAuthors = () => ({
+export const loadingAuthors = () => ({
   type: SET_AUTHORS_LOADING,
   payload: true,
 });
 
-const stopAuthorsLoading = () => ({
+export const stopAuthorsLoading = () => ({
   type: SET_AUTHORS_LOADING,
   payload: false,
 });
 
-const addAuthorsList = (data) => ({
+export const addAuthorsList = (data) => ({
   type: ADD_AUTHORS,
   payload: data,
 });
 
-const addAuthorsRequest = (data) => ({
+export const addAuthorsRequest = (data) => ({
   type: ADD_AUTHORS_REQUEST,
   payload: data,
 });
