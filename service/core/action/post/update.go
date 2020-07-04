@@ -35,7 +35,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(postID)
 
 	sID, err := util.GetSpace(r.Context())
-	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		return
 	}
@@ -58,7 +57,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Authors = make([]model.Author, 0)
 
 	// fetch all authors
-	authors, err := author.All(sID, uID)
+	authors, err := author.All(r.Context())
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{

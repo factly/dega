@@ -10,12 +10,13 @@ import (
 )
 
 // Mapper map user with id
-func Mapper(oID string, uID string) map[string]model.Author {
+func Mapper(oID int, uID int) map[string]model.Author {
 	userMap := make(map[string]model.Author)
+	url := fmt.Sprint(os.Getenv("KAVACH_URL"), "/organizations/", oID, "/users")
 
-	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+oID+"/users", nil)
+	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-User", uID)
+	req.Header.Set("X-User", fmt.Sprint(uID))
 	client := &http.Client{}
 	resp, err := client.Do(req)
 
