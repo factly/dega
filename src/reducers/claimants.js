@@ -27,7 +27,7 @@ export default function claimantsReducer(state = initialState, action = {}) {
         loading: action.payload,
       };
     case ADD_CLAIMANTS_REQUEST:
-      const localReq = state.req;
+      const localReq = [...state.req];
       const { query, data, total } = action.payload;
 
       const nodeIndex = state.req.findIndex((item) => {
@@ -47,7 +47,7 @@ export default function claimantsReducer(state = initialState, action = {}) {
         req: localReq,
       };
     case ADD_CLAIMANTS:
-      const localDetails = state.details;
+      const localDetails = { ...state.details };
       action.payload.forEach((element) => {
         localDetails[element.id] = element;
       });
