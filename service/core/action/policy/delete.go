@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -35,6 +36,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
+		errors.Render(w, errors.Parser(errors.NetworkError()), 503)
 		return
 	}
 

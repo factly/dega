@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -28,13 +28,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	categoryID := chi.URLParam(r, "category_id")
 	id, err := strconv.Atoi(categoryID)
 
-	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		errors.Render(w, errors.Parser(errors.InvalidID()), 404)
 		return
 	}
 
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
-		validation.InvalidID(w, r)
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -48,7 +49,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
-		validation.RecordNotFound(w, r)
+		errors.Render(w, errors.Parser(errors.RecordNotFound()), 404)
 		return
 	}
 

@@ -13,11 +13,11 @@ import (
 
 // factcheck request body
 type factcheck struct {
-	Title            string         `json:"title" validate:"required"`
+	Title            string         `json:"title" validate:"required,min=3,max=50"`
 	Subtitle         string         `json:"subtitle"`
 	Slug             string         `json:"slug"`
 	Status           string         `json:"status"`
-	Excerpt          string         `json:"excerpt" validate:"required"`
+	Excerpt          string         `json:"excerpt" validate:"required,min=3,max=100"`
 	Description      postgres.Jsonb `json:"description"`
 	Updates          string         `json:"updates"`
 	IsFeatured       bool           `json:"is_featured"`

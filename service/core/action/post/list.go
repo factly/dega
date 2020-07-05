@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -33,6 +34,10 @@ type paging struct {
 func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
+		return
+	}
 
 	if err != nil {
 		return

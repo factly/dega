@@ -6,11 +6,11 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -30,6 +30,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -37,6 +38,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(factcheckID)
 
 	if err != nil {
+		errors.Render(w, errors.Parser(errors.InvalidID()), 404)
 		return
 	}
 
@@ -58,7 +60,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}).First(&result.Factcheck).Error
 
 	if err != nil {
-		validation.RecordNotFound(w, r)
+		errors.Render(w, errors.Parser(errors.DBError()), 404)
 		return
 	}
 

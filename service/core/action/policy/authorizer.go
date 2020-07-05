@@ -85,8 +85,6 @@ func Authorizer(h http.Handler) http.Handler {
 			result.Resource = resource
 			result.Subject = fmt.Sprint(uID)
 
-			fmt.Printf("%+v", result)
-
 			buf := new(bytes.Buffer)
 			json.NewEncoder(buf).Encode(&result)
 			req, err := http.NewRequest("POST", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/allowed", buf)

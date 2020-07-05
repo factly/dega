@@ -4,7 +4,7 @@ import "github.com/go-chi/chi"
 
 // rating model
 type rating struct {
-	Name         string `json:"name" validate:"required"`
+	Name         string `json:"name" validate:"required,min=3,max=50"`
 	Slug         string `json:"slug"`
 	Description  string `json:"description"`
 	NumericValue int    `json:"numeric_value" validate:"required"`

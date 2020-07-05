@@ -7,12 +7,12 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
-	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -34,6 +34,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -41,6 +42,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(factcheckID)
 
 	if err != nil {
+		errors.Render(w, errors.Parser(errors.InvalidID()), 404)
 		return
 	}
 
@@ -50,7 +52,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	claims := []model.FactcheckClaim{}
 	factcheckAuthors := []model.FactcheckAuthor{}
 
-	json.NewDecoder(r.Body).Decode(&factcheck)
+	err = json.NewDecoder(r.Body).Decode(&factcheck)
+	if err != nil {
+		errors.Render(w, errors.Parser(errors.DecodeError()), 422)
+		return
+	}
 
 	result := &factcheckData{}
 	result.ID = uint(id)
@@ -68,7 +74,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).First(&result.Factcheck).Error
 
 	if err != nil {
-		validation.RecordNotFound(w, r)
+		errors.Render(w, errors.Parser(errors.DBError()), 404)
 		return
 	}
 
@@ -77,7 +83,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = factcheck.CheckSpace(config.DB)
 
 	if err != nil {
-		validation.Error(w, r, err.Error())
+		errors.Render(w, errors.Parser(errors.DBError()), 404)
 		return
 	}
 

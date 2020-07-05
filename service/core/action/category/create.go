@@ -5,10 +5,10 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
-	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -30,6 +30,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -40,7 +41,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	validationError := validationx.Check(category)
 
 	if validationError != nil {
-		renderx.JSON(w, http.StatusBadRequest, validationError)
+		errors.Render(w, validationError, 422)
 		return
 	}
 
@@ -63,7 +64,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Model(&model.Category{}).Create(&result).Error
 
 	if err != nil {
-		validation.InvalidFieldIDs(w, r)
+		errors.Render(w, errors.Parser(errors.DBError()), 404)
 		return
 	}
 
