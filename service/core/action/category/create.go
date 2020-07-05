@@ -30,7 +30,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
-		errors.Parser(w, r, errors.InternalServerError, 500)
+		errors.Parser(w, errors.InternalServerError, 500)
 		return
 	}
 
@@ -41,7 +41,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	validationError := validationx.Check(category)
 
 	if validationError != nil {
-		renderx.JSON(w, http.StatusBadRequest, validationError)
+		errors.Validator(w, validationError)
 		return
 	}
 
@@ -64,7 +64,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Model(&model.Category{}).Create(&result).Error
 
 	if err != nil {
-		errors.Parser(w, r, err.Error(), 404)
+		errors.Parser(w, err.Error(), 404)
 		return
 	}
 

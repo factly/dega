@@ -33,7 +33,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
-		errors.Parser(w, r, errors.InternalServerError, 500)
+		errors.Parser(w, errors.InternalServerError, 500)
 		return
 	}
 

@@ -17,21 +17,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 	spaceID, err := util.GetSpace(r.Context())
 
 	if err != nil {
-		errors.Parser(w, r, errors.InternalServerError, 500)
+		errors.Parser(w, errors.InternalServerError, 500)
 		return
 	}
 
 	userID, err := util.GetUser(r.Context())
 
 	if err != nil {
-		errors.Parser(w, r, errors.InternalServerError, 500)
+		errors.Parser(w, errors.InternalServerError, 500)
 		return
 	}
 
 	organisationID, err := util.GetOrganization(r.Context())
 
 	if err != nil {
-		errors.Parser(w, r, errors.InternalServerError, 500)
+		errors.Parser(w, errors.InternalServerError, 500)
 		return
 	}
 
@@ -49,7 +49,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		errors.Parser(w, r, err.Error(), 503)
+		errors.Parser(w, err.Error(), 503)
 		return
 	}
 

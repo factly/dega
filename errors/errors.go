@@ -13,18 +13,35 @@ var InvalidID string = "Invalid ID"
 var InternalServerError string = "Something went wrong"
 
 // error type
-type errorsList struct {
+type message struct {
 	Code    int    `json:"code"`
 	Message string `json:"message"`
+	Field   string `json:"title"`
+}
+
+type response struct {
+	Errors interface{} `json:"errors"`
+}
+
+// Validator -  validation errors
+func Validator(w http.ResponseWriter, err interface{}) {
+
+	result := response{
+		Errors: err,
+	}
+	renderx.JSON(w, 422, result)
 }
 
 // Parser - to parse error messages
-func Parser(w http.ResponseWriter, r *http.Request, message string, statusCode int) {
+func Parser(w http.ResponseWriter, msg string, statusCode int) {
 
-	err := make([]errorsList, 1)
-	err[0] = errorsList{
+	err := make([]message, 1)
+	err[0] = message{
 		Code:    statusCode,
-		Message: message,
+		Message: msg,
 	}
-	renderx.JSON(w, statusCode, err)
+	result := response{
+		Errors: err,
+	}
+	renderx.JSON(w, statusCode, result)
 }

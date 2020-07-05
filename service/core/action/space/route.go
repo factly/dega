@@ -9,7 +9,7 @@ import (
 
 // space request body
 type space struct {
-	Name              string         `json:"name" validate:"required"`
+	Name              string         `json:"name" validate:"required,min=3,max=50"`
 	Slug              string         `json:"slug"`
 	SiteTitle         string         `json:"site_title"`
 	TagLine           string         `json:"tag_line"`
