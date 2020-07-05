@@ -5,10 +5,10 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
+	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -30,7 +30,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
-		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
@@ -41,7 +41,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	validationError := validationx.Check(rating)
 
 	if validationError != nil {
-		errors.Render(w, validationError, 422)
+		errorx.Render(w, validationError)
 		return
 	}
 
