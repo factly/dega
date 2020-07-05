@@ -6,11 +6,11 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
+	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -31,7 +31,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
-		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
@@ -44,14 +44,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&post)
 
 	if err != nil {
-		errors.Render(w, errors.Parser(errors.DecodeError()), 422)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
 	validationError := validationx.Check(post)
 
 	if validationError != nil {
-		errors.Render(w, validationError, 422)
+		errorx.Render(w, validationError)
 		return
 	}
 
@@ -83,7 +83,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// check categories, tags & medium belong to same space or not
 	err = post.CheckSpace(config.DB)
 	if err != nil {
-		errors.Render(w, errors.Parser(errors.DBError()), 404)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 

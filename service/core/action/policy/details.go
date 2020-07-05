@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -44,7 +44,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		errors.Render(w, errors.Parser(errors.NetworkError()), 503)
+		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 		return
 	}
 
