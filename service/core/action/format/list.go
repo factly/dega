@@ -4,9 +4,9 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
@@ -33,6 +33,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		errors.Parser(w, r, errors.InternalServerError, 500)
 		return
 	}
 
@@ -46,7 +47,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
 
 	if err != nil {
-		validation.RecordNotFound(w, r)
+		errors.Parser(w, r, err.Error(), 404)
 		return
 	}
 

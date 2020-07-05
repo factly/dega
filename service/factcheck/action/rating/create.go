@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
@@ -29,6 +30,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		errors.Parser(w, r, errors.InternalServerError, 500)
 		return
 	}
 

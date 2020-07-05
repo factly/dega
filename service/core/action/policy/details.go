@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -50,6 +51,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
+		errors.Parser(w, r, err.Error(), 503)
 		return
 	}
 

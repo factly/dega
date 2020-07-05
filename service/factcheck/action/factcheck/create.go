@@ -6,12 +6,12 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
-	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -33,6 +33,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		errors.Parser(w, r, errors.InternalServerError, 500)
 		return
 	}
 	uID, err := util.GetUser(r.Context())
@@ -47,7 +48,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result.Claims = make([]model.Claim, 0)
 	result.Authors = make([]coreModel.Author, 0)
 
-	json.NewDecoder(r.Body).Decode(&factcheck)
+	err = json.NewDecoder(r.Body).Decode(&factcheck)
+
+	if err != nil {
+		errors.Parser(w, r, err.Error(), 422)
+		return
+	}
 
 	validationError := validationx.Check(factcheck)
 
@@ -83,7 +89,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// check claims, categories, tags & medium belong to same space or not
 	err = factcheck.CheckSpace(config.DB)
 	if err != nil {
-		validation.Error(w, r, err.Error())
+		errors.Parser(w, r, err.Error(), 404)
 		return
 	}
 

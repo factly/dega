@@ -5,9 +5,9 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -28,7 +28,16 @@ func details(w http.ResponseWriter, r *http.Request) {
 	tagID := chi.URLParam(r, "tag_id")
 	id, err := strconv.Atoi(tagID)
 
+	if err != nil {
+		errors.Parser(w, r, errors.InvalidID, 404)
+		return
+	}
+
 	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		errors.Parser(w, r, errors.InternalServerError, 500)
+		return
+	}
 
 	result := &model.Tag{}
 
@@ -39,7 +48,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
-		validation.RecordNotFound(w, r)
+		errors.Parser(w, r, err.Error(), 404)
 		return
 	}
 

@@ -7,11 +7,11 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/errors"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
-	"github.com/factly/dega-server/validation"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -34,7 +34,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
 
+	if err != nil {
+		errors.Parser(w, r, errors.InvalidID, 404)
+		return
+	}
+
 	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		errors.Parser(w, r, errors.InternalServerError, 500)
+		return
+	}
+
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		return
@@ -49,7 +59,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tags := []model.PostTag{}
 	postAuthors := []model.PostAuthor{}
 
-	json.NewDecoder(r.Body).Decode(&post)
+	err = json.NewDecoder(r.Body).Decode(&post)
+
+	errors.Parser(w, r, err.Error(), 422)
 
 	result := &postData{}
 	result.ID = uint(id)
@@ -66,7 +78,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).First(&result.Post).Error
 
 	if err != nil {
-		validation.RecordNotFound(w, r)
+		errors.Parser(w, r, err.Error(), 404)
 		return
 	}
 
@@ -75,7 +87,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = post.CheckSpace(config.DB)
 
 	if err != nil {
-		validation.Error(w, r, err.Error())
+		errors.Parser(w, r, err.Error(), 404)
 		return
 	}
 
