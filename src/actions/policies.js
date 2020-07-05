@@ -100,31 +100,31 @@ export const addPolicies = (policies) => {
   };
 };
 
-const loadingPolicies = () => ({
+export const loadingPolicies = () => ({
   type: SET_POLICIES_LOADING,
   payload: true,
 });
 
-const stopPoliciesLoading = () => ({
+export const stopPoliciesLoading = () => ({
   type: SET_POLICIES_LOADING,
   payload: false,
 });
 
-const getPolicyByID = (data) => ({
+export const getPolicyByID = (data) => ({
   type: ADD_POLICY,
   payload: data,
 });
 
-const addPoliciesList = (data) => ({
+export const addPoliciesList = (data) => ({
   type: ADD_POLICIES,
   payload: data,
 });
 
-const addPoliciesRequest = (data) => ({
+export const addPoliciesRequest = (data) => ({
   type: ADD_POLICIES_REQUEST,
   payload: data,
 });
 
-const resetPolicies = () => ({
+export const resetPolicies = () => ({
   type: RESET_POLICIES,
 });
