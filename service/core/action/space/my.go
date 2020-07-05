@@ -40,7 +40,7 @@ type orgWithSpace struct {
 func my(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
-		errors.Parser(w, errors.InternalServerError, 500)
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -52,7 +52,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		errors.Parser(w, err.Error(), 503)
+		errors.Render(w, errors.Parser(errors.NetworkError()), 503)
 		return
 	}
 

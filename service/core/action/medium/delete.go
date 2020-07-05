@@ -26,7 +26,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
-		errors.Parser(w, errors.InternalServerError, 500)
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -34,7 +34,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(mediumID)
 
 	if err != nil {
-		errors.Parser(w, errors.InvalidID, 404)
+		errors.Render(w, errors.Parser(errors.InvalidID()), 404)
 		return
 	}
 
@@ -48,7 +48,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
-		errors.Parser(w, err.Error(), 404)
+		errors.Render(w, errors.Parser(errors.RecordNotFound()), 404)
 		return
 	}
 

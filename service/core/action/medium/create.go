@@ -29,7 +29,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
-		errors.Parser(w, errors.InternalServerError, 500)
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -40,7 +40,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	validationError := validationx.Check(medium)
 
 	if validationError != nil {
-		errors.Validator(w, validationError)
+		errors.Render(w, validationError, 422)
 		return
 	}
 

@@ -29,7 +29,7 @@ import (
 func delete(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
-		errors.Parser(w, errors.InternalServerError, 500)
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -41,6 +41,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.First(&result).Error
 	if err != nil {
+		errors.Render(w, errors.Parser(errors.RecordNotFound()), 404)
 		return
 	}
 
@@ -56,7 +57,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		errors.Parser(w, err.Error(), 503)
+		errors.Render(w, errors.Parser(errors.NetworkError()), 503)
 		return
 	}
 

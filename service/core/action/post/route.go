@@ -15,8 +15,8 @@ type post struct {
 	Title            string         `json:"title" validate:"required,min=3,max=50"`
 	Subtitle         string         `json:"subtitle"`
 	Slug             string         `json:"slug"`
-	Status           string         `json:"status" validate:"required,min=3,max=100"`
-	Excerpt          string         `json:"excerpt" validate:"required"`
+	Status           string         `json:"status" validate:"required"`
+	Excerpt          string         `json:"excerpt" validate:"required,min=3,max=100"`
 	Description      postgres.Jsonb `json:"description"`
 	IsFeatured       bool           `json:"is_featured"`
 	IsSticky         bool           `json:"is_sticky"`

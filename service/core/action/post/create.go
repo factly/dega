@@ -31,7 +31,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
-		errors.Parser(w, errors.InternalServerError, 500)
+		errors.Render(w, errors.Parser(errors.InternalServerError()), 500)
 		return
 	}
 
@@ -44,14 +44,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&post)
 
 	if err != nil {
-		errors.Parser(w, err.Error(), 422)
+		errors.Render(w, errors.Parser(errors.DecodeError()), 422)
 		return
 	}
 
 	validationError := validationx.Check(post)
 
 	if validationError != nil {
-		errors.Validator(w, validationError)
+		errors.Render(w, validationError, 422)
 		return
 	}
 
@@ -83,7 +83,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// check categories, tags & medium belong to same space or not
 	err = post.CheckSpace(config.DB)
 	if err != nil {
-		errors.Parser(w, err.Error(), 404)
+		errors.Render(w, errors.Parser(errors.DBError()), 404)
 		return
 	}
 
