@@ -3,6 +3,7 @@ package policy
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 
@@ -19,12 +20,12 @@ func contains(s []string, e string) bool {
 }
 
 // Composer create keto policy
-func Composer(oID string, sID string, inputPolicy policyReq) model.KetoPolicy {
+func Composer(oID int, sID int, inputPolicy policyReq) model.KetoPolicy {
 	allowedResources := []string{"authors", "categories", "formats", "media", "policies", "posts", "tags", "claims", "claimants", "factchecks", "ratings"}
 	allowedActions := []string{"get", "create", "update", "delete"}
 	result := model.KetoPolicy{}
 
-	commanPolicyString := ":org:" + oID + ":app:dega:space:" + sID + ":"
+	commanPolicyString := fmt.Sprint(":org:", oID, ":app:dega:space:", sID, ":")
 	result.ID = "id" + commanPolicyString + inputPolicy.Name
 	result.Description = inputPolicy.Description
 	result.Effect = "allow"

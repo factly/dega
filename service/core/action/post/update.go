@@ -45,15 +45,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		return
-	}
-
-	if err != nil {
-		return
-	}
-
 	post := &post{}
 	categories := []model.PostCategory{}
 	tags := []model.PostTag{}
@@ -70,7 +61,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Authors = make([]model.Author, 0)
 
 	// fetch all authors
-	authors, err := author.All(sID, uID)
+	authors, err := author.All(r.Context())
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{

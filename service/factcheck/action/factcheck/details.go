@@ -33,10 +33,6 @@ func details(w http.ResponseWriter, r *http.Request) {
 		errors.Parser(w, r, errors.InternalServerError, 500)
 		return
 	}
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		return
-	}
 
 	factcheckID := chi.URLParam(r, "factcheck_id")
 	id, err := strconv.Atoi(factcheckID)
@@ -101,7 +97,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Adding author
-	authors, err := author.All(sID, uID)
+	authors, err := author.All(r.Context())
 	for _, postAuthor := range factCheckAuthors {
 		aID := fmt.Sprint(postAuthor.AuthorID)
 		if authors[aID].Email != "" {

@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core"
+	"github.com/factly/dega-server/service/core/action/policy"
 	"github.com/factly/dega-server/service/factcheck"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/loggerx"
@@ -73,7 +74,7 @@ func main() {
 	/* disable swagger in production */
 	r.Get("/swagger/*", httpSwagger.WrapHandler)
 
-	r.With(util.CheckUser, util.CheckSpace).Group(func(r chi.Router) {
+	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrgnaization, policy.Authorizer).Group(func(r chi.Router) {
 		r.Mount("/factcheck", factcheck.Router())
 		r.Mount("/core", core.Router())
 	})

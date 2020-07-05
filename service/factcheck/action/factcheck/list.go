@@ -40,11 +40,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		return
-	}
-
 	result := paging{}
 	result.Nodes = make([]factcheckData, 0)
 
@@ -61,7 +56,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all authors
-	authors, err := author.All(sID, uID)
+	authors, err := author.All(r.Context())
 
 	for _, factcheck := range factchecks {
 		factcheckList := &factcheckData{}
