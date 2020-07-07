@@ -152,13 +152,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// delete factcheck tags
-	if len(factcheck.TagIDS) == 0 {
-		config.DB.Where(&model.FactcheckTag{
-			FactcheckID: uint(id),
-		}).Delete(model.FactcheckTag{})
-	} else {
-		config.DB.Where(factcheckTagIDs).Delete(model.FactcheckTag{})
-	}
+	config.DB.Where(factcheckTagIDs).Delete(model.FactcheckTag{})
 
 	// create new factcheck tags
 	for _, id := range toCreateIDs {

@@ -194,13 +194,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// delete post categories
-	if len(post.CategoryIDS) == 0 {
-		config.DB.Where(&model.PostCategory{
-			PostID: uint(id),
-		}).Delete(model.PostCategory{})
-	} else {
-		config.DB.Where(postCategoryIDs).Delete(model.PostCategory{})
-	}
+
+	config.DB.Where(postCategoryIDs).Delete(model.PostCategory{})
 
 	// creating new categories
 	for _, id := range toCreateIDs {

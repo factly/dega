@@ -3,6 +3,11 @@ package arrays
 func Difference(prev []uint, new []uint) ([]uint, []uint, []uint) {
 	common := make([]uint, 0)
 	del := make([]uint, 0)
+	additional := make([]uint, 0)
+
+	if len(new) == 0 {
+		del = prev
+	}
 
 	for _, i := range prev {
 		found := false
@@ -19,7 +24,7 @@ func Difference(prev []uint, new []uint) ([]uint, []uint, []uint) {
 		}
 	}
 
-	additional := subtraction(new, prev)
+	additional = subtraction(new, prev)
 
 	return common, additional, del
 
