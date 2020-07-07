@@ -42,19 +42,22 @@ type factcheckData struct {
 
 // CheckSpace - validation for medium, format, categories & tags
 func (p *factcheck) CheckSpace(tx *gorm.DB) (e error) {
-	medium := coreModel.Medium{}
-	medium.ID = p.FeaturedMediumID
 
-	err := tx.Model(&coreModel.Medium{}).Where(coreModel.Medium{
-		SpaceID: p.SpaceID,
-	}).First(&medium).Error
+	if p.FeaturedMediumID > 0 {
+		medium := coreModel.Medium{}
+		medium.ID = p.FeaturedMediumID
 
-	if err != nil {
-		return errors.New("medium do not belong to same space")
+		err := tx.Model(&coreModel.Medium{}).Where(coreModel.Medium{
+			SpaceID: p.SpaceID,
+		}).First(&medium).Error
+
+		if err != nil {
+			return errors.New("medium do not belong to same space")
+		}
 	}
 
 	categories := []coreModel.Category{}
-	err = tx.Model(&coreModel.Category{}).Where(coreModel.Category{
+	err := tx.Model(&coreModel.Category{}).Where(coreModel.Category{
 		SpaceID: p.SpaceID,
 	}).Where(p.CategoryIDS).Find(&categories).Error
 
@@ -80,7 +83,7 @@ func (p *factcheck) CheckSpace(tx *gorm.DB) (e error) {
 		return errors.New("some claims do not belong to same space")
 	}
 
-	return err
+	return nil
 }
 
 // Router - Group of factcheck router

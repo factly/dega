@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
@@ -46,13 +47,16 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	post := &post{}
-	categories := []model.PostCategory{}
-	tags := []model.PostTag{}
+	postCategories := []model.PostCategory{}
+	postTags := []model.PostTag{}
 	postAuthors := []model.PostAuthor{}
 
 	err = json.NewDecoder(r.Body).Decode(&post)
 
-	errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	result := &postData{}
 	result.ID = uint(id)
@@ -69,7 +73,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).First(&result.Post).Error
 
 	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
@@ -109,141 +113,170 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
 
-	// fetch all categories
+	// fetch all postCategories
 	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
 		PostID: uint(id),
-	}).Preload("Category").Preload("Category.Medium").Find(&categories)
+	}).Preload("Category").Preload("Category.Medium").Find(&postCategories)
 
-	// fetch all tags
+	// fetch all postTags
 	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
 		PostID: uint(id),
-	}).Preload("Tag").Find(&tags)
+	}).Preload("Tag").Find(&postTags)
 
 	// fetch all authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Find(&postAuthors)
 
-	// delete tags
-	for _, t := range tags {
-		present := false
-		for _, id := range post.TagIDS {
-			if t.TagID == id {
-				present = true
-			}
-		}
-		if present == false {
-			config.DB.Where(&model.PostTag{
-				TagID:  t.TagID,
-				PostID: uint(id),
-			}).Delete(model.PostTag{})
-		}
+	prevTagIDs := make([]uint, 0)
+	postTagIDs := make([]uint, 0)
+	// key as tag_id & value as post_tag
+	mapperPostTag := map[uint]model.PostTag{}
+
+	for _, postTag := range postTags {
+		mapperPostTag[postTag.TagID] = postTag
+		prevTagIDs = append(prevTagIDs, postTag.TagID)
 	}
 
-	// creating new tags
-	for _, id := range post.TagIDS {
-		present := false
-		for _, t := range tags {
-			if t.TagID == id {
-				present = true
-				result.Tags = append(result.Tags, t.Tag)
-			}
-		}
-		if present == false {
-			postTag := &model.PostTag{}
-			postTag.TagID = uint(id)
-			postTag.PostID = result.ID
+	common, toCreateIDs, toDeleteIDs := arrays.Difference(prevTagIDs, post.TagIDS)
 
-			err = config.DB.Model(&model.PostTag{}).Create(&postTag).Error
-
-			if err != nil {
-				return
-			}
-			config.DB.Model(&model.PostTag{}).Preload("Tag").First(&postTag)
-			result.Tags = append(result.Tags, postTag.Tag)
-		}
+	// map post tag ids
+	for _, id := range toDeleteIDs {
+		postTagIDs = append(postTagIDs, mapperPostTag[id].ID)
 	}
 
-	// delete categories
-	for _, c := range categories {
-		present := false
-		for _, id := range post.CategoryIDS {
-			if c.CategoryID == id {
-				present = true
-			}
+	// delete post tags
+	if len(post.TagIDS) == 0 {
+		config.DB.Where(&model.PostTag{
+			PostID: uint(id),
+		}).Delete(model.PostTag{})
+	} else {
+		config.DB.Where(postTagIDs).Delete(model.PostTag{})
+	}
+
+	// create post tags
+	for _, id := range toCreateIDs {
+		postTag := &model.PostTag{}
+		postTag.TagID = uint(id)
+		postTag.PostID = result.ID
+
+		err = config.DB.Model(&model.PostTag{}).Create(&postTag).Error
+
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
 		}
-		if present == false {
-			config.DB.Where(&model.PostCategory{
-				CategoryID: c.CategoryID,
-				PostID:     uint(id),
-			}).Delete(model.PostCategory{})
-		}
+
+		config.DB.Model(&model.PostTag{}).Preload("Tag").Preload("Tag.Medium").First(&postTag)
+		result.Tags = append(result.Tags, postTag.Tag)
+	}
+
+	// appending previous post tags to result
+	for _, id := range common {
+		postTag := mapperPostTag[id]
+		result.Tags = append(result.Tags, postTag.Tag)
+	}
+
+	prevCategoryIDs := make([]uint, 0)
+	mapperPostCategory := map[uint]model.PostCategory{}
+	postCategoryIDs := make([]uint, 0)
+
+	for _, postCategory := range postCategories {
+		mapperPostCategory[postCategory.CategoryID] = postCategory
+		prevCategoryIDs = append(prevCategoryIDs, postCategory.CategoryID)
+	}
+
+	common, toCreateIDs, toDeleteIDs = arrays.Difference(prevCategoryIDs, post.CategoryIDS)
+
+	// map post category ids
+	for _, id := range toDeleteIDs {
+		postCategoryIDs = append(postCategoryIDs, mapperPostCategory[id].ID)
+	}
+
+	// delete post categories
+	if len(post.CategoryIDS) == 0 {
+		config.DB.Where(&model.PostCategory{
+			PostID: uint(id),
+		}).Delete(model.PostCategory{})
+	} else {
+		config.DB.Where(postCategoryIDs).Delete(model.PostCategory{})
 	}
 
 	// creating new categories
-	for _, id := range post.CategoryIDS {
-		present := false
-		for _, c := range categories {
-			if c.CategoryID == id {
-				present = true
-				result.Categories = append(result.Categories, c.Category)
-			}
+	for _, id := range toCreateIDs {
+		postCategory := &model.PostCategory{}
+		postCategory.CategoryID = uint(id)
+		postCategory.PostID = result.ID
+
+		err = config.DB.Model(&model.PostCategory{}).Create(&postCategory).Error
+
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
 		}
-		if present == false {
-			postCategory := &model.PostCategory{}
-			postCategory.CategoryID = uint(id)
-			postCategory.PostID = result.ID
 
-			err = config.DB.Model(&model.PostCategory{}).Create(&postCategory).Error
+		config.DB.Model(&model.PostCategory{}).Preload("Category").Preload("Category.Medium").First(&postCategory)
+		result.Categories = append(result.Categories, postCategory.Category)
 
-			if err != nil {
-				return
-			}
+	}
 
-			config.DB.Model(&model.PostCategory{}).Preload("Category").Preload("Category.Medium").First(&postCategory)
-			result.Categories = append(result.Categories, postCategory.Category)
-		}
+	// appending previous post categories to result
+	for _, id := range common {
+		postCategory := mapperPostCategory[id]
+		result.Categories = append(result.Categories, postCategory.Category)
+
+	}
+
+	prevAuthorIDs := make([]uint, 0)
+	mapperPostAuthor := map[uint]model.PostAuthor{}
+	postAuthorIDs := make([]uint, 0)
+
+	for _, postAuthor := range postAuthors {
+		mapperPostAuthor[postAuthor.AuthorID] = postAuthor
+		prevAuthorIDs = append(prevAuthorIDs, postAuthor.AuthorID)
+	}
+
+	common, toCreateIDs, toDeleteIDs = arrays.Difference(prevAuthorIDs, post.AuthorIDS)
+
+	// map post tag ids
+	for _, id := range toDeleteIDs {
+		postAuthorIDs = append(postAuthorIDs, mapperPostTag[id].ID)
 	}
 
 	// delete post authors
-	for _, a := range postAuthors {
-		present := false
-		for _, id := range post.AuthorIDS {
-			if a.AuthorID == id {
-				present = true
-			}
-		}
-		if present == false {
-			config.DB.Where(&model.PostAuthor{
-				AuthorID: a.AuthorID,
-				PostID:   uint(id),
-			}).Delete(model.PostAuthor{})
-		}
+	if len(post.AuthorIDS) == 0 {
+		config.DB.Where(&model.PostAuthor{
+			PostID: uint(id),
+		}).Delete(model.PostAuthor{})
+	} else {
+		config.DB.Where(postAuthorIDs).Delete(model.PostTag{})
 	}
 
 	// creating new post authors
 	for _, id := range post.AuthorIDS {
-		present := false
-		for _, postAuthor := range postAuthors {
-			if postAuthor.AuthorID == id {
-				present = true
-				aID := fmt.Sprint(postAuthor.AuthorID)
 
-				if authors[aID].Email != "" {
-					result.Authors = append(result.Authors, authors[aID])
-				}
-			}
+		postAuthor := &model.PostAuthor{}
+		postAuthor.AuthorID = uint(id)
+		postAuthor.PostID = result.ID
+
+		err = config.DB.Model(&model.PostAuthor{}).Create(&postAuthor).Error
+
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
 		}
-		if present == false {
-			postAuthor := &model.PostAuthor{}
-			postAuthor.AuthorID = uint(id)
-			postAuthor.PostID = result.ID
+		aID := fmt.Sprint(postAuthor.AuthorID)
 
-			err = config.DB.Model(&model.PostAuthor{}).Create(&postAuthor).Error
+		if authors[aID].Email != "" {
+			result.Authors = append(result.Authors, authors[aID])
+		}
 
-			if err != nil {
-				return
-			}
+	}
+
+	// appending previous post authors to result
+	for _, id := range common {
+		postAuthor := mapperPostAuthor[id]
+		if postAuthor.AuthorID == id {
 			aID := fmt.Sprint(postAuthor.AuthorID)
 
 			if authors[aID].Email != "" {
