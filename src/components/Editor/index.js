@@ -7,9 +7,12 @@ import Quote from '@editorjs/quote';
 import Table from '@editorjs/table';
 import UppyUploader from './uppy.js';
 function Editor({ value, onChange }) {
+  const editor_block = React.useRef(null);
+
+  console.log(editor_block);
   React.useEffect(() => {
     new EditorJS({
-      holder: 'editorjs',
+      holder: editor_block.current,
       tools: {
         header: Header,
         list: List,
@@ -32,7 +35,7 @@ function Editor({ value, onChange }) {
     });
   }, []);
 
-  return <div id="editorjs"></div>;
+  return <div ref={editor_block}></div>;
 }
 
 export default Editor;
