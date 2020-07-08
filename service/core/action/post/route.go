@@ -25,9 +25,9 @@ type post struct {
 	FormatID         uint           `json:"format_id"`
 	PublishedDate    time.Time      `json:"published_date"`
 	SpaceID          uint           `json:"space_id"`
-	CategoryIDS      []uint         `json:"category_ids"`
-	TagIDS           []uint         `json:"tag_ids"`
-	AuthorIDS        []uint         `json:"author_ids"`
+	CategoryIDs      []uint         `json:"category_ids"`
+	TagIDs           []uint         `json:"tag_ids"`
+	AuthorIDs        []uint         `json:"author_ids"`
 }
 
 type postData struct {
@@ -69,18 +69,18 @@ func (p *post) CheckSpace(tx *gorm.DB) (e error) {
 	categories := []model.Category{}
 	err := tx.Model(&model.Category{}).Where(model.Category{
 		SpaceID: p.SpaceID,
-	}).Where(p.CategoryIDS).Find(&categories).Error
+	}).Where(p.CategoryIDs).Find(&categories).Error
 
-	if err != nil || (len(p.CategoryIDS) != len(categories)) {
+	if err != nil || (len(p.CategoryIDs) != len(categories)) {
 		return errors.New("some categories do not belong to same space")
 	}
 
 	tags := []model.Tag{}
 	err = tx.Model(&model.Tag{}).Where(model.Tag{
 		SpaceID: p.SpaceID,
-	}).Where(p.TagIDS).Find(&tags).Error
+	}).Where(p.TagIDs).Find(&tags).Error
 
-	if err != nil || (len(p.TagIDS) != len(tags)) {
+	if err != nil || (len(p.TagIDs) != len(tags)) {
 		return errors.New("some tags do not belong to same space")
 	}
 

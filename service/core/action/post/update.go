@@ -113,17 +113,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
 
-	// fetch all postCategories
+	// fetch existing post categories
 	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
 		PostID: uint(id),
-	}).Preload("Category").Preload("Category.Medium").Find(&postCategories)
+	}).Preload("Category").Find(&postCategories)
 
-	// fetch all postTags
+	// fetch existing post tags
 	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
 		PostID: uint(id),
 	}).Preload("Tag").Find(&postTags)
 
-	// fetch all authors
+	// fetch existing post authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Find(&postAuthors)
@@ -138,7 +138,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		prevTagIDs = append(prevTagIDs, postTag.TagID)
 	}
 
-	common, toCreateIDs, toDeleteIDs := arrays.Difference(prevTagIDs, post.TagIDS)
+	toCreateIDs, toDeleteIDs := arrays.Difference(prevTagIDs, post.TagIDs)
 
 	// map post tag ids
 	for _, id := range toDeleteIDs {
@@ -146,11 +146,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// delete post tags
-	if len(post.TagIDS) == 0 {
-		config.DB.Where(&model.PostTag{
-			PostID: uint(id),
-		}).Delete(model.PostTag{})
-	} else {
+	if len(postTagIDs) > 0 {
 		config.DB.Where(postTagIDs).Delete(model.PostTag{})
 	}
 
@@ -161,19 +157,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postTag.PostID = result.ID
 
 		err = config.DB.Model(&model.PostTag{}).Create(&postTag).Error
-
 		if err != nil {
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-
-		config.DB.Model(&model.PostTag{}).Preload("Tag").Preload("Tag.Medium").First(&postTag)
-		result.Tags = append(result.Tags, postTag.Tag)
 	}
 
+	// fetch updated post tags
+	updatedPostTags := []model.PostTag{}
+	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
+		PostID: uint(id),
+	}).Preload("Tag").Find(&updatedPostTags)
+
 	// appending previous post tags to result
-	for _, id := range common {
-		postTag := mapperPostTag[id]
+	for _, postTag := range updatedPostTags {
 		result.Tags = append(result.Tags, postTag.Tag)
 	}
 
@@ -186,7 +183,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		prevCategoryIDs = append(prevCategoryIDs, postCategory.CategoryID)
 	}
 
-	common, toCreateIDs, toDeleteIDs = arrays.Difference(prevCategoryIDs, post.CategoryIDS)
+	toCreateIDs, toDeleteIDs = arrays.Difference(prevCategoryIDs, post.CategoryIDs)
 
 	// map post category ids
 	for _, id := range toDeleteIDs {
@@ -194,8 +191,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// delete post categories
-
-	config.DB.Where(postCategoryIDs).Delete(model.PostCategory{})
+	if len(postCategoryIDs) > 0 {
+		config.DB.Where(postCategoryIDs).Delete(model.PostCategory{})
+	}
 
 	// creating new categories
 	for _, id := range toCreateIDs {
@@ -209,17 +207,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-
-		config.DB.Model(&model.PostCategory{}).Preload("Category").Preload("Category.Medium").First(&postCategory)
-		result.Categories = append(result.Categories, postCategory.Category)
-
 	}
 
-	// appending previous post categories to result
-	for _, id := range common {
-		postCategory := mapperPostCategory[id]
-		result.Categories = append(result.Categories, postCategory.Category)
+	// fetch updated post categories
+	updatedPostCategories := []model.PostCategory{}
+	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
+		PostID: uint(id),
+	}).Preload("Category").Preload("Category.Medium").Find(&updatedPostCategories)
 
+	// appending previous post categories to result
+	for _, postCategory := range updatedPostCategories {
+		result.Categories = append(result.Categories, postCategory.Category)
 	}
 
 	prevAuthorIDs := make([]uint, 0)
@@ -231,7 +229,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		prevAuthorIDs = append(prevAuthorIDs, postAuthor.AuthorID)
 	}
 
-	common, toCreateIDs, toDeleteIDs = arrays.Difference(prevAuthorIDs, post.AuthorIDS)
+	toCreateIDs, toDeleteIDs = arrays.Difference(prevAuthorIDs, post.AuthorIDs)
 
 	// map post tag ids
 	for _, id := range toDeleteIDs {
@@ -239,17 +237,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// delete post authors
-	if len(post.AuthorIDS) == 0 {
-		config.DB.Where(&model.PostAuthor{
-			PostID: uint(id),
-		}).Delete(model.PostAuthor{})
-	} else {
+	if len(postAuthorIDs) > 0 {
 		config.DB.Where(postAuthorIDs).Delete(model.PostTag{})
 	}
 
 	// creating new post authors
-	for _, id := range post.AuthorIDS {
-
+	for _, id := range post.AuthorIDs {
 		postAuthor := &model.PostAuthor{}
 		postAuthor.AuthorID = uint(id)
 		postAuthor.PostID = result.ID
@@ -260,23 +253,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
+	}
+
+	// fetch existing post authors
+	updatedPostAuthors := []model.PostAuthor{}
+	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+		PostID: uint(id),
+	}).Find(&updatedPostAuthors)
+
+	// appending previous post authors to result
+	for _, postAuthor := range updatedPostAuthors {
 		aID := fmt.Sprint(postAuthor.AuthorID)
 
 		if authors[aID].Email != "" {
 			result.Authors = append(result.Authors, authors[aID])
-		}
-
-	}
-
-	// appending previous post authors to result
-	for _, id := range common {
-		postAuthor := mapperPostAuthor[id]
-		if postAuthor.AuthorID == id {
-			aID := fmt.Sprint(postAuthor.AuthorID)
-
-			if authors[aID].Email != "" {
-				result.Authors = append(result.Authors, authors[aID])
-			}
 		}
 	}
 

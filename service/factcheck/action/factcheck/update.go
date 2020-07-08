@@ -115,22 +115,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Model(&model.Factcheck{}).Preload("Medium").First(&result.Factcheck)
 
-	// fetch all factcheck categories
+	// fetch existing factcheck categories
 	config.DB.Model(&model.FactcheckCategory{}).Where(&model.FactcheckCategory{
 		FactcheckID: uint(id),
-	}).Preload("Category").Preload("Category.Medium").Find(&factcheckCategories)
+	}).Preload("Category").Find(&factcheckCategories)
 
-	// fetch all factcheck Tags
+	// fetch existing factcheck tags
 	config.DB.Model(&model.FactcheckTag{}).Where(&model.FactcheckTag{
 		FactcheckID: uint(id),
 	}).Preload("Tag").Find(&factcheckTags)
 
-	// fetch all factcheckClaims
+	// fetch existing factcheck claims
 	config.DB.Model(&model.FactcheckClaim{}).Where(&model.FactcheckClaim{
 		FactcheckID: uint(id),
-	}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&factcheckClaims)
+	}).Preload("Claim").Find(&factcheckClaims)
 
-	// fetch all authors
+	// fetch existing factcheck authors
 	config.DB.Model(&model.FactcheckAuthor{}).Where(&model.FactcheckAuthor{
 		FactcheckID: uint(id),
 	}).Find(&factcheckAuthors)
@@ -144,7 +144,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		prevTagIDs = append(prevTagIDs, factcheckTag.TagID)
 	}
 
-	common, toCreateIDs, toDeleteIDs := arrays.Difference(prevTagIDs, factcheck.TagIDS)
+	toCreateIDs, toDeleteIDs := arrays.Difference(prevTagIDs, factcheck.TagIDs)
 
 	// map factcheck tag ids
 	for _, id := range toDeleteIDs {
@@ -152,7 +152,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// delete factcheck tags
-	config.DB.Where(factcheckTagIDs).Delete(model.FactcheckTag{})
+	if len(factcheckTagIDs) > 0 {
+		config.DB.Where(factcheckTagIDs).Delete(model.FactcheckTag{})
+	}
 
 	// create new factcheck tags
 	for _, id := range toCreateIDs {
@@ -161,17 +163,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		factcheckTag.FactcheckID = result.ID
 
 		err = config.DB.Model(&model.FactcheckTag{}).Create(&factcheckTag).Error
-
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-		config.DB.Model(&model.FactcheckTag{}).Preload("Tag").First(&factcheckTag)
-		result.Tags = append(result.Tags, factcheckTag.Tag)
 	}
 
-	// appending previous factcheck tags to result
-	for _, id := range common {
-		factcheckTag := mapperFactcheckTag[id]
+	// fetch updated factcheck tags
+	updatedFactcheckTags := []model.FactcheckTag{}
+	config.DB.Model(&model.FactcheckTag{}).Where(&model.FactcheckTag{
+		FactcheckID: uint(id),
+	}).Preload("Tag").Find(&updatedFactcheckTags)
+
+	// appending factcheck tags to result
+	for _, factcheckTag := range updatedFactcheckTags {
 		result.Tags = append(result.Tags, factcheckTag.Tag)
 	}
 
@@ -184,7 +189,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		prevCategoryIDs = append(prevCategoryIDs, factcheckCategory.CategoryID)
 	}
 
-	common, toCreateIDs, toDeleteIDs = arrays.Difference(prevCategoryIDs, factcheck.CategoryIDS)
+	toCreateIDs, toDeleteIDs = arrays.Difference(prevCategoryIDs, factcheck.CategoryIDs)
 
 	// map factcheck category ids
 	for _, id := range toDeleteIDs {
@@ -192,11 +197,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// delete factcheck categories
-	if len(factcheck.CategoryIDS) == 0 {
-		config.DB.Where(&model.FactcheckCategory{
-			FactcheckID: uint(id),
-		}).Delete(model.FactcheckCategory{})
-	} else {
+	if len(factcheckCategoryIDs) > 0 {
 		config.DB.Where(factcheckCategoryIDs).Delete(model.FactcheckCategory{})
 	}
 
@@ -207,21 +208,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 		factcheckCategory.FactcheckID = result.ID
 
 		err = config.DB.Model(&model.FactcheckCategory{}).Create(&factcheckCategory).Error
-
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-
-		config.DB.Model(&model.FactcheckCategory{}).Preload("Category").Preload("Category.Medium").First(&factcheckCategory)
-		result.Categories = append(result.Categories, factcheckCategory.Category)
-
 	}
 
-	// appending previous factcheck categories to result
-	for _, id := range common {
-		factcheckCategory := mapperFactcheckCategory[id]
-		result.Categories = append(result.Categories, factcheckCategory.Category)
+	// fetch updated factcheck categories
+	updatedFactcheckCategories := []model.FactcheckCategory{}
+	config.DB.Model(&model.FactcheckCategory{}).Where(&model.FactcheckCategory{
+		FactcheckID: uint(id),
+	}).Preload("Category").Preload("Category.Medium").Find(&updatedFactcheckCategories)
 
+	// appending factcheck categories to result
+	for _, factcheckCategory := range updatedFactcheckCategories {
+		result.Categories = append(result.Categories, factcheckCategory.Category)
 	}
 
 	prevAuthorIDs := make([]uint, 0)
@@ -233,25 +234,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		prevAuthorIDs = append(prevAuthorIDs, factcheckAuthor.AuthorID)
 	}
 
-	common, toCreateIDs, toDeleteIDs = arrays.Difference(prevAuthorIDs, factcheck.AuthorIDS)
+	toCreateIDs, toDeleteIDs = arrays.Difference(prevAuthorIDs, factcheck.AuthorIDs)
 
-	// map factcheck tag ids
+	// map factcheck author ids
 	for _, id := range toDeleteIDs {
-		factcheckAuthorIDs = append(factcheckAuthorIDs, mapperFactcheckTag[id].ID)
+		factcheckAuthorIDs = append(factcheckAuthorIDs, mapperFactcheckAuthor[id].ID)
 	}
 
 	// delete factcheck authors
-	if len(factcheck.AuthorIDS) == 0 {
-		config.DB.Where(&model.FactcheckAuthor{
-			FactcheckID: uint(id),
-		}).Delete(model.FactcheckAuthor{})
-	} else {
-		config.DB.Where(factcheckAuthorIDs).Delete(model.FactcheckTag{})
+	if len(factcheckAuthorIDs) > 0 {
+		config.DB.Where(factcheckAuthorIDs).Delete(model.FactcheckAuthor{})
 	}
 
 	// creating new factcheck authors
-	for _, id := range factcheck.AuthorIDS {
-
+	for _, id := range factcheck.AuthorIDs {
 		factcheckAuthor := &model.FactcheckAuthor{}
 		factcheckAuthor.AuthorID = uint(id)
 		factcheckAuthor.FactcheckID = result.ID
@@ -259,25 +255,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 		err = config.DB.Model(&model.FactcheckAuthor{}).Create(&factcheckAuthor).Error
 
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-		aID := fmt.Sprint(factcheckAuthor.AuthorID)
-
-		if authors[aID].Email != "" {
-			result.Authors = append(result.Authors, authors[aID])
-		}
-
 	}
 
-	// appending previous factcheck authors to result
-	for _, id := range common {
-		factcheckAuthor := mapperFactcheckAuthor[id]
-		if factcheckAuthor.AuthorID == id {
-			aID := fmt.Sprint(factcheckAuthor.AuthorID)
+	// fetch existing factcheck authors
+	updatedFactcheckAuthors := []model.FactcheckAuthor{}
+	config.DB.Model(&model.FactcheckAuthor{}).Where(&model.FactcheckAuthor{
+		FactcheckID: uint(id),
+	}).Find(&updatedFactcheckAuthors)
 
-			if authors[aID].Email != "" {
-				result.Authors = append(result.Authors, authors[aID])
-			}
+	// appending factcheck authors to result
+	for _, factcheckAuthor := range updatedFactcheckAuthors {
+		aID := fmt.Sprint(factcheckAuthor.AuthorID)
+		if authors[aID].Email != "" {
+			result.Authors = append(result.Authors, authors[aID])
 		}
 	}
 
@@ -290,7 +283,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		prevClaimIDs = append(prevClaimIDs, factcheckClaim.ClaimID)
 	}
 
-	common, toCreateIDs, toDeleteIDs = arrays.Difference(prevClaimIDs, factcheck.ClaimIDS)
+	toCreateIDs, toDeleteIDs = arrays.Difference(prevClaimIDs, factcheck.ClaimIDs)
 
 	// map factcheck claim ids
 	for _, id := range toDeleteIDs {
@@ -298,33 +291,30 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// delete factcheck cliams
-	if len(factcheck.ClaimIDS) == 0 {
-		config.DB.Where(&model.FactcheckClaim{
-			FactcheckID: uint(id),
-		}).Delete(model.FactcheckClaim{})
-	} else {
-		config.DB.Where(factcheckClaimIDs).Delete(model.FactcheckTag{})
+	if len(factcheckClaimIDs) > 0 {
+		config.DB.Where(factcheckClaimIDs).Delete(model.FactcheckClaim{})
 	}
 
-	for _, id := range factcheck.ClaimIDS {
+	for _, id := range factcheck.ClaimIDs {
 		factcheckClaim := &model.FactcheckClaim{}
 		factcheckClaim.ClaimID = uint(id)
 		factcheckClaim.FactcheckID = result.ID
 
 		err = config.DB.Model(&model.FactcheckClaim{}).Create(&factcheckClaim).Error
-
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-
-		config.DB.Model(&model.FactcheckClaim{}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").First(&factcheckClaim)
-		result.Claims = append(result.Claims, factcheckClaim.Claim)
-
 	}
-	for _, id := range common {
-		factcheckClaim := mapperFactcheckClaim[id]
-		result.Claims = append(result.Claims, factcheckClaim.Claim)
 
+	// fetch existing factcheck claims
+	updatedFactcheckClaims := []model.FactcheckClaim{}
+	config.DB.Model(&model.FactcheckClaim{}).Where(&model.FactcheckClaim{
+		FactcheckID: uint(id),
+	}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&updatedFactcheckClaims)
+
+	for _, factcheckClaim := range updatedFactcheckClaims {
+		result.Claims = append(result.Claims, factcheckClaim.Claim)
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

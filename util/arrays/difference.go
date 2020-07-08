@@ -1,12 +1,15 @@
 package arrays
 
-func Difference(prev []uint, new []uint) ([]uint, []uint, []uint) {
-	common := make([]uint, 0)
+func Difference(prev []uint, new []uint) ([]uint, []uint) {
 	del := make([]uint, 0)
 	additional := make([]uint, 0)
 
 	if len(new) == 0 {
-		del = prev
+		return new, prev
+	}
+
+	if len(prev) == 0 {
+		return new, del
 	}
 
 	for _, i := range prev {
@@ -19,14 +22,12 @@ func Difference(prev []uint, new []uint) ([]uint, []uint, []uint) {
 		}
 		if !found {
 			del = append(del, i)
-		} else {
-			common = append(common, i)
 		}
 	}
 
 	additional = subtraction(new, prev)
 
-	return common, additional, del
+	return additional, del
 
 }
 

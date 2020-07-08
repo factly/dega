@@ -98,7 +98,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Factcheck{}).Preload("Medium").Find(&result.Factcheck)
 
 	// create factcheck category & fetch categories
-	for _, id := range factcheck.CategoryIDS {
+	for _, id := range factcheck.CategoryIDs {
 		factcheckCategory := &model.FactcheckCategory{}
 
 		factcheckCategory.CategoryID = uint(id)
@@ -107,13 +107,24 @@ func create(w http.ResponseWriter, r *http.Request) {
 		err = config.DB.Model(&model.FactcheckCategory{}).Create(&factcheckCategory).Error
 
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-		config.DB.Model(&model.FactcheckCategory{}).Preload("Category").Preload("Category.Medium").First(&factcheckCategory)
+	}
+
+	// fetch updated factcheck categories
+	factcheckCategories := []model.FactcheckCategory{}
+	config.DB.Model(&model.FactcheckCategory{}).Where(&model.FactcheckCategory{
+		FactcheckID: result.ID,
+	}).Preload("Category").Preload("Category.Medium").Find(&factcheckCategories)
+
+	// appending factcheck categories to result
+	for _, factcheckCategory := range factcheckCategories {
 		result.Categories = append(result.Categories, factcheckCategory.Category)
 	}
+
 	// create factcheck tag & fetch tags
-	for _, id := range factcheck.TagIDS {
+	for _, id := range factcheck.TagIDs {
 		factcheckTag := &model.FactcheckTag{}
 
 		factcheckTag.TagID = uint(id)
@@ -122,14 +133,24 @@ func create(w http.ResponseWriter, r *http.Request) {
 		err = config.DB.Model(&model.FactcheckTag{}).Create(&factcheckTag).Error
 
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-		config.DB.Model(&model.FactcheckTag{}).Preload("Tag").First(&factcheckTag)
+	}
+
+	// fetch all factcheck tags
+	factcheckTags := []model.FactcheckTag{}
+	config.DB.Model(&model.FactcheckTag{}).Where(&model.FactcheckTag{
+		FactcheckID: result.ID,
+	}).Preload("Tag").Find(&factcheckTags)
+
+	// appending factcheck tags to result
+	for _, factcheckTag := range factcheckTags {
 		result.Tags = append(result.Tags, factcheckTag.Tag)
 	}
 
 	// create factcheck claim & fetch claims
-	for _, id := range factcheck.ClaimIDS {
+	for _, id := range factcheck.ClaimIDs {
 		factcheckClaim := &model.FactcheckClaim{}
 
 		factcheckClaim.ClaimID = uint(id)
@@ -138,16 +159,24 @@ func create(w http.ResponseWriter, r *http.Request) {
 		err = config.DB.Model(&model.FactcheckClaim{}).Create(&factcheckClaim).Error
 
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
+	}
 
-		config.DB.Model(&model.FactcheckClaim{}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").First(&factcheckClaim)
+	// fetch all factcheck claims
+	factcheckClaims := []model.FactcheckClaim{}
+	config.DB.Model(&model.FactcheckClaim{}).Where(&model.FactcheckClaim{
+		FactcheckID: result.ID,
+	}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&factcheckClaims)
+
+	for _, factcheckClaim := range factcheckClaims {
 		result.Claims = append(result.Claims, factcheckClaim.Claim)
 	}
 
 	// Adding author
 	authors, err := author.All(r.Context())
-	for _, id := range factcheck.AuthorIDS {
+	for _, id := range factcheck.AuthorIDs {
 		aID := fmt.Sprint(id)
 		if authors[aID].Email != "" {
 			author := model.FactcheckAuthor{

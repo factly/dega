@@ -26,10 +26,10 @@ type factcheck struct {
 	FeaturedMediumID uint           `json:"featured_medium_id"`
 	PublishedDate    time.Time      `json:"published_date"`
 	SpaceID          uint           `json:"space_id"`
-	CategoryIDS      []uint         `json:"category_ids"`
-	TagIDS           []uint         `json:"tag_ids"`
-	ClaimIDS         []uint         `json:"claim_ids"`
-	AuthorIDS        []uint         `json:"author_ids"`
+	CategoryIDs      []uint         `json:"category_ids"`
+	TagIDs           []uint         `json:"tag_ids"`
+	ClaimIDs         []uint         `json:"claim_ids"`
+	AuthorIDs        []uint         `json:"author_ids"`
 }
 
 type factcheckData struct {
@@ -59,27 +59,27 @@ func (p *factcheck) CheckSpace(tx *gorm.DB) (e error) {
 	categories := []coreModel.Category{}
 	err := tx.Model(&coreModel.Category{}).Where(coreModel.Category{
 		SpaceID: p.SpaceID,
-	}).Where(p.CategoryIDS).Find(&categories).Error
+	}).Where(p.CategoryIDs).Find(&categories).Error
 
-	if err != nil || (len(p.CategoryIDS) != len(categories)) {
+	if err != nil || (len(p.CategoryIDs) != len(categories)) {
 		return errors.New("some categories do not belong to same space")
 	}
 
 	tags := []coreModel.Tag{}
 	err = tx.Model(&coreModel.Tag{}).Where(coreModel.Tag{
 		SpaceID: p.SpaceID,
-	}).Where(p.TagIDS).Find(&tags).Error
+	}).Where(p.TagIDs).Find(&tags).Error
 
-	if err != nil || (len(p.TagIDS) != len(tags)) {
+	if err != nil || (len(p.TagIDs) != len(tags)) {
 		return errors.New("some tags do not belong to same space")
 	}
 
 	claims := []factcheckModel.Claim{}
 	err = tx.Model(&factcheckModel.Claim{}).Where(factcheckModel.Claim{
 		SpaceID: p.SpaceID,
-	}).Where(p.ClaimIDS).Find(&claims).Error
+	}).Where(p.ClaimIDs).Find(&claims).Error
 
-	if err != nil || (len(p.ClaimIDS) != len(claims)) {
+	if err != nil || (len(p.ClaimIDs) != len(claims)) {
 		return errors.New("some claims do not belong to same space")
 	}
 
