@@ -90,46 +90,65 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Model(&model.Post{}).Create(&result.Post).Error
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
 	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
 
 	// create post category & fetch categories
-	for _, id := range post.CategoryIDS {
+	for _, id := range post.CategoryIDs {
 		postCategory := &model.PostCategory{}
-
 		postCategory.CategoryID = uint(id)
 		postCategory.PostID = result.ID
 
 		err = config.DB.Model(&model.PostCategory{}).Create(&postCategory).Error
 
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-		config.DB.Model(&model.PostCategory{}).Preload("Category").Preload("Category.Medium").First(&postCategory)
+	}
+
+	// fetch all post categories
+	postCategories := []model.PostCategory{}
+	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
+		PostID: result.ID,
+	}).Preload("Category").Preload("Category.Medium").Find(&postCategories)
+
+	// appending previous post categories to result
+	for _, postCategory := range postCategories {
 		result.Categories = append(result.Categories, postCategory.Category)
 	}
 
 	// create post tag & fetch tags
-	for _, id := range post.TagIDS {
+	for _, id := range post.TagIDs {
 		postTag := &model.PostTag{}
-
 		postTag.TagID = uint(id)
 		postTag.PostID = result.ID
 
 		err = config.DB.Model(&model.PostTag{}).Create(&postTag).Error
 
 		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-		config.DB.Model(&model.PostTag{}).Preload("Tag").First(&postTag)
+	}
+
+	// fetch all post tags
+	postTags := []model.PostTag{}
+	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
+		PostID: result.ID,
+	}).Preload("Tag").Find(&postTags)
+
+	// appending previous post tags to result
+	for _, postTag := range postTags {
 		result.Tags = append(result.Tags, postTag.Tag)
 	}
 
 	// Adding author
 	authors, err := author.All(r.Context())
-	for _, id := range post.AuthorIDS {
+	for _, id := range post.AuthorIDs {
 		aID := fmt.Sprint(id)
 		if authors[aID].Email != "" {
 			author := model.PostAuthor{
