@@ -9,7 +9,6 @@ import UppyUploader from './uppy.js';
 function Editor({ value, onChange }) {
   const editor_block = React.useRef(null);
 
-  console.log(editor_block);
   React.useEffect(() => {
     new EditorJS({
       holder: editor_block.current,

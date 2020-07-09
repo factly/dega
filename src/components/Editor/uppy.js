@@ -1,12 +1,31 @@
+import { MEDIA_API } from '../../constants/media';
+
 const Uppy = require('@uppy/core');
 const Dashboard = require('@uppy/dashboard');
 const GoogleDrive = require('@uppy/google-drive');
 const AwsS3 = require('@uppy/aws-s3');
+const axios = require('axios');
 
 class UppyUploader {
   constructor({ data, api, config }) {
     this.config = config;
     this.data = data;
+    this.nodes = {};
+    this.blockIndex = api.blocks.getCurrentBlockIndex();
+    this.api = api;
+
+    this.nodes.wrapper = document.createElement('div');
+    this.nodes.wrapper.id = 'Uploader-' + this.blockIndex;
+
+    var uploader = document.createElement('div');
+    uploader.id = 'DashboardContainer-' + this.blockIndex;
+
+    var imageContainer = document.createElement('img');
+    imageContainer.id = 'ImageContainer';
+    imageContainer.style.width = '100%';
+
+    this.nodes.wrapper.appendChild(uploader);
+    this.nodes.wrapper.appendChild(imageContainer);
   }
   static get toolbox() {
     return {
@@ -17,16 +36,9 @@ class UppyUploader {
   }
   render() {
     if (this.data.url) {
-      var imageItem = document.createElement('img');
-      imageItem.src = this.data.url;
-      imageItem.style.width = '100%';
-      return imageItem;
+      this.nodes.wrapper.children[1].src = this.data.url;
     }
-    var newItem = document.createElement('div');
-
-    newItem.className = 'DashboardContainer';
-
-    return newItem;
+    return this.nodes.wrapper;
   }
 
   rendered() {
@@ -66,7 +78,7 @@ class UppyUploader {
         .use(Dashboard, {
           trigger: '.UppyModalOpenerBtn',
           inline: true,
-          target: '.DashboardContainer',
+          target: '#' + this.nodes.wrapper.children[0].id,
           replaceTargetContent: true,
           showProgressDetails: true,
           height: 470,
@@ -78,25 +90,36 @@ class UppyUploader {
       uppy.on('complete', (result) => {
         const successful = result.successful[0];
         const upload = {};
-
         upload['alt_text'] = successful.meta.caption;
         upload['caption'] = successful.meta.caption;
         upload['description'] = successful.meta.caption;
         upload['dimensions'] = '100x100';
         upload['file_size'] = successful.size;
         upload['name'] = successful.meta.name;
-        upload['slug'] = successful.meta.caption;
-        upload['title'] = successful.meta.caption;
+        upload['slug'] = 'slug';
+        upload['title'] = 'image';
         upload['type'] = successful.meta.type;
         upload['url'] = successful.uploadURL;
 
-        this.data = upload;
+        axios
+          .post(MEDIA_API, upload)
+          .then((res) => {
+            this.data = res.data;
+            this.nodes.wrapper.children[0].style.display = 'none';
+            this.nodes.wrapper.children[1].src = this.data.url;
+          })
+          .catch((error) => {
+            this.api.notifier.show({
+              message: error.message,
+              style: 'error',
+            });
+          });
       });
     }
   }
 
   save(blockContent) {
-    return this.data.url ? this.data : undefined;
+    return this.data;
   }
 }
 
