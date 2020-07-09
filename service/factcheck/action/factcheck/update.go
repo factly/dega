@@ -247,7 +247,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// creating new factcheck authors
-	for _, id := range factcheck.AuthorIDs {
+	for _, id := range toCreateIDs {
 		factcheckAuthor := &model.FactcheckAuthor{}
 		factcheckAuthor.AuthorID = uint(id)
 		factcheckAuthor.FactcheckID = result.ID
@@ -295,7 +295,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		config.DB.Where(factcheckClaimIDs).Delete(model.FactcheckClaim{})
 	}
 
-	for _, id := range factcheck.ClaimIDs {
+	for _, id := range toCreateIDs {
 		factcheckClaim := &model.FactcheckClaim{}
 		factcheckClaim.ClaimID = uint(id)
 		factcheckClaim.FactcheckID = result.ID
