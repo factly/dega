@@ -6,8 +6,11 @@ import Paragraph from '@editorjs/paragraph';
 import Quote from '@editorjs/quote';
 import Table from '@editorjs/table';
 import UppyUploader from './uppy.js';
+import { useSelector } from 'react-redux';
+
 function Editor({ value, onChange }) {
   const editor_block = React.useRef(null);
+  const space_slug = useSelector((state) => state.spaces.details[state.spaces.selected].slug);
 
   React.useEffect(() => {
     new EditorJS({
@@ -21,7 +24,7 @@ function Editor({ value, onChange }) {
         uppy: {
           class: UppyUploader,
           config: {
-            space_slug: 'abc',
+            space_slug: space_slug,
           },
         },
       },
