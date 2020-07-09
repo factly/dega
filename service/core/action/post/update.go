@@ -231,14 +231,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	toCreateIDs, toDeleteIDs = arrays.Difference(prevAuthorIDs, post.AuthorIDs)
 
-	// map post tag ids
+	// map post author ids
 	for _, id := range toDeleteIDs {
-		postAuthorIDs = append(postAuthorIDs, mapperPostTag[id].ID)
+		postAuthorIDs = append(postAuthorIDs, mapperPostAuthor[id].ID)
 	}
 
 	// delete post authors
 	if len(postAuthorIDs) > 0 {
-		config.DB.Where(postAuthorIDs).Delete(model.PostTag{})
+		config.DB.Where(postAuthorIDs).Delete(model.PostAuthor{})
 	}
 
 	// creating new post authors
