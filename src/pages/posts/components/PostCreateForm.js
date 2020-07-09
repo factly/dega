@@ -12,6 +12,7 @@ function CreatePost({ onCreate, data = {} }) {
     values.tag_ids = values.tags || [];
     values.format_id = values.format || 0;
     values.author_ids = values.authors || [];
+    values.status = 'save';
     onCreate(values);
   };
 
