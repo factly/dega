@@ -242,7 +242,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// creating new post authors
-	for _, id := range post.AuthorIDs {
+	for _, id := range toCreateIDs {
 		postAuthor := &model.PostAuthor{}
 		postAuthor.AuthorID = uint(id)
 		postAuthor.PostID = result.ID
