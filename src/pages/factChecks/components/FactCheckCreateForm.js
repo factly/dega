@@ -90,7 +90,7 @@ function CreateFactCheck({ onCreate, data = {} }) {
           </Col>
           <Col span={6}>
             <Form.Item label="Status" name="status">
-              <Statistic />
+              {data.status ? <Statistic /> : null}
             </Form.Item>
             <Form.Item name="featured_medium_id" label="Image">
               <MediaSelector />

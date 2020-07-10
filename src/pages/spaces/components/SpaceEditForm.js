@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form, Input, Steps, Select } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
+import { checker } from '../../../utils/sluger';
 const { TextArea } = Input;
 const { Option } = Select;
 
@@ -54,9 +55,9 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
               <Form.Item
                 name="organisation_id"
                 noStyle
-                rules={[{ required: true, message: 'Organazation is required' }]}
+                rules={[{ required: true, message: 'Organization is required' }]}
               >
-                <Select style={{ width: '40%' }} placeholder="Select organazation">
+                <Select style={{ width: '40%' }} placeholder="Select organization">
                   {orgs.map((org) => (
                     <Option key={org.id} value={org.id}>
                       {org.title}
@@ -82,7 +83,7 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
                 message: 'Please input the slug!',
               },
               {
-                required: true,
+                required: checker,
                 message: 'Please enter valid slug!',
               },
             ]}
