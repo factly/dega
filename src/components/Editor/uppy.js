@@ -45,7 +45,7 @@ class UppyUploader {
     if (!this.data.url) {
       const uppy = Uppy({
         debug: true,
-        autoProceed: false,
+        autoProceed: true,
         restrictions: {
           maxNumberOfFiles: 1,
           minNumberOfFiles: 1,
