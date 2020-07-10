@@ -28,7 +28,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	organisationID, err := util.GetOrganization(r.Context())
+	organisationID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

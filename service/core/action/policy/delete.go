@@ -18,7 +18,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	organisationID, err := util.GetOrganization(r.Context())
+	organisationID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
 		return

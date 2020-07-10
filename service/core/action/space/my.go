@@ -14,7 +14,7 @@ import (
 	"github.com/factly/x/renderx"
 )
 
-type organizationUser struct {
+type organisationUser struct {
 	config.Base
 	Role string `gorm:"column:role" json:"role"`
 }
@@ -23,7 +23,7 @@ type orgWithSpace struct {
 	config.Base
 	Title      string           `gorm:"column:title" json:"title"`
 	Slug       string           `gorm:"column:slug;unique_index" json:"slug"`
-	Permission organizationUser `json:"permission"`
+	Permission organisationUser `json:"permission"`
 	Spaces     []model.Space    `json:"spaces"`
 }
 
@@ -44,7 +44,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/my", nil)
+	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organisations/my", nil)
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 
