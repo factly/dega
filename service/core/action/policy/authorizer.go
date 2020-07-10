@@ -42,7 +42,7 @@ func Authorizer(h http.Handler) http.Handler {
 				return
 			}
 
-			oID, err := util.GetOrganization(ctx)
+			oID, err := util.GetOrganisation(ctx)
 
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)

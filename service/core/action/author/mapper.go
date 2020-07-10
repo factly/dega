@@ -12,7 +12,7 @@ import (
 // Mapper map user with id
 func Mapper(oID int, uID int) map[string]model.Author {
 	userMap := make(map[string]model.Author)
-	url := fmt.Sprint(os.Getenv("KAVACH_URL"), "/organizations/", oID, "/users")
+	url := fmt.Sprint(os.Getenv("KAVACH_URL"), "/organisations/", oID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Set("Content-Type", "application/json")

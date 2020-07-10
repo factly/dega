@@ -35,7 +35,7 @@ type paging struct {
 func list(w http.ResponseWriter, r *http.Request) {
 
 	uID, err := util.GetUser(r.Context())
-	oID, err := util.GetOrganization(r.Context())
+	oID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
 		return
@@ -44,7 +44,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.Author, 0)
 
-	url := fmt.Sprint(os.Getenv("KAVACH_URL"), "/organizations/", oID, "/users")
+	url := fmt.Sprint(os.Getenv("KAVACH_URL"), "/organisations/", oID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	req.Header.Set("Content-Type", "application/json")

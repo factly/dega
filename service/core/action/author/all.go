@@ -11,7 +11,7 @@ import (
 func All(ctx context.Context) (map[string]model.Author, error) {
 	authors := make(map[string]model.Author)
 
-	organisationID, err := util.GetOrganization(ctx)
+	organisationID, err := util.GetOrganisation(ctx)
 
 	if err != nil {
 		return authors, err

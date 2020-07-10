@@ -49,7 +49,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organizations/"+strconv.Itoa(result.OrganisationID), nil)
+	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organisations/"+strconv.Itoa(result.OrganisationID), nil)
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 

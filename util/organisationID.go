@@ -10,10 +10,10 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 )
 
-type ctxKeyOrganizationID int
+type ctxKeyOrganisationID int
 
-// OrganizationIDKey is the key that holds the unique user ID in a request context.
-const OrganizationIDKey ctxKeyOrganizationID = 0
+// OrganisationIDKey is the key that holds the unique user ID in a request context.
+const OrganisationIDKey ctxKeyOrganisationID = 0
 
 // GenerateOrgnaization check X-User in header
 func GenerateOrgnaization(h http.Handler) http.Handler {
@@ -38,7 +38,7 @@ func GenerateOrgnaization(h http.Handler) http.Handler {
 				return
 			}
 
-			ctx = context.WithValue(ctx, OrganizationIDKey, space.OrganisationID)
+			ctx = context.WithValue(ctx, OrganisationIDKey, space.OrganisationID)
 			h.ServeHTTP(w, r.WithContext(ctx))
 			return
 		}
@@ -46,12 +46,12 @@ func GenerateOrgnaization(h http.Handler) http.Handler {
 	})
 }
 
-// GetOrganization return organizatio ID
-func GetOrganization(ctx context.Context) (int, error) {
+// GetOrganisation return organizatio ID
+func GetOrganisation(ctx context.Context) (int, error) {
 	if ctx == nil {
 		return 0, errors.New("context not found")
 	}
-	organisationID := ctx.Value(OrganizationIDKey)
+	organisationID := ctx.Value(OrganisationIDKey)
 	if organisationID != nil {
 		return organisationID.(int), nil
 	}
