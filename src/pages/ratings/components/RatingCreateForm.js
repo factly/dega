@@ -66,7 +66,7 @@ const RatingCreateForm = ({ onCreate, data = {} }) => {
           },
           {
             pattern: checker,
-            message: 'Slug can not have whitespaces!',
+            message: 'Please enter valid slug!',
           },
         ]}
       >

@@ -65,7 +65,7 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
           },
           {
             pattern: checker,
-            message: 'Slug can not have whitespace!',
+            message: 'Please enter valid slug!',
           },
         ]}
       >
