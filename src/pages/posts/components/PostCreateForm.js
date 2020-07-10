@@ -63,7 +63,16 @@ function CreatePost({ onCreate, data = {} }) {
         </Form.Item>
         <Row gutter={16}>
           <Col span={18}>
-            <Form.Item name="title" label="Title">
+            <Form.Item
+              name="title"
+              label="Title"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the title!',
+                },
+              ]}
+            >
               <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
             </Form.Item>
             <Form.Item name="excerpt" label="Excerpt">
@@ -75,7 +84,7 @@ function CreatePost({ onCreate, data = {} }) {
           </Col>
           <Col span={6}>
             <Form.Item label="Status" name="status">
-              <Statistic />
+              {data.status ? <Statistic /> : null}
             </Form.Item>
             <Form.Item name="featured_medium_id" label="Image">
               <MediaSelector />
@@ -90,7 +99,7 @@ function CreatePost({ onCreate, data = {} }) {
                 },
                 {
                   pattern: checker,
-                  message: 'Slug can not have whitespaces!',
+                  message: 'Please enter valid slug!',
                 },
               ]}
             >
@@ -102,7 +111,16 @@ function CreatePost({ onCreate, data = {} }) {
             <Form.Item name="tags" label="Tags">
               <Selector mode="multiple" action="Tags" />
             </Form.Item>
-            <Form.Item name="format" label="Formats">
+            <Form.Item
+              name="format"
+              label="Formats"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please add format!',
+                },
+              ]}
+            >
               <Selector action="Formats" />
             </Form.Item>
             <Form.Item name="authors" label="Authors">
