@@ -73,10 +73,12 @@ const ClaimCreateForm = ({ onCreate, data = {} }) => {
           <Form.Item
             name="title"
             label="Title"
-            rules={{
-              required: true,
-              message: 'Please input the title!',
-            }}
+            rules={[
+              {
+                required: true,
+                message: 'Please input the title!',
+              },
+            ]}
           >
             <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
           </Form.Item>
