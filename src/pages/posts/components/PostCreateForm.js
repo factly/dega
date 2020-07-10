@@ -92,6 +92,10 @@ function CreatePost({ onCreate, data = {} }) {
               label="Slug"
               rules={[
                 {
+                  required: true,
+                  message: 'Please input the slug!',
+                },
+                {
                   pattern: checker,
                   message: 'Slug can not have whitespaces!',
                 },
@@ -105,7 +109,14 @@ function CreatePost({ onCreate, data = {} }) {
             <Form.Item name="tags" label="Tags">
               <Selector mode="multiple" action="Tags" />
             </Form.Item>
-            <Form.Item name="format" label="Formats">
+            <Form.Item
+              name="format"
+              label="Formats"
+              rules={{
+                required: true,
+                message: 'Please add format!',
+              }}
+            >
               <Selector action="Formats" />
             </Form.Item>
             <Form.Item name="authors" label="Authors">

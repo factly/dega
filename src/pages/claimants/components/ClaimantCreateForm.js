@@ -61,6 +61,10 @@ const ClaimantCreateForm = ({ onCreate, data = {} }) => {
         label="Slug"
         rules={[
           {
+            required: true,
+            message: 'Please input the slug!',
+          },
+          {
             pattern: checker,
             message: 'Slug can not have whitespaces!',
           },

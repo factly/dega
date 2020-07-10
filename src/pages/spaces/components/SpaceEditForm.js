@@ -79,6 +79,10 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
             rules={[
               {
                 required: true,
+                message: 'Please input the slug!',
+              },
+              {
+                required: true,
                 message: 'Please input the slug of space!',
               },
             ]}

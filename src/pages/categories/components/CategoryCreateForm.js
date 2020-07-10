@@ -54,6 +54,10 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
         rules={[
           {
             required: true,
+            message: 'Please input the slug!',
+          },
+          {
+            required: true,
             message: 'Please enter the name!',
           },
         ]}
