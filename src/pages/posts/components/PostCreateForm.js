@@ -64,7 +64,14 @@ function CreatePost({ onCreate, data = {} }) {
         <Row gutter={16}>
           <Col span={18}>
             <Form.Item name="title" label="Title">
-              <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
+              <Input
+                placeholder="title"
+                onChange={(e) => onTitleChange(e.target.value)}
+                rules={{
+                  required: true,
+                  message: 'Please input the title!',
+                }}
+              />
             </Form.Item>
             <Form.Item name="excerpt" label="Excerpt">
               <Input.TextArea rows={4} placeholder="excerpt" />
@@ -84,10 +91,6 @@ function CreatePost({ onCreate, data = {} }) {
               name="slug"
               label="Slug"
               rules={[
-                {
-                  required: true,
-                  message: 'Please input the slug!',
-                },
                 {
                   pattern: checker,
                   message: 'Slug can not have whitespaces!',

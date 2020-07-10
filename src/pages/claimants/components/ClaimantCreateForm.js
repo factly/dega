@@ -61,10 +61,6 @@ const ClaimantCreateForm = ({ onCreate, data = {} }) => {
         label="Slug"
         rules={[
           {
-            required: true,
-            message: 'Please input the slug!',
-          },
-          {
             pattern: checker,
             message: 'Slug can not have whitespaces!',
           },
@@ -72,28 +68,10 @@ const ClaimantCreateForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        name="description"
-        label="Description"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the description!',
-          },
-        ]}
-      >
+      <Form.Item name="description" label="Description">
         <TextArea />
       </Form.Item>
-      <Form.Item
-        name="tag_line"
-        label="Tag Line"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the Tag Line!',
-          },
-        ]}
-      >
+      <Form.Item name="tag_line" label="Tag Line">
         <TextArea />
       </Form.Item>
       <Form.Item label="Upload Media" name="medium_id">

@@ -60,27 +60,14 @@ const FormatCreateForm = ({ onCreate, data = {} }) => {
         label="Slug"
         rules={[
           {
-            required: true,
-            message: 'Please input the slug!',
-          },
-          {
             pattern: checker,
-            message: 'Please enter valid slug!',
+            message: 'Slug can not have whitespaces!',
           },
         ]}
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        name="description"
-        label="Description"
-        rules={[
-          {
-            required: true,
-            message: 'Please enter the description!',
-          },
-        ]}
-      >
+      <Form.Item name="description" label="Description">
         <TextArea />
       </Form.Item>
       <Form.Item {...tailLayout}>

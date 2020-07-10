@@ -60,10 +60,6 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
         label="Slug"
         rules={[
           {
-            required: true,
-            message: 'Please input the slug of tag',
-          },
-          {
             pattern: checker,
             message: 'Slug can not have whitespace!',
           },
@@ -71,16 +67,7 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        name="description"
-        label="Description"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the description of category!',
-          },
-        ]}
-      >
+      <Form.Item name="description" label="Description">
         <TextArea />
       </Form.Item>
       <Form.Item {...tailLayout}>

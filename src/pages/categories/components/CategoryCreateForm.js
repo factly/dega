@@ -65,10 +65,6 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
         label="Slug"
         rules={[
           {
-            required: true,
-            message: 'Please input the slug!',
-          },
-          {
             pattern: checker,
             message: 'Slug can not have whitespaces!',
           },
@@ -76,16 +72,7 @@ const CategoryCreateForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        name="description"
-        label="Description"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the description!',
-          },
-        ]}
-      >
+      <Form.Item name="description" label="Description">
         <TextArea />
       </Form.Item>
       <Form.Item label="Upload Media" name="medium_id">

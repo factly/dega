@@ -70,17 +70,20 @@ const ClaimCreateForm = ({ onCreate, data = {} }) => {
         layout="vertical"
       >
         <div style={current === 0 ? { display: 'block' } : { display: 'none' }}>
-          <Form.Item name="title" label="Title">
+          <Form.Item
+            name="title"
+            label="Title"
+            rules={{
+              required: true,
+              message: 'Please input the title!',
+            }}
+          >
             <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
           </Form.Item>
           <Form.Item
             name="slug"
             label="Slug"
             rules={[
-              {
-                required: true,
-                message: 'Please input the slug!',
-              },
               {
                 pattern: checker,
                 message: 'Slug can not have whitespaces!',
@@ -89,10 +92,28 @@ const ClaimCreateForm = ({ onCreate, data = {} }) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item name="claimant" label="Claimants">
+          <Form.Item
+            name="claimant"
+            label="Claimants"
+            rules={[
+              {
+                required: true,
+                message: 'Please add claimant!',
+              },
+            ]}
+          >
             <Selector action="Claimants" />
           </Form.Item>
-          <Form.Item name="rating" label="Ratings">
+          <Form.Item
+            name="rating"
+            label="Ratings"
+            rules={[
+              {
+                required: true,
+                message: 'Please add rating!',
+              },
+            ]}
+          >
             <Selector action="Ratings" />
           </Form.Item>
           <Form.Item name="description" label="Description">
