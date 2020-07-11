@@ -46,21 +46,15 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.Preload("Medium").Preload("Format").Model(&model.Post{})
+	tx := config.DB.Preload("Medium").Preload("Format").Model(&model.Post{}).Where(&model.Post{
+		SpaceID: uint(sID),
+	})
 
 	format := chi.URLParam(r, "format")
-	if format == "factcheck" {
+	if format != "" {
 		tx = tx.Where(&model.Post{
-			SpaceID: uint(sID),
 			Format: &model.Format{
-				Slug: "factcheck",
-			},
-		})
-	} else {
-		tx = tx.Where(&model.Post{
-			SpaceID: uint(sID),
-			Format: &model.Format{
-				Slug: "article",
+				Slug: format,
 			},
 		})
 	}
@@ -90,7 +84,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		postList.Post = post
 
-		if format == "factcheck" {
+		if post.Format.Slug == "factcheck" {
 			postList.Claims = make([]factcheckModel.Claim, 0)
 
 			config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{

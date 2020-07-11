@@ -176,7 +176,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		result.Tags = append(result.Tags, postTag.Tag)
 	}
 
-	if result.Post.Format.Slug == "post" {
+	if result.Post.Format.Slug == "factcheck" {
 		// fetch existing post claims
 		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
 			PostID: uint(id),
