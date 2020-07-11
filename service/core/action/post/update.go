@@ -182,6 +182,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 			PostID: uint(id),
 		}).Find(&postClaims)
 
+		result.Claims = make([]factcheckModel.Claim, 0)
+
 		prevClaimIDs := make([]uint, 0)
 		mapperPostClaim := map[uint]factcheckModel.PostClaim{}
 		postClaimIDs := make([]uint, 0)
@@ -213,6 +215,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 				errorx.Render(w, errorx.Parser(errorx.DBError()))
 				return
 			}
+		}
+
+		// fetch updated post claims
+		updatedPostClaims := []factcheckModel.PostClaim{}
+		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+			PostID: uint(id),
+		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&updatedPostClaims)
+
+		// appending previous post claims to result
+		for _, postClaim := range updatedPostClaims {
+			result.Claims = append(result.Claims, postClaim.Claim)
 		}
 
 	}

@@ -42,10 +42,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err != nil {
-		return
-	}
-
 	tx := config.DB.Preload("Medium").Preload("Format").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
 	})
