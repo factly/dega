@@ -49,14 +49,14 @@ function UppyUploader({ onUpload }) {
     const successful = result.successful[0];
     const upload = {};
 
-    upload['alt_text'] = successful.meta.caption;
+    upload['alt_text'] = successful.meta.alt_text;
     upload['caption'] = successful.meta.caption;
     upload['description'] = successful.meta.caption;
     upload['dimensions'] = '100x100';
     upload['file_size'] = successful.size;
     upload['name'] = successful.meta.name;
-    upload['slug'] = successful.meta.caption;
-    upload['title'] = successful.meta.caption;
+    upload['slug'] = successful.response.body.key;
+    upload['title'] = successful.meta.caption ? successful.meta.caption : '';
     upload['type'] = successful.meta.type;
     upload['url'] = successful.uploadURL;
 
@@ -69,6 +69,7 @@ function UppyUploader({ onUpload }) {
       metaFields={[
         { id: 'name', name: 'Name', placeholder: 'file name' },
         { id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' },
+        { id: 'alt_text', name: 'Alt Text', placeholder: 'describe what the image is content' },
       ]}
     />
   );

@@ -1,8 +1,11 @@
 import { MEDIA_API } from '../../constants/media';
-
+import '@uppy/core/dist/style.css';
+import '@uppy/dashboard/dist/style.css';
+import '@uppy/url/dist/style.css';
 const Uppy = require('@uppy/core');
 const Dashboard = require('@uppy/dashboard');
 const GoogleDrive = require('@uppy/google-drive');
+const Url = require('@uppy/url');
 const AwsS3 = require('@uppy/aws-s3');
 const axios = require('axios');
 
@@ -85,6 +88,7 @@ class UppyUploader {
           browserBackButtonClose: true,
         })
         .use(GoogleDrive, { target: Dashboard, companionUrl: 'http://localhost:3020' })
+        .use(Url, { target: Dashboard, companionUrl: 'http://localhost:3020' })
         .use(AwsS3, { companionUrl: 'http://localhost:3020' });
 
       uppy.on('complete', (result) => {
@@ -96,8 +100,8 @@ class UppyUploader {
         upload['dimensions'] = '100x100';
         upload['file_size'] = successful.size;
         upload['name'] = successful.meta.name;
-        upload['slug'] = 'slug';
-        upload['title'] = 'image';
+        upload['slug'] = successful.response.body.key;
+        upload['title'] = successful.meta.caption ? successful.meta.caption : ' ';
         upload['type'] = successful.meta.type;
         upload['url'] = successful.uploadURL;
 
