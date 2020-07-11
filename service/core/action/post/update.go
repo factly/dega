@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
+	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/slug"
@@ -50,6 +51,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	postCategories := []model.PostCategory{}
 	postTags := []model.PostTag{}
 	postAuthors := []model.PostAuthor{}
+	postClaims := []factcheckModel.PostClaim{}
 
 	err = json.NewDecoder(r.Body).Decode(&post)
 
@@ -172,6 +174,47 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// appending previous post tags to result
 	for _, postTag := range updatedPostTags {
 		result.Tags = append(result.Tags, postTag.Tag)
+	}
+
+	if result.Post.Format.Slug == "post" {
+		// fetch existing post claims
+		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+			PostID: uint(id),
+		}).Find(&postClaims)
+
+		prevClaimIDs := make([]uint, 0)
+		mapperPostClaim := map[uint]factcheckModel.PostClaim{}
+		postClaimIDs := make([]uint, 0)
+
+		for _, postClaim := range postClaims {
+			mapperPostClaim[postClaim.ClaimID] = postClaim
+			prevClaimIDs = append(prevClaimIDs, postClaim.ClaimID)
+		}
+
+		toCreateIDs, toDeleteIDs = arrays.Difference(prevClaimIDs, post.ClaimIDs)
+
+		// map post claim ids
+		for _, id := range toDeleteIDs {
+			postClaimIDs = append(postClaimIDs, mapperPostClaim[id].ID)
+		}
+
+		// delete post claims
+		if len(postClaimIDs) > 0 {
+			config.DB.Where(postClaimIDs).Delete(factcheckModel.PostClaim{})
+		}
+
+		for _, id := range toCreateIDs {
+			postClaim := &factcheckModel.PostClaim{}
+			postClaim.ClaimID = uint(id)
+			postClaim.PostID = result.ID
+
+			err = config.DB.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
+			if err != nil {
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
+
 	}
 
 	prevCategoryIDs := make([]uint, 0)

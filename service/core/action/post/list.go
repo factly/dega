@@ -7,10 +7,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
+	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"github.com/go-chi/chi"
 )
 
 // list response
@@ -29,6 +31,7 @@ type paging struct {
 // @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
+// @Param format query string false "format type"
 // @Success 200 {array} postData
 // @Router /core/posts [get]
 func list(w http.ResponseWriter, r *http.Request) {
@@ -43,6 +46,25 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	tx := config.DB.Preload("Medium").Preload("Format").Model(&model.Post{})
+
+	format := chi.URLParam(r, "format")
+	if format == "factcheck" {
+		tx = tx.Where(&model.Post{
+			SpaceID: uint(sID),
+			Format: &model.Format{
+				Slug: "factcheck",
+			},
+		})
+	} else {
+		tx = tx.Where(&model.Post{
+			SpaceID: uint(sID),
+			Format: &model.Format{
+				Slug: "article",
+			},
+		})
+	}
+
 	result := paging{}
 	result.Nodes = make([]postData, 0)
 
@@ -50,13 +72,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Where(&model.Post{
-		SpaceID: uint(sID),
-	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts).Error
-
-	if err != nil {
-		return
-	}
+	tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts)
 
 	// fetch all authors
 	authors, err := author.All(r.Context())
@@ -66,12 +82,26 @@ func list(w http.ResponseWriter, r *http.Request) {
 		categories := []model.PostCategory{}
 		tags := []model.PostTag{}
 		postAuthors := []model.PostAuthor{}
+		postClaims := []factcheckModel.PostClaim{}
 
 		postList.Categories = make([]model.Category, 0)
 		postList.Tags = make([]model.Tag, 0)
 		postList.Authors = make([]model.Author, 0)
 
 		postList.Post = post
+
+		if format == "factcheck" {
+			postList.Claims = make([]factcheckModel.Claim, 0)
+
+			config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+				PostID: post.ID,
+			}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+
+			// appending all post claims
+			for _, postClaim := range postClaims {
+				postList.Claims = append(postList.Claims, postClaim.Claim)
+			}
+		}
 
 		// fetch all categories
 		config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{

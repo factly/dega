@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
+	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -96,6 +97,33 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
 
+	if result.Format.Slug == "factcheck" {
+		result.Claims = make([]factcheckModel.Claim, 0)
+		// create post claim
+		for _, id := range post.ClaimIDs {
+			postClaim := &factcheckModel.PostClaim{}
+			postClaim.ClaimID = uint(id)
+			postClaim.PostID = result.ID
+
+			err = config.DB.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
+			if err != nil {
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
+
+		// fetch all post claims
+		postClaims := []factcheckModel.PostClaim{}
+		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+			PostID: result.ID,
+		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+
+		// appending all post claims
+		for _, postClaim := range postClaims {
+			result.Claims = append(result.Claims, postClaim.Claim)
+		}
+	}
+
 	// create post category & fetch categories
 	for _, id := range post.CategoryIDs {
 		postCategory := &model.PostCategory{}
@@ -116,12 +144,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		PostID: result.ID,
 	}).Preload("Category").Preload("Category.Medium").Find(&postCategories)
 
-	// appending previous post categories to result
+	// appending post categories to result
 	for _, postCategory := range postCategories {
 		result.Categories = append(result.Categories, postCategory.Category)
 	}
 
-	// create post tag & fetch tags
+	// create post tag
 	for _, id := range post.TagIDs {
 		postTag := &model.PostTag{}
 		postTag.TagID = uint(id)
