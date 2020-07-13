@@ -92,6 +92,7 @@ export const getPosts = (query) => {
                 authors: post.authors.map((author) => author.id),
                 format: post.format.id,
                 claims: post.claims.map((claim) => claim.id),
+                medium: post.medium?.id,
               };
             }),
           ),
@@ -134,6 +135,7 @@ export const getPost = (id) => {
             claims: post.claims.map((claim) => claim.id),
             tags: post.tags.map((tag) => tag.id),
             format: post.format.id,
+            medium: post.medium?.id,
           }),
         );
         dispatch(stopPostsLoading());
@@ -189,6 +191,7 @@ export const updatePost = (data) => {
             tags: post.tags.map((tag) => tag.id),
             format: post.format.id,
             claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
           }),
         );
         dispatch(stopPostsLoading());

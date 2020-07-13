@@ -3,6 +3,7 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
+import deepEqual from 'deep-equal';
 
 function TagsList() {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ function TagsList() {
 
   const { tags, total, loading } = useSelector((state) => {
     const node = state.tags.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, { page });
     });
 
     if (node)

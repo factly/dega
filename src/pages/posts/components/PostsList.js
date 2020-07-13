@@ -4,6 +4,7 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, deletePost } from '../../../actions/posts';
 import { Link } from 'react-router-dom';
+import deepEqual from 'deep-equal';
 
 function PostsList() {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function PostsList() {
 
   const { posts, total, loading } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, { page });
     });
 
     if (node)

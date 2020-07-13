@@ -5,6 +5,7 @@ import {
   SET_RATINGS_LOADING,
   RESET_RATINGS,
 } from '../constants/ratings';
+import deepEqual from 'deep-equal';
 
 const initialState = {
   req: [],
@@ -27,24 +28,9 @@ export default function ratingsReducer(state = initialState, action = {}) {
         loading: action.payload,
       };
     case ADD_RATINGS_REQUEST:
-      const localReq = state.req;
-      const { query, data, total } = action.payload;
-
-      const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === query.page;
-      });
-
-      if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
-
-      localReq.push({
-        data: data,
-        query: query,
-        total: total,
-      });
-
       return {
         ...state,
-        req: localReq,
+        req: state.req.filter((value) => !deepEqual(value, action.payload)).concat(action.payload),
       };
     case ADD_RATINGS:
       if (action.payload.length === 0) {

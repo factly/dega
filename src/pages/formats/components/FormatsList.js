@@ -3,6 +3,7 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link } from 'react-router-dom';
+import deepEqual from 'deep-equal';
 
 function FormatsList() {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ function FormatsList() {
 
   const { formats, total, loading } = useSelector((state) => {
     const node = state.formats.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, { page });
     });
 
     if (node)

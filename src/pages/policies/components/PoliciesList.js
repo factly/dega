@@ -4,6 +4,7 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies, deletePolicy } from '../../../actions/policies';
 import { Link } from 'react-router-dom';
+import deepEqual from 'deep-equal';
 
 function PoliciesList() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function PoliciesList() {
 
   const { policies, total, loading } = useSelector((state) => {
     const node = state.policies.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, { page });
     });
 
     if (node)
