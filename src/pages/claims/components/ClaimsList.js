@@ -49,7 +49,9 @@ function ClaimsList() {
       width: '20%',
       render: (_, record) => {
         return (
-          <span title={record.claim_date}>{moment(record.claim_date).format('MMMM Do YYYY')}</span>
+          <span title={record.claim_date}>
+            {record.claim_date ? moment(record.claim_date).format('MMMM Do YYYY') : null}
+          </span>
         );
       },
     },
