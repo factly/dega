@@ -82,7 +82,7 @@ export default function spacesReducer(state = initialState, action = {}) {
         },
       };
     case DELETE_SPACE_SUCCESS:
-      return state;
+      return initialState;
     default:
       return state;
   }
