@@ -65,6 +65,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Tags = make([]model.Tag, 0)
 	result.Categories = make([]model.Category, 0)
 	result.Authors = make([]model.Author, 0)
+	result.Claims = make([]factcheckModel.Claim, 0)
 
 	// fetch all authors
 	authors, err := author.All(r.Context())
@@ -111,9 +112,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FormatID:         post.FormatID,
 		FeaturedMediumID: post.FeaturedMediumID,
 		PublishedDate:    post.PublishedDate,
-	})
-
-	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
+	}).Preload("Medium").Preload("Format").First(&result.Post)
 
 	// fetch existing post categories
 	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
@@ -181,8 +180,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
 			PostID: uint(id),
 		}).Find(&postClaims)
-
-		result.Claims = make([]factcheckModel.Claim, 0)
 
 		prevClaimIDs := make([]uint, 0)
 		mapperPostClaim := map[uint]factcheckModel.PostClaim{}

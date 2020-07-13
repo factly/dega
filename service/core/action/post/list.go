@@ -12,7 +12,6 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
-	"github.com/go-chi/chi"
 )
 
 // list response
@@ -46,13 +45,19 @@ func list(w http.ResponseWriter, r *http.Request) {
 		SpaceID: uint(sID),
 	})
 
-	format := chi.URLParam(r, "format")
+	format := r.URL.Query().Get("format")
+
 	if format != "" {
-		tx = tx.Where(&model.Post{
-			Format: &model.Format{
-				Slug: format,
-			},
-		})
+		f := model.Format{}
+		err = config.DB.Where(&model.Format{
+			SpaceID: uint(sID),
+			Slug:    format,
+		}).First(&f).Error
+		if err == nil {
+			tx = tx.Where(&model.Post{
+				FormatID: f.ID,
+			})
+		}
 	}
 
 	result := paging{}
@@ -62,7 +67,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts)
+	err = tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts).Error
 
 	// fetch all authors
 	authors, err := author.All(r.Context())
@@ -77,10 +82,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 		postList.Categories = make([]model.Category, 0)
 		postList.Tags = make([]model.Tag, 0)
 		postList.Authors = make([]model.Author, 0)
-
+		postList.Claims = make([]factcheckModel.Claim, 0)
 		postList.Post = post
 
-		if post.Format.Slug == "factcheck" {
+		if post.Format != nil && post.Format.Slug == "factcheck" {
 			postList.Claims = make([]factcheckModel.Claim, 0)
 
 			config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{

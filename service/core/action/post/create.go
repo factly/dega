@@ -41,6 +41,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result.Categories = make([]model.Category, 0)
 	result.Tags = make([]model.Tag, 0)
 	result.Authors = make([]model.Author, 0)
+	result.Claims = make([]factcheckModel.Claim, 0)
 
 	err = json.NewDecoder(r.Body).Decode(&post)
 
@@ -98,7 +99,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
 
 	if result.Format.Slug == "factcheck" {
-		result.Claims = make([]factcheckModel.Claim, 0)
 		// create post claim
 		for _, id := range post.ClaimIDs {
 			postClaim := &factcheckModel.PostClaim{}

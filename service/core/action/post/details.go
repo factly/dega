@@ -46,6 +46,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	result.Categories = make([]model.Category, 0)
 	result.Tags = make([]model.Tag, 0)
 	result.Authors = make([]model.Author, 0)
+	result.Claims = make([]factcheckModel.Claim, 0)
 
 	categories := []model.PostCategory{}
 	tags := []model.PostTag{}
@@ -63,7 +64,6 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if result.Format.Slug == "factcheck" {
-		result.Claims = make([]factcheckModel.Claim, 0)
 
 		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
 			PostID: uint(id),
