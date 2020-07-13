@@ -5,6 +5,7 @@ import {
   SET_TAGS_LOADING,
   RESET_TAGS,
 } from '../constants/tags';
+import deepEqual from 'deep-equal';
 
 const initialState = {
   req: [],
@@ -27,24 +28,9 @@ export default function tagsReducer(state = initialState, action = {}) {
         loading: action.payload,
       };
     case ADD_TAGS_REQUEST:
-      const localReq = state.req;
-      const { query, data, total } = action.payload;
-
-      const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === query.page;
-      });
-
-      if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
-
-      localReq.push({
-        data: data,
-        query: query,
-        total: total,
-      });
-
       return {
         ...state,
-        req: localReq,
+        req: state.req.filter((value) => !deepEqual(value, action.payload)).concat(action.payload),
       };
     case ADD_TAGS:
       if (action.payload.length === 0) {
