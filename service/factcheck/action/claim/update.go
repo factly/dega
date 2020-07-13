@@ -55,7 +55,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.Where(&model.Claimant{
+	err = config.DB.Where(&model.Claim{
 		SpaceID: uint(sID),
 	}).First(&result).Error
 
