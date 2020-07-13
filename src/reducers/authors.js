@@ -34,13 +34,15 @@ export default function tagsReducer(state = initialState, action = {}) {
         req: localReq,
       };
     case ADD_AUTHORS:
-      const localDetails = state.details;
-      action.payload.forEach((element) => {
-        localDetails[element.id] = element;
-      });
+      if (action.payload.length === 0) {
+        return state;
+      }
       return {
         ...state,
-        details: localDetails,
+        details: {
+          ...state.details,
+          ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
+        },
       };
     default:
       return state;
