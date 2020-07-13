@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
+	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
@@ -45,11 +46,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 	result.Categories = make([]model.Category, 0)
 	result.Tags = make([]model.Tag, 0)
 	result.Authors = make([]model.Author, 0)
+	result.Claims = make([]factcheckModel.Claim, 0)
 
 	categories := []model.PostCategory{}
 	tags := []model.PostTag{}
 	postAuthors := []model.PostAuthor{}
-
+	postClaims := []factcheckModel.PostClaim{}
 	result.ID = uint(id)
 
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Where(&model.Post{
@@ -59,6 +61,18 @@ func details(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
+	}
+
+	if result.Format.Slug == "factcheck" {
+
+		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+			PostID: uint(id),
+		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+
+		// appending all post claims
+		for _, postClaim := range postClaims {
+			result.Claims = append(result.Claims, postClaim.Claim)
+		}
 	}
 
 	// fetch all categories

@@ -27,6 +27,14 @@ type Claim struct {
 	SpaceID       uint           `gorm:"column:space_id" json:"space_id"`
 }
 
+// PostClaim model
+type PostClaim struct {
+	config.Base
+	ClaimID uint  `gorm:"column:claim_id" json:"claim_id"`
+	Claim   Claim `gorm:"foreignkey:claim_id;association_foreignkey:id"`
+	PostID  uint  `gorm:"column:post_id" json:"post_id"`
+}
+
 // BeforeCreate - validation for rating & claimant
 func (c *Claim) BeforeCreate(tx *gorm.DB) (e error) {
 	if c.ClaimantID > 0 {

@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
+	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/slug"
@@ -50,6 +51,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	postCategories := []model.PostCategory{}
 	postTags := []model.PostTag{}
 	postAuthors := []model.PostAuthor{}
+	postClaims := []factcheckModel.PostClaim{}
 
 	err = json.NewDecoder(r.Body).Decode(&post)
 
@@ -63,6 +65,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Tags = make([]model.Tag, 0)
 	result.Categories = make([]model.Category, 0)
 	result.Authors = make([]model.Author, 0)
+	result.Claims = make([]factcheckModel.Claim, 0)
 
 	// fetch all authors
 	authors, err := author.All(r.Context())
@@ -109,9 +112,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FormatID:         post.FormatID,
 		FeaturedMediumID: post.FeaturedMediumID,
 		PublishedDate:    post.PublishedDate,
-	})
-
-	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
+	}).Preload("Medium").Preload("Format").First(&result.Post)
 
 	// fetch existing post categories
 	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
@@ -172,6 +173,58 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// appending previous post tags to result
 	for _, postTag := range updatedPostTags {
 		result.Tags = append(result.Tags, postTag.Tag)
+	}
+
+	if result.Post.Format.Slug == "factcheck" {
+		// fetch existing post claims
+		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+			PostID: uint(id),
+		}).Find(&postClaims)
+
+		prevClaimIDs := make([]uint, 0)
+		mapperPostClaim := map[uint]factcheckModel.PostClaim{}
+		postClaimIDs := make([]uint, 0)
+
+		for _, postClaim := range postClaims {
+			mapperPostClaim[postClaim.ClaimID] = postClaim
+			prevClaimIDs = append(prevClaimIDs, postClaim.ClaimID)
+		}
+
+		toCreateIDs, toDeleteIDs = arrays.Difference(prevClaimIDs, post.ClaimIDs)
+
+		// map post claim ids
+		for _, id := range toDeleteIDs {
+			postClaimIDs = append(postClaimIDs, mapperPostClaim[id].ID)
+		}
+
+		// delete post claims
+		if len(postClaimIDs) > 0 {
+			config.DB.Where(postClaimIDs).Delete(factcheckModel.PostClaim{})
+		}
+
+		for _, id := range toCreateIDs {
+			postClaim := &factcheckModel.PostClaim{}
+			postClaim.ClaimID = uint(id)
+			postClaim.PostID = result.ID
+
+			err = config.DB.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
+			if err != nil {
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
+
+		// fetch updated post claims
+		updatedPostClaims := []factcheckModel.PostClaim{}
+		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+			PostID: uint(id),
+		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&updatedPostClaims)
+
+		// appending previous post claims to result
+		for _, postClaim := range updatedPostClaims {
+			result.Claims = append(result.Claims, postClaim.Claim)
+		}
+
 	}
 
 	prevCategoryIDs := make([]uint, 0)

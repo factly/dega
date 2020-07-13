@@ -52,16 +52,6 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// delete all tags related to post
-	config.DB.Where(&model.PostTag{
-		PostID: uint(id),
-	}).Delete(model.PostTag{})
-
-	// delete all categories related to post
-	config.DB.Where(&model.PostCategory{
-		PostID: uint(id),
-	}).Delete(model.PostCategory{})
-
 	config.DB.Model(&model.Post{}).Delete(&result)
 
 	renderx.JSON(w, http.StatusOK, nil)

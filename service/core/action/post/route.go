@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/service/core/model"
+	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -27,14 +28,16 @@ type post struct {
 	SpaceID          uint           `json:"space_id"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`
+	ClaimIDs         []uint         `json:"claim_ids"`
 	AuthorIDs        []uint         `json:"author_ids"`
 }
 
 type postData struct {
 	model.Post
-	Categories []model.Category `json:"categories"`
-	Tags       []model.Tag      `json:"tags"`
-	Authors    []model.Author   `json:"authors"`
+	Categories []model.Category       `json:"categories"`
+	Tags       []model.Tag            `json:"tags"`
+	Authors    []model.Author         `json:"authors"`
+	Claims     []factcheckModel.Claim `json:"claims"`
 }
 
 // CheckSpace - validation for medium, format, categories & tags
