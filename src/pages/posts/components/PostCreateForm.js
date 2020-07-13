@@ -10,9 +10,12 @@ import { useSelector } from 'react-redux';
 
 function CreatePost({ onCreate, data = {} }) {
   const [form] = Form.useForm();
-  const [claimShow, setClaimShow] = React.useState(true);
 
   const formats = useSelector((state) => state.formats.details);
+
+  const [claimHide, setClaimHide] = React.useState(
+    data.format && formats[data.format] && formats[data.format].slug === 'factcheck' ? false : true,
+  );
 
   const onSave = (values) => {
     values.category_ids = values.categories || [];
@@ -44,7 +47,7 @@ function CreatePost({ onCreate, data = {} }) {
             formats[form.getFieldValue('format')] &&
             formats[form.getFieldValue('format')].slug === 'factcheck';
 
-          setClaimShow(!flag);
+          setClaimHide(!flag);
         }
       }}
     >
@@ -95,7 +98,7 @@ function CreatePost({ onCreate, data = {} }) {
             <Form.Item name="excerpt" label="Excerpt">
               <Input.TextArea rows={4} placeholder="excerpt" />
             </Form.Item>
-            <Form.Item name="claims" label="Claims" hidden={claimShow}>
+            <Form.Item name="claims" label="Claims" hidden={claimHide}>
               <Selector mode="multiple" display={'title'} action="Claims" />
             </Form.Item>
             <Form.Item name="description" label="Description">
