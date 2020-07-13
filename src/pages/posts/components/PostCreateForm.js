@@ -95,7 +95,16 @@ function CreatePost({ onCreate, data = {} }) {
             >
               <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
             </Form.Item>
-            <Form.Item name="excerpt" label="Excerpt">
+            <Form.Item
+              name="excerpt"
+              label="Excerpt"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input excerpt!',
+                },
+              ]}
+            >
               <Input.TextArea rows={4} placeholder="excerpt" />
             </Form.Item>
             <Form.Item name="claims" label="Claims" hidden={claimHide}>

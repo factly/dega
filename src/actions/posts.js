@@ -28,8 +28,9 @@ export const getPosts = (query) => {
             response.data.nodes
               .filter((post) => post.authors.length > 0)
               .map((post) => {
-                return { ...post.authors };
-              }),
+                return post.authors;
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -37,8 +38,9 @@ export const getPosts = (query) => {
             response.data.nodes
               .filter((post) => post.tags.length > 0)
               .map((post) => {
-                return { ...post.tags };
-              }),
+                return post.tags;
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -46,8 +48,9 @@ export const getPosts = (query) => {
             response.data.nodes
               .filter((post) => post.categories.length > 0)
               .map((post) => {
-                return { ...post.categories };
-              }),
+                return post.categories;
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -56,7 +59,8 @@ export const getPosts = (query) => {
               .filter((post) => post.format)
               .map((post) => {
                 return post.format;
-              }),
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -64,8 +68,9 @@ export const getPosts = (query) => {
             response.data.nodes
               .filter((post) => post.claims.length > 0)
               .map((post) => {
-                return { ...post.claims };
-              }),
+                return post.claims;
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -85,7 +90,7 @@ export const getPosts = (query) => {
                 categories: post.categories.map((category) => category.id),
                 tags: post.tags.map((tag) => tag.id),
                 authors: post.authors.map((author) => author.id),
-                format: post.format?.id,
+                format: post.format.id,
                 claims: post.claims.map((claim) => claim.id),
               };
             }),
@@ -118,7 +123,7 @@ export const getPost = (id) => {
         dispatch(addAuthors(post.authors));
         dispatch(addCategories(post.categories));
         dispatch(addClaims(post.claims));
-        if (post.format) dispatch(addFormats([post.format]));
+        dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
 
         dispatch(
@@ -128,7 +133,7 @@ export const getPost = (id) => {
             categories: post.categories.map((category) => category.id),
             claims: post.claims.map((claim) => claim.id),
             tags: post.tags.map((tag) => tag.id),
-            format: post.format?.id,
+            format: post.format.id,
           }),
         );
         dispatch(stopPostsLoading());
@@ -150,8 +155,9 @@ export const addPost = (data) => {
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
         dispatch(addClaims(post.claims));
-        if (post.format) dispatch(addFormats([post.format]));
+        dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
+
         dispatch(resetPosts());
         dispatch(addSuccessNotification('Post added'));
       })
@@ -172,7 +178,7 @@ export const updatePost = (data) => {
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
         dispatch(addClaims(post.claims));
-        if (post.format) dispatch(addFormats([post.format]));
+        dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
 
         dispatch(
@@ -181,7 +187,7 @@ export const updatePost = (data) => {
             authors: post.authors.map((author) => author.id),
             categories: post.categories.map((category) => category.id),
             tags: post.tags.map((tag) => tag.id),
-            format: post.format?.id,
+            format: post.format.id,
             claims: post.claims.map((claim) => claim.id),
           }),
         );
