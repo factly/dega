@@ -71,8 +71,9 @@ func main() {
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
 
-	/* disable swagger in production */
-	r.Get("/swagger/*", httpSwagger.WrapHandler)
+	if envName, _ := os.LookupEnv("ENVIRONMENT_NAME"); envName == "development" {
+		r.Get("/swagger/*", httpSwagger.WrapHandler)
+	}
 
 	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrgnaization, policy.Authorizer).Group(func(r chi.Router) {
 		r.Mount("/factcheck", factcheck.Router())

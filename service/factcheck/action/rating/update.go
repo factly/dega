@@ -35,7 +35,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ratingID := chi.URLParam(r, "id")
+	ratingID := chi.URLParam(r, "rating_id")
 	id, err := strconv.Atoi(ratingID)
 
 	if err != nil {
