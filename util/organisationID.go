@@ -46,7 +46,7 @@ func GenerateOrgnaization(h http.Handler) http.Handler {
 	})
 }
 
-// GetOrganisation return organizatio ID
+// GetOrganisation return organisation ID
 func GetOrganisation(ctx context.Context) (int, error) {
 	if ctx == nil {
 		return 0, errors.New("context not found")
