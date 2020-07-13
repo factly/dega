@@ -32,7 +32,7 @@ export const getClaims = (query) => {
         dispatch(
           addClaimsList(
             response.data.nodes.map((claim) => {
-              return { ...claim, claimant: claim.claimant?.id, rating: claim.rating?.id };
+              return { ...claim, claimant: claim.claimant.id, rating: claim.rating.id };
             }),
           ),
         );
@@ -58,8 +58,8 @@ export const getClaim = (id) => {
       .get(CLAIMS_API + '/' + id)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
-        if (claim.rating) dispatch(addRatings([claim.rating]));
+        dispatch(addClaimants([claim.claimant]));
+        dispatch(addRatings([claim.rating]));
 
         dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
         dispatch(stopClaimsLoading());
@@ -77,8 +77,8 @@ export const addClaim = (data) => {
       .post(CLAIMS_API, data)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
-        if (claim.rating) dispatch(addRatings([claim.rating]));
+        dispatch(addClaimants([claim.claimant]));
+        dispatch(addRatings([claim.rating]));
 
         dispatch(resetClaims());
         dispatch(addSuccessNotification('Claim added'));
@@ -96,8 +96,8 @@ export const updateClaim = (data) => {
       .put(CLAIMS_API + '/' + data.id, data)
       .then((response) => {
         let claim = response.data;
-        if (claim.claimant) dispatch(addClaimants([claim.claimant]));
-        if (claim.rating) dispatch(addRatings([claim.rating]));
+        dispatch(addClaimants([claim.claimant]));
+        dispatch(addRatings([claim.rating]));
 
         dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
         dispatch(stopClaimsLoading());
@@ -131,7 +131,7 @@ export const addClaims = (claims) => {
     dispatch(
       addClaimsList(
         claims.map((claim) => {
-          return { ...claim, claimant: claim.claimant?.id, rating: claim.rating?.id };
+          return { ...claim, claimant: claim.claimant.id, rating: claim.rating.id };
         }),
       ),
     );
