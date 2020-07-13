@@ -33,7 +33,10 @@ export default function spacesReducer(state = initialState, action = {}) {
         });
       });
 
-      const defaultSpace = action.payload[0].spaces.length > 0 ? action.payload[0].spaces[0].id : 0;
+      const defaultSpace =
+        action.payload.length > 0 && action.payload[0].spaces.length > 0
+          ? action.payload[0].spaces[0].id
+          : 0;
 
       return {
         ...state,

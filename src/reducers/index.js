@@ -10,7 +10,6 @@ import posts from './posts';
 import ratings from './ratings';
 import claimants from './claimants';
 import claims from './claims';
-import factChecks from './factChecks';
 import notifications from './notifications';
 import policies from './policies';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
@@ -27,7 +26,6 @@ const appReducer = combineReducers({
   ratings,
   claimants,
   claims,
-  factChecks,
   notifications,
   policies,
 });

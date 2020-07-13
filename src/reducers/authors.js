@@ -4,7 +4,6 @@ const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 export default function tagsReducer(state = initialState, action = {}) {
@@ -27,12 +26,12 @@ export default function tagsReducer(state = initialState, action = {}) {
       localReq.push({
         data: data,
         query: query,
+        total: total,
       });
 
       return {
         ...state,
         req: localReq,
-        total: total,
       };
     case ADD_AUTHORS:
       const localDetails = state.details;
