@@ -3,6 +3,7 @@ import { Popconfirm, Avatar, Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia, deleteMedium } from '../../../actions/media';
 import { Link } from 'react-router-dom';
+import deepEqual from 'deep-equal';
 
 function MediaList() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function MediaList() {
 
   const { media, total, loading } = useSelector((state) => {
     const node = state.media.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, { page });
     });
 
     if (node)

@@ -34,9 +34,7 @@ export default function spacesReducer(state = initialState, action = {}) {
       });
 
       const defaultSpace =
-        action.payload.length > 0 && action.payload[0].spaces.length > 0
-          ? action.payload[0].spaces[0].id
-          : 0;
+        Object.keys(space_details).length > 0 ? space_details[Object.keys(space_details)[0]].id : 0;
 
       return {
         ...state,
@@ -51,9 +49,9 @@ export default function spacesReducer(state = initialState, action = {}) {
       let org_index = state.orgs.findIndex(
         (element) => element.id === action.payload.organisation_id,
       );
-      let space_list = state.orgs[org_index].spaces;
+      let space_list = [...state.orgs[org_index].spaces];
       space_list.splice(0, 0, action.payload.id);
-      let org_copy = state.orgs;
+      let org_copy = [...state.orgs];
       org_copy[org_index] = {
         ...org_copy[org_index],
         spaces: space_list,
