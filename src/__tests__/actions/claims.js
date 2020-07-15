@@ -26,16 +26,17 @@ const claim_without_id = {
 };
 const claim = {
   id: 1,
-  name: 'Claim 1',
-  claimant: { id: 11, name: 'Claimant 1', medium: { id: 21, name: 'Medium-Claimant 1' } },
-  rating: { id: 100, name: 'Rating 1', medium: { id: 110, name: 'Medium-Rating 1' } },
+  ...claim_without_id,
 };
+const { claimant, rating, ...claim_without_claimant_and_rating } = claim;
+
 const claim2 = {
   id: 2,
   name: 'Claim 2',
   claimant: { id: 12, name: 'Claimant 2', medium: { id: 22, name: 'Medium-Claimant 2' } },
   rating: { id: 200, name: 'Rating 2', medium: { id: 220, name: 'Medium-Rating 2' } },
 };
+const { claimant: claimant2, rating: rating2, ...claim_without_claimant_and_rating2 } = claim2;
 
 describe('claims actions', () => {
   it('should create an action to set loading to true', () => {
@@ -136,6 +137,51 @@ describe('claims actions', () => {
       params: query,
     });
   });
+  it('should create actions to fetch claims list without claimants and ratings', () => {
+    const query = { page: 1, limit: 5 };
+    const claims = [claim_without_claimant_and_rating, claim_without_claimant_and_rating2];
+    const resp = { data: { nodes: claims, total: 2 } };
+    axios.get.mockResolvedValue(resp);
+
+    const store = mockStore({ initialState });
+
+    store.dispatch(actions.getClaims(query)).catch((err) => expect(err).toBeInstanceOf(TypeError));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
+      params: query,
+    });
+  });
+  it('should create actions to fetch claims list with claimants but not ratings', () => {
+    const query = { page: 1, limit: 5 };
+    const claims = [
+      { ...claim_without_claimant_and_rating, claimant },
+      { ...claim_without_claimant_and_rating2, claimant2 },
+    ];
+    const resp = { data: { nodes: claims, total: 2 } };
+    axios.get.mockResolvedValue(resp);
+
+    const store = mockStore({ initialState });
+
+    store.dispatch(actions.getClaims(query)).catch((err) => expect(err).toBeInstanceOf(TypeError));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
+      params: query,
+    });
+  });
+  it('should create actions to fetch claims list with ratings but not claimants', () => {
+    const query = { page: 1, limit: 5 };
+    const claims = [
+      { ...claim_without_claimant_and_rating, rating },
+      { ...claim_without_claimant_and_rating2, rating2 },
+    ];
+    const resp = { data: { nodes: claims, total: 2 } };
+    axios.get.mockResolvedValue(resp);
+
+    const store = mockStore({ initialState });
+
+    store.dispatch(actions.getClaims(query)).catch((err) => expect(err).toBeInstanceOf(TypeError));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
+      params: query,
+    });
+  });
   it('should create actions to fetch claims failure', () => {
     const query = { page: 1, limit: 5 };
     const errorMessage = 'Unable to fetch';
@@ -204,6 +250,38 @@ describe('claims actions', () => {
     store
       .dispatch(actions.getClaim(id))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API + '/' + id);
+  });
+  it('should create actions to get claim by id without claimant and rating', () => {
+    const id = 1;
+    const resp = { data: claim };
+    axios.get.mockResolvedValue(resp);
+
+    const store = mockStore({ initialState });
+
+    store.dispatch(actions.getClaim(id)).catch((err) => expect(err).toBeInstanceOf(TypeError));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API + '/' + id);
+  });
+  it('should create actions to get claim by id with claimant but not rating', () => {
+    const claim = { ...claim_without_claimant_and_rating, claimant };
+    const id = 1;
+    const resp = { data: claim };
+    axios.get.mockResolvedValue(resp);
+
+    const store = mockStore({ initialState });
+
+    store.dispatch(actions.getClaim(id)).catch((err) => expect(err).toBeInstanceOf(TypeError));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API + '/' + id);
+  });
+  it('should create actions to get claim by id with rating but not claimant', () => {
+    const id = 1;
+    const resp = { data: claim };
+    axios.get.mockResolvedValue(resp);
+    const claim = { ...claim_without_claimant_and_rating, rating };
+
+    const store = mockStore({ initialState });
+
+    store.dispatch(actions.getClaim(id)).catch((err) => expect(err).toBeInstanceOf(TypeError));
     expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API + '/' + id);
   });
   it('should create actions to get claim by id failure', () => {
@@ -301,7 +379,7 @@ describe('claims actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CLAIMS_API, claim);
   });
-  it('should create actions to update claim success', () => {
+  it('should create actions to update claim success with claim and rating', () => {
     const resp = { data: claim };
     axios.put.mockResolvedValue(resp);
 
@@ -349,6 +427,37 @@ describe('claims actions', () => {
       .dispatch(actions.updateClaim(claim))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.CLAIMS_API + '/1', claim);
+  });
+  it('should create actions to update claim without claimant and rating', () => {
+    const store = mockStore({ initialState });
+
+    try {
+      store.dispatch(actions.updateClaim(claim_without_claimant_and_rating));
+    } catch (err) {
+      expect(err).toBeInstanceOf(TypeError);
+    }
+  });
+  it('should create actions to update claim with claimant but not rating', () => {
+    const claim = { ...claim_without_claimant_and_rating, claimant };
+
+    const store = mockStore({ initialState });
+
+    try {
+      store.dispatch(actions.updateClaim(claim));
+    } catch (err) {
+      expect(err).toBeInstanceOf(TypeError);
+    }
+  });
+  it('should create actions to update claim with rating but not claimant', () => {
+    const claim = { ...claim_without_claimant_and_rating, rating };
+
+    const store = mockStore({ initialState });
+
+    try {
+      store.dispatch(actions.updateClaim(claim));
+    } catch (err) {
+      expect(err).toBeInstanceOf(TypeError);
+    }
   });
   it('should create actions to update claim failure', () => {
     const errorMessage = 'Failed to update claim';
@@ -427,7 +536,46 @@ describe('claims actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.CLAIMS_API + '/1');
   });
-  it('should create actions to add claims list', () => {
+  it('should create actions to add claims list without claimants and ratings', () => {
+    const claims = [claim_without_claimant_and_rating, claim_without_claimant_and_rating2];
+
+    const store = mockStore({ initialState });
+
+    try {
+      store.dispatch(actions.addClaims(claims));
+    } catch (err) {
+      expect(err).toBeInstanceOf(TypeError);
+    }
+  });
+  it('should create actions to add claims list with claimants but not ratings', () => {
+    const claims = [
+      { ...claim_without_claimant_and_rating, claimant },
+      { ...claim_without_claimant_and_rating2, claimant2 },
+    ];
+
+    const store = mockStore({ initialState });
+
+    try {
+      store.dispatch(actions.addClaims(claims));
+    } catch (err) {
+      expect(err).toBeInstanceOf(TypeError);
+    }
+  });
+  it('should create actions to add claims list with ratings but not claimants', () => {
+    const claims = [
+      { ...claim_without_claimant_and_rating, rating },
+      { ...claim_without_claimant_and_rating2, rating2 },
+    ];
+
+    const store = mockStore({ initialState });
+
+    try {
+      store.dispatch(actions.addClaims(claims));
+    } catch (err) {
+      expect(err).toBeInstanceOf(TypeError);
+    }
+  });
+  it('should create actions to add claims list with claimants and ratings', () => {
     const claims = [claim, claim2];
 
     const expectedActions = [

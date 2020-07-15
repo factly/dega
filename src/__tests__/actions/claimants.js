@@ -66,7 +66,7 @@ describe('claimants actions', () => {
     };
     expect(actions.resetClaimants()).toEqual(resetClaimantsRequestAction);
   });
-  it('should create actions to fetch claimants success', () => {
+  it('should create actions to fetch claimants success without media', () => {
     const query = { page: 1, limit: 5 };
     const claimants = [{ id: 1, name: 'Claimant' }];
     const resp = { data: { nodes: claimants, total: 1 } };
@@ -107,11 +107,14 @@ describe('claimants actions', () => {
       params: query,
     });
   });
-  it('should create actions to fetch claimants success with media', () => {
+  it('should create actions to fetch claimants success not all with media', () => {
     const query = { page: 1, limit: 5 };
-    const medium = { id: 3, medium: 'Medium' };
-    const claimants = [{ id: 1, name: 'Claimant', medium }];
-    const resp = { data: { nodes: claimants, total: 1 } };
+
+    const claimants = [
+      { id: 1, name: 'Claimant', medium: { id: 11, medium: 'Medium' } },
+      { id: 2, name: 'Claimant 2' },
+    ];
+    const resp = { data: { nodes: claimants, total: 2 } };
     axios.get.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -121,18 +124,72 @@ describe('claimants actions', () => {
       },
       {
         type: ADD_MEDIA,
-        payload: [medium],
+        payload: [{ id: 11, medium: 'Medium' }],
       },
       {
         type: types.ADD_CLAIMANTS,
-        payload: [{ id: 1, name: 'Claimant', medium: 3 }],
+        payload: [
+          { id: 1, name: 'Claimant', medium: 11 },
+          { id: 2, name: 'Claimant 2', medium: undefined },
+        ],
       },
       {
         type: types.ADD_CLAIMANTS_REQUEST,
         payload: {
-          data: [1],
+          data: [1, 2],
           query: query,
-          total: 1,
+          total: 2,
+        },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getClaimants(query))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMANTS_API, {
+      params: query,
+    });
+  });
+  it('should create actions to fetch claimants success all with media', () => {
+    const query = { page: 1, limit: 5 };
+
+    const claimants = [
+      { id: 1, name: 'Claimant', medium: { id: 11, medium: 'Medium' } },
+      { id: 2, name: 'Claimant 2', medium: { id: 21, medium: 'Medium 2' } },
+    ];
+    const resp = { data: { nodes: claimants, total: 2 } };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [
+          { id: 11, medium: 'Medium' },
+          { id: 21, medium: 'Medium 2' },
+        ],
+      },
+      {
+        type: types.ADD_CLAIMANTS,
+        payload: [
+          { id: 1, name: 'Claimant', medium: 11 },
+          { id: 2, name: 'Claimant 2', medium: 21 },
+        ],
+      },
+      {
+        type: types.ADD_CLAIMANTS_REQUEST,
+        payload: {
+          data: [1, 2],
+          query: query,
+          total: 2,
         },
       },
       {
@@ -352,7 +409,7 @@ describe('claimants actions', () => {
     expect(axios.put).toHaveBeenCalledWith(types.CLAIMANTS_API + '/1', claimant);
   });
   it('should create actions to update claimant with medium success', () => {
-    const medium = { id: 4, name: 'mediumm' };
+    const medium = { id: 4, name: 'medium' };
     const claimant = { id: 1, name: 'Claimant', medium: medium };
     const resp = { data: claimant };
     axios.put.mockResolvedValue(resp);
@@ -485,6 +542,30 @@ describe('claimants actions', () => {
         payload: [
           { id: 1, name: 'Claimant', medium: undefined },
           { id: 2, name: 'Claimant', medium: 4 },
+        ],
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store.dispatch(actions.addClaimants(claimants));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('should create actions to add claimants list where no claimant has medium', () => {
+    const claimants = [
+      { id: 1, name: 'Claimant' },
+      { id: 2, name: 'Claimant' },
+    ];
+
+    const expectedActions = [
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: types.ADD_CLAIMANTS,
+        payload: [
+          { id: 1, name: 'Claimant', medium: undefined },
+          { id: 2, name: 'Claimant', medium: undefined },
         ],
       },
     ];

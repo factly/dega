@@ -469,6 +469,30 @@ describe('categories actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.CATEGORIES_API + '/1');
   });
+  it('should create actions to add categories list with no medium in any of the categories', () => {
+    const categories = [
+      { id: 1, name: 'Category' },
+      { id: 2, name: 'Category' },
+    ];
+
+    const expectedActions = [
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: types.ADD_CATEGORIES,
+        payload: [
+          { id: 1, name: 'Category', medium: undefined },
+          { id: 2, name: 'Category', medium: undefined },
+        ],
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store.dispatch(actions.addCategories(categories));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
   it('should create actions to add categories list', () => {
     const medium = { id: 4, name: 'mediumm' };
     const categories = [

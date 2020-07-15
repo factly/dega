@@ -67,10 +67,10 @@ describe('ratings actions', () => {
     };
     expect(actions.resetRatings()).toEqual(resetRatingsAction);
   });
-  it('should create actions to fetch ratings success', () => {
+  it('should create actions to fetch ratings with none having media', () => {
     const query = { page: 1, limit: 5 };
     const ratings = [{ id: 1, name: 'Rating' }];
-    const resp = { data: { nodes: ratings, total: 1 } };
+    const resp = { data: { nodes: ratings, total: 2 } };
     axios.get.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -91,7 +91,7 @@ describe('ratings actions', () => {
         payload: {
           data: [1],
           query: query,
-          total: 1,
+          total: 2,
         },
       },
       {
@@ -108,11 +108,13 @@ describe('ratings actions', () => {
       params: query,
     });
   });
-  it('should create actions to fetch ratings success with media', () => {
+  it('should create actions to fetch ratings success with some having media', () => {
     const query = { page: 1, limit: 5 };
-    const medium = { id: 3, medium: 'Medium' };
-    const ratings = [{ id: 1, name: 'Rating', medium }];
-    const resp = { data: { nodes: ratings, total: 1 } };
+    const ratings = [
+      { id: 1, name: 'Rating 1', medium: { id: 10, medium: 'Medium 1' } },
+      { id: 2, name: 'Rating 2' },
+    ];
+    const resp = { data: { nodes: ratings, total: 2 } };
     axios.get.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -122,18 +124,71 @@ describe('ratings actions', () => {
       },
       {
         type: ADD_MEDIA,
-        payload: [medium],
+        payload: [{ id: 10, medium: 'Medium 1' }],
       },
       {
         type: types.ADD_RATINGS,
-        payload: [{ id: 1, name: 'Rating', medium: 3 }],
+        payload: [
+          { id: 1, name: 'Rating 1', medium: 10 },
+          { id: 2, name: 'Rating 2', medium: undefined },
+        ],
       },
       {
         type: types.ADD_RATINGS_REQUEST,
         payload: {
-          data: [1],
+          data: [1, 2],
           query: query,
-          total: 1,
+          total: 2,
+        },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getRatings(query))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.RATINGS_API, {
+      params: query,
+    });
+  });
+  it('should create actions to fetch ratings success with all having media', () => {
+    const query = { page: 1, limit: 5 };
+    const ratings = [
+      { id: 1, name: 'Rating 1', medium: { id: 10, medium: 'Medium 1' } },
+      { id: 2, name: 'Rating 2', medium: { id: 20, medium: 'Medium 2' } },
+    ];
+    const resp = { data: { nodes: ratings, total: 2 } };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [
+          { id: 10, medium: 'Medium 1' },
+          { id: 20, medium: 'Medium 2' },
+        ],
+      },
+      {
+        type: types.ADD_RATINGS,
+        payload: [
+          { id: 1, name: 'Rating 1', medium: 10 },
+          { id: 2, name: 'Rating 2', medium: 20 },
+        ],
+      },
+      {
+        type: types.ADD_RATINGS_REQUEST,
+        payload: {
+          data: [1, 2],
+          query: query,
+          total: 2,
         },
       },
       {
@@ -204,7 +259,7 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.RATINGS_API + '/' + id);
   });
-  it('should create actions to get rating by id success', () => {
+  it('should create actions to get rating by id without medium', () => {
     const id = 1;
     const rating = { id, name: 'Rating' };
     const resp = { data: rating };
@@ -231,7 +286,7 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.RATINGS_API + '/' + id);
   });
-  it('should create actions to get rating by id where rating has medium', () => {
+  it('should create actions to get rating by id with medium', () => {
     const id = 1;
     const medium = { id: 1, medium: 'Medium' };
     const rating = { id, name: 'Rating', medium };
@@ -318,7 +373,7 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.RATINGS_API, rating);
   });
-  it('should create actions to update rating without medium success', () => {
+  it('should create actions to update rating without medium', () => {
     const rating = { id: 1, name: 'Rating' };
     const resp = { data: rating };
     axios.put.mockResolvedValue(resp);
@@ -352,8 +407,8 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.RATINGS_API + '/1', rating);
   });
-  it('should create actions to update rating with medium success', () => {
-    const medium = { id: 4, name: 'mediumm' };
+  it('should create actions to update rating with medium', () => {
+    const medium = { id: 4, name: 'medium' };
     const rating = { id: 1, name: 'Rating', medium: medium };
     const resp = { data: rating };
     axios.put.mockResolvedValue(resp);
@@ -461,11 +516,35 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.RATINGS_API + '/1');
   });
-  it('should create actions to add ratings list', () => {
-    const medium = { id: 4, name: 'mediumm' };
+  it('should create actions to add ratings list with none having medium', () => {
     const ratings = [
       { id: 1, name: 'Rating' },
-      { id: 2, name: 'Rating', medium: medium },
+      { id: 2, name: 'Rating 2' },
+    ];
+
+    const expectedActions = [
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: types.ADD_RATINGS,
+        payload: [
+          { id: 1, name: 'Rating', medium: undefined },
+          { id: 2, name: 'Rating 2', medium: undefined },
+        ],
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store.dispatch(actions.addRatings(ratings));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('should create actions to add ratings list with some having medium', () => {
+    const medium = { id: 4, name: 'medium' };
+    const ratings = [
+      { id: 1, name: 'Rating' },
+      { id: 2, name: 'Rating 2', medium: medium },
     ];
 
     const expectedActions = [
@@ -477,7 +556,7 @@ describe('ratings actions', () => {
         type: types.ADD_RATINGS,
         payload: [
           { id: 1, name: 'Rating', medium: undefined },
-          { id: 2, name: 'Rating', medium: 4 },
+          { id: 2, name: 'Rating 2', medium: 4 },
         ],
       },
     ];
