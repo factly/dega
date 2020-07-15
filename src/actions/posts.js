@@ -13,6 +13,7 @@ import { addTags } from './tags';
 import { addFormats } from './formats';
 import { addMediaList } from './media';
 import { addAuthors } from './authors';
+import { addClaims } from './claims';
 
 export const getPosts = (query) => {
   return (dispatch) => {
@@ -27,8 +28,9 @@ export const getPosts = (query) => {
             response.data.nodes
               .filter((post) => post.authors.length > 0)
               .map((post) => {
-                return { ...post.authors };
-              }),
+                return post.authors;
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -36,8 +38,9 @@ export const getPosts = (query) => {
             response.data.nodes
               .filter((post) => post.tags.length > 0)
               .map((post) => {
-                return { ...post.tags };
-              }),
+                return post.tags;
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -45,8 +48,9 @@ export const getPosts = (query) => {
             response.data.nodes
               .filter((post) => post.categories.length > 0)
               .map((post) => {
-                return { ...post.categories };
-              }),
+                return post.categories;
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -55,7 +59,18 @@ export const getPosts = (query) => {
               .filter((post) => post.format)
               .map((post) => {
                 return post.format;
-              }),
+              })
+              .flat(1),
+          ),
+        );
+        dispatch(
+          addClaims(
+            response.data.nodes
+              .filter((post) => post.claims.length > 0)
+              .map((post) => {
+                return post.claims;
+              })
+              .flat(1),
           ),
         );
         dispatch(
@@ -75,7 +90,9 @@ export const getPosts = (query) => {
                 categories: post.categories.map((category) => category.id),
                 tags: post.tags.map((tag) => tag.id),
                 authors: post.authors.map((author) => author.id),
-                format: post.format?.id,
+                format: post.format.id,
+                claims: post.claims.map((claim) => claim.id),
+                medium: post.medium?.id,
               };
             }),
           ),
@@ -106,7 +123,8 @@ export const getPost = (id) => {
         dispatch(addTags(post.tags));
         dispatch(addAuthors(post.authors));
         dispatch(addCategories(post.categories));
-        if (post.format) dispatch(addFormats([post.format]));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
 
         dispatch(
@@ -114,8 +132,10 @@ export const getPost = (id) => {
             ...post,
             authors: post.authors.map((author) => author.id),
             categories: post.categories.map((category) => category.id),
+            claims: post.claims.map((claim) => claim.id),
             tags: post.tags.map((tag) => tag.id),
-            format: post.format?.id,
+            format: post.format.id,
+            medium: post.medium?.id,
           }),
         );
         dispatch(stopPostsLoading());
@@ -136,8 +156,10 @@ export const addPost = (data) => {
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
-        if (post.format) dispatch(addFormats([post.format]));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
+
         dispatch(resetPosts());
         dispatch(addSuccessNotification('Post added'));
       })
@@ -157,7 +179,8 @@ export const updatePost = (data) => {
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
-        if (post.format) dispatch(addFormats([post.format]));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMediaList([post.medium]));
 
         dispatch(
@@ -166,7 +189,9 @@ export const updatePost = (data) => {
             authors: post.authors.map((author) => author.id),
             categories: post.categories.map((category) => category.id),
             tags: post.tags.map((tag) => tag.id),
-            format: post.format?.id,
+            format: post.format.id,
+            claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
           }),
         );
         dispatch(stopPostsLoading());

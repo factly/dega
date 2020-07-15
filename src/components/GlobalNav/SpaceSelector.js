@@ -22,10 +22,10 @@ function SpaceSelector() {
       onChange={handleSpaceChange}
       bordered={false}
     >
-      {orgs.map((organazation) => (
-        <OptGroup key={'org-' + organazation.id} label={organazation.title}>
-          {organazation.spaces.map((space) => (
-            <Option key={'space-' + details[space].slug} value={details[space].id}>
+      {orgs.map((organisation) => (
+        <OptGroup key={'org-' + organisation.id} label={organisation.title}>
+          {organisation.spaces.map((space) => (
+            <Option key={'space-' + details[space].id} value={details[space].id}>
               <Avatar
                 size="small"
                 src={details[space].logo ? details[space].logo.url : DEFAULT_IMAGE}

@@ -54,9 +54,9 @@ const SpaceCreateForm = ({ onCreate }) => {
             <Form.Item
               name="organisation_id"
               noStyle
-              rules={[{ required: true, message: 'Organazation is required' }]}
+              rules={[{ required: true, message: 'organisation is required' }]}
             >
-              <Select style={{ width: '40%' }} placeholder="Select organazation">
+              <Select style={{ width: '40%' }} placeholder="Select organisation">
                 {orgs.map((org) => (
                   <Option key={org.id} value={org.id}>
                     {org.title}
@@ -83,9 +83,8 @@ const SpaceCreateForm = ({ onCreate }) => {
           rules={[
             {
               required: true,
-              message: 'Please input the slug of!',
+              message: 'Please input the slug!',
             },
-
             {
               pattern: checker,
               message: 'Please enter valid slug!',

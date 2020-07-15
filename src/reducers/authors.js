@@ -1,10 +1,10 @@
 import { SET_AUTHORS_LOADING, ADD_AUTHORS, ADD_AUTHORS_REQUEST } from '../constants/authors';
+import deepEqual from 'deep-equal';
 
 const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 export default function tagsReducer(state = initialState, action = {}) {
@@ -15,33 +15,20 @@ export default function tagsReducer(state = initialState, action = {}) {
         loading: action.payload,
       };
     case ADD_AUTHORS_REQUEST:
-      const localReq = [...state.req];
-      const { query, data, total } = action.payload;
-
-      const nodeIndex = state.req.findIndex((item) => {
-        return item.query.page === query.page;
-      });
-
-      if (nodeIndex > -1) localReq.splice(nodeIndex, 1);
-
-      localReq.push({
-        data: data,
-        query: query,
-      });
-
       return {
         ...state,
-        req: localReq,
-        total: total,
+        req: state.req.filter((value) => !deepEqual(value, action.payload)).concat(action.payload),
       };
     case ADD_AUTHORS:
-      const localDetails = { ...state.details };
-      action.payload.forEach((element) => {
-        localDetails[element.id] = element;
-      });
+      if (action.payload.length === 0) {
+        return state;
+      }
       return {
         ...state,
-        details: localDetails,
+        details: {
+          ...state.details,
+          ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
+        },
       };
     default:
       return state;

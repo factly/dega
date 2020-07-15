@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getClaims, deleteClaim } from '../../../actions/claims';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import deepEqual from 'deep-equal';
 
 function ClaimsList() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function ClaimsList() {
 
   const { claims, total, loading } = useSelector(({ claims, claimants, ratings }) => {
     const node = claims.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, { page });
     });
 
     if (node) {
@@ -48,7 +49,9 @@ function ClaimsList() {
       width: '20%',
       render: (_, record) => {
         return (
-          <span title={record.claim_date}>{moment(record.claim_date).format('MMMM Do YYYY')}</span>
+          <span title={record.claim_date}>
+            {record.claim_date ? moment(record.claim_date).format('MMMM Do YYYY') : null}
+          </span>
         );
       },
     },

@@ -66,28 +66,28 @@ const RatingCreateForm = ({ onCreate, data = {} }) => {
           },
           {
             pattern: checker,
-            message: 'Slug can not have whitespaces!',
+            message: 'Please enter valid slug!',
           },
         ]}
       >
         <Input />
       </Form.Item>
+      <Form.Item name="description" label="Description">
+        <TextArea />
+      </Form.Item>
       <Form.Item
-        name="description"
-        label="Description"
+        name="numeric_value"
+        label="Numeric value"
         rules={[
           {
             required: true,
-            message: 'Please input the description!',
+            message: 'Please enter the numeric value!',
           },
         ]}
       >
-        <TextArea />
+        <InputNumber min={1} max={5} />
       </Form.Item>
-      <Form.Item name="numeric_value" label="Numeric value">
-        <InputNumber min={1} max={5} defaultValue={3} />
-      </Form.Item>
-      <Form.Item label="Upload Media" name="medium_id">
+      <Form.Item name="medium_id" label="Upload Media">
         <MediaSelector />
       </Form.Item>
       <Form.Item {...tailLayout}>
