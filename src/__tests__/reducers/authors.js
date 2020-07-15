@@ -5,7 +5,6 @@ const initialState = {
   req: [],
   details: {},
   loading: true,
-  total: 0,
 };
 
 describe('authors reducer', () => {
@@ -22,7 +21,6 @@ describe('authors reducer', () => {
       req: [],
       details: {},
       loading: true,
-      total: 0,
     });
     expect(
       reducer(initialState, {
@@ -33,7 +31,6 @@ describe('authors reducer', () => {
       req: [],
       details: {},
       loading: false,
-      total: 0,
     });
   });
   it('should handle ADD_AUTHORS_REQUEST', () => {
@@ -47,10 +44,9 @@ describe('authors reducer', () => {
         },
       }),
     ).toEqual({
-      req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 } }],
+      req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
       details: {},
       loading: true,
-      total: 3,
     });
   });
   it('should handle ADD_AUTHORS', () => {
@@ -65,7 +61,6 @@ describe('authors reducer', () => {
     ).toEqual({
       req: [],
       details: { 1: { id: 1, author: 'Aut' }, 2: { id: 2, author: 'hor' } },
-      total: 0,
       loading: true,
     });
   });
@@ -78,7 +73,6 @@ describe('authors reducer', () => {
     ).toEqual({
       req: [],
       details: {},
-      total: 0,
       loading: true,
     });
   });

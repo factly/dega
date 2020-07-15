@@ -69,13 +69,13 @@ describe('ratings reducer', () => {
       reducer(initialState, {
         type: types.ADD_RATINGS,
         payload: [
-          { id: 1, name: 'Cat 1' },
-          { id: 2, name: 'Cat 2' },
+          { id: 1, name: 'rating 1' },
+          { id: 2, name: 'rating 2' },
         ],
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, name: 'Cat 1' }, 2: { id: 2, name: 'Cat 2' } },
+      details: { 1: { id: 1, name: 'rating 1' }, 2: { id: 2, name: 'rating 2' } },
       loading: true,
     });
   });

@@ -16,7 +16,7 @@ describe('claims reducer', () => {
       reducer(
         {
           req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-          details: [{ id: 1, name: 'cat' }],
+          details: [{ id: 1, name: 'claim' }],
           loading: false,
         },
         {
@@ -69,13 +69,13 @@ describe('claims reducer', () => {
       reducer(initialState, {
         type: types.ADD_CLAIMS,
         payload: [
-          { id: 1, name: 'Cat 1' },
-          { id: 2, name: 'Cat 2' },
+          { id: 1, name: 'claim 1' },
+          { id: 2, name: 'claim 2' },
         ],
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, name: 'Cat 1' }, 2: { id: 2, name: 'Cat 2' } },
+      details: { 1: { id: 1, name: 'claim 1' }, 2: { id: 2, name: 'claim 2' } },
       loading: true,
     });
   });
