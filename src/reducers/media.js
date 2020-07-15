@@ -30,7 +30,9 @@ export default function mediaReducer(state = initialState, action = {}) {
     case ADD_MEDIA_REQUEST:
       return {
         ...state,
-        req: state.req.filter((value) => !deepEqual(value, action.payload)).concat(action.payload),
+        req: state.req
+          .filter((value) => !deepEqual(value.query, action.payload.query))
+          .concat(action.payload),
       };
     case ADD_MEDIA:
       if (action.payload.length === 0) {

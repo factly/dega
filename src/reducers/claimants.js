@@ -30,7 +30,9 @@ export default function claimantsReducer(state = initialState, action = {}) {
     case ADD_CLAIMANTS_REQUEST:
       return {
         ...state,
-        req: state.req.filter((value) => !deepEqual(value, action.payload)).concat(action.payload),
+        req: state.req
+          .filter((value) => !deepEqual(value.query, action.payload.query))
+          .concat(action.payload),
       };
     case ADD_CLAIMANTS:
       if (action.payload.length === 0) {

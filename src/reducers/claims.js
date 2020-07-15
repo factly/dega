@@ -30,7 +30,9 @@ export default function claimsReducer(state = initialState, action = {}) {
     case ADD_CLAIMS_REQUEST:
       return {
         ...state,
-        req: state.req.filter((value) => !deepEqual(value, action.payload)).concat(action.payload),
+        req: state.req
+          .filter((value) => !deepEqual(value.query, action.payload.query))
+          .concat(action.payload),
       };
     case ADD_CLAIMS:
       if (action.payload.length === 0) {
