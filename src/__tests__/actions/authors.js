@@ -44,6 +44,23 @@ describe('authors actions', () => {
     };
     expect(actions.addAuthorsList(data)).toEqual(addAuthorsAction);
   });
+  it('should create an action to add authors', () => {
+    const data = [
+      { id: 1, author: 'tester t' },
+      { id: 2, author: 'testing 2' },
+    ];
+
+    const expectedActions = [
+      {
+        type: types.ADD_AUTHORS,
+        payload: data,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store.dispatch(actions.addAuthors(data));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
   it('should create an action to add authors request', () => {
     const data = [{ query: 'query' }];
     const addAuthorsRequestAction = {

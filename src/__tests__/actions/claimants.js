@@ -177,7 +177,33 @@ describe('claimants actions', () => {
       params: query,
     });
   });
-  it('should create actions to get claimant by id', () => {
+  it('should create actions to get claimant by id failure', () => {
+    const id = 1;
+    const errorMessage = 'Unable to fetch';
+    axios.get.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getClaimant(id))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMANTS_API + '/' + id);
+  });
+  it('should create actions to get claimant by id success', () => {
     const id = 1;
     const claimant = { id, name: 'Claimant' };
     const resp = { data: claimant };

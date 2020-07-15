@@ -178,7 +178,33 @@ describe('categories actions', () => {
       params: query,
     });
   });
-  it('should create actions to get category by id', () => {
+  it('should create actions to get category by id failure', () => {
+    const id = 1;
+    const errorMessage = 'Unable to fetch';
+    axios.post.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getCategory(id))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.CATEGORIES_API + '/' + id);
+  });
+  it('should create actions to get category by id success', () => {
     const id = 1;
     const category = { id, name: 'Category' };
     const resp = { data: category };

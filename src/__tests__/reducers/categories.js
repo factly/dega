@@ -11,6 +11,19 @@ describe('categories reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
+  it('should return the state for default case', () => {
+    expect(
+      reducer({
+        req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
+        details: { 1: { id: 1, name: 'entity' } },
+        loading: false,
+      }),
+    ).toEqual({
+      req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
+      details: { 1: { id: 1, name: 'entity' } },
+      loading: false,
+    });
+  });
   it('should handle RESET_CATEGORIES', () => {
     expect(
       reducer(
@@ -58,6 +71,29 @@ describe('categories reducer', () => {
           total: 3,
         },
       }),
+    ).toEqual({
+      req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
+      details: {},
+      loading: true,
+    });
+  });
+  it('should handle ADD_CATEGORIES_REQUEST when req already exists', () => {
+    expect(
+      reducer(
+        {
+          req: [{ data: [1, 2], query: { page: 1, limit: 5 }, total: 2 }],
+          details: {},
+          loading: true,
+        },
+        {
+          type: types.ADD_CATEGORIES_REQUEST,
+          payload: {
+            data: [1, 2, 3],
+            query: { page: 1, limit: 5 },
+            total: 3,
+          },
+        },
+      ),
     ).toEqual({
       req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
       details: {},

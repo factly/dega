@@ -168,7 +168,33 @@ describe('media actions', () => {
       params: query,
     });
   });
-  it('should create actions to get medium by id', () => {
+  it('should create actions to get medium by id failure', () => {
+    const id = 1;
+    const errorMessage = 'Unable to fetch';
+    axios.get.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getMedium(id))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.MEDIA_API + '/' + id);
+  });
+  it('should create actions to get medium by id success', () => {
     const id = 1;
     const medium = { id, name: 'Medium' };
     const resp = { data: medium };
