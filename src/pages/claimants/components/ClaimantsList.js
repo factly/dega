@@ -4,6 +4,7 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants, deleteClaimant } from '../../../actions/claimants';
 import { Link } from 'react-router-dom';
+import deepEqual from 'deep-equal';
 
 function ClaimantsList() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function ClaimantsList() {
 
   const { claimants, total, loading } = useSelector((state) => {
     const node = state.claimants.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, { page });
     });
 
     if (node)

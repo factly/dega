@@ -4,6 +4,7 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, deleteCategory } from '../../../actions/categories';
 import { Link } from 'react-router-dom';
+import deepEqual from 'deep-equal';
 
 function CategoriesList() {
   const dispatch = useDispatch();
@@ -11,7 +12,7 @@ function CategoriesList() {
 
   const { categories, total, loading } = useSelector((state) => {
     const node = state.categories.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, { page });
     });
 
     if (node)

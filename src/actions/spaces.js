@@ -1,8 +1,6 @@
 import axios from 'axios';
 import {
   GET_SPACES_SUCCESS,
-  GET_SPACES_FAILURE,
-  ADD_SPACE_FAILURE,
   ADD_SPACE_SUCCESS,
   LOADING_SPACES,
   API_ADD_SPACE,
@@ -11,9 +9,7 @@ import {
   API_UPDATE_SPACE,
   SET_SELECTED_SPACE,
   DELETE_SPACE_SUCCESS,
-  DELETE_SPACE_FAILURE,
   UPDATE_SPACE_SUCCESS,
-  UPDATE_SPACE_FAILURE,
 } from '../constants/spaces';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 

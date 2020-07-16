@@ -5,7 +5,7 @@ import { LogoutOutlined, DownOutlined } from '@ant-design/icons';
 
 const AccountMenu = () => {
   const accountMenu = (
-    <Menu selectedKeys={['en-US']}>
+    <Menu>
       <Menu.Item>
         <a href={process.env.REACT_APP_KRATOS_PUBLIC_URL + '/self-service/browser/flows/logout'}>
           <LogoutOutlined />
@@ -16,7 +16,7 @@ const AccountMenu = () => {
   );
   return (
     <Dropdown overlay={accountMenu} placement="topRight">
-      <span className="dropdown">
+      <span>
         <UserOutlined title="Spaces" />
         <DownOutlined />
       </span>
