@@ -51,7 +51,7 @@ function PolicyCreateForm({ data = {}, onCreate }) {
         </Col>
         <Col span={12}>
           <Form.Item name="users" label="Users">
-            <Selector mode="multiple" display={'email'} action="Authors" />
+            <Selector display={'email'} action="Authors" />
           </Form.Item>
         </Col>
       </Row>
