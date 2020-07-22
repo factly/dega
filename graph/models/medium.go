@@ -6,21 +6,18 @@ import (
 
 // Medium model
 type Medium struct {
-	ID              string    `bson:"_id"`
-	Name            string    `bson:"name"`
-	Type            string    `bson:"type"`
-	URL             string    `bson:"url"`
-	FileSize        string    `bson:"file_size"`
-	Title           string    `bson:"title"`
-	AltText         string    `bson:"alt_text"`
-	UploadedBy      string    `bson:"uploaded_by"`
-	PublishedDate   time.Time `bson:"published_date"`
-	LastUpdatedDate time.Time `bson:"last_updated_date"`
-	Slug            *string   `bson:"slug"`
-	Description     *string   `bson:"description"`
-	ClientID        string    `bson:"client_id"`
-	CreatedDate     time.Time `bson:"created_date"`
-	Class           string    `bson:"_class"`
-	RelativeURL     string    `bson:"relative_url"`
-	SourceURL       string    `bson:"source_url"`
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	Name        string    `json:"name"`
+	Slug        *string   `json:"slug"`
+	Type        string    `json:"type"`
+	Title       string    `json:"title"`
+	Description *string   `json:"description"`
+	Caption     *string   `json:"caption"`
+	FileSize    string    `json:"file_size"`
+	AltText     string    `json:"alt_text"`
+	URL         string    `json:"url"`
+	Dimensions  string    `json:"dimensions"`
+	SpaceID     int       `json:"space_id"`
 }

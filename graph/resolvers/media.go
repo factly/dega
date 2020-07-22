@@ -2,43 +2,23 @@ package resolvers
 
 import (
 	"context"
-	"errors"
 
-	"github.com/factly/dega-api/graph/logger"
+	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/models"
-	"github.com/factly/dega-api/graph/mongo"
-	"go.mongodb.org/mongo-driver/bson"
+	"github.com/factly/dega-api/graph/validator"
 )
 
 func (r *queryResolver) Media(ctx context.Context) ([]*models.Medium, error) {
-	client := ctx.Value("client").(string)
-
-	if client == "" {
-		return nil, errors.New("client id missing")
-	}
-
-	query := bson.M{
-		"client_id": client,
-	}
-
-	cursor, err := mongo.Core.Collection("media").Find(ctx, query)
-
+	sID, err := validator.GetSpace(ctx)
 	if err != nil {
-		logger.Error(err)
-		return nil, nil
+		return nil, err
 	}
 
-	var results []*models.Medium
+	result := []*models.Medium{}
 
-	for cursor.Next(ctx) {
-		var each *models.Medium
-		err := cursor.Decode(&each)
-		if err != nil {
-			logger.Error(err)
-			return nil, nil
-		}
-		results = append(results, each)
-	}
+	config.DB.Model(&models.Medium{}).Where(&models.Medium{
+		SpaceID: sID,
+	}).Find(&result)
 
-	return results, nil
+	return result, nil
 }

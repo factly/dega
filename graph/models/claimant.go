@@ -6,16 +6,15 @@ import (
 
 // Claimant model
 type Claimant struct {
-	ID              string       `bson:"_id"`
-	Name            string       `bson:"name"`
-	TagLine         string       `bson:"tag_line"`
-	Description     string       `bson:"description"`
-	ClientID        string       `bson:"client_id"`
-	Slug            string       `bson:"slug"`
-	CreatedDate     time.Time    `bson:"created_date"`
-	LastUpdatedDate time.Time    `bson:"last_updated_date"`
-	Media           *DatabaseRef `bson:"media"`
-	Class           string       `bson:"_class"`
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	Name        string    `json:"name"`
+	Slug        string    `json:"slug"`
+	Description string    `json:"description"`
+	TagLine     string    `json:"tag_line"`
+	MediumID    *int      `json:"medium_id"`
+	SpaceID     int       `json:"space_id"`
 }
 
 // ClaimantsPaging model

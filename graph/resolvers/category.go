@@ -2,123 +2,91 @@ package resolvers
 
 import (
 	"context"
-	"errors"
+	"fmt"
 
-	"github.com/factly/dega-api/graph/logger"
+	"github.com/factly/dega-api/config"
+	"github.com/factly/dega-api/graph/generated"
+	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
-	"github.com/factly/dega-api/graph/mongo"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/factly/dega-api/graph/validator"
+	"github.com/factly/dega-api/util"
+	"github.com/jinzhu/gorm"
 )
 
-func (r *queryResolver) Categories(ctx context.Context, ids []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
+func (r *categoryResolver) ParentID(ctx context.Context, obj *models.Category) (int, error) {
+	return int(obj.ID), nil
+}
 
-	client := ctx.Value("client").(string)
-
-	if client == "" {
-		return nil, errors.New("client id missing")
+func (r *categoryResolver) Medium(ctx context.Context, obj *models.Category) (*models.Medium, error) {
+	if obj.MediumID == nil {
+		return nil, nil
 	}
 
-	query := bson.M{
-		"client_id": client,
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
+}
+
+func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
 	}
 
-	if len(ids) > 0 {
-		keys := []primitive.ObjectID{}
+	result := &models.Category{}
 
-		for _, id := range ids {
-			rid, err := primitive.ObjectIDFromHex(id)
+	err = config.DB.Model(&models.Category{}).Where(&models.Category{
+		ID:      id,
+		SpaceID: sID,
+	}).First(&result).Error
 
-			if err == nil {
-				keys = append(keys, rid)
-			}
-		}
-
-		query["_id"] = bson.M{"$in": keys}
+	if err != nil {
+		return nil, nil
 	}
 
-	pageLimit := 10
-	pageNo := 1
-	pageSortBy := "created_date"
-	pageSortOrder := -1
+	return result, nil
+}
 
-	if limit != nil {
-		pageLimit = *limit
-	}
-	if page != nil {
-		pageNo = *page
+func (r *queryResolver) Categories(ctx context.Context, ids []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	order := "created_at desc"
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
+
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
 	}
 
-	if sortBy != nil {
+	if sortOrder != nil && *sortOrder == "asc" {
+		pageSortOrder = "asc"
+	}
+
+	if sortBy != nil && util.ColumnValidator(*sortBy, columns) {
 		pageSortBy = *sortBy
 	}
-	if sortOrder != nil && *sortOrder == "ASC" {
-		pageSortOrder = 1
+
+	order = pageSortBy + " " + pageSortOrder
+
+	result := &models.CategoriesPaging{}
+	result.Nodes = make([]*models.Category, 0)
+
+	offset, pageLimit := util.Parse(limit, page)
+
+	var tx *gorm.DB
+
+	if len(ids) > 0 {
+		tx = config.DB.Model(&models.Category{}).Where(ids)
+	} else {
+		tx = config.DB.Model(&models.Category{})
 	}
 
-	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
-	cursor, err := mongo.Core.Collection("category").Find(ctx, query, opts)
-
-	if err != nil {
-		logger.Error(err)
-		return nil, nil
-	}
-
-	count, err := mongo.Core.Collection("category").CountDocuments(ctx, query)
-
-	if err != nil {
-		logger.Error(err)
-		return nil, nil
-	}
-
-	var nodes []*models.Category
-
-	for cursor.Next(ctx) {
-		var each *models.Category
-		err := cursor.Decode(&each)
-		if err != nil {
-			logger.Error(err)
-			return nil, nil
-		}
-		nodes = append(nodes, each)
-	}
-
-	var result *models.CategoriesPaging = new(models.CategoriesPaging)
-
-	result.Nodes = nodes
-	result.Total = int(count)
+	tx.Where(&models.Category{
+		SpaceID: sID,
+	}).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	return result, nil
 }
 
-func (r *queryResolver) Category(ctx context.Context, id string) (*models.Category, error) {
+// Category model resolver
+func (r *Resolver) Category() generated.CategoryResolver { return &categoryResolver{r} }
 
-	client := ctx.Value("client").(string)
-
-	if client == "" {
-		return nil, errors.New("client id missing")
-	}
-
-	oid, err := primitive.ObjectIDFromHex(id)
-
-	if err != nil {
-		logger.Error(err)
-		return nil, nil
-	}
-
-	query := bson.M{
-		"client_id": client,
-		"_id":       oid,
-	}
-
-	var result *models.Category
-
-	err = mongo.Core.Collection("category").FindOne(ctx, query).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
-}
+type categoryResolver struct{ *Resolver }

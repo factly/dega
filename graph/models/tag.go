@@ -6,14 +6,13 @@ import (
 
 // Tag model
 type Tag struct {
-	ID              string    `bson:"_id"`
-	Class           string    `bson:"_class"`
-	Name            string    `bson:"name"`
-	Slug            string    `bson:"slug"`
-	Description     *string   `bson:"description"`
-	ClientID        string    `bson:"client_id"`
-	CreatedDate     time.Time `bson:"created_date"`
-	LastUpdatedDate time.Time `bson:"last_updated_date"`
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	Name        string    `json:"name"`
+	Slug        string    `json:"slug"`
+	Description *string   `json:"description"`
+	SpaceID     int       `json:"space_id"`
 }
 
 // TagsPaging model

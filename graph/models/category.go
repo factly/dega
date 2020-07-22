@@ -6,14 +6,15 @@ import (
 
 // Category model
 type Category struct {
-	ID              string    `bson:"_id"`
-	Class           string    `bson:"_class"`
-	Name            string    `bson:"name"`
-	Slug            string    `bson:"slug"`
-	ClientID        string    `bson:"client_id"`
-	CreatedDate     time.Time `bson:"created_date"`
-	Description     *string   `bson:"description"`
-	LastUpdatedDate time.Time `bson:"last_updated_date"`
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	Name        string    `json:"name"`
+	Slug        string    `json:"slug"`
+	Description *string   `json:"description"`
+	ParentID    int       `json:"parent_id"`
+	MediumID    *int      `json:"medium_id"`
+	SpaceID     int       `json:"space_id"`
 }
 
 // CategoriesPaging model

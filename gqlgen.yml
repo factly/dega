@@ -54,10 +54,6 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
-  Status:
-    model: github.com/factly/dega-api/graph/models.Status
-  StatusesPaging:
-    model: github.com/factly/dega-api/graph/models.StatusesPaging
   Format:
     model: github.com/factly/dega-api/graph/models.Format
   FormatsPaging:
@@ -80,40 +76,22 @@ models:
     model: github.com/factly/dega-api/graph/models.ReviewRating
   Schemas:
     model: github.com/factly/dega-api/graph/models.Schemas
-  Organization:
-    model: github.com/factly/dega-api/graph/models.Organization
-    fields:
-        mediaLogo:
-          resolver: true
-        mediaMobileLogo:
-          resolver: true
-        mediaFavicon:
-          resolver: true
-        mediaMobileIcon:
-          resolver: true
   User:
     model: github.com/factly/dega-api/graph/models.User
-    fields:
-        organizationDefault:
-          resolver: true
-        organizationCurrent:
-          resolver: true
-        media:
-          resolver: true
   UsersPaging:
     model: github.com/factly/dega-api/graph/models.UsersPaging
   Post:
     model: github.com/factly/dega-api/graph/models.Post
     fields:
-        status:
-          resolver: true
         tags:
           resolver: true
         categories:
           resolver: true
+        claims:
+          resolver: true
         format:
           resolver: true
-        media:
+        medium:
           resolver: true
         degaUsers:
           resolver: true
@@ -122,14 +100,14 @@ models:
   Rating:
     model: github.com/factly/dega-api/graph/models.Rating
     fields:
-        media:
+        medium:
           resolver: true
   RatingsPaging:
     model: github.com/factly/dega-api/graph/models.RatingsPaging
   Claimant:
     model: github.com/factly/dega-api/graph/models.Claimant
     fields:
-        media:
+        medium:
           resolver: true
   ClaimantsPaging:
     model: github.com/factly/dega-api/graph/models.ClaimantsPaging
@@ -142,25 +120,6 @@ models:
           resolver: true
   ClaimsPaging:
     model: github.com/factly/dega-api/graph/models.ClaimsPaging
-  Factcheck:
-    model: github.com/factly/dega-api/graph/models.Factcheck
-    fields:
-        status:
-          resolver: true
-        tags:
-          resolver: true
-        categories:
-          resolver: true
-        media:
-          resolver: true
-        degaUsers:
-          resolver: true
-        claims:
-          resolver: true
-        schemas:
-          resolver: true
-  FactchecksPaging:
-    model: github.com/factly/dega-api/graph/models.FactchecksPaging
   Sitemap:
     model: github.com/factly/dega-api/graph/models.Sitemap
   Sitemaps:
@@ -174,11 +133,7 @@ models:
           resolver: true
         formats:
           resolver: true
-        statuses:
-          resolver: true
         posts:
-          resolver: true
-        factchecks:
           resolver: true
         claims:
           resolver: true

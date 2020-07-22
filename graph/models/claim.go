@@ -2,26 +2,27 @@ package models
 
 import (
 	"time"
+
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Claim model
 type Claim struct {
-	ID              string       `bson:"_id"`
-	Claim           string       `bson:"claim"`
-	Description     string       `bson:"description"`
-	ClaimDate       time.Time    `bson:"claim_date"`
-	ClaimSource     string       `bson:"claim_source"`
-	CheckedDate     time.Time    `bson:"checked_date"`
-	ReviewSources   string       `bson:"review_sources"`
-	Review          string       `bson:"review"`
-	ReviewTagLine   *string      `bson:"review_tag_line"`
-	ClientID        string       `bson:"client_id"`
-	Slug            string       `bson:"slug"`
-	CreatedDate     time.Time    `bson:"created_date"`
-	LastUpdatedDate time.Time    `bson:"last_updated_date"`
-	Rating          *DatabaseRef `bson:"rating"`
-	Claimant        *DatabaseRef `bson:"claimant"`
-	Class           string       `bson:"_class"`
+	ID            int            `json:"id"`
+	CreatedDate   time.Time      `json:"created_date"`
+	UpdatedDate   time.Time      `json:"updated_date"`
+	Title         string         `json:"title"`
+	Slug          string         `json:"slug"`
+	ClaimDate     *time.Time     `json:"claim_date"`
+	CheckedDate   *time.Time     `json:"checked_date"`
+	ClaimSource   string         `json:"claim_source"`
+	Description   postgres.Jsonb `json:"description"`
+	Review        string         `json:"review"`
+	ReviewTagLine *string        `json:"review_tag_line"`
+	ReviewSources string         `json:"review_sources"`
+	SpaceID       int            `json:"space_id"`
+	RatingID      int            `json:"rating_id"`
+	ClaimantID    int            `json:"claimant_id"`
 }
 
 // ClaimsPaging model
