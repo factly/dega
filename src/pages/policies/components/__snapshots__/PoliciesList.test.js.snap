@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Policies List component should match component when loading 1`] = `
+exports[`Policies List component snapshot testing should match component when loading 1`] = `
 <div
   className="ant-table-wrapper"
 >
@@ -173,7 +173,7 @@ exports[`Policies List component should match component when loading 1`] = `
 </div>
 `;
 
-exports[`Policies List component should match component with policies 1`] = `
+exports[`Policies List component snapshot testing should match component with policies 1`] = `
 <div
   className="ant-table-wrapper"
 >
@@ -280,7 +280,7 @@ exports[`Policies List component should match component with policies 1`] = `
                         }
                       }
                     >
-                      
+                      description
                     </div>
                   </td>
                   <td
@@ -423,7 +423,7 @@ exports[`Policies List component should match component with policies 1`] = `
 </div>
 `;
 
-exports[`Policies List component should render the component 1`] = `
+exports[`Policies List component snapshot testing should render the component 1`] = `
 <div
   className="ant-table-wrapper"
 >

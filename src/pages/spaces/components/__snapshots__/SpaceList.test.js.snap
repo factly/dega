@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Spaces List component should match component when loading 1`] = `
+exports[`Spaces List component snapshot testing should match component when loading 1`] = `
 <div
   className="ant-table-wrapper"
 >
@@ -205,7 +205,7 @@ exports[`Spaces List component should match component when loading 1`] = `
 </div>
 `;
 
-exports[`Spaces List component should match component with spaces 1`] = `
+exports[`Spaces List component snapshot testing should match component with spaces 1`] = `
 <div
   className="ant-table-wrapper"
 >
@@ -335,19 +335,25 @@ exports[`Spaces List component should match component with spaces 1`] = `
                     colSpan={null}
                     rowSpan={null}
                     style={Object {}}
-                  />
+                  >
+                    site_address
+                  </td>
                   <td
                     className="ant-table-cell"
                     colSpan={null}
                     rowSpan={null}
                     style={Object {}}
-                  />
+                  >
+                    site_title
+                  </td>
                   <td
                     className="ant-table-cell"
                     colSpan={null}
                     rowSpan={null}
                     style={Object {}}
-                  />
+                  >
+                    tag_line
+                  </td>
                   <td
                     className="ant-table-cell"
                     colSpan={null}
@@ -488,7 +494,7 @@ exports[`Spaces List component should match component with spaces 1`] = `
 </div>
 `;
 
-exports[`Spaces List component should render the component 1`] = `
+exports[`Spaces List component snapshot testing should render the component 1`] = `
 <div
   className="ant-table-wrapper"
 >

@@ -64,7 +64,11 @@ function PostsList() {
               <Button icon={<DeleteOutlined />}>Delete</Button>
             </Popconfirm>,
           ]}
-          extra={item.medium ? <img width={272} alt={item.alt_text} src={item.medium.url} /> : null}
+          extra={
+            item.medium ? (
+              <img width={272} alt={item.medium.alt_text} src={item.medium.url} />
+            ) : null
+          }
         >
           <List.Item.Meta
             title={<Link to={`/posts/${item.id}/edit`}>{item.title}</Link>}

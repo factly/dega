@@ -77,6 +77,7 @@
     "@babel/preset-env": "^7.10.4",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "enzyme-to-json": "^3.5.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
@@ -88,9 +89,12 @@
     "redux-mock-store": "^1.5.4"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>src/setupTests.js"],
-    "snapshotSerializers": ["enzyme-to-json/serializer"],
-    "collectCoverageFrom": ["src/**/*.js", "!src/index.js"],
-    "coverageReporters": ["text"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ]
   }
 }
