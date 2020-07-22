@@ -3,25 +3,15 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { entitySelector } from '../../../selectors';
 
 function FormatsList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { formats, total, loading } = useSelector((state) => {
-    const node = state.formats.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node)
-      return {
-        formats: node.data.map((element) => state.formats.details[element]),
-        total: node.total,
-        loading: state.formats.loading,
-      };
-    return { formats: [], total: 0, loading: state.formats.loading };
-  });
+  const { formats, total, loading } = useSelector((state) =>
+    entitySelector(state, page, 'formats'),
+  );
 
   React.useEffect(() => {
     fetchFormats();
