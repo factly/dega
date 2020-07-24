@@ -60,6 +60,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if result.ID == category.ParentID {
+		category.ParentID = result.ParentID
+	}
+
 	var categorySlug string
 
 	if result.Slug == category.Slug {

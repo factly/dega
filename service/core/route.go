@@ -35,6 +35,7 @@ func Router() http.Handler {
 
 	config.DB.Model(&model.Category{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Category{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.Category{}).AddForeignKey("parent_id", "categories(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Format{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Medium{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Space{}).AddForeignKey("logo_id", "media(id)", "RESTRICT", "RESTRICT")

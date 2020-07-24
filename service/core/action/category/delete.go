@@ -50,9 +50,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-
 		return
 	}
+
+	// Delete all children categories
+	err = config.DB.Where(&model.Category{
+		SpaceID:  uint(sID),
+		ParentID: uint(id),
+	}).Delete(model.Category{}).Error
 
 	config.DB.Delete(&result)
 
