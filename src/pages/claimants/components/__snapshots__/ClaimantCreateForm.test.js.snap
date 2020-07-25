@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Claimants Create Form component should match component with data 1`] = `
+exports[`Claimants Create Form component snapshot testing should match component with data 1`] = `
 <form
   className="ant-form ant-form-horizontal"
   id="creat-claimant"
@@ -193,6 +193,18 @@ exports[`Claimants Create Form component should match component with data 1`] = 
           >
             <div
               className="ant-space-item"
+              style={
+                Object {
+                  "marginBottom": 8,
+                }
+              }
+            >
+              <img
+                width="100%"
+              />
+            </div>
+            <div
+              className="ant-space-item"
               style={Object {}}
             >
               <button
@@ -267,7 +279,7 @@ exports[`Claimants Create Form component should match component with data 1`] = 
 </form>
 `;
 
-exports[`Claimants Create Form component should match component with empty data 1`] = `
+exports[`Claimants Create Form component snapshot testing should match component with empty data 1`] = `
 <form
   className="ant-form ant-form-horizontal"
   id="creat-claimant"
@@ -460,6 +472,18 @@ exports[`Claimants Create Form component should match component with empty data 
           >
             <div
               className="ant-space-item"
+              style={
+                Object {
+                  "marginBottom": 8,
+                }
+              }
+            >
+              <img
+                width="100%"
+              />
+            </div>
+            <div
+              className="ant-space-item"
               style={Object {}}
             >
               <button
@@ -534,7 +558,7 @@ exports[`Claimants Create Form component should match component with empty data 
 </form>
 `;
 
-exports[`Claimants Create Form component should render the component 1`] = `
+exports[`Claimants Create Form component snapshot testing should render the component 1`] = `
 <form
   className="ant-form ant-form-horizontal"
   id="creat-claimant"
@@ -725,6 +749,18 @@ exports[`Claimants Create Form component should render the component 1`] = `
           <div
             className="ant-space ant-space-vertical"
           >
+            <div
+              className="ant-space-item"
+              style={
+                Object {
+                  "marginBottom": 8,
+                }
+              }
+            >
+              <img
+                width="100%"
+              />
+            </div>
             <div
               className="ant-space-item"
               style={Object {}}

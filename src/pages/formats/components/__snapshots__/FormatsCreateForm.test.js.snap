@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Formats Create Form component should match component with data 1`] = `
+exports[`Formats Create Form component snapshot testing should match component with data 1`] = `
 <form
   className="ant-form ant-form-horizontal"
   id="create-format"
@@ -181,7 +181,7 @@ exports[`Formats Create Form component should match component with data 1`] = `
 </form>
 `;
 
-exports[`Formats Create Form component should match component with empty data 1`] = `
+exports[`Formats Create Form component snapshot testing should match component with empty data 1`] = `
 <form
   className="ant-form ant-form-horizontal"
   id="create-format"
@@ -362,7 +362,7 @@ exports[`Formats Create Form component should match component with empty data 1`
 </form>
 `;
 
-exports[`Formats Create Form component should render the component 1`] = `
+exports[`Formats Create Form component snapshot testing should render the component 1`] = `
 <form
   className="ant-form ant-form-horizontal"
   id="create-format"

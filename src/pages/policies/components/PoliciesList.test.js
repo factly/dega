@@ -119,11 +119,10 @@ describe('Policies List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      setTimeout(() => {
-        expect(deletePolicy).toHaveBeenCalled();
-        expect(deletePolicy).toHaveBeenCalledWith(1);
-        expect(getPolicies).toHaveBeenCalledWith({ page: 1 });
-      });
+
+      expect(deletePolicy).toHaveBeenCalled();
+      expect(deletePolicy).toHaveBeenCalledWith(1);
+      expect(getPolicies).toHaveBeenCalledWith({ page: 1 });
     });
     it('should edit policy', () => {
       useSelector.mockImplementation((state) => ({

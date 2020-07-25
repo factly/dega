@@ -88,8 +88,10 @@ describe('Categories List component', () => {
 
       const wrapper = shallow(<CategoriesList />);
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(2);
-      setTimeout(() => expect(table.props().pagination.current).toEqual(2));
+      table.props().pagination.onChange(3);
+      wrapper.update();
+      const updatedTable = wrapper.find(Table);
+      expect(updatedTable.props().pagination.current).toEqual(3);
     });
     it('should delete category', () => {
       useSelector.mockImplementation((state) => ({
