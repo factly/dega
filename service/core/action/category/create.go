@@ -45,23 +45,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := &model.Category{}
-	res.ID = category.ParentID
-	res.SpaceID = uint(sID)
-	count := 0
-
-	// check if record with parent id exists or not
-	err = config.DB.Model(&model.Category{}).Where(&res).Count(&count).Error
-
-	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
-	if count == 0 {
-		category.ParentID = 0
-	}
-
 	var categorySlug string
 	if category.Slug != "" && slug.Check(category.Slug) {
 		categorySlug = category.Slug

@@ -74,13 +74,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		categorySlug = slug.Approve(slug.Make(category.Name), sID, config.DB.NewScope(&model.Category{}).TableName())
 	}
 
-	config.DB.Model(&result).Updates(model.Category{
+	err = config.DB.Model(&result).Updates(model.Category{
 		Name:        category.Name,
 		Slug:        categorySlug,
 		Description: category.Description,
 		ParentID:    category.ParentID,
 		MediumID:    category.MediumID,
-	}).Preload("Medium").First(&result)
+	}).Error
+
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	config.DB.Model(&model.Category{}).Preload("Medium").First(&result)
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -53,13 +53,26 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Delete all children categories
-	err = config.DB.Where(&model.Category{
+	tx := config.DB.Begin()
+	// Updates all children categories
+	err = tx.Model(model.Category{}).Where(&model.Category{
 		SpaceID:  uint(sID),
-		ParentID: uint(id),
-	}).Delete(model.Category{}).Error
+		ParentID: result.ID,
+	}).Updates(map[string]interface{}{"parent_id": nil}).Error
 
-	config.DB.Delete(&result)
+	if err != nil {
+		tx.Rollback()
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	err = tx.Delete(&result).Error
+	if err != nil {
+		tx.Rollback()
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	tx.Commit()
 
 	renderx.JSON(w, http.StatusOK, nil)
 }
