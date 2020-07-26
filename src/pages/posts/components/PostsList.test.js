@@ -87,14 +87,17 @@ describe('Posts List component', () => {
       useSelector.mockImplementation((state) => ({}));
 
       const wrapper = shallow(<PostsList />);
-      const table = wrapper.find(List);
-      table.props().pagination.onChange(2);
-      setTimeout(() => expect(table.props().pagination.current).toEqual(2));
+      const list = wrapper.find(List);
+      list.props().pagination.onChange(2);
+      wrapper.update();
+      const updatedList = wrapper.find(List);
+      expect(updatedList.props().pagination.current).toEqual(2);
     });
     it('should delete post', () => {
       useSelector.mockImplementation((state) => ({
         posts: [
           {
+            id: 1,
             name: 'name',
             slug: 'slug',
             description: 'description',
@@ -119,11 +122,10 @@ describe('Posts List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      setTimeout(() => {
-        expect(deletePost).toHaveBeenCalled();
-        expect(deletePost).toHaveBeenCalledWith(1);
-        expect(getPosts).toHaveBeenCalledWith({ page: 1 });
-      });
+
+      expect(deletePost).toHaveBeenCalled();
+      expect(deletePost).toHaveBeenCalledWith(1);
+      expect(getPosts).toHaveBeenCalledWith({ page: 1 });
     });
     it('should edit post', () => {
       useSelector.mockImplementation((state) => ({

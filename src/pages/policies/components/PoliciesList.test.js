@@ -97,7 +97,9 @@ describe('Policies List component', () => {
       const wrapper = shallow(<PoliciesList />);
       const table = wrapper.find(Table);
       table.props().pagination.onChange(2);
-      setTimeout(() => expect(table.props().pagination.current).toEqual(2));
+      wrapper.update();
+      const updatedTable = wrapper.find(Table);
+      expect(updatedTable.props().pagination.current).toEqual(2);
     });
     it('should delete policy', () => {
       useSelector.mockImplementation((state) => ({
@@ -119,7 +121,6 @@ describe('Policies List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-
       expect(deletePolicy).toHaveBeenCalled();
       expect(deletePolicy).toHaveBeenCalledWith(1);
       expect(getPolicies).toHaveBeenCalledWith({ page: 1 });

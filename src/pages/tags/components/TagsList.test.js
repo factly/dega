@@ -96,7 +96,9 @@ describe('Tags List component', () => {
       const wrapper = shallow(<TagsList />);
       const table = wrapper.find(Table);
       table.props().pagination.onChange(2);
-      setTimeout(() => expect(table.props().pagination.current).toEqual(2));
+      wrapper.update();
+      const updatedTable = wrapper.find(Table);
+      expect(updatedTable.props().pagination.current).toEqual(2);
     });
     it('should delete tag', () => {
       useSelector.mockImplementation((state) => ({
@@ -118,11 +120,10 @@ describe('Tags List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      setTimeout(() => {
-        expect(deleteTag).toHaveBeenCalled();
-        expect(deleteTag).toHaveBeenCalledWith(1);
-        expect(getTags).toHaveBeenCalledWith({ page: 1 });
-      });
+
+      expect(deleteTag).toHaveBeenCalled();
+      expect(deleteTag).toHaveBeenCalledWith(1);
+      expect(getTags).toHaveBeenCalledWith({ page: 1 });
     });
     it('should edit tag', () => {
       useSelector.mockImplementation((state) => ({

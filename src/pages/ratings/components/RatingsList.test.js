@@ -119,11 +119,10 @@ describe('Ratings List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      setTimeout(() => {
-        expect(deleteRating).toHaveBeenCalled();
-        expect(deleteRating).toHaveBeenCalledWith(1);
-        expect(getRatings).toHaveBeenCalledWith({ page: 1 });
-      });
+
+      expect(deleteRating).toHaveBeenCalled();
+      expect(deleteRating).toHaveBeenCalledWith(1);
+      expect(getRatings).toHaveBeenCalledWith({ page: 1 });
     });
     it('should edit rating', () => {
       useSelector.mockImplementation((state) => ({
