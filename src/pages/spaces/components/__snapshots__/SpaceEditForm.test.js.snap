@@ -1,0 +1,4845 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Claims Create Form component snapshot testing should match component in all steps 1`] = `
+<div>
+  <div
+    className="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+    style={Object {}}
+  >
+    <div
+      className="ant-steps-item ant-steps-item-process ant-steps-item-active"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            1
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Basic
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-wait"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            2
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Media
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-wait"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            3
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Contact
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form
+    className="ant-form ant-form-horizontal"
+    id="create-space"
+    onSubmit={[Function]}
+    style={
+      Object {
+        "paddingTop": "24px",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "display": "block",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <span
+                className="ant-input-group ant-input-group-compact"
+              >
+                <div
+                  className="ant-select ant-select-single ant-select-show-arrow"
+                  onBlur={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "width": "40%",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-select-selector"
+                    onMouseDown={[Function]}
+                  >
+                    <span
+                      className="ant-select-selection-search"
+                    >
+                      <input
+                        aria-activedescendant="create-space_organisation_id_list_0"
+                        aria-autocomplete="list"
+                        aria-controls="create-space_organisation_id_list"
+                        aria-haspopup="listbox"
+                        aria-owns="create-space_organisation_id_list"
+                        autoComplete="off"
+                        className="ant-select-selection-search-input"
+                        id="create-space_organisation_id"
+                        onChange={[Function]}
+                        onCompositionEnd={[Function]}
+                        onCompositionStart={[Function]}
+                        onKeyDown={[Function]}
+                        onMouseDown={[Function]}
+                        onPaste={[Function]}
+                        readOnly={true}
+                        role="combobox"
+                        style={
+                          Object {
+                            "opacity": 0,
+                          }
+                        }
+                        unselectable="on"
+                        value=""
+                      />
+                    </span>
+                    <span
+                      className="ant-select-selection-placeholder"
+                    >
+                      Select organisation
+                    </span>
+                  </div>
+                  <span
+                    aria-hidden={true}
+                    className="ant-select-arrow"
+                    onMouseDown={[Function]}
+                    style={
+                      Object {
+                        "WebkitUserSelect": "none",
+                        "userSelect": "none",
+                      }
+                    }
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="down"
+                      className="anticon anticon-down ant-select-suffix"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+                <input
+                  className="ant-input"
+                  id="create-space_name"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Input name"
+                  style={
+                    Object {
+                      "width": "60%",
+                    }
+                  }
+                  type="text"
+                  value=""
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className="ant-form-item-required"
+            htmlFor="create-space_slug"
+            title="Slug"
+          >
+            Slug
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_slug"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_title"
+            title="Title"
+          >
+            Title
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_title"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_tag_line"
+            title="Tag line"
+          >
+            Tag line
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_tag_line"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <textarea
+                className="ant-input"
+                id="create-space_description"
+                onChange={[Function]}
+                onKeyDown={[Function]}
+                style={Object {}}
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_address"
+            title="Website"
+          >
+            Website
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_address"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_id"
+            title="Logo"
+          >
+            Logo
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_mobile_id"
+            title="Logo Mobile"
+          >
+            Logo Mobile
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_fav_icon_id"
+            title="Fav Icon"
+          >
+            Fav Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_mobile_icon_id"
+            title="Mobile Icon"
+          >
+            Mobile Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_facebook"
+            title="Facebook"
+          >
+            Facebook
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_facebook"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_twitetr"
+            title="Twitter"
+          >
+            Twitter
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_twitetr"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_pintrest"
+            title="Pintrest"
+          >
+            Pintrest
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_pintrest"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_instagram"
+            title="Instagram"
+          >
+            Instagram
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_instagram"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-row ant-form-item"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-16 ant-form-item-control"
+        style={Object {}}
+      >
+        <div
+          className="ant-form-item-control-input"
+        >
+          <div
+            className="ant-form-item-control-input-content"
+          >
+            <button
+              className="ant-btn"
+              disabled={true}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Back
+              </span>
+            </button>
+            <button
+              className="ant-btn"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Next
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Claims Create Form component snapshot testing should match component in all steps 2`] = `
+<div>
+  <div
+    className="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+    style={Object {}}
+  >
+    <div
+      className="ant-steps-item ant-steps-item-finish"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            <span
+              aria-label="check"
+              className="anticon anticon-check ant-steps-finish-icon"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                className=""
+                data-icon="check"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 00-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z"
+                />
+              </svg>
+            </span>
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Basic
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-process ant-steps-item-active"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            2
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Media
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-wait"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            3
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Contact
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form
+    className="ant-form ant-form-horizontal"
+    id="create-space"
+    onSubmit={[Function]}
+    style={
+      Object {
+        "paddingTop": "24px",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <span
+                className="ant-input-group ant-input-group-compact"
+              >
+                <div
+                  className="ant-select ant-select-single ant-select-show-arrow"
+                  onBlur={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "width": "40%",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-select-selector"
+                    onMouseDown={[Function]}
+                  >
+                    <span
+                      className="ant-select-selection-search"
+                    >
+                      <input
+                        aria-activedescendant="create-space_organisation_id_list_0"
+                        aria-autocomplete="list"
+                        aria-controls="create-space_organisation_id_list"
+                        aria-haspopup="listbox"
+                        aria-owns="create-space_organisation_id_list"
+                        autoComplete="off"
+                        className="ant-select-selection-search-input"
+                        id="create-space_organisation_id"
+                        onChange={[Function]}
+                        onCompositionEnd={[Function]}
+                        onCompositionStart={[Function]}
+                        onKeyDown={[Function]}
+                        onMouseDown={[Function]}
+                        onPaste={[Function]}
+                        readOnly={true}
+                        role="combobox"
+                        style={
+                          Object {
+                            "opacity": 0,
+                          }
+                        }
+                        unselectable="on"
+                        value=""
+                      />
+                    </span>
+                    <span
+                      className="ant-select-selection-placeholder"
+                    >
+                      Select organisation
+                    </span>
+                  </div>
+                  <span
+                    aria-hidden={true}
+                    className="ant-select-arrow"
+                    onMouseDown={[Function]}
+                    style={
+                      Object {
+                        "WebkitUserSelect": "none",
+                        "userSelect": "none",
+                      }
+                    }
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="down"
+                      className="anticon anticon-down ant-select-suffix"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+                <input
+                  className="ant-input"
+                  id="create-space_name"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Input name"
+                  style={
+                    Object {
+                      "width": "60%",
+                    }
+                  }
+                  type="text"
+                  value=""
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className="ant-form-item-required"
+            htmlFor="create-space_slug"
+            title="Slug"
+          >
+            Slug
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_slug"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_title"
+            title="Title"
+          >
+            Title
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_title"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_tag_line"
+            title="Tag line"
+          >
+            Tag line
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_tag_line"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <textarea
+                className="ant-input"
+                id="create-space_description"
+                onChange={[Function]}
+                onKeyDown={[Function]}
+                style={Object {}}
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_address"
+            title="Website"
+          >
+            Website
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_address"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "block",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_id"
+            title="Logo"
+          >
+            Logo
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_mobile_id"
+            title="Logo Mobile"
+          >
+            Logo Mobile
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_fav_icon_id"
+            title="Fav Icon"
+          >
+            Fav Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_mobile_icon_id"
+            title="Mobile Icon"
+          >
+            Mobile Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_facebook"
+            title="Facebook"
+          >
+            Facebook
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_facebook"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_twitetr"
+            title="Twitter"
+          >
+            Twitter
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_twitetr"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_pintrest"
+            title="Pintrest"
+          >
+            Pintrest
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_pintrest"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_instagram"
+            title="Instagram"
+          >
+            Instagram
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_instagram"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-row ant-form-item"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-16 ant-form-item-control"
+        style={Object {}}
+      >
+        <div
+          className="ant-form-item-control-input"
+        >
+          <div
+            className="ant-form-item-control-input-content"
+          >
+            <button
+              className="ant-btn"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Back
+              </span>
+            </button>
+            <button
+              className="ant-btn"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Next
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Claims Create Form component snapshot testing should match component with data 1`] = `
+<div>
+  <div
+    className="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+    style={Object {}}
+  >
+    <div
+      className="ant-steps-item ant-steps-item-process ant-steps-item-active"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            1
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Basic
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-wait"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            2
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Media
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-wait"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            3
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Contact
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form
+    className="ant-form ant-form-horizontal"
+    id="create-space"
+    onSubmit={[Function]}
+    style={
+      Object {
+        "paddingTop": "24px",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "display": "block",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <span
+                className="ant-input-group ant-input-group-compact"
+              >
+                <div
+                  className="ant-select ant-select-single ant-select-show-arrow"
+                  onBlur={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "width": "40%",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-select-selector"
+                    onMouseDown={[Function]}
+                  >
+                    <span
+                      className="ant-select-selection-search"
+                    >
+                      <input
+                        aria-activedescendant="create-space_organisation_id_list_0"
+                        aria-autocomplete="list"
+                        aria-controls="create-space_organisation_id_list"
+                        aria-haspopup="listbox"
+                        aria-owns="create-space_organisation_id_list"
+                        autoComplete="off"
+                        className="ant-select-selection-search-input"
+                        id="create-space_organisation_id"
+                        onChange={[Function]}
+                        onCompositionEnd={[Function]}
+                        onCompositionStart={[Function]}
+                        onKeyDown={[Function]}
+                        onMouseDown={[Function]}
+                        onPaste={[Function]}
+                        readOnly={true}
+                        role="combobox"
+                        style={
+                          Object {
+                            "opacity": 0,
+                          }
+                        }
+                        unselectable="on"
+                        value=""
+                      />
+                    </span>
+                    <span
+                      className="ant-select-selection-item"
+                    />
+                  </div>
+                  <span
+                    aria-hidden={true}
+                    className="ant-select-arrow"
+                    onMouseDown={[Function]}
+                    style={
+                      Object {
+                        "WebkitUserSelect": "none",
+                        "userSelect": "none",
+                      }
+                    }
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="down"
+                      className="anticon anticon-down ant-select-suffix"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+                <input
+                  className="ant-input"
+                  id="create-space_name"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Input name"
+                  style={
+                    Object {
+                      "width": "60%",
+                    }
+                  }
+                  type="text"
+                  value="name"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className="ant-form-item-required"
+            htmlFor="create-space_slug"
+            title="Slug"
+          >
+            Slug
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_slug"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="slug"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_title"
+            title="Title"
+          >
+            Title
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_title"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="site_title"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_tag_line"
+            title="Tag line"
+          >
+            Tag line
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_tag_line"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="tag_line"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <textarea
+                className="ant-input"
+                id="create-space_description"
+                onChange={[Function]}
+                onKeyDown={[Function]}
+                style={Object {}}
+                value="description"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_address"
+            title="Website"
+          >
+            Website
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_address"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="site_address"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_id"
+            title="Logo"
+          >
+            Logo
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_mobile_id"
+            title="Logo Mobile"
+          >
+            Logo Mobile
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_fav_icon_id"
+            title="Fav Icon"
+          >
+            Fav Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_mobile_icon_id"
+            title="Mobile Icon"
+          >
+            Mobile Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_facebook"
+            title="Facebook"
+          >
+            Facebook
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_facebook"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value="fb.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_twitetr"
+            title="Twitter"
+          >
+            Twitter
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_twitetr"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value="twitter.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_pintrest"
+            title="Pintrest"
+          >
+            Pintrest
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_pintrest"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value="pinterest.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_instagram"
+            title="Instagram"
+          >
+            Instagram
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_instagram"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value="instagram.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-row ant-form-item"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-16 ant-form-item-control"
+        style={Object {}}
+      >
+        <div
+          className="ant-form-item-control-input"
+        >
+          <div
+            className="ant-form-item-control-input-content"
+          >
+            <button
+              className="ant-btn"
+              disabled={true}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Back
+              </span>
+            </button>
+            <button
+              className="ant-btn"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Next
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Claims Create Form component snapshot testing should match component with data 2`] = `
+<div>
+  <div
+    className="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+    style={Object {}}
+  >
+    <div
+      className="ant-steps-item ant-steps-item-finish"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            <span
+              aria-label="check"
+              className="anticon anticon-check ant-steps-finish-icon"
+              role="img"
+            >
+              <svg
+                aria-hidden="true"
+                className=""
+                data-icon="check"
+                fill="currentColor"
+                focusable="false"
+                height="1em"
+                viewBox="64 64 896 896"
+                width="1em"
+              >
+                <path
+                  d="M912 190h-69.9c-9.8 0-19.1 4.5-25.1 12.2L404.7 724.5 207 474a32 32 0 00-25.1-12.2H112c-6.7 0-10.4 7.7-6.3 12.9l273.9 347c12.8 16.2 37.4 16.2 50.3 0l488.4-618.9c4.1-5.1.4-12.8-6.3-12.8z"
+                />
+              </svg>
+            </span>
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Basic
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-process ant-steps-item-active"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            2
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Media
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-wait"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            3
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Contact
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form
+    className="ant-form ant-form-horizontal"
+    id="create-space"
+    onSubmit={[Function]}
+    style={
+      Object {
+        "paddingTop": "24px",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <span
+                className="ant-input-group ant-input-group-compact"
+              >
+                <div
+                  className="ant-select ant-select-single ant-select-show-arrow"
+                  onBlur={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "width": "40%",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-select-selector"
+                    onMouseDown={[Function]}
+                  >
+                    <span
+                      className="ant-select-selection-search"
+                    >
+                      <input
+                        aria-activedescendant="create-space_organisation_id_list_0"
+                        aria-autocomplete="list"
+                        aria-controls="create-space_organisation_id_list"
+                        aria-haspopup="listbox"
+                        aria-owns="create-space_organisation_id_list"
+                        autoComplete="off"
+                        className="ant-select-selection-search-input"
+                        id="create-space_organisation_id"
+                        onChange={[Function]}
+                        onCompositionEnd={[Function]}
+                        onCompositionStart={[Function]}
+                        onKeyDown={[Function]}
+                        onMouseDown={[Function]}
+                        onPaste={[Function]}
+                        readOnly={true}
+                        role="combobox"
+                        style={
+                          Object {
+                            "opacity": 0,
+                          }
+                        }
+                        unselectable="on"
+                        value=""
+                      />
+                    </span>
+                    <span
+                      className="ant-select-selection-item"
+                    />
+                  </div>
+                  <span
+                    aria-hidden={true}
+                    className="ant-select-arrow"
+                    onMouseDown={[Function]}
+                    style={
+                      Object {
+                        "WebkitUserSelect": "none",
+                        "userSelect": "none",
+                      }
+                    }
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="down"
+                      className="anticon anticon-down ant-select-suffix"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+                <input
+                  className="ant-input"
+                  id="create-space_name"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Input name"
+                  style={
+                    Object {
+                      "width": "60%",
+                    }
+                  }
+                  type="text"
+                  value="name"
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className="ant-form-item-required"
+            htmlFor="create-space_slug"
+            title="Slug"
+          >
+            Slug
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_slug"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="slug"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_title"
+            title="Title"
+          >
+            Title
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_title"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="site_title"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_tag_line"
+            title="Tag line"
+          >
+            Tag line
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_tag_line"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="tag_line"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <textarea
+                className="ant-input"
+                id="create-space_description"
+                onChange={[Function]}
+                onKeyDown={[Function]}
+                style={Object {}}
+                value="description"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_address"
+            title="Website"
+          >
+            Website
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_address"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="site_address"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "block",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_id"
+            title="Logo"
+          >
+            Logo
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_mobile_id"
+            title="Logo Mobile"
+          >
+            Logo Mobile
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_fav_icon_id"
+            title="Fav Icon"
+          >
+            Fav Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_mobile_icon_id"
+            title="Mobile Icon"
+          >
+            Mobile Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_facebook"
+            title="Facebook"
+          >
+            Facebook
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_facebook"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value="fb.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_twitetr"
+            title="Twitter"
+          >
+            Twitter
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_twitetr"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value="twitter.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_pintrest"
+            title="Pintrest"
+          >
+            Pintrest
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_pintrest"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value="pinterest.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_instagram"
+            title="Instagram"
+          >
+            Instagram
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_instagram"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value="instagram.com"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-row ant-form-item"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-16 ant-form-item-control"
+        style={Object {}}
+      >
+        <div
+          className="ant-form-item-control-input"
+        >
+          <div
+            className="ant-form-item-control-input-content"
+          >
+            <button
+              className="ant-btn"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Back
+              </span>
+            </button>
+            <button
+              className="ant-btn"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Next
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Claims Create Form component snapshot testing should render the component 1`] = `
+<div>
+  <div
+    className="ant-steps ant-steps-horizontal ant-steps-label-horizontal"
+    style={Object {}}
+  >
+    <div
+      className="ant-steps-item ant-steps-item-process ant-steps-item-active"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            1
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Basic
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-wait"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            2
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Media
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-steps-item ant-steps-item-wait"
+      style={Object {}}
+    >
+      <div
+        className="ant-steps-item-container"
+        onClick={[Function]}
+        role="button"
+        tabIndex={0}
+      >
+        <div
+          className="ant-steps-item-tail"
+        />
+        <div
+          className="ant-steps-item-icon"
+        >
+          <span
+            className="ant-steps-icon"
+          >
+            3
+          </span>
+        </div>
+        <div
+          className="ant-steps-item-content"
+        >
+          <div
+            className="ant-steps-item-title"
+          >
+            Contact
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form
+    className="ant-form ant-form-horizontal"
+    id="create-space"
+    onSubmit={[Function]}
+    style={
+      Object {
+        "paddingTop": "24px",
+      }
+    }
+  >
+    <div
+      style={
+        Object {
+          "display": "block",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <span
+                className="ant-input-group ant-input-group-compact"
+              >
+                <div
+                  className="ant-select ant-select-single ant-select-show-arrow"
+                  onBlur={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  onKeyUp={[Function]}
+                  onMouseDown={[Function]}
+                  style={
+                    Object {
+                      "width": "40%",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-select-selector"
+                    onMouseDown={[Function]}
+                  >
+                    <span
+                      className="ant-select-selection-search"
+                    >
+                      <input
+                        aria-activedescendant="create-space_organisation_id_list_0"
+                        aria-autocomplete="list"
+                        aria-controls="create-space_organisation_id_list"
+                        aria-haspopup="listbox"
+                        aria-owns="create-space_organisation_id_list"
+                        autoComplete="off"
+                        className="ant-select-selection-search-input"
+                        id="create-space_organisation_id"
+                        onChange={[Function]}
+                        onCompositionEnd={[Function]}
+                        onCompositionStart={[Function]}
+                        onKeyDown={[Function]}
+                        onMouseDown={[Function]}
+                        onPaste={[Function]}
+                        readOnly={true}
+                        role="combobox"
+                        style={
+                          Object {
+                            "opacity": 0,
+                          }
+                        }
+                        unselectable="on"
+                        value=""
+                      />
+                    </span>
+                    <span
+                      className="ant-select-selection-placeholder"
+                    >
+                      Select organisation
+                    </span>
+                  </div>
+                  <span
+                    aria-hidden={true}
+                    className="ant-select-arrow"
+                    onMouseDown={[Function]}
+                    style={
+                      Object {
+                        "WebkitUserSelect": "none",
+                        "userSelect": "none",
+                      }
+                    }
+                    unselectable="on"
+                  >
+                    <span
+                      aria-label="down"
+                      className="anticon anticon-down ant-select-suffix"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className=""
+                        data-icon="down"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </div>
+                <input
+                  className="ant-input"
+                  id="create-space_name"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Input name"
+                  style={
+                    Object {
+                      "width": "60%",
+                    }
+                  }
+                  type="text"
+                  value=""
+                />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className="ant-form-item-required"
+            htmlFor="create-space_slug"
+            title="Slug"
+          >
+            Slug
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_slug"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_title"
+            title="Title"
+          >
+            Title
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_title"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_tag_line"
+            title="Tag line"
+          >
+            Tag line
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_tag_line"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <textarea
+                className="ant-input"
+                id="create-space_description"
+                onChange={[Function]}
+                onKeyDown={[Function]}
+                style={Object {}}
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_site_address"
+            title="Website"
+          >
+            Website
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_site_address"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_id"
+            title="Logo"
+          >
+            Logo
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_logo_mobile_id"
+            title="Logo Mobile"
+          >
+            Logo Mobile
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_fav_icon_id"
+            title="Fav Icon"
+          >
+            Fav Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_mobile_icon_id"
+            title="Mobile Icon"
+          >
+            Mobile Icon
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <div
+                className="ant-space ant-space-vertical"
+              >
+                <div
+                  className="ant-space-item"
+                  style={
+                    Object {
+                      "marginBottom": 8,
+                    }
+                  }
+                >
+                  <img
+                    width="100%"
+                  />
+                </div>
+                <div
+                  className="ant-space-item"
+                  style={Object {}}
+                >
+                  <button
+                    className="ant-btn"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    <span>
+                      Select
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      style={
+        Object {
+          "display": "none",
+        }
+      }
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_facebook"
+            title="Facebook"
+          >
+            Facebook
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_facebook"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_twitetr"
+            title="Twitter"
+          >
+            Twitter
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_twitetr"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_pintrest"
+            title="Pintrest"
+          >
+            Pintrest
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_pintrest"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_social_media_urls_instagram"
+            title="Instagram"
+          >
+            Instagram
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_social_media_urls_instagram"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                style={
+                  Object {
+                    "width": "100%",
+                  }
+                }
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-row ant-form-item"
+      style={Object {}}
+    >
+      <div
+        className="ant-col ant-col-16 ant-form-item-control"
+        style={Object {}}
+      >
+        <div
+          className="ant-form-item-control-input"
+        >
+          <div
+            className="ant-form-item-control-input-content"
+          >
+            <button
+              className="ant-btn"
+              disabled={true}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Back
+              </span>
+            </button>
+            <button
+              className="ant-btn"
+              disabled={false}
+              onClick={[Function]}
+              type="button"
+            >
+              <span>
+                Next
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;

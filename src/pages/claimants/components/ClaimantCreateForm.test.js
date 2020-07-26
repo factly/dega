@@ -192,7 +192,6 @@ describe('Claimants Create Form component', () => {
       });
 
       setTimeout(() => {
-        expect(wrapper.find('div[class="ant-form-item-explain"]'));
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
