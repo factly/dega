@@ -1,0 +1,967 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Media List component should match component with empty data 1`] = `
+<div
+  className="ant-row"
+  style={Object {}}
+>
+  <div
+    className="ant-col ant-col-12"
+    style={Object {}}
+  >
+    <img
+      alt="space"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    />
+  </div>
+  <div
+    className="ant-col ant-col-12"
+    style={Object {}}
+  >
+    <form
+      className="ant-form ant-form-horizontal"
+      id="create-space"
+      onSubmit={[Function]}
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_name"
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_name"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_alt_text"
+            title="Alt Text"
+          >
+            Alt Text
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_alt_text"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_caption"
+            title="Caption"
+          >
+            Caption
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_caption"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_description"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Media List component should match skeleton while loading 1`] = `
+<div
+  className="ant-skeleton"
+>
+  <div
+    className="ant-skeleton-content"
+  >
+    <h3
+      className="ant-skeleton-title"
+      style={
+        Object {
+          "width": "38%",
+        }
+      }
+    />
+    <ul
+      className="ant-skeleton-paragraph"
+    >
+      <li
+        style={
+          Object {
+            "width": undefined,
+          }
+        }
+      />
+      <li
+        style={
+          Object {
+            "width": undefined,
+          }
+        }
+      />
+      <li
+        style={
+          Object {
+            "width": "61%",
+          }
+        }
+      />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Media List component should render the component 1`] = `
+<div
+  className="ant-row"
+  style={Object {}}
+>
+  <div
+    className="ant-col ant-col-12"
+    style={Object {}}
+  >
+    <img
+      alt="space"
+      src="some-url"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    />
+  </div>
+  <div
+    className="ant-col ant-col-12"
+    style={Object {}}
+  >
+    <form
+      className="ant-form ant-form-horizontal"
+      id="create-space"
+      onSubmit={[Function]}
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_name"
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_name"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="name"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_alt_text"
+            title="Alt Text"
+          >
+            Alt Text
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_alt_text"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_caption"
+            title="Caption"
+          >
+            Caption
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_caption"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="caption"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_description"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="description"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Medias List component should match component with empty data 1`] = `
+<div
+  className="ant-row"
+  style={Object {}}
+>
+  <div
+    className="ant-col ant-col-12"
+    style={Object {}}
+  >
+    <img
+      alt="space"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    />
+  </div>
+  <div
+    className="ant-col ant-col-12"
+    style={Object {}}
+  >
+    <form
+      className="ant-form ant-form-horizontal"
+      id="create-space"
+      onSubmit={[Function]}
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_name"
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_name"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_alt_text"
+            title="Alt Text"
+          >
+            Alt Text
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_alt_text"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_caption"
+            title="Caption"
+          >
+            Caption
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_caption"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_description"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`Medias List component should match skeleton while loading 1`] = `
+<div
+  className="ant-skeleton"
+>
+  <div
+    className="ant-skeleton-content"
+  >
+    <h3
+      className="ant-skeleton-title"
+      style={
+        Object {
+          "width": "38%",
+        }
+      }
+    />
+    <ul
+      className="ant-skeleton-paragraph"
+    >
+      <li
+        style={
+          Object {
+            "width": undefined,
+          }
+        }
+      />
+      <li
+        style={
+          Object {
+            "width": undefined,
+          }
+        }
+      />
+      <li
+        style={
+          Object {
+            "width": "61%",
+          }
+        }
+      />
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Medias List component should render the component 1`] = `
+<div
+  className="ant-row"
+  style={Object {}}
+>
+  <div
+    className="ant-col ant-col-12"
+    style={Object {}}
+  >
+    <img
+      alt="space"
+      src="some-url"
+      style={
+        Object {
+          "width": "100%",
+        }
+      }
+    />
+  </div>
+  <div
+    className="ant-col ant-col-12"
+    style={Object {}}
+  >
+    <form
+      className="ant-form ant-form-horizontal"
+      id="create-space"
+      onSubmit={[Function]}
+    >
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_name"
+            title="Name"
+          >
+            Name
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_name"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="name"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_alt_text"
+            title="Alt Text"
+          >
+            Alt Text
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_alt_text"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_caption"
+            title="Caption"
+          >
+            Caption
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_caption"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="caption"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-8 ant-form-item-label"
+          style={Object {}}
+        >
+          <label
+            className=""
+            htmlFor="create-space_description"
+            title="Description"
+          >
+            Description
+          </label>
+        </div>
+        <div
+          className="ant-col ant-col-16 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <input
+                className="ant-input"
+                id="create-space_description"
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                type="text"
+                value="description"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="ant-row ant-form-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+          style={Object {}}
+        >
+          <div
+            className="ant-form-item-control-input"
+          >
+            <div
+              className="ant-form-item-control-input-content"
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;
