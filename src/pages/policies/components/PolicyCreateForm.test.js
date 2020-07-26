@@ -1,12 +1,9 @@
 import React from 'react';
-//import renderer, { act as rendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
-import { Steps, Button, DatePicker } from 'antd';
-import moment from 'moment';
 
 import '../../../matchMedia.mock';
 import PolicyCreateForm from './PolicyCreateForm';
@@ -68,6 +65,209 @@ describe('Policy Create Form component', () => {
         );
       });
       expect(tree).toMatchSnapshot();
+    });
+  });
+  describe('component testing', () => {
+    let wrapper, props;
+    beforeEach(() => {
+      props = {
+        onCreate: jest.fn(),
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <PolicyCreateForm {...props} />
+          </Provider>,
+        );
+      });
+    });
+    afterEach(() => {
+      wrapper.unmount();
+    });
+    it('should not submit form with empty data', (done) => {
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <PolicyCreateForm onCreate={props.onCreate} />
+          </Provider>,
+        );
+      });
+
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(0);
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+
+      setTimeout(() => {
+        expect(props.onCreate).not.toHaveBeenCalled();
+        done();
+      }, 0);
+      wrapper.unmount();
+    });
+    it('should not submit form with given data', (done) => {
+      let wrapper;
+      const data = {
+        name: 'name',
+        description: 'description',
+        users: [1, 2],
+        permissions: {
+          categories: ['get', 'create', 'update', 'delete'],
+          tags: ['get', 'create', 'update', 'delete'],
+          formats: ['get', 'create', 'update', 'delete'],
+          media: ['get', 'create', 'update', 'delete'],
+          posts: ['get', 'create', 'update', 'delete'],
+          claimants: ['get', 'create', 'update', 'delete'],
+          ratings: ['get', 'create', 'update', 'delete'],
+          claims: ['get', 'create', 'update', 'delete'],
+          factchecks: ['get', 'create', 'update', 'delete'],
+          policies: ['get', 'create', 'update', 'delete'],
+        },
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <PolicyCreateForm onCreate={props.onCreate} data={data} />
+          </Provider>,
+        );
+      });
+
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(0);
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledWith({
+          name: 'name',
+          description: 'description',
+          users: ['1', '2'],
+          permissions: [
+            { resource: 'categories', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'tags', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'formats', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'media', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'posts', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'claimants', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'ratings', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'claims', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'factchecks', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'policies', actions: ['get', 'create', 'update', 'delete'] },
+          ],
+        });
+        done();
+      }, 0);
+      wrapper.unmount();
+    });
+    it('should submit form with added data', (done) => {
+      act(() => {
+        wrapper
+          .find('FormItem')
+          .at(0)
+          .find('Input')
+          .simulate('change', { target: { value: 'name' } });
+        wrapper
+          .find('FormItem')
+          .at(1)
+          .find('TextArea')
+          .at(0)
+          .simulate('change', { target: { value: 'description' } });
+        wrapper
+          .find('FormItem')
+          .at(2)
+          .find('Selector')
+          .at(0)
+          .props()
+          .onChange({ target: { value: [1, 2] } });
+        wrapper
+          .find('FormItem')
+          .at(3)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(4)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(5)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(6)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(7)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(8)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(9)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(10)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(11)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+        wrapper
+          .find('FormItem')
+          .at(12)
+          .find('Permission')
+          .props()
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
+
+        const submitButtom = wrapper.find('Button').at(0);
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          name: 'name',
+          description: 'description',
+          users: ['1', '2'],
+          permissions: [
+            { resource: 'categories', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'tags', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'formats', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'media', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'posts', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'claimants', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'ratings', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'claims', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'factchecks', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'policies', actions: ['get', 'create', 'update', 'delete'] },
+          ],
+        });
+        done();
+      }, 0);
     });
   });
 });
