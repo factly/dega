@@ -31,6 +31,7 @@ func Router() http.Handler {
 	config.DB.Model(&model.Claim{}).AddForeignKey("claimant_id", "claimants(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Claim{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.PostClaim{}).AddForeignKey("claim_id", "claims(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.PostClaim{}).AddForeignKey("post_id", "posts(id)", "RESTRICT", "RESTRICT")
 
 	r.Mount("/claimants", claimant.Router())
 	r.Mount("/ratings", rating.Router())

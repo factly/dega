@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
@@ -56,6 +57,42 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Post{}).Where(&model.Post{
 		SpaceID:          uint(sID),
 		FeaturedMediumID: uint(id),
+	}).Count(&cnt)
+
+	if cnt != 0 {
+		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		return
+	}
+
+	var medID uint = uint(id)
+	config.DB.Model(&model.Space{}).Where(&model.Space{
+		LogoID: &medID,
+	}).Or(&model.Space{
+		LogoMobileID: &medID,
+	}).Or(&model.Space{
+		FavIconID: &medID,
+	}).Or(&model.Space{
+		MobileIconID: &medID,
+	}).Count(&cnt)
+
+	if cnt != 0 {
+		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		return
+	}
+
+	config.DB.Model(&factcheckModel.Rating{}).Where(&factcheckModel.Rating{
+		SpaceID:  uint(sID),
+		MediumID: uint(id),
+	}).Count(&cnt)
+
+	if cnt != 0 {
+		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		return
+	}
+
+	config.DB.Model(&factcheckModel.Claimant{}).Where(&factcheckModel.Claimant{
+		SpaceID:  uint(sID),
+		MediumID: uint(id),
 	}).Count(&cnt)
 
 	if cnt != 0 {
