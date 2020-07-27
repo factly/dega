@@ -50,7 +50,6 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-
 		return
 	}
 
@@ -63,7 +62,26 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Delete(&result)
+	tx := config.DB.Begin()
+	// Updates all children categories
+	err = tx.Model(model.Category{}).Where(&model.Category{
+		SpaceID:  uint(sID),
+		ParentID: result.ID,
+	}).Updates(map[string]interface{}{"parent_id": nil}).Error
+
+	if err != nil {
+		tx.Rollback()
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	err = tx.Delete(&result).Error
+	if err != nil {
+		tx.Rollback()
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	tx.Commit()
 
 	renderx.JSON(w, http.StatusOK, nil)
 }

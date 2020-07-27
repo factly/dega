@@ -24,9 +24,12 @@ func Router() http.Handler {
 	)
 
 	config.DB.Model(&model.Claimant{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.Claimant{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Rating{}).AddForeignKey("medium_id", "media(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.Rating{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Claim{}).AddForeignKey("rating_id", "ratings(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Claim{}).AddForeignKey("claimant_id", "claimants(id)", "RESTRICT", "RESTRICT")
+	config.DB.Model(&model.Claim{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.PostClaim{}).AddForeignKey("claim_id", "claims(id)", "RESTRICT", "RESTRICT")
 
 	r.Mount("/claimants", claimant.Router())
