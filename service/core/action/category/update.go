@@ -80,14 +80,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Description: category.Description,
 		ParentID:    category.ParentID,
 		MediumID:    category.MediumID,
-	}).Error
+	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
-
-	config.DB.Model(&model.Category{}).Preload("Medium").First(&result)
 
 	renderx.JSON(w, http.StatusOK, result)
 }
