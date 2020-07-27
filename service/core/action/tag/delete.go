@@ -53,11 +53,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = config.DB.Where(&model.PostTag{
+	var cnt int
+	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
 		TagID: uint(id),
-	}).First(&model.PostTag{}).Error
+	}).Count(&cnt)
 
-	if err == nil {
+	if cnt != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}

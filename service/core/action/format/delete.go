@@ -52,12 +52,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = config.DB.Where(&model.Post{
+	var cnt int
+	config.DB.Model(&model.Post{}).Where(&model.Post{
 		SpaceID:  uint(sID),
 		FormatID: uint(id),
-	}).First(&model.Post{}).Error
+	}).Count(&cnt)
 
-	if err == nil {
+	if cnt != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}
