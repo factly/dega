@@ -23,7 +23,7 @@ type post struct {
 	IsSticky         bool           `json:"is_sticky"`
 	IsHighlighted    bool           `json:"is_highlighted"`
 	FeaturedMediumID uint           `json:"featured_medium_id"`
-	FormatID         uint           `json:"format_id"`
+	FormatID         uint           `json:"format_id" validate:"required"`
 	PublishedDate    time.Time      `json:"published_date"`
 	SpaceID          uint           `json:"space_id"`
 	CategoryIDs      []uint         `json:"category_ids"`

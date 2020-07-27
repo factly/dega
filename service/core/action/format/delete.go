@@ -52,6 +52,16 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = config.DB.Where(&model.Post{
+		SpaceID:  uint(sID),
+		FormatID: uint(id),
+	}).First(&model.Post{}).Error
+
+	if err == nil {
+		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		return
+	}
+
 	config.DB.Delete(&result)
 
 	renderx.JSON(w, http.StatusOK, nil)

@@ -54,6 +54,15 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	err = config.DB.Where(&model.PostCategory{
+		CategoryID: uint(id),
+	}).First(&model.PostCategory{}).Error
+
+	if err == nil {
+		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		return
+	}
+
 	config.DB.Delete(&result)
 
 	renderx.JSON(w, http.StatusOK, nil)
