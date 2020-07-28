@@ -48,7 +48,18 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		return
+	}
+
+	// check if claim is associated with posts
+	var totAssociated int
+	config.DB.Model(&model.PostClaim{}).Where(&model.PostClaim{
+		ClaimID: uint(id),
+	}).Count(&totAssociated)
+
+	if totAssociated != 0 {
+		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}
 
