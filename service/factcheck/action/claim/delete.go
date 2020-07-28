@@ -52,12 +52,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var cnt int
+	// check if claim is associated with posts
+	var totAssociated int
 	config.DB.Model(&model.PostClaim{}).Where(&model.PostClaim{
 		ClaimID: uint(id),
-	}).Count(&cnt)
+	}).Count(&totAssociated)
 
-	if cnt != 0 {
+	if totAssociated != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}

@@ -53,17 +53,30 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var cnt int
+	// check if medium is associated with posts
+	var totAssociated int
 	config.DB.Model(&model.Post{}).Where(&model.Post{
 		SpaceID:          uint(sID),
 		FeaturedMediumID: uint(id),
-	}).Count(&cnt)
+	}).Count(&totAssociated)
 
-	if cnt != 0 {
+	if totAssociated != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}
 
+	// check if medium is associated with categories
+	config.DB.Model(&model.Category{}).Where(&model.Category{
+		SpaceID:  uint(sID),
+		MediumID: uint(id),
+	}).Count(&totAssociated)
+
+	if totAssociated != 0 {
+		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		return
+	}
+
+	// check if medium is associated with spaces
 	var medID uint = uint(id)
 	config.DB.Model(&model.Space{}).Where(&model.Space{
 		LogoID: &medID,
@@ -73,29 +86,31 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		FavIconID: &medID,
 	}).Or(&model.Space{
 		MobileIconID: &medID,
-	}).Count(&cnt)
+	}).Count(&totAssociated)
 
-	if cnt != 0 {
+	if totAssociated != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}
 
+	// check if medium is associated with ratings
 	config.DB.Model(&factcheckModel.Rating{}).Where(&factcheckModel.Rating{
 		SpaceID:  uint(sID),
 		MediumID: uint(id),
-	}).Count(&cnt)
+	}).Count(&totAssociated)
 
-	if cnt != 0 {
+	if totAssociated != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}
 
+	// check if medium is associated with claimants
 	config.DB.Model(&factcheckModel.Claimant{}).Where(&factcheckModel.Claimant{
 		SpaceID:  uint(sID),
 		MediumID: uint(id),
-	}).Count(&cnt)
+	}).Count(&totAssociated)
 
-	if cnt != 0 {
+	if totAssociated != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}

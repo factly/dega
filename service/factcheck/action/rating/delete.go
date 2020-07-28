@@ -52,13 +52,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var cnt int
+	// check if rating is associated with claims
+	var totAssociated int
 	config.DB.Model(&model.Claim{}).Where(&model.Claim{
 		SpaceID:  uint(sID),
 		RatingID: uint(id),
-	}).Count(&cnt)
+	}).Count(&totAssociated)
 
-	if cnt != 0 {
+	if totAssociated != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
 		return
 	}
