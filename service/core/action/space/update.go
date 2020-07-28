@@ -96,7 +96,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
 
 	if err != nil {
-		renderx.JSON(w, http.StatusInternalServerError, err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
