@@ -100,6 +100,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Create(&result).Error
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
