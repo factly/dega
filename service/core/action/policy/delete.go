@@ -15,12 +15,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	spaceID, err := util.GetSpace(r.Context())
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
 	organisationID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 

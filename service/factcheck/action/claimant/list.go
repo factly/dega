@@ -47,6 +47,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}).Count(&result.Total).Offset(offset).Order("id desc").Limit(limit).Find(&result.Nodes).Error
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 

@@ -75,6 +75,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Model(&model.Claim{}).Create(&result).Error
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 

@@ -35,9 +35,16 @@ type paging struct {
 func list(w http.ResponseWriter, r *http.Request) {
 
 	uID, err := util.GetUser(r.Context())
+
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	oID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
