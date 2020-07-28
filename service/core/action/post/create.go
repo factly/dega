@@ -89,6 +89,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&result.Post.Tags)
+
 	err = config.DB.Model(&model.Post{}).Create(&result.Post).Error
 
 	if err != nil {
@@ -96,7 +98,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
+	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").First(&result.Post)
 
 	if result.Format.Slug == "factcheck" {
 		// create post claim
@@ -147,31 +149,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// appending post categories to result
 	for _, postCategory := range postCategories {
 		result.Categories = append(result.Categories, postCategory.Category)
-	}
-
-	// create post tag
-	for _, id := range post.TagIDs {
-		postTag := &model.PostTag{}
-		postTag.TagID = uint(id)
-		postTag.PostID = result.ID
-
-		err = config.DB.Model(&model.PostTag{}).Create(&postTag).Error
-
-		if err != nil {
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	// fetch all post tags
-	postTags := []model.PostTag{}
-	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
-		PostID: result.ID,
-	}).Preload("Tag").Find(&postTags)
-
-	// appending previous post tags to result
-	for _, postTag := range postTags {
-		result.Tags = append(result.Tags, postTag.Tag)
 	}
 
 	// Adding author

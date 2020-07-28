@@ -54,10 +54,9 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if tag is associated with posts
-	var totAssociated int
-	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
-		TagID: uint(id),
-	}).Count(&totAssociated)
+	tag := new(model.Tag)
+	tag.ID = uint(id)
+	totAssociated := config.DB.Model(tag).Association("Posts").Count()
 
 	if totAssociated != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))

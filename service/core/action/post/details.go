@@ -49,12 +49,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 	result.Claims = make([]factcheckModel.Claim, 0)
 
 	categories := []model.PostCategory{}
-	tags := []model.PostTag{}
 	postAuthors := []model.PostAuthor{}
 	postClaims := []factcheckModel.PostClaim{}
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Tags").Preload("Format").Where(&model.Post{
 		SpaceID: uint(sID),
 	}).First(&result.Post).Error
 
@@ -80,11 +79,6 @@ func details(w http.ResponseWriter, r *http.Request) {
 		PostID: uint(id),
 	}).Preload("Category").Preload("Category.Medium").Find(&categories)
 
-	// fetch all tags
-	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
-		PostID: uint(id),
-	}).Preload("Tag").Find(&tags)
-
 	// fetch all authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
@@ -93,12 +87,6 @@ func details(w http.ResponseWriter, r *http.Request) {
 	for _, c := range categories {
 		if c.Category.ID != 0 {
 			result.Categories = append(result.Categories, c.Category)
-		}
-	}
-
-	for _, t := range tags {
-		if t.Tag.ID != 0 {
-			result.Tags = append(result.Tags, t.Tag)
 		}
 	}
 

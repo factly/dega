@@ -41,7 +41,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.Preload("Medium").Preload("Format").Model(&model.Post{}).Where(&model.Post{
+	tx := config.DB.Preload("Medium").Preload("Tags").Preload("Format").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
 	})
 
@@ -75,7 +75,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 	for _, post := range posts {
 		postList := &postData{}
 		categories := []model.PostCategory{}
-		tags := []model.PostTag{}
 		postAuthors := []model.PostAuthor{}
 		postClaims := []factcheckModel.PostClaim{}
 
@@ -103,11 +102,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 			PostID: post.ID,
 		}).Preload("Category").Preload("Category.Medium").Find(&categories)
 
-		// fetch all tags
-		config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
-			PostID: post.ID,
-		}).Preload("Tag").Find(&tags)
-
 		// fetch all post authors
 		config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 			PostID: post.ID,
@@ -116,12 +110,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 		for _, c := range categories {
 			if c.Category.ID != 0 {
 				postList.Categories = append(postList.Categories, c.Category)
-			}
-		}
-
-		for _, t := range tags {
-			if t.Tag.ID != 0 {
-				postList.Tags = append(postList.Tags, t.Tag)
 			}
 		}
 

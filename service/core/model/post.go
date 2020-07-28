@@ -25,14 +25,7 @@ type Post struct {
 	Format           *Format        `gorm:"foreignkey:format_id;association_foreignkey:id" json:"format"`
 	PublishedDate    time.Time      `gorm:"column:published_date" json:"published_date"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
-}
-
-// PostTag model
-type PostTag struct {
-	config.Base
-	TagID  uint `gorm:"column:tag_id" json:"tag_id"`
-	Tag    Tag  `gorm:"foreignkey:tag_id;association_foreignkey:id"`
-	PostID uint `gorm:"column:post_id" json:"post_id"`
+	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 }
 
 // PostCategory model
