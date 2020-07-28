@@ -55,7 +55,6 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// check if format is associated with posts
 	var totAssociated int
 	config.DB.Model(&model.Post{}).Where(&model.Post{
-		SpaceID:  uint(sID),
 		FormatID: uint(id),
 	}).Count(&totAssociated)
 
