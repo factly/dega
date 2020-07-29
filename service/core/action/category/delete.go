@@ -54,10 +54,9 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if the category is associated with posts
-	var totAssociated int
-	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
-		CategoryID: uint(id),
-	}).Count(&totAssociated)
+	category := new(model.Category)
+	category.ID = uint(id)
+	totAssociated := config.DB.Model(category).Association("Posts").Count()
 
 	if totAssociated != 0 {
 		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))

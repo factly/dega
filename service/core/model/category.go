@@ -15,6 +15,7 @@ type Category struct {
 	MediumID    uint    `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
 	Medium      *Medium `gorm:"foreignkey:medium_id;association_foreignkey:id" json:"medium"`
 	SpaceID     uint    `gorm:"column:space_id" json:"space_id"`
+	Posts       []*Post `gorm:"many2many:post_categories;" json:"posts"`
 }
 
 // BeforeCreate - validation for medium

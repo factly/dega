@@ -45,6 +45,18 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Check if parent category exist or not
+	if category.ParentID != 0 {
+		var parentCat model.Category
+		parentCat.ID = category.ParentID
+		err = config.DB.Model(&model.Category{}).First(&parentCat).Error
+
+		if err != nil {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
 	var categorySlug string
 	if category.Slug != "" && slug.Check(category.Slug) {
 		categorySlug = category.Slug

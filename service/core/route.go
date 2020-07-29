@@ -28,7 +28,6 @@ func Router() http.Handler {
 		&model.Space{},
 		&model.Format{},
 		&model.Post{},
-		&model.PostCategory{},
 		&model.PostAuthor{},
 	)
 
@@ -44,8 +43,6 @@ func Router() http.Handler {
 	config.DB.Model(&model.Post{}).AddForeignKey("featured_medium_id", "media(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Post{}).AddForeignKey("format_id", "formats(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Post{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
-	config.DB.Model(&model.PostCategory{}).AddForeignKey("category_id", "categories(id)", "RESTRICT", "RESTRICT")
-	config.DB.Model(&model.PostCategory{}).AddForeignKey("post_id", "posts(id)", "RESTRICT", "RESTRICT")
 	config.DB.Model(&model.Tag{}).AddForeignKey("space_id", "spaces(id)", "RESTRICT", "RESTRICT")
 
 	r.Mount("/media", medium.Router())
