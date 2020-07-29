@@ -15,8 +15,8 @@ type ctxKeyOrganisationID int
 // OrganisationIDKey is the key that holds the unique user ID in a request context.
 const OrganisationIDKey ctxKeyOrganisationID = 0
 
-// GenerateOrgnaization check X-User in header
-func GenerateOrgnaization(h http.Handler) http.Handler {
+// GenerateOrganisation check X-User in header
+func GenerateOrganisation(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		if strings.Split(strings.Trim(r.URL.Path, "/"), "/")[1] != "spaces" {
