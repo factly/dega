@@ -75,7 +75,7 @@ func main() {
 		r.Get("/swagger/*", httpSwagger.WrapHandler)
 	}
 
-	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrgnaization, policy.Authorizer).Group(func(r chi.Router) {
+	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
 		r.Mount("/factcheck", factcheck.Router())
 		r.Mount("/core", core.Router())
 	})
