@@ -41,18 +41,21 @@ func list(w http.ResponseWriter, r *http.Request) {
 	userID, err := util.GetUser(r.Context())
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
 	spaceID, err := util.GetSpace(r.Context())
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
 	organisationID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
