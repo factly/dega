@@ -34,10 +34,8 @@ type post struct {
 
 type postData struct {
 	model.Post
-	Categories []model.Category       `json:"categories"`
-	Tags       []model.Tag            `json:"tags"`
-	Authors    []model.Author         `json:"authors"`
-	Claims     []factcheckModel.Claim `json:"claims"`
+	Authors []model.Author         `json:"authors"`
+	Claims  []factcheckModel.Claim `json:"claims"`
 }
 
 // CheckSpace - validation for medium, format, categories & tags

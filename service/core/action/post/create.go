@@ -38,8 +38,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	post := post{}
 	result := &postData{}
-	result.Categories = make([]model.Category, 0)
-	result.Tags = make([]model.Tag, 0)
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factcheckModel.Claim, 0)
 
@@ -89,14 +87,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = config.DB.Model(&model.Post{}).Create(&result.Post).Error
+	config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&result.Post.Tags)
+	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
+
+	err = config.DB.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
-	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").First(&result.Post)
+	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post)
 
 	if result.Format.Slug == "factcheck" {
 		// create post claim
@@ -122,56 +123,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		for _, postClaim := range postClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
 		}
-	}
-
-	// create post category & fetch categories
-	for _, id := range post.CategoryIDs {
-		postCategory := &model.PostCategory{}
-		postCategory.CategoryID = uint(id)
-		postCategory.PostID = result.ID
-
-		err = config.DB.Model(&model.PostCategory{}).Create(&postCategory).Error
-
-		if err != nil {
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	// fetch all post categories
-	postCategories := []model.PostCategory{}
-	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
-		PostID: result.ID,
-	}).Preload("Category").Preload("Category.Medium").Find(&postCategories)
-
-	// appending post categories to result
-	for _, postCategory := range postCategories {
-		result.Categories = append(result.Categories, postCategory.Category)
-	}
-
-	// create post tag
-	for _, id := range post.TagIDs {
-		postTag := &model.PostTag{}
-		postTag.TagID = uint(id)
-		postTag.PostID = result.ID
-
-		err = config.DB.Model(&model.PostTag{}).Create(&postTag).Error
-
-		if err != nil {
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	// fetch all post tags
-	postTags := []model.PostTag{}
-	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
-		PostID: result.ID,
-	}).Preload("Tag").Find(&postTags)
-
-	// appending previous post tags to result
-	for _, postTag := range postTags {
-		result.Tags = append(result.Tags, postTag.Tag)
 	}
 
 	// Adding author

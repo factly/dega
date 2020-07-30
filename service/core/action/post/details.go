@@ -43,18 +43,14 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &postData{}
-	result.Categories = make([]model.Category, 0)
-	result.Tags = make([]model.Tag, 0)
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factcheckModel.Claim, 0)
 
-	categories := []model.PostCategory{}
-	tags := []model.PostTag{}
 	postAuthors := []model.PostAuthor{}
 	postClaims := []factcheckModel.PostClaim{}
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Tags").Preload("Categories").Preload("Format").Where(&model.Post{
 		SpaceID: uint(sID),
 	}).First(&result.Post).Error
 
@@ -75,32 +71,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// fetch all categories
-	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
-		PostID: uint(id),
-	}).Preload("Category").Preload("Category.Medium").Find(&categories)
-
-	// fetch all tags
-	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
-		PostID: uint(id),
-	}).Preload("Tag").Find(&tags)
-
 	// fetch all authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Find(&postAuthors)
-
-	for _, c := range categories {
-		if c.Category.ID != 0 {
-			result.Categories = append(result.Categories, c.Category)
-		}
-	}
-
-	for _, t := range tags {
-		if t.Tag.ID != 0 {
-			result.Tags = append(result.Tags, t.Tag)
-		}
-	}
 
 	// Adding author
 	authors, err := author.All(r.Context())

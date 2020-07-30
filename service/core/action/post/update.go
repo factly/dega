@@ -48,8 +48,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	post := &post{}
-	postCategories := []model.PostCategory{}
-	postTags := []model.PostTag{}
 	postAuthors := []model.PostAuthor{}
 	postClaims := []factcheckModel.PostClaim{}
 
@@ -62,8 +60,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	result := &postData{}
 	result.ID = uint(id)
-	result.Tags = make([]model.Tag, 0)
-	result.Categories = make([]model.Category, 0)
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factcheckModel.Claim, 0)
 
@@ -73,12 +69,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).First(&result.Post).Error
+	}).Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
+
+	// Fetching old and new tags related to post
+	oldTags := result.Post.Tags
+	newTags := make([]model.Tag, 0)
+	config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&newTags)
+
+	// Fetching old and new categories related to post
+	oldCategories := result.Post.Categories
+	newCategories := make([]model.Category, 0)
+	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&newCategories)
 
 	post.SpaceID = result.SpaceID
 
@@ -99,7 +105,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slug.Approve(slug.Make(post.Title), sID, config.DB.NewScope(&model.Post{}).TableName())
 	}
 
-	config.DB.Model(&result.Post).Updates(model.Post{
+	// Deleting old associations
+	if len(oldTags) > 0 {
+		config.DB.Model(&result.Post).Association("Tags").Delete(oldTags)
+	}
+	if len(oldCategories) > 0 {
+		config.DB.Model(&result.Post).Association("Categories").Delete(oldCategories)
+	}
+
+	if len(newTags) == 0 {
+		newTags = nil
+	}
+	if len(newCategories) == 0 {
+		newCategories = nil
+	}
+
+	config.DB.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
 		Title:            post.Title,
 		Slug:             postSlug,
 		Status:           post.Status,
@@ -112,68 +133,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FormatID:         post.FormatID,
 		FeaturedMediumID: post.FeaturedMediumID,
 		PublishedDate:    post.PublishedDate,
+		Tags:             newTags,
+		Categories:       newCategories,
 	}).Preload("Medium").Preload("Format").First(&result.Post)
-
-	// fetch existing post categories
-	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
-		PostID: uint(id),
-	}).Preload("Category").Find(&postCategories)
-
-	// fetch existing post tags
-	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
-		PostID: uint(id),
-	}).Preload("Tag").Find(&postTags)
 
 	// fetch existing post authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Find(&postAuthors)
 
-	prevTagIDs := make([]uint, 0)
-	postTagIDs := make([]uint, 0)
-	// key as tag_id & value as post_tag
-	mapperPostTag := map[uint]model.PostTag{}
-
-	for _, postTag := range postTags {
-		mapperPostTag[postTag.TagID] = postTag
-		prevTagIDs = append(prevTagIDs, postTag.TagID)
-	}
-
-	toCreateIDs, toDeleteIDs := arrays.Difference(prevTagIDs, post.TagIDs)
-
-	// map post tag ids
-	for _, id := range toDeleteIDs {
-		postTagIDs = append(postTagIDs, mapperPostTag[id].ID)
-	}
-
-	// delete post tags
-	if len(postTagIDs) > 0 {
-		config.DB.Where(postTagIDs).Delete(model.PostTag{})
-	}
-
-	// create post tags
-	for _, id := range toCreateIDs {
-		postTag := &model.PostTag{}
-		postTag.TagID = uint(id)
-		postTag.PostID = result.ID
-
-		err = config.DB.Model(&model.PostTag{}).Create(&postTag).Error
-		if err != nil {
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	// fetch updated post tags
-	updatedPostTags := []model.PostTag{}
-	config.DB.Model(&model.PostTag{}).Where(&model.PostTag{
-		PostID: uint(id),
-	}).Preload("Tag").Find(&updatedPostTags)
-
-	// appending previous post tags to result
-	for _, postTag := range updatedPostTags {
-		result.Tags = append(result.Tags, postTag.Tag)
-	}
+	var toCreateIDs []uint
+	var toDeleteIDs []uint
 
 	if result.Post.Format.Slug == "factcheck" {
 		// fetch existing post claims
@@ -225,52 +195,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 			result.Claims = append(result.Claims, postClaim.Claim)
 		}
 
-	}
-
-	prevCategoryIDs := make([]uint, 0)
-	mapperPostCategory := map[uint]model.PostCategory{}
-	postCategoryIDs := make([]uint, 0)
-
-	for _, postCategory := range postCategories {
-		mapperPostCategory[postCategory.CategoryID] = postCategory
-		prevCategoryIDs = append(prevCategoryIDs, postCategory.CategoryID)
-	}
-
-	toCreateIDs, toDeleteIDs = arrays.Difference(prevCategoryIDs, post.CategoryIDs)
-
-	// map post category ids
-	for _, id := range toDeleteIDs {
-		postCategoryIDs = append(postCategoryIDs, mapperPostCategory[id].ID)
-	}
-
-	// delete post categories
-	if len(postCategoryIDs) > 0 {
-		config.DB.Where(postCategoryIDs).Delete(model.PostCategory{})
-	}
-
-	// creating new categories
-	for _, id := range toCreateIDs {
-		postCategory := &model.PostCategory{}
-		postCategory.CategoryID = uint(id)
-		postCategory.PostID = result.ID
-
-		err = config.DB.Model(&model.PostCategory{}).Create(&postCategory).Error
-
-		if err != nil {
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	// fetch updated post categories
-	updatedPostCategories := []model.PostCategory{}
-	config.DB.Model(&model.PostCategory{}).Where(&model.PostCategory{
-		PostID: uint(id),
-	}).Preload("Category").Preload("Category.Medium").Find(&updatedPostCategories)
-
-	// appending previous post categories to result
-	for _, postCategory := range updatedPostCategories {
-		result.Categories = append(result.Categories, postCategory.Category)
 	}
 
 	prevAuthorIDs := make([]uint, 0)
