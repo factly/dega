@@ -60,7 +60,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
-		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
@@ -70,7 +70,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
-		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
@@ -87,7 +87,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
-		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
@@ -97,7 +97,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
-		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
@@ -107,7 +107,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
-		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 

@@ -59,7 +59,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	totAssociated := config.DB.Model(category).Association("Posts").Count()
 
 	if totAssociated != 0 {
-		errorx.Render(w, errorx.Parser(util.CannotDeleteError()))
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
