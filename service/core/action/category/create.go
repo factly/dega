@@ -52,7 +52,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		err = config.DB.Model(&model.Category{}).First(&parentCat).Error
 
 		if err != nil {
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 			return
 		}
 	}

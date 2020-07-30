@@ -61,7 +61,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if result.ID == category.ParentID {
-		category.ParentID = result.ParentID
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
 	}
 
 	var categorySlug string
