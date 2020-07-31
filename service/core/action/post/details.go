@@ -80,8 +80,8 @@ func details(w http.ResponseWriter, r *http.Request) {
 	authors, err := author.All(r.Context())
 	for _, postAuthor := range postAuthors {
 		aID := fmt.Sprint(postAuthor.AuthorID)
-		if authors[aID].Email != "" {
-			result.Authors = append(result.Authors, authors[aID])
+		if author, found := authors[aID]; found {
+			result.Authors = append(result.Authors, author)
 		}
 	}
 

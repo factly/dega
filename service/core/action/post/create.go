@@ -129,7 +129,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	authors, err := author.All(r.Context())
 	for _, id := range post.AuthorIDs {
 		aID := fmt.Sprint(id)
-		if authors[aID].Email != "" {
+		if _, found := authors[aID]; found {
 			author := model.PostAuthor{
 				AuthorID: id,
 				PostID:   result.Post.ID,

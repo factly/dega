@@ -69,12 +69,33 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	err = tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts).Error
 
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	var postIDs []uint
+	for _, p := range posts {
+		postIDs = append(postIDs, p.ID)
+	}
+
 	// fetch all authors
 	authors, err := author.All(r.Context())
 
+	// fetch all authors related to posts
+	postAuthors := []model.PostAuthor{}
+	config.DB.Model(&model.PostAuthor{}).Where("post_id in (?)", postIDs).Find(&postAuthors)
+
+	postAuthorMap := make(map[uint][]uint)
+	for _, po := range postAuthors {
+		if _, ok := postAuthorMap[po.PostID]; !ok {
+			postAuthorMap[po.PostID] = make([]uint, 0)
+		}
+		postAuthorMap[po.PostID] = append(postAuthorMap[po.PostID], po.AuthorID)
+	}
+
 	for _, post := range posts {
 		postList := &postData{}
-		postAuthors := []model.PostAuthor{}
 		postClaims := []factcheckModel.PostClaim{}
 
 		postList.Authors = make([]model.Author, 0)
@@ -94,15 +115,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 
-		// fetch all post authors
-		config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-			PostID: post.ID,
-		}).Find(&postAuthors)
+		postAuthors, hasEle := postAuthorMap[post.ID]
 
-		for _, postAuthor := range postAuthors {
-			aID := fmt.Sprint(postAuthor.AuthorID)
-			if authors[aID].Email != "" {
-				postList.Authors = append(postList.Authors, authors[aID])
+		if hasEle {
+			for _, postAuthor := range postAuthors {
+				aID := fmt.Sprint(postAuthor)
+				if author, found := authors[aID]; found {
+					postList.Authors = append(postList.Authors, author)
+				}
 			}
 		}
 
