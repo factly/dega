@@ -79,6 +79,18 @@ func list(w http.ResponseWriter, r *http.Request) {
 		postIDs = append(postIDs, p.ID)
 	}
 
+	// fetch all claims related to posts
+	postClaims := []factcheckModel.PostClaim{}
+	config.DB.Model(&factcheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+
+	postClaimMap := make(map[uint][]factcheckModel.Claim)
+	for _, pc := range postClaims {
+		if _, found := postClaimMap[pc.PostID]; !found {
+			postClaimMap[pc.PostID] = make([]factcheckModel.Claim, 0)
+		}
+		postClaimMap[pc.PostID] = append(postClaimMap[pc.PostID], pc.Claim)
+	}
+
 	// fetch all authors
 	authors, err := author.All(r.Context())
 
@@ -88,7 +100,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	postAuthorMap := make(map[uint][]uint)
 	for _, po := range postAuthors {
-		if _, ok := postAuthorMap[po.PostID]; !ok {
+		if _, found := postAuthorMap[po.PostID]; !found {
 			postAuthorMap[po.PostID] = make([]uint, 0)
 		}
 		postAuthorMap[po.PostID] = append(postAuthorMap[po.PostID], po.AuthorID)
@@ -96,24 +108,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	for _, post := range posts {
 		postList := &postData{}
-		postClaims := []factcheckModel.PostClaim{}
 
 		postList.Authors = make([]model.Author, 0)
-		postList.Claims = make([]factcheckModel.Claim, 0)
+		postList.Claims = postClaimMap[post.ID]
 		postList.Post = post
-
-		if post.Format != nil && post.Format.Slug == "factcheck" {
-			postList.Claims = make([]factcheckModel.Claim, 0)
-
-			config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
-				PostID: post.ID,
-			}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
-
-			// appending all post claims
-			for _, postClaim := range postClaims {
-				postList.Claims = append(postList.Claims, postClaim.Claim)
-			}
-		}
 
 		postAuthors, hasEle := postAuthorMap[post.ID]
 
