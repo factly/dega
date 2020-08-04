@@ -69,40 +69,58 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	err = tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts).Error
 
+	if err != nil {
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	var postIDs []uint
+	for _, p := range posts {
+		postIDs = append(postIDs, p.ID)
+	}
+
+	// fetch all claims related to posts
+	postClaims := []factcheckModel.PostClaim{}
+	config.DB.Model(&factcheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+
+	postClaimMap := make(map[uint][]factcheckModel.Claim)
+	for _, pc := range postClaims {
+		if _, found := postClaimMap[pc.PostID]; !found {
+			postClaimMap[pc.PostID] = make([]factcheckModel.Claim, 0)
+		}
+		postClaimMap[pc.PostID] = append(postClaimMap[pc.PostID], pc.Claim)
+	}
+
 	// fetch all authors
 	authors, err := author.All(r.Context())
 
+	// fetch all authors related to posts
+	postAuthors := []model.PostAuthor{}
+	config.DB.Model(&model.PostAuthor{}).Where("post_id in (?)", postIDs).Find(&postAuthors)
+
+	postAuthorMap := make(map[uint][]uint)
+	for _, po := range postAuthors {
+		if _, found := postAuthorMap[po.PostID]; !found {
+			postAuthorMap[po.PostID] = make([]uint, 0)
+		}
+		postAuthorMap[po.PostID] = append(postAuthorMap[po.PostID], po.AuthorID)
+	}
+
 	for _, post := range posts {
 		postList := &postData{}
-		postAuthors := []model.PostAuthor{}
-		postClaims := []factcheckModel.PostClaim{}
 
 		postList.Authors = make([]model.Author, 0)
-		postList.Claims = make([]factcheckModel.Claim, 0)
+		postList.Claims = postClaimMap[post.ID]
 		postList.Post = post
 
-		if post.Format != nil && post.Format.Slug == "factcheck" {
-			postList.Claims = make([]factcheckModel.Claim, 0)
+		postAuthors, hasEle := postAuthorMap[post.ID]
 
-			config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
-				PostID: post.ID,
-			}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
-
-			// appending all post claims
-			for _, postClaim := range postClaims {
-				postList.Claims = append(postList.Claims, postClaim.Claim)
-			}
-		}
-
-		// fetch all post authors
-		config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-			PostID: post.ID,
-		}).Find(&postAuthors)
-
-		for _, postAuthor := range postAuthors {
-			aID := fmt.Sprint(postAuthor.AuthorID)
-			if authors[aID].Email != "" {
-				postList.Authors = append(postList.Authors, authors[aID])
+		if hasEle {
+			for _, postAuthor := range postAuthors {
+				aID := fmt.Sprint(postAuthor)
+				if author, found := authors[aID]; found {
+					postList.Authors = append(postList.Authors, author)
+				}
 			}
 		}
 

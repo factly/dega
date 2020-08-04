@@ -242,8 +242,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	for _, postAuthor := range updatedPostAuthors {
 		aID := fmt.Sprint(postAuthor.AuthorID)
 
-		if authors[aID].Email != "" {
-			result.Authors = append(result.Authors, authors[aID])
+		if author, found := authors[aID]; found {
+			result.Authors = append(result.Authors, author)
 		}
 	}
 
