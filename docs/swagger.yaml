@@ -1,5 +1,14 @@
 basePath: /
 definitions:
+  author.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Author'
+        type: array
+      total:
+        type: integer
+    type: object
   category.category:
     properties:
       description:
@@ -14,7 +23,6 @@ definitions:
         type: string
     required:
     - name
-    - slug
     type: object
   category.paging:
     properties:
@@ -52,17 +60,7 @@ definitions:
     required:
     - claimant_id
     - rating_id
-    - slug
     - title
-    type: object
-  claim.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/model.Claim'
-        type: array
-      total:
-        type: integer
     type: object
   claimant.claimant:
     properties:
@@ -78,85 +76,12 @@ definitions:
         type: string
     required:
     - name
-    - slug
     type: object
   claimant.paging:
     properties:
       nodes:
         items:
           $ref: '#/definitions/model.Claimant'
-        type: array
-      total:
-        type: integer
-    type: object
-  factcheck.factcheck:
-    properties:
-      category_ids:
-        items:
-          type: integer
-        type: array
-      claim_ids:
-        items:
-          type: integer
-        type: array
-      description:
-        type: string
-      excerpt:
-        type: string
-      featured_medium_id:
-        type: integer
-      is_featured:
-        type: boolean
-      is_highlighted:
-        type: boolean
-      is_sticky:
-        type: boolean
-      published_date:
-        type: string
-      slug:
-        type: string
-      space_id:
-        type: integer
-      status:
-        type: string
-      subtitle:
-        type: string
-      tag_ids:
-        items:
-          type: integer
-        type: array
-      title:
-        type: string
-      updates:
-        type: string
-    required:
-    - excerpt
-    - published_date
-    - slug
-    - space_id
-    - status
-    - title
-    type: object
-  factcheck.factcheckData:
-    properties:
-      categories:
-        items:
-          $ref: '#/definitions/model.Category'
-        type: array
-      claims:
-        items:
-          $ref: '#/definitions/model.Claim'
-        type: array
-      tags:
-        items:
-          $ref: '#/definitions/model.Tag'
-        type: array
-    type: object
-  factcheck.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/factcheck.factcheckData'
         type: array
       total:
         type: integer
@@ -171,7 +96,6 @@ definitions:
         type: string
     required:
     - name
-    - slug
     type: object
   format.paging:
     properties:
@@ -212,6 +136,27 @@ definitions:
     - title
     - type
     type: object
+  model.Author:
+    properties:
+      birth_date:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      updated_at:
+        type: string
+    type: object
   model.Category:
     properties:
       created_at:
@@ -231,6 +176,10 @@ definitions:
         type: string
       parent_id:
         type: integer
+      posts:
+        items:
+          $ref: '#/definitions/model.Post'
+        type: array
       slug:
         type: string
       space_id:
@@ -360,6 +309,57 @@ definitions:
       url:
         type: string
     type: object
+  model.Post:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      excerpt:
+        type: string
+      featured_medium_id:
+        type: integer
+      format:
+        $ref: '#/definitions/model.Format'
+        type: object
+      format_id:
+        type: integer
+      id:
+        type: integer
+      is_featured:
+        type: boolean
+      is_highlighted:
+        type: boolean
+      is_sticky:
+        type: boolean
+      medium:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      published_date:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      status:
+        type: string
+      subtitle:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
   model.Rating:
     properties:
       created_at:
@@ -449,6 +449,10 @@ definitions:
         type: integer
       name:
         type: string
+      posts:
+        items:
+          $ref: '#/definitions/model.Post'
+        type: array
       slug:
         type: string
       space_id:
@@ -461,7 +465,15 @@ definitions:
     type: object
   post.post:
     properties:
+      author_ids:
+        items:
+          type: integer
+        type: array
       category_ids:
+        items:
+          type: integer
+        type: array
+      claim_ids:
         items:
           type: integer
         type: array
@@ -495,24 +507,25 @@ definitions:
         type: array
       title:
         type: string
-      updates:
-        type: string
     required:
-    - description
     - excerpt
     - format_id
-    - published_date
-    - slug
-    - space_id
     - status
-    - subtitle
     - title
     type: object
   post.postData:
     properties:
+      authors:
+        items:
+          $ref: '#/definitions/model.Author'
+        type: array
       categories:
         items:
           $ref: '#/definitions/model.Category'
+        type: array
+      claims:
+        items:
+          $ref: '#/definitions/model.Claim'
         type: array
       created_at:
         type: string
@@ -558,8 +571,6 @@ definitions:
         type: string
       updated_at:
         type: string
-      updates:
-        type: string
     type: object
   rating.paging:
     properties:
@@ -585,7 +596,6 @@ definitions:
     required:
     - name
     - numeric_value
-    - slug
     type: object
   space.orgWithSpace:
     properties:
@@ -596,7 +606,7 @@ definitions:
       id:
         type: integer
       permission:
-        $ref: '#/definitions/space.organizationUser'
+        $ref: '#/definitions/space.organisationUser'
         type: object
       slug:
         type: string
@@ -609,7 +619,7 @@ definitions:
       updated_at:
         type: string
     type: object
-  space.organizationUser:
+  space.organisationUser:
     properties:
       created_at:
         type: string
@@ -655,7 +665,6 @@ definitions:
     required:
     - name
     - organisation_id
-    - slug
     type: object
   tag.tag:
     properties:
@@ -667,9 +676,8 @@ definitions:
         type: string
     required:
     - name
-    - slug
     type: object
-host: localhost:8820
+host: localhost:8000
 info:
   contact:
     email: support@swagger.io
@@ -682,6 +690,39 @@ info:
   title: Dega API
   version: "1.0"
 paths:
+  /core/authors:
+    get:
+      description: Get all authors
+      operationId: get-all-authors
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/author.paging'
+      summary: Show all authors
+      tags:
+      - Authors
   /core/categories:
     get:
       description: Get all categories
@@ -1183,6 +1224,10 @@ paths:
       - description: page number
         in: query
         name: page
+        type: string
+      - description: format type
+        in: query
+        name: format
         type: string
       produces:
       - application/json
@@ -1912,163 +1957,6 @@ paths:
       summary: Update a claim by id
       tags:
       - Claim
-  /factcheck/factchecks:
-    get:
-      description: Get all factchecks
-      operationId: get-all-factchecks
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: limit per page
-        in: query
-        name: limit
-        type: string
-      - description: page number
-        in: query
-        name: page
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/factcheck.paging'
-      summary: Show all factchecks
-      tags:
-      - Factcheck
-    post:
-      description: Create factcheck
-      operationId: add-factcheck
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Factcheck Object
-        in: body
-        name: Factcheck
-        required: true
-        schema:
-          $ref: '#/definitions/factcheck.factcheck'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/factcheck.factcheckData'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create factcheck
-      tags:
-      - Factcheck
-  /factcheck/factchecks/{factcheck_id}:
-    delete:
-      description: Delete factcheck by ID
-      operationId: delete-factcheck-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Factcheck ID
-        in: path
-        name: factcheck_id
-        required: true
-        type: string
-      responses:
-        "200": {}
-      summary: Delete a factcheck
-      tags:
-      - Factcheck
-    get:
-      description: Get factcheck by ID
-      operationId: get-factcheck-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Factcheck ID
-        in: path
-        name: factcheck_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/factcheck.factcheckData'
-      summary: Show a factcheck by id
-      tags:
-      - Factcheck
-    put:
-      description: Update factcheck by ID
-      operationId: update-factcheck-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Factcheck ID
-        in: path
-        name: factcheck_id
-        required: true
-        type: string
-      - description: Factcheck
-        in: body
-        name: Factcheck
-        schema:
-          $ref: '#/definitions/factcheck.factcheck'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/factcheck.factcheckData'
-      summary: Update a factcheck by id
-      tags:
-      - Factcheck
   /factcheck/ratings:
     get:
       description: Get all ratings

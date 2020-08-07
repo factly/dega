@@ -31,18 +31,11 @@ import (
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host localhost:8820
+// @host localhost:8000
 // @BasePath /
 func main() {
 
 	godotenv.Load()
-
-	port, ok := os.LookupEnv("PORT")
-	if !ok {
-		port = "8820"
-	}
-
-	port = ":" + port
 
 	// db setup
 	config.SetupDB()
@@ -80,5 +73,5 @@ func main() {
 		r.Mount("/core", core.Router())
 	})
 
-	http.ListenAndServe(port, r)
+	http.ListenAndServe(":8000", r)
 }
