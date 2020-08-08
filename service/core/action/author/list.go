@@ -2,10 +2,13 @@ package author
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
 	"strconv"
+
+	"github.com/factly/x/loggerx"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -37,6 +40,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -44,6 +48,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	oID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -60,6 +65,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
+		loggerx.Error(errors.New("cannot connect to kavach server"))
 		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 		return
 	}

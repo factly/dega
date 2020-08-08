@@ -2,7 +2,10 @@ package category
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
+
+	"github.com/factly/x/loggerx"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -30,6 +33,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -41,6 +45,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	validationError := validationx.Check(category)
 
 	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
 		return
 	}
@@ -52,6 +57,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		err = config.DB.Model(&model.Category{}).First(&parentCat).Error
 
 		if err != nil {
+			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 			return
 		}
@@ -76,6 +82,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Model(&model.Category{}).Create(&result).Error
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
