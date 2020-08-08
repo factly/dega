@@ -2,7 +2,6 @@ package author
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -65,7 +64,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
-		loggerx.Error(errors.New("cannot connect to kavach server"))
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 		return
 	}
