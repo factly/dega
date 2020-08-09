@@ -1,5 +1,4 @@
 import React from 'react';
-//import renderer, { act as rendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';

@@ -6,7 +6,6 @@ import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { Steps, Button } from 'antd';
-import moment from 'moment';
 
 import '../../../matchMedia.mock';
 import SpaceEditForm from './SpaceEditForm';

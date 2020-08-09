@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { shallow, mount } from 'enzyme';
-import { Popconfirm, Button, Typography, Table } from 'antd';
+import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
 import CategoriesList from './CategoriesList';

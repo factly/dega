@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, useHistory } from 'react-router-dom';
-import renderer, { act } from 'react-test-renderer';
+import { BrowserRouter as Router } from 'react-router-dom';
+import renderer from 'react-test-renderer';
 import { useDispatch, useSelector, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';

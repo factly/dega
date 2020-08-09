@@ -349,7 +349,6 @@ exports[`Posts List component should render the component with data 1`] = `
                 className="ant-list-item-extra"
               >
                 <img
-                  alt="alt_text"
                   src="http://example.com"
                   width={272}
                 />

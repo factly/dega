@@ -1,9 +1,9 @@
 import React from 'react';
 import renderer, { act as rendererAct } from 'react-test-renderer';
-import { Provider, useDispatch, useSelector } from 'react-redux';
+import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { act, render } from '@testing-library/react';
+import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
