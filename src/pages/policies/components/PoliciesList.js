@@ -4,25 +4,15 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies, deletePolicy } from '../../../actions/policies';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { entitySelector } from '../../../selectors';
 
 function PoliciesList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { policies, total, loading } = useSelector((state) => {
-    const node = state.policies.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node)
-      return {
-        policies: node.data.map((element) => state.policies.details[element]),
-        total: node.total,
-        loading: state.policies.loading,
-      };
-    return { policies: [], total: 0, loading: state.policies.loading };
-  });
+  const { policies, total, loading } = useSelector((state) =>
+    entitySelector(state, page, policies),
+  );
 
   React.useEffect(() => {
     fetchPolicies();

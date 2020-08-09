@@ -4,25 +4,15 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants, deleteClaimant } from '../../../actions/claimants';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { entitySelector } from '../../../selectors';
 
 function ClaimantsList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { claimants, total, loading } = useSelector((state) => {
-    const node = state.claimants.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node)
-      return {
-        claimants: node.data.map((element) => state.claimants.details[element]),
-        total: node.total,
-        loading: state.claimants.loading,
-      };
-    return { claimants: [], total: 0, loading: state.claimants.loading };
-  });
+  const { claimants, total, loading } = useSelector((state) =>
+    entitySelector(state, page, 'claimants'),
+  );
 
   React.useEffect(() => {
     fetchClaimants();

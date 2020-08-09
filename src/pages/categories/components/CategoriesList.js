@@ -4,25 +4,15 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, deleteCategory } from '../../../actions/categories';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { entitySelector } from '../../../selectors';
 
 function CategoriesList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { categories, total, loading } = useSelector((state) => {
-    const node = state.categories.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node)
-      return {
-        categories: node.data.map((element) => state.categories.details[element]),
-        total: node.total,
-        loading: state.categories.loading,
-      };
-    return { categories: [], total: 0, loading: state.categories.loading };
-  });
+  const { categories, total, loading } = useSelector((state) =>
+    entitySelector(state, page, 'categories'),
+  );
 
   React.useEffect(() => {
     fetchCategories();

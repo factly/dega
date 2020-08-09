@@ -1,9 +1,11 @@
 import React from 'react';
-import { Button, Form, Input, Steps, DatePicker } from 'antd';
+import { Button, Form, Input, Steps, DatePicker, Row, Col } from 'antd';
 import Selector from '../../../components/Selector';
 import Editor from '../../../components/Editor';
 import { maker, checker } from '../../../utils/sluger';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { addClaimant } from '../../../actions/claimants';
 
 const { TextArea } = Input;
 
@@ -18,6 +20,8 @@ const layout = {
 
 const ClaimCreateForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [claimant, setClaimant] = React.useState('');
+  const dispatch = useDispatch();
 
   const onReset = () => {
     form.resetFields();
@@ -108,7 +112,29 @@ const ClaimCreateForm = ({ onCreate, data = {} }) => {
               },
             ]}
           >
-            <Selector action="Claimants" />
+            <Selector action="Claimants" key={!claimant} />
+          </Form.Item>
+          <Form.Item>
+            <Row gutter={8}>
+              <Col span={18}>
+                <Input
+                  placeholder="claimant name"
+                  value={claimant}
+                  onChange={(e) => setClaimant(e.target.value)}
+                />
+              </Col>
+              <Col span={6}>
+                <Button
+                  onClick={() => {
+                    if (claimant)
+                      dispatch(addClaimant({ name: claimant })).then(() => setClaimant(''));
+                  }}
+                  block
+                >
+                  Add
+                </Button>
+              </Col>
+            </Row>
           </Form.Item>
           <Form.Item
             name="rating"

@@ -4,32 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getClaims, deleteClaim } from '../../../actions/claims';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import deepEqual from 'deep-equal';
+import { claimSelector } from '../../../selectors/claims';
 
 function ClaimsList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { claims, total, loading } = useSelector(({ claims, claimants, ratings }) => {
-    const node = claims.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node) {
-      const list = node.data.map((element) => {
-        let claim = claims.details[element];
-        claim.claimant = claimants.details[claim.claimant_id].name;
-        claim.rating = ratings.details[claim.rating_id].name;
-        return claim;
-      });
-      return {
-        claims: list,
-        total: node.total,
-        loading: claims.loading,
-      };
-    }
-    return { claims: [], total: 0, loading: claims.loading };
-  });
+  const { claims, total, loading } = useSelector((state) => claimSelector(state, page));
 
   React.useEffect(() => {
     fetchClaims();

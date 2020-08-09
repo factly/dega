@@ -218,31 +218,31 @@ export const deletePost = (id) => {
   };
 };
 
-const loadingPosts = () => ({
+export const loadingPosts = () => ({
   type: SET_POSTS_LOADING,
   payload: true,
 });
 
-const stopPostsLoading = () => ({
+export const stopPostsLoading = () => ({
   type: SET_POSTS_LOADING,
   payload: false,
 });
 
-const getPostByID = (data) => ({
+export const getPostByID = (data) => ({
   type: ADD_POST,
   payload: data,
 });
 
-const addPostsList = (data) => ({
+export const addPostsList = (data) => ({
   type: ADD_POSTS,
   payload: data,
 });
 
-const addPostsRequest = (data) => ({
+export const addPostsRequest = (data) => ({
   type: ADD_POSTS_REQUEST,
   payload: data,
 });
 
-const resetPosts = () => ({
+export const resetPosts = () => ({
   type: RESET_POSTS,
 });

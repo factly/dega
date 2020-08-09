@@ -82,26 +82,26 @@ export const updateSpace = (data) => {
   };
 };
 
-const loadingSpaces = () => ({
+export const loadingSpaces = () => ({
   type: LOADING_SPACES,
 });
 
-const getSpacesSuccess = (spaces) => ({
+export const getSpacesSuccess = (spaces) => ({
   type: GET_SPACES_SUCCESS,
   payload: spaces,
 });
 
-const addSpaceSuccess = (space) => ({
+export const addSpaceSuccess = (space) => ({
   type: ADD_SPACE_SUCCESS,
   payload: space,
 });
 
-const updateSpaceSuccess = (data) => ({
+export const updateSpaceSuccess = (data) => ({
   type: UPDATE_SPACE_SUCCESS,
   payload: data,
 });
 
-const deleteSpaceSuccess = (id) => ({
+export const deleteSpaceSuccess = (id) => ({
   type: DELETE_SPACE_SUCCESS,
   payload: id,
 });

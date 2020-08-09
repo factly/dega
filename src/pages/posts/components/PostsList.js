@@ -4,26 +4,14 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, deletePost } from '../../../actions/posts';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { entitySelector } from '../../../selectors/';
 
 function PostsList() {
   const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(1);
 
-  const { posts, total, loading } = useSelector((state) => {
-    const node = state.posts.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node)
-      return {
-        posts: node.data.map((element) => state.posts.details[element]),
-        total: node.total,
-        loading: state.posts.loading,
-      };
-    return { posts: [], total: 0, loading: state.posts.loading };
-  });
+  const { posts, total, loading } = useSelector((state) => entitySelector(state, page, 'posts'));
 
   React.useEffect(() => {
     fetchPosts();
