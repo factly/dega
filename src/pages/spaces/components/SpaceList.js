@@ -3,22 +3,11 @@ import { Popconfirm, Button, Table } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteSpace, getSpaces } from './../../../actions/spaces';
+import { spaceSelector } from '../../../selectors/spaces';
 
 function SpaceList() {
   const dispatch = useDispatch();
-  const { spaces, loading } = useSelector((state) => {
-    const selectedOrg = state.spaces.orgs.find((item) =>
-      item.spaces.includes(state.spaces.selected),
-    );
-    let spaces = [];
-    if (selectedOrg) {
-      spaces = selectedOrg.spaces.map((s) => state.spaces.details[s]);
-    }
-    return {
-      loading: state.spaces.loading,
-      spaces: spaces,
-    };
-  });
+  const { spaces, loading } = useSelector(spaceSelector);
 
   const fetchSpaces = () => {
     dispatch(getSpaces());

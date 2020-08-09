@@ -55,7 +55,7 @@ function Selector({ mode, value, onChange, action, display = 'name' }) {
       loading={loading}
       mode={mode}
       defaultValue={value}
-      placeholder={`Add ${entity}`}
+      placeholder={`Select ${entity}`}
       onChange={(values) => onChange(values)}
       filterOption={(input, option) =>
         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0

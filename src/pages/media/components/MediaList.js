@@ -3,26 +3,14 @@ import { Popconfirm, Avatar, Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia, deleteMedium } from '../../../actions/media';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { entitySelector } from '../../../selectors';
 
 function MediaList() {
   const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(1);
 
-  const { media, total, loading } = useSelector((state) => {
-    const node = state.media.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node)
-      return {
-        media: node.data.map((element) => state.media.details[element]),
-        total: node.total,
-        loading: state.media.loading,
-      };
-    return { media: [], total: 0, loading: state.media.loading };
-  });
+  const { media, total, loading } = useSelector((state) => entitySelector(state, page, 'media'));
 
   React.useEffect(() => {
     fetchMedia();

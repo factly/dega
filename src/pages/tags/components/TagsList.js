@@ -3,25 +3,13 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { entitySelector } from '../../../selectors';
 
 function TagsList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { tags, total, loading } = useSelector((state) => {
-    const node = state.tags.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node)
-      return {
-        tags: node.data.map((element) => state.tags.details[element]),
-        total: node.total,
-        loading: state.tags.loading,
-      };
-    return { tags: [], total: 0, loading: state.tags.loading };
-  });
+  const { tags, total, loading } = useSelector((state) => entitySelector(state, page, 'tags'));
 
   React.useEffect(() => {
     fetchTags();

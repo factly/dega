@@ -4,25 +4,15 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRatings, deleteRating } from '../../../actions/ratings';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { entitySelector } from '../../../selectors';
 
 function RatingsList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { ratings, total, loading } = useSelector((state) => {
-    const node = state.ratings.req.find((item) => {
-      return deepEqual(item.query, { page });
-    });
-
-    if (node)
-      return {
-        ratings: node.data.map((element) => state.ratings.details[element]),
-        total: node.total,
-        loading: state.ratings.loading,
-      };
-    return { ratings: [], total: 0, loading: state.ratings.loading };
-  });
+  const { ratings, total, loading } = useSelector((state) =>
+    entitySelector(state, page, 'ratings'),
+  );
 
   React.useEffect(() => {
     fetchRatings();
