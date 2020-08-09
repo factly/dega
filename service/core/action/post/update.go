@@ -14,6 +14,7 @@ import (
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -37,12 +38,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(postID)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -54,6 +57,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&post)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
@@ -72,6 +76,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
@@ -91,6 +96,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = post.CheckSpace(config.DB)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}

@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -31,6 +32,7 @@ import (
 func update(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -54,6 +56,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 		return
 	}
@@ -75,6 +78,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = space.CheckSpaceUpdate(config.DB, uint(id))
 
 	if err != nil {
+		loggerx.Error(err)
 		renderx.JSON(w, http.StatusBadRequest, err.Error)
 		return
 	}
@@ -96,6 +100,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}

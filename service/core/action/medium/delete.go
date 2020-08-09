@@ -1,6 +1,7 @@
 package medium
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -9,6 +10,7 @@ import (
 	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 )
@@ -27,6 +29,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -35,6 +38,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(mediumID)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
@@ -49,6 +53,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
@@ -60,6 +65,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
+		loggerx.Error(errors.New("medium is associated with post"))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
@@ -70,6 +76,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
+		loggerx.Error(errors.New("medium is associated with category"))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
@@ -87,6 +94,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
+		loggerx.Error(errors.New("medium is associated with space"))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
@@ -97,6 +105,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
+		loggerx.Error(errors.New("medium is associated with rating"))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
@@ -107,6 +116,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
+		loggerx.Error(errors.New("medium is associated with claimant"))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}

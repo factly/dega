@@ -2,6 +2,7 @@ package post
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -32,6 +34,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -44,6 +47,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&post)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
@@ -51,6 +55,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	validationError := validationx.Check(post)
 
 	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
 		return
 	}
@@ -83,6 +88,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// check categories, tags & medium belong to same space or not
 	err = post.CheckSpace(config.DB)
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
@@ -93,6 +99,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
@@ -108,6 +115,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 			err = config.DB.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
+				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))
 				return
 			}
