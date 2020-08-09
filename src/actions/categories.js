@@ -129,31 +129,31 @@ export const addCategories = (categories) => {
   };
 };
 
-const loadingCategories = () => ({
+export const loadingCategories = () => ({
   type: SET_CATEGORIES_LOADING,
   payload: true,
 });
 
-const stopCategoriesLoading = () => ({
+export const stopCategoriesLoading = () => ({
   type: SET_CATEGORIES_LOADING,
   payload: false,
 });
 
-const getCategoryByID = (data) => ({
+export const getCategoryByID = (data) => ({
   type: ADD_CATEGORY,
   payload: data,
 });
 
-const addCategoriesList = (data) => ({
+export const addCategoriesList = (data) => ({
   type: ADD_CATEGORIES,
   payload: data,
 });
 
-const addCategoriesRequest = (data) => ({
+export const addCategoriesRequest = (data) => ({
   type: ADD_CATEGORIES_REQUEST,
   payload: data,
 });
 
-const resetCategories = () => ({
+export const resetCategories = () => ({
   type: RESET_CATEGORIES,
 });

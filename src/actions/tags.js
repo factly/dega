@@ -100,31 +100,31 @@ export const addTags = (tags) => {
   };
 };
 
-const loadingTags = () => ({
+export const loadingTags = () => ({
   type: SET_TAGS_LOADING,
   payload: true,
 });
 
-const stopTagsLoading = () => ({
+export const stopTagsLoading = () => ({
   type: SET_TAGS_LOADING,
   payload: false,
 });
 
-const getTagByID = (data) => ({
+export const getTagByID = (data) => ({
   type: ADD_TAG,
   payload: data,
 });
 
-const addTagsList = (data) => ({
+export const addTagsList = (data) => ({
   type: ADD_TAGS,
   payload: data,
 });
 
-const addTagsRequest = (data) => ({
+export const addTagsRequest = (data) => ({
   type: ADD_TAGS_REQUEST,
   payload: data,
 });
 
-const resetTags = () => ({
+export const resetTags = () => ({
   type: RESET_TAGS,
 });

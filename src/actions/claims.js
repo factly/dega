@@ -138,31 +138,31 @@ export const addClaims = (claims) => {
   };
 };
 
-const loadingClaims = () => ({
+export const loadingClaims = () => ({
   type: SET_CLAIMS_LOADING,
   payload: true,
 });
 
-const stopClaimsLoading = () => ({
+export const stopClaimsLoading = () => ({
   type: SET_CLAIMS_LOADING,
   payload: false,
 });
 
-const getClaimByID = (data) => ({
+export const getClaimByID = (data) => ({
   type: ADD_CLAIM,
   payload: data,
 });
 
-const addClaimsList = (data) => ({
+export const addClaimsList = (data) => ({
   type: ADD_CLAIMS,
   payload: data,
 });
 
-const addClaimsRequest = (data) => ({
+export const addClaimsRequest = (data) => ({
   type: ADD_CLAIMS_REQUEST,
   payload: data,
 });
 
-const resetClaims = () => ({
+export const resetClaims = () => ({
   type: RESET_CLAIMS,
 });

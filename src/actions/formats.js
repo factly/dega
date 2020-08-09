@@ -94,17 +94,17 @@ export const deleteFormat = (id) => {
   };
 };
 
-const loadingFormats = () => ({
+export const loadingFormats = () => ({
   type: SET_FORMATS_LOADING,
   payload: true,
 });
 
-const stopFormatsLoading = () => ({
+export const stopFormatsLoading = () => ({
   type: SET_FORMATS_LOADING,
   payload: false,
 });
 
-const getFormatByID = (data) => ({
+export const getFormatByID = (data) => ({
   type: ADD_FORMAT,
   payload: data,
 });
@@ -114,11 +114,11 @@ export const addFormats = (data) => ({
   payload: data,
 });
 
-const addFormatsRequest = (data) => ({
+export const addFormatsRequest = (data) => ({
   type: ADD_FORMATS_REQUEST,
   payload: data,
 });
 
-const resetFormats = () => ({
+export const resetFormats = () => ({
   type: RESET_FORMATS,
 });
