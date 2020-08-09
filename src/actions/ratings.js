@@ -125,31 +125,31 @@ export const addRatings = (ratings) => {
   };
 };
 
-const loadingRatings = () => ({
+export const loadingRatings = () => ({
   type: SET_RATINGS_LOADING,
   payload: true,
 });
 
-const stopRatingsLoading = () => ({
+export const stopRatingsLoading = () => ({
   type: SET_RATINGS_LOADING,
   payload: false,
 });
 
-const getRatingByID = (data) => ({
+export const getRatingByID = (data) => ({
   type: ADD_RATING,
   payload: data,
 });
 
-const addRatingsList = (data) => ({
+export const addRatingsList = (data) => ({
   type: ADD_RATINGS,
   payload: data,
 });
 
-const addRatingsRequest = (data) => ({
+export const addRatingsRequest = (data) => ({
   type: ADD_RATINGS_REQUEST,
   payload: data,
 });
 
-const resetRatings = () => ({
+export const resetRatings = () => ({
   type: RESET_RATINGS,
 });

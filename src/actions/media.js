@@ -100,17 +100,17 @@ export const addMedia = (media) => {
   };
 };
 
-const loadingMedia = () => ({
+export const loadingMedia = () => ({
   type: SET_MEDIA_LOADING,
   payload: true,
 });
 
-const stopMediaLoading = () => ({
+export const stopMediaLoading = () => ({
   type: SET_MEDIA_LOADING,
   payload: false,
 });
 
-const getMediumByID = (data) => ({
+export const getMediumByID = (data) => ({
   type: ADD_MEDIUM,
   payload: data,
 });
@@ -120,11 +120,11 @@ export const addMediaList = (data) => ({
   payload: data,
 });
 
-const addMediaRequest = (data) => ({
+export const addMediaRequest = (data) => ({
   type: ADD_MEDIA_REQUEST,
   payload: data,
 });
 
-const resetMedia = () => ({
+export const resetMedia = () => ({
   type: RESET_MEDIA,
 });

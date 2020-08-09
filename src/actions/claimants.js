@@ -129,31 +129,31 @@ export const addClaimants = (claimants) => {
   };
 };
 
-const loadingClaimants = () => ({
+export const loadingClaimants = () => ({
   type: SET_CLAIMANTS_LOADING,
   payload: true,
 });
 
-const stopClaimantsLoading = () => ({
+export const stopClaimantsLoading = () => ({
   type: SET_CLAIMANTS_LOADING,
   payload: false,
 });
 
-const getClaimantByID = (data) => ({
+export const getClaimantByID = (data) => ({
   type: ADD_CLAIMANT,
   payload: data,
 });
 
-const addClaimantsList = (data) => ({
+export const addClaimantsList = (data) => ({
   type: ADD_CLAIMANTS,
   payload: data,
 });
 
-const addClaimantsRequest = (data) => ({
+export const addClaimantsRequest = (data) => ({
   type: ADD_CLAIMANTS_REQUEST,
   payload: data,
 });
 
-const resetClaimants = () => ({
+export const resetClaimants = () => ({
   type: RESET_CLAIMANTS,
 });
