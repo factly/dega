@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Ratings List component should render the component 1`] = `
+exports[`Ratings create component snapshot component should render the component 1`] = `
 <form
   className="ant-form ant-form-horizontal"
   id="creat-rating"

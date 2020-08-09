@@ -1,12 +1,15 @@
 import React from 'react';
-
+import { useHistory } from 'react-router-dom';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from 'react-dom/test-utils';
+import { mount, shallow } from 'enzyme';
+
 import '../../matchMedia.mock';
 import CreatePost from './create';
-import { mount, shallow } from 'enzyme';
+import * as actions from '../../actions/posts';
+import PostCreateForm from './components/PostCreateForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -30,76 +33,101 @@ describe('Post create component', () => {
   let store;
   let mockedDispatch;
 
-  beforeEach(() => {
-    store = mockStore({
-      posts: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-      authors: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-      tags: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-      categories: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-      formats: {
-        req: [],
-        details: {},
-        loading: true,
-      },
+  store = mockStore({
+    posts: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    authors: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    tags: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    categories: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    formats: {
+      req: [],
+      details: {},
+      loading: true,
+    },
 
-      claims: {
-        req: [],
-        details: {},
-        loading: true,
+    claims: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    claimants: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    ratings: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    media: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    spaces: {
+      orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
+      details: {
+        11: { id: 11, name: 'Space 11' },
       },
-      claimants: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-      ratings: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-      media: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-      spaces: {
-        orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
-        details: {
-          11: { id: 11, name: 'Space 11' },
-        },
-        loading: false,
-        selected: 11,
-      },
-    });
-    store.dispatch = jest.fn(() => ({}));
-    mockedDispatch = jest.fn();
-    useDispatch.mockReturnValue(mockedDispatch);
+      loading: false,
+      selected: 11,
+    },
   });
-  it('should render the component', () => {
-    let tree;
-    act(() => {
-      tree = shallow(
-        <Provider store={store}>
-          <CreatePost />
-        </Provider>,
-      );
+  store.dispatch = jest.fn(() => ({}));
+  mockedDispatch = jest.fn(() => Promise.resolve({}));
+  useDispatch.mockReturnValue(mockedDispatch);
+  describe('snapshot testing', () => {
+    it('should render the component', () => {
+      let tree;
+      act(() => {
+        tree = shallow(
+          <Provider store={store}>
+            <CreatePost />
+          </Provider>,
+        );
+      });
+      expect(tree).toMatchSnapshot();
+      tree.unmount();
     });
-    expect(tree).toMatchSnapshot();
+  });
+  describe('component testing', () => {
+    let wrapper;
+    afterEach(() => {
+      wrapper.unmount();
+    });
+    it('should call addPost', (done) => {
+      actions.addPost.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <CreatePost />
+          </Provider>,
+        );
+      });
+      wrapper.find(PostCreateForm).props().onCreate({ test: 'test' });
+      setTimeout(() => {
+        expect(actions.addPost).toHaveBeenCalledWith({ test: 'test' });
+        expect(push).toHaveBeenCalledWith('/posts');
+        done();
+      }, 0);
+    });
   });
 });

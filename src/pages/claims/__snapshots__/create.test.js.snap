@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Claim Edit Form component snapshot testing should render the component 1`] = `
+exports[`Claim create component snapshot testing should render the component 1`] = `
 <ContextProvider
   value={
     Object {

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Spaces List component should render the component 1`] = `
+exports[`Spaces create component snapshot testing should render the component 1`] = `
 <div>
   <form
     className="ant-form ant-form-horizontal"

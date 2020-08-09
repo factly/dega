@@ -1,12 +1,16 @@
 import React from 'react';
 import { BrowserRouter as Router, useHistory } from 'react-router-dom';
-import renderer, { act } from 'react-test-renderer';
+import renderer, { act as rendererAct } from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { mount } from 'enzyme';
+import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
 import CreateSpace from './create';
+import * as actions from '../../actions/spaces';
+import SpaceCreateForm from './components/SpaceCreateForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -26,31 +30,62 @@ jest.mock('../../actions/spaces', () => ({
   addSpace: jest.fn(),
 }));
 
-describe('Spaces List component', () => {
+describe('Spaces create component', () => {
   let store;
   let mockedDispatch;
 
-  beforeEach(() => {
-    store = mockStore({
-      spaces: {
-        orgs: [],
-        details: {},
-        loading: true,
-        selected: 0,
-      },
-    });
-    store.dispatch = jest.fn(() => ({}));
-    mockedDispatch = jest.fn();
-    useDispatch.mockReturnValue(mockedDispatch);
+  store = mockStore({
+    spaces: {
+      orgs: [],
+      details: {},
+      loading: true,
+      selected: 0,
+    },
   });
-  it('should render the component', () => {
-    const tree = renderer
-      .create(
-        <Provider store={store}>
-          <CreateSpace />
-        </Provider>,
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
+  store.dispatch = jest.fn(() => ({}));
+  mockedDispatch = jest.fn(() => Promise.resolve({}));
+  useDispatch.mockReturnValue(mockedDispatch);
+
+  describe('snapshot testing', () => {
+    it('should render the component', () => {
+      let component;
+      rendererAct(() => {
+        component = renderer.create(
+          <Provider store={store}>
+            <CreateSpace />
+          </Provider>,
+        );
+      });
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+      rendererAct(() => component.unmount());
+    });
+  });
+  describe('component testing', () => {
+    let wrapper;
+    afterEach(() => {
+      wrapper.unmount();
+    });
+    it('should call addSpace', (done) => {
+      actions.addSpace.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <CreateSpace />
+          </Provider>,
+        );
+      });
+      act(() => {
+        wrapper.find(SpaceCreateForm).props().onCreate({ test: 'test' });
+        wrapper.update();
+      });
+      setTimeout(() => {
+        expect(actions.addSpace).toHaveBeenCalledWith({ test: 'test' });
+        expect(push).toHaveBeenCalledWith('/spaces');
+        done();
+      }, 0);
+    });
   });
 });
