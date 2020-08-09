@@ -1,13 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router, useHistory } from 'react-router-dom';
-import renderer, { act } from 'react-test-renderer';
+import { useHistory } from 'react-router-dom';
+import renderer, { act as rendererAct } from 'react-test-renderer';
 import { useDispatch, Provider, useSelector } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
+import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
 import EditClaimant from './edit';
+import * as actions from '../../actions/claimants';
+import ClaimantCreateForm from './components/ClaimantCreateForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -30,103 +33,143 @@ jest.mock('../../actions/claimants', () => ({
   updateClaimant: jest.fn(),
 }));
 
-describe('Claimants List component', () => {
+describe('Claimants edit component', () => {
   let store;
   let mockedDispatch;
 
-  beforeEach(() => {
-    store = mockStore({
-      claimants: {
-        req: [
-          {
-            data: [1, 2],
-            query: {
-              page: 1,
+  describe('snapshot testing', () => {
+    beforeEach(() => {
+      store = mockStore({
+        claimants: {
+          req: [
+            {
+              data: [1, 2],
+              query: {
+                page: 1,
+              },
+              total: 2,
             },
-            total: 2,
+          ],
+          details: {
+            '1': {
+              id: 1,
+              name: 'TOI',
+              slug: 'toi',
+              description: 'description',
+              tag_line: 'tag line',
+              claimant_date: '2017-12-12',
+            },
+            '2': {
+              id: 2,
+              name: 'CNN',
+              slug: 'cnn',
+              description: 'description',
+              tag_line: 'tag line',
+              claimant_date: '2017-12-12',
+            },
           },
-        ],
-        details: {
-          '1': {
-            id: 1,
-            name: 'TOI',
-            slug: 'toi',
-            description: 'description',
-            tag_line: 'tag line',
-            claimant_date: '2017-12-12',
-          },
-          '2': {
-            id: 2,
-            name: 'CNN',
-            slug: 'cnn',
-            description: 'description',
-            tag_line: 'tag line',
-            claimant_date: '2017-12-12',
-          },
+          loading: true,
         },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      });
+      store.dispatch = jest.fn(() => ({}));
+      mockedDispatch = jest.fn();
+      useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should render the component', () => {
+      useSelector.mockReturnValueOnce({
+        claimant: {
+          id: 1,
+          name: 'TOI',
+          slug: 'toi',
+          description: 'description',
+          tag_line: 'tag line',
+          claimant_date: '2017-12-12',
+        },
+        loading: false,
+      });
+      const tree = renderer
+        .create(
+          <Provider store={store}>
+            <EditClaimant />
+          </Provider>,
+        )
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match component with empty data', () => {
+      useSelector.mockReturnValueOnce({
+        claimant: {},
+        loading: false,
+      });
+      let component;
+      rendererAct(() => {
+        component = renderer.create(
+          <Provider store={store}>
+            <EditClaimant />
+          </Provider>,
+        );
+      });
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match skeleton while loading', () => {
+      useSelector.mockReturnValueOnce({
+        claimant: {},
         loading: true,
-      },
-      media: {
-        req: [],
-        details: {},
-        loading: true,
-      },
+      });
+      let component;
+      rendererAct(() => {
+        component = renderer.create(
+          <Provider store={store}>
+            <EditClaimant />
+          </Provider>,
+        );
+      });
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
     });
-    store.dispatch = jest.fn(() => ({}));
-    mockedDispatch = jest.fn();
-    useDispatch.mockReturnValue(mockedDispatch);
   });
-  it('should render the component', () => {
-    useSelector.mockReturnValueOnce({
-      claimant: {
-        id: 1,
-        name: 'TOI',
-        slug: 'toi',
-        description: 'description',
-        tag_line: 'tag line',
-        claimant_date: '2017-12-12',
-      },
-      loading: false,
+  describe('component testing', () => {
+    let wrapper;
+    afterEach(() => {
+      wrapper.unmount();
     });
-    const tree = renderer
-      .create(
-        <Provider store={store}>
-          <EditClaimant />
-        </Provider>,
-      )
-      .toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-  it('should match component with empty data', () => {
-    useSelector.mockReturnValueOnce({
-      claimant: {},
-      loading: false,
+    it('should call get action', () => {
+      useSelector.mockReturnValueOnce({ rating: null, loading: true });
+      actions.getClaimant.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditClaimant />
+          </Provider>,
+        );
+      });
+      expect(actions.getClaimant).toHaveBeenCalledWith('1');
     });
-    let component;
-    act(() => {
-      component = renderer.create(
-        <Provider store={store}>
-          <EditClaimant />
-        </Provider>,
-      );
+    it('should call updateClaimant', (done) => {
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      useDispatch.mockReturnValueOnce(() => Promise.resolve({}));
+      useSelector.mockReturnValueOnce({ rating: {}, loading: false });
+      actions.updateClaimant.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditClaimant />
+          </Provider>,
+        );
+      });
+      wrapper.find(ClaimantCreateForm).props().onCreate({ test: 'test' });
+      setTimeout(() => {
+        expect(actions.updateClaimant).toHaveBeenCalledWith({ test: 'test' });
+        expect(push).toHaveBeenCalledWith('/claimants');
+        done();
+      }, 0);
     });
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-  it('should match skeleton while loading', () => {
-    useSelector.mockReturnValueOnce({
-      claimant: {},
-      loading: true,
-    });
-    let component;
-    act(() => {
-      component = renderer.create(
-        <Provider store={store}>
-          <EditClaimant />
-        </Provider>,
-      );
-    });
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
   });
 });

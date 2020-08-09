@@ -1,11 +1,16 @@
 import React from 'react';
-import renderer, { act } from 'react-test-renderer';
-import { useDispatch, Provider } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import renderer, { act as rendererAct } from 'react-test-renderer';
+import { useDispatch, Provider, useSelector } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { mount } from 'enzyme';
+import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
 import EditCategory from './edit';
+import * as actions from '../../actions/categories';
+import CategoryCreateForm from './components/CategoryCreateForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -28,113 +33,207 @@ jest.mock('../../actions/categories', () => ({
   updateCategory: jest.fn(),
 }));
 
-describe('Categories List component', () => {
+describe('Categories Edit component', () => {
   let store;
   let mockedDispatch;
-
-  beforeEach(() => {
-    store = mockStore({
-      categories: {
-        req: [
-          {
-            data: [1, 2],
-            query: {
-              page: 1,
-            },
-            total: 2,
+  store = mockStore({
+    categories: {
+      req: [
+        {
+          data: [1, 2],
+          query: {
+            page: 1,
           },
-        ],
-        details: {
-          '1': {
-            id: 1,
-            created_at: '2020-07-17T10:14:44.251814Z',
-            updated_at: '2020-07-17T10:14:44.251814Z',
-            deleted_at: null,
-            name: 'category-1',
-            slug: 'category-1',
-            description: '',
-            parent_id: 0,
-            medium_id: 0,
-            space_id: 1,
-          },
-          '2': {
-            id: 2,
-            created_at: '2020-07-17T10:14:48.173442Z',
-            updated_at: '2020-07-17T10:14:48.173442Z',
-            deleted_at: null,
-            name: 'category-2',
-            slug: 'category-2',
-            description: '',
-            parent_id: 0,
-            medium_id: 0,
-            space_id: 1,
-          },
+          total: 2,
         },
-        loading: true,
+      ],
+      details: {
+        '1': {
+          id: 1,
+          created_at: '2020-07-17T10:14:44.251814Z',
+          updated_at: '2020-07-17T10:14:44.251814Z',
+          deleted_at: null,
+          name: 'category-1',
+          slug: 'category-1',
+          description: '',
+          parent_id: 0,
+          medium_id: 0,
+          space_id: 1,
+        },
+        '2': {
+          id: 2,
+          created_at: '2020-07-17T10:14:48.173442Z',
+          updated_at: '2020-07-17T10:14:48.173442Z',
+          deleted_at: null,
+          name: 'category-2',
+          slug: 'category-2',
+          description: '',
+          parent_id: 0,
+          medium_id: 0,
+          space_id: 1,
+        },
       },
-      media: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-    });
-    store.dispatch = jest.fn(() => ({}));
-    mockedDispatch = jest.fn();
-    useDispatch.mockReturnValue(mockedDispatch);
+      loading: true,
+    },
+    media: {
+      req: [],
+      details: {},
+      loading: true,
+    },
   });
-  it('should render the component', () => {
-    let component;
-    act(() => {
-      component = renderer.create(
-        <Provider store={store}>
-          <EditCategory />
-        </Provider>,
-      );
+  store.dispatch = jest.fn(() => ({}));
+  mockedDispatch = jest.fn(() => Promise.resolve({}));
+  useDispatch.mockReturnValue(mockedDispatch);
+
+  describe('snapshot testing', () => {
+    it('should render the component', () => {
+      let component;
+      rendererAct(() => {
+        component = renderer.create(
+          <Provider store={store}>
+            <EditCategory />
+          </Provider>,
+        );
+      });
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
     });
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
+    it('should match component with empty data', () => {
+      let component;
+      store = mockStore({
+        categories: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      });
+      rendererAct(() => {
+        component = renderer.create(
+          <Provider store={store}>
+            <EditCategory />
+          </Provider>,
+        );
+      });
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match skeleton while loading', () => {
+      let component;
+      store = mockStore({
+        categories: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      });
+      rendererAct(() => {
+        component = renderer.create(
+          <Provider store={store}>
+            <EditCategory />
+          </Provider>,
+        );
+      });
+      const tree = component.toJSON();
+      expect(tree).toMatchSnapshot();
+    });
   });
-  it('should match component with empty data', () => {
-    let component;
-    store = mockStore({
-      categories: {
-        req: [],
-        details: {},
-        loading: false,
-      },
-      media: {
-        req: [],
-        details: {},
-        loading: true,
-      },
+  describe('component testing', () => {
+    let wrapper;
+    beforeEach(() => {
+      store = mockStore({
+        categories: {
+          req: [
+            {
+              data: [1, 2],
+              query: {
+                page: 1,
+              },
+              total: 2,
+            },
+          ],
+          details: {
+            '1': {
+              id: 1,
+              created_at: '2020-07-17T10:14:44.251814Z',
+              updated_at: '2020-07-17T10:14:44.251814Z',
+              deleted_at: null,
+              name: 'category-1',
+              slug: 'category-1',
+              description: '',
+              parent_id: 0,
+              medium_id: 0,
+              space_id: 1,
+            },
+            '2': {
+              id: 2,
+              created_at: '2020-07-17T10:14:48.173442Z',
+              updated_at: '2020-07-17T10:14:48.173442Z',
+              deleted_at: null,
+              name: 'category-2',
+              slug: 'category-2',
+              description: '',
+              parent_id: 0,
+              medium_id: 0,
+              space_id: 1,
+            },
+          },
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      });
     });
-    act(() => {
-      component = renderer.create(
-        <Provider store={store}>
-          <EditCategory />
-        </Provider>,
-      );
+    afterEach(() => {
+      wrapper.unmount();
     });
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-  });
-  it('should match skeleton while loading', () => {
-    let component;
-    store = mockStore({
-      categories: {
-        req: [],
-        details: {},
-        loading: true,
-      },
+    it('should call get action', () => {
+      actions.getCategory.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditCategory />
+          </Provider>,
+        );
+      });
+      expect(actions.getCategory).toHaveBeenCalledWith('1');
     });
-    act(() => {
-      component = renderer.create(
-        <Provider store={store}>
-          <EditCategory />
-        </Provider>,
-      );
+    it('should call updateCategory', (done) => {
+      actions.updateCategory.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditCategory />
+          </Provider>,
+        );
+      });
+      wrapper.find(CategoryCreateForm).props().onCreate({ test: 'test' });
+      setTimeout(() => {
+        expect(actions.updateCategory).toHaveBeenCalledWith({
+          id: 1,
+          created_at: '2020-07-17T10:14:44.251814Z',
+          updated_at: '2020-07-17T10:14:44.251814Z',
+          deleted_at: null,
+          name: 'category-1',
+          slug: 'category-1',
+          description: '',
+          parent_id: 0,
+          medium_id: 0,
+          space_id: 1,
+          test: 'test',
+        });
+        expect(push).toHaveBeenCalledWith('/categories');
+        done();
+      }, 0);
     });
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
   });
 });

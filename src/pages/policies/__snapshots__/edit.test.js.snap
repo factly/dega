@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Categories List component should match component with empty data 1`] = `
+exports[`Policies edit component snapshot testing should match component with empty data 1`] = `
 <ContextProvider
   value={
     Object {
@@ -36,7 +36,7 @@ exports[`Categories List component should match component with empty data 1`] = 
 </ContextProvider>
 `;
 
-exports[`Categories List component should match skeleton while loading 1`] = `
+exports[`Policies edit component snapshot testing should match skeleton while loading 1`] = `
 <ContextProvider
   value={
     Object {
@@ -72,7 +72,7 @@ exports[`Categories List component should match skeleton while loading 1`] = `
 </ContextProvider>
 `;
 
-exports[`Categories List component should render the component 1`] = `
+exports[`Policies edit component snapshot testing should render the component 1`] = `
 <ContextProvider
   value={
     Object {

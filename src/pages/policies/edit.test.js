@@ -1,12 +1,15 @@
 import React from 'react';
-import renderer, { act } from 'react-test-renderer';
-import { useDispatch, Provider } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useDispatch, Provider, useSelector } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { shallow, mount } from 'enzyme';
+import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
 import EditPolicy from './edit';
-import { shallow } from 'enzyme';
+import * as actions from '../../actions/policies';
+import PolicyCreateForm from './components/PolicyCreateForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -22,101 +25,171 @@ jest.mock('react-router-dom', () => ({
   useParams: jest.fn().mockReturnValue({ id: '1' }),
 }));
 
-jest.mock('../../actions/categories', () => ({
-  getCategories: jest.fn(),
-  addCategory: jest.fn(),
-  getCategory: jest.fn(),
-  updateCategory: jest.fn(),
+jest.mock('../../actions/policies', () => ({
+  getPolicies: jest.fn(),
+  addPolicy: jest.fn(),
+  getPolicy: jest.fn(),
+  updatePolicy: jest.fn(),
 }));
 
-describe('Categories List component', () => {
+describe('Policies edit component', () => {
   let store;
   let mockedDispatch;
-
-  beforeEach(() => {
-    store = mockStore({
-      policies: {
-        req: [],
-        details: {
-          '1': {
-            id: 1,
-            name: 'policy',
-            description: 'description',
-            permissions: [
-              {
-                resource: 'category',
-                actions: ['create'],
-              },
-            ],
-          },
+  store = mockStore({
+    policies: {
+      req: [],
+      details: {
+        '1': {
+          id: 1,
+          name: 'policy',
+          description: 'description',
+          permissions: [
+            {
+              resource: 'policy',
+              actions: ['create'],
+            },
+          ],
         },
-        loading: false,
       },
-      authors: {
-        req: [{ query: { page: 1 }, total: 1, data: [1] }],
-        details: { 1: { id: 1, name: 'Author', email: 'author@aut.co' } },
-        loading: false,
-      },
-    });
-    store.dispatch = jest.fn(() => ({}));
-    mockedDispatch = jest.fn();
-    useDispatch.mockReturnValue(mockedDispatch);
+      loading: false,
+    },
+    authors: {
+      req: [{ query: { page: 1 }, total: 1, data: [1] }],
+      details: { 1: { id: 1, name: 'Author', email: 'author@aut.co' } },
+      loading: false,
+    },
   });
-  it('should render the component', () => {
-    let tree;
-    act(() => {
-      tree = shallow(
-        <Provider store={store}>
-          <EditPolicy />
-        </Provider>,
-      );
+  store.dispatch = jest.fn(() => ({}));
+  mockedDispatch = jest.fn(() => Promise.resolve({}));
+  useDispatch.mockReturnValue(mockedDispatch);
+
+  describe('snapshot testing', () => {
+    it('should render the component', () => {
+      let tree;
+      act(() => {
+        tree = shallow(
+          <Provider store={store}>
+            <EditPolicy />
+          </Provider>,
+        );
+      });
+      expect(tree).toMatchSnapshot();
     });
-    expect(tree).toMatchSnapshot();
+    it('should match component with empty data', () => {
+      let tree;
+      store = mockStore({
+        policies: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+        authors: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+      });
+      act(() => {
+        tree = shallow(
+          <Provider store={store}>
+            <EditPolicy />
+          </Provider>,
+        );
+      });
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match skeleton while loading', () => {
+      let tree;
+      store = mockStore({
+        policies: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+        authors: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+      });
+      act(() => {
+        tree = shallow(
+          <Provider store={store}>
+            <EditPolicy />
+          </Provider>,
+        );
+      });
+      expect(tree).toMatchSnapshot();
+    });
   });
-  it('should match component with empty data', () => {
-    let tree;
-    store = mockStore({
-      policies: {
-        req: [],
-        details: {},
-        loading: false,
-      },
-      authors: {
-        req: [],
-        details: {},
-        loading: false,
-      },
+  describe('component testing', () => {
+    let wrapper;
+    beforeEach(() => {
+      store = mockStore({
+        policies: {
+          req: [],
+          details: {
+            '1': {
+              id: 1,
+              name: 'policy',
+              description: 'description',
+              permissions: [
+                {
+                  resource: 'policy',
+                  actions: ['create'],
+                },
+              ],
+            },
+          },
+          loading: false,
+        },
+        authors: {
+          req: [{ query: { page: 1 }, total: 1, data: [1] }],
+          details: { 1: { id: 1, name: 'Author', email: 'author@aut.co' } },
+          loading: false,
+        },
+      });
     });
-    act(() => {
-      tree = shallow(
-        <Provider store={store}>
-          <EditPolicy />
-        </Provider>,
-      );
+    afterEach(() => {
+      wrapper.unmount();
     });
-    expect(tree).toMatchSnapshot();
-  });
-  it('should match skeleton while loading', () => {
-    let tree;
-    store = mockStore({
-      policies: {
-        req: [],
-        details: {},
-        loading: true,
-      },
-      authors: {
-        req: [],
-        details: {},
-        loading: false,
-      },
+    it('should call get action', () => {
+      actions.getPolicy.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditPolicy />
+          </Provider>,
+        );
+      });
+      expect(actions.getPolicy).toHaveBeenCalledWith('1');
     });
-    act(() => {
-      tree = shallow(
-        <Provider store={store}>
-          <EditPolicy />
-        </Provider>,
-      );
+    it('should call updatePolicy', (done) => {
+      actions.updatePolicy.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditPolicy />
+          </Provider>,
+        );
+      });
+      wrapper.find(PolicyCreateForm).props().onCreate({ test: 'test' });
+      setTimeout(() => {
+        expect(actions.updatePolicy).toHaveBeenCalledWith({
+          id: 1,
+          name: 'policy',
+          description: 'description',
+          permissions: {
+            policy: ['create'],
+          },
+          users: [],
+          test: 'test',
+        });
+        expect(push).toHaveBeenCalledWith('/policies');
+        done();
+      }, 0);
     });
-    expect(tree).toMatchSnapshot();
   });
 });

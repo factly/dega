@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Posts List component should match skeleton while loading 1`] = `
+exports[`Posts List component snapshot testing should match skeleton while loading 1`] = `
 <ContextProvider
   value={
     Object {
@@ -32,11 +32,11 @@ exports[`Posts List component should match skeleton while loading 1`] = `
     }
   }
 >
-  <CreatePost />
+  <EditPost />
 </ContextProvider>
 `;
 
-exports[`Posts List component should render the component 1`] = `
+exports[`Posts List component snapshot testing should render the component 1`] = `
 <ContextProvider
   value={
     Object {
@@ -68,6 +68,6 @@ exports[`Posts List component should render the component 1`] = `
     }
   }
 >
-  <CreatePost />
+  <EditPost />
 </ContextProvider>
 `;
