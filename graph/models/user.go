@@ -1,21 +1,17 @@
 package models
 
+import "time"
+
 // User model
 type User struct {
-	ID           string       `bson:"_id"`
-	FirstName    string       `bson:"first_name"`
-	LastName     string       `bson:"last_name"`
-	DisplayName  string       `bson:"display_name"`
-	Slug         string       `bson:"slug"`
-	Description  string       `bson:"description"`
-	FacebookURL  *string      `bson:"facebook_url"`
-	TwitterURL   *string      `bson:"twitter_url"`
-	InstagramURL *string      `bson:"instagram_url"`
-	LinkedinURL  *string      `bson:"linkedin_url"`
-	GithubURL    *string      `bson:"github_url"`
-	Email        string       `bson:"email"`
-	Media        *DatabaseRef `bson:"media"`
-	Class        string       `bson:"_class"`
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	FirstName   string    `json:"first_name"`
+	LastName    *string   `json:"last_name"`
+	Email       string    `json:"email"`
+	BirthDate   *string   `json:"birth_date"`
+	Gender      *string   `json:"gender"`
 }
 
 // UsersPaging model

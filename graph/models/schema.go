@@ -6,15 +6,15 @@ import (
 
 // Author of Factcheck
 type Author struct {
-	Name  string  `json:"name"`
-	Type  *string `json:"type"`
+	Name  *string `json:"name"`
+	Type  string  `json:"type"`
 	URL   *string `json:"url"`
 	Image *string `json:"image"`
 }
 
 // ItemReviewed type
 type ItemReviewed struct {
-	Type          *string   `json:"type"`
+	Type          string    `json:"type"`
 	Author        *Author   `json:"author"`
 	DatePublished time.Time `json:"datePublished"`
 	Name          *string   `json:"name"`
@@ -22,7 +22,7 @@ type ItemReviewed struct {
 
 // ReviewRating type
 type ReviewRating struct {
-	Type          *string `json:"type"`
+	Type          string  `json:"type"`
 	RatingValue   int     `json:"ratingValue"`
 	BestRating    int     `json:"bestRating"`
 	WorstRating   int     `json:"worstRating"`

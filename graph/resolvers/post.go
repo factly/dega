@@ -2,42 +2,49 @@ package resolvers
 
 import (
 	"context"
-	"errors"
+	"fmt"
 
+	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
-	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
-	"github.com/factly/dega-api/graph/mongo"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/factly/dega-api/graph/validator"
+	"github.com/factly/dega-api/util"
+	"github.com/jinzhu/gorm"
 )
 
-func (r *postResolver) Status(ctx context.Context, obj *models.Post) (*models.Status, error) {
-	return loaders.GetStatusLoader(ctx).Load(obj.Status.ID)
+type postResolver struct{ *Resolver }
+
+func (r *Resolver) Post() generated.PostResolver { return &postResolver{r} }
+
+func (r *postResolver) Description(ctx context.Context, obj *models.Post) (interface{}, error) {
+	return obj.Description, nil
 }
 
 func (r *postResolver) Format(ctx context.Context, obj *models.Post) (*models.Format, error) {
-	return loaders.GetFormatLoader(ctx).Load(obj.Format.ID)
+	return loaders.GetFormatLoader(ctx).Load(fmt.Sprint(obj.FormatID))
 }
 
-func (r *postResolver) Media(ctx context.Context, obj *models.Post) (*models.Medium, error) {
-	if obj.Media == nil {
+func (r *postResolver) Medium(ctx context.Context, obj *models.Post) (*models.Medium, error) {
+	if obj.FeaturedMediumID == 0 {
 		return nil, nil
 	}
-	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
+
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.FeaturedMediumID))
 }
 
 func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*models.Category, error) {
-	if len(obj.Categories) == 0 {
-		return nil, nil
-	}
+	postCategories := []models.PostCategory{}
+
+	// fetch all categories
+	config.DB.Model(&models.PostCategory{}).Where(&models.PostCategory{
+		PostID: obj.ID,
+	}).Find(&postCategories)
 
 	var allCategoryID []string
 
-	for _, category := range obj.Categories {
-		allCategoryID = append(allCategoryID, category.ID)
+	for _, postCategory := range postCategories {
+		allCategoryID = append(allCategoryID, fmt.Sprint(postCategory.CategoryID))
 	}
 
 	categories, _ := loaders.GetCategoryLoader(ctx).LoadAll(allCategoryID)
@@ -45,175 +52,148 @@ func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*mod
 }
 
 func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Tag, error) {
-	if len(obj.Tags) == 0 {
-		return nil, nil
-	}
+	postTags := []models.PostTag{}
+
+	config.DB.Model(&models.PostTag{}).Where(&models.PostTag{
+		PostID: obj.ID,
+	}).Find(&postTags)
 
 	var allTagID []string
 
-	for _, tag := range obj.Tags {
-		allTagID = append(allTagID, tag.ID)
+	for _, postTag := range postTags {
+		allTagID = append(allTagID, fmt.Sprint(postTag.TagID))
 	}
 
 	tags, _ := loaders.GetTagLoader(ctx).LoadAll(allTagID)
 	return tags, nil
 }
 
-func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error) {
-	if len(obj.DegaUsers) == 0 {
-		return nil, nil
+func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.Claim, error) {
+	postClaims := []models.PostClaim{}
+
+	config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
+		PostID: obj.ID,
+	}).Find(&postClaims)
+
+	var allClaimID []string
+
+	for _, postClaim := range postClaims {
+		allClaimID = append(allClaimID, fmt.Sprint(postClaim.ClaimID))
 	}
+
+	claims, _ := loaders.GetClaimLoader(ctx).LoadAll(allClaimID)
+	return claims, nil
+}
+
+func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error) {
+	postAuthors := []models.PostAuthor{}
+
+	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
+		PostID: obj.ID,
+	}).Find(&postAuthors)
 
 	var allUserID []string
 
-	for _, user := range obj.DegaUsers {
-		allUserID = append(allUserID, user.ID)
+	for _, postAuthor := range postAuthors {
+		allUserID = append(allUserID, fmt.Sprint(postAuthor.AuthorID))
 	}
 
 	users, _ := loaders.GetUserLoader(ctx).LoadAll(allUserID)
 	return users, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
-
-	client := ctx.Value("client").(string)
-
-	if client == "" {
-		return nil, errors.New("client id missing")
+func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
 	}
 
-	query := bson.M{
-		"client_id": client,
+	result := &models.Post{}
+
+	err = config.DB.Model(&models.Post{}).Where(&models.Post{
+		ID:      int(id),
+		SpaceID: sID,
+	}).First(&result).Error
+
+	if err != nil {
+		return nil, nil
 	}
+
+	return result, nil
+}
+
+func (r *queryResolver) Posts(ctx context.Context, formats []string, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	order := "created_at desc"
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
+
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	if sortOrder != nil && *sortOrder == "asc" {
+		pageSortOrder = "asc"
+	}
+
+	if sortBy != nil && util.ColumnValidator(*sortBy, columns) {
+		pageSortBy = *sortBy
+	}
+
+	order = pageSortBy + " " + pageSortOrder
+
+	result := &models.PostsPaging{}
+	result.Nodes = make([]*models.Post, 0)
+
+	offset, pageLimit := util.Parse(limit, page)
+
+	pIDs := make([]int, 0)
 
 	if len(categories) > 0 {
-		keys := []primitive.ObjectID{}
-
-		for _, id := range categories {
-			rid, err := primitive.ObjectIDFromHex(id)
-
-			if err == nil {
-				keys = append(keys, rid)
-			}
+		rows := []models.Post{}
+		config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN categories ON categories.id = post_categories.category_id").Where("categories.slug in (?)", categories).Where("posts.space_id in (?)", sID).Scan(&rows)
+		for _, row := range rows {
+			pIDs = append(pIDs, row.ID)
 		}
-
-		query["categories.$id"] = bson.M{"$in": keys}
 	}
 
 	if len(tags) > 0 {
-		keys := []primitive.ObjectID{}
-
-		for _, id := range tags {
-			cid, err := primitive.ObjectIDFromHex(id)
-
-			if err == nil {
-				keys = append(keys, cid)
-			}
+		rows := []models.Post{}
+		tx := config.DB.Table("posts").Select("posts.id").Where("posts.id IN (?)", pIDs).Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN tags ON tags.id = post_tags.tag_id").Where("posts.space_id in (?)", sID).Where("tags.slug in (?)", tags)
+		if len(pIDs) > 0 {
+			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
+		} else {
+			tx.Scan(&rows)
 		}
-
-		query["tags.$id"] = bson.M{"$in": keys}
-	}
-
-	if len(users) > 0 {
-		keys := []primitive.ObjectID{}
-
-		for _, id := range users {
-			cid, err := primitive.ObjectIDFromHex(id)
-
-			if err == nil {
-				keys = append(keys, cid)
-			}
+		pIDs = []int{}
+		for _, row := range rows {
+			pIDs = append(pIDs, row.ID)
 		}
-
-		query["degaUsers.$id"] = bson.M{"$in": keys}
 	}
 
-	pageLimit := 10
-	pageNo := 1
-	pageSortBy := "created_date"
-	pageSortOrder := -1
-
-	if limit != nil {
-		pageLimit = *limit
-	}
-	if page != nil {
-		pageNo = *page
-	}
-
-	if sortBy != nil {
-		pageSortBy = *sortBy
-	}
-	if sortOrder != nil && *sortOrder == "ASC" {
-		pageSortOrder = 1
-	}
-
-	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
-
-	cursor, err := mongo.Core.Collection("post").Find(ctx, query, opts)
-
-	if err != nil {
-		logger.Error(err)
-		return nil, nil
-	}
-
-	count, err := mongo.Core.Collection("post").CountDocuments(ctx, query)
-
-	if err != nil {
-		logger.Error(err)
-		return nil, nil
-	}
-
-	var nodes []*models.Post
-
-	for cursor.Next(ctx) {
-		var each *models.Post
-		err := cursor.Decode(&each)
-		if err != nil {
-			logger.Error(err)
-			return nil, nil
+	if len(formats) > 0 {
+		rows := []models.Post{}
+		tx := config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN formats ON formats.id = posts.format_id").Where("posts.space_id in (?)", sID).Where("formats.slug in (?)", formats)
+		if len(pIDs) > 0 {
+			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
+		} else {
+			tx.Scan(&rows)
 		}
-		nodes = append(nodes, each)
+		pIDs = []int{}
+		for _, row := range rows {
+			pIDs = append(pIDs, row.ID)
+		}
+	}
+	var tx *gorm.DB
+
+	if len(pIDs) > 0 {
+		tx = config.DB.Model(&models.Post{}).Where(pIDs)
+	} else {
+		tx = config.DB.Model(&models.Post{}).Where("space_id in (?)", sID)
 	}
 
-	var result *models.PostsPaging = new(models.PostsPaging)
-
-	result.Nodes = nodes
-	result.Total = int(count)
+	tx.Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	return result, nil
 }
-
-func (r *queryResolver) Post(ctx context.Context, id string) (*models.Post, error) {
-
-	client := ctx.Value("client").(string)
-
-	if client == "" {
-		return nil, errors.New("client id missing")
-	}
-
-	oid, err := primitive.ObjectIDFromHex(id)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	query := bson.M{
-		"client_id": client,
-		"_id":       oid,
-	}
-
-	var result *models.Post
-
-	err = mongo.Core.Collection("post").FindOne(ctx, query).Decode(&result)
-
-	if err != nil {
-		return nil, nil
-	}
-
-	return result, nil
-}
-
-// Post model resolver
-func (r *Resolver) Post() generated.PostResolver { return &postResolver{r} }
-
-type postResolver struct{ *Resolver }

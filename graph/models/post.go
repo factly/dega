@@ -2,34 +2,67 @@ package models
 
 import (
 	"time"
+
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Post model
 type Post struct {
-	ID              string         `bson:"_id"`
-	Title           string         `bson:"title"`
-	ClientID        string         `bson:"client_id"`
-	Content         string         `bson:"content"`
-	Excerpt         *string        `bson:"excerpt"`
-	PublishedDate   time.Time      `bson:"published_date"`
-	LastUpdatedDate time.Time      `bson:"last_updated_date"`
-	Featured        bool           `bson:"featured"`
-	Sticky          bool           `bson:"sticky"`
-	Updates         *string        `bson:"updates"`
-	SubTitle        *string        `bson:"sub_title"`
-	Slug            string         `bson:"slug"`
-	CreatedDate     time.Time      `bson:"created_date"`
-	Status          DatabaseRef    `bson:"status"`
-	Media           *DatabaseRef   `bson:"media"`
-	Format          DatabaseRef    `bson:"format"`
-	Tags            []*DatabaseRef `bson:"tags"`
-	Categories      []*DatabaseRef `bson:"categories"`
-	DegaUsers       []*DatabaseRef `bson:"degaUsers"`
-	Class           string         `bson:"_class"`
+	ID               int            `json:"id"`
+	CreatedDate      time.Time      `json:"created_date"`
+	UpdatedDate      time.Time      `json:"updated_date"`
+	Title            string         `json:"title"`
+	Subtitle         *string        `json:"subtitle"`
+	Slug             string         `json:"slug"`
+	Status           string         `json:"status"`
+	Excerpt          *string        `json:"excerpt"`
+	Description      postgres.Jsonb `json:"description"`
+	IsFeatured       *bool          `json:"is_featured"`
+	IsSticky         *bool          `json:"is_sticky"`
+	IsHighlighted    *bool          `json:"is_highlighted"`
+	SpaceID          int            `json:"space_id"`
+	FormatID         int            `json:"format_id"`
+	FeaturedMediumID int            `json:"featured_medium_id"`
 }
 
 // PostsPaging model
 type PostsPaging struct {
 	Nodes []*Post `json:"nodes"`
 	Total int     `json:"total"`
+}
+
+// PostTag model
+type PostTag struct {
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	TagID       int       `json:"tag_id"`
+	PostID      int       `gorm:"column:post_id" json:"post_id"`
+}
+
+// PostCategory model
+type PostCategory struct {
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	CategoryID  int       `json:"category_id"`
+	PostID      int       `json:"post_id"`
+}
+
+// PostAuthor model
+type PostAuthor struct {
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	AuthorID    int       `json:"author_id"`
+	PostID      int       `json:"post_id"`
+}
+
+// PostClaim model
+type PostClaim struct {
+	ID          int       `json:"id"`
+	CreatedDate time.Time `json:"created_date"`
+	UpdatedDate time.Time `json:"updated_date"`
+	ClaimID     int       `json:"claim_id"`
+	PostID      int       `gorm:"column:post_id" json:"post_id"`
 }

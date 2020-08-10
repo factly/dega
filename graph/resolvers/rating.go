@@ -2,86 +2,53 @@ package resolvers
 
 import (
 	"context"
-	"errors"
+	"fmt"
 
+	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
-	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
-	"github.com/factly/dega-api/graph/mongo"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/factly/dega-api/graph/validator"
+	"github.com/factly/dega-api/util"
 )
 
-func (r *ratingResolver) Media(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
-	if obj.Media == nil {
+func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
+	if obj.MediumID == nil {
 		return nil, nil
 	}
 
-	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
 func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
-	client := ctx.Value("client").(string)
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	order := "created_at desc"
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
 
-	if client == "" {
-		return nil, errors.New("client id missing")
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
 	}
 
-	query := bson.M{
-		"client_id": client,
+	if sortOrder != nil && *sortOrder == "asc" {
+		pageSortOrder = "asc"
 	}
 
-	pageLimit := 10
-	pageNo := 1
-	pageSortBy := "created_date"
-	pageSortOrder := -1
-
-	if limit != nil {
-		pageLimit = *limit
-	}
-	if page != nil {
-		pageNo = *page
-	}
-
-	if sortBy != nil {
+	if sortBy != nil && util.ColumnValidator(*sortBy, columns) {
 		pageSortBy = *sortBy
 	}
-	if sortOrder != nil && *sortOrder == "ASC" {
-		pageSortOrder = 1
-	}
 
-	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
-	cursor, err := mongo.Factcheck.Collection("rating").Find(ctx, query, opts)
+	order = pageSortBy + " " + pageSortOrder
 
-	if err != nil {
-		logger.Error(err)
-		return nil, nil
-	}
+	result := &models.RatingsPaging{}
+	result.Nodes = make([]*models.Rating, 0)
 
-	count, err := mongo.Factcheck.Collection("rating").CountDocuments(ctx, query)
+	offset, pageLimit := util.Parse(limit, page)
 
-	if err != nil {
-		logger.Error(err)
-		return nil, nil
-	}
-
-	var nodes []*models.Rating
-
-	for cursor.Next(ctx) {
-		var each *models.Rating
-		err := cursor.Decode(&each)
-		if err != nil {
-			logger.Error(err)
-			return nil, nil
-		}
-		nodes = append(nodes, each)
-	}
-
-	var result *models.RatingsPaging = new(models.RatingsPaging)
-
-	result.Nodes = nodes
-	result.Total = int(count)
+	config.DB.Model(&models.Rating{}).Where(&models.Rating{
+		SpaceID: sID,
+	}).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	return result, nil
 }

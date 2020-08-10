@@ -1,212 +1,128 @@
 type Category {
-  _id: ID!
-  _class: String!
+  id: ID!
+  created_date: Time
+  updated_date: Time
   name: String!
   slug: String!
   description: String
-  client_id: String!
-  created_date: Time!
-  last_updated_date: Time!
+  parent_id: Int
+  medium: Medium
+  space_id: Int!
 }
 
 type Tag {
-  _id: ID!
-  _class: String!
+  id: ID!
+  created_date: Time
+  updated_date: Time
   name: String!
   slug: String!
   description: String
-  client_id: String!
-  created_date: Time!
-  last_updated_date: Time!
+  space_id: Int!
 }
 
 type Format {
-  _id: ID!
-  _class: String!
+  id: ID!
+  created_date: Time
+  updated_date: Time
   name: String!
   slug: String!
-  client_id: String!
-  is_default: Boolean
-  created_date: Time!
-  last_updated_date: Time!
-}
-
-type Status {
-  _id: ID!
-  _class: String!
-  name: String!
-  slug: String!
-  client_id: String!
-  is_default: Boolean
-  created_date: Time!
-  last_updated_date: Time!
+  description: String
+  space_id: Int!
 }
 
 type Medium {
-  _id: ID!
+  id: ID!
+  created_date: Time
+  updated_date: Time
   name: String!
-  type: String!
-  url: String!
-  file_size: String!
-  title: String!
-  alt_text: String!
-  description: String
-  uploaded_by: String!
-  published_date: Time!
-  last_updated_date: Time!
   slug: String
-  client_id: String!
-  created_date: Time!
-  relative_url: String!
-  source_url: String!
-  _class: String!
+  type: String!
+  title: String!
+  description: String
+  caption: String
+  file_size: String!
+  alt_text: String!
+  url: String!
+  dimensions: String!
+  space_id: Int!
 }
 
 type Post {
-  _id: ID!
+  id: ID!
+  created_date: Time
+  updated_date: Time
   title: String!
-  client_id: String!
-  content: String!
-  excerpt: String
-  published_date: Time!
-  last_updated_date: Time!
-  featured: Boolean!
-  sticky: Boolean!
-  updates: String
+  subtitle: String
   slug: String!
-  sub_title: String
-  created_date: Time!
-  status: Status!
+  status: String!
+  excerpt: String
+  description: Any
+  is_featured: Boolean
+  is_sticky: Boolean
+  is_highlighted: Boolean
+  space_id: Int!
   format: Format!
-  media: Medium
+  medium: Medium
   categories: [Category!]!
   tags: [Tag!]!
   degaUsers: [User!]!
-  _class: String!
+  claims: [Claim]
 }
 
-type Organization {
-  _id: ID!
-  name: String!
-  site_title: String!
-  tag_line: String!
-  description: String
-  baidu_verification_code: String
-  bing_verification_code: String
-  google_verification_code: String
-  yandex_verification_code: String
-  facebook_url: String
-  twitter_url: String
-  instagram_url: String
-  linked_in_url: String
-  pinterest_url: String
-  youTube_url: String
-  github_url: String
-  facebook_page_access_token: String
-  ga_tracking_code: String
-  site_language: String
-  time_zone: String
-  client_id: String!
-  slug: String!
-  email: String!
-  created_date: Time!
-  last_updated_date: Time!
-  site_address: String!
-  enable_factchecking: Boolean!
-  mediaLogo: Medium
-  mediaMobileLogo: Medium
-  mediaFavicon: Medium
-  mediaMobileIcon: Medium
-  _class: String!
-}
 
 type User {
-  _id: ID!
+  id: ID!
+  created_date: Time
+  updated_date: Time
   first_name: String!
-  last_name: String!
-  display_name: String!
-  description: String
-  facebook_url: String
-  twitter_url: String
-  instagram_url: String
-  linkedin_url: String
-  github_url: String
-  slug: String!
+  last_name: String
   email: String!
-  media: Medium
-  _class: String!
+  birth_date: String
+  gender:  String
 }
 
 type Rating {
-  _id: ID!
+  id: ID!
+  created_date: Time
+  updated_date: Time
   name: String!
-  numeric_value: Int!
-  is_default: Boolean!
-  client_id: String!
   slug: String!
-  description: String!
-  created_date: Time!
-  last_updated_date: Time!
-  media: Medium
-  _class: String!
+  description: String
+  numeric_value: Int!
+  medium: Medium
+  space_id: Int!
 }
 
 type Claimant {
-  _id: ID!
+  id: ID!
+  created_date: Time
+  updated_date: Time
   name: String!
-  tag_line: String!
-  description: String!
-  client_id: String!
   slug: String!
-  created_date: Time!
-  last_updated_date: Time!
-  media: Medium
-  _class: String!
+  description: String
+  tag_line: String
+  medium: Medium
+  space_id: Int!
 }
 
 type Claim {
-  _id: ID!
-  claim: String!
-  description: String!
-  claim_date: Time!
-  claim_source: String!
-  checked_date: Time!
-  review_sources: String!
-  review: String!
-  review_tag_line: String
-  client_id: String!
+  id: ID!
+  created_date: Time
+  updated_date: Time
+  title: String!
   slug: String!
-  created_date: Time!
-  last_updated_date: Time!
+  claim_date: Time
+  checked_date: Time
+  claim_source: String
+  description: Any
+  review: String
+  review_tag_line: String
+  review_sources: String
+  space_id: Int!
   rating: Rating!
   claimant: Claimant!
-  _class: String!
 }
 
-type Factcheck {
-  _id: ID!
-  title: String!
-  client_id: String!
-  introduction: String!
-  summary: String!
-  excerpt: String
-  last_updated_date: Time!
-  featured: Boolean!
-  sticky: Boolean!
-  updates: String
-  slug: String!
-  sub_title: String
-  created_date: Time!
-  published_date: Time!
-  claims: [Claim!]!
-  status: Status!
-  media: Medium
-  categories: [Category!]!
-  tags: [Tag!]!
-  degaUsers: [User!]!
-  schemas: [Schemas!]!
-  _class: String!
-}
 
 type CategoriesPaging {
   nodes: [Category!]!
@@ -223,10 +139,6 @@ type PostsPaging {
   total: Int!
 }
 
-type FactchecksPaging {
-  nodes: [Factcheck!]!
-  total: Int!
-}
 
 type UsersPaging {
   nodes: [User!]!
@@ -253,15 +165,10 @@ type FormatsPaging {
   total: Int!
 }
 
-type StatusesPaging {
-  nodes: [Status!]!
-  total: Int!
-}
-
 type Sitemap {
   slug: String!
-  _id: ID!
-  created_date: Time!
+  id: ID!
+  created_date: Time
 }
 
 type Sitemaps {
@@ -269,9 +176,7 @@ type Sitemaps {
   tags: [Sitemap]
   users: [Sitemap]
   formats: [Sitemap]
-  statuses: [Sitemap]
   posts: [Sitemap]
-  factchecks: [Sitemap]
   claims: [Sitemap]
   claimants: [Sitemap]
   ratings: [Sitemap] 
@@ -296,14 +201,14 @@ type ReviewRating {
 type ItemReviewed {
   type: String!
   author: Author!
-  datePublished: Time!
+  datePublished: Time
   name: String
 }
 
 type Schemas {
   context: String
   type: String!
-  datePublished: Time!
+  datePublished: Time
   url: String
   author: Author!
   claimReviewed: String!
@@ -312,23 +217,20 @@ type Schemas {
 }
 
 type Query {
-  categories(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
-  category(id: String!): Category
-  tags(ids: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
-  tag(id: String!): Tag
+  categories(ids: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
+  category(id: Int!): Category
+  tags(ids: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
+  tag(id: Int!): Tag
   formats: FormatsPaging
-  statuses: StatusesPaging
-  organization: Organization
-  posts(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
-  post(id: String!): Post
+  posts(formats: [String!], categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  post(id: Int!): Post
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
-  user(id: String!): User
+  user(id: Int!): User
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
-  factchecks(categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): FactchecksPaging
-  factcheck(id: String!): Factcheck
   sitemap: Sitemaps
 }
 
 scalar Time
+scalar Any

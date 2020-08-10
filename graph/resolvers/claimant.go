@@ -2,86 +2,38 @@ package resolvers
 
 import (
 	"context"
-	"errors"
+	"fmt"
 
+	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
-	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
-	"github.com/factly/dega-api/graph/mongo"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/factly/dega-api/graph/validator"
+	"github.com/factly/dega-api/util"
 )
 
-func (r *claimantResolver) Media(ctx context.Context, obj *models.Claimant) (*models.Medium, error) {
-	if obj.Media == nil {
+func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error) {
+	if obj.MediumID == nil {
 		return nil, nil
 	}
 
-	return loaders.GetMediumLoader(ctx).Load(obj.Media.ID)
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
 func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
-	client := ctx.Value("client").(string)
-
-	if client == "" {
-		return nil, errors.New("client id missing")
-	}
-
-	query := bson.M{
-		"client_id": client,
-	}
-
-	pageLimit := 10
-	pageNo := 1
-	pageSortBy := "created_date"
-	pageSortOrder := -1
-
-	if limit != nil {
-		pageLimit = *limit
-	}
-	if page != nil {
-		pageNo = *page
-	}
-
-	if sortBy != nil {
-		pageSortBy = *sortBy
-	}
-	if sortOrder != nil && *sortOrder == "ASC" {
-		pageSortOrder = 1
-	}
-
-	opts := options.Find().SetSort(bson.D{{pageSortBy, pageSortOrder}}).SetSkip(int64((pageNo - 1) * pageLimit)).SetLimit(int64(pageLimit))
-	cursor, err := mongo.Factcheck.Collection("claimant").Find(ctx, query, opts)
-
+	sID, err := validator.GetSpace(ctx)
 	if err != nil {
-		logger.Error(err)
-		return nil, nil
+		return nil, err
 	}
 
-	count, err := mongo.Factcheck.Collection("claimant").CountDocuments(ctx, query)
+	result := &models.ClaimantsPaging{}
+	result.Nodes = make([]*models.Claimant, 0)
 
-	if err != nil {
-		logger.Error(err)
-		return nil, nil
-	}
+	offset, pageLimit := util.Parse(limit, page)
 
-	var nodes []*models.Claimant
-
-	for cursor.Next(ctx) {
-		var each *models.Claimant
-		err := cursor.Decode(&each)
-		if err != nil {
-			logger.Error(err)
-			return nil, nil
-		}
-		nodes = append(nodes, each)
-	}
-
-	var result *models.ClaimantsPaging = new(models.ClaimantsPaging)
-
-	result.Nodes = nodes
-	result.Total = int(count)
+	config.DB.Model(&models.Claimant{}).Where(&models.Claimant{
+		SpaceID: sID,
+	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	return result, nil
 }
