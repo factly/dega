@@ -10,3 +10,11 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+
+.ce-toolbar__content {
+  max-width: none;
+}
+
+.ce-block__content {
+  max-width: none;
+}
