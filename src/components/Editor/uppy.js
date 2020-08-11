@@ -87,9 +87,9 @@ class UppyUploader {
           height: 470,
           browserBackButtonClose: true,
         })
-        .use(GoogleDrive, { target: Dashboard, companionUrl: 'http://localhost:3020' })
-        .use(Url, { target: Dashboard, companionUrl: 'http://localhost:3020' })
-        .use(AwsS3, { companionUrl: 'http://localhost:3020' });
+        .use(GoogleDrive, { target: Dashboard, companionUrl: process.env.REACT_APP_COMPANION_URL })
+        .use(Url, { target: Dashboard, companionUrl: process.env.REACT_APP_COMPANION_URL })
+        .use(AwsS3, { companionUrl: process.env.REACT_APP_COMPANION_URL });
 
       uppy.on('complete', (result) => {
         const successful = result.successful[0];
