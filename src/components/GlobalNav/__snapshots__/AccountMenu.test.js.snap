@@ -1,0 +1,349 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Account Menu component should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <AccountMenu>
+    <Dropdown
+      mouseEnterDelay={0.15}
+      mouseLeaveDelay={0.1}
+      overlay={
+        <Menu>
+          <MenuItem>
+            <a
+              href="undefined/self-service/browser/flows/logout"
+            >
+              <ForwardRef(LogoutOutlined) />
+              Logout
+            </a>
+          </MenuItem>
+        </Menu>
+      }
+      placement="topRight"
+    >
+      <ForwardRef(Dropdown)
+        mouseEnterDelay={0.15}
+        mouseLeaveDelay={0.1}
+        overlay={[Function]}
+        overlayClassName=""
+        placement="topRight"
+        prefixCls="ant-dropdown"
+        transitionName="slide-down"
+      >
+        <Trigger
+          action={
+            Array [
+              "hover",
+            ]
+          }
+          afterPopupVisibleChange={[Function]}
+          autoDestroy={false}
+          blurDelay={0.15}
+          builtinPlacements={
+            Object {
+              "bottomCenter": Object {
+                "offset": Array [
+                  0,
+                  4,
+                ],
+                "overflow": Object {
+                  "adjustX": 1,
+                  "adjustY": 1,
+                },
+                "points": Array [
+                  "tc",
+                  "bc",
+                ],
+                "targetOffset": Array [
+                  0,
+                  0,
+                ],
+              },
+              "bottomLeft": Object {
+                "offset": Array [
+                  0,
+                  4,
+                ],
+                "overflow": Object {
+                  "adjustX": 1,
+                  "adjustY": 1,
+                },
+                "points": Array [
+                  "tl",
+                  "bl",
+                ],
+                "targetOffset": Array [
+                  0,
+                  0,
+                ],
+              },
+              "bottomRight": Object {
+                "offset": Array [
+                  0,
+                  4,
+                ],
+                "overflow": Object {
+                  "adjustX": 1,
+                  "adjustY": 1,
+                },
+                "points": Array [
+                  "tr",
+                  "br",
+                ],
+                "targetOffset": Array [
+                  0,
+                  0,
+                ],
+              },
+              "topCenter": Object {
+                "offset": Array [
+                  0,
+                  -4,
+                ],
+                "overflow": Object {
+                  "adjustX": 1,
+                  "adjustY": 1,
+                },
+                "points": Array [
+                  "bc",
+                  "tc",
+                ],
+                "targetOffset": Array [
+                  0,
+                  0,
+                ],
+              },
+              "topLeft": Object {
+                "offset": Array [
+                  0,
+                  -4,
+                ],
+                "overflow": Object {
+                  "adjustX": 1,
+                  "adjustY": 1,
+                },
+                "points": Array [
+                  "bl",
+                  "tl",
+                ],
+                "targetOffset": Array [
+                  0,
+                  0,
+                ],
+              },
+              "topRight": Object {
+                "offset": Array [
+                  0,
+                  -4,
+                ],
+                "overflow": Object {
+                  "adjustX": 1,
+                  "adjustY": 1,
+                },
+                "points": Array [
+                  "br",
+                  "tr",
+                ],
+                "targetOffset": Array [
+                  0,
+                  0,
+                ],
+              },
+            }
+          }
+          defaultPopupVisible={false}
+          destroyPopupOnHide={false}
+          focusDelay={0}
+          getDocument={[Function]}
+          getPopupClassNameFromAlign={[Function]}
+          hideAction={Array []}
+          mask={false}
+          maskClosable={true}
+          mouseEnterDelay={0.15}
+          mouseLeaveDelay={0.1}
+          onPopupAlign={[Function]}
+          onPopupVisibleChange={[Function]}
+          overlay={[Function]}
+          popup={[Function]}
+          popupAlign={Object {}}
+          popupClassName=""
+          popupPlacement="topRight"
+          popupStyle={Object {}}
+          popupTransitionName="slide-down"
+          prefixCls="ant-dropdown"
+          showAction={Array []}
+          stretch="minWidth"
+        >
+          <span
+            className="ant-dropdown-trigger"
+            key="trigger"
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+          >
+            <ForwardRef(UserOutlined)
+              title="Spaces"
+            >
+              <AntdIcon
+                icon={
+                  Object {
+                    "icon": Object {
+                      "attrs": Object {
+                        "focusable": "false",
+                        "viewBox": "64 64 896 896",
+                      },
+                      "children": Array [
+                        Object {
+                          "attrs": Object {
+                            "d": "M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z",
+                          },
+                          "tag": "path",
+                        },
+                      ],
+                      "tag": "svg",
+                    },
+                    "name": "user",
+                    "theme": "outlined",
+                  }
+                }
+                title="Spaces"
+              >
+                <span
+                  aria-label="user"
+                  className="anticon anticon-user"
+                  role="img"
+                  title="Spaces"
+                >
+                  <IconReact
+                    className=""
+                    icon={
+                      Object {
+                        "icon": Object {
+                          "attrs": Object {
+                            "focusable": "false",
+                            "viewBox": "64 64 896 896",
+                          },
+                          "children": Array [
+                            Object {
+                              "attrs": Object {
+                                "d": "M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z",
+                              },
+                              "tag": "path",
+                            },
+                          ],
+                          "tag": "svg",
+                        },
+                        "name": "user",
+                        "theme": "outlined",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className=""
+                      data-icon="user"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      key="svg-user"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M858.5 763.6a374 374 0 00-80.6-119.5 375.63 375.63 0 00-119.5-80.6c-.4-.2-.8-.3-1.2-.5C719.5 518 760 444.7 760 362c0-137-111-248-248-248S264 225 264 362c0 82.7 40.5 156 102.8 201.1-.4.2-.8.3-1.2.5-44.8 18.9-85 46-119.5 80.6a375.63 375.63 0 00-80.6 119.5A371.7 371.7 0 00136 901.8a8 8 0 008 8.2h60c4.4 0 7.9-3.5 8-7.8 2-77.2 33-149.5 87.8-204.3 56.7-56.7 132-87.9 212.2-87.9s155.5 31.2 212.2 87.9C779 752.7 810 825 812 902.2c.1 4.4 3.6 7.8 8 7.8h60a8 8 0 008-8.2c-1-47.8-10.9-94.3-29.5-138.2zM512 534c-45.9 0-89.1-17.9-121.6-50.4S340 407.9 340 362c0-45.9 17.9-89.1 50.4-121.6S466.1 190 512 190s89.1 17.9 121.6 50.4S684 316.1 684 362c0 45.9-17.9 89.1-50.4 121.6S557.9 534 512 534z"
+                        key="svg-user-svg-0"
+                      />
+                    </svg>
+                  </IconReact>
+                </span>
+              </AntdIcon>
+            </ForwardRef(UserOutlined)>
+            <ForwardRef(DownOutlined)>
+              <AntdIcon
+                icon={
+                  Object {
+                    "icon": Object {
+                      "attrs": Object {
+                        "focusable": "false",
+                        "viewBox": "64 64 896 896",
+                      },
+                      "children": Array [
+                        Object {
+                          "attrs": Object {
+                            "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                          },
+                          "tag": "path",
+                        },
+                      ],
+                      "tag": "svg",
+                    },
+                    "name": "down",
+                    "theme": "outlined",
+                  }
+                }
+              >
+                <span
+                  aria-label="down"
+                  className="anticon anticon-down"
+                  role="img"
+                >
+                  <IconReact
+                    className=""
+                    icon={
+                      Object {
+                        "icon": Object {
+                          "attrs": Object {
+                            "focusable": "false",
+                            "viewBox": "64 64 896 896",
+                          },
+                          "children": Array [
+                            Object {
+                              "attrs": Object {
+                                "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                              },
+                              "tag": "path",
+                            },
+                          ],
+                          "tag": "svg",
+                        },
+                        "name": "down",
+                        "theme": "outlined",
+                      }
+                    }
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className=""
+                      data-icon="down"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      key="svg-down"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                        key="svg-down-svg-0"
+                      />
+                    </svg>
+                  </IconReact>
+                </span>
+              </AntdIcon>
+            </ForwardRef(DownOutlined)>
+          </span>
+        </Trigger>
+      </ForwardRef(Dropdown)>
+    </Dropdown>
+  </AccountMenu>
+</Provider>
+`;
