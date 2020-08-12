@@ -1,9 +1,11 @@
 package model
 
 import (
+	"errors"
 	"time"
 
 	"github.com/factly/dega-server/config"
+	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -34,4 +36,47 @@ type PostAuthor struct {
 	config.Base
 	AuthorID uint `gorm:"column:author_id" json:"author_id"`
 	PostID   uint `gorm:"column:post_id" json:"post_id"`
+}
+
+// BeforeSave - validation for associations
+func (p *Post) BeforeSave(tx *gorm.DB) (e error) {
+	if p.FeaturedMediumID > 0 {
+		medium := Medium{}
+		medium.ID = p.FeaturedMediumID
+
+		err := tx.Model(&Medium{}).Where(Medium{
+			SpaceID: p.SpaceID,
+		}).First(&medium).Error
+
+		if err != nil {
+			return err
+		}
+	}
+
+	if p.FormatID > 0 {
+		format := Format{}
+		format.ID = p.FormatID
+
+		err := tx.Model(&Format{}).Where(Format{
+			SpaceID: p.SpaceID,
+		}).First(&format).Error
+
+		if err != nil {
+			return err
+		}
+	}
+
+	for _, t := range p.Tags {
+		if t.SpaceID != p.SpaceID {
+			return errors.New("some tags do not belong to same space")
+		}
+	}
+
+	for _, c := range p.Categories {
+		if c.SpaceID != p.SpaceID {
+			return errors.New("some categories do not belong to same space")
+		}
+	}
+
+	return nil
 }

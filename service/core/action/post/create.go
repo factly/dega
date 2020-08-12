@@ -85,14 +85,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:          post.SpaceID,
 	}
 
-	// check categories, tags & medium belong to same space or not
-	err = post.CheckSpace(config.DB)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
 	config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&result.Post.Tags)
 	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 
