@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector, Provider } from 'react-redux';
+import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -8,7 +8,6 @@ import { act } from 'react-dom/test-utils';
 import '../../matchMedia.mock';
 import Selector from './index';
 import { mount } from 'enzyme';
-import * as actions from '../../actions/categories';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

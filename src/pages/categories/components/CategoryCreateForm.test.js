@@ -74,7 +74,6 @@ describe('Categories Create Form component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match component with data', () => {
-      const wrapper = shallow(<CategoryCreateForm onCreate={onCreate} data={data} />);
       let component;
       RendererAct(() => {
         component = renderer.create(
@@ -106,7 +105,6 @@ describe('Categories Create Form component', () => {
       wrapper.unmount();
     });
     it('should not submit form with empty data', (done) => {
-      let wrapper;
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -125,7 +123,6 @@ describe('Categories Create Form component', () => {
         expect(props.onCreate).not.toHaveBeenCalled();
         done();
       }, 0);
-      wrapper.unmount();
     });
     it('should submit form with given data', (done) => {
       act(() => {

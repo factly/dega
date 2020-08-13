@@ -91,7 +91,6 @@ describe('Tags Create Form component', () => {
       wrapper.unmount();
     });
     it('should not submit form with empty data', (done) => {
-      let wrapper;
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -110,7 +109,6 @@ describe('Tags Create Form component', () => {
         expect(props.onCreate).not.toHaveBeenCalled();
         done();
       }, 0);
-      wrapper.unmount();
     });
     it('should submit form with given data', (done) => {
       act(() => {

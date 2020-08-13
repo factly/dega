@@ -1,11 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { useLocation, Router } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 import PageHeader from './index';
 
 const middlewares = [thunk];

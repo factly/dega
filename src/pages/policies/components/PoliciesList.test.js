@@ -80,12 +80,6 @@ describe('Policies List component', () => {
     });
   });
   describe('component testing', () => {
-    const policy = {
-      id: 1,
-      name: 'policy',
-      slug: 'slug',
-      description: 'description',
-    };
     beforeEach(() => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));

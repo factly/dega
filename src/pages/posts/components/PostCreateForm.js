@@ -4,7 +4,6 @@ import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import moment from 'moment';
 import { SaveOutlined, ToTopOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { addCategory } from '../../../actions/categories';

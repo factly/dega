@@ -7,9 +7,6 @@ import thunk from 'redux-thunk';
 import '../../matchMedia.mock';
 import MediaSelector from './index';
 import { mount } from 'enzyme';
-import { List, Modal } from 'antd';
-import { act } from 'react-dom/test-utils';
-import * as actions from '../../actions/media';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

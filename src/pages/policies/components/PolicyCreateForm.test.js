@@ -85,7 +85,6 @@ describe('Policy Create Form component', () => {
       wrapper.unmount();
     });
     it('should not submit form with empty data', (done) => {
-      let wrapper;
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -104,11 +103,9 @@ describe('Policy Create Form component', () => {
         expect(props.onCreate).not.toHaveBeenCalled();
         done();
       }, 0);
-      wrapper.unmount();
     });
     it('should not submit form with given data', (done) => {
-      let wrapper;
-      const data = {
+      const policyData = {
         name: 'name',
         description: 'description',
         users: [1, 2],
@@ -128,7 +125,7 @@ describe('Policy Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PolicyCreateForm onCreate={props.onCreate} data={data} />
+            <PolicyCreateForm onCreate={props.onCreate} data={policyData} />
           </Provider>,
         );
       });
@@ -159,7 +156,6 @@ describe('Policy Create Form component', () => {
         });
         done();
       }, 0);
-      wrapper.unmount();
     });
     it('should submit form with added data', (done) => {
       act(() => {
