@@ -18,14 +18,14 @@ type Claimant struct {
 	SpaceID     uint          `gorm:"column:space_id" json:"space_id"`
 }
 
-// BeforeCreate - validation for medium
-func (c *Claimant) BeforeCreate(tx *gorm.DB) (e error) {
-	if c.MediumID > 0 {
+// BeforeSave - validation for medium
+func (claimant *Claimant) BeforeSave(tx *gorm.DB) (e error) {
+	if claimant.MediumID > 0 {
 		medium := model.Medium{}
-		medium.ID = c.MediumID
+		medium.ID = claimant.MediumID
 
 		err := tx.Model(&model.Medium{}).Where(model.Medium{
-			SpaceID: c.SpaceID,
+			SpaceID: claimant.SpaceID,
 		}).First(&medium).Error
 
 		if err != nil {

@@ -18,18 +18,18 @@ type Rating struct {
 	SpaceID      uint          `gorm:"column:space_id" json:"space_id"`
 }
 
-// BeforeCreate - validation for medium
-func (r *Rating) BeforeCreate(tx *gorm.DB) (e error) {
-	
-	if r.MediumID > 0 {
+// BeforeSave - validation for medium
+func (rating *Rating) BeforeSave(tx *gorm.DB) (e error) {
+
+	if rating.MediumID > 0 {
 		medium := model.Medium{}
-		medium.ID = r.MediumID
+		medium.ID = rating.MediumID
 
 		err := tx.Model(&model.Medium{}).Where(model.Medium{
-			SpaceID: r.SpaceID,
+			SpaceID: rating.SpaceID,
 		}).First(&medium).Error
 
-		if err != nil{
+		if err != nil {
 			return err
 		}
 	}

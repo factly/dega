@@ -35,14 +35,14 @@ type PostClaim struct {
 	PostID  uint  `gorm:"column:post_id" json:"post_id"`
 }
 
-// BeforeCreate - validation for rating & claimant
-func (c *Claim) BeforeCreate(tx *gorm.DB) (e error) {
-	if c.ClaimantID > 0 {
+// BeforeSave - validation for rating & claimant
+func (claim *Claim) BeforeSave(tx *gorm.DB) (e error) {
+	if claim.ClaimantID > 0 {
 		claimant := Claimant{}
-		claimant.ID = c.ClaimantID
+		claimant.ID = claim.ClaimantID
 
 		err := tx.Model(&Claimant{}).Where(Claimant{
-			SpaceID: c.SpaceID,
+			SpaceID: claim.SpaceID,
 		}).First(&claimant).Error
 
 		if err != nil {
@@ -50,12 +50,12 @@ func (c *Claim) BeforeCreate(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if c.RatingID > 0 {
+	if claim.RatingID > 0 {
 		rating := Rating{}
-		rating.ID = c.RatingID
+		rating.ID = claim.RatingID
 
 		err := tx.Model(&Rating{}).Where(Rating{
-			SpaceID: c.SpaceID,
+			SpaceID: claim.SpaceID,
 		}).First(&rating).Error
 
 		if err != nil {
