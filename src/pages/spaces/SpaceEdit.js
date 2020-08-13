@@ -2,7 +2,7 @@ import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Skeleton } from 'antd';
-import { updateSpace } from './../../actions/spaces';
+import { updateSpace } from '../../actions/spaces';
 import SpaceEditForm from './components/SpaceEditForm';
 
 function SpaceEdit() {

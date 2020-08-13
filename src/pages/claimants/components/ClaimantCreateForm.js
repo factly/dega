@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Space, InputNumber } from 'antd';
+import { Button, Form, Input, Space } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 

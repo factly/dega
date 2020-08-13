@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
 import UploadMedium from './upload';
-import UppyUploader from './../../components/Uppy';
+import UppyUploader from '../../components/Uppy';
 import * as actions from '../../actions/media';
 import { mount } from 'enzyme';
 

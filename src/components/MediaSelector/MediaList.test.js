@@ -5,7 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import MediaList from './list';
+import MediaList from './MediaList';
 import { mount } from 'enzyme';
 import { List } from 'antd';
 import { act } from 'react-dom/test-utils';

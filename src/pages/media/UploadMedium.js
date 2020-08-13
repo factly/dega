@@ -1,5 +1,5 @@
 import React from 'react';
-import UppyUploader from './../../components/Uppy';
+import UppyUploader from '../../components/Uppy';
 import { useDispatch } from 'react-redux';
 import { addMedium } from '../../actions/media';
 import { useHistory } from 'react-router-dom';

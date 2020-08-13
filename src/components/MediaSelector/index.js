@@ -1,8 +1,8 @@
 import React from 'react';
 import { Modal, Button, Radio, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import MediaUploader from './uploader';
-import MediaList from './list';
+import MediaUploader from './UploadMedium';
+import MediaList from './MediaList';
 import { getMedium } from '../../actions/media';
 
 function MediaSelector({ value = null, onChange }) {

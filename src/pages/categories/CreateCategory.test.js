@@ -8,7 +8,7 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import CreateCategory from './create';
+import CreateCategory from './CreateCategory';
 import * as actions from '../../actions/categories';
 import CategoryCreateForm from './components/CategoryCreateForm';
 

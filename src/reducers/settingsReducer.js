@@ -1,4 +1,4 @@
-import defaultSettings from '../config/defaultSettings';
+import defaultSettings from '../config/proSettings';
 import { TOGGLE_SIDER } from '../constants/settings';
 
 const initialState = {

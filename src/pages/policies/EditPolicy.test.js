@@ -7,7 +7,7 @@ import { shallow, mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import EditPolicy from './edit';
+import EditPolicy from './EditPolicy';
 import * as actions from '../../actions/policies';
 import PolicyCreateForm from './components/PolicyCreateForm';
 

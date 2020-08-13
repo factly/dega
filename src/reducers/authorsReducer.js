@@ -7,7 +7,7 @@ const initialState = {
   loading: true,
 };
 
-export default function tagsReducer(state = initialState, action = {}) {
+export default function authorsReducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_AUTHORS_LOADING:
       return {

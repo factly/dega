@@ -5,7 +5,7 @@ import List from '@editorjs/list';
 import Paragraph from '@editorjs/paragraph';
 import Quote from '@editorjs/quote';
 import Table from '@editorjs/table';
-import UppyUploader from './uppy.js';
+import UppyUploader from './UppyUploader';
 import { useSelector } from 'react-redux';
 
 function Editor({ value, onChange }) {
