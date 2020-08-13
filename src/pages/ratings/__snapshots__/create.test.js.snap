@@ -166,7 +166,7 @@ exports[`Ratings create component snapshot component should render the component
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="up"
@@ -196,7 +196,7 @@ exports[`Ratings create component snapshot component should render the component
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="down"

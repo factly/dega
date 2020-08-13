@@ -286,6 +286,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                             value="Policy 1"
                                           >
                                             <ClearableLabeledInput
+                                              bordered={true}
                                               element={
                                                 <input
                                                   className="ant-input"
@@ -452,8 +453,10 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                             onChange={[Function]}
                                           >
                                             <ClearableLabeledInput
+                                              bordered={true}
                                               element={
                                                 <TextArea
+                                                  className=""
                                                   id="create-policy_description"
                                                   onChange={[Function]}
                                                   prefixCls="ant-input"
@@ -468,12 +471,14 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                               value=""
                                             >
                                               <TextArea
+                                                className=""
                                                 id="create-policy_description"
                                                 onChange={[Function]}
                                                 prefixCls="ant-input"
                                                 value=""
                                               >
                                                 <ResizableTextArea
+                                                  className=""
                                                   id="create-policy_description"
                                                   onChange={[Function]}
                                                   onKeyDown={[Function]}
@@ -647,7 +652,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           >
                                             <Select
                                               bordered={true}
-                                              choiceTransitionName="zoom"
+                                              choiceTransitionName=""
                                               defaultValue={Array []}
                                               filterOption={[Function]}
                                               listHeight={128}
@@ -655,11 +660,11 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                               mode="multiple"
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
-                                              placeholder="Add authors"
+                                              placeholder="Select authors"
                                               transitionName="slide-up"
                                             >
                                               <Select
-                                                choiceTransitionName="zoom"
+                                                choiceTransitionName=""
                                                 className=""
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                 defaultValue={Array []}
@@ -678,13 +683,13 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                 }
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
-                                                placeholder="Add authors"
+                                                placeholder="Select authors"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                 transitionName="slide-up"
                                               >
                                                 <ForwardRef(Select)
-                                                  choiceTransitionName="zoom"
+                                                  choiceTransitionName=""
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   defaultValue={Array []}
@@ -703,7 +708,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
-                                                  placeholder="Add authors"
+                                                  placeholder="Select authors"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -872,7 +877,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                         <Selector
                                                           accessibilityIndex={0}
                                                           activeValue={null}
-                                                          choiceTransitionName="zoom"
+                                                          choiceTransitionName=""
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue={Array []}
@@ -911,7 +916,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                                 <span
                                                                   class="ant-select-selection-placeholder"
                                                                 >
-                                                                  Add authors
+                                                                  Select authors
                                                                 </span>
                                                               </div>,
                                                             }
@@ -938,7 +943,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                           onSearchSubmit={[Function]}
                                                           onSelect={[Function]}
                                                           onToggleOpen={[Function]}
-                                                          placeholder="Add authors"
+                                                          placeholder="Select authors"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           searchValue=""
@@ -954,7 +959,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                             <SelectSelector
                                                               accessibilityIndex={0}
                                                               activeValue={null}
-                                                              choiceTransitionName="zoom"
+                                                              choiceTransitionName=""
                                                               className=""
                                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                               defaultValue={Array []}
@@ -993,7 +998,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                                     <span
                                                                       class="ant-select-selection-placeholder"
                                                                     >
-                                                                      Add authors
+                                                                      Select authors
                                                                     </span>
                                                                   </div>,
                                                                 }
@@ -1044,7 +1049,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                               onSearchSubmit={[Function]}
                                                               onSelect={[Function]}
                                                               onToggleOpen={[Function]}
-                                                              placeholder="Add authors"
+                                                              placeholder="Select authors"
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               searchValue=""
@@ -1057,7 +1062,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                                 component={false}
                                                                 keys={Array []}
                                                                 motionAppear={false}
-                                                                motionName="zoom"
+                                                                motionName=""
                                                               />
                                                               <span
                                                                 className="ant-select-selection-search"
@@ -1115,7 +1120,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                               <span
                                                                 className="ant-select-selection-placeholder"
                                                               >
-                                                                Add authors
+                                                                Select authors
                                                               </span>
                                                             </SelectSelector>
                                                           </div>
@@ -5110,6 +5115,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                             type="text"
                                           >
                                             <ClearableLabeledInput
+                                              bordered={true}
                                               element={
                                                 <input
                                                   className="ant-input"
@@ -5275,8 +5281,10 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                             onChange={[Function]}
                                           >
                                             <ClearableLabeledInput
+                                              bordered={true}
                                               element={
                                                 <TextArea
+                                                  className=""
                                                   id="create-policy_description"
                                                   onChange={[Function]}
                                                   prefixCls="ant-input"
@@ -5291,12 +5299,14 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                               value=""
                                             >
                                               <TextArea
+                                                className=""
                                                 id="create-policy_description"
                                                 onChange={[Function]}
                                                 prefixCls="ant-input"
                                                 value=""
                                               >
                                                 <ResizableTextArea
+                                                  className=""
                                                   id="create-policy_description"
                                                   onChange={[Function]}
                                                   onKeyDown={[Function]}
@@ -5470,7 +5480,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           >
                                             <Select
                                               bordered={true}
-                                              choiceTransitionName="zoom"
+                                              choiceTransitionName=""
                                               defaultValue={Array []}
                                               filterOption={[Function]}
                                               listHeight={128}
@@ -5478,11 +5488,11 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                               mode="multiple"
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
-                                              placeholder="Add authors"
+                                              placeholder="Select authors"
                                               transitionName="slide-up"
                                             >
                                               <Select
-                                                choiceTransitionName="zoom"
+                                                choiceTransitionName=""
                                                 className=""
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                 defaultValue={Array []}
@@ -5501,13 +5511,13 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                 }
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
-                                                placeholder="Add authors"
+                                                placeholder="Select authors"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                 transitionName="slide-up"
                                               >
                                                 <ForwardRef(Select)
-                                                  choiceTransitionName="zoom"
+                                                  choiceTransitionName=""
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   defaultValue={Array []}
@@ -5526,7 +5536,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
-                                                  placeholder="Add authors"
+                                                  placeholder="Select authors"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -5695,7 +5705,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                         <Selector
                                                           accessibilityIndex={0}
                                                           activeValue={null}
-                                                          choiceTransitionName="zoom"
+                                                          choiceTransitionName=""
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue={Array []}
@@ -5734,7 +5744,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                                 <span
                                                                   class="ant-select-selection-placeholder"
                                                                 >
-                                                                  Add authors
+                                                                  Select authors
                                                                 </span>
                                                               </div>,
                                                             }
@@ -5761,7 +5771,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                           onSearchSubmit={[Function]}
                                                           onSelect={[Function]}
                                                           onToggleOpen={[Function]}
-                                                          placeholder="Add authors"
+                                                          placeholder="Select authors"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           searchValue=""
@@ -5777,7 +5787,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                             <SelectSelector
                                                               accessibilityIndex={0}
                                                               activeValue={null}
-                                                              choiceTransitionName="zoom"
+                                                              choiceTransitionName=""
                                                               className=""
                                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                               defaultValue={Array []}
@@ -5816,7 +5826,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                                     <span
                                                                       class="ant-select-selection-placeholder"
                                                                     >
-                                                                      Add authors
+                                                                      Select authors
                                                                     </span>
                                                                   </div>,
                                                                 }
@@ -5867,7 +5877,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                               onSearchSubmit={[Function]}
                                                               onSelect={[Function]}
                                                               onToggleOpen={[Function]}
-                                                              placeholder="Add authors"
+                                                              placeholder="Select authors"
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               searchValue=""
@@ -5880,7 +5890,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                                 component={false}
                                                                 keys={Array []}
                                                                 motionAppear={false}
-                                                                motionName="zoom"
+                                                                motionName=""
                                                               />
                                                               <span
                                                                 className="ant-select-selection-search"
@@ -5938,7 +5948,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                               <span
                                                                 className="ant-select-selection-placeholder"
                                                               >
-                                                                Add authors
+                                                                Select authors
                                                               </span>
                                                             </SelectSelector>
                                                           </div>

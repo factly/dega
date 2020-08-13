@@ -33,7 +33,6 @@ function CreatePost({ onCreate, data = {} }) {
     values.format_id = values.format || 0;
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims || [];
-    values.published_date = moment().format('YYYY-MM-DDTHH:mm:ssZ');
     onCreate(values);
   };
 

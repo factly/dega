@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, Provider, useSelector } from 'react-redux';
+import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
@@ -11,9 +11,11 @@ import EditClaim from './edit';
 import * as actions from '../../actions/claims';
 import ClaimCreateForm from './components/ClaimCreateForm';
 
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }));
 
@@ -24,50 +26,105 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../../actions/claims', () => ({
+  getClaims: jest.fn(),
+  addClaim: jest.fn(),
   getClaim: jest.fn(),
   updateClaim: jest.fn(),
 }));
+let claims = {
+  req: [
+    {
+      data: [1, 2],
+      query: {
+        page: 1,
+      },
+      total: 2,
+    },
+  ],
+  details: {
+    '1': {
+      id: 1,
+      created_at: '2020-07-17T10:14:44.251814Z',
+      updated_at: '2020-07-17T10:14:44.251814Z',
+      checked_date: '2020-07-17T10:14:44.251814Z',
+      claim_date: '2020-07-17T10:14:44.251814Z',
+      deleted_at: null,
+      name: 'claim-1',
+      slug: 'claim-1',
+      description: '',
+      claimant_id: 1,
+      rating_id: 1,
+      space_id: 1,
+    },
+    '2': {
+      id: 2,
+      created_at: '2020-07-17T10:14:48.173442Z',
+      updated_at: '2020-07-17T10:14:48.173442Z',
+      checked_date: '2020-07-17T10:14:44.251814Z',
+      claim_date: '2020-07-17T10:14:44.251814Z',
+      deleted_at: null,
+      name: 'claim-2',
+      slug: 'claim-2',
+      description: '',
+      claimant_id: 1,
+      rating_id: 1,
+      space_id: 1,
+    },
+  },
+  loading: false,
+};
+let spaces = {
+  orgs: [
+    {
+      id: 1,
+      title: 'TOI',
+      spaces: [1],
+    },
+  ],
+  details: {
+    1: {
+      id: 1,
+      name: 'English',
+      site_address: 'site_address',
+      site_title: 'site_title',
+      tag_line: 'tag_line',
+    },
+  },
+  selected: 1,
+};
+let state = {
+  claims: claims,
+  spaces: spaces,
+  media: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  ratings: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  claimants: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+};
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
-
-let onCreate, store;
-
-describe('Claim Edit component', () => {
-  store = mockStore({
-    claims: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    claimants: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    rating: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    media: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-  });
-  const mockedDispatch = jest.fn(() => Promise.resolve({}));
+describe('Claims Edit component', () => {
+  let store;
+  let mockedDispatch;
+  store = mockStore(state);
+  store.dispatch = jest.fn(() => ({}));
+  mockedDispatch = jest.fn(() => Promise.resolve({}));
   useDispatch.mockReturnValue(mockedDispatch);
-  useSelector.mockImplementation((state) => ({ details: [], total: 0, loading: false }));
 
   describe('snapshot testing', () => {
-    beforeEach(() => {
-      onCreate = jest.fn();
-    });
     it('should render the component', () => {
       let tree;
       act(() => {
-        tree = shallow(
+        tree = mount(
           <Provider store={store}>
             <EditClaim />
           </Provider>,
@@ -76,52 +133,64 @@ describe('Claim Edit component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      let component;
+      let tree;
+      state.claims = {
+        req: [],
+        details: {},
+        loading: false,
+      };
+      store = mockStore(state);
       act(() => {
-        component = shallow(
+        tree = mount(
           <Provider store={store}>
             <EditClaim />
           </Provider>,
         );
       });
-      expect(component).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
-      let component;
+      let tree;
+      state.claims = {
+        req: [],
+        details: {},
+        loading: true,
+      };
+      store = mockStore(state);
+      act(() => {
+        tree = mount(
+          <Provider store={store}>
+            <EditClaim />
+          </Provider>,
+        );
+      });
+
+      expect(tree).toMatchSnapshot();
+    });
+  });
+  describe('component testing', () => {
+    let wrapper;
+    beforeEach(() => {
       store = mockStore({
-        claims: {
+        claims: claims,
+        media: {
           req: [],
           details: {},
-          loading: false,
+          loading: true,
+        },
+        spaces: spaces,
+        ratings: {
+          req: [],
+          details: {},
+          loading: true,
         },
         claimants: {
           req: [],
           details: {},
           loading: true,
         },
-        rating: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        media: {
-          req: [],
-          details: {},
-          loading: true,
-        },
       });
-      act(() => {
-        component = shallow(
-          <Provider store={store}>
-            <EditClaim />
-          </Provider>,
-        );
-      });
-      expect(component).toMatchSnapshot();
     });
-  });
-  describe('component testing', () => {
-    let wrapper;
     afterEach(() => {
       wrapper.unmount();
     });
@@ -147,10 +216,34 @@ describe('Claim Edit component', () => {
           </Provider>,
         );
       });
-      wrapper.find(ClaimCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(ClaimCreateForm).props().onCreate({
+        id: 1,
+        created_at: '2020-07-17T10:14:44.251814Z',
+        updated_at: '2020-07-17T10:14:44.251814Z',
+        checked_date: '2020-07-17T10:14:44.251814Z',
+        claim_date: '2020-07-17T10:14:44.251814Z',
+        deleted_at: null,
+        name: 'claim-1',
+        slug: 'claim-1',
+        description: '',
+        claimant_id: 1,
+        rating_id: 1,
+        space_id: 1,
+      });
       setTimeout(() => {
         expect(actions.updateClaim).toHaveBeenCalledWith({
-          test: 'test',
+          id: 1,
+          created_at: '2020-07-17T10:14:44.251814Z',
+          updated_at: '2020-07-17T10:14:44.251814Z',
+          checked_date: '2020-07-17T10:14:44.251814Z',
+          claim_date: '2020-07-17T10:14:44.251814Z',
+          deleted_at: null,
+          name: 'claim-1',
+          slug: 'claim-1',
+          description: '',
+          claimant_id: 1,
+          rating_id: 1,
+          space_id: 1,
         });
         expect(push).toHaveBeenCalledWith('/claims');
         done();

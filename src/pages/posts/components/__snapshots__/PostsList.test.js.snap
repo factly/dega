@@ -92,7 +92,9 @@ exports[`Posts List component snapshot component should match component when loa
         tabIndex="0"
         title={0}
       >
-        <a>
+        <a
+          rel="nofollow"
+        >
           0
         </a>
       </li>
@@ -306,7 +308,9 @@ exports[`Posts List component snapshot component should match component with pos
         tabIndex="0"
         title={1}
       >
-        <a>
+        <a
+          rel="nofollow"
+        >
           1
         </a>
       </li>
@@ -464,7 +468,9 @@ exports[`Posts List component snapshot component should render the component 1`]
         tabIndex="0"
         title={0}
       >
-        <a>
+        <a
+          rel="nofollow"
+        >
           0
         </a>
       </li>

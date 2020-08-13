@@ -1,11 +1,10 @@
 import React from 'react';
-import renderer, { act as rendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
-import { Steps, Button, DatePicker } from 'antd';
+import { Steps, DatePicker } from 'antd';
 import moment from 'moment';
 
 import '../../../matchMedia.mock';
@@ -89,48 +88,51 @@ describe('Claims Create Form component', () => {
       );
     });
     it('should render the component', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
+      let tree;
+      act(() => {
+        tree = mount(
           <Provider store={store}>
             <ClaimCreateForm />
           </Provider>,
         );
       });
-      const tree = component.toJSON();
       expect(tree).toMatchSnapshot();
     });
     it('should match component in all steps', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
+      let tree;
+      act(() => {
+        tree = mount(
           <Provider store={store}>
-            <ClaimCreateForm data={{}} />
+            <ClaimCreateForm data={data} />
           </Provider>,
         );
       });
-      expect(component.toJSON()).toMatchSnapshot();
-
-      const root = component.root;
-      rendererAct(() => root.findAllByType(Button)[2].props.onClick());
-      expect(root.findByType(Steps).props.current).toEqual(1);
-      expect(component.toJSON()).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
+      act(() => {
+        const nextButton = tree.find('Button').at(3);
+        nextButton.simulate('click');
+      });
+      tree.update();
+      expect(tree.find(Steps).props().current).toEqual(1);
+      expect(tree).toMatchSnapshot();
     });
     it('should match component with data', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
+      let tree;
+      act(() => {
+        tree = mount(
           <Provider store={store}>
             <ClaimCreateForm onCreate={onCreate} data={data} />
           </Provider>,
         );
       });
-      expect(component.toJSON()).toMatchSnapshot();
-
-      const root = component.root;
-      rendererAct(() => root.findAllByType(Button)[2].props.onClick());
-      expect(root.findByType(Steps).props.current).toEqual(1);
-      expect(component.toJSON()).toMatchSnapshot();
+      expect(tree).toMatchSnapshot();
+      act(() => {
+        const nextButton = tree.find('Button').at(3);
+        nextButton.simulate('click');
+      });
+      tree.update();
+      expect(tree.find(Steps).props().current).toEqual(1);
+      expect(tree).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
@@ -175,7 +177,7 @@ describe('Claims Create Form component', () => {
     });
     it('should submit form with given data', (done) => {
       act(() => {
-        const submitButtom = wrapper.find('Button').at(0);
+        const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -224,7 +226,7 @@ describe('Claims Create Form component', () => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
-        const submitButtom = wrapper.find('Button').at(0);
+        const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');
       });
 
@@ -290,7 +292,7 @@ describe('Claims Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(5)
           .find('Editor')
           .at(0)
           .props()
@@ -314,51 +316,51 @@ describe('Claims Create Form component', () => {
           .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(4)
           .find('Select')
           .at(0)
           .props()
           .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
-          .at(5)
+          .at(6)
           .find(DatePicker)
           .at(0)
           .props()
           .onChange({ target: { value: moment(new Date('2020-01-01')) } });
         wrapper
           .find('FormItem')
-          .at(6)
+          .at(7)
           .find(DatePicker)
           .at(0)
           .props()
           .onChange({ target: { value: moment(new Date('2020-04-04')) } });
         wrapper
           .find('FormItem')
-          .at(7)
+          .at(8)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new sources' } });
         wrapper
           .find('FormItem')
-          .at(8)
+          .at(9)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new reiviews' } });
         wrapper
           .find('FormItem')
-          .at(9)
+          .at(10)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new review tag lines' } });
         wrapper
           .find('FormItem')
-          .at(10)
+          .at(11)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new review sources' } });
 
-        const submitButtom = wrapper.find('Button').at(0);
+        const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');
       });
 
@@ -384,14 +386,14 @@ describe('Claims Create Form component', () => {
     });
     it('should handle next and back buttons', () => {
       act(() => {
-        const nextButton = wrapper.find('Button').at(2);
+        const nextButton = wrapper.find('Button').at(3);
         nextButton.simulate('click');
       });
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(1);
 
       act(() => {
-        const prevButton = wrapper.find('Button').at(1);
+        const prevButton = wrapper.find('Button').at(2);
         prevButton.simulate('click');
       });
       wrapper.update();

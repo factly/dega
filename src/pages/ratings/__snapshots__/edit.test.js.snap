@@ -166,7 +166,7 @@ exports[`Ratings Edit component snapshot testing should match component with emp
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="up"
@@ -196,7 +196,7 @@ exports[`Ratings Edit component snapshot testing should match component with emp
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="down"
@@ -564,7 +564,7 @@ exports[`Ratings Edit component snapshot testing should render the component 1`]
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="up"
@@ -594,7 +594,7 @@ exports[`Ratings Edit component snapshot testing should render the component 1`]
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="down"

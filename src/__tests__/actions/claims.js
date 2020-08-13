@@ -274,10 +274,10 @@ describe('claims actions', () => {
     expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API + '/' + id);
   });
   it('should create actions to get claim by id with rating but not claimant', () => {
+    const claim = { ...claim_without_claimant_and_rating, rating };
     const id = 1;
     const resp = { data: claim };
     axios.get.mockResolvedValue(resp);
-    const claim = { ...claim_without_claimant_and_rating, rating };
 
     const store = mockStore({ initialState });
 

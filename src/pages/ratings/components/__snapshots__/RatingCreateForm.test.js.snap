@@ -166,7 +166,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="up"
@@ -196,7 +196,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="down"
@@ -532,7 +532,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="up"
@@ -562,7 +562,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="down"
@@ -897,7 +897,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="up"
@@ -927,7 +927,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                 onMouseLeave={[Function]}
                 onMouseUp={[Function]}
                 role="button"
-                unselectable="unselectable"
+                unselectable="on"
               >
                 <span
                   aria-label="down"

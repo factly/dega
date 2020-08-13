@@ -417,7 +417,9 @@ exports[`Policies List component should render the component with data 1`] = `
               tabIndex="0"
               title={1}
             >
-              <a>
+              <a
+                rel="nofollow"
+              >
                 1
               </a>
             </li>
