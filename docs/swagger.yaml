@@ -1458,7 +1458,7 @@ paths:
         required: true
         type: string
       - description: Space ID
-        in: header
+        in: path
         name: space_id
         required: true
         type: string

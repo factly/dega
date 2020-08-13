@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/factly/dega-server/config"
+	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -26,4 +27,61 @@ type Space struct {
 	SocialMediaURLs   postgres.Jsonb `gorm:"column:social_media_urls" json:"social_media_urls"`
 	ContactInfo       postgres.Jsonb `gorm:"column:contact_info" json:"contact_info"`
 	OrganisationID    int            `gorm:"column:organisation_id" json:"organisation_id"`
+}
+
+// BeforeUpdate checks if all associated mediums are in same space
+func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
+	if space.LogoID != nil {
+
+		medium := Medium{}
+		medium.ID = *space.LogoID
+
+		err := tx.Model(&Medium{}).Where(Medium{
+			SpaceID: space.ID,
+		}).First(&medium).Error
+
+		if err != nil {
+			return err
+		}
+	}
+
+	if space.LogoMobileID != nil {
+		medium := Medium{}
+		medium.ID = *space.LogoMobileID
+
+		err := tx.Model(&Medium{}).Where(Medium{
+			SpaceID: space.ID,
+		}).First(&medium).Error
+
+		if err != nil {
+			return err
+		}
+	}
+
+	if space.FavIconID != nil {
+		medium := Medium{}
+		medium.ID = *space.FavIconID
+
+		err := tx.Model(&Medium{}).Where(Medium{
+			SpaceID: space.ID,
+		}).First(&medium).Error
+
+		if err != nil {
+			return err
+		}
+	}
+
+	if space.MobileIconID != nil {
+		medium := Medium{}
+		medium.ID = *space.MobileIconID
+
+		err := tx.Model(&Medium{}).Where(Medium{
+			SpaceID: space.ID,
+		}).First(&medium).Error
+
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

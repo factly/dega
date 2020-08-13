@@ -1127,7 +1127,7 @@ var doc = `{
                         "type": "string",
                         "description": "Space ID",
                         "name": "space_id",
-                        "in": "header",
+                        "in": "path",
                         "required": true
                     },
                     {

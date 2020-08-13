@@ -194,7 +194,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		// fetch updated post claims
 		updatedPostClaims := []factcheckModel.PostClaim{}
-		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+		tx.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&updatedPostClaims)
 

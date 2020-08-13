@@ -39,13 +39,13 @@ type PostAuthor struct {
 }
 
 // BeforeSave - validation for associations
-func (p *Post) BeforeSave(tx *gorm.DB) (e error) {
-	if p.FeaturedMediumID > 0 {
+func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
+	if post.FeaturedMediumID > 0 {
 		medium := Medium{}
-		medium.ID = p.FeaturedMediumID
+		medium.ID = post.FeaturedMediumID
 
 		err := tx.Model(&Medium{}).Where(Medium{
-			SpaceID: p.SpaceID,
+			SpaceID: post.SpaceID,
 		}).First(&medium).Error
 
 		if err != nil {
@@ -53,12 +53,12 @@ func (p *Post) BeforeSave(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if p.FormatID > 0 {
+	if post.FormatID > 0 {
 		format := Format{}
-		format.ID = p.FormatID
+		format.ID = post.FormatID
 
 		err := tx.Model(&Format{}).Where(Format{
-			SpaceID: p.SpaceID,
+			SpaceID: post.SpaceID,
 		}).First(&format).Error
 
 		if err != nil {
@@ -66,14 +66,14 @@ func (p *Post) BeforeSave(tx *gorm.DB) (e error) {
 		}
 	}
 
-	for _, t := range p.Tags {
-		if t.SpaceID != p.SpaceID {
+	for _, tag := range post.Tags {
+		if tag.SpaceID != post.SpaceID {
 			return errors.New("some tags do not belong to same space")
 		}
 	}
 
-	for _, c := range p.Categories {
-		if c.SpaceID != p.SpaceID {
+	for _, category := range post.Categories {
+		if category.SpaceID != post.SpaceID {
 			return errors.New("some categories do not belong to same space")
 		}
 	}

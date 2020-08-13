@@ -25,7 +25,7 @@ import (
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param space_id header string true "Space ID"
+// @Param space_id path string true "Space ID"
 // @Param Space body space true "Space Object"
 // @Success 200 {object} model.Space
 // @Router /core/spaces/{space_id} [put]
@@ -74,14 +74,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Space{}
 	result.ID = uint(id)
-
-	err = space.CheckSpaceUpdate(config.DB, uint(id))
-
-	if err != nil {
-		loggerx.Error(err)
-		renderx.JSON(w, http.StatusBadRequest, err.Error)
-		return
-	}
 
 	err = config.DB.Model(&result).Updates(model.Space{
 		Name:              space.Name,
