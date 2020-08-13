@@ -1,0 +1,268 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Claimants create component snapshot testing should render the component 1`] = `
+<form
+  className="ant-form ant-form-horizontal"
+  id="creat-claimant"
+  onSubmit={[Function]}
+>
+  <div
+    className="ant-row ant-form-item"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-10 ant-form-item-label"
+      style={Object {}}
+    >
+      <label
+        className="ant-form-item-required"
+        htmlFor="creat-claimant_name"
+        title="Claimant Name"
+      >
+        Claimant Name
+      </label>
+    </div>
+    <div
+      className="ant-col ant-col-14 ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        >
+          <input
+            className="ant-input"
+            id="creat-claimant_name"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-row ant-form-item"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-10 ant-form-item-label"
+      style={Object {}}
+    >
+      <label
+        className="ant-form-item-required"
+        htmlFor="creat-claimant_slug"
+        title="Slug"
+      >
+        Slug
+      </label>
+    </div>
+    <div
+      className="ant-col ant-col-14 ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        >
+          <input
+            className="ant-input"
+            id="creat-claimant_slug"
+            onBlur={[Function]}
+            onChange={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-row ant-form-item"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-10 ant-form-item-label"
+      style={Object {}}
+    >
+      <label
+        className=""
+        htmlFor="creat-claimant_description"
+        title="Description"
+      >
+        Description
+      </label>
+    </div>
+    <div
+      className="ant-col ant-col-14 ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        >
+          <textarea
+            className="ant-input"
+            id="creat-claimant_description"
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            style={Object {}}
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-row ant-form-item"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-10 ant-form-item-label"
+      style={Object {}}
+    >
+      <label
+        className=""
+        htmlFor="creat-claimant_tag_line"
+        title="Tag Line"
+      >
+        Tag Line
+      </label>
+    </div>
+    <div
+      className="ant-col ant-col-14 ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        >
+          <textarea
+            className="ant-input"
+            id="creat-claimant_tag_line"
+            onChange={[Function]}
+            onKeyDown={[Function]}
+            style={Object {}}
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-row ant-form-item"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-10 ant-form-item-label"
+      style={Object {}}
+    >
+      <label
+        className=""
+        htmlFor="creat-claimant_medium_id"
+        title="Upload Media"
+      >
+        Upload Media
+      </label>
+    </div>
+    <div
+      className="ant-col ant-col-14 ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        >
+          <div
+            className="ant-space ant-space-vertical"
+          >
+            <div
+              className="ant-space-item"
+              style={Object {}}
+            >
+              <button
+                className="ant-btn"
+                onClick={[Function]}
+                type="button"
+              >
+                <span>
+                  Select
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-row ant-form-item"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        >
+          <div
+            className="ant-space ant-space-horizontal ant-space-align-center"
+          >
+            <div
+              className="ant-space-item"
+              style={
+                Object {
+                  "marginRight": 8,
+                }
+              }
+            >
+              <button
+                className="ant-btn ant-btn-primary"
+                onClick={[Function]}
+                type="submit"
+              >
+                <span>
+                  Submit
+                </span>
+              </button>
+            </div>
+            <div
+              className="ant-space-item"
+              style={Object {}}
+            >
+              <button
+                className="ant-btn"
+                onClick={[Function]}
+                type="button"
+              >
+                <span>
+                  Reset
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+`;
