@@ -447,7 +447,7 @@ exports[`Media List component should render the component with data 1`] = `
                         rowSpan={null}
                         style={Object {}}
                       >
-                        file_size KB
+                        NaN KB
                       </td>
                       <td
                         className="ant-table-cell"

@@ -36,7 +36,7 @@ function MediaList() {
       title: 'File size',
       dataIndex: 'file_size',
       key: 'file_size',
-      render: (_, record) => record.file_size + ' KB',
+      render: (_, record) => parseInt(record.file_size) / 1024 + ' KB',
     },
     {
       title: 'Caption',

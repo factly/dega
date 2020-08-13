@@ -414,7 +414,7 @@ exports[`Media List component snapshot testing should match component with media
                     rowSpan={null}
                     style={Object {}}
                   >
-                    undefined KB
+                    NaN KB
                   </td>
                   <td
                     className="ant-table-cell"

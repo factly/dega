@@ -3,7 +3,7 @@ import { Provider, useSelector, useDispatch } from 'react-redux';
 import renderer, { act as RendererAct } from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../../matchMedia.mock';
