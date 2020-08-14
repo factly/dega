@@ -3,7 +3,6 @@ import { Layout, Card, Skeleton, notification } from 'antd';
 import { withRouter, useHistory } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
-import PageHeader from '../components/PageHeader';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
 import './basic.css';
@@ -40,7 +39,6 @@ function BasicLayout(props) {
       <Layout>
         <Header />
         <Content className="layout-content">
-          <PageHeader location={location} />
           {selected > 0 ||
           location.pathname === '/spaces' ||
           location.pathname === '/spaces/create' ? (
