@@ -1,12 +1,12 @@
 name: Notify on Issue
 on:
-  issues: 
+  issues:
     types: [opened]
 
 jobs:
   slack-message:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Google Chat Message
         run: |
           curl -X POST -H 'Content-type: application/json; charset=UTF-8'
