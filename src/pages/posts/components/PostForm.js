@@ -8,11 +8,11 @@ import { SaveOutlined, ToTopOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { addCategory } from '../../../actions/categories';
 import Modal from 'antd/lib/modal/Modal';
-import ClaimCreateForm from '../../claims/components/ClaimCreateForm';
+import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { addClaim } from '../../../actions/claims';
 import { addTag } from '../../../actions/tags';
 
-function CreatePost({ onCreate, data = {} }) {
+function PostForm({ onCreate, data = {} }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
@@ -244,4 +244,4 @@ function CreatePost({ onCreate, data = {} }) {
   );
 }
 
-export default CreatePost;
+export default PostForm;

@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryCreateForm from './components/CategoryCreateForm';
+import CategoryCreateForm from './components/CategoryForm';
 import { useDispatch } from 'react-redux';
 import { addCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';

@@ -1,5 +1,5 @@
 import React from 'react';
-import FormatsCreateForm from './components/FormatsCreateForm';
+import FormatEditForm from './components/FormatForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateFormat, getFormat } from '../../actions/formats';
 import { useHistory } from 'react-router-dom';
@@ -28,7 +28,7 @@ function EditFormat() {
     dispatch(updateFormat({ ...format, ...values }));
     history.push('/formats');
   };
-  return <FormatsCreateForm data={format} onCreate={onUpdate} />;
+  return <FormatEditForm data={format} onCreate={onUpdate} />;
 }
 
 export default EditFormat;

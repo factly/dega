@@ -1,5 +1,5 @@
 import React from 'react';
-import PostCreateForm from './components/PostCreateForm';
+import PostForm from './components/PostForm';
 import { useDispatch } from 'react-redux';
 import { addPost } from '../../actions/posts';
 import { useHistory } from 'react-router-dom';
@@ -11,7 +11,7 @@ function CreatePost() {
   const onCreate = (values) => {
     dispatch(addPost(values)).then(() => history.push('/posts'));
   };
-  return <PostCreateForm onCreate={onCreate} />;
+  return <PostForm onCreate={onCreate} />;
 }
 
 export default CreatePost;

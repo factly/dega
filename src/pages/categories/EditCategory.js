@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoryCreateForm from './components/CategoryCreateForm';
+import CategoryEditForm from './components/CategoryForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateCategory, getCategory } from '../../actions/categories';
@@ -29,7 +29,7 @@ function EditCategory() {
     dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));
   };
 
-  return <CategoryCreateForm data={category} onCreate={onUpdate} />;
+  return <CategoryEditForm data={category} onCreate={onUpdate} />;
 }
 
 export default EditCategory;

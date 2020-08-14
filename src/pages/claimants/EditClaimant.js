@@ -1,5 +1,5 @@
 import React from 'react';
-import ClaimantCreateForm from './components/ClaimantCreateForm';
+import ClaimantEditForm from './components/ClaimantForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateClaimant, getClaimant } from '../../actions/claimants';
@@ -29,7 +29,7 @@ function EditClaimant() {
     dispatch(updateClaimant({ ...claimant, ...values })).then(() => history.push('/claimants'));
   };
 
-  return <ClaimantCreateForm data={claimant} onCreate={onUpdate} />;
+  return <ClaimantEditForm data={claimant} onCreate={onUpdate} />;
 }
 
 export default EditClaimant;

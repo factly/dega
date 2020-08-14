@@ -16,7 +16,7 @@ const entities = [
   'policies',
 ];
 
-function PolicyCreateForm({ data = {}, onCreate }) {
+function PolicyForm({ data = {}, onCreate }) {
   const [form] = Form.useForm();
 
   return (
@@ -67,4 +67,4 @@ function PolicyCreateForm({ data = {}, onCreate }) {
   );
 }
 
-export default PolicyCreateForm;
+export default PolicyForm;

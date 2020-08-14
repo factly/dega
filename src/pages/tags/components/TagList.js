@@ -5,7 +5,7 @@ import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
 import { entitySelector } from '../../../selectors';
 
-function TagsList() {
+function TagList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
@@ -80,4 +80,4 @@ function TagsList() {
   );
 }
 
-export default TagsList;
+export default TagList;

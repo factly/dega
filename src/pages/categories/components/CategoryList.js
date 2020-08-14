@@ -6,7 +6,7 @@ import { getCategories, deleteCategory } from '../../../actions/categories';
 import { Link } from 'react-router-dom';
 import { entitySelector } from '../../../selectors';
 
-function CategoriesList() {
+function CategoryList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
@@ -83,4 +83,4 @@ function CategoriesList() {
   );
 }
 
-export default CategoriesList;
+export default CategoryList;

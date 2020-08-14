@@ -1,25 +1,24 @@
 import React from 'react';
 import { Popconfirm, Button, Typography, Table } from 'antd';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { getRatings, deleteRating } from '../../../actions/ratings';
+import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link } from 'react-router-dom';
 import { entitySelector } from '../../../selectors';
 
-function RatingsList() {
+function FormatList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { ratings, total, loading } = useSelector((state) =>
-    entitySelector(state, page, 'ratings'),
+  const { formats, total, loading } = useSelector((state) =>
+    entitySelector(state, page, 'formats'),
   );
 
   React.useEffect(() => {
-    fetchRatings();
+    fetchFormats();
   }, [page]);
 
-  const fetchRatings = () => {
-    dispatch(getRatings({ page: page }));
+  const fetchFormats = () => {
+    dispatch(getFormats({ page: page }));
   };
 
   const columns = [
@@ -36,7 +35,6 @@ function RatingsList() {
         );
       },
     },
-    { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
     {
       title: 'Action',
       dataIndex: 'operation',
@@ -48,13 +46,13 @@ function RatingsList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/ratings/${record.id}/edit`}
+              to={`/formats/${record.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
-              onConfirm={() => dispatch(deleteRating(record.id)).then(() => fetchRatings())}
+              onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
             >
               <Link to="" className="ant-dropdown-link">
                 <Button>Delete</Button>
@@ -70,7 +68,7 @@ function RatingsList() {
     <Table
       bordered
       columns={columns}
-      dataSource={ratings}
+      dataSource={formats}
       loading={loading}
       rowKey={'id'}
       pagination={{
@@ -83,4 +81,4 @@ function RatingsList() {
   );
 }
 
-export default RatingsList;
+export default FormatList;

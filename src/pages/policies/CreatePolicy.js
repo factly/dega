@@ -2,7 +2,7 @@ import React from 'react';
 import { addPolicy } from '../../actions/policies';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import PolicyCreateForm from './components/PolicyCreateForm';
+import PolicyCreateForm from './components/PolicyForm';
 
 function CreatePolicy() {
   const history = useHistory();

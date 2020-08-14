@@ -20,7 +20,7 @@ const tailLayout = {
   },
 };
 
-const RatingCreateForm = ({ onCreate, data = {} }) => {
+const RatingForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -104,4 +104,4 @@ const RatingCreateForm = ({ onCreate, data = {} }) => {
   );
 };
 
-export default RatingCreateForm;
+export default RatingForm;

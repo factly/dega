@@ -1,37 +1,38 @@
 import React from 'react';
-import { Popconfirm, Button, Typography, Table } from 'antd';
+import { Popconfirm, Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { getFormats, deleteFormat } from '../../../actions/formats';
+import { getClaims, deleteClaim } from '../../../actions/claims';
 import { Link } from 'react-router-dom';
-import { entitySelector } from '../../../selectors';
+import moment from 'moment';
+import { claimSelector } from '../../../selectors/claims';
 
-function FormatsList() {
+function ClaimList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { formats, total, loading } = useSelector((state) =>
-    entitySelector(state, page, 'formats'),
-  );
+  const { claims, total, loading } = useSelector((state) => claimSelector(state, page));
 
   React.useEffect(() => {
-    fetchFormats();
+    fetchClaims();
   }, [page]);
 
-  const fetchFormats = () => {
-    dispatch(getFormats({ page: page }));
+  const fetchClaims = () => {
+    dispatch(getClaims({ page: page }));
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
-    { title: 'Slug', dataIndex: 'slug', key: 'slug' },
+    { title: 'Title', dataIndex: 'title', key: 'title', width: '20%' },
+    { title: 'Claimant', dataIndex: 'claimant', key: 'claimant', width: '20%' },
+    { title: 'Rating', dataIndex: 'rating', key: 'rating', width: '20%' },
     {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-      width: '50%',
+      title: 'Claim Date',
+      dataIndex: 'claim_date',
+      width: '20%',
       render: (_, record) => {
         return (
-          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+          <span title={record.claim_date}>
+            {record.claim_date ? moment(record.claim_date).format('MMMM Do YYYY') : null}
+          </span>
         );
       },
     },
@@ -46,13 +47,13 @@ function FormatsList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/formats/${record.id}/edit`}
+              to={`/claims/${record.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
-              onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
+              onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
             >
               <Link to="" className="ant-dropdown-link">
                 <Button>Delete</Button>
@@ -61,6 +62,7 @@ function FormatsList() {
           </span>
         );
       },
+      width: '20%',
     },
   ];
 
@@ -68,7 +70,7 @@ function FormatsList() {
     <Table
       bordered
       columns={columns}
-      dataSource={formats}
+      dataSource={claims}
       loading={loading}
       rowKey={'id'}
       pagination={{
@@ -81,4 +83,4 @@ function FormatsList() {
   );
 }
 
-export default FormatsList;
+export default ClaimList;

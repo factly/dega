@@ -17,7 +17,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-function MediaEdit() {
+function EditMedium() {
   const [form] = Form.useForm();
 
   const { id } = useParams();
@@ -80,4 +80,4 @@ function MediaEdit() {
   );
 }
 
-export default MediaEdit;
+export default EditMedium;

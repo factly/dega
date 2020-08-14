@@ -6,12 +6,12 @@ import { getPolicies, deletePolicy } from '../../../actions/policies';
 import { Link } from 'react-router-dom';
 import { entitySelector } from '../../../selectors';
 
-function PoliciesList() {
+function PolicyList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
   const { policies, total, loading } = useSelector((state) =>
-    entitySelector(state, page, policies),
+    entitySelector(state, page, 'policies'),
   );
 
   React.useEffect(() => {
@@ -78,4 +78,4 @@ function PoliciesList() {
   );
 }
 
-export default PoliciesList;
+export default PolicyList;

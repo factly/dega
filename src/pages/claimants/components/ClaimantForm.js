@@ -20,7 +20,7 @@ const tailLayout = {
   },
 };
 
-const ClaimantCreateForm = ({ onCreate, data = {} }) => {
+const ClaimantForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -95,4 +95,4 @@ const ClaimantCreateForm = ({ onCreate, data = {} }) => {
   );
 };
 
-export default ClaimantCreateForm;
+export default ClaimantForm;

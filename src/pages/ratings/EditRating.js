@@ -1,5 +1,5 @@
 import React from 'react';
-import RatingCreateForm from './components/RatingCreateForm';
+import RatingEditForm from './components/RatingForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateRating, getRating } from '../../actions/ratings';
@@ -29,7 +29,7 @@ function EditRating() {
     dispatch(updateRating({ ...rating, ...values })).then(() => history.push('/ratings'));
   };
 
-  return <RatingCreateForm data={rating} onCreate={onUpdate} />;
+  return <RatingEditForm data={rating} onCreate={onUpdate} />;
 }
 
 export default EditRating;

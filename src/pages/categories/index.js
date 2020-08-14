@@ -1,5 +1,5 @@
 import React from 'react';
-import CategoriesList from './components/CategoriesList';
+import CategoryList from './components/CategoryList';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ function Categories() {
       <Link key="1" to="/categories/create">
         <Button>Create New</Button>
       </Link>
-      <CategoriesList />
+      <CategoryList />
     </Space>
   );
 }

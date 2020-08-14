@@ -1,5 +1,5 @@
 import React from 'react';
-import ClaimantCreateForm from './components/ClaimantCreateForm';
+import ClaimantCreateForm from './components/ClaimantForm';
 import { useDispatch } from 'react-redux';
 import { addClaimant } from '../../actions/claimants';
 import { useHistory } from 'react-router-dom';

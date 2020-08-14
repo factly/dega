@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
-import { maker, checker } from './../../../utils/sluger';
+import { maker, checker } from '../../../utils/sluger';
+import Selector from '../../../components/Selector';
+import MediaSelector from '../../../components/MediaSelector';
 
 const { TextArea } = Input;
 
@@ -19,7 +21,7 @@ const tailLayout = {
   },
 };
 
-const FormatCreateForm = ({ onCreate, data = {} }) => {
+const CategoryEditForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -37,19 +39,22 @@ const FormatCreateForm = ({ onCreate, data = {} }) => {
       {...layout}
       form={form}
       initialValues={{ ...data }}
-      name="create-format"
+      name="create-category"
       onFinish={(values) => {
         onCreate(values);
         onReset();
       }}
     >
+      <Form.Item name="parent_id" label="Parent Category">
+        <Selector action="Categories" />
+      </Form.Item>
       <Form.Item
         name="name"
-        label="Format Name"
+        label="Category Name"
         rules={[
           {
             required: true,
-            message: 'Please enter name!',
+            message: 'Please enter the name!',
           },
         ]}
       >
@@ -74,6 +79,9 @@ const FormatCreateForm = ({ onCreate, data = {} }) => {
       <Form.Item name="description" label="Description">
         <TextArea />
       </Form.Item>
+      <Form.Item label="Upload Media" name="medium_id">
+        <MediaSelector />
+      </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
           <Button type="primary" htmlType="submit">
@@ -88,4 +96,4 @@ const FormatCreateForm = ({ onCreate, data = {} }) => {
   );
 };
 
-export default FormatCreateForm;
+export default CategoryEditForm;

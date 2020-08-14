@@ -17,13 +17,13 @@ import Dashboard from '../pages/dashboard';
 
 //Spaces
 import Spaces from '../pages/spaces';
-import SpaceCreate from '../pages/spaces/CreateSpace';
-import SpaceEdit from '../pages/spaces/SpaceEdit';
+import CreateSpace from '../pages/spaces/CreateSpace';
+import EditSpace from '../pages/spaces/EditSpace';
 
 //Media
 import Media from '../pages/media';
-import MediaUploader from '../pages/media/UploadMedium';
-import MediaEdit from '../pages/media/MediaEdit';
+import UploadMedium from '../pages/media/UploadMedium';
+import EditMedium from '../pages/media/EditMedium';
 
 //Categories
 import Categories from '../pages/categories';
@@ -33,12 +33,12 @@ import EditCategory from '../pages/categories/EditCategory';
 //Tags
 import Tags from '../pages/tags';
 import CreateTag from '../pages/tags/CreateTag';
-import EditTags from '../pages/tags/EditTag';
+import EditTag from '../pages/tags/EditTag';
 
 //Formats
 import Formats from '../pages/formats';
 import CreateFormat from '../pages/formats/CreateFormat';
-import EditFormats from '../pages/formats/EditFormat';
+import EditFormat from '../pages/formats/EditFormat';
 
 //Post
 import Posts from '../pages/posts';
@@ -84,7 +84,7 @@ export default [
   },
   {
     path: '/spaces/create',
-    Component: SpaceCreate,
+    Component: CreateSpace,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: BorderlessTableOutlined,
@@ -92,7 +92,7 @@ export default [
   },
   {
     path: '/spaces/:id/edit',
-    Component: SpaceEdit,
+    Component: EditSpace,
     enableNavigation: false,
     enableBreadcrumb: false,
     Icon: BorderlessTableOutlined,
@@ -164,7 +164,7 @@ export default [
   },
   {
     path: '/formats/:id/edit',
-    Component: EditFormats,
+    Component: EditFormat,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: FileExclamationOutlined,
@@ -188,7 +188,7 @@ export default [
   },
   {
     path: '/tags/:id/edit',
-    Component: EditTags,
+    Component: EditTag,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: TagsOutlined,
@@ -204,7 +204,7 @@ export default [
   },
   {
     path: '/media/upload',
-    Component: MediaUploader,
+    Component: UploadMedium,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: PictureOutlined,
@@ -212,7 +212,7 @@ export default [
   },
   {
     path: '/media/:id/edit',
-    Component: MediaEdit,
+    Component: EditMedium,
     enableNavigation: false,
     enableBreadcrumb: false,
     Icon: PictureOutlined,

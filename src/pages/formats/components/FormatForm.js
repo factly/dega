@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
-import { maker, checker } from './../../../utils/sluger';
+import { maker, checker } from '../../../utils/sluger';
 
 const { TextArea } = Input;
 
@@ -19,7 +19,7 @@ const tailLayout = {
   },
 };
 
-const TagCreateForm = ({ onCreate, data = {} }) => {
+const FormatForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -37,7 +37,7 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
       {...layout}
       form={form}
       initialValues={{ ...data }}
-      name="create-tag"
+      name="create-format"
       onFinish={(values) => {
         onCreate(values);
         onReset();
@@ -45,11 +45,11 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
     >
       <Form.Item
         name="name"
-        label="Tag Name"
+        label="Format Name"
         rules={[
           {
             required: true,
-            message: 'Please enter tag name!',
+            message: 'Please enter name!',
           },
         ]}
       >
@@ -88,4 +88,4 @@ const TagCreateForm = ({ onCreate, data = {} }) => {
   );
 };
 
-export default TagCreateForm;
+export default FormatForm;

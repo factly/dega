@@ -1,5 +1,5 @@
 import React from 'react';
-import RatingsList from './components/RatingsList';
+import RatingList from './components/RatingList';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ function Ratings() {
       <Link key="1" to="/ratings/create">
         <Button>Create New</Button>
       </Link>
-      <RatingsList />
+      <RatingList />
     </Space>
   );
 }

@@ -18,7 +18,7 @@ const layout = {
   },
 };
 
-const ClaimCreateForm = ({ onCreate, data = {} }) => {
+const ClaimForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const [claimant, setClaimant] = React.useState('');
   const dispatch = useDispatch();
@@ -190,4 +190,4 @@ const ClaimCreateForm = ({ onCreate, data = {} }) => {
   );
 };
 
-export default ClaimCreateForm;
+export default ClaimForm;

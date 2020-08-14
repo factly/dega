@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addFormat } from '../../actions/formats';
 import { useHistory } from 'react-router-dom';
-import FormatCreateForm from './components/FormatsCreateForm';
+import FormatCreateForm from './components/FormatForm';
 
 function CreateFormat() {
   const history = useHistory();

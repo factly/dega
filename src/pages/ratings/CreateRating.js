@@ -1,5 +1,5 @@
 import React from 'react';
-import RatingCreateForm from './components/RatingCreateForm';
+import RatingCreateForm from './components/RatingForm';
 import { useDispatch } from 'react-redux';
 import { addRating } from '../../actions/ratings';
 import { useHistory } from 'react-router-dom';

@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
-import TagCreateForm from './components/TagsCreateForm';
+import TagCreateForm from './components/TagForm';
 
 function CreateTag() {
   const history = useHistory();

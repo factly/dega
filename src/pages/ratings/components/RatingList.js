@@ -2,51 +2,41 @@ import React from 'react';
 import { Popconfirm, Button, Typography, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getClaimants, deleteClaimant } from '../../../actions/claimants';
+import { getRatings, deleteRating } from '../../../actions/ratings';
 import { Link } from 'react-router-dom';
 import { entitySelector } from '../../../selectors';
 
-function ClaimantsList() {
+function RatingList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { claimants, total, loading } = useSelector((state) =>
-    entitySelector(state, page, 'claimants'),
+  const { ratings, total, loading } = useSelector((state) =>
+    entitySelector(state, page, 'ratings'),
   );
 
   React.useEffect(() => {
-    fetchClaimants();
+    fetchRatings();
   }, [page]);
 
-  const fetchClaimants = () => {
-    dispatch(getClaimants({ page: page }));
+  const fetchRatings = () => {
+    dispatch(getRatings({ page: page }));
   };
 
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
     {
-      title: 'Tag Line',
-      dataIndex: 'tag_line',
-      key: 'tag_line',
-      width: '20%',
-      render: (_, record) => {
-        return (
-          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.tag_line}</Typography.Paragraph>
-        );
-      },
-    },
-    {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      width: '30%',
+      width: '50%',
       render: (_, record) => {
         return (
           <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
         );
       },
     },
+    { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
     {
       title: 'Action',
       dataIndex: 'operation',
@@ -58,13 +48,13 @@ function ClaimantsList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/claimants/${record.id}/edit`}
+              to={`/ratings/${record.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
-              onConfirm={() => dispatch(deleteClaimant(record.id)).then(() => fetchClaimants())}
+              onConfirm={() => dispatch(deleteRating(record.id)).then(() => fetchRatings())}
             >
               <Link to="" className="ant-dropdown-link">
                 <Button>Delete</Button>
@@ -80,7 +70,7 @@ function ClaimantsList() {
     <Table
       bordered
       columns={columns}
-      dataSource={claimants}
+      dataSource={ratings}
       loading={loading}
       rowKey={'id'}
       pagination={{
@@ -93,4 +83,4 @@ function ClaimantsList() {
   );
 }
 
-export default ClaimantsList;
+export default RatingList;

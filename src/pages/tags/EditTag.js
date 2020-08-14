@@ -1,5 +1,5 @@
 import React from 'react';
-import TagsCreateForm from './components/TagsCreateForm';
+import TagEditForm from './components/TagForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateTag, getTag } from '../../actions/tags';
@@ -28,7 +28,7 @@ function EditTag() {
     dispatch(updateTag({ ...tag, ...values }));
     history.push('/tags');
   };
-  return <TagsCreateForm data={tag} onCreate={onUpdate} />;
+  return <TagEditForm data={tag} onCreate={onUpdate} />;
 }
 
 export default EditTag;

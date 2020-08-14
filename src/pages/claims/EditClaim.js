@@ -1,5 +1,5 @@
 import React from 'react';
-import ClaimCreateForm from './components/ClaimCreateForm';
+import ClaimEditForm from './components/ClaimForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateClaim, getClaim } from '../../actions/claims';
@@ -30,7 +30,7 @@ function EditClaim() {
   const onUpdate = (values) => {
     dispatch(updateClaim({ ...claim, ...values })).then(() => history.push('/claims'));
   };
-  return <ClaimCreateForm data={claim} onCreate={onUpdate} />;
+  return <ClaimEditForm data={claim} onCreate={onUpdate} />;
 }
 
 export default EditClaim;

@@ -4,9 +4,9 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, deletePost } from '../../../actions/posts';
 import { Link } from 'react-router-dom';
-import { entitySelector } from '../../../selectors/';
+import { entitySelector } from '../../../selectors';
 
-function PostsList() {
+function PostList() {
   const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(1);
@@ -68,4 +68,4 @@ function PostsList() {
   );
 }
 
-export default PostsList;
+export default PostList;

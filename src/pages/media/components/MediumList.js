@@ -5,7 +5,7 @@ import { getMedia, deleteMedium } from '../../../actions/media';
 import { Link } from 'react-router-dom';
 import { entitySelector } from '../../../selectors';
 
-function MediaList() {
+function MediumList() {
   const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(1);
@@ -92,4 +92,4 @@ function MediaList() {
   );
 }
 
-export default MediaList;
+export default MediumList;

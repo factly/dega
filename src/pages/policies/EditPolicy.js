@@ -1,5 +1,5 @@
 import React from 'react';
-import PolicyCreateForm from './components/PolicyCreateForm';
+import PolicyEditForm from './components/PolicyForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { getPolicy, updatePolicy } from '../../actions/policies';
@@ -44,7 +44,7 @@ function EditPolicy() {
     dispatch(updatePolicy({ ...policy, ...values })).then(() => history.push('/policies'));
   };
 
-  return <PolicyCreateForm data={policy} onCreate={onUpdate} />;
+  return <PolicyEditForm data={policy} onCreate={onUpdate} />;
 }
 
 export default EditPolicy;

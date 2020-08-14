@@ -5,7 +5,7 @@ import { Skeleton } from 'antd';
 import { updateSpace } from '../../actions/spaces';
 import SpaceEditForm from './components/SpaceEditForm';
 
-function SpaceEdit() {
+function EditSpace() {
   const history = useHistory();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -26,4 +26,4 @@ function SpaceEdit() {
   return <SpaceEditForm onCreate={onCreate} data={space} />;
 }
 
-export default SpaceEdit;
+export default EditSpace;

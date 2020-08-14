@@ -1,38 +1,49 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { getClaims, deleteClaim } from '../../../actions/claims';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import { claimSelector } from '../../../selectors/claims';
+import { Popconfirm, Button, Typography, Table } from 'antd';
 
-function ClaimsList() {
+import { useDispatch, useSelector } from 'react-redux';
+import { getClaimants, deleteClaimant } from '../../../actions/claimants';
+import { Link } from 'react-router-dom';
+import { entitySelector } from '../../../selectors';
+
+function ClaimantList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
 
-  const { claims, total, loading } = useSelector((state) => claimSelector(state, page));
+  const { claimants, total, loading } = useSelector((state) =>
+    entitySelector(state, page, 'claimants'),
+  );
 
   React.useEffect(() => {
-    fetchClaims();
+    fetchClaimants();
   }, [page]);
 
-  const fetchClaims = () => {
-    dispatch(getClaims({ page: page }));
+  const fetchClaimants = () => {
+    dispatch(getClaimants({ page: page }));
   };
 
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title', width: '20%' },
-    { title: 'Claimant', dataIndex: 'claimant', key: 'claimant', width: '20%' },
-    { title: 'Rating', dataIndex: 'rating', key: 'rating', width: '20%' },
+    { title: 'Name', dataIndex: 'name', key: 'name' },
+    { title: 'Slug', dataIndex: 'slug', key: 'slug' },
     {
-      title: 'Claim Date',
-      dataIndex: 'claim_date',
+      title: 'Tag Line',
+      dataIndex: 'tag_line',
+      key: 'tag_line',
       width: '20%',
       render: (_, record) => {
         return (
-          <span title={record.claim_date}>
-            {record.claim_date ? moment(record.claim_date).format('MMMM Do YYYY') : null}
-          </span>
+          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.tag_line}</Typography.Paragraph>
+        );
+      },
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      width: '30%',
+      render: (_, record) => {
+        return (
+          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
         );
       },
     },
@@ -47,13 +58,13 @@ function ClaimsList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/claims/${record.id}/edit`}
+              to={`/claimants/${record.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
-              onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
+              onConfirm={() => dispatch(deleteClaimant(record.id)).then(() => fetchClaimants())}
             >
               <Link to="" className="ant-dropdown-link">
                 <Button>Delete</Button>
@@ -62,7 +73,6 @@ function ClaimsList() {
           </span>
         );
       },
-      width: '20%',
     },
   ];
 
@@ -70,7 +80,7 @@ function ClaimsList() {
     <Table
       bordered
       columns={columns}
-      dataSource={claims}
+      dataSource={claimants}
       loading={loading}
       rowKey={'id'}
       pagination={{
@@ -83,4 +93,4 @@ function ClaimsList() {
   );
 }
 
-export default ClaimsList;
+export default ClaimantList;

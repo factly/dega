@@ -1,5 +1,5 @@
 import React from 'react';
-import PostCreateForm from './components/PostCreateForm';
+import PostEditForm from './components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updatePost, getPost } from '../../actions/posts';
@@ -32,7 +32,7 @@ function EditPost() {
       history.push('/posts');
     });
   };
-  return <PostCreateForm data={post} onCreate={onUpdate} />;
+  return <PostEditForm data={post} onCreate={onUpdate} />;
 }
 
 export default EditPost;
