@@ -13,10 +13,10 @@ type space struct {
 	TagLine           string         `json:"tag_line"`
 	Description       string         `json:"description"`
 	SiteAddress       string         `json:"site_address"`
-	LogoID            *uint          `json:"logo_id"`
-	LogoMobileID      *uint          `json:"logo_mobile_id"`
-	FavIconID         *uint          `json:"fav_icon_id"`
-	MobileIconID      *uint          `json:"mobile_icon_id"`
+	LogoID            uint           `json:"logo_id"`
+	LogoMobileID      uint           `json:"logo_mobile_id"`
+	FavIconID         uint           `json:"fav_icon_id"`
+	MobileIconID      uint           `json:"mobile_icon_id"`
 	VerificationCodes postgres.Jsonb `json:"verification_codes"`
 	SocialMediaURLs   postgres.Jsonb `json:"social_media_urls"`
 	ContactInfo       postgres.Jsonb `json:"contact_info"`

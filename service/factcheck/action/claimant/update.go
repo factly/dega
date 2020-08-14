@@ -2,6 +2,7 @@ package claimant
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
 
@@ -49,7 +51,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 	claimant := &model.Claimant{}
 	json.NewDecoder(r.Body).Decode(&claimant)
 
-	result := &model.Claimant{}
+	validationError := validationx.Check(claimant)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
+
+	result := model.Claimant{}
 	result.ID = uint(id)
 
 	// check record exists or not
@@ -73,13 +83,35 @@ func update(w http.ResponseWriter, r *http.Request) {
 		claimantSlug = slug.Approve(slug.Make(claimant.Name), sID, config.DB.NewScope(&model.Claimant{}).TableName())
 	}
 
-	config.DB.Model(&result).Updates(model.Claimant{
+	tx := config.DB.Begin()
+
+	if claimant.MediumID == 0 {
+		err = tx.Model(result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
+		result.MediumID = 0
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
+	err = tx.Model(&result).Updates(model.Claimant{
 		Name:        claimant.Name,
 		Slug:        claimantSlug,
 		MediumID:    claimant.MediumID,
 		TagLine:     claimant.TagLine,
 		Description: claimant.Description,
-	}).Preload("Medium").First(&result)
+	}).Preload("Medium").First(&result).Error
+
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	tx.Commit()
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -84,13 +84,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// check if medium is associated with spaces
 	var medID uint = uint(id)
 	config.DB.Model(&model.Space{}).Where(&model.Space{
-		LogoID: &medID,
+		LogoID: medID,
 	}).Or(&model.Space{
-		LogoMobileID: &medID,
+		LogoMobileID: medID,
 	}).Or(&model.Space{
-		FavIconID: &medID,
+		FavIconID: medID,
 	}).Or(&model.Space{
-		MobileIconID: &medID,
+		MobileIconID: medID,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {

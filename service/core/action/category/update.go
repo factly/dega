@@ -13,6 +13,7 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
 
@@ -51,7 +52,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 	category := &category{}
 	json.NewDecoder(r.Body).Decode(&category)
 
-	result := &model.Category{}
+	validationError := validationx.Check(category)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
+
+	result := model.Category{}
 	result.ID = uint(id)
 
 	// check record exists or not
@@ -81,7 +90,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		categorySlug = slug.Approve(slug.Make(category.Name), sID, config.DB.NewScope(&model.Category{}).TableName())
 	}
 
-	err = config.DB.Model(&result).Updates(model.Category{
+	tx := config.DB.Begin()
+
+	if category.MediumID == 0 {
+		err = tx.Model(result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
+		result.MediumID = 0
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
+	err = tx.Model(&result).Updates(model.Category{
 		Name:        category.Name,
 		Slug:        categorySlug,
 		Description: category.Description,
@@ -90,10 +112,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
+
+	tx.Commit()
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/jinzhu/gorm"
@@ -29,7 +31,7 @@ func (claimant *Claimant) BeforeSave(tx *gorm.DB) (e error) {
 		}).First(&medium).Error
 
 		if err != nil {
-			return err
+			return errors.New("medium do not belong to same space")
 		}
 	}
 

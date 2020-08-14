@@ -1,6 +1,7 @@
 package model
 
 import (
+	"errors"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -46,7 +47,7 @@ func (claim *Claim) BeforeSave(tx *gorm.DB) (e error) {
 		}).First(&claimant).Error
 
 		if err != nil {
-			return err
+			return errors.New("claimant do not belong to same space")
 		}
 	}
 
@@ -59,7 +60,7 @@ func (claim *Claim) BeforeSave(tx *gorm.DB) (e error) {
 		}).First(&rating).Error
 
 		if err != nil {
-			return err
+			return errors.New("rating do not belong to same space")
 		}
 	}
 

@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+
 	"github.com/factly/dega-server/config"
 	"github.com/jinzhu/gorm"
 )
@@ -28,7 +30,9 @@ func (category *Category) BeforeSave(tx *gorm.DB) (e error) {
 			SpaceID: category.SpaceID,
 		}).First(&medium).Error
 
-		return err
+		if err != nil {
+			return errors.New("medium do not belong to same space")
+		}
 	}
 
 	return nil
