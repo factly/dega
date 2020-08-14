@@ -13,10 +13,8 @@ function EditClaim() {
   const dispatch = useDispatch();
 
   const { claim, loading } = useSelector((state) => {
-    const claim = state.claims.details[id];
-
     return {
-      claim,
+      claim: state.claims.details[id] ? state.claims.details[id] : null,
       loading: state.claims.loading,
     };
   });

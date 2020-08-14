@@ -13,10 +13,8 @@ function EditPost() {
   const dispatch = useDispatch();
 
   const { post, loading } = useSelector((state) => {
-    const post = state.posts.details[id];
-
     return {
-      post,
+      post: state.posts.details[id] ? state.posts.details[id] : null,
       loading: state.posts.loading,
     };
   });
