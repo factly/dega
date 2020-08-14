@@ -51,7 +51,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,html,css}": [
-      "prettier --write"
+      "npm run format"
     ]
   },
   "scripts": {
@@ -59,7 +59,10 @@
     "build": "react-scripts build",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "eject": "react-scripts eject"
+    "test:coverage": "npm test -- --coverage",
+    "eject": "react-scripts eject",
+    "format:check": "prettier --check \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\""
   },
   "browserslist": {
     "production": [
