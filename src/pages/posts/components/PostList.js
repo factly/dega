@@ -32,7 +32,7 @@ function PostList() {
         total: total,
         current: page,
         pageSize: 5,
-        onChange: (page, pageSize) => setPage(page),
+        onChange: (pageNumber, pageSize) => setPage(pageNumber),
       }}
       renderItem={(item) => (
         <List.Item

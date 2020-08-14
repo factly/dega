@@ -21,7 +21,7 @@ const tailLayout = {
   },
 };
 
-const CategoryEditForm = ({ onCreate, data = {} }) => {
+const CategoryForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -96,4 +96,4 @@ const CategoryEditForm = ({ onCreate, data = {} }) => {
   );
 };
 
-export default CategoryEditForm;
+export default CategoryForm;

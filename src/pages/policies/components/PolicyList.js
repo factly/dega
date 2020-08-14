@@ -72,7 +72,7 @@ function PolicyList() {
         total: total,
         current: page,
         pageSize: 5,
-        onChange: (page, pageSize) => setPage(page),
+        onChange: (pageNumber, pageSize) => setPage(pageNumber),
       }}
     />
   );

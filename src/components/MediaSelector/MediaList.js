@@ -36,8 +36,8 @@ function MediaList({ onSelect, selected }) {
         }}
         pagination={{
           current: page,
-          onChange: (page) => {
-            setPage(page);
+          onChange: (value) => {
+            setPage(value);
           },
           total: total,
           pageSize: 5,
