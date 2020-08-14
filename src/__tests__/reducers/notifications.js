@@ -1,4 +1,4 @@
-import reducer from '../../reducers/notifications';
+import reducer from '../../reducers/notificationsReducer';
 import * as types from '../../constants/notifications';
 
 const initialState = {

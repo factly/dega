@@ -1,4 +1,4 @@
-import reducer from '../../reducers/ratings';
+import reducer from '../../reducers/ratingsReducer';
 import * as types from '../../constants/ratings';
 
 const initialState = {

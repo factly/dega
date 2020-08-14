@@ -1,4 +1,4 @@
-import reducer from '../../reducers/spaces';
+import reducer from '../../reducers/spacesReducer';
 import * as types from '../../constants/spaces';
 
 const initialState = {

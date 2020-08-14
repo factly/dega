@@ -1,4 +1,4 @@
-import reducer from '../../reducers/posts';
+import reducer from '../../reducers/postsReducer';
 import * as types from '../../constants/posts';
 
 const initialState = {
