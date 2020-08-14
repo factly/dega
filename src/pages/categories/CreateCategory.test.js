@@ -10,7 +10,7 @@ import { act } from '@testing-library/react';
 import '../../matchMedia.mock';
 import CreateCategory from './CreateCategory';
 import * as actions from '../../actions/categories';
-import CategoryCreateForm from './components/CategoryCreateForm';
+import CategoryCreateForm from './components/CategoryForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

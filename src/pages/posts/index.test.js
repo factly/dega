@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import PostsList from './index';
+import PostList from './index';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -43,7 +43,7 @@ describe('Posts List component', () => {
       .create(
         <Provider store={store}>
           <Router>
-            <PostsList />
+            <PostList />
           </Router>
         </Provider>,
       )
@@ -68,7 +68,7 @@ describe('Posts List component', () => {
       .create(
         <Provider store={store}>
           <Router>
-            <PostsList />
+            <PostList />
           </Router>
         </Provider>,
       )

@@ -13,7 +13,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
     }
   }
 >
-  <CreatePost
+  <PostForm
     data={
       Object {
         "authors": Array [
@@ -6805,7 +6805,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
         </ForwardRef(Form)>
       </SizeContextProvider>
     </ForwardRef(InternalForm)>
-  </CreatePost>
+  </PostForm>
 </Provider>
 `;
 
@@ -6822,7 +6822,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
     }
   }
 >
-  <CreatePost>
+  <PostForm>
     <Modal
       confirmLoading={false}
       maskTransitionName="fade"
@@ -12327,6 +12327,6 @@ exports[`Posts Create Form component snapshot testing should render the componen
         </ForwardRef(Form)>
       </SizeContextProvider>
     </ForwardRef(InternalForm)>
-  </CreatePost>
+  </PostForm>
 </Provider>
 `;

@@ -8,7 +8,7 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import CreateSpace from './create';
+import CreateSpace from './CreateSpace';
 import * as actions from '../../actions/spaces';
 import SpaceCreateForm from './components/SpaceCreateForm';
 

@@ -10,7 +10,7 @@ import { act } from '@testing-library/react';
 import '../../matchMedia.mock';
 import EditCategory from './EditCategory';
 import * as actions from '../../actions/categories';
-import CategoryCreateForm from './components/CategoryCreateForm';
+import CategoryEditForm from './components/CategoryForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -216,7 +216,7 @@ describe('Categories Edit component', () => {
           </Provider>,
         );
       });
-      wrapper.find(CategoryCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(CategoryEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.updateCategory).toHaveBeenCalledWith({
           id: 1,

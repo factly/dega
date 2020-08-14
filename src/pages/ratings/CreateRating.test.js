@@ -8,9 +8,9 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import CreateRating from './create';
+import CreateRating from './CreateRating';
 import * as actions from '../../actions/ratings';
-import RatingCreateForm from './components/RatingCreateForm';
+import RatingForm from './components/RatingForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -78,7 +78,7 @@ describe('Ratings create component', () => {
           </Provider>,
         );
       });
-      wrapper.find(RatingCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(RatingForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.addRating).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/ratings');

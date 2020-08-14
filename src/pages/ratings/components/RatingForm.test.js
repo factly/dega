@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer, { act as RendererAct } from 'react-test-renderer';
+import renderer, { act as rendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -7,7 +7,7 @@ import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
-import FormatsCreateForm from './FormatsCreateForm';
+import RatingForm from './RatingForm';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -23,17 +23,23 @@ const data = {
   name: 'name',
   slug: 'slug',
   description: 'description',
+  numeric_value: 3,
+  medium_id: 1,
 };
 
-describe('Formats Create Form component', () => {
+describe('Ratings Create Form component', () => {
   store = mockStore({
-    formats: {
+    ratings: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    media: {
       req: [],
       details: {},
       loading: true,
     },
   });
-
   useDispatch.mockReturnValue(jest.fn());
   useSelector.mockImplementation((state) => ({ details: [], total: 0, loading: false }));
 
@@ -46,10 +52,10 @@ describe('Formats Create Form component', () => {
     });
     it('should render the component', () => {
       let component;
-      RendererAct(() => {
+      rendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <FormatsCreateForm />
+            <RatingForm />
           </Provider>,
         );
       });
@@ -58,10 +64,10 @@ describe('Formats Create Form component', () => {
     });
     it('should match component with empty data', () => {
       let component;
-      RendererAct(() => {
+      rendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <FormatsCreateForm data={[]} />
+            <RatingForm data={[]} />
           </Provider>,
         );
       });
@@ -70,10 +76,10 @@ describe('Formats Create Form component', () => {
     });
     it('should match component with data', () => {
       let component;
-      RendererAct(() => {
+      rendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <FormatsCreateForm onCreate={onCreate} data={data} />
+            <RatingForm onCreate={onCreate} data={data} />
           </Provider>,
         );
       });
@@ -91,7 +97,7 @@ describe('Formats Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FormatsCreateForm {...props} />
+            <RatingForm {...props} />
           </Provider>,
         );
       });
@@ -103,7 +109,7 @@ describe('Formats Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FormatsCreateForm onCreate={props.onCreate} />
+            <RatingForm onCreate={props.onCreate} />
           </Provider>,
         );
       });
@@ -139,7 +145,6 @@ describe('Formats Create Form component', () => {
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
-        wrapper.update();
       });
 
       setTimeout(() => {
@@ -148,6 +153,8 @@ describe('Formats Create Form component', () => {
           name: 'new name',
           slug: 'new-name',
           description: 'description',
+          numeric_value: 3,
+          medium_id: 1,
         });
         done();
       }, 0);
@@ -170,6 +177,12 @@ describe('Formats Create Form component', () => {
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new description' } });
+        wrapper
+          .find('FormItem')
+          .at(3)
+          .find('InputNumber')
+          .props()
+          .onChange({ target: { value: 4 } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -182,6 +195,8 @@ describe('Formats Create Form component', () => {
           name: 'new name',
           slug: 'new-slug',
           description: 'new description',
+          numeric_value: 4,
+          medium_id: 1,
         });
         done();
       }, 0);

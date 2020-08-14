@@ -7,9 +7,9 @@ import { mount, shallow } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import CreateClaim from './create';
+import CreateClaim from './CreateClaim';
 import * as actions from '../../actions/claims';
-import ClaimCreateForm from './components/ClaimCreateForm';
+import ClaimCreateForm from './components/ClaimForm';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

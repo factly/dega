@@ -1,46 +1,32 @@
 import React from 'react';
-import { Provider, useSelector, useDispatch } from 'react-redux';
 import renderer, { act as RendererAct } from 'react-test-renderer';
+import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
+import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
-import CategoryCreateForm from './CategoryCreateForm';
+import TagForm from './TagForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-jest.mock('../../../actions/categories', () => ({
-  getCategories: jest.fn(),
-  deleteCategory: jest.fn(),
-}));
-
-jest.mock('react-redux', () => ({
-  ...jest.requireActual('react-redux'),
-  useSelector: jest.fn(),
-  useDispatch: jest.fn(),
-}));
-
 let onCreate, store;
-const data = { parent_id: 1, name: 'Name', description: 'Description', medium_id: 2 };
+const data = {
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+};
 
-describe('Categories Create Form component', () => {
+describe('Tags Create Form component', () => {
   store = mockStore({
-    categories: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    media: {
+    tags: {
       req: [],
       details: {},
       loading: true,
     },
   });
-  useDispatch.mockReturnValue(jest.fn());
-  useSelector.mockImplementation((state) => ({ details: [], total: 0, loading: false }));
 
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -54,7 +40,7 @@ describe('Categories Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <CategoryCreateForm />
+            <TagForm />
           </Provider>,
         );
       });
@@ -66,7 +52,7 @@ describe('Categories Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <CategoryCreateForm data={[]} />
+            <TagForm data={[]} />
           </Provider>,
         );
       });
@@ -78,7 +64,7 @@ describe('Categories Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <CategoryCreateForm onCreate={onCreate} data={data} />
+            <TagForm onCreate={onCreate} data={data} />
           </Provider>,
         );
       });
@@ -91,12 +77,12 @@ describe('Categories Create Form component', () => {
     beforeEach(() => {
       props = {
         onCreate: jest.fn(),
-        data: { name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
+        data: data,
       };
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <CategoryCreateForm {...props} />
+            <TagForm {...props} />
           </Provider>,
         );
       });
@@ -108,7 +94,7 @@ describe('Categories Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <CategoryCreateForm onCreate={props.onCreate} />
+            <TagForm onCreate={props.onCreate} />
           </Provider>,
         );
       });
@@ -137,22 +123,22 @@ describe('Categories Create Form component', () => {
         done();
       }, 0);
     });
-    it('should submit form with new title', (done) => {
+    it('should submit form with new name', (done) => {
       act(() => {
-        const input = wrapper.find('FormItem').at(1).find('Input');
+        const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
+        wrapper.update();
       });
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          description: 'Description',
           slug: 'new-name',
-          parent_id: 1,
+          description: 'description',
         });
         done();
       }, 0);
@@ -161,32 +147,32 @@ describe('Categories Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(3)
-          .find('TextArea')
           .at(0)
-          .simulate('change', { target: { value: 'new description' } });
-        wrapper
-          .find('FormItem')
-          .at(1)
           .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(1)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
+        wrapper
+          .find('FormItem')
+          .at(2)
+          .find('TextArea')
+          .at(0)
+          .simulate('change', { target: { value: 'new description' } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
+        wrapper.update();
       });
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          description: 'new description',
           slug: 'new-slug',
-          parent_id: 1,
+          description: 'new description',
         });
         done();
       }, 0);

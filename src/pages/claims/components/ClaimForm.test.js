@@ -8,7 +8,7 @@ import { Steps, DatePicker } from 'antd';
 import moment from 'moment';
 
 import '../../../matchMedia.mock';
-import ClaimCreateForm from './ClaimCreateForm';
+import ClaimCreateForm from './ClaimForm';
 
 const data = {
   title: 'title',

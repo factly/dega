@@ -8,8 +8,8 @@ import { shallow, mount } from 'enzyme';
 import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
-import ClaimsList from './ClaimsList';
-import { getClaims, deleteClaim } from '../../../actions/claims';
+import RatingList from './RatingList';
+import { getRatings, deleteRating } from '../../../actions/ratings';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,14 +18,21 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }));
-jest.mock('../../../actions/claims', () => ({
-  getClaims: jest.fn(),
-  deleteClaim: jest.fn(),
+jest.mock('../../../actions/ratings', () => ({
+  getRatings: jest.fn(),
+  deleteRating: jest.fn(),
 }));
 
-describe('Claims List component', () => {
+describe('Ratings List component', () => {
   let store;
   let mockedDispatch;
+  const rating = {
+    id: 1,
+    name: 'rating',
+    slug: 'slug',
+    description: 'description',
+    numeric_value: 2,
+  };
 
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -36,23 +43,23 @@ describe('Claims List component', () => {
     });
     it('should render the component', () => {
       useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<ClaimsList />).toJSON();
+      const tree = renderer.create(<RatingList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
     it('should match component when loading', () => {
       useSelector.mockImplementation((state) => ({
-        claims: [],
+        ratings: [],
         total: 0,
         loading: true,
       }));
-      const tree = renderer.create(<ClaimsList />).toJSON();
+      const tree = renderer.create(<RatingList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
-    it('should match component with claims', () => {
+    it('should match component with ratings', () => {
       useSelector.mockImplementation((state) => ({
-        claims: [{ id: 1, name: 'claim' }],
+        ratings: [rating],
         total: 1,
         loading: false,
       }));
@@ -61,7 +68,7 @@ describe('Claims List component', () => {
       act(() => {
         component = renderer.create(
           <Router>
-            <ClaimsList />
+            <RatingList />
           </Router>,
         );
       });
@@ -71,21 +78,14 @@ describe('Claims List component', () => {
       expect(useSelector).toHaveBeenCalled();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
       expect(useSelector).toHaveReturnedWith({
-        claims: [{ id: 1, name: 'claim' }],
+        ratings: [rating],
         total: 1,
         loading: false,
       });
-      expect(getClaims).toHaveBeenCalledWith({ page: 1 });
+      expect(getRatings).toHaveBeenCalledWith({ page: 1 });
     });
   });
   describe('component testing', () => {
-    const claim = {
-      id: 1,
-      title: 'title',
-      claimant: 12,
-      rating: 13,
-      claim_date: '2020-12-12',
-    };
     beforeEach(() => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
@@ -94,23 +94,21 @@ describe('Claims List component', () => {
     it('should change the page', () => {
       useSelector.mockImplementation((state) => ({}));
 
-      const wrapper = shallow(<ClaimsList />);
+      const wrapper = shallow(<RatingList />);
       const table = wrapper.find(Table);
       table.props().pagination.onChange(2);
-      wrapper.update();
-      const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(2);
+      setTimeout(() => expect(table.props().pagination.current).toEqual(2));
     });
-    it('should delete claim', () => {
+    it('should delete rating', () => {
       useSelector.mockImplementation((state) => ({
-        claims: [claim],
+        ratings: [rating],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <ClaimsList />
+          <RatingList />
         </Router>,
       );
       const button = wrapper.find(Button).at(1);
@@ -121,33 +119,34 @@ describe('Claims List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      expect(deleteClaim).toHaveBeenCalled();
-      expect(deleteClaim).toHaveBeenCalledWith(1);
-      expect(getClaims).toHaveBeenCalledWith({ page: 1 });
+
+      expect(deleteRating).toHaveBeenCalled();
+      expect(deleteRating).toHaveBeenCalledWith(1);
+      expect(getRatings).toHaveBeenCalledWith({ page: 1 });
     });
-    it('should edit claim', () => {
+    it('should edit rating', () => {
       useSelector.mockImplementation((state) => ({
-        claims: [claim],
+        ratings: [rating],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <ClaimsList />
+          <RatingList />
         </Router>,
       );
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/claims/1/edit');
+      expect(link.prop('to')).toEqual('/ratings/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       useSelector.mockImplementation((state) => ({}));
 
       const wrapper = mount(
         <Router>
-          <ClaimsList />
+          <RatingList />
         </Router>,
       );
 

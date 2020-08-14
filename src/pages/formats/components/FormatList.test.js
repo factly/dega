@@ -5,11 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { shallow, mount } from 'enzyme';
-import { Popconfirm, Button, List } from 'antd';
+import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
-import PostsList from './PostsList';
-import { getPosts, deletePost } from '../../../actions/posts';
+import FormatList from './FormatList';
+import { getFormats, deleteFormat } from '../../../actions/formats';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,15 +18,16 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }));
-jest.mock('../../../actions/posts', () => ({
-  getPosts: jest.fn(),
-  deletePost: jest.fn(),
+jest.mock('../../../actions/formats', () => ({
+  getFormats: jest.fn(),
+  deleteFormat: jest.fn(),
 }));
 
-describe('Posts List component', () => {
+describe('Formats List component', () => {
   let store;
   let mockedDispatch;
-  describe('snapshot component', () => {
+
+  describe('snapshot testing', () => {
     beforeEach(() => {
       store = mockStore({});
       store.dispatch = jest.fn();
@@ -35,23 +36,23 @@ describe('Posts List component', () => {
     });
     it('should render the component', () => {
       useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<PostsList />).toJSON();
+      const tree = renderer.create(<FormatList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
     it('should match component when loading', () => {
       useSelector.mockImplementation((state) => ({
-        posts: [],
+        formats: [],
         total: 0,
         loading: true,
       }));
-      const tree = renderer.create(<PostsList />).toJSON();
+      const tree = renderer.create(<FormatList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
-    it('should match component with posts', () => {
+    it('should match component with formats', () => {
       useSelector.mockImplementation((state) => ({
-        posts: [{ id: 1, name: 'post' }],
+        formats: [{ id: 1, name: 'format' }],
         total: 1,
         loading: false,
       }));
@@ -60,7 +61,7 @@ describe('Posts List component', () => {
       act(() => {
         component = renderer.create(
           <Router>
-            <PostsList />
+            <FormatList />
           </Router>,
         );
       });
@@ -70,14 +71,20 @@ describe('Posts List component', () => {
       expect(useSelector).toHaveBeenCalled();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
       expect(useSelector).toHaveReturnedWith({
-        posts: [{ id: 1, name: 'post' }],
+        formats: [{ id: 1, name: 'format' }],
         total: 1,
         loading: false,
       });
-      expect(getPosts).toHaveBeenCalledWith({ page: 1 });
+      expect(getFormats).toHaveBeenCalledWith({ page: 1 });
     });
   });
   describe('component testing', () => {
+    const format = {
+      id: 1,
+      name: 'format',
+      slug: 'slug',
+      description: 'description',
+    };
     beforeEach(() => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
@@ -86,32 +93,23 @@ describe('Posts List component', () => {
     it('should change the page', () => {
       useSelector.mockImplementation((state) => ({}));
 
-      const wrapper = shallow(<PostsList />);
-      const list = wrapper.find(List);
-      list.props().pagination.onChange(2);
+      const wrapper = shallow(<FormatList />);
+      const table = wrapper.find(Table);
+      table.props().pagination.onChange(2);
       wrapper.update();
-      const updatedList = wrapper.find(List);
-      expect(updatedList.props().pagination.current).toEqual(2);
+      const updatedTable = wrapper.find(Table);
+      expect(updatedTable.props().pagination.current).toEqual(2);
     });
-    it('should delete post', () => {
+    it('should delete format', () => {
       useSelector.mockImplementation((state) => ({
-        posts: [
-          {
-            id: 1,
-            name: 'name',
-            slug: 'slug',
-            description: 'description',
-            tag_line: 'tag_line',
-            medium_id: 1,
-          },
-        ],
+        formats: [format],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <PostsList />
+          <FormatList />
         </Router>,
       );
       const button = wrapper.find(Button).at(1);
@@ -122,71 +120,40 @@ describe('Posts List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-
-      expect(deletePost).toHaveBeenCalled();
-      expect(deletePost).toHaveBeenCalledWith(1);
-      expect(getPosts).toHaveBeenCalledWith({ page: 1 });
+      setTimeout(() => {
+        expect(deleteFormat).toHaveBeenCalled();
+        expect(deleteFormat).toHaveBeenCalledWith(1);
+        expect(getFormats).toHaveBeenCalledWith({ page: 1 });
+      });
     });
-    it('should edit post', () => {
+    it('should edit format', () => {
       useSelector.mockImplementation((state) => ({
-        posts: [
-          {
-            id: 1,
-            title: 'title',
-            excerpt: 'excerpt',
-            medium: { url: 'http://example.com', alt_text: 'example' },
-          },
-        ],
+        formats: [format],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <PostsList />
+          <FormatList />
         </Router>,
       );
-      const link = wrapper.find(Link).at(1);
+      const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/posts/1/edit');
+      expect(link.prop('to')).toEqual('/formats/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       useSelector.mockImplementation((state) => ({}));
 
       const wrapper = mount(
         <Router>
-          <PostsList />
+          <FormatList />
         </Router>,
       );
 
       const button = wrapper.find(Button);
       expect(button.length).toEqual(0);
-    });
-    it('should check image url and alt_text', () => {
-      useSelector.mockImplementation((state) => ({
-        posts: [
-          {
-            id: 1,
-            title: 'title',
-            excerpt: 'excerpt',
-            medium: { url: 'http://example.com', alt_text: 'example' },
-          },
-        ],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <PostsList />
-        </Router>,
-      );
-
-      const image = wrapper.find('img');
-      expect(image.length).toEqual(1);
-      expect(image.props().src).toEqual('http://example.com');
-      expect(image.props().alt).toEqual('example');
     });
   });
 });

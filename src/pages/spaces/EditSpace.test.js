@@ -7,7 +7,7 @@ import { mount, shallow } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import EditSpace from './edit';
+import EditSpace from './EditSpace';
 import * as actions from '../../actions/spaces';
 import SpaceEditForm from './components/SpaceEditForm';
 

@@ -8,9 +8,9 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import EditFormat from './edit';
+import EditFormat from './EditFormat';
 import * as actions from '../../actions/formats';
-import FormatsCreateForm from './components/FormatsCreateForm';
+import FormatEditForm from './components/FormatForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -145,7 +145,7 @@ describe('Formats edit component', () => {
           </Provider>,
         );
       });
-      wrapper.find(FormatsCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(FormatEditForm).props().onCreate({ test: 'test' });
       expect(actions.updateFormat).toHaveBeenCalledWith({ test: 'test' });
       expect(push).toHaveBeenCalledWith('/formats');
     });

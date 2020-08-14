@@ -9,7 +9,7 @@ import { act } from '@testing-library/react';
 import '../../matchMedia.mock';
 import EditPolicy from './EditPolicy';
 import * as actions from '../../actions/policies';
-import PolicyCreateForm from './components/PolicyCreateForm';
+import PolicyEditForm from './components/PolicyForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -175,7 +175,7 @@ describe('Policies edit component', () => {
           </Provider>,
         );
       });
-      wrapper.find(PolicyCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(PolicyEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.updatePolicy).toHaveBeenCalledWith({
           id: 1,

@@ -13,7 +13,7 @@ exports[`Claims Create Form component snapshot testing should match component in
     }
   }
 >
-  <ClaimCreateForm
+  <ClaimForm
     data={
       Object {
         "checked_date": "2020-12-12T00:00:00.000Z",
@@ -5669,7 +5669,7 @@ exports[`Claims Create Form component snapshot testing should match component in
         </SizeContextProvider>
       </ForwardRef(InternalForm)>
     </div>
-  </ClaimCreateForm>
+  </ClaimForm>
 </Provider>
 `;
 
@@ -5686,7 +5686,7 @@ exports[`Claims Create Form component snapshot testing should match component in
     }
   }
 >
-  <ClaimCreateForm
+  <ClaimForm
     data={
       Object {
         "checked_date": "2020-12-12T00:00:00.000Z",
@@ -11429,7 +11429,7 @@ exports[`Claims Create Form component snapshot testing should match component in
         </SizeContextProvider>
       </ForwardRef(InternalForm)>
     </div>
-  </ClaimCreateForm>
+  </ClaimForm>
 </Provider>
 `;
 
@@ -11446,7 +11446,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
     }
   }
 >
-  <ClaimCreateForm
+  <ClaimForm
     data={
       Object {
         "checked_date": "2020-12-12T00:00:00.000Z",
@@ -17103,7 +17103,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
         </SizeContextProvider>
       </ForwardRef(InternalForm)>
     </div>
-  </ClaimCreateForm>
+  </ClaimForm>
 </Provider>
 `;
 
@@ -17120,7 +17120,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
     }
   }
 >
-  <ClaimCreateForm
+  <ClaimForm
     data={
       Object {
         "checked_date": "2020-12-12T00:00:00.000Z",
@@ -22864,7 +22864,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
         </SizeContextProvider>
       </ForwardRef(InternalForm)>
     </div>
-  </ClaimCreateForm>
+  </ClaimForm>
 </Provider>
 `;
 
@@ -22881,7 +22881,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
     }
   }
 >
-  <ClaimCreateForm>
+  <ClaimForm>
     <div>
       <Steps
         current={0}
@@ -28191,6 +28191,6 @@ exports[`Claims Create Form component snapshot testing should render the compone
         </SizeContextProvider>
       </ForwardRef(InternalForm)>
     </div>
-  </ClaimCreateForm>
+  </ClaimForm>
 </Provider>
 `;

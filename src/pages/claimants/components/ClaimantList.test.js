@@ -8,8 +8,8 @@ import { shallow, mount } from 'enzyme';
 import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
-import TagsList from './TagsList';
-import { getTags, deleteTag } from '../../../actions/tags';
+import ClaimantList from './ClaimantList';
+import { getClaimants, deleteClaimant } from '../../../actions/claimants';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,20 +18,14 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }));
-jest.mock('../../../actions/tags', () => ({
-  getTags: jest.fn(),
-  deleteTag: jest.fn(),
+jest.mock('../../../actions/claimants', () => ({
+  getClaimants: jest.fn(),
+  deleteClaimant: jest.fn(),
 }));
 
-describe('Tags List component', () => {
+describe('Claimants List component', () => {
   let store;
   let mockedDispatch;
-  const tag = {
-    id: 1,
-    name: 'tag',
-    slug: 'slug',
-    description: 'description',
-  };
 
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -42,23 +36,23 @@ describe('Tags List component', () => {
     });
     it('should render the component', () => {
       useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<TagsList />).toJSON();
+      const tree = renderer.create(<ClaimantList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
     it('should match component when loading', () => {
       useSelector.mockImplementation((state) => ({
-        tags: [],
+        claimants: [],
         total: 0,
         loading: true,
       }));
-      const tree = renderer.create(<TagsList />).toJSON();
+      const tree = renderer.create(<ClaimantList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
-    it('should match component with tags', () => {
+    it('should match component with claimants', () => {
       useSelector.mockImplementation((state) => ({
-        tags: [tag],
+        claimants: [{ id: 1, name: 'claimant' }],
         total: 1,
         loading: false,
       }));
@@ -67,7 +61,7 @@ describe('Tags List component', () => {
       act(() => {
         component = renderer.create(
           <Router>
-            <TagsList />
+            <ClaimantList />
           </Router>,
         );
       });
@@ -77,11 +71,11 @@ describe('Tags List component', () => {
       expect(useSelector).toHaveBeenCalled();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
       expect(useSelector).toHaveReturnedWith({
-        tags: [tag],
+        claimants: [{ id: 1, name: 'claimant' }],
         total: 1,
         loading: false,
       });
-      expect(getTags).toHaveBeenCalledWith({ page: 1 });
+      expect(getClaimants).toHaveBeenCalledWith({ page: 1 });
     });
   });
   describe('component testing', () => {
@@ -93,23 +87,32 @@ describe('Tags List component', () => {
     it('should change the page', () => {
       useSelector.mockImplementation((state) => ({}));
 
-      const wrapper = shallow(<TagsList />);
+      const wrapper = shallow(<ClaimantList />);
       const table = wrapper.find(Table);
       table.props().pagination.onChange(2);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
       expect(updatedTable.props().pagination.current).toEqual(2);
     });
-    it('should delete tag', () => {
+    it('should delete claimant', () => {
       useSelector.mockImplementation((state) => ({
-        tags: [tag],
+        claimants: [
+          {
+            id: 1,
+            name: 'name',
+            slug: 'slug',
+            description: 'description',
+            tag_line: 'tag_line',
+            medium_id: 1,
+          },
+        ],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <TagsList />
+          <ClaimantList />
         </Router>,
       );
       const button = wrapper.find(Button).at(1);
@@ -120,34 +123,37 @@ describe('Tags List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-
-      expect(deleteTag).toHaveBeenCalled();
-      expect(deleteTag).toHaveBeenCalledWith(1);
-      expect(getTags).toHaveBeenCalledWith({ page: 1 });
+      setTimeout(() => {
+        expect(deleteClaimant).toHaveBeenCalled();
+        expect(deleteClaimant).toHaveBeenCalledWith(1);
+        expect(getClaimants).toHaveBeenCalledWith({ page: 1 });
+      });
     });
-    it('should edit tag', () => {
+    it('should edit claimant', () => {
       useSelector.mockImplementation((state) => ({
-        tags: [tag],
+        claimants: [
+          { id: 1, name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
+        ],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <TagsList />
+          <ClaimantList />
         </Router>,
       );
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/tags/1/edit');
+      expect(link.prop('to')).toEqual('/claimants/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       useSelector.mockImplementation((state) => ({}));
 
       const wrapper = mount(
         <Router>
-          <TagsList />
+          <ClaimantList />
         </Router>,
       );
 

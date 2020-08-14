@@ -1,32 +1,48 @@
 import React from 'react';
 import renderer, { act as RendererAct } from 'react-test-renderer';
-import { Provider } from 'react-redux';
+import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
-import TagsCreateForm from './TagsCreateForm';
+import ClaimantCreateForm from './ClaimantForm';
+
+const data = {
+  name: 'name',
+  slug: 'slug',
+  description: 'description',
+  tag_line: 'tag_line',
+  medium_id: 1,
+};
+
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}));
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 let onCreate, store;
-const data = {
-  name: 'name',
-  slug: 'slug',
-  description: 'description',
-};
 
-describe('Tags Create Form component', () => {
+describe('Claimants Create Form component', () => {
   store = mockStore({
-    tags: {
+    claimants: {
+      req: [],
+      details: {},
+      loading: true,
+    },
+    media: {
       req: [],
       details: {},
       loading: true,
     },
   });
+  useDispatch.mockReturnValue(jest.fn());
+  useSelector.mockImplementation((state) => ({ details: [], total: 0, loading: false }));
 
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -40,7 +56,7 @@ describe('Tags Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <TagsCreateForm />
+            <ClaimantCreateForm data={[]} />
           </Provider>,
         );
       });
@@ -52,7 +68,7 @@ describe('Tags Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <TagsCreateForm data={[]} />
+            <ClaimantCreateForm data={[]} />
           </Provider>,
         );
       });
@@ -64,7 +80,7 @@ describe('Tags Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <TagsCreateForm onCreate={onCreate} data={data} />
+            <ClaimantCreateForm onCreate={onCreate} data={data} />
           </Provider>,
         );
       });
@@ -82,7 +98,7 @@ describe('Tags Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <TagsCreateForm {...props} />
+            <ClaimantCreateForm {...props} />
           </Provider>,
         );
       });
@@ -94,7 +110,7 @@ describe('Tags Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <TagsCreateForm onCreate={props.onCreate} />
+            <ClaimantCreateForm onCreate={props.onCreate} />
           </Provider>,
         );
       });
@@ -130,7 +146,6 @@ describe('Tags Create Form component', () => {
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
-        wrapper.update();
       });
 
       setTimeout(() => {
@@ -139,12 +154,20 @@ describe('Tags Create Form component', () => {
           name: 'new name',
           slug: 'new-name',
           description: 'description',
+          tag_line: 'tag_line',
+          medium_id: 1,
         });
         done();
       }, 0);
     });
     it('should submit form with updated data', (done) => {
       act(() => {
+        wrapper
+          .find('FormItem')
+          .at(2)
+          .find('TextArea')
+          .at(0)
+          .simulate('change', { target: { value: 'new description' } });
         wrapper
           .find('FormItem')
           .at(0)
@@ -157,22 +180,23 @@ describe('Tags Create Form component', () => {
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(3)
           .find('TextArea')
           .at(0)
-          .simulate('change', { target: { value: 'new description' } });
+          .simulate('change', { target: { value: 'new tag line' } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
-        wrapper.update();
       });
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          slug: 'new-slug',
           description: 'new description',
+          slug: 'new-slug',
+          medium_id: 1,
+          tag_line: 'new tag line',
         });
         done();
       }, 0);

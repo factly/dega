@@ -14,7 +14,7 @@ exports[`Policies create component snapshot testing should render the component 
   }
 >
   <CreatePolicy>
-    <PolicyCreateForm
+    <PolicyForm
       onCreate={[Function]}
     >
       <ForwardRef(InternalForm)
@@ -4873,7 +4873,7 @@ exports[`Policies create component snapshot testing should render the component 
           </ForwardRef(Form)>
         </SizeContextProvider>
       </ForwardRef(InternalForm)>
-    </PolicyCreateForm>
+    </PolicyForm>
   </CreatePolicy>
 </Provider>
 `;

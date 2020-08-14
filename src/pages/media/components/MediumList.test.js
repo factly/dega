@@ -4,12 +4,12 @@ import renderer, { act } from 'react-test-renderer';
 import { useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { shallow, mount } from 'enzyme';
-import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
-import FormatsList from './FormatsList';
-import { getFormats, deleteFormat } from '../../../actions/formats';
+import MediumList from './MediumList';
+import * as actions from '../../../actions/media';
+import { mount, shallow } from 'enzyme';
+import { Button, Table, Popconfirm } from 'antd';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,15 +18,14 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }));
-jest.mock('../../../actions/formats', () => ({
-  getFormats: jest.fn(),
-  deleteFormat: jest.fn(),
+jest.mock('../../../actions/media', () => ({
+  getMedia: jest.fn(),
+  deleteMedium: jest.fn(),
 }));
 
-describe('Formats List component', () => {
+describe('Media List component', () => {
   let store;
   let mockedDispatch;
-
   describe('snapshot testing', () => {
     beforeEach(() => {
       store = mockStore({});
@@ -35,24 +34,24 @@ describe('Formats List component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<FormatsList />).toJSON();
+      useSelector.mockImplementation(() => ({}));
+      const tree = renderer.create(<MediumList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
     it('should match component when loading', () => {
-      useSelector.mockImplementation((state) => ({
-        formats: [],
+      useSelector.mockImplementation(() => ({
+        media: [],
         total: 0,
         loading: true,
       }));
-      const tree = renderer.create(<FormatsList />).toJSON();
+      const tree = renderer.create(<MediumList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
-    it('should match component with formats', () => {
-      useSelector.mockImplementation((state) => ({
-        formats: [{ id: 1, name: 'format' }],
+    it('should match component with media', () => {
+      useSelector.mockImplementation(() => ({
+        media: [{ id: 1, name: 'medium' }],
         total: 1,
         loading: false,
       }));
@@ -61,7 +60,7 @@ describe('Formats List component', () => {
       act(() => {
         component = renderer.create(
           <Router>
-            <FormatsList />
+            <MediumList />
           </Router>,
         );
       });
@@ -71,45 +70,39 @@ describe('Formats List component', () => {
       expect(useSelector).toHaveBeenCalled();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
       expect(useSelector).toHaveReturnedWith({
-        formats: [{ id: 1, name: 'format' }],
+        media: [{ id: 1, name: 'medium' }],
         total: 1,
         loading: false,
       });
-      expect(getFormats).toHaveBeenCalledWith({ page: 1 });
+      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1 });
     });
   });
   describe('component testing', () => {
-    const format = {
-      id: 1,
-      name: 'format',
-      slug: 'slug',
-      description: 'description',
-    };
     beforeEach(() => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should change the page', () => {
-      useSelector.mockImplementation((state) => ({}));
+      useSelector.mockImplementation(() => ({}));
 
-      const wrapper = shallow(<FormatsList />);
+      const wrapper = shallow(<MediumList />);
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(2);
+      table.props().pagination.onChange(3);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(2);
+      expect(updatedTable.props().pagination.current).toEqual(3);
     });
-    it('should delete format', () => {
-      useSelector.mockImplementation((state) => ({
-        formats: [format],
+    it('should delete medium', () => {
+      useSelector.mockImplementation(() => ({
+        media: [{ id: 1, name: 'Sample image', caption: 'testing ', alt_text: 'sample' }],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <FormatsList />
+          <MediumList />
         </Router>,
       );
       const button = wrapper.find(Button).at(1);
@@ -120,35 +113,33 @@ describe('Formats List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      setTimeout(() => {
-        expect(deleteFormat).toHaveBeenCalled();
-        expect(deleteFormat).toHaveBeenCalledWith(1);
-        expect(getFormats).toHaveBeenCalledWith({ page: 1 });
-      });
+      expect(actions.deleteMedium).toHaveBeenCalled();
+      expect(actions.deleteMedium).toHaveBeenCalledWith(1);
+      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1 });
     });
-    it('should edit format', () => {
-      useSelector.mockImplementation((state) => ({
-        formats: [format],
+    it('should edit medium', () => {
+      useSelector.mockImplementation(() => ({
+        media: [{ id: 1, name: 'Sample image', caption: 'testing ', alt_text: 'sample' }],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <FormatsList />
+          <MediumList />
         </Router>,
       );
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/formats/1/edit');
+      expect(link.prop('to')).toEqual('/media/1/edit');
     });
     it('should have no delete and edit buttons', () => {
-      useSelector.mockImplementation((state) => ({}));
+      useSelector.mockImplementation(() => ({}));
 
       const wrapper = mount(
         <Router>
-          <FormatsList />
+          <MediumList />
         </Router>,
       );
 

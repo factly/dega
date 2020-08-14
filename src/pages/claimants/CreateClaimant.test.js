@@ -8,9 +8,9 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import CreateClaimant from './create';
+import CreateClaimant from './CreateClaimant';
 import * as actions from '../../actions/claimants';
-import ClaimantCreateForm from './components/ClaimantCreateForm';
+import ClaimantCreateForm from './components/ClaimantForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

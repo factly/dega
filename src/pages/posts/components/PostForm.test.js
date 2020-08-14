@@ -6,7 +6,7 @@ import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
-import PostCreateForm from './PostCreateForm';
+import PostForm from './PostForm';
 
 const data = {
   id: 1,
@@ -121,7 +121,7 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostCreateForm />
+            <PostForm />
           </Provider>,
         );
       });
@@ -132,7 +132,7 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostCreateForm onCreate={onCreate} data={data} />
+            <PostForm onCreate={onCreate} data={data} />
           </Provider>,
         );
       });
@@ -149,7 +149,7 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostCreateForm {...props} />
+            <PostForm {...props} />
           </Provider>,
         );
       });
@@ -161,7 +161,7 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostCreateForm onCreate={props.onCreate} />
+            <PostForm onCreate={props.onCreate} />
           </Provider>,
         );
       });

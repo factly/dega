@@ -13,7 +13,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
     }
   }
 >
-  <PolicyCreateForm
+  <PolicyForm
     data={
       Object {
         "id": 1,
@@ -4845,7 +4845,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
         </ForwardRef(Form)>
       </SizeContextProvider>
     </ForwardRef(InternalForm)>
-  </PolicyCreateForm>
+  </PolicyForm>
 </Provider>
 `;
 
@@ -4862,7 +4862,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
     }
   }
 >
-  <PolicyCreateForm>
+  <PolicyForm>
     <ForwardRef(InternalForm)
       form={
         Object {
@@ -9673,6 +9673,6 @@ exports[`Policy Create Form component snapshot testing should render the compone
         </ForwardRef(Form)>
       </SizeContextProvider>
     </ForwardRef(InternalForm)>
-  </PolicyCreateForm>
+  </PolicyForm>
 </Provider>
 `;

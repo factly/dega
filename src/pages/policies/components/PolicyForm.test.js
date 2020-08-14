@@ -6,7 +6,7 @@ import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
-import PolicyCreateForm from './PolicyCreateForm';
+import PolicyCreateForm from './PolicyForm';
 
 const data = { id: 1, name: 'Policy 1' };
 

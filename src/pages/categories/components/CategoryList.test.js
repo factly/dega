@@ -8,8 +8,8 @@ import { shallow, mount } from 'enzyme';
 import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
-import PoliciesList from './PoliciesList';
-import { getPolicies, deletePolicy } from '../../../actions/policies';
+import CategoriesList from './CategoryList';
+import { getCategories, deleteCategory } from '../../../actions/categories';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,16 +18,14 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }));
-jest.mock('../../../actions/policies', () => ({
-  getPolicies: jest.fn(),
-  deletePolicy: jest.fn(),
+jest.mock('../../../actions/categories', () => ({
+  getCategories: jest.fn(),
+  deleteCategory: jest.fn(),
 }));
 
-describe('Policies List component', () => {
+describe('Categories List component', () => {
   let store;
   let mockedDispatch;
-  const policy = { id: 1, name: 'policy', description: 'description' };
-
   describe('snapshot testing', () => {
     beforeEach(() => {
       store = mockStore({});
@@ -37,23 +35,23 @@ describe('Policies List component', () => {
     });
     it('should render the component', () => {
       useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<PoliciesList />).toJSON();
+      const tree = renderer.create(<CategoriesList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
     it('should match component when loading', () => {
       useSelector.mockImplementation((state) => ({
-        policies: [],
+        categories: [],
         total: 0,
         loading: true,
       }));
-      const tree = renderer.create(<PoliciesList />).toJSON();
+      const tree = renderer.create(<CategoriesList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
-    it('should match component with policies', () => {
+    it('should match component with categories', () => {
       useSelector.mockImplementation((state) => ({
-        policies: [policy],
+        categories: [{ id: 1, name: 'category' }],
         total: 1,
         loading: false,
       }));
@@ -62,7 +60,7 @@ describe('Policies List component', () => {
       act(() => {
         component = renderer.create(
           <Router>
-            <PoliciesList />
+            <CategoriesList />
           </Router>,
         );
       });
@@ -72,11 +70,11 @@ describe('Policies List component', () => {
       expect(useSelector).toHaveBeenCalled();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
       expect(useSelector).toHaveReturnedWith({
-        policies: [policy],
+        categories: [{ id: 1, name: 'category' }],
         total: 1,
         loading: false,
       });
-      expect(getPolicies).toHaveBeenCalledWith({ page: 1 });
+      expect(getCategories).toHaveBeenCalledWith({ page: 1 });
     });
   });
   describe('component testing', () => {
@@ -88,23 +86,25 @@ describe('Policies List component', () => {
     it('should change the page', () => {
       useSelector.mockImplementation((state) => ({}));
 
-      const wrapper = shallow(<PoliciesList />);
+      const wrapper = shallow(<CategoriesList />);
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(2);
+      table.props().pagination.onChange(3);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(2);
+      expect(updatedTable.props().pagination.current).toEqual(3);
     });
-    it('should delete policy', () => {
+    it('should delete category', () => {
       useSelector.mockImplementation((state) => ({
-        policies: [policy],
+        categories: [
+          { id: 1, name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
+        ],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <PoliciesList />
+          <CategoriesList />
         </Router>,
       );
       const button = wrapper.find(Button).at(1);
@@ -115,33 +115,35 @@ describe('Policies List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      expect(deletePolicy).toHaveBeenCalled();
-      expect(deletePolicy).toHaveBeenCalledWith(1);
-      expect(getPolicies).toHaveBeenCalledWith({ page: 1 });
+      expect(deleteCategory).toHaveBeenCalled();
+      expect(deleteCategory).toHaveBeenCalledWith(1);
+      expect(getCategories).toHaveBeenCalledWith({ page: 1 });
     });
-    it('should edit policy', () => {
+    it('should edit category', () => {
       useSelector.mockImplementation((state) => ({
-        policies: [policy],
+        categories: [
+          { id: 1, name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
+        ],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <PoliciesList />
+          <CategoriesList />
         </Router>,
       );
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/policies/1/edit');
+      expect(link.prop('to')).toEqual('/categories/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       useSelector.mockImplementation((state) => ({}));
 
       const wrapper = mount(
         <Router>
-          <PoliciesList />
+          <CategoriesList />
         </Router>,
       );
 

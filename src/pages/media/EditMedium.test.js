@@ -9,7 +9,7 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import EditMedia from './edit';
+import EditMedium from './EditMedium';
 import * as actions from '../../actions/media';
 
 const middlewares = [thunk];
@@ -82,7 +82,7 @@ describe('Media edit component', () => {
       const tree = renderer
         .create(
           <Provider store={store}>
-            <EditMedia />
+            <EditMedium />
           </Provider>,
         )
         .toJSON();
@@ -97,7 +97,7 @@ describe('Media edit component', () => {
       rendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <EditMedia />
+            <EditMedium />
           </Provider>,
         );
       });
@@ -113,7 +113,7 @@ describe('Media edit component', () => {
       rendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <EditMedia />
+            <EditMedium />
           </Provider>,
         );
       });
@@ -132,7 +132,7 @@ describe('Media edit component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditMedia />
+            <EditMedium />
           </Provider>,
         );
       });
@@ -146,7 +146,7 @@ describe('Media edit component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditMedia />
+            <EditMedium />
           </Provider>,
         );
       });

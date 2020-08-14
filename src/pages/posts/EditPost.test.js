@@ -7,9 +7,9 @@ import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
 
 import '../../matchMedia.mock';
-import EditPost from './edit';
+import EditPost from './EditPost';
 import * as actions from '../../actions/posts';
-import PostCreateForm from './components/PostCreateForm';
+import PostEditForm from './components/PostForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -220,7 +220,7 @@ describe('Posts List component', () => {
         );
       });
       // console.log(wrapper.debug());
-      wrapper.find(PostCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(PostEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.updatePost).toHaveBeenCalledWith({
           id: 1,

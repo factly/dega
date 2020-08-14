@@ -7,9 +7,9 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import EditClaim from './edit';
+import EditClaim from './EditClaim';
 import * as actions from '../../actions/claims';
-import ClaimCreateForm from './components/ClaimCreateForm';
+import ClaimEditForm from './components/ClaimForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -143,7 +143,7 @@ describe('Claims Edit component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <EditClaim />
+            <EditClaim data={{}} />
           </Provider>,
         );
       });
@@ -216,7 +216,7 @@ describe('Claims Edit component', () => {
           </Provider>,
         );
       });
-      wrapper.find(ClaimCreateForm).props().onCreate({
+      wrapper.find(ClaimEditForm).props().onCreate({
         id: 1,
         created_at: '2020-07-17T10:14:44.251814Z',
         updated_at: '2020-07-17T10:14:44.251814Z',

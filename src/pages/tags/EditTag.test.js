@@ -8,9 +8,9 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import EditTag from './edit';
+import EditTag from './EditTag';
 import * as actions from '../../actions/tags';
-import TagCreateForm from './components/TagsCreateForm';
+import TagEditForm from './components/TagForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -144,7 +144,7 @@ describe('Tags List component', () => {
           </Provider>,
         );
       });
-      wrapper.find(TagCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(TagEditForm).props().onCreate({ test: 'test' });
       expect(actions.updateTag).toHaveBeenCalledWith({ test: 'test' });
       expect(push).toHaveBeenCalledWith('/tags');
     });

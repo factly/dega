@@ -1,5 +1,5 @@
 import React from 'react';
-import renderer, { act as rendererAct } from 'react-test-renderer';
+import renderer, { act as RendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -7,7 +7,7 @@ import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
-import RatingCreateForm from './RatingCreateForm';
+import FormatsCreateForm from './FormatForm';
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -23,23 +23,17 @@ const data = {
   name: 'name',
   slug: 'slug',
   description: 'description',
-  numeric_value: 3,
-  medium_id: 1,
 };
 
-describe('Ratings Create Form component', () => {
+describe('Formats Create Form component', () => {
   store = mockStore({
-    ratings: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    media: {
+    formats: {
       req: [],
       details: {},
       loading: true,
     },
   });
+
   useDispatch.mockReturnValue(jest.fn());
   useSelector.mockImplementation((state) => ({ details: [], total: 0, loading: false }));
 
@@ -52,10 +46,10 @@ describe('Ratings Create Form component', () => {
     });
     it('should render the component', () => {
       let component;
-      rendererAct(() => {
+      RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <RatingCreateForm />
+            <FormatsCreateForm />
           </Provider>,
         );
       });
@@ -64,10 +58,10 @@ describe('Ratings Create Form component', () => {
     });
     it('should match component with empty data', () => {
       let component;
-      rendererAct(() => {
+      RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <RatingCreateForm data={[]} />
+            <FormatsCreateForm data={[]} />
           </Provider>,
         );
       });
@@ -76,10 +70,10 @@ describe('Ratings Create Form component', () => {
     });
     it('should match component with data', () => {
       let component;
-      rendererAct(() => {
+      RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <RatingCreateForm onCreate={onCreate} data={data} />
+            <FormatsCreateForm onCreate={onCreate} data={data} />
           </Provider>,
         );
       });
@@ -97,7 +91,7 @@ describe('Ratings Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <RatingCreateForm {...props} />
+            <FormatsCreateForm {...props} />
           </Provider>,
         );
       });
@@ -109,7 +103,7 @@ describe('Ratings Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <RatingCreateForm onCreate={props.onCreate} />
+            <FormatsCreateForm onCreate={props.onCreate} />
           </Provider>,
         );
       });
@@ -145,6 +139,7 @@ describe('Ratings Create Form component', () => {
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
+        wrapper.update();
       });
 
       setTimeout(() => {
@@ -153,8 +148,6 @@ describe('Ratings Create Form component', () => {
           name: 'new name',
           slug: 'new-name',
           description: 'description',
-          numeric_value: 3,
-          medium_id: 1,
         });
         done();
       }, 0);
@@ -177,12 +170,6 @@ describe('Ratings Create Form component', () => {
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new description' } });
-        wrapper
-          .find('FormItem')
-          .at(3)
-          .find('InputNumber')
-          .props()
-          .onChange({ target: { value: 4 } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -195,8 +182,6 @@ describe('Ratings Create Form component', () => {
           name: 'new name',
           slug: 'new-slug',
           description: 'new description',
-          numeric_value: 4,
-          medium_id: 1,
         });
         done();
       }, 0);

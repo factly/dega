@@ -1,21 +1,21 @@
 import React from 'react';
-import renderer, { act as RendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
+import renderer, { act as RendererAct } from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
+import { act } from '@testing-library/react';
 
 import '../../../matchMedia.mock';
-import ClaimantCreateForm from './ClaimantCreateForm';
+import CategoryCreateForm from './CategoryForm';
 
-const data = {
-  name: 'name',
-  slug: 'slug',
-  description: 'description',
-  tag_line: 'tag_line',
-  medium_id: 1,
-};
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+
+jest.mock('../../../actions/categories', () => ({
+  getCategories: jest.fn(),
+  deleteCategory: jest.fn(),
+}));
 
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -23,14 +23,12 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }));
 
-const middlewares = [thunk];
-const mockStore = configureMockStore(middlewares);
-
 let onCreate, store;
+const data = { parent_id: 1, name: 'Name', description: 'Description', medium_id: 2 };
 
-describe('Claimants Create Form component', () => {
+describe('Categories Create Form component', () => {
   store = mockStore({
-    claimants: {
+    categories: {
       req: [],
       details: {},
       loading: true,
@@ -56,7 +54,7 @@ describe('Claimants Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <ClaimantCreateForm data={[]} />
+            <CategoryCreateForm />
           </Provider>,
         );
       });
@@ -68,7 +66,7 @@ describe('Claimants Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <ClaimantCreateForm data={[]} />
+            <CategoryCreateForm data={[]} />
           </Provider>,
         );
       });
@@ -80,7 +78,7 @@ describe('Claimants Create Form component', () => {
       RendererAct(() => {
         component = renderer.create(
           <Provider store={store}>
-            <ClaimantCreateForm onCreate={onCreate} data={data} />
+            <CategoryCreateForm onCreate={onCreate} data={data} />
           </Provider>,
         );
       });
@@ -93,12 +91,12 @@ describe('Claimants Create Form component', () => {
     beforeEach(() => {
       props = {
         onCreate: jest.fn(),
-        data: data,
+        data: { name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
       };
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <ClaimantCreateForm {...props} />
+            <CategoryCreateForm {...props} />
           </Provider>,
         );
       });
@@ -110,7 +108,7 @@ describe('Claimants Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <ClaimantCreateForm onCreate={props.onCreate} />
+            <CategoryCreateForm onCreate={props.onCreate} />
           </Provider>,
         );
       });
@@ -139,9 +137,9 @@ describe('Claimants Create Form component', () => {
         done();
       }, 0);
     });
-    it('should submit form with new name', (done) => {
+    it('should submit form with new title', (done) => {
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('FormItem').at(1).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -152,10 +150,9 @@ describe('Claimants Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
+          description: 'Description',
           slug: 'new-name',
-          description: 'description',
-          tag_line: 'tag_line',
-          medium_id: 1,
+          parent_id: 1,
         });
         done();
       }, 0);
@@ -164,26 +161,20 @@ describe('Claimants Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(3)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new description' } });
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(2)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
-        wrapper
-          .find('FormItem')
-          .at(3)
-          .find('TextArea')
-          .at(0)
-          .simulate('change', { target: { value: 'new tag line' } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -195,8 +186,7 @@ describe('Claimants Create Form component', () => {
           name: 'new name',
           description: 'new description',
           slug: 'new-slug',
-          medium_id: 1,
-          tag_line: 'new tag line',
+          parent_id: 1,
         });
         done();
       }, 0);

@@ -7,9 +7,9 @@ import { act } from 'react-dom/test-utils';
 import { mount, shallow } from 'enzyme';
 
 import '../../matchMedia.mock';
-import CreatePost from './create';
+import CreatePost from './CreatePost';
 import * as actions from '../../actions/posts';
-import PostCreateForm from './components/PostCreateForm';
+import PostCreateForm from './components/PostForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

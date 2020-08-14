@@ -8,9 +8,9 @@ import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
-import EditClaimant from './edit';
+import EditClaimant from './EditClaimant';
 import * as actions from '../../actions/claimants';
-import ClaimantCreateForm from './components/ClaimantCreateForm';
+import ClaimantEditForm from './components/ClaimantForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -164,7 +164,7 @@ describe('Claimants edit component', () => {
           </Provider>,
         );
       });
-      wrapper.find(ClaimantCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(ClaimantEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.updateClaimant).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/claimants');

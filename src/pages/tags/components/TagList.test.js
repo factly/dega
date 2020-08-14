@@ -8,8 +8,8 @@ import { shallow, mount } from 'enzyme';
 import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
-import CategoriesList from './CategoriesList';
-import { getCategories, deleteCategory } from '../../../actions/categories';
+import TagList from './TagList';
+import { getTags, deleteTag } from '../../../actions/tags';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,14 +18,21 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }));
-jest.mock('../../../actions/categories', () => ({
-  getCategories: jest.fn(),
-  deleteCategory: jest.fn(),
+jest.mock('../../../actions/tags', () => ({
+  getTags: jest.fn(),
+  deleteTag: jest.fn(),
 }));
 
-describe('Categories List component', () => {
+describe('Tags List component', () => {
   let store;
   let mockedDispatch;
+  const tag = {
+    id: 1,
+    name: 'tag',
+    slug: 'slug',
+    description: 'description',
+  };
+
   describe('snapshot testing', () => {
     beforeEach(() => {
       store = mockStore({});
@@ -35,23 +42,23 @@ describe('Categories List component', () => {
     });
     it('should render the component', () => {
       useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<CategoriesList />).toJSON();
+      const tree = renderer.create(<TagList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
     it('should match component when loading', () => {
       useSelector.mockImplementation((state) => ({
-        categories: [],
+        tags: [],
         total: 0,
         loading: true,
       }));
-      const tree = renderer.create(<CategoriesList />).toJSON();
+      const tree = renderer.create(<TagList />).toJSON();
       expect(tree).toMatchSnapshot();
       expect(useSelector).toHaveBeenCalled();
     });
-    it('should match component with categories', () => {
+    it('should match component with tags', () => {
       useSelector.mockImplementation((state) => ({
-        categories: [{ id: 1, name: 'category' }],
+        tags: [tag],
         total: 1,
         loading: false,
       }));
@@ -60,7 +67,7 @@ describe('Categories List component', () => {
       act(() => {
         component = renderer.create(
           <Router>
-            <CategoriesList />
+            <TagList />
           </Router>,
         );
       });
@@ -70,11 +77,11 @@ describe('Categories List component', () => {
       expect(useSelector).toHaveBeenCalled();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
       expect(useSelector).toHaveReturnedWith({
-        categories: [{ id: 1, name: 'category' }],
+        tags: [tag],
         total: 1,
         loading: false,
       });
-      expect(getCategories).toHaveBeenCalledWith({ page: 1 });
+      expect(getTags).toHaveBeenCalledWith({ page: 1 });
     });
   });
   describe('component testing', () => {
@@ -86,25 +93,23 @@ describe('Categories List component', () => {
     it('should change the page', () => {
       useSelector.mockImplementation((state) => ({}));
 
-      const wrapper = shallow(<CategoriesList />);
+      const wrapper = shallow(<TagList />);
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(3);
+      table.props().pagination.onChange(2);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(3);
+      expect(updatedTable.props().pagination.current).toEqual(2);
     });
-    it('should delete category', () => {
+    it('should delete tag', () => {
       useSelector.mockImplementation((state) => ({
-        categories: [
-          { id: 1, name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
-        ],
+        tags: [tag],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <CategoriesList />
+          <TagList />
         </Router>,
       );
       const button = wrapper.find(Button).at(1);
@@ -115,35 +120,34 @@ describe('Categories List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      expect(deleteCategory).toHaveBeenCalled();
-      expect(deleteCategory).toHaveBeenCalledWith(1);
-      expect(getCategories).toHaveBeenCalledWith({ page: 1 });
+
+      expect(deleteTag).toHaveBeenCalled();
+      expect(deleteTag).toHaveBeenCalledWith(1);
+      expect(getTags).toHaveBeenCalledWith({ page: 1 });
     });
-    it('should edit category', () => {
+    it('should edit tag', () => {
       useSelector.mockImplementation((state) => ({
-        categories: [
-          { id: 1, name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
-        ],
+        tags: [tag],
         total: 1,
         loading: false,
       }));
 
       const wrapper = mount(
         <Router>
-          <CategoriesList />
+          <TagList />
         </Router>,
       );
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/categories/1/edit');
+      expect(link.prop('to')).toEqual('/tags/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       useSelector.mockImplementation((state) => ({}));
 
       const wrapper = mount(
         <Router>
-          <CategoriesList />
+          <TagList />
         </Router>,
       );
 

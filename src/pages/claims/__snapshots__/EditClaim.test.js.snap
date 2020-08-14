@@ -13,8 +13,11 @@ exports[`Claims Edit component snapshot testing should match component with empt
     }
   }
 >
-  <EditClaim>
-    <ClaimCreateForm
+  <EditClaim
+    data={Object {}}
+  >
+    <ClaimForm
+      data={null}
       onCreate={[Function]}
     >
       <div>
@@ -195,7 +198,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
               "validateFields": [Function],
             }
           }
-          initialValues={Object {}}
+          initialValues={null}
           labelCol={
             Object {
               "span": 8,
@@ -243,7 +246,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                 }
               }
               id="create-claim"
-              initialValues={Object {}}
+              initialValues={null}
               name="create-claim"
               onFinish={[Function]}
               onFinishFailed={[Function]}
@@ -5366,7 +5369,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
           </SizeContextProvider>
         </ForwardRef(InternalForm)>
       </div>
-    </ClaimCreateForm>
+    </ClaimForm>
   </EditClaim>
 </Provider>
 `;
@@ -5464,7 +5467,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
   }
 >
   <EditClaim>
-    <ClaimCreateForm
+    <ClaimForm
       data={
         Object {
           "checked_date": "2020-07-17T10:14:44.251Z",
@@ -11033,7 +11036,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
           </SizeContextProvider>
         </ForwardRef(InternalForm)>
       </div>
-    </ClaimCreateForm>
+    </ClaimForm>
   </EditClaim>
 </Provider>
 `;
