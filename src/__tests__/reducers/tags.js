@@ -1,4 +1,4 @@
-import reducer from '../../reducers/tags';
+import reducer from '../../reducers/tagsReducer';
 import * as types from '../../constants/tags';
 
 const initialState = {

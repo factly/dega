@@ -1,4 +1,4 @@
-import reducer from '../../reducers/categories';
+import reducer from '../../reducers/categoriesReducer';
 import * as types from '../../constants/categories';
 
 const initialState = {
