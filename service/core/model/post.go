@@ -49,7 +49,7 @@ func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
 		}).First(&medium).Error
 
 		if err != nil {
-			return err
+			return errors.New("medium do not belong to same space")
 		}
 	}
 
@@ -62,7 +62,7 @@ func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
 		}).First(&format).Error
 
 		if err != nil {
-			return err
+			return errors.New("format do not belong to same space")
 		}
 	}
 

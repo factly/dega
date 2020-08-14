@@ -93,8 +93,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = result.SpaceID
 
-	tx := config.DB.Begin()
-
 	var postSlug string
 
 	if result.Slug == post.Slug {
@@ -105,12 +103,25 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slug.Approve(slug.Make(post.Title), sID, config.DB.NewScope(&model.Post{}).TableName())
 	}
 
+	tx := config.DB.Begin()
 	// Deleting old associations
 	if len(oldTags) > 0 {
-		tx.Model(&result.Post).Association("Tags").Delete(oldTags)
+		err = tx.Model(&result.Post).Association("Tags").Delete(oldTags).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 	if len(oldCategories) > 0 {
-		tx.Model(&result.Post).Association("Categories").Delete(oldCategories)
+		err = tx.Model(&result.Post).Association("Categories").Delete(oldCategories).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	if len(newTags) == 0 {
@@ -118,6 +129,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	if len(newCategories) == 0 {
 		newCategories = nil
+	}
+
+	if post.FeaturedMediumID == 0 {
+		err = tx.Model(result.Post).Updates(map[string]interface{}{"featured_medium_id": nil}).First(&result.Post).Error
+		result.FeaturedMediumID = 0
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
@@ -176,7 +198,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		// delete post claims
 		if len(postClaimIDs) > 0 {
-			tx.Where(postClaimIDs).Delete(factcheckModel.PostClaim{})
+			err = tx.Where(postClaimIDs).Delete(factcheckModel.PostClaim{}).Error
+			if err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
 		}
 
 		for _, id := range toCreateIDs {
@@ -187,6 +215,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			err = tx.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
 				tx.Rollback()
+				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))
 				return
 			}
@@ -223,7 +252,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// delete post authors
 	if len(postAuthorIDs) > 0 {
-		tx.Where(postAuthorIDs).Delete(model.PostAuthor{})
+		err = tx.Where(postAuthorIDs).Delete(model.PostAuthor{}).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	// creating new post authors
@@ -236,6 +271,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			tx.Rollback()
+			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
