@@ -1,0 +1,516 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Posts List component snapshot component should match component when loading 1`] = `
+<div
+  className="ant-list post-list ant-list-vertical ant-list-split ant-list-bordered ant-list-loading ant-list-something-after-last-item"
+>
+  <div
+    className="ant-spin-nested-loading"
+  >
+    <div>
+      <div
+        className="ant-spin ant-spin-spinning"
+      >
+        <span
+          className="ant-spin-dot ant-spin-dot-spin"
+        >
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+          <i
+            className="ant-spin-dot-item"
+          />
+        </span>
+      </div>
+    </div>
+    <div
+      className="ant-spin-container ant-spin-blur"
+    >
+      <div
+        style={
+          Object {
+            "minHeight": 53,
+          }
+        }
+      />
+    </div>
+  </div>
+  <div
+    className="ant-list-pagination"
+  >
+    <ul
+      className="ant-pagination"
+      style={Object {}}
+      unselectable="unselectable"
+    >
+      <li
+        aria-disabled={true}
+        className="ant-pagination-prev ant-pagination-disabled"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex={null}
+        title="Previous Page"
+      >
+        <button
+          className="ant-pagination-item-link"
+          disabled={true}
+          tabIndex={-1}
+          type="button"
+        >
+          <span
+            aria-label="left"
+            className="anticon anticon-left"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              className=""
+              data-icon="left"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+        title={0}
+      >
+        <a
+          rel="nofollow"
+        >
+          0
+        </a>
+      </li>
+      <li
+        aria-disabled={true}
+        className="ant-pagination-next ant-pagination-disabled"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex={null}
+        title="Next Page"
+      >
+        <button
+          className="ant-pagination-item-link"
+          disabled={true}
+          tabIndex={-1}
+          type="button"
+        >
+          <span
+            aria-label="right"
+            className="anticon anticon-right"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              className=""
+              data-icon="right"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Posts List component snapshot component should match component with posts 1`] = `
+<div
+  className="ant-list post-list ant-list-vertical ant-list-split ant-list-bordered ant-list-something-after-last-item"
+>
+  <div
+    className="ant-spin-nested-loading"
+  >
+    <div
+      className="ant-spin-container"
+    >
+      <ul
+        className="ant-list-items"
+      >
+        <li
+          className="ant-list-item ant-list-item-no-flex"
+        >
+          <div
+            className="ant-list-item-meta"
+          >
+            <div
+              className="ant-list-item-meta-content"
+            >
+              <h4
+                className="ant-list-item-meta-title"
+              >
+                <a
+                  href="/posts/1/edit"
+                  onClick={[Function]}
+                />
+              </h4>
+            </div>
+          </div>
+          <ul
+            className="ant-list-item-action"
+          >
+            <li>
+              <a
+                href="/posts/1/edit"
+                onClick={[Function]}
+                style={
+                  Object {
+                    "marginRight": 8,
+                  }
+                }
+              >
+                <button
+                  className="ant-btn"
+                  onClick={[Function]}
+                  type="button"
+                >
+                  <span
+                    aria-label="edit"
+                    className="anticon anticon-edit"
+                    role="img"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      className=""
+                      data-icon="edit"
+                      fill="currentColor"
+                      focusable="false"
+                      height="1em"
+                      viewBox="64 64 896 896"
+                      width="1em"
+                    >
+                      <path
+                        d="M257.7 752c2 0 4-.2 6-.5L431.9 722c2-.4 3.9-1.3 5.3-2.8l423.9-423.9a9.96 9.96 0 000-14.1L694.9 114.9c-1.9-1.9-4.4-2.9-7.1-2.9s-5.2 1-7.1 2.9L256.8 538.8c-1.5 1.5-2.4 3.3-2.8 5.3l-29.5 168.2a33.5 33.5 0 009.4 29.8c6.6 6.4 14.9 9.9 23.8 9.9zm67.4-174.4L687.8 215l73.3 73.3-362.7 362.6-88.9 15.7 15.6-89zM880 836H144c-17.7 0-32 14.3-32 32v36c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-36c0-17.7-14.3-32-32-32z"
+                      />
+                    </svg>
+                  </span>
+                  <span>
+                    Edit
+                  </span>
+                </button>
+              </a>
+              <em
+                className="ant-list-item-action-split"
+              />
+            </li>
+            <li>
+              <button
+                className="ant-btn"
+                onClick={[Function]}
+                onKeyDown={[Function]}
+                onMouseDown={[Function]}
+                onTouchStart={[Function]}
+                type="button"
+              >
+                <span
+                  aria-label="delete"
+                  className="anticon anticon-delete"
+                  role="img"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className=""
+                    data-icon="delete"
+                    fill="currentColor"
+                    focusable="false"
+                    height="1em"
+                    viewBox="64 64 896 896"
+                    width="1em"
+                  >
+                    <path
+                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                    />
+                  </svg>
+                </span>
+                <span>
+                  Delete
+                </span>
+              </button>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div
+    className="ant-list-pagination"
+  >
+    <ul
+      className="ant-pagination"
+      style={Object {}}
+      unselectable="unselectable"
+    >
+      <li
+        aria-disabled={true}
+        className="ant-pagination-prev ant-pagination-disabled"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex={null}
+        title="Previous Page"
+      >
+        <button
+          className="ant-pagination-item-link"
+          disabled={true}
+          tabIndex={-1}
+          type="button"
+        >
+          <span
+            aria-label="left"
+            className="anticon anticon-left"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              className=""
+              data-icon="left"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+        title={1}
+      >
+        <a
+          rel="nofollow"
+        >
+          1
+        </a>
+      </li>
+      <li
+        aria-disabled={true}
+        className="ant-pagination-next ant-pagination-disabled"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex={null}
+        title="Next Page"
+      >
+        <button
+          className="ant-pagination-item-link"
+          disabled={true}
+          tabIndex={-1}
+          type="button"
+        >
+          <span
+            aria-label="right"
+            className="anticon anticon-right"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              className=""
+              data-icon="right"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+`;
+
+exports[`Posts List component snapshot component should render the component 1`] = `
+<div
+  className="ant-list post-list ant-list-vertical ant-list-split ant-list-bordered ant-list-something-after-last-item"
+>
+  <div
+    className="ant-spin-nested-loading"
+  >
+    <div
+      className="ant-spin-container"
+    >
+      <div
+        className="ant-list-empty-text"
+      >
+        <div
+          className="ant-empty ant-empty-normal"
+        >
+          <div
+            className="ant-empty-image"
+          >
+            <svg
+              className="ant-empty-img-simple"
+              height="41"
+              viewBox="0 0 64 41"
+              width="64"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                fill="none"
+                fillRule="evenodd"
+                transform="translate(0 1)"
+              >
+                <ellipse
+                  className="ant-empty-img-simple-ellipse"
+                  cx="32"
+                  cy="33"
+                  rx="32"
+                  ry="7"
+                />
+                <g
+                  className="ant-empty-img-simple-g"
+                  fillRule="nonzero"
+                >
+                  <path
+                    d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                  />
+                  <path
+                    className="ant-empty-img-simple-path"
+                    d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                  />
+                </g>
+              </g>
+            </svg>
+          </div>
+          <p
+            className="ant-empty-description"
+          >
+            No Data
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-list-pagination"
+  >
+    <ul
+      className="ant-pagination"
+      style={Object {}}
+      unselectable="unselectable"
+    >
+      <li
+        aria-disabled={true}
+        className="ant-pagination-prev ant-pagination-disabled"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex={null}
+        title="Previous Page"
+      >
+        <button
+          className="ant-pagination-item-link"
+          disabled={true}
+          tabIndex={-1}
+          type="button"
+        >
+          <span
+            aria-label="left"
+            className="anticon anticon-left"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              className=""
+              data-icon="left"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+      <li
+        className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex="0"
+        title={0}
+      >
+        <a
+          rel="nofollow"
+        >
+          0
+        </a>
+      </li>
+      <li
+        aria-disabled={true}
+        className="ant-pagination-next ant-pagination-disabled"
+        onClick={[Function]}
+        onKeyPress={[Function]}
+        tabIndex={null}
+        title="Next Page"
+      >
+        <button
+          className="ant-pagination-item-link"
+          disabled={true}
+          tabIndex={-1}
+          type="button"
+        >
+          <span
+            aria-label="right"
+            className="anticon anticon-right"
+            role="img"
+          >
+            <svg
+              aria-hidden="true"
+              className=""
+              data-icon="right"
+              fill="currentColor"
+              focusable="false"
+              height="1em"
+              viewBox="64 64 896 896"
+              width="1em"
+            >
+              <path
+                d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+              />
+            </svg>
+          </span>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>
+`;

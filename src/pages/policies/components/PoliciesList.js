@@ -51,7 +51,7 @@ function PoliciesList() {
             </Link>
             <Popconfirm
               title="Sure to cancel?"
-              onConfirm={() => dispatch(deletePolicy(record.name)).then(() => fetchPolicies())}
+              onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
             >
               <Button>Delete</Button>
             </Popconfirm>
