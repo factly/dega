@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import PostsList from './components/PostsList';
+import PostList from './components/PostList';
 
 function Posts() {
   return (
@@ -9,7 +9,7 @@ function Posts() {
       <Link key="1" to="/posts/create">
         <Button>Create New</Button>
       </Link>
-      <PostsList />
+      <PostList />
     </Space>
   );
 }

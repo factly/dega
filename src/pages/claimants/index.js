@@ -1,5 +1,5 @@
 import React from 'react';
-import ClaimantsList from './components/ClaimantsList';
+import ClaimantList from './components/ClaimantList';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ function Claimants() {
       <Link to="/claimants/create">
         <Button>Create New</Button>
       </Link>
-      <ClaimantsList />
+      <ClaimantList />
     </Space>
   );
 }

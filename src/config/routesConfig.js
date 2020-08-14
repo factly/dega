@@ -7,7 +7,6 @@ import {
   TagsOutlined,
   PictureOutlined,
   FileDoneOutlined,
-  FileProtectOutlined,
   CheckCircleOutlined,
   StarOutlined,
   EyeOutlined,
@@ -18,53 +17,53 @@ import Dashboard from '../pages/dashboard';
 
 //Spaces
 import Spaces from '../pages/spaces';
-import SpaceCreate from '../pages/spaces/create';
-import SpaceEdit from '../pages/spaces/edit';
+import CreateSpace from '../pages/spaces/CreateSpace';
+import EditSpace from '../pages/spaces/EditSpace';
 
 //Media
 import Media from '../pages/media';
-import MediaUploader from '../pages/media/upload';
-import MediaEdit from '../pages/media/edit';
+import UploadMedium from '../pages/media/UploadMedium';
+import EditMedium from '../pages/media/EditMedium';
 
 //Categories
 import Categories from '../pages/categories';
-import CreateCategory from '../pages/categories/create';
-import EditCategory from '../pages/categories/edit';
+import CreateCategory from '../pages/categories/CreateCategory';
+import EditCategory from '../pages/categories/EditCategory';
 
 //Tags
 import Tags from '../pages/tags';
-import CreateTag from '../pages/tags/create';
-import EditTags from '../pages/tags/edit';
+import CreateTag from '../pages/tags/CreateTag';
+import EditTag from '../pages/tags/EditTag';
 
 //Formats
 import Formats from '../pages/formats';
-import CreateFormat from '../pages/formats/create';
-import EditFormats from '../pages/formats/edit';
+import CreateFormat from '../pages/formats/CreateFormat';
+import EditFormat from '../pages/formats/EditFormat';
 
 //Post
 import Posts from '../pages/posts';
-import CreatePost from '../pages/posts/create';
-import EditPost from '../pages/posts/edit';
+import CreatePost from '../pages/posts/CreatePost';
+import EditPost from '../pages/posts/EditPost';
 
 //Ratings
 import Ratings from '../pages/ratings';
-import CreateRating from '../pages/ratings/create';
-import EditRating from '../pages/ratings/edit';
+import CreateRating from '../pages/ratings/CreateRating';
+import EditRating from '../pages/ratings/EditRating';
 
 //Claimants
 import Claimants from '../pages/claimants';
-import CreateClaimant from '../pages/claimants/create';
-import EditClaimant from '../pages/claimants/edit';
+import CreateClaimant from '../pages/claimants/CreateClaimant';
+import EditClaimant from '../pages/claimants/EditClaimant';
 
 //Claims
 import Claims from '../pages/claims';
-import CreateClaim from '../pages/claims/create';
-import EditClaim from '../pages/claims/edit';
+import CreateClaim from '../pages/claims/CreateClaim';
+import EditClaim from '../pages/claims/EditClaim';
 
 //Policies
 import Policies from '../pages/policies';
-import CreatePolicy from '../pages/policies/create';
-import EditPolicy from '../pages/policies/edit';
+import CreatePolicy from '../pages/policies/CreatePolicy';
+import EditPolicy from '../pages/policies/EditPolicy';
 
 export default [
   {
@@ -85,7 +84,7 @@ export default [
   },
   {
     path: '/spaces/create',
-    Component: SpaceCreate,
+    Component: CreateSpace,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: BorderlessTableOutlined,
@@ -93,7 +92,7 @@ export default [
   },
   {
     path: '/spaces/:id/edit',
-    Component: SpaceEdit,
+    Component: EditSpace,
     enableNavigation: false,
     enableBreadcrumb: false,
     Icon: BorderlessTableOutlined,
@@ -165,7 +164,7 @@ export default [
   },
   {
     path: '/formats/:id/edit',
-    Component: EditFormats,
+    Component: EditFormat,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: FileExclamationOutlined,
@@ -189,7 +188,7 @@ export default [
   },
   {
     path: '/tags/:id/edit',
-    Component: EditTags,
+    Component: EditTag,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: TagsOutlined,
@@ -205,7 +204,7 @@ export default [
   },
   {
     path: '/media/upload',
-    Component: MediaUploader,
+    Component: UploadMedium,
     enableNavigation: false,
     enableBreadcrumb: true,
     Icon: PictureOutlined,
@@ -213,7 +212,7 @@ export default [
   },
   {
     path: '/media/:id/edit',
-    Component: MediaEdit,
+    Component: EditMedium,
     enableNavigation: false,
     enableBreadcrumb: false,
     Icon: PictureOutlined,

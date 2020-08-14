@@ -1,4 +1,4 @@
-import reducer from '../../reducers/media';
+import reducer from '../../reducers/mediaReducer';
 import * as types from '../../constants/media';
 
 const initialState = {

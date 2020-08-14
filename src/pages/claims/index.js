@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import ClaimsList from './components/ClaimsList';
+import ClaimList from './components/ClaimList';
 
 function Claims() {
   return (
@@ -9,7 +9,7 @@ function Claims() {
       <Link to="/claims/create">
         <Button>Create New</Button>
       </Link>
-      <ClaimsList />
+      <ClaimList />
     </Space>
   );
 }

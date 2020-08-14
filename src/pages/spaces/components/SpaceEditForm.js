@@ -19,7 +19,7 @@ const tailLayout = {
   wrapperCol: { offset: 8, span: 16 },
 };
 
-const SpaceCreateForm = ({ onCreate, data = {} }) => {
+const SpaceEditForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const orgs = useSelector((state) => state.spaces.orgs);
 
@@ -149,4 +149,4 @@ const SpaceCreateForm = ({ onCreate, data = {} }) => {
   );
 };
 
-export default SpaceCreateForm;
+export default SpaceEditForm;

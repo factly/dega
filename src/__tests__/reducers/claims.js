@@ -1,4 +1,4 @@
-import reducer from '../../reducers/claims';
+import reducer from '../../reducers/claimsReducer';
 import * as types from '../../constants/claims';
 
 const initialState = {
