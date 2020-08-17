@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/setup"
 	"github.com/factly/dega-server/util/test"
 	"github.com/joho/godotenv"
 	"gopkg.in/h2non/gock.v1"
@@ -42,9 +43,9 @@ func TestMain(m *testing.M) {
 	os.Setenv("ORG_ID", org)
 	os.Setenv("USER_ID", user)
 
-	test.CreateTestDB()
+	setup.CreateDB()
 	exitValue := m.Run()
-	test.DeleteTestDB()
+	setup.DeleteTestDB()
 
 	os.Exit(exitValue)
 
@@ -72,6 +73,6 @@ func SetUp() (*model.Space, *model.Tag) {
 }
 
 func TearDown() {
-	config.DB.Unscoped().Delete(&model.Space{})
 	config.DB.Unscoped().Delete(&model.Tag{})
+	config.DB.Unscoped().Delete(&model.Space{})
 }

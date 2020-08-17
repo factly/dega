@@ -22,6 +22,7 @@ func TestList(t *testing.T) {
 	var tagsList []uint
 
 	user := os.Getenv("USER_ID")
+	errorMsg := "handler returned wrong status code: got %v want %v"
 
 	var temp model.Tag
 	var requests []model.Tag
@@ -49,9 +50,10 @@ func TestList(t *testing.T) {
 	}
 
 	r := chi.NewRouter()
+	link := "/core/tags"
 	r.Use(loggerx.Init())
 	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Get("/core/tags", list)
+		r.Get(link, list)
 	})
 
 	// Create test server and allow Gock to call the test server.
@@ -63,10 +65,10 @@ func TestList(t *testing.T) {
 	// Retrieve list
 	t.Run("Get Successful", func(t *testing.T) {
 
-		_, y, status := test.Request(t, ts, "GET", "/core/tags", nil, headers)
+		_, y, status := test.Request(t, ts, "GET", link, nil, headers)
 
 		if status != http.StatusOK {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+			t.Errorf(errorMsg, status, http.StatusOK)
 		}
 
 		// Data present here , with type assertion
@@ -96,10 +98,10 @@ func TestList(t *testing.T) {
 			"space": "",
 			"user":  "",
 		}
-		_, _, status := test.Request(t, ts, "GET", "/core/tags", nil, headers)
+		_, _, status := test.Request(t, ts, "GET", link, nil, headers)
 
 		if status != http.StatusUnauthorized {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusUnauthorized)
+			t.Errorf(errorMsg, status, http.StatusUnauthorized)
 		}
 	})
 
@@ -111,7 +113,7 @@ func TestList(t *testing.T) {
 		_, _, status := test.Request(t, ts, "GET", url, nil, headers)
 
 		if status != http.StatusNotFound {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusNotFound)
+			t.Errorf(errorMsg, status, http.StatusNotFound)
 		}
 	})
 

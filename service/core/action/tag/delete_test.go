@@ -19,7 +19,7 @@ import (
 
 func TestDelete(t *testing.T) {
 	user := os.Getenv("USER_ID")
-
+	errorMsg := "handler returned wrong status code: got %v want %v"
 	// Create new space and tag
 	space, tag := SetUp()
 	config.DB.Create(&tag)
@@ -35,9 +35,10 @@ func TestDelete(t *testing.T) {
 
 	// Create router
 	r := chi.NewRouter()
+	link := "/core/tags/"
 	r.Use(loggerx.Init())
 	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Delete("/core/tags/{tag_id}", delete)
+		r.Delete(link+"{tag_id}", delete)
 	})
 
 	// Create test server and allow Gock to call the test server.
@@ -47,14 +48,14 @@ func TestDelete(t *testing.T) {
 	defer ts.Close()
 
 	// Contruct url to delete
-	url := fmt.Sprint("/core/tags/" + tagID)
+	url := fmt.Sprint(link + tagID)
 
 	// Successful delete
 	t.Run("Delete successful", func(t *testing.T) {
 		_, _, status := test.Request(t, ts, "DELETE", url, nil, headers)
 
 		if status != http.StatusOK {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+			t.Errorf(errorMsg, status, http.StatusOK)
 		}
 	})
 
@@ -67,7 +68,7 @@ func TestDelete(t *testing.T) {
 		_, _, status := test.Request(t, ts, "DELETE", url, nil, headers)
 
 		if status != http.StatusUnauthorized {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusUnauthorized)
+			t.Errorf(errorMsg, status, http.StatusUnauthorized)
 		}
 	})
 
@@ -75,28 +76,28 @@ func TestDelete(t *testing.T) {
 	t.Run("Invalid Tag", func(t *testing.T) {
 
 		tag := fmt.Sprint(int(tag.ID) * 2379)
-		url := fmt.Sprint("/core/tags/" + tag)
+		url := fmt.Sprint(link + tag)
 
 		_, _, status := test.Request(t, ts, "DELETE", url, nil, headers)
 
 		if status != http.StatusNotFound {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusNotFound)
+			t.Errorf(errorMsg, status, http.StatusNotFound)
 		}
 	})
 
 	// Invalid Tag type
 	t.Run("Invalid Tag Type", func(t *testing.T) {
 
-		url := fmt.Sprint("/core/tags/" + "abc")
+		url := fmt.Sprint(link + "abc")
 
 		_, _, status := test.Request(t, ts, "DELETE", url, nil, headers)
 
 		if status != http.StatusNotFound {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusNotFound)
+			t.Errorf(errorMsg, status, http.StatusNotFound)
 		}
 	})
 
 	// Cleanup
 	// Delete space and tags
-	// TearDown()
+	TearDown()
 }

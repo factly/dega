@@ -21,7 +21,7 @@ import (
 func TestCreate(t *testing.T) {
 
 	user := os.Getenv("USER_ID")
-
+	errorMsg := "handler returned wrong status code: got %v want %v"
 	// Create space and tag
 	space, tag := SetUp()
 
@@ -36,9 +36,10 @@ func TestCreate(t *testing.T) {
 
 	// Create router
 	r := chi.NewRouter()
+	link := "/core/tags"
 	r.Use(loggerx.Init())
 	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Post("/core/tags", create)
+		r.Post(link, create)
 	})
 
 	// Create test server and allow Gock to call the test server.
@@ -49,10 +50,10 @@ func TestCreate(t *testing.T) {
 
 	// Successful post
 	t.Run("Create Tag Successful", func(t *testing.T) {
-		_, _, status := test.Request(t, ts, "POST", "/core/tags", req, headers)
+		_, _, status := test.Request(t, ts, "POST", link, req, headers)
 
 		if status != http.StatusCreated {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusCreated)
+			t.Errorf(errorMsg, status, http.StatusCreated)
 		}
 	})
 
@@ -62,10 +63,10 @@ func TestCreate(t *testing.T) {
 			"space": "0",
 			"user":  "",
 		}
-		_, _, status := test.Request(t, ts, "POST", "/core/tags", req, headers)
+		_, _, status := test.Request(t, ts, "POST", link, req, headers)
 
 		if status != http.StatusUnauthorized {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusUnauthorized)
+			t.Errorf(errorMsg, status, http.StatusUnauthorized)
 		}
 	})
 
@@ -80,10 +81,10 @@ func TestCreate(t *testing.T) {
 		reqBody, _ := json.Marshal(createTag)
 		req := bytes.NewReader(reqBody)
 
-		_, _, status := test.Request(t, ts, "POST", "/core/tags", req, headers)
+		_, _, status := test.Request(t, ts, "POST", link, req, headers)
 
 		if status != http.StatusCreated {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusCreated)
+			t.Errorf(errorMsg, status, http.StatusCreated)
 		}
 	})
 
@@ -94,10 +95,10 @@ func TestCreate(t *testing.T) {
 		reqBody, _ := json.Marshal(createTag)
 		req := bytes.NewReader(reqBody)
 
-		_, _, status := test.Request(t, ts, "POST", "/core/tags", req, headers)
+		_, _, status := test.Request(t, ts, "POST", link, req, headers)
 
 		if status != http.StatusUnprocessableEntity {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusUnprocessableEntity)
+			t.Errorf(errorMsg, status, http.StatusUnprocessableEntity)
 		}
 	})
 

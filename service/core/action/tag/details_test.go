@@ -20,7 +20,7 @@ import (
 func TestDetails(t *testing.T) {
 
 	user := os.Getenv("USER_ID")
-
+	errorMsg := "handler returned wrong status code: got %v want %v"
 	// Create new space and tag
 	space, tag := SetUp()
 	config.DB.Create(tag)
@@ -36,9 +36,10 @@ func TestDetails(t *testing.T) {
 
 	// Create router
 	r := chi.NewRouter()
+	link := "/core/tags/"
 	r.Use(loggerx.Init())
 	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Get("/core/tags/{tag_id}", details)
+		r.Get(link+"{tag_id}", details)
 	})
 
 	// Create test server and allow Gock to call the test server.
@@ -48,7 +49,7 @@ func TestDetails(t *testing.T) {
 	defer ts.Close()
 
 	// Contruct url to get details
-	url := fmt.Sprint("/core/tags/" + tagID)
+	url := fmt.Sprint(link + tagID)
 
 	// Successful retrieve
 	t.Run("Details Retrievied successfully", func(t *testing.T) {
@@ -57,45 +58,32 @@ func TestDetails(t *testing.T) {
 		checkIfEqual := y["id"] == tagID && y["name"] == tag.Name && y["slug"] == tag.Slug && y["space_id"] == space.ID
 
 		if status != http.StatusOK && checkIfEqual {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
-		}
-	})
-
-	// Run tests
-	t.Run("User Missing", func(t *testing.T) {
-		headers := map[string]string{
-			"space": "0",
-			"user":  "",
-		}
-		_, _, status := test.Request(t, ts, "GET", url, nil, headers)
-
-		if status != http.StatusUnauthorized {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusUnauthorized)
-		}
-	})
-
-	// Invalid Tags
-	t.Run("Invalid Tag", func(t *testing.T) {
-
-		tag := fmt.Sprint(int(tag.ID) * 2379)
-		url := fmt.Sprint("/core/tags/" + tag)
-
-		_, _, status := test.Request(t, ts, "GET", url, nil, headers)
-
-		if status != http.StatusNotFound {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusNotFound)
+			t.Errorf(errorMsg, status, http.StatusOK)
 		}
 	})
 
 	// Invalid Tag type
 	t.Run("Invalid Tag Type", func(t *testing.T) {
 
-		url := fmt.Sprint("/core/tags/" + "abc")
+		url := fmt.Sprint(link + "def")
 
 		_, _, status := test.Request(t, ts, "GET", url, nil, headers)
 
 		if status != http.StatusNotFound {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusNotFound)
+			t.Errorf(errorMsg, status, http.StatusNotFound)
+		}
+	})
+
+	// Invalid Tags
+	t.Run("Invalid Tag", func(t *testing.T) {
+
+		tag := fmt.Sprint(int(tag.ID) * 2432)
+		url := fmt.Sprint(link + tag)
+
+		_, _, status := test.Request(t, ts, "GET", url, nil, headers)
+
+		if status != http.StatusNotFound {
+			t.Errorf(errorMsg, status, http.StatusNotFound)
 		}
 	})
 

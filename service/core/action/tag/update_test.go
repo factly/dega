@@ -22,7 +22,7 @@ import (
 
 func TestUpdate(t *testing.T) {
 	user := os.Getenv("USER_ID")
-
+	errorMsg := "handler returned wrong status code: got %v want %v"
 	// Create new space and tag
 	space, tag := SetUp()
 	config.DB.Create(&tag)
@@ -45,9 +45,10 @@ func TestUpdate(t *testing.T) {
 
 	// Create router
 	r := chi.NewRouter()
+	link := "/core/tags/"
 	r.Use(loggerx.Init())
 	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Put("/core/tags/{tag_id}", update)
+		r.Put(link+"{tag_id}", update)
 	})
 
 	// Create test server and allow Gock to call the test server.
@@ -56,14 +57,14 @@ func TestUpdate(t *testing.T) {
 	defer gock.DisableNetworking()
 	defer ts.Close()
 
-	url := fmt.Sprint("/core/tags/" + tagID)
+	url := fmt.Sprint(link + tagID)
 
 	// Successful post
 	t.Run("Update Tag Successful", func(t *testing.T) {
 		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
 
 		if status != http.StatusOK {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+			t.Errorf(errorMsg, status, http.StatusOK)
 		}
 	})
 
@@ -76,7 +77,7 @@ func TestUpdate(t *testing.T) {
 		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
 
 		if status != http.StatusUnauthorized {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusUnauthorized)
+			t.Errorf(errorMsg, status, http.StatusUnauthorized)
 		}
 	})
 
@@ -84,12 +85,12 @@ func TestUpdate(t *testing.T) {
 	t.Run("Invalid Tag", func(t *testing.T) {
 
 		tag := fmt.Sprint(int(tag.ID) * 2379)
-		url := fmt.Sprint("/core/tags/" + tag)
+		url := fmt.Sprint(link + tag)
 
 		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
 
 		if status != http.StatusInternalServerError {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusInternalServerError)
+			t.Errorf(errorMsg, status, http.StatusInternalServerError)
 		}
 	})
 
@@ -106,19 +107,19 @@ func TestUpdate(t *testing.T) {
 		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
 
 		if status != http.StatusOK {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusOK)
+			t.Errorf(errorMsg, status, http.StatusOK)
 		}
 	})
 
 	// Invalid Tag type
 	t.Run("Invalid Tag Type", func(t *testing.T) {
 
-		url := fmt.Sprint("/core/tags/" + "abc")
+		url := fmt.Sprint(link + "abc")
 
 		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
 
 		if status != http.StatusNotFound {
-			t.Errorf("handler returned wrong status code: got %v want %v", status, http.StatusNotFound)
+			t.Errorf(errorMsg, status, http.StatusNotFound)
 		}
 	})
 
