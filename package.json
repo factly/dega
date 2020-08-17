@@ -41,20 +41,20 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run format",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
-  },
-  "lint-staged": {
-    "*.{js,jsx,html,css}": [
-      "prettier --write"
-    ]
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "test:watch": "npm test -- --watch",
-    "eject": "react-scripts eject"
+    "test:coverage": "npm test -- --coverage",
+    "eject": "react-scripts eject",
+    "format:check": "prettier --check \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\""
   },
   "browserslist": {
     "production": [
@@ -70,6 +70,9 @@
   },
   "devDependencies": {
     "@babel/preset-env": "^7.10.4",
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^9.1.1",
+    "cz-conventional-changelog": "^3.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "enzyme-to-json": "^3.5.0",
@@ -81,7 +84,8 @@
     "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
     "react-test-renderer": "^16.13.1",
-    "redux-mock-store": "^1.5.4"
+    "redux-mock-store": "^1.5.4",
+    "semantic-release": "^17.1.1"
   },
   "jest": {
     "snapshotSerializers": [
@@ -91,5 +95,10 @@
       "src/**/*.js",
       "!src/index.js"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
