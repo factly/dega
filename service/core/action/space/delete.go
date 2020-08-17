@@ -24,7 +24,7 @@ import (
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param space_id header string true "Space ID"
+// @Param space_id path string true "Space ID"
 // @Success 200
 // @Router /core/spaces/{space_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
