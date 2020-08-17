@@ -1,13 +1,11 @@
 package post
 
 import (
-	"errors"
 	"time"
 
 	"github.com/factly/dega-server/service/core/model"
 	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
 	"github.com/go-chi/chi"
-	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -36,56 +34,6 @@ type postData struct {
 	model.Post
 	Authors []model.Author         `json:"authors"`
 	Claims  []factcheckModel.Claim `json:"claims"`
-}
-
-// CheckSpace - validation for medium, format, categories & tags
-func (p *post) CheckSpace(tx *gorm.DB) (e error) {
-
-	if p.FeaturedMediumID > 0 {
-		medium := model.Medium{}
-		medium.ID = p.FeaturedMediumID
-
-		err := tx.Model(&model.Medium{}).Where(model.Medium{
-			SpaceID: p.SpaceID,
-		}).First(&medium).Error
-
-		if err != nil {
-			return errors.New("medium do not belong to same space")
-		}
-	}
-
-	if p.FormatID > 0 {
-		format := model.Format{}
-		format.ID = p.FormatID
-
-		err := tx.Model(&model.Format{}).Where(model.Format{
-			SpaceID: p.SpaceID,
-		}).First(&format).Error
-
-		if err != nil {
-			return errors.New("format do not belong to same space")
-		}
-	}
-
-	categories := []model.Category{}
-	err := tx.Model(&model.Category{}).Where(model.Category{
-		SpaceID: p.SpaceID,
-	}).Where(p.CategoryIDs).Find(&categories).Error
-
-	if err != nil || (len(p.CategoryIDs) != len(categories)) {
-		return errors.New("some categories do not belong to same space")
-	}
-
-	tags := []model.Tag{}
-	err = tx.Model(&model.Tag{}).Where(model.Tag{
-		SpaceID: p.SpaceID,
-	}).Where(p.TagIDs).Find(&tags).Error
-
-	if err != nil || (len(p.TagIDs) != len(tags)) {
-		return errors.New("some tags do not belong to same space")
-	}
-
-	return nil
 }
 
 // Router - Group of post router

@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+
 	"github.com/factly/dega-server/config"
 	"github.com/jinzhu/gorm"
 )
@@ -18,17 +20,19 @@ type Category struct {
 	Posts       []*Post `gorm:"many2many:post_categories;" json:"posts"`
 }
 
-// BeforeCreate - validation for medium
-func (c *Category) BeforeCreate(tx *gorm.DB) (e error) {
-	if c.MediumID > 0 {
+// BeforeSave - validation for medium
+func (category *Category) BeforeSave(tx *gorm.DB) (e error) {
+	if category.MediumID > 0 {
 		medium := Medium{}
-		medium.ID = c.MediumID
+		medium.ID = category.MediumID
 
 		err := tx.Model(&Medium{}).Where(Medium{
-			SpaceID: c.SpaceID,
+			SpaceID: category.SpaceID,
 		}).First(&medium).Error
 
-		return err
+		if err != nil {
+			return errors.New("medium do not belong to same space")
+		}
 	}
 
 	return nil
