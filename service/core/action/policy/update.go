@@ -47,6 +47,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	policyID = "id" + commanPolicyString + policyID
 
 	req, err := http.NewRequest("DELETE", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -63,7 +68,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	/* create new policy */
 	policyReq := policyReq{}
 
-	json.NewDecoder(r.Body).Decode(&policyReq)
+	err = json.NewDecoder(r.Body).Decode(&policyReq)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	/* User req */
 

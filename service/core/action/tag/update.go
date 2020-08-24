@@ -47,18 +47,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
-	tag := &tag{}
-	json.NewDecoder(r.Body).Decode(&tag)
-
-	validationError := validationx.Check(tag)
-
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
-		return
-	}
-
 	result := &model.Tag{}
 	result.ID = uint(id)
 
@@ -69,7 +57,24 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		return
+	}
+
+	tag := &tag{}
+	err = json.NewDecoder(r.Body).Decode(&tag)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
+
+	validationError := validationx.Check(tag)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
 		return
 	}
 

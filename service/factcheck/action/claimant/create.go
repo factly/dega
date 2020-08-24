@@ -39,7 +39,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	claimant := &claimant{}
 
-	json.NewDecoder(r.Body).Decode(&claimant)
+	err = json.NewDecoder(r.Body).Decode(&claimant)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	validationError := validationx.Check(claimant)
 

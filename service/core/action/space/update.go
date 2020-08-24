@@ -42,9 +42,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 	spaceID := chi.URLParam(r, "space_id")
 	id, err := strconv.Atoi(spaceID)
 
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+
 	space := &space{}
 
-	json.NewDecoder(r.Body).Decode(&space)
+	err = json.NewDecoder(r.Body).Decode(&space)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	validationError := validationx.Check(space)
 
@@ -59,6 +71,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organisations/"+strconv.Itoa(space.OrganisationID), nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 
@@ -77,6 +94,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	org := orgWithSpace{}
 
 	err = json.Unmarshal(body, &org)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	if org.Permission.Role != "owner" {
 		return

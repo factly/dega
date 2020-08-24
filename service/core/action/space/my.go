@@ -47,6 +47,11 @@ func my(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organisations/my", nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 
@@ -64,6 +69,12 @@ func my(w http.ResponseWriter, r *http.Request) {
 
 	allOrg := []orgWithSpace{}
 	err = json.Unmarshal(body, &allOrg)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	var allOrgIDs []int
 

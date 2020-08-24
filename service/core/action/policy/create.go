@@ -38,7 +38,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	policyReq := policyReq{}
 
-	json.NewDecoder(r.Body).Decode(&policyReq)
+	err = json.NewDecoder(r.Body).Decode(&policyReq)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	result := Mapper(Composer(organisationID, spaceID, policyReq), author.Mapper(organisationID, userID))
 
