@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"net/http"
 	"os"
 
@@ -35,7 +36,11 @@ import (
 // @BasePath /
 func main() {
 
-	godotenv.Load()
+	err := godotenv.Load()
+
+	if err != nil {
+		log.Fatal("unable to load .env")
+	}
 
 	// db setup
 	config.SetupDB()
@@ -68,5 +73,7 @@ func main() {
 		r.Mount("/core", core.Router())
 	})
 
-	http.ListenAndServe(":8000", r)
+	if err = http.ListenAndServe(":8000", r); err != nil {
+		log.Fatal(err)
+	}
 }

@@ -35,6 +35,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	policyID = fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":"+policyID)
 
 	req, err := http.NewRequest("DELETE", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}

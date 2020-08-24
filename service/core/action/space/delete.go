@@ -36,6 +36,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	result := &model.Space{}
 	result.ID = uint(sID)
@@ -53,6 +58,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organisations/"+strconv.Itoa(result.OrganisationID), nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 
@@ -71,6 +81,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	org := orgWithSpace{}
 
 	err = json.Unmarshal(body, &org)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	if org.Permission.Role != "owner" {
 		return

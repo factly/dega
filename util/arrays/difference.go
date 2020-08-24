@@ -2,7 +2,6 @@ package arrays
 
 func Difference(prev []uint, new []uint) ([]uint, []uint) {
 	del := make([]uint, 0)
-	additional := make([]uint, 0)
 
 	if len(new) == 0 {
 		return new, prev
@@ -25,7 +24,7 @@ func Difference(prev []uint, new []uint) ([]uint, []uint) {
 		}
 	}
 
-	additional = subtraction(new, prev)
+	additional := subtraction(new, prev)
 
 	return additional, del
 

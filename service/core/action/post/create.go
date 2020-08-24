@@ -127,6 +127,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Adding author
 	authors, err := author.All(r.Context())
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	for _, id := range post.AuthorIDs {
 		aID := fmt.Sprint(id)
 		if _, found := authors[aID]; found {

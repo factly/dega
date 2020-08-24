@@ -39,7 +39,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	rating := &rating{}
 
-	json.NewDecoder(r.Body).Decode(&rating)
+	err = json.NewDecoder(r.Body).Decode(&rating)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	validationError := validationx.Check(rating)
 
