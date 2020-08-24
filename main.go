@@ -40,15 +40,10 @@ func main() {
 	// db setup
 	config.SetupDB()
 
-	// open log file
-	file, err := os.OpenFile("logrus.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
-
 	r := chi.NewRouter()
 
 	r.Use(middleware.RequestID)
-	if err == nil {
-		r.Use(loggerx.NewLogger(file))
-	}
+	r.Use(loggerx.Init())
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/ping"))

@@ -2,6 +2,7 @@ package rating
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -10,7 +11,9 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
 
@@ -31,6 +34,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -39,6 +43,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(ratingID)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
@@ -46,7 +51,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 	rating := &rating{}
 	json.NewDecoder(r.Body).Decode(&rating)
 
-	result := &model.Rating{}
+	validationError := validationx.Check(rating)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
+
+	result := model.Rating{}
 	result.ID = uint(id)
 
 	// check record exists or not
@@ -55,7 +68,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
@@ -69,12 +83,35 @@ func update(w http.ResponseWriter, r *http.Request) {
 		ratingSlug = slug.Approve(slug.Make(rating.Name), sID, config.DB.NewScope(&model.Rating{}).TableName())
 	}
 
-	config.DB.Model(&result).Updates(model.Rating{
-		Name:        rating.Name,
-		Slug:        ratingSlug,
-		MediumID:    rating.MediumID,
-		Description: rating.Description,
-	}).Preload("Medium").First(&result)
+	tx := config.DB.Begin()
+
+	if rating.MediumID == 0 {
+		err = tx.Model(result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
+		result.MediumID = 0
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
+	err = tx.Model(&result).Updates(model.Rating{
+		Name:         rating.Name,
+		Slug:         ratingSlug,
+		MediumID:     rating.MediumID,
+		Description:  rating.Description,
+		NumericValue: rating.NumericValue,
+	}).Preload("Medium").First(&result).Error
+
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	tx.Commit()
 
 	renderx.JSON(w, http.StatusOK, result)
 }

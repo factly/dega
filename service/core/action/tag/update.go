@@ -2,6 +2,7 @@ package tag
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -10,7 +11,9 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
 
@@ -32,6 +35,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(tagID)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
@@ -39,12 +43,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
 	tag := &tag{}
 	json.NewDecoder(r.Body).Decode(&tag)
+
+	validationError := validationx.Check(tag)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
 
 	result := &model.Tag{}
 	result.ID = uint(id)
@@ -55,6 +68,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}

@@ -2,6 +2,7 @@ package claim
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -10,7 +11,9 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
 
@@ -31,6 +34,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -39,6 +43,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(claimID)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
@@ -47,7 +52,16 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&claim)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
+
+	validationError := validationx.Check(claim)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
 		return
 	}
 
@@ -60,7 +74,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
@@ -74,7 +89,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		claimSlug = slug.Approve(slug.Make(claim.Title), sID, config.DB.NewScope(&model.Claim{}).TableName())
 	}
 
-	config.DB.Model(&result).Updates(model.Claim{
+	err = config.DB.Model(&result).Updates(model.Claim{
 		Title:         claim.Title,
 		Slug:          claimSlug,
 		ClaimDate:     claim.ClaimDate,
@@ -86,7 +101,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Review:        claim.Review,
 		ReviewTagLine: claim.ReviewTagLine,
 		ReviewSources: claim.ReviewSources,
-	}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").First(&result)
+	}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -2,6 +2,7 @@ package space
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -12,6 +13,7 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -31,6 +33,7 @@ import (
 func create(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
@@ -42,6 +45,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	validationError := validationx.Check(space)
 
 	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
 		return
 	}
@@ -58,6 +62,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	resp, err := client.Do(req)
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 		return
 	}
@@ -80,17 +85,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		spaceSlug = slug.Make(space.Name)
 	}
 
-	result := &model.Space{
+	result := model.Space{
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
 		Slug:              slug.Approve(spaceSlug, 0, config.DB.NewScope(&model.Space{}).TableName()),
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
-		LogoID:            space.LogoID,
-		FavIconID:         space.FavIconID,
-		MobileIconID:      space.MobileIconID,
-		LogoMobileID:      space.LogoMobileID,
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
 		OrganisationID:    space.OrganisationID,
@@ -100,6 +101,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = config.DB.Create(&result).Error
 
 	if err != nil {
+		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
