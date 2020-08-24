@@ -23,12 +23,12 @@ var headers = map[string]string{
 }
 
 var data = map[string]interface{}{
-	"name": "Elections",
-	"slug": "elections",
+	"name": "Article",
+	"slug": "article",
 }
 
 var dataWithoutSlug = map[string]interface{}{
-	"name": "Elections",
+	"name": "Article",
 	"slug": "",
 }
 

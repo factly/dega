@@ -80,8 +80,8 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Elections",
-			"slug": "elections",
+			"name": "Article",
+			"slug": "article",
 		}
 
 		formatSelectMock(mock)
@@ -102,15 +102,15 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Elections",
-			"slug": "elections-1",
+			"name": "Article",
+			"slug": "article-1",
 		}
 		formatSelectMock(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
-			WithArgs("elections%", 1).
+			WithArgs("article%", 1).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, updatedFormat["name"], "elections"))
+				AddRow(1, time.Now(), time.Now(), nil, updatedFormat["name"], "article"))
 
 		formatUpdateMock(mock, updatedFormat)
 
@@ -128,7 +128,7 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Elections",
+			"name": "Article",
 			"slug": "testing-slug",
 		}
 		formatSelectMock(mock)
