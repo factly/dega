@@ -1,94 +1,55 @@
 package tag
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
-	"strconv"
 	"testing"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/policy"
-	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/test"
-	"github.com/factly/x/loggerx"
-	"github.com/go-chi/chi"
+	"github.com/factly/dega-server/test"
+	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestDetails(t *testing.T) {
+func TestTagDetails(t *testing.T) {
+	mock := test.SetupMockDB()
 
-	user := os.Getenv("USER_ID")
-	errorMsg := "handler returned wrong status code: got %v want %v"
-	// Create new space and tag
-	space, tag := SetUp()
-	config.DB.Create(tag)
-
-	// Get Tag ID
-	tagID := strconv.Itoa(int(tag.ID))
-
-	// Headers
-	headers := map[string]string{
-		"space": fmt.Sprint(space.ID),
-		"user":  user,
-	}
-
-	// Create router
-	r := chi.NewRouter()
-	link := "/core/tags/"
-	r.Use(loggerx.Init())
-	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Get(link+"{tag_id}", details)
-	})
-
-	// Create test server and allow Gock to call the test server.
-	ts := httptest.NewServer(r)
-	gock.New(ts.URL).EnableNetworking().Persist()
+	testServer := httptest.NewServer(Routes())
+	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
-	defer ts.Close()
+	defer testServer.Close()
 
-	// Contruct url to get details
-	url := fmt.Sprint(link + tagID)
+	// create httpexpect instance
+	e := httpexpect.New(t, testServer.URL)
 
-	// Successful retrieve
-	t.Run("Details Retrievied successfully", func(t *testing.T) {
-		_, y, status := test.Request(t, ts, "GET", url, nil, headers)
-
-		checkIfEqual := y["id"] == tagID && y["name"] == tag.Name && y["slug"] == tag.Slug && y["space_id"] == space.ID
-
-		if status != http.StatusOK && checkIfEqual {
-			t.Errorf(errorMsg, status, http.StatusOK)
-		}
+	t.Run("invalid tag id", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		e.GET(path).
+			WithPath("tag_id", "invalid_id").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusNotFound)
 	})
 
-	// Invalid Tag type
-	t.Run("Invalid Tag Type", func(t *testing.T) {
+	t.Run("tag record not found", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		recordNotFoundMock(mock)
 
-		url := fmt.Sprint(link + "def")
-
-		_, _, status := test.Request(t, ts, "GET", url, nil, headers)
-
-		if status != http.StatusNotFound {
-			t.Errorf(errorMsg, status, http.StatusNotFound)
-		}
+		e.GET(path).
+			WithPath("tag_id", "100").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusNotFound)
 	})
 
-	// Invalid Tags
-	t.Run("Invalid Tag", func(t *testing.T) {
+	t.Run("get tag by id", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		tagSelectMock(mock)
 
-		tag := fmt.Sprint(int(tag.ID) * 2432)
-		url := fmt.Sprint(link + tag)
-
-		_, _, status := test.Request(t, ts, "GET", url, nil, headers)
-
-		if status != http.StatusNotFound {
-			t.Errorf(errorMsg, status, http.StatusNotFound)
-		}
+		e.GET(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK).JSON().Object().ContainsMap(data)
 	})
-
-	// Cleanup
-	// Delete space and tags
-	TearDown()
 
 }

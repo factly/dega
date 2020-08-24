@@ -1,129 +1,127 @@
 package tag
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
-	"strconv"
 	"testing"
+	"time"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/policy"
-	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/test"
-	"github.com/factly/x/loggerx"
-	"github.com/go-chi/chi"
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/test"
+	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestUpdate(t *testing.T) {
-	user := os.Getenv("USER_ID")
-	errorMsg := "handler returned wrong status code: got %v want %v"
-	// Create new space and tag
-	space, tag := SetUp()
-	config.DB.Create(&tag)
+func selectAfterUpdate(mock sqlmock.Sqlmock, tag map[string]interface{}) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(1, time.Now(), time.Now(), nil, tag["name"], tag["slug"]))
+}
 
-	UpdateTag := &model.Tag{
-		Name: "test updated",
-		Slug: "test-updated",
-	}
-	reqBody, _ := json.Marshal(UpdateTag)
-	req := bytes.NewReader(reqBody)
+func TestTagUpdate(t *testing.T) {
+	mock := test.SetupMockDB()
 
-	// Get Tag ID
-	tagID := strconv.Itoa(int(tag.ID))
-
-	// Headers
-	headers := map[string]string{
-		"space": fmt.Sprint(space.ID),
-		"user":  user,
-	}
-
-	// Create router
-	r := chi.NewRouter()
-	link := "/core/tags/"
-	r.Use(loggerx.Init())
-	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Put(link+"{tag_id}", update)
-	})
-
-	// Create test server and allow Gock to call the test server.
-	ts := httptest.NewServer(r)
-	gock.New(ts.URL).EnableNetworking().Persist()
+	testServer := httptest.NewServer(Routes())
+	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
-	defer ts.Close()
+	defer testServer.Close()
 
-	url := fmt.Sprint(link + tagID)
+	// create httpexpect instance
+	e := httpexpect.New(t, testServer.URL)
 
-	// Successful post
-	t.Run("Update Tag Successful", func(t *testing.T) {
-		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
-
-		if status != http.StatusOK {
-			t.Errorf(errorMsg, status, http.StatusOK)
-		}
+	t.Run("invalid tag id", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		e.PUT(path).
+			WithPath("tag_id", "invalid_id").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusNotFound)
 	})
 
-	// Run tests
-	t.Run("User Missing", func(t *testing.T) {
-		headers := map[string]string{
-			"space": "0",
-			"user":  "",
-		}
-		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
+	t.Run("tag record not found", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		recordNotFoundMock(mock)
 
-		if status != http.StatusUnauthorized {
-			t.Errorf(errorMsg, status, http.StatusUnauthorized)
-		}
+		e.PUT(path).
+			WithPath("tag_id", "100").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusNotFound)
 	})
 
-	// Invalid Tags
-	t.Run("Invalid Tag", func(t *testing.T) {
-
-		tag := fmt.Sprint(int(tag.ID) * 2379)
-		url := fmt.Sprint(link + tag)
-
-		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
-
-		if status != http.StatusInternalServerError {
-			t.Errorf(errorMsg, status, http.StatusInternalServerError)
+	t.Run("update tag", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatedTag := map[string]interface{}{
+			"name": "Elections",
+			"slug": "elections",
 		}
+
+		tagSelectMock(mock)
+
+		tagUpdateMock(mock, updatedTag)
+
+		selectAfterUpdate(mock, updatedTag)
+
+		e.PUT(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedTag).
+			Expect().
+			Status(http.StatusOK).JSON().Object().ContainsMap(updatedTag)
+
 	})
 
-	// Invalid Slug
-	t.Run("Invalid Tag", func(t *testing.T) {
-
-		UpdateTag := &model.Tag{
-			Name: "test updated",
-			Slug: "test updated wrong",
+	t.Run("update tag by id with empty slug", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatedTag := map[string]interface{}{
+			"name": "Elections",
+			"slug": "elections-1",
 		}
-		reqBody, _ := json.Marshal(UpdateTag)
-		req := bytes.NewReader(reqBody)
+		tagSelectMock(mock)
 
-		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
+		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
+			WithArgs("elections%", 1).
+			WillReturnRows(sqlmock.NewRows(columns).
+				AddRow(1, time.Now(), time.Now(), nil, updatedTag["name"], "elections"))
 
-		if status != http.StatusOK {
-			t.Errorf(errorMsg, status, http.StatusOK)
-		}
+		tagUpdateMock(mock, updatedTag)
+
+		selectAfterUpdate(mock, updatedTag)
+
+		e.PUT(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			WithJSON(dataWithoutSlug).
+			Expect().
+			Status(http.StatusOK).JSON().Object().ContainsMap(updatedTag)
+
 	})
 
-	// Invalid Tag type
-	t.Run("Invalid Tag Type", func(t *testing.T) {
-
-		url := fmt.Sprint(link + "abc")
-
-		_, _, status := test.Request(t, ts, "PUT", url, req, headers)
-
-		if status != http.StatusNotFound {
-			t.Errorf(errorMsg, status, http.StatusNotFound)
+	t.Run("update tag with different slug", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatedTag := map[string]interface{}{
+			"name": "Elections",
+			"slug": "testing-slug",
 		}
+		tagSelectMock(mock)
+
+		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
+			WithArgs(fmt.Sprint(updatedTag["slug"], "%"), 1).
+			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
+
+		tagUpdateMock(mock, updatedTag)
+
+		selectAfterUpdate(mock, updatedTag)
+
+		e.PUT(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedTag).
+			Expect().
+			Status(http.StatusOK).JSON().Object().ContainsMap(updatedTag)
+
 	})
 
-	// Cleanup
-	// Delete space and tags
-	TearDown()
 }

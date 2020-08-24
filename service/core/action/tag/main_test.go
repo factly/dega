@@ -1,78 +1,116 @@
 package tag
 
 import (
+	"fmt"
+	"net/http"
 	"os"
-	"strconv"
+	"regexp"
 	"testing"
+	"time"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/setup"
-	"github.com/factly/dega-server/util/test"
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/service/core/action/policy"
+	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/util"
+	"github.com/factly/x/loggerx"
+	"github.com/go-chi/chi"
 	"github.com/joho/godotenv"
 	"gopkg.in/h2non/gock.v1"
 )
 
-type TagsRet struct {
-	Created  string `json:"created_at"`
-	Deleted  string `json:"deleted_at"`
-	Desc     string `json:"description"`
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Slug     string `json:"slug"`
-	Space_ID int    `json:"space_id"`
-	Updated  string `json:"updated_at"`
+var headers = map[string]string{
+	"X-Space": "1",
+	"X-User":  "1",
+}
+
+var data = map[string]interface{}{
+	"name": "Elections",
+	"slug": "elections",
+}
+
+var dataWithoutSlug = map[string]interface{}{
+	"name": "Elections",
+	"slug": "",
+}
+
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}
+
+var selectQuery = regexp.QuoteMeta(`SELECT * FROM "tags"`)
+var deleteQuery = regexp.QuoteMeta(`UPDATE "tags" SET "deleted_at"=`)
+var paginationQuery = `SELECT \* FROM "tags" (.+) LIMIT 1 OFFSET 1`
+
+var basePath = "/core/tags"
+var path = "/core/tags/{tag_id}"
+
+func slugCheckMock(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "tags"`)).
+		WithArgs(fmt.Sprint(data["slug"], "%"), 1).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "space_id", "name", "slug"}))
+}
+
+func tagInsertMock(mock sqlmock.Sqlmock) {
+	mock.ExpectBegin()
+	mock.ExpectQuery(`INSERT INTO "tags"`).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, data["name"], data["slug"], "", 1).
+		WillReturnRows(sqlmock.
+			NewRows([]string{"id"}).
+			AddRow(1))
+	mock.ExpectCommit()
+}
+
+//check tag exits or not
+func recordNotFoundMock(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(100, 1).
+		WillReturnRows(sqlmock.NewRows(columns))
+}
+
+func tagSelectMock(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(1, 1).
+		WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(1, time.Now(), time.Now(), nil, data["name"], data["slug"]))
+}
+
+// check tag associated with any post before deleting
+func tagPostExpect(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts" INNER JOIN "post_tags"`)).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+func tagUpdateMock(mock sqlmock.Sqlmock, tag map[string]interface{}) {
+	mock.ExpectBegin()
+	mock.ExpectExec(`UPDATE \"tags\" SET (.+)  WHERE (.+) \"tags\".\"id\" = `).
+		WithArgs(tag["name"], tag["slug"], test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	mock.ExpectCommit()
+}
+
+func tagCountQuery(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "tags"`)).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+func Routes() http.Handler {
+	r := chi.NewRouter()
+	r.Use(loggerx.Init())
+
+	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Mount(basePath, Router())
+
+	return r
 }
 
 func TestMain(m *testing.M) {
 
-	godotenv.Load("../../../../.env")
+	godotenv.Load("../../.env")
 
-	userId, orgId := test.GetUserOrg()
-	org := strconv.Itoa(orgId)
-	user := strconv.Itoa(userId)
-
-	config.SetupDB()
-
-	// Mock Keto and kavach servers and allowing persisted external traffic
+	// Mock kavach server and allowing persisted external traffic
 	defer gock.Disable()
 	test.MockServer()
-	gock.New(os.Getenv("DSN")).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 
-	os.Setenv("ORG_ID", org)
-	os.Setenv("USER_ID", user)
-
-	setup.CreateDB()
 	exitValue := m.Run()
-	setup.DeleteTestDB()
 
 	os.Exit(exitValue)
-
-}
-
-func SetUp() (*model.Space, *model.Tag) {
-	org, _ := strconv.Atoi(os.Getenv("ORG_ID"))
-
-	// Create new space
-	CreateSpace := &model.Space{
-		Name:           "test space",
-		Slug:           "test-space",
-		OrganisationID: org,
-	}
-	config.DB.Create(&CreateSpace)
-
-	// Create a new Tag
-	CreateTag := &model.Tag{
-		SpaceID: CreateSpace.ID,
-		Name:    "test tag",
-		Slug:    "test-tag",
-	}
-
-	return CreateSpace, CreateTag
-}
-
-func TearDown() {
-	config.DB.Unscoped().Delete(&model.Tag{})
-	config.DB.Unscoped().Delete(&model.Space{})
 }

@@ -1,103 +1,79 @@
 package tag
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
-	"strconv"
 	"testing"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/policy"
-	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/test"
-	"github.com/factly/x/loggerx"
-	"github.com/go-chi/chi"
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/test"
+	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestDelete(t *testing.T) {
-	user := os.Getenv("USER_ID")
-	errorMsg := "handler returned wrong status code: got %v want %v"
-	// Create new space and tag
-	space, tag := SetUp()
-	config.DB.Create(&tag)
+func TestTagDelete(t *testing.T) {
+	mock := test.SetupMockDB()
 
-	// Get Tag ID
-	tagID := strconv.Itoa(int(tag.ID))
-
-	// Headers
-	headers := map[string]string{
-		"space": fmt.Sprint(space.ID),
-		"user":  user,
-	}
-
-	// Create router
-	r := chi.NewRouter()
-	link := "/core/tags/"
-	r.Use(loggerx.Init())
-	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Delete(link+"{tag_id}", delete)
-	})
-
-	// Create test server and allow Gock to call the test server.
-	ts := httptest.NewServer(r)
-	gock.New(ts.URL).EnableNetworking().Persist()
+	testServer := httptest.NewServer(Routes())
+	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
-	defer ts.Close()
+	defer testServer.Close()
 
-	// Contruct url to delete
-	url := fmt.Sprint(link + tagID)
+	// create httpexpect instance
+	e := httpexpect.New(t, testServer.URL)
 
-	// Successful delete
-	t.Run("Delete successful", func(t *testing.T) {
-		_, _, status := test.Request(t, ts, "DELETE", url, nil, headers)
+	t.Run("invalid tag id", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
 
-		if status != http.StatusOK {
-			t.Errorf(errorMsg, status, http.StatusOK)
-		}
+		e.DELETE(path).
+			WithPath("tag_id", "invalid_id").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusNotFound)
+
 	})
 
-	// Run tests
-	t.Run("User Missing", func(t *testing.T) {
-		headers := map[string]string{
-			"space": "0",
-			"user":  "",
-		}
-		_, _, status := test.Request(t, ts, "DELETE", url, nil, headers)
+	t.Run("tag record not found", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		recordNotFoundMock(mock)
 
-		if status != http.StatusUnauthorized {
-			t.Errorf(errorMsg, status, http.StatusUnauthorized)
-		}
+		e.DELETE(path).
+			WithPath("tag_id", "100").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusNotFound)
 	})
 
-	// Invalid Tags
-	t.Run("Invalid Tag", func(t *testing.T) {
+	t.Run("check tag associated with other entity", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		tagSelectMock(mock)
 
-		tag := fmt.Sprint(int(tag.ID) * 2379)
-		url := fmt.Sprint(link + tag)
+		tagPostExpect(mock, 1)
 
-		_, _, status := test.Request(t, ts, "DELETE", url, nil, headers)
-
-		if status != http.StatusNotFound {
-			t.Errorf(errorMsg, status, http.StatusNotFound)
-		}
+		e.DELETE(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
 	})
 
-	// Invalid Tag type
-	t.Run("Invalid Tag Type", func(t *testing.T) {
+	t.Run("tag record deleted", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		tagSelectMock(mock)
 
-		url := fmt.Sprint(link + "abc")
+		tagPostExpect(mock, 0)
 
-		_, _, status := test.Request(t, ts, "DELETE", url, nil, headers)
+		mock.ExpectBegin()
+		mock.ExpectExec(deleteQuery).
+			WithArgs(test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		mock.ExpectCommit()
 
-		if status != http.StatusNotFound {
-			t.Errorf(errorMsg, status, http.StatusNotFound)
-		}
+		e.DELETE(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK)
 	})
 
-	// Cleanup
-	// Delete space and tags
-	TearDown()
 }

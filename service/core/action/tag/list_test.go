@@ -1,124 +1,102 @@
 package tag
 
 import (
-	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
+	"time"
 
-	"github.com/factly/dega-server/service/core/action/policy"
-	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/test"
-	"github.com/factly/x/loggerx"
-	"github.com/go-chi/chi"
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/test"
+	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
-
-	"github.com/factly/dega-server/config"
 )
 
-func TestList(t *testing.T) {
-	var tagsList []uint
+func TestTagList(t *testing.T) {
+	mock := test.SetupMockDB()
 
-	user := os.Getenv("USER_ID")
-	errorMsg := "handler returned wrong status code: got %v want %v"
-
-	var temp model.Tag
-	var requests []model.Tag
-
-	// Create new space
-	space, _ := SetUp()
-	spaceID := fmt.Sprint(space.ID)
-
-	for i := 0; i < 10; i++ {
-		temp = model.Tag{
-			SpaceID: space.ID,
-			Name:    fmt.Sprintf("Tag %d", i),
-			Slug:    fmt.Sprintf("tag-%d", i),
-		}
-
-		config.DB.Create(&temp)
-
-		requests = append(requests, temp)
-		tagsList = append(tagsList, temp.ID)
-	}
-
-	headers := map[string]string{
-		"space": spaceID,
-		"user":  user,
-	}
-
-	r := chi.NewRouter()
-	link := "/core/tags"
-	r.Use(loggerx.Init())
-	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, policy.Authorizer).Group(func(r chi.Router) {
-		r.Get(link, list)
-	})
-
-	// Create test server and allow Gock to call the test server.
-	ts := httptest.NewServer(r)
-	gock.New(ts.URL).EnableNetworking().Persist()
+	testServer := httptest.NewServer(Routes())
+	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
-	defer ts.Close()
+	defer testServer.Close()
 
-	// Retrieve list
-	t.Run("Get Successful", func(t *testing.T) {
+	// create httpexpect instance
+	e := httpexpect.New(t, testServer.URL)
 
-		_, y, status := test.Request(t, ts, "GET", link, nil, headers)
+	taglist := []map[string]interface{}{
+		{"name": "Test Tag 1", "slug": "test-tag-1"},
+		{"name": "Test Tag 2", "slug": "test-tag-2"},
+	}
 
-		if status != http.StatusOK {
-			t.Errorf(errorMsg, status, http.StatusOK)
-		}
+	t.Run("get empty list of tags", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		tagCountQuery(mock, 0)
 
-		// Data present here , with type assertion
-		// total := y["total"].(int)
-		data := y["nodes"].([]interface{})
+		mock.ExpectQuery(selectQuery).
+			WillReturnRows(sqlmock.NewRows(columns))
 
-		for index, value := range data {
+		e.GET(basePath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": 0})
 
-			// Indexes taken from the end as the requests array is appended, and hence is the reverse of the array received
-			indexRequest := len(requests) - index - 1
-
-			// Value of the element with type assertion
-			temp := value.(map[string]interface{})
-
-			// compare the data received with the original values
-			check := requests[indexRequest].ID == uint(temp["id"].(float64)) && requests[indexRequest].Name == temp["name"].(string) && requests[indexRequest].Slug == temp["slug"].(string)
-
-			if !check {
-				t.Error("Improper values and got", fmt.Sprint(check))
-			}
-		}
+		test.ExpectationsMet(t, mock)
 	})
 
-	// Missing space and user in header
-	t.Run("User Missing", func(t *testing.T) {
-		headers := map[string]string{
-			"space": "",
-			"user":  "",
-		}
-		_, _, status := test.Request(t, ts, "GET", link, nil, headers)
+	t.Run("get non-empty list of tags", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		tagCountQuery(mock, len(taglist))
 
-		if status != http.StatusUnauthorized {
-			t.Errorf(errorMsg, status, http.StatusUnauthorized)
-		}
+		mock.ExpectQuery(selectQuery).
+			WillReturnRows(sqlmock.NewRows(columns).
+				AddRow(1, time.Now(), time.Now(), nil, taglist[0]["name"], taglist[0]["slug"]).
+				AddRow(2, time.Now(), time.Now(), nil, taglist[1]["name"], taglist[1]["slug"]))
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(taglist)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(taglist[0])
+
+		test.ExpectationsMet(t, mock)
 	})
 
-	// Invalid Tag type
-	t.Run("Invalid Tag Type", func(t *testing.T) {
+	t.Run("get tags with pagination", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		tagCountQuery(mock, len(taglist))
 
-		url := fmt.Sprint("/core/tags/" + "abc")
+		mock.ExpectQuery(paginationQuery).
+			WillReturnRows(sqlmock.NewRows(columns).
+				AddRow(2, time.Now(), time.Now(), nil, taglist[1]["name"], taglist[1]["slug"]))
 
-		_, _, status := test.Request(t, ts, "GET", url, nil, headers)
+		e.GET(basePath).
+			WithQueryObject(map[string]interface{}{
+				"limit": "1",
+				"page":  "2",
+			}).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(taglist)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(taglist[1])
 
-		if status != http.StatusNotFound {
-			t.Errorf(errorMsg, status, http.StatusNotFound)
-		}
+		test.ExpectationsMet(t, mock)
+
 	})
-
-	// Cleanup
-	// Delete space and tags
-	TearDown()
-
 }
