@@ -20,7 +20,7 @@ type Rating struct {
 
 // BeforeCreate - validation for medium
 func (r *Rating) BeforeCreate(tx *gorm.DB) (e error) {
-	
+
 	if r.MediumID > 0 {
 		medium := model.Medium{}
 		medium.ID = r.MediumID
@@ -29,7 +29,7 @@ func (r *Rating) BeforeCreate(tx *gorm.DB) (e error) {
 			SpaceID: r.SpaceID,
 		}).First(&medium).Error
 
-		if err != nil{
+		if err != nil {
 			return err
 		}
 	}
