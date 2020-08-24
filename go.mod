@@ -11,7 +11,6 @@ require (
 	github.com/go-chi/cors v1.1.1
 	github.com/go-openapi/spec v0.19.8 // indirect
 	github.com/go-openapi/swag v0.19.9 // indirect
-	github.com/golangci/golangci-lint v1.30.0 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/joho/godotenv v1.3.0
 	github.com/mailru/easyjson v0.7.1 // indirect
