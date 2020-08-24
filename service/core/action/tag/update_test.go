@@ -50,8 +50,7 @@ func TestTagUpdate(t *testing.T) {
 			Expect().
 			Status(http.StatusNotFound)
 	})
-
-	t.Run("Unprocessable tag", func(t *testing.T) {
+	t.Run("Unable to decode tag data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 		tagSelectMock(mock)
@@ -62,7 +61,20 @@ func TestTagUpdate(t *testing.T) {
 			Expect().
 			Status(http.StatusUnprocessableEntity)
 
-		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("Unprocessable tag", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+		tagSelectMock(mock)
+
+		e.PUT(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			WithJSON(invalidData).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+
 	})
 
 	t.Run("update tag", func(t *testing.T) {

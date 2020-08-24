@@ -27,6 +27,18 @@ func TestTagCreate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		e.POST(basePath).
+			WithJSON(invalidData).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+
+	})
+
+	t.Run("Unable to decode tag", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)

@@ -23,6 +23,11 @@ type paging struct {
 
 func list(w http.ResponseWriter, r *http.Request) {
 	req, err := http.NewRequest("GET", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies", nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -38,7 +43,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	var polices []model.KetoPolicy
 
-	json.NewDecoder(resp.Body).Decode(&polices)
+	err = json.NewDecoder(resp.Body).Decode(&polices)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	userID, err := util.GetUser(r.Context())
 

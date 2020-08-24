@@ -58,6 +58,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 	url := fmt.Sprint(os.Getenv("KAVACH_URL"), "/organisations/", oID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	client := &http.Client{}
@@ -72,7 +78,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	users := make([]model.Author, 0)
-	json.NewDecoder(resp.Body).Decode(&users)
+	err = json.NewDecoder(resp.Body).Decode(&users)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 

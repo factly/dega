@@ -14,7 +14,6 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/loggerx"
 	"github.com/go-chi/chi"
-	"github.com/joho/godotenv"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -31,6 +30,10 @@ var data = map[string]interface{}{
 var dataWithoutSlug = map[string]interface{}{
 	"name": "Elections",
 	"slug": "",
+}
+
+var invalidData = map[string]interface{}{
+	"name": "a",
 }
 
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}
@@ -103,7 +106,9 @@ func Routes() http.Handler {
 
 func TestMain(m *testing.M) {
 
-	godotenv.Load("../../.env")
+	os.Setenv("DSN", "postgres://postgres:postgres@localhost:5432/dega-test?sslmode=disable")
+	os.Setenv("KAVACH_URL", "http://kavach:6620")
+	os.Setenv("KETO_URL", "http://keto:6644")
 
 	// Mock kavach server and allowing persisted external traffic
 	defer gock.Disable()

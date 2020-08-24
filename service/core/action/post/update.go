@@ -79,6 +79,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// fetch all authors
 	authors, err := author.All(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{

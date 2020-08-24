@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/x/loggerx"
 )
 
 func contains(s []string, e string) bool {
@@ -48,8 +49,15 @@ func Composer(oID int, sID int, inputPolicy policyReq) model.KetoPolicy {
 	result.Subjects = inputPolicy.Users
 
 	buf := new(bytes.Buffer)
-	json.NewEncoder(buf).Encode(&result)
+	err := json.NewEncoder(buf).Encode(&result)
+	if err != nil {
+		loggerx.Error(err)
+	}
+
 	req, err := http.NewRequest("PUT", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies", buf)
+	if err != nil {
+		loggerx.Error(err)
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -61,7 +69,11 @@ func Composer(oID int, sID int, inputPolicy policyReq) model.KetoPolicy {
 
 	defer resp.Body.Close()
 
-	json.NewDecoder(resp.Body).Decode(&result)
+	err = json.NewDecoder(resp.Body).Decode(&result)
+
+	if err != nil {
+		loggerx.Error(err)
+	}
 
 	return result
 }

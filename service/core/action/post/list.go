@@ -96,6 +96,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	// fetch all authors
 	authors, err := author.All(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	// fetch all authors related to posts
 	postAuthors := []model.PostAuthor{}

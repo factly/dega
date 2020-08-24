@@ -15,7 +15,7 @@ func Approve(slug string, space int, table string) string {
 	var result []comman
 	config.DB.Table(table).Select("slug, space_id").Where("slug LIKE ? AND space_id = ?", slug+"%", space).Scan(&result)
 	count := 0
-	for true {
+	for {
 		flag := true
 		for _, each := range result {
 			temp := slug

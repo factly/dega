@@ -40,7 +40,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tag := &tag{}
 
-	json.NewDecoder(r.Body).Decode(&tag)
+	err = json.NewDecoder(r.Body).Decode(&tag)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	validationError := validationx.Check(tag)
 

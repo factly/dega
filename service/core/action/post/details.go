@@ -82,6 +82,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	// Adding author
 	authors, err := author.All(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	for _, postAuthor := range postAuthors {
 		aID := fmt.Sprint(postAuthor.AuthorID)
 		if author, found := authors[aID]; found {

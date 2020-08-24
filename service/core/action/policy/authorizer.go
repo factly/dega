@@ -9,6 +9,8 @@ import (
 	"strings"
 
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 )
 
 type ketoAllowed struct {
@@ -86,8 +88,19 @@ func Authorizer(h http.Handler) http.Handler {
 			result.Subject = fmt.Sprint(uID)
 
 			buf := new(bytes.Buffer)
-			json.NewEncoder(buf).Encode(&result)
+			err = json.NewEncoder(buf).Encode(&result)
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+				return
+			}
+
 			req, err := http.NewRequest("POST", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/allowed", buf)
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 			req.Header.Set("Content-Type", "application/json")
 
 			client := &http.Client{}

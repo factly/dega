@@ -45,6 +45,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 	ketoPolicyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":", policyID)
 
 	req, err := http.NewRequest("GET", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies/"+ketoPolicyID, nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -60,7 +65,13 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	ketoPolicy := model.KetoPolicy{}
 
-	json.NewDecoder(resp.Body).Decode(&ketoPolicy)
+	err = json.NewDecoder(resp.Body).Decode(&ketoPolicy)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	/* User req */
 	userMap := author.Mapper(organisationID, userID)

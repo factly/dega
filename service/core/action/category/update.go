@@ -50,7 +50,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	category := &category{}
-	json.NewDecoder(r.Body).Decode(&category)
+	err = json.NewDecoder(r.Body).Decode(&category)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
 	validationError := validationx.Check(category)
 
