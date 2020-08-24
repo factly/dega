@@ -48,6 +48,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	result := &model.Format{}
+	result.ID = uint(id)
+
+	// check record exists or not
+	err = config.DB.Where(&model.Format{
+		SpaceID: uint(sID),
+	}).First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		return
+	}
+
 	format := &format{}
 	err = json.NewDecoder(r.Body).Decode(&format)
 
@@ -62,20 +76,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if validationError != nil {
 		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
-		return
-	}
-
-	result := &model.Format{}
-	result.ID = uint(id)
-
-	// check record exists or not
-	err = config.DB.Where(&model.Format{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
