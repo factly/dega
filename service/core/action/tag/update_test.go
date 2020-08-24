@@ -51,6 +51,20 @@ func TestTagUpdate(t *testing.T) {
 			Status(http.StatusNotFound)
 	})
 
+	t.Run("Unprocessable tag", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+		tagSelectMock(mock)
+
+		e.PUT(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("update tag", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedTag := map[string]interface{}{

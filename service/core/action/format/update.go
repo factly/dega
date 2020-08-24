@@ -2,6 +2,7 @@ package format
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
 
@@ -48,6 +50,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	format := &format{}
 	json.NewDecoder(r.Body).Decode(&format)
+
+	validationError := validationx.Check(format)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
+
 	result := &model.Format{}
 	result.ID = uint(id)
 

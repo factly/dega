@@ -2,6 +2,7 @@ package post
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -16,6 +17,7 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
 
@@ -62,6 +64,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	validationError := validationx.Check(post)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
+
 	result := &postData{}
 	result.ID = uint(id)
 	result.Authors = make([]model.Author, 0)
@@ -93,14 +103,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = result.SpaceID
 
-	err = post.CheckSpace(config.DB)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
 	var postSlug string
 
 	if result.Slug == post.Slug {
@@ -111,12 +113,25 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slug.Approve(slug.Make(post.Title), sID, config.DB.NewScope(&model.Post{}).TableName())
 	}
 
+	tx := config.DB.Begin()
 	// Deleting old associations
 	if len(oldTags) > 0 {
-		config.DB.Model(&result.Post).Association("Tags").Delete(oldTags)
+		err = tx.Model(&result.Post).Association("Tags").Delete(oldTags).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 	if len(oldCategories) > 0 {
-		config.DB.Model(&result.Post).Association("Categories").Delete(oldCategories)
+		err = tx.Model(&result.Post).Association("Categories").Delete(oldCategories).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	if len(newTags) == 0 {
@@ -126,7 +141,18 @@ func update(w http.ResponseWriter, r *http.Request) {
 		newCategories = nil
 	}
 
-	config.DB.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
+	if post.FeaturedMediumID == 0 {
+		err = tx.Model(result.Post).Updates(map[string]interface{}{"featured_medium_id": nil}).First(&result.Post).Error
+		result.FeaturedMediumID = 0
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
+	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
 		Title:            post.Title,
 		Slug:             postSlug,
 		Status:           post.Status,
@@ -141,7 +167,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		PublishedDate:    post.PublishedDate,
 		Tags:             newTags,
 		Categories:       newCategories,
-	}).Preload("Medium").Preload("Format").First(&result.Post)
+	}).Preload("Medium").Preload("Format").First(&result.Post).Error
+
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 
 	// fetch existing post authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
@@ -175,7 +208,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		// delete post claims
 		if len(postClaimIDs) > 0 {
-			config.DB.Where(postClaimIDs).Delete(factcheckModel.PostClaim{})
+			err = tx.Where(postClaimIDs).Delete(factcheckModel.PostClaim{}).Error
+			if err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
 		}
 
 		for _, id := range toCreateIDs {
@@ -183,8 +222,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 			postClaim.ClaimID = uint(id)
 			postClaim.PostID = result.ID
 
-			err = config.DB.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
+			err = tx.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))
 				return
 			}
@@ -192,7 +233,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		// fetch updated post claims
 		updatedPostClaims := []factcheckModel.PostClaim{}
-		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+		tx.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&updatedPostClaims)
 
@@ -221,7 +262,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// delete post authors
 	if len(postAuthorIDs) > 0 {
-		config.DB.Where(postAuthorIDs).Delete(model.PostAuthor{})
+		err = tx.Where(postAuthorIDs).Delete(model.PostAuthor{}).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	// creating new post authors
@@ -230,9 +277,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postAuthor.AuthorID = uint(id)
 		postAuthor.PostID = result.ID
 
-		err = config.DB.Model(&model.PostAuthor{}).Create(&postAuthor).Error
+		err = tx.Model(&model.PostAuthor{}).Create(&postAuthor).Error
 
 		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
@@ -252,6 +301,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 			result.Authors = append(result.Authors, author)
 		}
 	}
+
+	tx.Commit()
 
 	renderx.JSON(w, http.StatusOK, result)
 }

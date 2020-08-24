@@ -2,6 +2,7 @@ package claim
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -12,6 +13,7 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
 
@@ -55,6 +57,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	validationError := validationx.Check(claim)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
+
 	result := &model.Claim{}
 	result.ID = uint(id)
 
@@ -65,7 +75,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
@@ -79,7 +89,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		claimSlug = slug.Approve(slug.Make(claim.Title), sID, config.DB.NewScope(&model.Claim{}).TableName())
 	}
 
-	config.DB.Model(&result).Updates(model.Claim{
+	err = config.DB.Model(&result).Updates(model.Claim{
 		Title:         claim.Title,
 		Slug:          claimSlug,
 		ClaimDate:     claim.ClaimDate,
@@ -91,7 +101,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Review:        claim.Review,
 		ReviewTagLine: claim.ReviewTagLine,
 		ReviewSources: claim.ReviewSources,
-	}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").First(&result)
+	}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -1,6 +1,8 @@
 package model
 
 import (
+	"errors"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/jinzhu/gorm"
@@ -18,19 +20,19 @@ type Rating struct {
 	SpaceID      uint          `gorm:"column:space_id" json:"space_id"`
 }
 
-// BeforeCreate - validation for medium
-func (r *Rating) BeforeCreate(tx *gorm.DB) (e error) {
-	
-	if r.MediumID > 0 {
+// BeforeSave - validation for medium
+func (rating *Rating) BeforeSave(tx *gorm.DB) (e error) {
+
+	if rating.MediumID > 0 {
 		medium := model.Medium{}
-		medium.ID = r.MediumID
+		medium.ID = rating.MediumID
 
 		err := tx.Model(&model.Medium{}).Where(model.Medium{
-			SpaceID: r.SpaceID,
+			SpaceID: rating.SpaceID,
 		}).First(&medium).Error
 
-		if err != nil{
-			return err
+		if err != nil {
+			return errors.New("medium do not belong to same space")
 		}
 	}
 	return nil

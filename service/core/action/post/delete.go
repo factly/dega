@@ -48,13 +48,21 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).First(&result).Error
+	}).Preload("Tags").Preload("Categories").First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
+
+	// delete all associations
+	config.DB.Model(&result).Association("Tags").Delete(result.Tags)
+	config.DB.Model(&result).Association("Categories").Delete(result.Categories)
+
+	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+		PostID: uint(id),
+	}).Delete(&model.PostAuthor{})
 
 	config.DB.Model(&model.Post{}).Delete(&result)
 

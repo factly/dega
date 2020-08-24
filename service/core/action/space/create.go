@@ -85,17 +85,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		spaceSlug = slug.Make(space.Name)
 	}
 
-	result := &model.Space{
+	result := model.Space{
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
 		Slug:              slug.Approve(spaceSlug, 0, config.DB.NewScope(&model.Space{}).TableName()),
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
-		LogoID:            space.LogoID,
-		FavIconID:         space.FavIconID,
-		MobileIconID:      space.MobileIconID,
-		LogoMobileID:      space.LogoMobileID,
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
 		OrganisationID:    space.OrganisationID,
