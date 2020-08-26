@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -29,7 +29,7 @@ import (
 // @Param claim_id path string true "Claim ID"
 // @Param Claim body claim false "Claim"
 // @Success 200 {object} model.Claim
-// @Router /factcheck/claims/{claim_id} [put]
+// @Router /fact-check/claims/{claim_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())

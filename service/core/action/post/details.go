@@ -8,7 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
-	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
+	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -47,10 +47,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	result := &postData{}
 	result.Authors = make([]model.Author, 0)
-	result.Claims = make([]factcheckModel.Claim, 0)
+	result.Claims = make([]factCheckModel.Claim, 0)
 
 	postAuthors := []model.PostAuthor{}
-	postClaims := []factcheckModel.PostClaim{}
+	postClaims := []factCheckModel.PostClaim{}
 	result.ID = uint(id)
 
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Tags").Preload("Categories").Preload("Format").Where(&model.Post{
@@ -65,7 +65,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	if result.Format.Slug == "factcheck" {
 
-		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
 

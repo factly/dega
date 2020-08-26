@@ -7,7 +7,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
+	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -100,7 +100,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if medium is associated with ratings
-	config.DB.Model(&factcheckModel.Rating{}).Where(&factcheckModel.Rating{
+	config.DB.Model(&factCheckModel.Rating{}).Where(&factCheckModel.Rating{
 		MediumID: uint(id),
 	}).Count(&totAssociated)
 
@@ -111,7 +111,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if medium is associated with claimants
-	config.DB.Model(&factcheckModel.Claimant{}).Where(&factcheckModel.Claimant{
+	config.DB.Model(&factCheckModel.Claimant{}).Where(&factCheckModel.Claimant{
 		MediumID: uint(id),
 	}).Count(&totAssociated)
 

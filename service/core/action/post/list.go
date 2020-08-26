@@ -7,7 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
-	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
+	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -83,13 +83,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all claims related to posts
-	postClaims := []factcheckModel.PostClaim{}
-	config.DB.Model(&factcheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+	postClaims := []factCheckModel.PostClaim{}
+	config.DB.Model(&factCheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
 
-	postClaimMap := make(map[uint][]factcheckModel.Claim)
+	postClaimMap := make(map[uint][]factCheckModel.Claim)
 	for _, pc := range postClaims {
 		if _, found := postClaimMap[pc.PostID]; !found {
-			postClaimMap[pc.PostID] = make([]factcheckModel.Claim, 0)
+			postClaimMap[pc.PostID] = make([]factCheckModel.Claim, 0)
 		}
 		postClaimMap[pc.PostID] = append(postClaimMap[pc.PostID], pc.Claim)
 	}

@@ -10,7 +10,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
-	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
+	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/dega-server/util/slug"
@@ -54,7 +54,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	post := &post{}
 	postAuthors := []model.PostAuthor{}
-	postClaims := []factcheckModel.PostClaim{}
+	postClaims := []factCheckModel.PostClaim{}
 
 	err = json.NewDecoder(r.Body).Decode(&post)
 
@@ -75,7 +75,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result := &postData{}
 	result.ID = uint(id)
 	result.Authors = make([]model.Author, 0)
-	result.Claims = make([]factcheckModel.Claim, 0)
+	result.Claims = make([]factCheckModel.Claim, 0)
 
 	// fetch all authors
 	authors, err := author.All(r.Context())
@@ -191,12 +191,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Post.Format.Slug == "factcheck" {
 		// fetch existing post claims
-		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
 		}).Find(&postClaims)
 
 		prevClaimIDs := make([]uint, 0)
-		mapperPostClaim := map[uint]factcheckModel.PostClaim{}
+		mapperPostClaim := map[uint]factCheckModel.PostClaim{}
 		postClaimIDs := make([]uint, 0)
 
 		for _, postClaim := range postClaims {
@@ -213,7 +213,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		// delete post claims
 		if len(postClaimIDs) > 0 {
-			err = tx.Where(postClaimIDs).Delete(factcheckModel.PostClaim{}).Error
+			err = tx.Where(postClaimIDs).Delete(factCheckModel.PostClaim{}).Error
 			if err != nil {
 				tx.Rollback()
 				loggerx.Error(err)
@@ -223,11 +223,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 
 		for _, id := range toCreateIDs {
-			postClaim := &factcheckModel.PostClaim{}
+			postClaim := &factCheckModel.PostClaim{}
 			postClaim.ClaimID = uint(id)
 			postClaim.PostID = result.ID
 
-			err = tx.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
+			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
 				tx.Rollback()
 				loggerx.Error(err)
@@ -237,8 +237,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// fetch updated post claims
-		updatedPostClaims := []factcheckModel.PostClaim{}
-		tx.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+		updatedPostClaims := []factCheckModel.PostClaim{}
+		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&updatedPostClaims)
 

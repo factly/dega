@@ -1,4 +1,4 @@
-package rating
+package claimant
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -15,19 +15,19 @@ import (
 	"github.com/factly/x/validationx"
 )
 
-// create - Create rating
-// @Summary Create rating
-// @Description Create rating
-// @Tags Rating
-// @ID add-rating
+// create - Create claimant
+// @Summary Create claimant
+// @Description Create claimant
+// @Tags Claimant
+// @ID add-claimant
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param Rating body rating true "Rating Object"
-// @Success 201 {object} model.Rating
+// @Param Claimant body claimant true "Claimant Object"
+// @Success 201 {object} model.Claimant
 // @Failure 400 {array} string
-// @Router /factcheck/ratings [post]
+// @Router /fact-check/claimants [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
@@ -37,9 +37,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rating := &rating{}
+	claimant := &claimant{}
 
-	err = json.NewDecoder(r.Body).Decode(&rating)
+	err = json.NewDecoder(r.Body).Decode(&claimant)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -47,7 +47,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validationError := validationx.Check(rating)
+	validationError := validationx.Check(claimant)
 
 	if validationError != nil {
 		loggerx.Error(errors.New("validation error"))
@@ -55,23 +55,23 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var ratingSlug string
-	if rating.Slug != "" && slug.Check(rating.Slug) {
-		ratingSlug = rating.Slug
+	var claimantSlug string
+	if claimant.Slug != "" && slug.Check(claimant.Slug) {
+		claimantSlug = claimant.Slug
 	} else {
-		ratingSlug = slug.Make(rating.Name)
+		claimantSlug = slug.Make(claimant.Name)
 	}
 
-	result := &model.Rating{
-		Name:         rating.Name,
-		Slug:         slug.Approve(ratingSlug, sID, config.DB.NewScope(&model.Rating{}).TableName()),
-		Description:  rating.Description,
-		MediumID:     rating.MediumID,
-		SpaceID:      uint(sID),
-		NumericValue: rating.NumericValue,
+	result := &model.Claimant{
+		Name:        claimant.Name,
+		Slug:        slug.Approve(claimantSlug, sID, config.DB.NewScope(&model.Claimant{}).TableName()),
+		Description: claimant.Description,
+		MediumID:    claimant.MediumID,
+		SpaceID:     uint(sID),
+		TagLine:     claimant.TagLine,
 	}
 
-	err = config.DB.Model(&model.Rating{}).Create(&result).Error
+	err = config.DB.Model(&model.Claimant{}).Create(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -79,7 +79,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Model(&model.Rating{}).Preload("Medium").First(&result)
+	config.DB.Model(&model.Claimant{}).Preload("Medium").First(&result)
 
 	renderx.JSON(w, http.StatusCreated, result)
 }

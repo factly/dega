@@ -1,11 +1,11 @@
-package rating
+package claimant
 
 import (
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -13,17 +13,17 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// details - Get rating by id
-// @Summary Show a rating by id
-// @Description Get rating by ID
-// @Tags Rating
-// @ID get-rating-by-id
+// details - Get claimant by id
+// @Summary Show a claimant by id
+// @Description Get claimant by ID
+// @Tags Claimant
+// @ID get-claimant-by-id
 // @Produce  json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param rating_id path string true "Claimant ID"
+// @Param claimant_id path string true "Claimant ID"
 // @Success 200 {object} model.Claimant
-// @Router /factcheck/ratings/{rating_id} [get]
+// @Router /fact-check/claimants/{claimant_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
@@ -33,8 +33,8 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ratingID := chi.URLParam(r, "rating_id")
-	id, err := strconv.Atoi(ratingID)
+	claimantID := chi.URLParam(r, "claimant_id")
+	id, err := strconv.Atoi(claimantID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -42,17 +42,17 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Rating{}
+	result := &model.Claimant{}
 
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
+	err = config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
 		SpaceID: uint(sID),
 	}).First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 

@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/service/core/model"
-	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
+	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -33,7 +33,7 @@ type post struct {
 type postData struct {
 	model.Post
 	Authors []model.Author         `json:"authors"`
-	Claims  []factcheckModel.Claim `json:"claims"`
+	Claims  []factCheckModel.Claim `json:"claims"`
 }
 
 // Router - Group of post router

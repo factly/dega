@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -27,7 +27,7 @@ import (
 // @Param Claim body claim true "Claim Object"
 // @Success 201 {object} model.Claim
 // @Failure 400 {array} string
-// @Router /factcheck/claims [post]
+// @Router /fact-check/claims [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())

@@ -1,10 +1,10 @@
-package claim
+package rating
 
 import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -14,22 +14,22 @@ import (
 
 // list response
 type paging struct {
-	Total int           `json:"total"`
-	Nodes []model.Claim `json:"nodes"`
+	Total int            `json:"total"`
+	Nodes []model.Rating `json:"nodes"`
 }
 
-// list - Get all claims
-// @Summary Show all claims
-// @Description Get all claims
-// @Tags Claim
-// @ID get-all-claims
+// list - Get all ratings
+// @Summary Show all ratings
+// @Description Get all ratings
+// @Tags Rating
+// @ID get-all-ratings
 // @Produce  json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
-// @Success 200 {Object} paging
-// @Router /factcheck/claims [get]
+// @Success 200 {object} paging
+// @Router /fact-check/ratings [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
@@ -40,11 +40,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := paging{}
-	result.Nodes = make([]model.Claim, 0)
+	result.Nodes = make([]model.Rating, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	err = config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").Where(&model.Claim{
+	err = config.DB.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
 		SpaceID: uint(sID),
 	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
 
