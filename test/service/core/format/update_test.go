@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
@@ -23,7 +24,7 @@ func selectAfterUpdate(mock sqlmock.Sqlmock, format map[string]interface{}) {
 func TestFormatUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
-	testServer := httptest.NewServer(Routes())
+	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
