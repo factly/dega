@@ -51,8 +51,8 @@ func Authorizer(h http.Handler) http.Handler {
 				return
 			}
 
-			allowedServices := []string{"core", "factcheck"}
-			allowedEntities := []string{"authors", "categories", "formats", "media", "policies", "posts", "tags", "claims", "claimants", "factchecks", "ratings"}
+			allowedServices := []string{"core", "fact-check"}
+			allowedEntities := []string{"authors", "categories", "formats", "media", "policies", "posts", "tags", "claims", "claimants", "fact-checks", "ratings"}
 
 			actionMapper := map[string]string{
 				"GET":    "get",

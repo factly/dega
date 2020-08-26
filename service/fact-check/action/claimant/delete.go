@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -23,7 +23,7 @@ import (
 // @Param X-Space header string true "Space ID"
 // @Param claimant_id path string true "Claimant ID"
 // @Success 200
-// @Router /factcheck/claimants/{claimant_id} [delete]
+// @Router /fact-check/claimants/{claimant_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())

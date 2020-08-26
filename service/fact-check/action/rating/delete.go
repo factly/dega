@@ -1,4 +1,4 @@
-package claim
+package rating
 
 import (
 	"errors"
@@ -6,7 +6,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -14,16 +14,16 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// delete - Delete claim by id
-// @Summary Delete a claim
-// @Description Delete claim by ID
-// @Tags Claim
-// @ID delete-claim-by-id
+// delete - Delete rating by id
+// @Summary Delete a rating
+// @Description Delete rating by ID
+// @Tags Rating
+// @ID delete-rating-by-id
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param claim_id path string true "Claim ID"
+// @Param rating_id path string true "Rating ID"
 // @Success 200
-// @Router /factcheck/claims/{claim_id} [delete]
+// @Router /fact-check/ratings/{rating_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
@@ -33,8 +33,8 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claimID := chi.URLParam(r, "claim_id")
-	id, err := strconv.Atoi(claimID)
+	ratingID := chi.URLParam(r, "rating_id")
+	id, err := strconv.Atoi(ratingID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -42,12 +42,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Claim{}
+	result := &model.Rating{}
 
 	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.Where(&model.Claim{
+	err = config.DB.Model(&model.Rating{}).Where(&model.Rating{
 		SpaceID: uint(sID),
 	}).First(&result).Error
 
@@ -57,19 +57,19 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// check if claim is associated with posts
+	// check if rating is associated with claims
 	var totAssociated int
-	config.DB.Model(&model.PostClaim{}).Where(&model.PostClaim{
-		ClaimID: uint(id),
+	config.DB.Model(&model.Claim{}).Where(&model.Claim{
+		RatingID: uint(id),
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
-		loggerx.Error(errors.New("claim is associated with post"))
+		loggerx.Error(errors.New("rating is associated with claim"))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
-	config.DB.Delete(&result)
+	config.DB.Model(&model.Rating{}).Delete(&result)
 
 	renderx.JSON(w, http.StatusOK, nil)
 }

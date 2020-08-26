@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -29,7 +29,7 @@ type paging struct {
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Success 200 {object} paging
-// @Router /factcheck/claimants [get]
+// @Router /fact-check/claimants [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())

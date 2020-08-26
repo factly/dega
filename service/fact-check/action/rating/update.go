@@ -1,4 +1,4 @@
-package claimant
+package rating
 
 import (
 	"encoding/json"
@@ -7,7 +7,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/factcheck/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -17,19 +17,19 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// update - Update claimant by id
-// @Summary Update a claimant by id
-// @Description Update claimant by ID
-// @Tags Claimant
-// @ID update-claimant-by-id
+// update - Update rating by id
+// @Summary Update a rating by id
+// @Description Update rating by ID
+// @Tags Rating
+// @ID update-rating-by-id
 // @Produce json
 // @Consume json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param claimant_id path string true "Claimant ID"
-// @Param Claimant body claimant false "Claimant"
-// @Success 200 {object} model.Claimant
-// @Router /factcheck/claimants/{claimant_id} [put]
+// @Param rating_id path string true "Rating ID"
+// @Param Rating body rating false "Rating"
+// @Success 200 {object} model.Rating
+// @Router /fact-check/ratings/{rating_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := util.GetSpace(r.Context())
@@ -39,8 +39,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claimantID := chi.URLParam(r, "claimant_id")
-	id, err := strconv.Atoi(claimantID)
+	ratingID := chi.URLParam(r, "rating_id")
+	id, err := strconv.Atoi(ratingID)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -48,16 +48,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claimant := &model.Claimant{}
-	err = json.NewDecoder(r.Body).Decode(&claimant)
-
+	rating := &rating{}
+	err = json.NewDecoder(r.Body).Decode(&rating)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
-	validationError := validationx.Check(claimant)
+	validationError := validationx.Check(rating)
 
 	if validationError != nil {
 		loggerx.Error(errors.New("validation error"))
@@ -65,11 +64,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := model.Claimant{}
+	result := model.Rating{}
 	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.Where(&model.Claimant{
+	err = config.DB.Where(&model.Rating{
 		SpaceID: uint(sID),
 	}).First(&result).Error
 
@@ -79,19 +78,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var claimantSlug string
+	var ratingSlug string
 
-	if result.Slug == claimant.Slug {
-		claimantSlug = result.Slug
-	} else if claimant.Slug != "" && slug.Check(claimant.Slug) {
-		claimantSlug = slug.Approve(claimant.Slug, sID, config.DB.NewScope(&model.Claimant{}).TableName())
+	if result.Slug == rating.Slug {
+		ratingSlug = result.Slug
+	} else if rating.Slug != "" && slug.Check(rating.Slug) {
+		ratingSlug = slug.Approve(rating.Slug, sID, config.DB.NewScope(&model.Rating{}).TableName())
 	} else {
-		claimantSlug = slug.Approve(slug.Make(claimant.Name), sID, config.DB.NewScope(&model.Claimant{}).TableName())
+		ratingSlug = slug.Approve(slug.Make(rating.Name), sID, config.DB.NewScope(&model.Rating{}).TableName())
 	}
 
 	tx := config.DB.Begin()
 
-	if claimant.MediumID == 0 {
+	if rating.MediumID == 0 {
 		err = tx.Model(result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
 		result.MediumID = 0
 		if err != nil {
@@ -102,12 +101,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	err = tx.Model(&result).Updates(model.Claimant{
-		Name:        claimant.Name,
-		Slug:        claimantSlug,
-		MediumID:    claimant.MediumID,
-		TagLine:     claimant.TagLine,
-		Description: claimant.Description,
+	err = tx.Model(&result).Updates(model.Rating{
+		Name:         rating.Name,
+		Slug:         ratingSlug,
+		MediumID:     rating.MediumID,
+		Description:  rating.Description,
+		NumericValue: rating.NumericValue,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {

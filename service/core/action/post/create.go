@@ -9,7 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
-	factcheckModel "github.com/factly/dega-server/service/factcheck/model"
+	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -42,7 +42,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	post := post{}
 	result := &postData{}
 	result.Authors = make([]model.Author, 0)
-	result.Claims = make([]factcheckModel.Claim, 0)
+	result.Claims = make([]factCheckModel.Claim, 0)
 
 	err = json.NewDecoder(r.Body).Decode(&post)
 
@@ -101,11 +101,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if result.Format.Slug == "factcheck" {
 		// create post claim
 		for _, id := range post.ClaimIDs {
-			postClaim := &factcheckModel.PostClaim{}
+			postClaim := &factCheckModel.PostClaim{}
 			postClaim.ClaimID = uint(id)
 			postClaim.PostID = result.ID
 
-			err = config.DB.Model(&factcheckModel.PostClaim{}).Create(&postClaim).Error
+			err = config.DB.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))
@@ -114,8 +114,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// fetch all post claims
-		postClaims := []factcheckModel.PostClaim{}
-		config.DB.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+		postClaims := []factCheckModel.PostClaim{}
+		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: result.ID,
 		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
 

@@ -5,9 +5,9 @@ import (
 
 	"github.com/go-chi/chi"
 
-	"github.com/factly/dega-server/service/factcheck/action/claim"
-	"github.com/factly/dega-server/service/factcheck/action/claimant"
-	"github.com/factly/dega-server/service/factcheck/action/rating"
+	"github.com/factly/dega-server/service/fact-check/action/claim"
+	"github.com/factly/dega-server/service/fact-check/action/claimant"
+	"github.com/factly/dega-server/service/fact-check/action/rating"
 )
 
 // Router - CRUD servies
