@@ -3,16 +3,13 @@ package test
 import (
 	"net/http"
 	"os"
-	"strconv"
 	"time"
 
 	"gopkg.in/h2non/gock.v1"
 )
 
-// Mock Servers are created to intercept HTTP Calls outside this project. Mocking the external project servers helps with Unit Testing.
+// MockServer is created to intercept HTTP Calls outside this project. Mocking the external project servers helps with Unit Testing.
 func MockServer() {
-	org, _ := strconv.Atoi(os.Getenv("ORG_ID"))
-	user, _ := strconv.Atoi(os.Getenv("USER_ID"))
 
 	// Creates a mock server for kavach URL with an appropriate dummy response.
 	gock.New(os.Getenv("KAVACH_URL")).
@@ -20,7 +17,7 @@ func MockServer() {
 		Persist().
 		Reply(http.StatusOK).
 		JSON(map[string]interface{}{
-			"id":         org,
+			"id":         1,
 			"created_at": time.Now(),
 			"updated_at": time.Now(),
 			"deleted_at": nil,
@@ -30,9 +27,9 @@ func MockServer() {
 				"created_at":      time.Now(),
 				"updated_at":      time.Now(),
 				"deleted_at":      nil,
-				"user_id":         user,
+				"user_id":         1,
 				"user":            nil,
-				"organisation_id": org,
+				"organisation_id": 1,
 				"organisation":    nil,
 				"role":            "owner",
 			},
