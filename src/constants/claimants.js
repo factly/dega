@@ -6,4 +6,4 @@ export const RESET_CLAIMANTS = 'RESET_CLAIMANTS';
 export const SET_CLAIMANTS_LOADING = 'SET_CLAIMANTS_LOADING';
 
 //API
-export const CLAIMANTS_API = '/factcheck/claimants';
+export const CLAIMANTS_API = '/fact-check/claimants';

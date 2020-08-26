@@ -6,4 +6,4 @@ export const RESET_RATINGS = 'RESET_RATINGS';
 export const SET_RATINGS_LOADING = 'SET_RATINGS_LOADING';
 
 //API
-export const RATINGS_API = '/factcheck/ratings';
+export const RATINGS_API = '/fact-check/ratings';

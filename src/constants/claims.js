@@ -6,4 +6,4 @@ export const RESET_CLAIMS = 'RESET_CLAIMS';
 export const SET_CLAIMS_LOADING = 'SET_CLAIMS_LOADING';
 
 //API
-export const CLAIMS_API = '/factcheck/claims';
+export const CLAIMS_API = '/fact-check/claims';
