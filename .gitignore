@@ -136,3 +136,5 @@ fabric.properties
 *.log
 
 main
+
+.DS_Store
