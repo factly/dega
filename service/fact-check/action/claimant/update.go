@@ -48,7 +48,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	claimant := &model.Claimant{}
+	claimant := &claimant{}
 	err = json.NewDecoder(r.Body).Decode(&claimant)
 
 	if err != nil {
