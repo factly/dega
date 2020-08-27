@@ -135,3 +135,38 @@ func countQuery(mock sqlmock.Sqlmock, count int) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "media"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
+
+// check medium associated with any post before deleting
+func mediumPostExpect(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+// check medium associated with any rating before deleting
+func mediumRatingExpect(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+// check medium associated with any claimant before deleting
+func mediumClaimantExpect(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claimants"`)).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+// check medium associated with any category before deleting
+func mediumCategoryExpect(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "categories"`)).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+// check medium associated with any space before deleting
+func mediumSpaceExpect(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "spaces"`)).
+		WithArgs(1, 1, 1, 1).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
