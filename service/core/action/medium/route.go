@@ -8,7 +8,7 @@ import (
 // medium model
 type medium struct {
 	Name        string         `json:"name" validate:"required"`
-	Slug        string         `json:"slug" validate:"required"`
+	Slug        string         `json:"slug"`
 	Type        string         `json:"type" validate:"required"`
 	Title       string         `json:"title" validate:"required"`
 	Description string         `json:"description"`

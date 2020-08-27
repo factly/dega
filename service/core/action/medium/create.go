@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -54,9 +55,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var mediumSlug string
+	if medium.Slug != "" && slug.Check(medium.Slug) {
+		mediumSlug = medium.Slug
+	} else {
+		mediumSlug = slug.Make(medium.Name)
+	}
+
 	result := &model.Medium{
 		Name:        medium.Name,
-		Slug:        medium.Slug,
+		Slug:        slug.Approve(mediumSlug, sID, config.DB.NewScope(&model.Medium{}).TableName()),
 		Title:       medium.Title,
 		Type:        medium.Type,
 		Description: medium.Description,
@@ -76,5 +84,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	renderx.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }

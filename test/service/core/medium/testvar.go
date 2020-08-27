@@ -2,25 +2,15 @@ package medium
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"regexp"
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/test"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
-
-var Data = map[string]interface{}{
-	"name":        "Test Medium",
-	"slug":        "test-medium",
-	"type":        "testtype",
-	"title":       "Test Title",
-	"description": "Test Description",
-	"caption":     "Test Caption",
-	"alt_text":    "Test alt text",
-	"file_size":   100,
-	"url":         nilJsonb(),
-	"dimensions":  "testdims",
-}
 
 func nilJsonb() postgres.Jsonb {
 	ba, _ := json.Marshal(nil)
@@ -29,10 +19,99 @@ func nilJsonb() postgres.Jsonb {
 	}
 }
 
+var headers = map[string]string{
+	"X-Space": "1",
+	"X-User":  "1",
+}
+
+var Data = map[string]interface{}{
+	"name":        "Image",
+	"slug":        "image",
+	"type":        "jpg",
+	"title":       "Sample image",
+	"description": "desc",
+	"caption":     "sample",
+	"alt_text":    "sample",
+	"file_size":   100,
+	"url":         nilJsonb(),
+	"dimensions":  "testdims",
+}
+
+var dataWithoutSlug = map[string]interface{}{
+	"name":        "Image",
+	"slug":        "",
+	"type":        "jpg",
+	"title":       "Sample image",
+	"description": "desc",
+	"caption":     "sample",
+	"alt_text":    "sample",
+	"file_size":   100,
+	"url":         nilJsonb(),
+	"dimensions":  "testdims",
+}
+
+var invalidData = map[string]interface{}{
+	"name": "a",
+}
+
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "type", "title", "description", "caption", "alt_text", "file_size", "url", "dimensions", "space_id"}
 
+var selectQuery = regexp.QuoteMeta(`SELECT * FROM "media"`)
+var deleteQuery = regexp.QuoteMeta(`UPDATE "media" SET "deleted_at"=`)
+var paginationQuery = `SELECT \* FROM "media" (.+) LIMIT 1 OFFSET 1`
+
+var basePath = "/core/media"
+var path = "/core/media/{medium_id}"
+
+func slugCheckMock(mock sqlmock.Sqlmock, medium map[string]interface{}) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "media"`)).
+		WithArgs(fmt.Sprint(medium["slug"], "%"), 1).
+		WillReturnRows(sqlmock.NewRows(columns))
+}
+
+//check medium exits or not
+func recordNotFoundMock(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(100, 1).
+		WillReturnRows(sqlmock.NewRows(columns))
+}
+
+func mediumInsertError(mock sqlmock.Sqlmock) {
+	mock.ExpectBegin()
+	mock.ExpectQuery(`INSERT INTO "media"`).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["type"], Data["title"], Data["description"], Data["caption"], Data["alt_text"], Data["file_size"], Data["url"], Data["dimensions"], 1).
+		WillReturnError(errors.New(`pq: insert or update on table "medium" violates foreign key constraint "media_space_id_spaces_id_foreign"`))
+	mock.ExpectRollback()
+}
+
+func mediumInsertMock(mock sqlmock.Sqlmock) {
+	mock.ExpectBegin()
+	mock.ExpectQuery(`INSERT INTO "media"`).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["type"], Data["title"], Data["description"], Data["caption"], Data["alt_text"], Data["file_size"], Data["url"], Data["dimensions"], 1).
+		WillReturnRows(sqlmock.
+			NewRows([]string{"id"}).
+			AddRow(1))
+	mock.ExpectCommit()
+}
+
+func mediumUpdateMock(mock sqlmock.Sqlmock, medium map[string]interface{}, err error) {
+	mock.ExpectBegin()
+	if err != nil {
+		mock.ExpectExec(`UPDATE \"media\" SET (.+)  WHERE (.+) \"media\".\"id\" = `).
+			WithArgs(medium["alt_text"], medium["caption"], medium["description"], medium["dimensions"], medium["file_size"], medium["name"], medium["slug"], medium["title"], medium["type"], test.AnyTime{}, medium["url"], 1).
+			WillReturnError(errors.New("update failed"))
+		mock.ExpectRollback()
+	} else {
+		mock.ExpectExec(`UPDATE \"media\" SET (.+)  WHERE (.+) \"media\".\"id\" = `).
+			WithArgs(medium["alt_text"], medium["caption"], medium["description"], medium["dimensions"], medium["file_size"], medium["name"], medium["slug"], medium["title"], medium["type"], test.AnyTime{}, medium["url"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		mock.ExpectCommit()
+	}
+
+}
+
 func SelectWithSpace(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["type"], Data["title"], Data["description"], Data["caption"], Data["alt_text"], Data["file_size"], Data["url"], Data["dimensions"], 1))
@@ -40,14 +119,19 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 }
 
 func SelectWithOutSpace(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(columns).
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["type"], Data["title"], Data["description"], Data["caption"], Data["alt_text"], Data["file_size"], Data["url"], Data["dimensions"], 1))
 }
 
 func EmptyRowMock(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns))
+}
+
+func countQuery(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "media"`)).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
