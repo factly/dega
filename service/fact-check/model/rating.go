@@ -32,7 +32,7 @@ func (rating *Rating) BeforeSave(tx *gorm.DB) (e error) {
 		}).First(&medium).Error
 
 		if err != nil {
-			return errors.New("medium do not belong to same space")
+			return errors.New("medium does not belong to same space")
 		}
 	}
 	return nil
