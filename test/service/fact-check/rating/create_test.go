@@ -83,4 +83,21 @@ func TestRatingCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("medium does not belong same space", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		slugCheckMock(mock, Rating)
+
+		ratingInsertError(mock)
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(dataWithoutSlug).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
 }

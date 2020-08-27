@@ -1,6 +1,7 @@
 package rating
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"net/http/httptest"
@@ -84,7 +85,7 @@ func TestRatingUpdate(t *testing.T) {
 
 		ratingSelectWithSpace(mock)
 
-		ratingUpdateMock(mock, updatedRating)
+		ratingUpdateMock(mock, updatedRating, nil)
 
 		e.PUT(path).
 			WithPath("rating_id", 1).
@@ -102,7 +103,7 @@ func TestRatingUpdate(t *testing.T) {
 
 		slugCheckMock(mock, Rating)
 
-		ratingUpdateMock(mock, updatedRating)
+		ratingUpdateMock(mock, updatedRating, nil)
 
 		e.PUT(path).
 			WithPath("rating_id", 1).
@@ -124,7 +125,7 @@ func TestRatingUpdate(t *testing.T) {
 			WithArgs(fmt.Sprint(updatedRating["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
-		ratingUpdateMock(mock, updatedRating)
+		ratingUpdateMock(mock, updatedRating, nil)
 
 		e.PUT(path).
 			WithPath("rating_id", 1).
@@ -132,6 +133,28 @@ func TestRatingUpdate(t *testing.T) {
 			WithJSON(updatedRating).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedRating)
+		test.ExpectationsMet(t, mock)
+
+	})
+
+	t.Run("medium not found", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatedRating["slug"] = "true-test"
+
+		ratingSelectWithSpace(mock)
+
+		mock.ExpectQuery(`SELECT slug, space_id FROM "ratings"`).
+			WithArgs(fmt.Sprint(updatedRating["slug"], "%"), 1).
+			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
+
+		ratingUpdateMock(mock, updatedRating, errors.New("record not found"))
+
+		e.PUT(path).
+			WithPath("rating_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedRating).
+			Expect().
+			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 
 	})

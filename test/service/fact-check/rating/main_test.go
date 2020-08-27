@@ -86,15 +86,30 @@ func ratingInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectCommit()
 }
 
-func ratingUpdateMock(mock sqlmock.Sqlmock, rating map[string]interface{}) {
-
+func ratingInsertError(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	MediumSelectWithSpace(mock)
-	mock.ExpectExec(`UPDATE \"ratings\" SET (.+)  WHERE (.+) \"ratings\".\"id\" = `).
-		WithArgs(rating["description"], rating["medium_id"], rating["name"], rating["numeric_value"], rating["slug"], test.AnyTime{}, 1).
-		WillReturnResult(sqlmock.NewResult(1, 1))
-	ratingSelectWithOutSpace(mock, rating)
-	mock.ExpectCommit()
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+		WithArgs(1, 1).
+		WillReturnRows(sqlmock.NewRows(MediumCols))
+	mock.ExpectRollback()
+}
+
+func ratingUpdateMock(mock sqlmock.Sqlmock, rating map[string]interface{}, err error) {
+	mock.ExpectBegin()
+	if err != nil {
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+			WithArgs(1, 1).
+			WillReturnRows(sqlmock.NewRows(MediumCols))
+		mock.ExpectRollback()
+	} else {
+		MediumSelectWithSpace(mock)
+		mock.ExpectExec(`UPDATE \"ratings\" SET (.+)  WHERE (.+) \"ratings\".\"id\" = `).
+			WithArgs(rating["description"], rating["medium_id"], rating["name"], rating["numeric_value"], rating["slug"], test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		ratingSelectWithOutSpace(mock, rating)
+		mock.ExpectCommit()
+	}
+
 }
 
 func ratingSelectWithOutSpace(mock sqlmock.Sqlmock, rating map[string]interface{}) {
