@@ -1,4 +1,4 @@
-package rating
+package claimant
 
 import (
 	"net/http"
@@ -11,7 +11,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestRatingCreate(t *testing.T) {
+func TestClaimantCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
@@ -23,7 +23,7 @@ func TestRatingCreate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable rating", func(t *testing.T) {
+	t.Run("Unprocessable claimant", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
@@ -35,7 +35,7 @@ func TestRatingCreate(t *testing.T) {
 
 	})
 
-	t.Run("Unable to decode rating", func(t *testing.T) {
+	t.Run("Unable to decode claimant", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
@@ -46,14 +46,14 @@ func TestRatingCreate(t *testing.T) {
 
 	})
 
-	t.Run("create rating", func(t *testing.T) {
+	t.Run("create claimant", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		ratingInsertMock(mock)
-		ratingSelectWithOutSpace(mock, Data)
+		claimantInsertMock(mock)
+		claimantSelectWithOutSpace(mock, Data)
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -64,15 +64,15 @@ func TestRatingCreate(t *testing.T) {
 
 	})
 
-	t.Run("create rating with slug is empty", func(t *testing.T) {
+	t.Run("create claimant with slug is empty", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		ratingInsertMock(mock)
+		claimantInsertMock(mock)
 
-		ratingSelectWithOutSpace(mock, Data)
+		claimantSelectWithOutSpace(mock, Data)
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -89,7 +89,7 @@ func TestRatingCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		ratingInsertError(mock)
+		claimantInsertError(mock)
 
 		e.POST(basePath).
 			WithHeaders(headers).

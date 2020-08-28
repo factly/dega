@@ -1,4 +1,4 @@
-package rating
+package claimant
 
 import (
 	"net/http"
@@ -12,7 +12,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestRatingDetails(t *testing.T) {
+func TestClaimantDetails(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -23,33 +23,33 @@ func TestRatingDetails(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("invalid rating id", func(t *testing.T) {
+	t.Run("invalid claimant id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		e.GET(path).
-			WithPath("rating_id", "invalid_id").
+			WithPath("claimant_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 	})
 
-	t.Run("rating record not found", func(t *testing.T) {
+	t.Run("claimant record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		recordNotFoundMock(mock)
 
 		e.GET(path).
-			WithPath("rating_id", "100").
+			WithPath("claimant_id", "100").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusInternalServerError)
+			Status(http.StatusNotFound)
 	})
 
-	t.Run("get rating by id", func(t *testing.T) {
+	t.Run("get claimant by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		ratingSelectWithSpace(mock)
+		claimantSelectWithSpace(mock)
 		medium.SelectWithOutSpace(mock)
 
 		e.GET(path).
-			WithPath("rating_id", 1).
+			WithPath("claimant_id", 1).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(Data)

@@ -101,7 +101,7 @@ func TestRatingUpdate(t *testing.T) {
 		updatedRating["slug"] = "true"
 		ratingSelectWithSpace(mock)
 
-		slugCheckMock(mock, Rating)
+		slugCheckMock(mock, Data)
 
 		ratingUpdateMock(mock, updatedRating, nil)
 

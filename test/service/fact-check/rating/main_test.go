@@ -1,7 +1,6 @@
 package rating
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 	"regexp"
@@ -10,7 +9,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
-	"github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/factly/dega-server/test/service/core/medium"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -19,7 +18,7 @@ var headers = map[string]string{
 	"X-User":  "1",
 }
 
-var Rating = map[string]interface{}{
+var Data = map[string]interface{}{
 	"name":          "True",
 	"slug":          "true",
 	"description":   "article is validated",
@@ -33,26 +32,6 @@ var dataWithoutSlug = map[string]interface{}{
 	"description":   "article is validated",
 	"numeric_value": 5,
 	"medium_id":     uint(1),
-}
-
-func nilJsonb() postgres.Jsonb {
-	ba, _ := json.Marshal(nil)
-	return postgres.Jsonb{
-		RawMessage: ba,
-	}
-}
-
-var Medium = map[string]interface{}{
-	"name":        "Test Medium",
-	"slug":        "test-medium",
-	"type":        "testtype",
-	"title":       "Test Title",
-	"description": "Test Description",
-	"caption":     "Test Caption",
-	"alt_text":    "Test alt text",
-	"file_size":   100,
-	"url":         nilJsonb(),
-	"dimensions":  "testdims",
 }
 
 var invalidData = map[string]interface{}{
@@ -77,9 +56,9 @@ func slugCheckMock(mock sqlmock.Sqlmock, rating map[string]interface{}) {
 
 func ratingInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	MediumSelectWithSpace(mock)
+	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "ratings"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Rating["name"], Rating["slug"], Rating["description"], Rating["numeric_value"], Rating["medium_id"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["description"], Data["numeric_value"], Data["medium_id"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -88,21 +67,17 @@ func ratingInsertMock(mock sqlmock.Sqlmock) {
 
 func ratingInsertError(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
-		WithArgs(1, 1).
-		WillReturnRows(sqlmock.NewRows(MediumCols))
+	medium.EmptyRowMock(mock)
 	mock.ExpectRollback()
 }
 
 func ratingUpdateMock(mock sqlmock.Sqlmock, rating map[string]interface{}, err error) {
 	mock.ExpectBegin()
 	if err != nil {
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
-			WithArgs(1, 1).
-			WillReturnRows(sqlmock.NewRows(MediumCols))
+		medium.EmptyRowMock(mock)
 		mock.ExpectRollback()
 	} else {
-		MediumSelectWithSpace(mock)
+		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"ratings\" SET (.+)  WHERE (.+) \"ratings\".\"id\" = `).
 			WithArgs(rating["description"], rating["medium_id"], rating["name"], rating["numeric_value"], rating["slug"], test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
@@ -119,14 +94,14 @@ func ratingSelectWithOutSpace(mock sqlmock.Sqlmock, rating map[string]interface{
 			AddRow(1, time.Now(), time.Now(), nil, rating["name"], rating["slug"], rating["medium_id"], rating["description"], rating["numeric_value"], 1))
 
 	// Preload medium
-	MediumSelectWithOutSpace(mock)
+	medium.SelectWithOutSpace(mock)
 }
 
 func ratingSelectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, Rating["name"], Rating["slug"], Rating["medium_id"], Rating["description"], Rating["numeric_value"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["medium_id"], Data["description"], Data["numeric_value"], 1))
 }
 
 //check rating exits or not
@@ -146,24 +121,6 @@ func ratingClaimExpect(mock sqlmock.Sqlmock, count int) {
 func ratingCountQuery(mock sqlmock.Sqlmock, count int) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
-}
-
-var MediumCols = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "type", "title", "description", "caption", "alt_text", "file_size", "url", "dimensions", "space_id"}
-
-func MediumSelectWithSpace(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
-		WithArgs(1, 1).
-		WillReturnRows(sqlmock.NewRows(MediumCols).
-			AddRow(1, time.Now(), time.Now(), nil, Medium["name"], Medium["slug"], Medium["type"], Medium["title"], Medium["description"], Medium["caption"], Medium["alt_text"], Medium["file_size"], Medium["url"], Medium["dimensions"], 1))
-
-}
-
-func MediumSelectWithOutSpace(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows(MediumCols).
-			AddRow(1, time.Now(), time.Now(), nil, Medium["name"], Medium["slug"], Medium["type"], Medium["title"], Medium["description"], Medium["caption"], Medium["alt_text"], Medium["file_size"], Medium["url"], Medium["dimensions"], 1))
-
 }
 
 func TestMain(m *testing.M) {
