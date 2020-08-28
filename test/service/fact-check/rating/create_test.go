@@ -53,7 +53,7 @@ func TestRatingCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		ratingInsertMock(mock)
-		ratingSelectWithOutSpace(mock, Data)
+		SelectWithOutSpace(mock, Data)
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -72,7 +72,7 @@ func TestRatingCreate(t *testing.T) {
 
 		ratingInsertMock(mock)
 
-		ratingSelectWithOutSpace(mock, Data)
+		SelectWithOutSpace(mock, Data)
 
 		e.POST(basePath).
 			WithHeaders(headers).

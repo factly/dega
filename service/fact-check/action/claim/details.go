@@ -46,7 +46,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").Where(&model.Claim{
+	err = config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
 		SpaceID: uint(sID),
 	}).First(&result).Error
 

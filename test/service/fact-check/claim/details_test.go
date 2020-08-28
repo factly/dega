@@ -1,4 +1,4 @@
-package rating
+package claim
 
 import (
 	"net/http"
@@ -7,12 +7,13 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/fact-check/claimant"
+	"github.com/factly/dega-server/test/service/fact-check/rating"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestRatingDetails(t *testing.T) {
+func TestClaimDetails(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -23,33 +24,34 @@ func TestRatingDetails(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("invalid rating id", func(t *testing.T) {
+	t.Run("invalid claim id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		e.GET(path).
-			WithPath("rating_id", "invalid_id").
+			WithPath("claim_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 	})
 
-	t.Run("rating record not found", func(t *testing.T) {
+	t.Run("claim record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		recordNotFoundMock(mock)
 
 		e.GET(path).
-			WithPath("rating_id", "100").
+			WithPath("claim_id", "100").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
 	})
 
-	t.Run("get rating by id", func(t *testing.T) {
+	t.Run("get claim by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-		medium.SelectWithOutSpace(mock)
+		claimSelectWithSpace(mock)
+		rating.SelectWithOutSpace(mock, rating.Data)
+		claimant.SelectWithOutSpace(mock, claimant.Data)
 
 		e.GET(path).
-			WithPath("rating_id", 1).
+			WithPath("claim_id", 1).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(Data)

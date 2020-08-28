@@ -83,7 +83,7 @@ func TestRatingUpdate(t *testing.T) {
 		updatedRating["slug"] = "true"
 		test.CheckSpaceMock(mock)
 
-		ratingSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		ratingUpdateMock(mock, updatedRating, nil)
 
@@ -99,7 +99,7 @@ func TestRatingUpdate(t *testing.T) {
 	t.Run("update rating by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedRating["slug"] = "true"
-		ratingSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		slugCheckMock(mock, Data)
 
@@ -119,7 +119,7 @@ func TestRatingUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedRating["slug"] = "true-test"
 
-		ratingSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "ratings"`).
 			WithArgs(fmt.Sprint(updatedRating["slug"], "%"), 1).
@@ -141,7 +141,7 @@ func TestRatingUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedRating["slug"] = "true-test"
 
-		ratingSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "ratings"`).
 			WithArgs(fmt.Sprint(updatedRating["slug"], "%"), 1).

@@ -47,7 +47,7 @@ func TestClaimantDelete(t *testing.T) {
 
 	t.Run("check claimant associated with other entity", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		claimantSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		claimantClaimExpect(mock, 1)
 
@@ -60,7 +60,7 @@ func TestClaimantDelete(t *testing.T) {
 
 	t.Run("claimant record deleted", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		claimantSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		claimantClaimExpect(mock, 0)
 
