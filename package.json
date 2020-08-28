@@ -47,7 +47,7 @@
     }
   },
   "lint-staged": {
-    "*": [
+    "**/*.{js,jsx,yml,yaml,json,css,scss,md}": [
       "npm run format",
       "git add"
     ]

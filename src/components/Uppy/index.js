@@ -41,9 +41,9 @@ function UppyUploader({ onUpload }) {
       return updatedFiles;
     },
   })
-    .use(AwsS3, { companionUrl: process.env.REACT_APP_COMPANION_URL })
-    .use(Url, { companionUrl: process.env.REACT_APP_COMPANION_URL })
-    .use(GoogleDrive, { companionUrl: process.env.REACT_APP_COMPANION_URL });
+    .use(AwsS3, { companionUrl: window.REACT_APP_COMPANION_URL })
+    .use(Url, { companionUrl: window.REACT_APP_COMPANION_URL })
+    .use(GoogleDrive, { companionUrl: window.REACT_APP_COMPANION_URL });
 
   uppy.on('complete', (result) => {
     const successful = result.successful[0];
