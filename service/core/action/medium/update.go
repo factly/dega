@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -78,18 +79,34 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Model(&result).Updates(model.Medium{
+	var mediumSlug string
+
+	if result.Slug == medium.Slug {
+		mediumSlug = result.Slug
+	} else if medium.Slug != "" && slug.Check(medium.Slug) {
+		mediumSlug = slug.Approve(medium.Slug, sID, config.DB.NewScope(&model.Medium{}).TableName())
+	} else {
+		mediumSlug = slug.Approve(slug.Make(medium.Name), sID, config.DB.NewScope(&model.Medium{}).TableName())
+	}
+
+	err = config.DB.Model(&result).Updates(model.Medium{
 		Name:        medium.Name,
-		Slug:        medium.Slug,
+		Slug:        mediumSlug,
 		Title:       medium.Title,
-		Type:        medium.Title,
+		Type:        medium.Type,
 		Description: medium.Description,
 		AltText:     medium.AltText,
 		Caption:     medium.Caption,
 		FileSize:    medium.FileSize,
 		URL:         medium.URL,
 		Dimensions:  medium.Dimensions,
-	}).First(&result)
+	}).First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
 }
