@@ -23,9 +23,7 @@ jobs:
       - run: go mod download
       - run: go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.30.0
       - run: golangci-lint run  ./...
-      - run: mkdir coverage
       - run: go test ./test/... -coverpkg ./service/... -coverprofile=cov.out
-      
       - name: Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
