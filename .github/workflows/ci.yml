@@ -23,14 +23,13 @@ jobs:
       - run: go mod download
       - run: go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.30.0
       - run: golangci-lint run  ./...
-      - run: go test ./test/... -coverpkg ./service/... -coverprofile=cov.out -covermode=count -json > report.json
+      - run: mkdir coverage
+      - run: go test ./test/... -coverpkg ./service/... -coverprofile=coverage/cov.out -covermode=count -json > coverage/report.json
       - name: Archive code coverage results
         uses: actions/upload-artifact@v1
         with:
           name: code-coverage-report
-          path: |
-            ./cov.out
-            ./report.json
+          path: coverage
   
   sonarcloud:
     needs: build
