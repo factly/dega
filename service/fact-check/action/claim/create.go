@@ -85,7 +85,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").Find(&result)
+	config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Find(&result)
 
 	renderx.JSON(w, http.StatusCreated, result)
 }

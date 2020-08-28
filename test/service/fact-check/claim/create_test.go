@@ -1,4 +1,4 @@
-package claimant
+package claim
 
 import (
 	"net/http"
@@ -11,7 +11,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestClaimantCreate(t *testing.T) {
+func TestClaimCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
@@ -23,7 +23,7 @@ func TestClaimantCreate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable claimant", func(t *testing.T) {
+	t.Run("Unprocessable claim", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
@@ -35,7 +35,7 @@ func TestClaimantCreate(t *testing.T) {
 
 	})
 
-	t.Run("Unable to decode claimant", func(t *testing.T) {
+	t.Run("Unable to decode claim", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
@@ -46,50 +46,67 @@ func TestClaimantCreate(t *testing.T) {
 
 	})
 
-	t.Run("create claimant", func(t *testing.T) {
+	t.Run("create claim", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		claimantInsertMock(mock)
-		SelectWithOutSpace(mock, Data)
+		claimInsertMock(mock)
+		claimSelectWithOutSpace(mock, Data)
 
-		e.POST(basePath).
+		result := e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+
+		validateAssociations(result)
 		test.ExpectationsMet(t, mock)
 
 	})
 
-	t.Run("create claimant with slug is empty", func(t *testing.T) {
+	t.Run("create claim with slug is empty", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		claimantInsertMock(mock)
+		claimInsertMock(mock)
+		claimSelectWithOutSpace(mock, Data)
 
-		SelectWithOutSpace(mock, Data)
+		result := e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(dataWithoutSlug).
+			Expect().
+			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+		validateAssociations(result)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("claimant does not belong same space", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		slugCheckMock(mock, Data)
+
+		claimantFKError(mock)
 
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(dataWithoutSlug).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+			Status(http.StatusInternalServerError)
 
 		test.ExpectationsMet(t, mock)
 	})
-
-	t.Run("medium does not belong same space", func(t *testing.T) {
+	t.Run("rating does not belong same space", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		claimantInsertError(mock)
+		ratingFKError(mock)
 
 		e.POST(basePath).
 			WithHeaders(headers).

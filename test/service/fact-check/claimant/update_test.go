@@ -83,7 +83,7 @@ func TestClaimantUpdate(t *testing.T) {
 		updatedClaimant["slug"] = "toi"
 		test.CheckSpaceMock(mock)
 
-		claimantSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		claimantUpdateMock(mock, updatedClaimant, nil)
 
@@ -99,7 +99,7 @@ func TestClaimantUpdate(t *testing.T) {
 	t.Run("update claimant by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedClaimant["slug"] = "toi"
-		claimantSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		slugCheckMock(mock, Data)
 
@@ -119,7 +119,7 @@ func TestClaimantUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedClaimant["slug"] = "toi-test"
 
-		claimantSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "claimants"`).
 			WithArgs(fmt.Sprint(updatedClaimant["slug"], "%"), 1).
@@ -141,7 +141,7 @@ func TestClaimantUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedClaimant["slug"] = "toi-test"
 
-		claimantSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "claimants"`).
 			WithArgs(fmt.Sprint(updatedClaimant["slug"], "%"), 1).

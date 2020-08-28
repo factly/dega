@@ -101,7 +101,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Review:        claim.Review,
 		ReviewTagLine: claim.ReviewTagLine,
 		ReviewSources: claim.ReviewSources,
-	}).Preload("Rating").Preload("Claimant").Preload("Rating.Medium").Preload("Claimant.Medium").First(&result).Error
+	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)
