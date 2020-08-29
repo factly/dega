@@ -3,6 +3,7 @@ package policy
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/factly/dega-server/service"
@@ -25,10 +26,13 @@ func TestList(t *testing.T) {
 	t.Run("List success", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
+		// Splits string of ID to retrieve the name of the policy. The name is in the last index, hence the split
+		var text = strings.Split(test.Dummy_KetoPolicy[1]["id"].(string), ":")
+
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
-			JSON().Object().Value("nodes").Array().Element(0).Object().Value("name").Equal("test-policy-0")
+			JSON().Object().Value("nodes").Array().Element(0).Object().Value("name").Equal(text[len(text)-1])
 	})
 }

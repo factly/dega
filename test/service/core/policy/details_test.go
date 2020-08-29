@@ -3,6 +3,7 @@ package policy
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/factly/dega-server/service"
@@ -25,11 +26,15 @@ func TestDetails(t *testing.T) {
 	t.Run("Get detail success", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
+		// Splits string of ID to retrieve the name of the policy. The name is in the last index, hence the split
+		var id = strings.Split(test.Dummy_SingleMock["id"].(string), ":")
+
 		e.GET(path).
 			WithPath("policy_id", 1).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
-			JSON()
+			JSON().Object().Value("name").Equal(id[len(id)-1])
+
 	})
 }
