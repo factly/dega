@@ -12,14 +12,12 @@ func MockServer() {
 
 	// Mock server to return a user from kavach
 	gock.New(os.Getenv("KAVACH_URL") + "/organisations/[0-9]+/users").
-		// Get("").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_AuthorList)
 
-		// Creates a mock server for kavach URL with an appropriate dummy response.
+	// Creates a mock server for kavach URL with an appropriate dummy response.
 	gock.New(os.Getenv("KAVACH_URL") + "/organisations").
-		// Get("").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_Org)

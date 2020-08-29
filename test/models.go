@@ -2,6 +2,8 @@ package test
 
 import "time"
 
+// Dummy response body for the mock server requesting organisation data
+// Endpoint this is sent for is /organisations
 var Dummy_Org = map[string]interface{}{
 	"id":         1,
 	"created_at": time.Now(),
@@ -21,6 +23,8 @@ var Dummy_Org = map[string]interface{}{
 	},
 }
 
+// Dummy response for the mock server requesting list of authors
+// Endpoint this is sent for is /organisations/[id]/users
 var Dummy_AuthorList = []map[string]interface{}{
 	{
 		"id":         1,
