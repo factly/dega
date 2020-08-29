@@ -13,6 +13,7 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/go-chi/chi"
 )
 
 // delete - Delete space
@@ -35,10 +36,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
+	spaceID := chi.URLParam(r, "space_id")
+	sID, err := strconv.Atoi(spaceID)
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
@@ -94,5 +96,5 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Model(&model.Space{}).Delete(&result)
 
-	renderx.JSON(w, http.StatusCreated, nil)
+	renderx.JSON(w, http.StatusOK, nil)
 }

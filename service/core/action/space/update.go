@@ -188,5 +188,5 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	renderx.JSON(w, http.StatusCreated, result)
+	renderx.JSON(w, http.StatusOK, result)
 }

@@ -16,6 +16,11 @@ func MockServer() {
 		Reply(http.StatusOK).
 		JSON(Dummy_AuthorList)
 
+	gock.New(os.Getenv("KAVACH_URL") + "/organisations/my").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(Dummy_OrgList)
+
 	// Creates a mock server for kavach URL with an appropriate dummy response.
 	gock.New(os.Getenv("KAVACH_URL") + "/organisations").
 		Persist().

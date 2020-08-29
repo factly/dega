@@ -23,6 +23,10 @@ var Dummy_Org = map[string]interface{}{
 	},
 }
 
+var Dummy_OrgList = []map[string]interface{}{
+	Dummy_Org,
+}
+
 // Dummy response for the mock server requesting list of authors
 // Endpoint this is sent for is /organisations/[id]/users
 var Dummy_AuthorList = []map[string]interface{}{
