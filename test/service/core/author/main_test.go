@@ -1,7 +1,6 @@
 package author
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -32,8 +31,6 @@ func TestMain(m *testing.M) {
 	defer gock.Disable()
 	test.MockServer()
 	defer gock.DisableNetworking()
-	fmt.Print("running")
 	exitValue := m.Run()
-	fmt.Print("end")
 	os.Exit(exitValue)
 }
