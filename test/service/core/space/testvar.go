@@ -41,26 +41,9 @@ var invalidData map[string]interface{} = map[string]interface{}{
 	"organisation_id": 0,
 }
 
-var dataWithoutSlug map[string]interface{} = map[string]interface{}{
-	"name":               "Test Space",
-	"site_title":         "Test site title",
-	"tag_line":           "Test tagline",
-	"description":        "Test Description",
-	"site_address":       "testaddress.com",
-	"logo_id":            1,
-	"logo_mobile_id":     1,
-	"fav_icon_id":        1,
-	"mobile_icon_id":     1,
-	"verification_codes": nilJsonb(),
-	"social_media_urls":  nilJsonb(),
-	"contact_info":       nilJsonb(),
-	"organisation_id":    1,
-}
-
 var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "site_title", "tag_line", "description", "site_address", "logo_id", "logo_mobile_id", "fav_icon_id", "mobile_icon_id", "verification_codes", "social_media_urls", "contact_info", "organisation_id"}
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "spaces"`)
-var countQuery string = regexp.QuoteMeta(`SELECT count(*) FROM "spaces"`)
 var deleteQuery string = regexp.QuoteMeta(`UPDATE "spaces" SET "deleted_at"=`)
 
 const path string = "/core/spaces/{space_id}"
