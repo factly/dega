@@ -77,3 +77,62 @@ var Dummy_AuthorList = []map[string]interface{}{
 		},
 	},
 }
+
+var Dummy_KetoPolicy = []map[string]interface{}{
+	{
+		"id":          "id:org:1:app:dega:space:1:test-policy-4",
+		"description": "",
+		"subjects": []string{
+			"",
+		},
+		"resources": []string{
+			"resources:org:12:app:dega:space:16:policies",
+		},
+		"actions": []string{
+			"actions:org:12:app:dega:space:16:policies:get",
+			"actions:org:12:app:dega:space:16:policies:create",
+			"actions:org:12:app:dega:space:16:policies:update",
+			"actions:org:12:app:dega:space:16:policies:delete",
+		},
+		"effect":     "allow",
+		"conditions": nil,
+	},
+	{
+		"id":          "id:org:1:app:dega:space:1:test-policy-0",
+		"description": "",
+		"subjects": []string{
+			"",
+		},
+		"resources": []string{
+			"resources:org:12:app:dega:space:18:policies",
+		},
+		"actions": []string{
+			"actions:org:12:app:dega:space:18:policies:get",
+			"actions:org:12:app:dega:space:18:policies:create",
+			"actions:org:12:app:dega:space:18:policies:update",
+			"actions:org:12:app:dega:space:18:policies:delete",
+		},
+		"effect":     "allow",
+		"conditions": nil,
+	},
+}
+
+// Dummy single policy
+var Dummy_SingleMock = map[string]interface{}{
+	"id":          "id:org:1:app:dega:space:1:test-policy-0",
+	"description": "",
+	"subjects": []string{
+		"",
+	},
+	"resources": []string{
+		"resources:org:12:app:dega:space:18:policies",
+	},
+	"actions": []string{
+		"actions:org:12:app:dega:space:18:policies:get",
+		"actions:org:12:app:dega:space:18:policies:create",
+		"actions:org:12:app:dega:space:18:policies:update",
+		"actions:org:12:app:dega:space:18:policies:delete",
+	},
+	"effect":     "allow",
+	"conditions": nil,
+}

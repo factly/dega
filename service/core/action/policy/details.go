@@ -64,7 +64,6 @@ func details(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	ketoPolicy := model.KetoPolicy{}
-
 	err = json.NewDecoder(resp.Body).Decode(&ketoPolicy)
 
 	if err != nil {
