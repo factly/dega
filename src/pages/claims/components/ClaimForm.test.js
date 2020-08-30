@@ -9,6 +9,12 @@ import moment from 'moment';
 
 import '../../../matchMedia.mock';
 import ClaimCreateForm from './ClaimForm';
+import { addClaimant } from '../../../actions/claimants';
+
+jest.mock('../../../actions/claimants', () => ({
+  ...jest.requireActual('../../../actions/claimants'),
+  addClaimant: jest.fn(),
+}));
 
 const data = {
   title: 'title',
@@ -77,7 +83,7 @@ describe('Claims Create Form component', () => {
       loading: true,
     },
   });
-  useDispatch.mockReturnValue(jest.fn());
+  useDispatch.mockReturnValue(jest.fn(() => Promise.resolve({})));
   useSelector.mockImplementation((state) => ({ details: [], total: 0, loading: false }));
 
   describe('snapshot testing', () => {
@@ -396,6 +402,24 @@ describe('Claims Create Form component', () => {
       });
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(0);
+    });
+    it.only('should call addClaimant', async (done) => {
+      await act(async () => {
+        wrapper
+          .find('FormItem')
+          .at(3)
+          .find('Input')
+          .simulate('change', { target: { value: 'new claimant' } });
+      });
+      wrapper.update();
+
+      await act(async () => {
+        wrapper.find('FormItem').at(3).find('Button').props().onClick();
+      });
+      setTimeout(() => {
+        expect(addClaimant).toHaveBeenCalledWith({ name: 'new claimant' });
+        done();
+      });
     });
   });
 });
