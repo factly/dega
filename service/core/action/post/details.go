@@ -53,7 +53,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	postClaims := []factCheckModel.PostClaim{}
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Tags").Preload("Categories").Preload("Format").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
 		SpaceID: uint(sID),
 	}).First(&result.Post).Error
 
@@ -64,10 +64,9 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if result.Format.Slug == "factcheck" {
-
 		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
-		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
 		// appending all post claims
 		for _, postClaim := range postClaims {

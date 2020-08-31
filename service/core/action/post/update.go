@@ -240,7 +240,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updatedPostClaims := []factCheckModel.PostClaim{}
 		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
-		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&updatedPostClaims)
+		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&updatedPostClaims)
 
 		// appending previous post claims to result
 		for _, postClaim := range updatedPostClaims {
