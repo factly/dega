@@ -116,9 +116,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	for _, post := range posts {
 		postList := &postData{}
-
+		postList.Claims = make([]factCheckModel.Claim, 0)
 		postList.Authors = make([]model.Author, 0)
-		postList.Claims = postClaimMap[post.ID]
+		if len(postClaimMap[post.ID]) > 0 {
+			postList.Claims = postClaimMap[post.ID]
+		}
 		postList.Post = post
 
 		postAuthors, hasEle := postAuthorMap[post.ID]
