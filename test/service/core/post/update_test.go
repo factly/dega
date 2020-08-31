@@ -1,11 +1,14 @@
 package post
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
 	"time"
 
+	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
@@ -29,6 +32,8 @@ var updatePost = map[string]interface{}{
 	"claim_ids":          []uint{1},
 	"author_ids":         []uint{1},
 }
+
+var errorDB = errors.New("Something went wrong with db queries")
 
 func TestPostUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
@@ -135,6 +140,127 @@ func TestPostUpdate(t *testing.T) {
 			WithJSON(updatePost).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(postData)
+
+		test.ExpectationsMet(t, mock)
+
+	})
+
+	t.Run("error while deleting old post tags", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatePost["slug"] = "post"
+		updatePost["tag_ids"] = []uint{}
+		updatePost["category_ids"] = []uint{}
+
+		postSelectWithSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
+			WithArgs(sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"tag_id", "post_id"}...)).
+				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
+			WithArgs(sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"category_id", "post_id"}...)).
+				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
+
+		mock.ExpectBegin()
+		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
+			WithArgs(1, 1).
+			WillReturnError(errorDB)
+		mock.ExpectRollback()
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+
+	})
+
+	t.Run("error while deleting old post categories", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatePost["slug"] = "post"
+		updatePost["tag_ids"] = []uint{}
+		updatePost["category_ids"] = []uint{}
+
+		postSelectWithSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
+			WithArgs(sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"tag_id", "post_id"}...)).
+				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
+			WithArgs(sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"category_id", "post_id"}...)).
+				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
+
+		mock.ExpectBegin()
+		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
+			WithArgs(1, 1).
+			WillReturnResult(sqlmock.NewResult(0, 1))
+		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
+			WithArgs(1, 1).
+			WillReturnError(errorDB)
+		mock.ExpectRollback()
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+
+	})
+
+	t.Run("error while deleting old post categories", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatePost["featured_medium_id"] = 0
+
+		postSelectWithSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
+			WithArgs(sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"tag_id", "post_id"}...)).
+				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
+			WithArgs(sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"category_id", "post_id"}...)).
+				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
+
+		mock.ExpectBegin()
+		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
+			WithArgs(1, 1).
+			WillReturnResult(sqlmock.NewResult(0, 1))
+		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
+			WithArgs(1, 1).
+			WillReturnResult(sqlmock.NewResult(0, 1))
+		mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
+			WithArgs(nil, test.AnyTime{}, 1).
+			WillReturnError(errorDB)
+		mock.ExpectRollback()
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
 
 		test.ExpectationsMet(t, mock)
 

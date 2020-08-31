@@ -270,17 +270,33 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
 		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}))
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
+			AddRow(1, time.Now(), time.Now(), nil, 2, 1))
+
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
+			AddRow(1, time.Now(), time.Now(), nil, 2, 1))
+
+	mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
+		WithArgs(test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	mock.ExpectQuery(`INSERT INTO "post_claims"`).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+		WillReturnRows(sqlmock.
+			NewRows([]string{"id"}).
+			AddRow(1))
 
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
 			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
 	claim.SelectWithOutSpace(mock, claim.Data)
+
+	mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
+		WithArgs(test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
 
 	mock.ExpectQuery(`INSERT INTO "post_authors"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
