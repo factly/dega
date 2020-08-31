@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
@@ -46,7 +46,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	policyID = "id" + commanPolicyString + policyID
 
-	req, err := http.NewRequest("DELETE", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	req, err := http.NewRequest("DELETE", config.KetoURL+"/engines/acp/ory/regex/policies/"+policyID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

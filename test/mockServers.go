@@ -2,8 +2,8 @@ package test
 
 import (
 	"net/http"
-	"os"
 
+	"github.com/factly/dega-server/config"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -11,25 +11,25 @@ import (
 func MockServer() {
 
 	// Mock server to return a user from kavach
-	gock.New(os.Getenv("KAVACH_URL") + "/organisations/[0-9]+/users").
+	gock.New(config.KavachURL + "/organisations/[0-9]+/users").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_AuthorList)
 
-	gock.New(os.Getenv("KAVACH_URL") + "/organisations/my").
+	gock.New(config.KavachURL + "/organisations/my").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_OrgList)
 
 	// Creates a mock server for kavach URL with an appropriate dummy response.
-	gock.New(os.Getenv("KAVACH_URL") + "/organisations").
+	gock.New(config.KavachURL + "/organisations").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_Org)
 
 	// <----- ALL THE KETO POLICIES (FOR POLICY TEST)------>
 	// GET-details for single id,
-	gock.New(os.Getenv("KETO_URL")).
+	gock.New(config.KetoURL).
 		Get("/engines/acp/ory/regex/policies/(.+)").
 		SetMatcher(gock.NewMatcher()).
 		AddMatcher(func(req *http.Request, ereq *gock.Request) (bool, error) { return req.Method == "GET", nil }).
@@ -38,7 +38,7 @@ func MockServer() {
 		JSON(Dummy_SingleMock)
 
 	// DELETE AND UPDATE POLICY - get specific policy, delete and put
-	gock.New(os.Getenv("KETO_URL")).
+	gock.New(config.KetoURL).
 		Put("/engines/acp/ory/regex/policies/(.+)").
 		SetMatcher(gock.NewMatcher()).
 		AddMatcher(func(req *http.Request, ereq *gock.Request) (bool, error) {
@@ -52,7 +52,7 @@ func MockServer() {
 		Reply(http.StatusOK).
 		JSON(Dummy_KetoPolicy)
 
-	gock.New(os.Getenv("KETO_URL")).
+	gock.New(config.KetoURL).
 		Delete("/engines/acp/ory/regex/policies/(.+)").
 		SetMatcher(gock.NewMatcher()).
 		AddMatcher(func(req *http.Request, ereq *gock.Request) (bool, error) {
@@ -67,13 +67,13 @@ func MockServer() {
 		JSON(Dummy_KetoPolicy)
 
 		// GET and POST POLICY - returns a list of policies and post policy
-	gock.New(os.Getenv("KETO_URL") + "/engines/acp/ory/regex/policies").
+	gock.New(config.KetoURL + "/engines/acp/ory/regex/policies").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_KetoPolicy)
 
 	// Creates a mock server for keto for provisioning Policy.Authorizer module.
-	gock.New(os.Getenv("KETO_URL")).
+	gock.New(config.KetoURL).
 		Post("/engines/acp/ory/regex/allowed").
 		Persist().
 		Reply(http.StatusOK)

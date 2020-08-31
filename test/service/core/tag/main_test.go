@@ -92,8 +92,6 @@ func tagCountQuery(mock sqlmock.Sqlmock, count int) {
 
 func TestMain(m *testing.M) {
 
-	test.SetEnv()
-
 	// Mock kavach server and allowing persisted external traffic
 	defer gock.Disable()
 	test.MockServer()

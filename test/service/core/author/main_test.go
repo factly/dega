@@ -25,8 +25,6 @@ var basePath = "/core/authors"
 
 func TestMain(m *testing.M) {
 
-	test.SetEnv()
-
 	// Mock kavach server and allowing persisted external traffic
 	defer gock.Disable()
 	test.MockServer()
