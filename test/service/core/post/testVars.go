@@ -76,7 +76,6 @@ var columns = []string{"id", "created_at", "updated_at", "deleted_at", "title", 
 	"description", "is_featured", "is_sticky", "is_highlighted", "featured_medium_id", "format_id", "published_date", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "posts"`)
-var deleteQuery = regexp.QuoteMeta(`UPDATE "posts" SET "deleted_at"=`)
 var paginationQuery = `SELECT \* FROM "posts" (.+) LIMIT 1 OFFSET 1`
 
 var basePath = "/core/posts"
