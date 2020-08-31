@@ -9,9 +9,6 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/fact-check/claim"
-	"github.com/factly/dega-server/test/service/fact-check/claimant"
-	"github.com/factly/dega-server/test/service/fact-check/rating"
-	"github.com/gavv/httpexpect"
 )
 
 var headers = map[string]string{
@@ -113,19 +110,6 @@ func postInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectCommit()
 }
 
-func claimantFKError(mock sqlmock.Sqlmock) {
-	mock.ExpectBegin()
-	claimant.EmptyRowMock(mock)
-	mock.ExpectRollback()
-}
-
-func ratingFKError(mock sqlmock.Sqlmock) {
-	mock.ExpectBegin()
-	claimant.SelectWithSpace(mock)
-	rating.EmptyRowMock(mock)
-	mock.ExpectRollback()
-}
-
 func preloadMock(mock sqlmock.Sqlmock) {
 	medium.SelectWithOutSpace(mock)
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "formats"`)).
@@ -166,16 +150,6 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 func postCountQuery(mock sqlmock.Sqlmock, count int) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
-}
-
-func validateAssociations(result *httpexpect.Object) {
-	result.Value("claimant").
-		Object().
-		ContainsMap(claimant.Data)
-
-	result.Value("rating").
-		Object().
-		ContainsMap(rating.Data)
 }
 
 func postTagMock(mock sqlmock.Sqlmock) {
@@ -227,21 +201,6 @@ func postAuthorInsertMock(mock sqlmock.Sqlmock) {
 			NewRows([]string{"id"}).
 			AddRow(1))
 	mock.ExpectCommit()
-}
-
-func postUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, err error) {
-	mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
-		WithArgs(post["description"], post["excerpt"], post["featured_medium_id"], post["format_id"],
-			post["is_highlighted"], post["is_sticky"], post["slug"], post["status"], post["subtitle"], post["title"],
-			test.AnyTime{}, 1).
-		WillReturnResult(sqlmock.NewResult(1, 1))
-	mock.ExpectExec(`INSERT INTO "post_tags"`).
-		WithArgs(1, 1, 1, 1).
-		WillReturnResult(sqlmock.NewResult(0, 1))
-	mock.ExpectExec(`INSERT INTO "post_categories"`).
-		WithArgs(1, 1, 1, 1).
-		WillReturnResult(sqlmock.NewResult(0, 1))
-
 }
 
 func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
