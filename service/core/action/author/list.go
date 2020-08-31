@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/factly/x/loggerx"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
@@ -55,7 +55,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.Author, 0)
 
-	url := fmt.Sprint(os.Getenv("KAVACH_URL"), "/organisations/", oID, "/users")
+	url := fmt.Sprint(config.KavachURL, "/organisations/", oID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

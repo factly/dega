@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 	"strings"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -95,7 +95,7 @@ func Authorizer(h http.Handler) http.Handler {
 				return
 			}
 
-			req, err := http.NewRequest("POST", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/allowed", buf)
+			req, err := http.NewRequest("POST", config.KetoURL+"/engines/acp/ory/regex/allowed", buf)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

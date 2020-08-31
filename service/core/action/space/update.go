@@ -5,7 +5,6 @@ import (
 	"errors"
 	"io/ioutil"
 	"net/http"
-	"os"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
@@ -70,7 +69,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := http.NewRequest("GET", os.Getenv("KAVACH_URL")+"/organisations/"+strconv.Itoa(space.OrganisationID), nil)
+	req, err := http.NewRequest("GET", config.KavachURL+"/organisations/"+strconv.Itoa(space.OrganisationID), nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

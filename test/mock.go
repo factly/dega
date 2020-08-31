@@ -23,6 +23,10 @@ func (a AnyTime) Match(v driver.Value) bool {
 
 // SetupMockDB setups the mock sql db
 func SetupMockDB() sqlmock.Sqlmock {
+
+	config.KavachURL = "http://kavach:6620"
+	config.KetoURL = "http://keto:6644"
+
 	db, mock, err := sqlmock.New()
 	if err != nil {
 		log.Fatal(err)

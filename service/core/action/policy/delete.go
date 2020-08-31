@@ -3,8 +3,8 @@ package policy
 import (
 	"fmt"
 	"net/http"
-	"os"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -34,7 +34,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	policyID = fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":"+policyID)
 
-	req, err := http.NewRequest("DELETE", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	req, err := http.NewRequest("DELETE", config.KetoURL+"/engines/acp/ory/regex/policies/"+policyID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

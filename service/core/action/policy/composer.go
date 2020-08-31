@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/loggerx"
 )
@@ -54,7 +54,7 @@ func Composer(oID int, sID int, inputPolicy policyReq) model.KetoPolicy {
 		loggerx.Error(err)
 	}
 
-	req, err := http.NewRequest("PUT", os.Getenv("KETO_URL")+"/engines/acp/ory/regex/policies", buf)
+	req, err := http.NewRequest("PUT", config.KetoURL+"/engines/acp/ory/regex/policies", buf)
 	if err != nil {
 		loggerx.Error(err)
 	}
