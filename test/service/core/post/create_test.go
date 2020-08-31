@@ -1,4 +1,4 @@
-package claim
+package post
 
 import (
 	"net/http"
@@ -7,6 +7,8 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/format"
+	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -23,7 +25,7 @@ func TestClaimCreate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable claim", func(t *testing.T) {
+	t.Run("Unprocessable post", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
@@ -35,7 +37,7 @@ func TestClaimCreate(t *testing.T) {
 
 	})
 
-	t.Run("Unable to decode claim", func(t *testing.T) {
+	t.Run("Unable to decode post", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
@@ -46,51 +48,69 @@ func TestClaimCreate(t *testing.T) {
 
 	})
 
-	t.Run("create claim", func(t *testing.T) {
+	t.Run("create post", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		claimInsertMock(mock)
-		SelectWithOutSpace(mock, Data)
+		postTagMock(mock)
+		postCategoryMock(mock)
 
-		result := e.POST(basePath).
+		postInsertMock(mock)
+
+		postSelectWithOutSpace(mock, Data)
+
+		postClaimInsertMock(mock)
+		postClaimSelectMock(mock)
+		postAuthorInsertMock(mock)
+
+		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
 
-		validateAssociations(result)
 		test.ExpectationsMet(t, mock)
 
 	})
 
-	t.Run("create claim with slug is empty", func(t *testing.T) {
+	t.Run("create post with slug is empty", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		claimInsertMock(mock)
-		SelectWithOutSpace(mock, Data)
+		postTagMock(mock)
+		postCategoryMock(mock)
 
-		result := e.POST(basePath).
+		postInsertMock(mock)
+
+		postSelectWithOutSpace(mock, Data)
+		postClaimInsertMock(mock)
+		postClaimSelectMock(mock)
+		postAuthorInsertMock(mock)
+
+		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(dataWithoutSlug).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
-		validateAssociations(result)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
+
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("claimant does not belong same space", func(t *testing.T) {
+	t.Run("medium does not belong same space", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		claimantFKError(mock)
+		postTagMock(mock)
+		postCategoryMock(mock)
+		mock.ExpectBegin()
+		medium.EmptyRowMock(mock)
+		mock.ExpectRollback()
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -100,13 +120,18 @@ func TestClaimCreate(t *testing.T) {
 
 		test.ExpectationsMet(t, mock)
 	})
-	t.Run("rating does not belong same space", func(t *testing.T) {
+	t.Run("format does not belong same space", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
 		slugCheckMock(mock, Data)
 
-		ratingFKError(mock)
+		postTagMock(mock)
+		postCategoryMock(mock)
+		mock.ExpectBegin()
+		medium.SelectWithSpace(mock)
+		format.EmptyRowMock(mock)
+		mock.ExpectRollback()
 
 		e.POST(basePath).
 			WithHeaders(headers).

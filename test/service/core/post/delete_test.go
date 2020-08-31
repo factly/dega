@@ -1,8 +1,9 @@
-package claim
+package post
 
 import (
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -12,7 +13,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestClaimDelete(t *testing.T) {
+func TestPostDelete(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -23,55 +24,58 @@ func TestClaimDelete(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("invalid claim id", func(t *testing.T) {
+	t.Run("invalid post id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		e.DELETE(path).
-			WithPath("claim_id", "invalid_id").
+			WithPath("post_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 
 	})
 
-	t.Run("claim record not found", func(t *testing.T) {
+	t.Run("post record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		recordNotFoundMock(mock)
 
 		e.DELETE(path).
-			WithPath("claim_id", "100").
+			WithPath("post_id", "100").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 	})
 
-	t.Run("check claim associated with other entity", func(t *testing.T) {
+	t.Run("post record deleted", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-
-		claimPostExpect(mock, 1)
-
-		e.DELETE(path).
-			WithPath("claim_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-	})
-
-	t.Run("claim record deleted", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-
-		claimPostExpect(mock, 0)
+		postSelectWithSpace(mock)
+		postTagMock(mock)
+		postCategoryMock(mock)
 
 		mock.ExpectBegin()
-		mock.ExpectExec(deleteQuery).
+		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
+			WillReturnResult(sqlmock.NewResult(0, 1))
+		mock.ExpectCommit()
+
+		mock.ExpectBegin()
+		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
+			WillReturnResult(sqlmock.NewResult(0, 1))
+		mock.ExpectCommit()
+
+		mock.ExpectBegin()
+		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
+			WithArgs(test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		mock.ExpectCommit()
+
+		mock.ExpectBegin()
+		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "posts" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		mock.ExpectCommit()
 
 		e.DELETE(path).
-			WithPath("claim_id", 1).
+			WithPath("post_id", 1).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK)

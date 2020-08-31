@@ -117,7 +117,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		postClaims := []factCheckModel.PostClaim{}
 		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: result.ID,
-		}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
 		// appending all post claims
 		for _, postClaim := range postClaims {

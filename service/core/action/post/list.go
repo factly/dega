@@ -43,7 +43,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.Preload("Medium").Preload("Tags").Preload("Categories").Preload("Format").Model(&model.Post{}).Where(&model.Post{
+	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
 	})
 
@@ -84,7 +84,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	// fetch all claims related to posts
 	postClaims := []factCheckModel.PostClaim{}
-	config.DB.Model(&factCheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Find(&postClaims)
+	config.DB.Model(&factCheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
 	postClaimMap := make(map[uint][]factCheckModel.Claim)
 	for _, pc := range postClaims {

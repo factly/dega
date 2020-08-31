@@ -1,4 +1,4 @@
-package claim
+package post
 
 import (
 	"net/http"
@@ -7,13 +7,11 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/fact-check/claimant"
-	"github.com/factly/dega-server/test/service/fact-check/rating"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestClaimDetails(t *testing.T) {
+func TestPostDetails(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -24,37 +22,38 @@ func TestClaimDetails(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("invalid claim id", func(t *testing.T) {
+	t.Run("invalid post id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		e.GET(path).
-			WithPath("claim_id", "invalid_id").
+			WithPath("post_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 	})
 
-	t.Run("claim record not found", func(t *testing.T) {
+	t.Run("post record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		recordNotFoundMock(mock)
 
 		e.GET(path).
-			WithPath("claim_id", "100").
+			WithPath("post_id", "100").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusInternalServerError)
+			Status(http.StatusNotFound)
 	})
 
-	t.Run("get claim by id", func(t *testing.T) {
+	t.Run("get post by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-		rating.SelectWithOutSpace(mock, rating.Data)
-		claimant.SelectWithOutSpace(mock, claimant.Data)
+		postSelectWithSpace(mock)
+		preloadMock(mock)
+		postClaimSelectMock(mock)
+		postAuthorSelectMock(mock)
 
 		e.GET(path).
-			WithPath("claim_id", 1).
+			WithPath("post_id", 1).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(Data)
+			Status(http.StatusOK).JSON().Object().ContainsMap(postData)
 	})
 
 }

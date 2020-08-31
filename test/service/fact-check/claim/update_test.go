@@ -91,7 +91,7 @@ func TestClaimUpdate(t *testing.T) {
 		updatedClaim["slug"] = "claim"
 		test.CheckSpaceMock(mock)
 
-		claimSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		claimUpdateMock(mock, updatedClaim, nil)
 
@@ -108,7 +108,7 @@ func TestClaimUpdate(t *testing.T) {
 	t.Run("update claim by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedClaim["slug"] = "claim"
-		claimSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		slugCheckMock(mock, Data)
 
@@ -129,7 +129,7 @@ func TestClaimUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedClaim["slug"] = "claim-test"
 
-		claimSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "claims"`).
 			WithArgs(fmt.Sprint(updatedClaim["slug"], "%"), 1).
@@ -151,7 +151,7 @@ func TestClaimUpdate(t *testing.T) {
 		updatedClaim["slug"] = "claim"
 		test.CheckSpaceMock(mock)
 
-		claimSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectBegin()
 		claimant.EmptyRowMock(mock)
@@ -171,7 +171,7 @@ func TestClaimUpdate(t *testing.T) {
 		updatedClaim["slug"] = "claim"
 		test.CheckSpaceMock(mock)
 
-		claimSelectWithSpace(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectBegin()
 		claimant.SelectWithSpace(mock)
