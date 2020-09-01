@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -80,6 +81,25 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	config.DB.Model(&model.Rating{}).Preload("Medium").First(&result)
+
+	// Insert into meili index
+	meiliObj := map[string]interface{}{
+		"id":            result.ID,
+		"kind":          "rating",
+		"name":          result.Name,
+		"slug":          result.Slug,
+		"description":   result.Description,
+		"numeric_value": result.NumericValue,
+		"medium_id":     result.MediumID,
+		"space_id":      result.SpaceID,
+	}
+
+	err = meili.AddDocument(meiliObj)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusCreated, result)
 }

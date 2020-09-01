@@ -14,8 +14,8 @@ type Claim struct {
 	config.Base
 	Title         string         `gorm:"column:title" json:"title"`
 	Slug          string         `gorm:"column:slug" json:"slug"`
-	ClaimDate     *time.Time     `gorm:"column:claim_date" json:"claim_date" sql:"DEFAULT:NULL"`
-	CheckedDate   *time.Time     `gorm:"column:checked_date" json:"checked_date" sql:"DEFAULT:NULL"`
+	ClaimDate     time.Time      `gorm:"column:claim_date" json:"claim_date" sql:"DEFAULT:NULL"`
+	CheckedDate   time.Time      `gorm:"column:checked_date" json:"checked_date" sql:"DEFAULT:NULL"`
 	ClaimSources  string         `gorm:"column:claim_sources" json:"claim_sources"`
 	Description   postgres.Jsonb `gorm:"column:description" json:"description"`
 	ClaimantID    uint           `gorm:"column:claimant_id" json:"claimant_id"`
