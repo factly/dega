@@ -77,4 +77,25 @@ func MockServer() {
 		Post("/engines/acp/ory/regex/allowed").
 		Persist().
 		Reply(http.StatusOK)
+
+	gock.New(config.MeiliURL).
+		Post("/indexes/dega/documents").
+		HeaderPresent("X-Meili-API-Key").
+		Persist().
+		Reply(http.StatusAccepted).
+		JSON(ReturnUpdate)
+
+	gock.New(config.MeiliURL).
+		Put("/indexes/dega/documents").
+		HeaderPresent("X-Meili-API-Key").
+		Persist().
+		Reply(http.StatusAccepted).
+		JSON(ReturnUpdate)
+
+	gock.New(config.MeiliURL).
+		Delete("/indexes/dega/documents/(.+)").
+		HeaderPresent("X-Meili-API-Key").
+		Persist().
+		Reply(http.StatusAccepted).
+		JSON(ReturnUpdate)
 }

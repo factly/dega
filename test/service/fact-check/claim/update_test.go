@@ -18,8 +18,8 @@ import (
 
 var updatedClaim = map[string]interface{}{
 	"title":           "Claim",
-	"claim_date":      time.Time{},
-	"checked_date":    time.Time{},
+	"claim_date":      time.Now(),
+	"checked_date":    time.Now(),
 	"claim_sources":   "GOI",
 	"description":     test.NilJsonb(),
 	"claimant_id":     uint(1),
