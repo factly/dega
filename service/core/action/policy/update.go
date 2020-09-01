@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -79,6 +80,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 	/* User req */
 
 	result := Mapper(Composer(organisationID, spaceID, policyReq), author.Mapper(organisationID, userID))
+
+	// Update into meili index
+	meiliObj := map[string]interface{}{
+		"id":          result.ID,
+		"kind":        "policy",
+		"name":        result.Name,
+		"description": result.Description,
+	}
+
+	err = meili.UpdateDocument(meiliObj)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
 }

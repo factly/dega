@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -119,6 +120,30 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	// Insert into meili index
+	meiliObj := map[string]interface{}{
+		"id":              result.ID,
+		"kind":            "space",
+		"name":            result.Name,
+		"slug":            result.Slug,
+		"description":     result.Description,
+		"site_title":      result.SiteTitle,
+		"site_address":    result.SiteAddress,
+		"tag_line":        result.TagLine,
+		"organisation_id": result.OrganisationID,
+		"logo_id":         result.LogoID,
+		"logo_mobile_id":  result.LogoMobileID,
+		"fav_icon_id":     result.FavIconID,
+		"mobile_icon_id":  result.MobileIconID,
+	}
+
+	err = meili.AddDocument(meiliObj)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 

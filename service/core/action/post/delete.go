@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -65,6 +66,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}).Delete(&model.PostAuthor{})
 
 	config.DB.Model(&model.Post{}).Delete(&result)
+
+	err = meili.DeleteDocument(result.ID, "post")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, nil)
 }
