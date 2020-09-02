@@ -17,7 +17,6 @@ import (
 func TestSpaceUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
-	defer gock.Disable()
 	test.MockServer()
 	defer gock.DisableNetworking()
 
@@ -30,24 +29,7 @@ func TestSpaceUpdate(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("update a space", func(t *testing.T) {
-		mock.ExpectQuery(selectQuery).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
-
-		mock.ExpectBegin()
-		medium.SelectWithSpace(mock)
-		medium.SelectWithSpace(mock)
-		medium.SelectWithSpace(mock)
-		medium.SelectWithSpace(mock)
-		mock.ExpectExec(`UPDATE \"spaces\" SET (.+)  WHERE (.+) \"spaces\".\"id\" = `).
-			WithArgs(Data["contact_info"], Data["description"], Data["fav_icon_id"], Data["logo_id"], Data["logo_mobile_id"], Data["mobile_icon_id"], Data["name"], Data["site_address"], Data["site_title"], Data["slug"], Data["social_media_urls"], Data["tag_line"], test.AnyTime{}, Data["verification_codes"], 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectQuery(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
+		updateMock(mock)
 		mock.ExpectCommit()
 
 		e.PUT(path).
@@ -178,6 +160,21 @@ func TestSpaceUpdate(t *testing.T) {
 		medium.SelectWithSpace(mock)
 		medium.SelectWithSpace(mock)
 		mediumNotFound(mock)
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("space_id", "1").
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("update a space when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		updateMock(mock)
 		mock.ExpectRollback()
 
 		e.PUT(path).

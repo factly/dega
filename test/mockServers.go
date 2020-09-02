@@ -9,7 +9,12 @@ import (
 
 // MockServer is created to intercept HTTP Calls outside this project. Mocking the external project servers helps with Unit Testing.
 func MockServer() {
+	KavachGock()
+	KetoGock()
+	MeiliGock()
+}
 
+func KavachGock() {
 	// Mock server to return a user from kavach
 	gock.New(config.KavachURL + "/organisations/[0-9]+/users").
 		Persist().
@@ -27,6 +32,9 @@ func MockServer() {
 		Reply(http.StatusOK).
 		JSON(Dummy_Org)
 
+}
+
+func KetoGock() {
 	// <----- ALL THE KETO POLICIES (FOR POLICY TEST)------>
 	// GET-details for single id,
 	gock.New(config.KetoURL).
@@ -77,7 +85,9 @@ func MockServer() {
 		Post("/engines/acp/ory/regex/allowed").
 		Persist().
 		Reply(http.StatusOK)
+}
 
+func MeiliGock() {
 	gock.New(config.MeiliURL).
 		Post("/indexes/dega/documents").
 		HeaderPresent("X-Meili-API-Key").
@@ -103,16 +113,9 @@ func MockServer() {
 func DisableMeiliGock(serverURL string) {
 	gock.Off()
 
+	KavachGock()
+	KetoGock()
+
 	gock.New(serverURL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
-
-	gock.New(config.KetoURL).
-		Post("/engines/acp/ory/regex/allowed").
-		Persist().
-		Reply(http.StatusOK)
-
-	gock.New(config.KavachURL + "/organisations/[0-9]+/users").
-		Persist().
-		Reply(http.StatusOK).
-		JSON(Dummy_AuthorList)
 }

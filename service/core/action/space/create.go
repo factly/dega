@@ -115,7 +115,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		ContactInfo:       space.ContactInfo,
 	}
 
-	err = config.DB.Create(&result).Error
+	tx := config.DB.Begin()
+	err = tx.Create(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -142,10 +143,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	err = meili.AddDocument(meiliObj)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
+	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
 }

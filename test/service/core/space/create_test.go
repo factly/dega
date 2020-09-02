@@ -14,7 +14,6 @@ import (
 func TestSpaceCreate(t *testing.T) {
 	mock := test.SetupMockDB()
 
-	defer gock.Disable()
 	test.MockServer()
 	defer gock.DisableNetworking()
 
@@ -30,6 +29,7 @@ func TestSpaceCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		insertMock(mock)
+		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithHeader("X-User", "1").
@@ -70,5 +70,21 @@ func TestSpaceCreate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusServiceUnavailable)
+	})
+
+	t.Run("create a space when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		slugCheckMock(mock, Data)
+
+		insertMock(mock)
+		mock.ExpectRollback()
+
+		e.POST(basePath).
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
 	})
 }

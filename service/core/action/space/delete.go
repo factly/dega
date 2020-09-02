@@ -94,14 +94,17 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Model(&model.Space{}).Delete(&result)
+	tx := config.DB.Begin()
+	tx.Model(&model.Space{}).Delete(&result)
 
 	err = meili.DeleteDocument(result.ID, "space")
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, nil)
 }
