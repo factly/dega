@@ -44,13 +44,13 @@ func TestFormatDetails(t *testing.T) {
 
 	t.Run("get format by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		formatSelectMock(mock)
+		SelectWithSpace(mock)
 
 		e.GET(path).
 			WithPath("format_id", 1).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(data)
+			Status(http.StatusOK).JSON().Object().ContainsMap(Data)
 	})
 
 }

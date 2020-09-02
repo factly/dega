@@ -53,8 +53,8 @@ func TestCategoryList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["parent_id"], categorylist[0]["medium_id"]).
-				AddRow(2, time.Now(), time.Now(), nil, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["medium_id"]))
+				AddRow(1, time.Now(), time.Now(), nil, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["parent_id"], categorylist[0]["medium_id"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["medium_id"], 1))
 
 		medium.SelectWithOutSpace(mock)
 
@@ -83,7 +83,7 @@ func TestCategoryList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(2, time.Now(), time.Now(), nil, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["medium_id"]))
+				AddRow(2, time.Now(), time.Now(), nil, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["medium_id"], 1))
 
 		medium.SelectWithOutSpace(mock)
 

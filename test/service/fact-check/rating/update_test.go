@@ -110,12 +110,14 @@ func TestRatingUpdate(t *testing.T) {
 		ratingUpdateMock(mock, updatedRating, nil)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.PUT(path).
 			WithPath("rating_id", 1).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedRating)
+		Data["slug"] = "true"
 		test.ExpectationsMet(t, mock)
 
 	})

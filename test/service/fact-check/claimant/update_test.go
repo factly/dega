@@ -110,14 +110,15 @@ func TestClaimantUpdate(t *testing.T) {
 		claimantUpdateMock(mock, updatedClaimant, nil)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.PUT(path).
 			WithPath("claimant_id", 1).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedClaimant)
+		Data["slug"] = "toi"
 		test.ExpectationsMet(t, mock)
-
 	})
 
 	t.Run("update claimant with different slug", func(t *testing.T) {

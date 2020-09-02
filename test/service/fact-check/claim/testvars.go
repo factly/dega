@@ -31,20 +31,6 @@ var Data = map[string]interface{}{
 	"review_sources":  "TOI",
 }
 
-var dataWithoutSlug = map[string]interface{}{
-	"title":           "Claim",
-	"slug":            "",
-	"claim_date":      time.Now(),
-	"checked_date":    time.Now(),
-	"claim_sources":   "GOI",
-	"description":     test.NilJsonb(),
-	"claimant_id":     uint(1),
-	"rating_id":       uint(1),
-	"review":          "Succesfully reviewed",
-	"review_tag_line": "tag line",
-	"review_sources":  "TOI",
-}
-
 var invalidData = map[string]interface{}{
 	"title": "a",
 }

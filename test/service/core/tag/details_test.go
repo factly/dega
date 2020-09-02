@@ -14,6 +14,9 @@ import (
 func TestTagDetails(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -44,13 +47,13 @@ func TestTagDetails(t *testing.T) {
 
 	t.Run("get tag by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		e.GET(path).
 			WithPath("tag_id", 1).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(data)
+			Status(http.StatusOK).JSON().Object().ContainsMap(Data)
 	})
 
 }

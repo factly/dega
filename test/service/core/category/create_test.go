@@ -56,7 +56,7 @@ func TestCategoryCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		insertMock(mock)
-		SelectWithoutSpace(mock)
+		SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
@@ -93,14 +93,14 @@ func TestCategoryCreate(t *testing.T) {
 
 		insertMock(mock)
 
-		SelectWithoutSpace(mock)
+		SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
 		Data["slug"] = ""
 		res := e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).JSON().Object()
 		Data["slug"] = "test-category"
@@ -147,7 +147,7 @@ func TestCategoryCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		insertMock(mock)
-		SelectWithoutSpace(mock)
+		SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectRollback()
 

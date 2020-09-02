@@ -57,7 +57,7 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("Unable to decode format data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		formatSelectMock(mock)
+		SelectWithSpace(mock)
 
 		e.PUT(path).
 			WithPath("format_id", 1).
@@ -70,7 +70,7 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("Unprocessable format", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		formatSelectMock(mock)
+		SelectWithSpace(mock)
 
 		e.PUT(path).
 			WithPath("format_id", 1).
@@ -85,10 +85,10 @@ func TestFormatUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
 			"name": "Article",
-			"slug": "article",
+			"slug": "factcheck",
 		}
 
-		formatSelectMock(mock)
+		SelectWithSpace(mock)
 
 		formatUpdateMock(mock, updatedFormat)
 
@@ -107,28 +107,31 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Article",
-			"slug": "article-1",
+			"name": "Factcheck",
+			"slug": "factcheck-1",
 		}
-		formatSelectMock(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
-			WithArgs("article%", 1).
+			WithArgs("factcheck%", 1).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, updatedFormat["name"], "article"))
+				AddRow(1, time.Now(), time.Now(), nil, updatedFormat["name"], "factcheck"))
 
 		formatUpdateMock(mock, updatedFormat)
 
 		selectAfterUpdate(mock, updatedFormat)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.PUT(path).
 			WithPath("format_id", 1).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedFormat)
+		Data["slug"] = "factcheck"
 
+		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("update format with different slug", func(t *testing.T) {
@@ -137,7 +140,7 @@ func TestFormatUpdate(t *testing.T) {
 			"name": "Article",
 			"slug": "testing-slug",
 		}
-		formatSelectMock(mock)
+		SelectWithSpace(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
 			WithArgs(fmt.Sprint(updatedFormat["slug"], "%"), 1).
@@ -165,7 +168,7 @@ func TestFormatUpdate(t *testing.T) {
 			"slug": "article",
 		}
 
-		formatSelectMock(mock)
+		SelectWithSpace(mock)
 
 		formatUpdateMock(mock, updatedFormat)
 

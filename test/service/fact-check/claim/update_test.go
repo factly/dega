@@ -119,12 +119,14 @@ func TestClaimUpdate(t *testing.T) {
 		claimUpdateMock(mock, updatedClaim, nil)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		result := e.PUT(path).
 			WithPath("claim_id", 1).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedClaim)
+		Data["slug"] = "claim"
 		validateAssociations(result)
 		test.ExpectationsMet(t, mock)
 

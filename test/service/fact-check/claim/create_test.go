@@ -80,11 +80,14 @@ func TestClaimCreate(t *testing.T) {
 		SelectWithOutSpace(mock, Data)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		result := e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+			Status(http.StatusCreated).JSON().Object()
+		Data["slug"] = "claim"
+		result.ContainsMap(Data)
 		validateAssociations(result)
 		test.ExpectationsMet(t, mock)
 	})
@@ -99,7 +102,7 @@ func TestClaimCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 
@@ -115,7 +118,7 @@ func TestClaimCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 

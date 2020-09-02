@@ -15,6 +15,9 @@ func TestTagCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -57,9 +60,9 @@ func TestTagCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(data).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(data)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
 
 	})
@@ -73,12 +76,14 @@ func TestTagCreate(t *testing.T) {
 		tagInsertMock(mock)
 		mock.ExpectCommit()
 
-		e.POST(basePath).
+		Data["slug"] = ""
+		res := e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(data)
-
+			Status(http.StatusCreated).JSON().Object()
+		Data["slug"] = "elections"
+		res.ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
 	})
 
@@ -94,7 +99,7 @@ func TestTagCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 

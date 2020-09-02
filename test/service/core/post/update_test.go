@@ -139,13 +139,14 @@ func TestPostUpdate(t *testing.T) {
 		updateMock(mock, updatePost, true)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.PUT(path).
 			WithPath("post_id", 1).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(postData)
-
+		Data["slug"] = "post"
 		test.ExpectationsMet(t, mock)
 
 	})

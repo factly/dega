@@ -7,6 +7,8 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/category"
+	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -50,8 +52,8 @@ func TestPostDelete(t *testing.T) {
 	t.Run("post record deleted", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		postSelectWithSpace(mock)
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithOutSpace(mock)
 
 		deleteMock(mock)
 		mock.ExpectCommit()
@@ -67,8 +69,8 @@ func TestPostDelete(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 		postSelectWithSpace(mock)
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithOutSpace(mock)
 
 		deleteMock(mock)
 		mock.ExpectRollback()

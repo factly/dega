@@ -73,13 +73,15 @@ func TestMediumCreate(t *testing.T) {
 		mediumInsertMock(mock)
 		mock.ExpectCommit()
 
-		e.POST(basePath).
+		Data["slug"] = ""
+		res := e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+			Status(http.StatusCreated).JSON().Object()
+		Data["slug"] = "image"
+		res.ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
-
 	})
 
 	t.Run("medium does not belong same space", func(t *testing.T) {
@@ -90,7 +92,7 @@ func TestMediumCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 

@@ -16,6 +16,9 @@ import (
 func TestTagList(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -34,7 +37,7 @@ func TestTagList(t *testing.T) {
 		tagCountQuery(mock, 0)
 
 		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns))
+			WillReturnRows(sqlmock.NewRows(Columns))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -52,9 +55,9 @@ func TestTagList(t *testing.T) {
 		tagCountQuery(mock, len(taglist))
 
 		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, taglist[0]["name"], taglist[0]["slug"]).
-				AddRow(2, time.Now(), time.Now(), nil, taglist[1]["name"], taglist[1]["slug"]))
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(1, time.Now(), time.Now(), nil, taglist[0]["name"], taglist[0]["slug"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, taglist[1]["name"], taglist[1]["slug"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -77,8 +80,8 @@ func TestTagList(t *testing.T) {
 		tagCountQuery(mock, len(taglist))
 
 		mock.ExpectQuery(paginationQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, taglist[1]["name"], taglist[1]["slug"]))
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(2, time.Now(), time.Now(), nil, taglist[1]["name"], taglist[1]["slug"], 1))
 
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{

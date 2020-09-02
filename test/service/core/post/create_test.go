@@ -7,8 +7,10 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -57,8 +59,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock)
 		postSelectWithOutSpace(mock, Data)
@@ -83,8 +85,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock)
 
@@ -94,12 +96,13 @@ func TestClaimCreate(t *testing.T) {
 		postAuthorInsertMock(mock)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
-
+		Data["slug"] = "post"
 		test.ExpectationsMet(t, mock)
 	})
 
@@ -109,15 +112,15 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithOutSpace(mock)
 		mock.ExpectBegin()
 		medium.EmptyRowMock(mock)
 		mock.ExpectRollback()
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 
@@ -129,8 +132,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithOutSpace(mock)
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
 		format.EmptyRowMock(mock)
@@ -138,7 +141,7 @@ func TestClaimCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 
@@ -151,8 +154,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock)
 		postSelectWithOutSpace(mock, Data)

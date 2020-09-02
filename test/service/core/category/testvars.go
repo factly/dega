@@ -28,13 +28,6 @@ var invalidData map[string]interface{} = map[string]interface{}{
 	"slg": "test-category",
 }
 
-var dataWithoutSlug map[string]interface{} = map[string]interface{}{
-	"name":        "Test category",
-	"description": "Test Description",
-	"parent_id":   0,
-	"medium_id":   1,
-}
-
 var categorylist []map[string]interface{} = []map[string]interface{}{
 	{
 		"name":        "Test category 1",
@@ -52,7 +45,7 @@ var categorylist []map[string]interface{} = []map[string]interface{}{
 	},
 }
 
-var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "description", "parent_id", "medium_id"}
+var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "description", "parent_id", "medium_id", "space_id"}
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "categories"`)
 var countQuery string = regexp.QuoteMeta(`SELECT count(*) FROM "categories"`)
@@ -65,14 +58,14 @@ func selectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"]))
+			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], 1))
 }
 
-func SelectWithoutSpace(mock sqlmock.Sqlmock) {
+func SelectWithOutSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"]))
+			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], 1))
 }
 
 func slugCheckMock(mock sqlmock.Sqlmock, category map[string]interface{}) {
@@ -105,11 +98,11 @@ func insertWithMediumError(mock sqlmock.Sqlmock) {
 
 func updateMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	medium.SelectWithOutSpace(mock)
+	medium.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
 		WithArgs(Data["description"], Data["medium_id"], Data["name"], Data["slug"], test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	SelectWithoutSpace(mock)
+	SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)
 }
 

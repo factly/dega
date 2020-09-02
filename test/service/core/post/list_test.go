@@ -10,6 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/fact-check/claim"
 	"github.com/gavv/httpexpect/v2"
@@ -100,10 +101,7 @@ func TestPostList(t *testing.T) {
 					postList[1]["description"], postList[1]["is_featured"], postList[1]["is_sticky"], postList[1]["is_highlighted"], postList[1]["featured_medium_id"], postList[1]["format_id"], postList[1]["published_date"], 1))
 
 		medium.SelectWithOutSpace(mock)
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "formats"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}).
-				AddRow(1, time.Now(), time.Now(), nil, "Fact check", "factcheck"))
+		format.SelectWithOutSpace(mock)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
 			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
@@ -152,10 +150,7 @@ func TestPostList(t *testing.T) {
 					postList[1]["description"], postList[1]["is_featured"], postList[1]["is_sticky"], postList[1]["is_highlighted"], postList[1]["featured_medium_id"], postList[1]["format_id"], postList[1]["published_date"], 1))
 
 		medium.SelectWithOutSpace(mock)
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "formats"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}).
-				AddRow(1, time.Now(), time.Now(), nil, "Fact check", "factcheck"))
+		format.SelectWithOutSpace(mock)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
 			WithArgs(2).
