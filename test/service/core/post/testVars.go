@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/factly/dega-server/test/service/fact-check/claim"
 )
 
@@ -116,8 +117,8 @@ func preloadMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}).
 			AddRow(1, time.Now(), time.Now(), nil, "Fact check", "factcheck"))
 
-	postTagMock(mock)
-	postCategoryMock(mock)
+	tag.SelectWithOutSpace(mock, tag.Data)
+	category.SelectWithoutSpace(mock)
 }
 
 func postSelectWithOutSpace(mock sqlmock.Sqlmock, post map[string]interface{}) {
@@ -149,20 +150,6 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 func postCountQuery(mock sqlmock.Sqlmock, count int) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
-}
-
-func postTagMock(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}).
-			AddRow(1, time.Now(), time.Now(), nil, "Tag test 1", "tag-test-1", 1))
-}
-
-func postCategoryMock(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}).
-			AddRow(1, time.Now(), time.Now(), nil, "Tag test 1", "tag-test-1", 1))
 }
 
 func postClaimInsertMock(mock sqlmock.Sqlmock) {
@@ -205,16 +192,16 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 	// preload tags & categories
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
 		WithArgs(sqlmock.AnyArg()).
-		WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"tag_id", "post_id"}...)).
-			AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
+		WillReturnRows(sqlmock.NewRows(append(tag.Columns, []string{"tag_id", "post_id"}...)).
+			AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1, 1))
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
 		WithArgs(sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.NewRows(append(category.Columns, []string{"category_id", "post_id"}...)).
-			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, 1, 1))
+			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, 1, 1, 1))
 
 	// get new tags & categories to update
-	postTagMock(mock)
-	postCategoryMock(mock)
+	tag.SelectWithOutSpace(mock, tag.Data)
+	category.SelectWithoutSpace(mock)
 
 	// slug check is required
 	if slugCheckRequired {

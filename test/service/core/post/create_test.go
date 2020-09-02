@@ -7,8 +7,10 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -57,8 +59,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithoutSpace(mock)
 
 		postInsertMock(mock)
 		postSelectWithOutSpace(mock, Data)
@@ -83,8 +85,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithoutSpace(mock)
 
 		postInsertMock(mock)
 
@@ -109,8 +111,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithoutSpace(mock)
 		mock.ExpectBegin()
 		medium.EmptyRowMock(mock)
 		mock.ExpectRollback()
@@ -129,8 +131,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithoutSpace(mock)
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
 		format.EmptyRowMock(mock)
@@ -151,8 +153,8 @@ func TestClaimCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		postTagMock(mock)
-		postCategoryMock(mock)
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithoutSpace(mock)
 
 		postInsertMock(mock)
 		postSelectWithOutSpace(mock, Data)

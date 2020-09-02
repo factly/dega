@@ -15,6 +15,9 @@ func TestTagCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -57,9 +60,9 @@ func TestTagCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(data).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(data)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
 
 	})
@@ -77,7 +80,7 @@ func TestTagCreate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(dataWithoutSlug).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(data)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
 
 		test.ExpectationsMet(t, mock)
 	})

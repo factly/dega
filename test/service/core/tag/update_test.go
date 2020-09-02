@@ -14,13 +14,6 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func selectAfterUpdate(mock sqlmock.Sqlmock, tag map[string]interface{}) {
-	mock.ExpectQuery(selectQuery).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, tag["name"], tag["slug"]))
-}
-
 func TestTagUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
@@ -57,7 +50,7 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("Unable to decode tag data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		e.PUT(path).
 			WithPath("tag_id", 1).
@@ -70,7 +63,7 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("Unprocessable tag", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		e.PUT(path).
 			WithPath("tag_id", 1).
@@ -88,7 +81,7 @@ func TestTagUpdate(t *testing.T) {
 			"slug": "elections",
 		}
 
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
@@ -108,12 +101,12 @@ func TestTagUpdate(t *testing.T) {
 			"name": "Elections",
 			"slug": "elections-1",
 		}
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
 			WithArgs("elections%", 1).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, updatedTag["name"], "elections"))
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(1, time.Now(), time.Now(), nil, updatedTag["name"], "elections", 1))
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
@@ -133,7 +126,7 @@ func TestTagUpdate(t *testing.T) {
 			"name": "Elections",
 			"slug": "testing-slug",
 		}
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
 			WithArgs(fmt.Sprint(updatedTag["slug"], "%"), 1).
@@ -159,7 +152,7 @@ func TestTagUpdate(t *testing.T) {
 			"slug": "elections",
 		}
 
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectRollback()

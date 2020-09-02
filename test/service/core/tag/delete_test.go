@@ -50,7 +50,7 @@ func TestTagDelete(t *testing.T) {
 
 	t.Run("check tag associated with other entity", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		tagPostExpect(mock, 1)
 
@@ -63,7 +63,7 @@ func TestTagDelete(t *testing.T) {
 
 	t.Run("tag record deleted", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		tagPostExpect(mock, 0)
 
@@ -83,7 +83,7 @@ func TestTagDelete(t *testing.T) {
 	t.Run("delete when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		tagSelectMock(mock)
+		SelectWithSpaceMock(mock)
 
 		tagPostExpect(mock, 0)
 
