@@ -61,7 +61,7 @@ func selectWithSpace(mock sqlmock.Sqlmock) {
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], 1))
 }
 
-func SelectWithoutSpace(mock sqlmock.Sqlmock) {
+func SelectWithOutSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(Columns).
@@ -102,7 +102,7 @@ func updateMock(mock sqlmock.Sqlmock) {
 	mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
 		WithArgs(Data["description"], Data["medium_id"], Data["name"], Data["slug"], test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	SelectWithoutSpace(mock)
+	SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)
 }
 

@@ -15,8 +15,8 @@ var headers = map[string]string{
 }
 
 var Data = map[string]interface{}{
-	"name": "Article",
-	"slug": "article",
+	"name": "Factcheck",
+	"slug": "factcheck",
 }
 
 var invalidData = map[string]interface{}{
@@ -54,9 +54,16 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
-func formatSelectMock(mock sqlmock.Sqlmock) {
+func SelectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
+		WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"]))
+}
+
+func SelectWithOutSpace(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(columns).
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"]))
 }

@@ -82,7 +82,7 @@ func TestFormatCreate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).JSON().Object()
-		Data["slug"] = "article"
+		Data["slug"] = "factcheck"
 		res.ContainsMap(Data)
 
 		test.ExpectationsMet(t, mock)

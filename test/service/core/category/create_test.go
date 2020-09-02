@@ -56,7 +56,7 @@ func TestCategoryCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		insertMock(mock)
-		SelectWithoutSpace(mock)
+		SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
@@ -93,7 +93,7 @@ func TestCategoryCreate(t *testing.T) {
 
 		insertMock(mock)
 
-		SelectWithoutSpace(mock)
+		SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
@@ -147,7 +147,7 @@ func TestCategoryCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		insertMock(mock)
-		SelectWithoutSpace(mock)
+		SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectRollback()
 

@@ -60,7 +60,7 @@ func TestClaimCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		tag.SelectWithOutSpace(mock, tag.Data)
-		category.SelectWithoutSpace(mock)
+		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock)
 		postSelectWithOutSpace(mock, Data)
@@ -86,7 +86,7 @@ func TestClaimCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		tag.SelectWithOutSpace(mock, tag.Data)
-		category.SelectWithoutSpace(mock)
+		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock)
 
@@ -113,7 +113,7 @@ func TestClaimCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		tag.SelectWithOutSpace(mock, tag.Data)
-		category.SelectWithoutSpace(mock)
+		category.SelectWithOutSpace(mock)
 		mock.ExpectBegin()
 		medium.EmptyRowMock(mock)
 		mock.ExpectRollback()
@@ -133,7 +133,7 @@ func TestClaimCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		tag.SelectWithOutSpace(mock, tag.Data)
-		category.SelectWithoutSpace(mock)
+		category.SelectWithOutSpace(mock)
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
 		format.EmptyRowMock(mock)
@@ -155,7 +155,7 @@ func TestClaimCreate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		tag.SelectWithOutSpace(mock, tag.Data)
-		category.SelectWithoutSpace(mock)
+		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock)
 		postSelectWithOutSpace(mock, Data)

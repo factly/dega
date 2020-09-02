@@ -139,11 +139,11 @@ func TestCategoryUpdate(t *testing.T) {
 		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
 			WithArgs(nil, test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectWithoutSpace(mock)
+		SelectWithOutSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
 			WithArgs(Data["description"], Data["name"], Data["slug"], test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectWithoutSpace(mock)
+		SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
 		res := e.PUT(path).

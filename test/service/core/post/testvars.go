@@ -8,6 +8,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/category"
+	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/factly/dega-server/test/service/fact-check/claim"
@@ -73,10 +74,8 @@ func slugCheckMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 func postInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "formats"`)).
-		WithArgs(1, 1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}).
-			AddRow(1, time.Now(), time.Now(), nil, "Fact check", "factcheck"))
+	format.SelectWithSpace(mock)
+
 	mock.ExpectQuery(`INSERT INTO "posts"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["excerpt"],
 			Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1).
@@ -93,13 +92,10 @@ func postInsertMock(mock sqlmock.Sqlmock) {
 
 func preloadMock(mock sqlmock.Sqlmock) {
 	medium.SelectWithOutSpace(mock)
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "formats"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}).
-			AddRow(1, time.Now(), time.Now(), nil, "Fact check", "factcheck"))
+	format.SelectWithOutSpace(mock)
 
 	tag.SelectWithOutSpace(mock, tag.Data)
-	category.SelectWithoutSpace(mock)
+	category.SelectWithOutSpace(mock)
 }
 
 func postSelectWithOutSpace(mock sqlmock.Sqlmock, post map[string]interface{}) {
@@ -182,7 +178,7 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 
 	// get new tags & categories to update
 	tag.SelectWithOutSpace(mock, tag.Data)
-	category.SelectWithoutSpace(mock)
+	category.SelectWithOutSpace(mock)
 
 	// slug check is required
 	if slugCheckRequired {
@@ -201,10 +197,7 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 
 	// Check medium & format belong to same space or not
 	medium.SelectWithSpace(mock)
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "formats"`)).
-		WithArgs(1, 1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}).
-			AddRow(1, time.Now(), time.Now(), nil, "Fact check", "factcheck"))
+	format.SelectWithSpace(mock)
 
 	//update post
 	mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
@@ -227,10 +220,7 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 
 	// Preload Claimant & Rating
 	medium.SelectWithOutSpace(mock)
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "formats"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}).
-			AddRow(1, time.Now(), time.Now(), nil, "Fact check", "factcheck"))
+	format.SelectWithOutSpace(mock)
 
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
 		WithArgs(1).

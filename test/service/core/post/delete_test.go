@@ -53,7 +53,7 @@ func TestPostDelete(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		postSelectWithSpace(mock)
 		tag.SelectWithOutSpace(mock, tag.Data)
-		category.SelectWithoutSpace(mock)
+		category.SelectWithOutSpace(mock)
 
 		deleteMock(mock)
 		mock.ExpectCommit()
@@ -70,7 +70,7 @@ func TestPostDelete(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		postSelectWithSpace(mock)
 		tag.SelectWithOutSpace(mock, tag.Data)
-		category.SelectWithoutSpace(mock)
+		category.SelectWithOutSpace(mock)
 
 		deleteMock(mock)
 		mock.ExpectRollback()

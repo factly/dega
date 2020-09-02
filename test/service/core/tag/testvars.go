@@ -2,14 +2,11 @@ package tag
 
 import (
 	"fmt"
-	"os"
 	"regexp"
-	"testing"
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
-	"gopkg.in/h2non/gock.v1"
 )
 
 var headers = map[string]string{
@@ -89,16 +86,4 @@ func tagUpdateMock(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 func tagCountQuery(mock sqlmock.Sqlmock, count int) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "tags"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
-}
-
-func TestMain(m *testing.M) {
-
-	// Mock kavach server and allowing persisted external traffic
-	defer gock.Disable()
-	test.MockServer()
-	defer gock.DisableNetworking()
-
-	exitValue := m.Run()
-
-	os.Exit(exitValue)
 }
