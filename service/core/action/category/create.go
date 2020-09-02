@@ -85,16 +85,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		MediumID:    category.MediumID,
 		SpaceID:     uint(sID),
 	}
-
-	err = config.DB.Model(&model.Category{}).Create(&result).Error
+	tx := config.DB.Begin()
+	err = tx.Model(&model.Category{}).Create(&result).Error
 
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
-	config.DB.Model(&model.Category{}).Preload("Medium").First(&result)
+	tx.Model(&model.Category{}).Preload("Medium").First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
@@ -109,10 +110,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	err = meili.AddDocument(meiliObj)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
+	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
 }

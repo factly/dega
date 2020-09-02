@@ -5,7 +5,6 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
@@ -14,6 +13,9 @@ import (
 
 func TestMediumDelete(t *testing.T) {
 	mock := test.SetupMockDB()
+
+	test.MockServer()
+	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
@@ -48,16 +50,7 @@ func TestMediumDelete(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		SelectWithSpace(mock)
 
-		mediumPostExpect(mock, 0)
-		mediumCategoryExpect(mock, 0)
-		mediumSpaceExpect(mock, 0)
-		mediumRatingExpect(mock, 0)
-		mediumClaimantExpect(mock, 0)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(deleteQuery).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
+		mediumDeleteMock(mock)
 		mock.ExpectCommit()
 
 		e.DELETE(path).
@@ -138,4 +131,18 @@ func TestMediumDelete(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
+	t.Run("delete when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+		SelectWithSpace(mock)
+
+		mediumDeleteMock(mock)
+		mock.ExpectRollback()
+
+		e.DELETE(path).
+			WithPath("medium_id", 1).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
+	})
 }

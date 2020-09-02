@@ -57,22 +57,26 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// delete all associations
-	config.DB.Model(&result).Association("Tags").Delete(result.Tags)
-	config.DB.Model(&result).Association("Categories").Delete(result.Categories)
+	tx := config.DB.Begin()
 
-	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+	// delete all associations
+	tx.Model(&result).Association("Tags").Delete(result.Tags)
+	tx.Model(&result).Association("Categories").Delete(result.Categories)
+
+	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Delete(&model.PostAuthor{})
 
-	config.DB.Model(&model.Post{}).Delete(&result)
+	tx.Model(&model.Post{}).Delete(&result)
 
 	err = meili.DeleteDocument(result.ID, "post")
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, nil)
 }

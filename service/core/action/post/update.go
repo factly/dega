@@ -308,16 +308,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx.Commit()
-
-	tagIDs := make([]uint, 0)
-	catIDs := make([]uint, 0)
-	for _, tag := range result.Tags {
-		tagIDs = append(tagIDs, tag.ID)
-	}
-	for _, cat := range result.Categories {
-		catIDs = append(catIDs, cat.ID)
-	}
 	// Update into meili index
 	meiliObj := map[string]interface{}{
 		"id":                 result.ID,
@@ -334,16 +324,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"featured_medium_id": result.FeaturedMediumID,
 		"published_date":     result.PublishedDate.Unix(),
 		"space_id":           result.SpaceID,
-		"tag_ids":            tagIDs,
-		"category_ids":       catIDs,
+		"tag_ids":            post.TagIDs,
+		"category_ids":       post.CategoryIDs,
 	}
 
 	err = meili.UpdateDocument(meiliObj)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, result)
 }

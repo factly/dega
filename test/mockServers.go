@@ -99,3 +99,20 @@ func MockServer() {
 		Reply(http.StatusAccepted).
 		JSON(ReturnUpdate)
 }
+
+func DisableMeiliGock(serverURL string) {
+	gock.Off()
+
+	gock.New(serverURL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+
+	gock.New(config.KetoURL).
+		Post("/engines/acp/ory/regex/allowed").
+		Persist().
+		Reply(http.StatusOK)
+
+	gock.New(config.KavachURL + "/organisations/[0-9]+/users").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(Dummy_AuthorList)
+}

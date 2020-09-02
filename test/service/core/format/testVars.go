@@ -50,7 +50,6 @@ func formatInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 //check format exits or not
@@ -79,7 +78,6 @@ func formatUpdateMock(mock sqlmock.Sqlmock, format map[string]interface{}) {
 	mock.ExpectExec(`UPDATE \"formats\" SET (.+)  WHERE (.+) \"formats\".\"id\" = `).
 		WithArgs(format["name"], format["slug"], test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	mock.ExpectCommit()
 }
 
 func formatCountQuery(mock sqlmock.Sqlmock, count int) {

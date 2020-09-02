@@ -53,6 +53,7 @@ func TestTagCreate(t *testing.T) {
 		slugCheckMock(mock)
 
 		tagInsertMock(mock)
+		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -70,6 +71,7 @@ func TestTagCreate(t *testing.T) {
 		slugCheckMock(mock)
 
 		tagInsertMock(mock)
+		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -80,4 +82,22 @@ func TestTagCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("create tag when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+
+		test.CheckSpaceMock(mock)
+
+		slugCheckMock(mock)
+
+		tagInsertMock(mock)
+		mock.ExpectRollback()
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(dataWithoutSlug).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
 }

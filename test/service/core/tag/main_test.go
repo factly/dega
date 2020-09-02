@@ -53,7 +53,6 @@ func tagInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 //check tag exits or not
@@ -82,7 +81,7 @@ func tagUpdateMock(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 	mock.ExpectExec(`UPDATE \"tags\" SET (.+)  WHERE (.+) \"tags\".\"id\" = `).
 		WithArgs(tag["name"], tag["slug"], test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	mock.ExpectCommit()
+	selectAfterUpdate(mock, tag)
 }
 
 func tagCountQuery(mock sqlmock.Sqlmock, count int) {

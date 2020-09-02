@@ -17,6 +17,9 @@ func TestClaimCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -58,12 +61,11 @@ func TestClaimCreate(t *testing.T) {
 		postCategoryMock(mock)
 
 		postInsertMock(mock)
-
 		postSelectWithOutSpace(mock, Data)
-
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)
 		postAuthorInsertMock(mock)
+		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -90,6 +92,7 @@ func TestClaimCreate(t *testing.T) {
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)
 		postAuthorInsertMock(mock)
+		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -136,6 +139,31 @@ func TestClaimCreate(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(dataWithoutSlug).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("create post when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		slugCheckMock(mock, Data)
+
+		postTagMock(mock)
+		postCategoryMock(mock)
+
+		postInsertMock(mock)
+		postSelectWithOutSpace(mock, Data)
+		postClaimInsertMock(mock)
+		postClaimSelectMock(mock)
+		postAuthorInsertMock(mock)
+		mock.ExpectRollback()
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 

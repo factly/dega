@@ -77,9 +77,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:     uint(sID),
 	}
 
-	err = config.DB.Model(&model.Medium{}).Create(&result).Error
+	tx := config.DB.Begin()
+	err = tx.Model(&model.Medium{}).Create(&result).Error
 
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
@@ -99,10 +101,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	err = meili.AddDocument(meiliObj)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
+	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
 }

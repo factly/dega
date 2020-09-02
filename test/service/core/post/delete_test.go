@@ -3,10 +3,8 @@ package post
 import (
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
@@ -15,6 +13,9 @@ import (
 
 func TestPostDelete(t *testing.T) {
 	mock := test.SetupMockDB()
+
+	test.MockServer()
+	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
@@ -52,26 +53,7 @@ func TestPostDelete(t *testing.T) {
 		postTagMock(mock)
 		postCategoryMock(mock)
 
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-		mock.ExpectCommit()
-
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-		mock.ExpectCommit()
-
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectCommit()
-
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "posts" SET "deleted_at"=`)).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
+		deleteMock(mock)
 		mock.ExpectCommit()
 
 		e.DELETE(path).
@@ -79,6 +61,23 @@ func TestPostDelete(t *testing.T) {
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK)
+	})
+
+	t.Run("delete when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+		postSelectWithSpace(mock)
+		postTagMock(mock)
+		postCategoryMock(mock)
+
+		deleteMock(mock)
+		mock.ExpectRollback()
+
+		e.DELETE(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
 	})
 
 }

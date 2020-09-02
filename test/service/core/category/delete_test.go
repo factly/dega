@@ -15,6 +15,9 @@ import (
 func TestCategoryDelete(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -57,13 +60,7 @@ func TestCategoryDelete(t *testing.T) {
 
 		categoryPostAssociation(mock, 0)
 
-		mock.ExpectBegin()
-		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+)`).
-			WithArgs(nil, test.AnyTime{}, 1, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectExec(deleteQuery).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
+		deleteMock(mock)
 		mock.ExpectCommit()
 
 		e.DELETE(path).
@@ -88,5 +85,24 @@ func TestCategoryDelete(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 		test.ExpectationsMet(t, mock)
 
+	})
+
+	t.Run("delete a category when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		categoryPostAssociation(mock, 0)
+
+		deleteMock(mock)
+		mock.ExpectRollback()
+
+		e.DELETE(path).
+			WithPath("category_id", "1").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
 	})
 }

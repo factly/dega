@@ -24,6 +24,9 @@ func selectAfterUpdate(mock sqlmock.Sqlmock, format map[string]interface{}) {
 func TestFormatUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -90,6 +93,7 @@ func TestFormatUpdate(t *testing.T) {
 		formatUpdateMock(mock, updatedFormat)
 
 		selectAfterUpdate(mock, updatedFormat)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("format_id", 1).
@@ -116,6 +120,7 @@ func TestFormatUpdate(t *testing.T) {
 		formatUpdateMock(mock, updatedFormat)
 
 		selectAfterUpdate(mock, updatedFormat)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("format_id", 1).
@@ -141,6 +146,7 @@ func TestFormatUpdate(t *testing.T) {
 		formatUpdateMock(mock, updatedFormat)
 
 		selectAfterUpdate(mock, updatedFormat)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("format_id", 1).
@@ -151,4 +157,26 @@ func TestFormatUpdate(t *testing.T) {
 
 	})
 
+	t.Run("update format when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+		updatedFormat := map[string]interface{}{
+			"name": "Article",
+			"slug": "article",
+		}
+
+		formatSelectMock(mock)
+
+		formatUpdateMock(mock, updatedFormat)
+
+		selectAfterUpdate(mock, updatedFormat)
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("format_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedFormat).
+			Expect().
+			Status(http.StatusInternalServerError)
+	})
 }

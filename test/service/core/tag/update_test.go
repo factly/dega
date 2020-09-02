@@ -24,6 +24,9 @@ func selectAfterUpdate(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 func TestTagUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -88,8 +91,7 @@ func TestTagUpdate(t *testing.T) {
 		tagSelectMock(mock)
 
 		tagUpdateMock(mock, updatedTag)
-
-		selectAfterUpdate(mock, updatedTag)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("tag_id", 1).
@@ -114,8 +116,7 @@ func TestTagUpdate(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, updatedTag["name"], "elections"))
 
 		tagUpdateMock(mock, updatedTag)
-
-		selectAfterUpdate(mock, updatedTag)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("tag_id", 1).
@@ -139,8 +140,7 @@ func TestTagUpdate(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
 		tagUpdateMock(mock, updatedTag)
-
-		selectAfterUpdate(mock, updatedTag)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("tag_id", 1).
@@ -151,4 +151,24 @@ func TestTagUpdate(t *testing.T) {
 
 	})
 
+	t.Run("update tag when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+		updatedTag := map[string]interface{}{
+			"name": "Elections",
+			"slug": "elections",
+		}
+
+		tagSelectMock(mock)
+
+		tagUpdateMock(mock, updatedTag)
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedTag).
+			Expect().
+			Status(http.StatusInternalServerError)
+	})
 }

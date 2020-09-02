@@ -7,6 +7,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/fact-check/claim"
 )
@@ -106,7 +107,6 @@ func postInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectExec(`INSERT INTO "post_categories"`).
 		WithArgs(1, 1, 1, 1).
 		WillReturnResult(sqlmock.NewResult(0, 1))
-	mock.ExpectCommit()
 }
 
 func preloadMock(mock sqlmock.Sqlmock) {
@@ -166,13 +166,11 @@ func postCategoryMock(mock sqlmock.Sqlmock) {
 }
 
 func postClaimInsertMock(mock sqlmock.Sqlmock) {
-	mock.ExpectBegin()
 	mock.ExpectQuery(`INSERT INTO "post_claims"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 func postClaimSelectMock(mock sqlmock.Sqlmock) {
@@ -193,13 +191,11 @@ func postAuthorSelectMock(mock sqlmock.Sqlmock) {
 }
 
 func postAuthorInsertMock(mock sqlmock.Sqlmock) {
-	mock.ExpectBegin()
 	mock.ExpectQuery(`INSERT INTO "post_authors"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
@@ -213,8 +209,8 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 			AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
 		WithArgs(sqlmock.AnyArg()).
-		WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"category_id", "post_id"}...)).
-			AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
+		WillReturnRows(sqlmock.NewRows(append(category.Columns, []string{"category_id", "post_id"}...)).
+			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, 1, 1))
 
 	// get new tags & categories to update
 	postTagMock(mock)
@@ -305,6 +301,22 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 			AddRow(1))
 
 	postAuthorSelectMock(mock)
-	mock.ExpectCommit()
 
+}
+
+func deleteMock(mock sqlmock.Sqlmock) {
+	mock.ExpectBegin()
+	mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
+		WillReturnResult(sqlmock.NewResult(0, 1))
+
+	mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
+		WillReturnResult(sqlmock.NewResult(0, 1))
+
+	mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
+		WithArgs(test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	mock.ExpectExec(regexp.QuoteMeta(`UPDATE "posts" SET "deleted_at"=`)).
+		WithArgs(test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
 }

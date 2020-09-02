@@ -90,7 +90,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		mediumSlug = slug.Approve(slug.Make(medium.Name), sID, config.DB.NewScope(&model.Medium{}).TableName())
 	}
 
-	err = config.DB.Model(&result).Updates(model.Medium{
+	tx := config.DB.Begin()
+	err = tx.Model(&result).Updates(model.Medium{
 		Name:        medium.Name,
 		Slug:        mediumSlug,
 		Title:       medium.Title,
@@ -104,6 +105,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
@@ -123,10 +125,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	err = meili.UpdateDocument(meiliObj)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, result)
 }

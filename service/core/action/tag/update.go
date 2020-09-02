@@ -89,7 +89,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		tagSlug = slug.Approve(slug.Make(tag.Name), sID, config.DB.NewScope(&model.Tag{}).TableName())
 	}
 
-	config.DB.Model(&result).Updates(model.Tag{
+	tx := config.DB.Begin()
+	tx.Model(&result).Updates(model.Tag{
 		Name:        tag.Name,
 		Slug:        tagSlug,
 		Description: tag.Description,
@@ -107,10 +108,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	err = meili.UpdateDocument(meiliObj)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, result)
 }
