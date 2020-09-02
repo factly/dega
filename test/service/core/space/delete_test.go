@@ -15,7 +15,6 @@ import (
 func TestSpaceDelete(t *testing.T) {
 	mock := test.SetupMockDB()
 
-	defer gock.Disable()
 	test.MockServer()
 	defer gock.DisableNetworking()
 
@@ -75,6 +74,24 @@ func TestSpaceDelete(t *testing.T) {
 			Expect().
 			Status(http.StatusServiceUnavailable)
 
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("delete a space when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		SelectQuery(mock)
+
+		mock.ExpectBegin()
+		mock.ExpectExec(deleteQuery).
+			WithArgs(test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		mock.ExpectRollback()
+
+		e.DELETE(path).
+			WithPath("space_id", "1").
+			WithHeader("X-User", "1").
+			Expect().
+			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
 }

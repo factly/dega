@@ -59,7 +59,6 @@ func ratingInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 func ratingInsertError(mock sqlmock.Sqlmock) {
@@ -72,14 +71,12 @@ func ratingUpdateMock(mock sqlmock.Sqlmock, rating map[string]interface{}, err e
 	mock.ExpectBegin()
 	if err != nil {
 		medium.EmptyRowMock(mock)
-		mock.ExpectRollback()
 	} else {
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"ratings\" SET (.+)  WHERE (.+) \"ratings\".\"id\" = `).
 			WithArgs(rating["description"], rating["medium_id"], rating["name"], rating["numeric_value"], rating["slug"], test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		SelectWithOutSpace(mock, rating)
-		mock.ExpectCommit()
 	}
 
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -88,11 +89,30 @@ func update(w http.ResponseWriter, r *http.Request) {
 		tagSlug = slug.Approve(slug.Make(tag.Name), sID, config.DB.NewScope(&model.Tag{}).TableName())
 	}
 
-	config.DB.Model(&result).Updates(model.Tag{
+	tx := config.DB.Begin()
+	tx.Model(&result).Updates(model.Tag{
 		Name:        tag.Name,
 		Slug:        tagSlug,
 		Description: tag.Description,
 	}).First(&result)
 
+	// Update into meili index
+	meiliObj := map[string]interface{}{
+		"id":          result.ID,
+		"kind":        "tag",
+		"name":        result.Name,
+		"slug":        result.Slug,
+		"description": result.Description,
+		"space_id":    result.SpaceID,
+	}
+
+	err = meili.UpdateDocument(meiliObj)
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, result)
 }

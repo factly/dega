@@ -15,6 +15,9 @@ func TestClaimantCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -54,6 +57,7 @@ func TestClaimantCreate(t *testing.T) {
 
 		claimantInsertMock(mock)
 		SelectWithOutSpace(mock, Data)
+		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -73,6 +77,7 @@ func TestClaimantCreate(t *testing.T) {
 		claimantInsertMock(mock)
 
 		SelectWithOutSpace(mock, Data)
+		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -100,4 +105,21 @@ func TestClaimantCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("create claimant when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		slugCheckMock(mock, Data)
+
+		claimantInsertMock(mock)
+		SelectWithOutSpace(mock, Data)
+		mock.ExpectRollback()
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
 }

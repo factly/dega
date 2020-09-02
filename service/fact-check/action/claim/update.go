@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -89,7 +90,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		claimSlug = slug.Approve(slug.Make(claim.Title), sID, config.DB.NewScope(&model.Claim{}).TableName())
 	}
 
-	err = config.DB.Model(&result).Updates(model.Claim{
+	tx := config.DB.Begin()
+	err = tx.Model(&result).Updates(model.Claim{
 		Title:         claim.Title,
 		Slug:          claimSlug,
 		ClaimDate:     claim.ClaimDate,
@@ -104,10 +106,38 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").First(&result).Error
 
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
+	// Update into meili index
+	meiliObj := map[string]interface{}{
+		"id":              result.ID,
+		"kind":            "claim",
+		"title":           result.Title,
+		"slug":            result.Slug,
+		"description":     result.Description,
+		"claim_date":      result.ClaimDate.Unix(),
+		"checked_date":    result.CheckedDate.Unix(),
+		"claim_sources":   result.ClaimSources,
+		"claimant_id":     result.ClaimantID,
+		"rating_id":       result.RatingID,
+		"review":          result.Review,
+		"review_tag_line": result.ReviewTagLine,
+		"review_sources":  result.ReviewSources,
+		"space_id":        result.SpaceID,
+	}
+
+	err = meili.UpdateDocument(meiliObj)
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, result)
 }

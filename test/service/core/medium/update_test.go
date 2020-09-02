@@ -30,6 +30,9 @@ var updatedMedium = map[string]interface{}{
 func TestMediumUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -92,8 +95,8 @@ func TestMediumUpdate(t *testing.T) {
 		SelectWithSpace(mock)
 
 		mediumUpdateMock(mock, updatedMedium, nil)
-
 		SelectWithOutSpace(mock)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("medium_id", 1).
@@ -112,8 +115,8 @@ func TestMediumUpdate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		mediumUpdateMock(mock, updatedMedium, nil)
-
 		SelectWithOutSpace(mock)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("medium_id", 1).
@@ -141,6 +144,7 @@ func TestMediumUpdate(t *testing.T) {
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(columns).
 				AddRow(1, time.Now(), time.Now(), nil, updatedMedium["name"], updatedMedium["slug"], updatedMedium["type"], updatedMedium["title"], updatedMedium["description"], updatedMedium["caption"], updatedMedium["alt_text"], updatedMedium["file_size"], updatedMedium["url"], updatedMedium["dimensions"], 1))
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("medium_id", 1).
@@ -163,6 +167,7 @@ func TestMediumUpdate(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
 		mediumUpdateMock(mock, updatedMedium, errors.New("update failed"))
+		mock.ExpectRollback()
 
 		e.PUT(path).
 			WithPath("medium_id", 1).
@@ -174,4 +179,23 @@ func TestMediumUpdate(t *testing.T) {
 
 	})
 
+	t.Run("update medium when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		updatedMedium["slug"] = "image"
+		test.CheckSpaceMock(mock)
+
+		SelectWithSpace(mock)
+
+		mediumUpdateMock(mock, updatedMedium, nil)
+		SelectWithOutSpace(mock)
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("medium_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedMedium).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
 }

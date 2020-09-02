@@ -58,7 +58,6 @@ func claimantInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 func claimantInsertError(mock sqlmock.Sqlmock) {
@@ -71,14 +70,12 @@ func claimantUpdateMock(mock sqlmock.Sqlmock, claimant map[string]interface{}, e
 	mock.ExpectBegin()
 	if err != nil {
 		medium.EmptyRowMock(mock)
-		mock.ExpectRollback()
 	} else {
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"claimants\" SET (.+)  WHERE (.+) \"claimants\".\"id\" = `).
 			WithArgs(claimant["description"], claimant["medium_id"], claimant["name"], claimant["slug"], claimant["tag_line"], test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		SelectWithOutSpace(mock, claimant)
-		mock.ExpectCommit()
 	}
 
 }

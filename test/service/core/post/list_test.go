@@ -106,23 +106,23 @@ func TestPostList(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, "Fact check", "factcheck"))
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
-			WithArgs(1, 2).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}).
 				AddRow(1, time.Now(), time.Now(), nil, "Tag test 1", "tag-test-1", 1))
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
-			WithArgs(1, 2).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}).
 				AddRow(1, time.Now(), time.Now(), nil, "Tag test 1", "tag-test-1", 1))
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
-			WithArgs(1, 2).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1))
 
 		claim.SelectWithOutSpace(mock, claim.Data)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
-			WithArgs(1, 2).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1))
 

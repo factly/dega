@@ -92,7 +92,6 @@ func insertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT "parent_id" FROM "categories"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"parent_id"}).AddRow(0))
-	mock.ExpectCommit()
 }
 
 func insertWithMediumError(mock sqlmock.Sqlmock) {
@@ -112,11 +111,20 @@ func updateMock(mock sqlmock.Sqlmock) {
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	SelectWithoutSpace(mock)
 	medium.SelectWithOutSpace(mock)
-	mock.ExpectCommit()
 }
 
 func categoryPostAssociation(mock sqlmock.Sqlmock, count int) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts" INNER JOIN "post_categories"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+func deleteMock(mock sqlmock.Sqlmock) {
+	mock.ExpectBegin()
+	mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+)`).
+		WithArgs(nil, test.AnyTime{}, 1, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	mock.ExpectExec(deleteQuery).
+		WithArgs(test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
 }

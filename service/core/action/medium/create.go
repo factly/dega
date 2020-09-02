@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -76,13 +77,36 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:     uint(sID),
 	}
 
-	err = config.DB.Model(&model.Medium{}).Create(&result).Error
+	tx := config.DB.Begin()
+	err = tx.Model(&model.Medium{}).Create(&result).Error
 
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
+	// Insert into meili index
+	meiliObj := map[string]interface{}{
+		"id":          result.ID,
+		"kind":        "medium",
+		"name":        result.Name,
+		"slug":        result.Slug,
+		"title":       result.Title,
+		"type":        result.Type,
+		"description": result.Description,
+		"space_id":    result.SpaceID,
+	}
+
+	err = meili.AddDocument(meiliObj)
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
 }

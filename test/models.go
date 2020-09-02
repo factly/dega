@@ -136,3 +136,7 @@ var Dummy_SingleMock = map[string]interface{}{
 	"effect":     "allow",
 	"conditions": nil,
 }
+
+var ReturnUpdate = map[string]interface{}{
+	"updateId": 1,
+}

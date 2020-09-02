@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -88,15 +89,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&result.Post.Tags)
 	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 
-	err = config.DB.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
+	tx := config.DB.Begin()
+	err = tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
 
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
-	config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post)
+	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post)
 
 	if result.Format.Slug == "factcheck" {
 		// create post claim
@@ -105,8 +108,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 			postClaim.ClaimID = uint(id)
 			postClaim.PostID = result.ID
 
-			err = config.DB.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
+			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
+				tx.Rollback()
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))
 				return
@@ -115,7 +119,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 		// fetch all post claims
 		postClaims := []factCheckModel.PostClaim{}
-		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
+		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: result.ID,
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
@@ -141,12 +145,41 @@ func create(w http.ResponseWriter, r *http.Request) {
 				AuthorID: id,
 				PostID:   result.Post.ID,
 			}
-			err := config.DB.Model(&model.PostAuthor{}).Create(&author).Error
+			err := tx.Model(&model.PostAuthor{}).Create(&author).Error
 			if err == nil {
 				result.Authors = append(result.Authors, authors[aID])
 			}
 		}
 	}
 
+	// Insert into meili index
+	meiliObj := map[string]interface{}{
+		"id":                 result.ID,
+		"kind":               "post",
+		"title":              result.Title,
+		"subtitle":           result.Subtitle,
+		"slug":               result.Slug,
+		"status":             result.Status,
+		"excerpt":            result.Excerpt,
+		"description":        result.Description,
+		"is_featured":        result.IsFeatured,
+		"is_sticky":          result.IsSticky,
+		"is_highlighted":     result.IsHighlighted,
+		"featured_medium_id": result.FeaturedMediumID,
+		"published_date":     result.PublishedDate.Unix(),
+		"space_id":           result.SpaceID,
+		"tag_ids":            post.TagIDs,
+		"category_ids":       post.CategoryIDs,
+	}
+
+	err = meili.AddDocument(meiliObj)
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
 }

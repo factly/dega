@@ -20,8 +20,8 @@ var headers = map[string]string{
 var Data = map[string]interface{}{
 	"title":           "Claim",
 	"slug":            "claim",
-	"claim_date":      time.Time{},
-	"checked_date":    time.Time{},
+	"claim_date":      time.Now(),
+	"checked_date":    time.Now(),
 	"claim_sources":   "GOI",
 	"description":     test.NilJsonb(),
 	"claimant_id":     uint(1),
@@ -34,8 +34,8 @@ var Data = map[string]interface{}{
 var dataWithoutSlug = map[string]interface{}{
 	"title":           "Claim",
 	"slug":            "",
-	"claim_date":      time.Time{},
-	"checked_date":    time.Time{},
+	"claim_date":      time.Now(),
+	"checked_date":    time.Now(),
 	"claim_sources":   "GOI",
 	"description":     test.NilJsonb(),
 	"claimant_id":     uint(1),
@@ -70,12 +70,10 @@ func claimInsertMock(mock sqlmock.Sqlmock) {
 	claimant.SelectWithSpace(mock)
 	rating.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "claims"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["title"], Data["slug"], Data["claim_date"], Data["checked_date"], Data["claim_sources"],
-			Data["description"], Data["claimant_id"], Data["rating_id"], Data["review"], Data["review_tag_line"], Data["review_sources"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["title"], Data["slug"], test.AnyTime{}, test.AnyTime{}, Data["claim_sources"], Data["description"], Data["claimant_id"], Data["rating_id"], Data["review"], Data["review_tag_line"], Data["review_sources"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 func claimantFKError(mock sqlmock.Sqlmock) {
@@ -96,12 +94,10 @@ func claimUpdateMock(mock sqlmock.Sqlmock, claim map[string]interface{}, err err
 	claimant.SelectWithSpace(mock)
 	rating.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"claims\" SET (.+)  WHERE (.+) \"claims\".\"id\" = `).
-		WithArgs(claim["checked_date"], claim["claim_date"], claim["claim_sources"], claim["claimant_id"], claim["description"], claim["rating_id"], claim["review"], claim["review_sources"], claim["review_tag_line"], claim["slug"], claim["title"],
+		WithArgs(test.AnyTime{}, test.AnyTime{}, claim["claim_sources"], claim["claimant_id"], claim["description"], claim["rating_id"], claim["review"], claim["review_sources"], claim["review_tag_line"], claim["slug"], claim["title"],
 			test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	mock.ExpectCommit()
 	SelectWithOutSpace(mock, claim)
-
 }
 
 func SelectWithOutSpace(mock sqlmock.Sqlmock, claim map[string]interface{}) {

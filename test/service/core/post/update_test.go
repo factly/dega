@@ -38,6 +38,9 @@ var errorDB = errors.New("Something went wrong with db queries")
 func TestPostUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -46,7 +49,7 @@ func TestPostUpdate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("invalid claim id", func(t *testing.T) {
+	t.Run("invalid post id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		e.PUT(path).
 			WithPath("post_id", "invalid_id").
@@ -55,7 +58,7 @@ func TestPostUpdate(t *testing.T) {
 			Status(http.StatusNotFound)
 	})
 
-	t.Run("claim record not found", func(t *testing.T) {
+	t.Run("post record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		recordNotFoundMock(mock)
 
@@ -66,7 +69,7 @@ func TestPostUpdate(t *testing.T) {
 			Expect().
 			Status(http.StatusNotFound)
 	})
-	t.Run("Unable to decode claim data", func(t *testing.T) {
+	t.Run("Unable to decode post data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
@@ -79,7 +82,7 @@ func TestPostUpdate(t *testing.T) {
 
 	})
 
-	t.Run("Unprocessable claim", func(t *testing.T) {
+	t.Run("Unprocessable post", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
@@ -93,11 +96,12 @@ func TestPostUpdate(t *testing.T) {
 
 	})
 
-	t.Run("update claim", func(t *testing.T) {
+	t.Run("update post", func(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
 
 		updateMock(mock, updatePost, false)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("post_id", 1).
@@ -109,11 +113,31 @@ func TestPostUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update claim by id with empty slug", func(t *testing.T) {
+	t.Run("update post when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		updateMock(mock, updatePost, false)
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+		test.MockServer()
+	})
+
+	t.Run("update post by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatePost["slug"] = "post"
 
 		updateMock(mock, updatePost, true)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("post_id", 1).
@@ -126,11 +150,12 @@ func TestPostUpdate(t *testing.T) {
 
 	})
 
-	t.Run("update claim with different slug", func(t *testing.T) {
+	t.Run("update post with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatePost["slug"] = "post-test"
 
 		updateMock(mock, updatePost, true)
+		mock.ExpectCommit()
 
 		postData["slug"] = "post-test"
 

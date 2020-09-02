@@ -7,6 +7,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/factly/dega-server/util/meili"
+	"github.com/meilisearch/meilisearch-go"
+
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/config"
 	"github.com/jinzhu/gorm"
@@ -26,6 +29,13 @@ func SetupMockDB() sqlmock.Sqlmock {
 
 	config.KavachURL = "http://kavach:6620"
 	config.KetoURL = "http://keto:6644"
+	config.MeiliURL = "http://meili:7700"
+	config.MeiliKey = "password"
+
+	meili.Client = meilisearch.NewClient(meilisearch.Config{
+		Host:   config.MeiliURL,
+		APIKey: config.MeiliKey,
+	})
 
 	db, mock, err := sqlmock.New()
 	if err != nil {

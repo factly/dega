@@ -8,6 +8,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -75,11 +76,31 @@ func insertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.NewRows([]string{"logo_id", "logo_mobile_id", "fav_icon_id", "mobile_icon_id"}).
 			AddRow(0, 0, 0, 0))
 
-	mock.ExpectCommit()
 }
 
 func mediumNotFound(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "type", "title", "description", "caption", "alt_text", "file_size", "url", "dimensions", "space_id"}))
+}
+
+func updateMock(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows(Columns).
+			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+
+	mock.ExpectBegin()
+	medium.SelectWithSpace(mock)
+	medium.SelectWithSpace(mock)
+	medium.SelectWithSpace(mock)
+	medium.SelectWithSpace(mock)
+	mock.ExpectExec(`UPDATE \"spaces\" SET (.+)  WHERE (.+) \"spaces\".\"id\" = `).
+		WithArgs(Data["contact_info"], Data["description"], Data["fav_icon_id"], Data["logo_id"], Data["logo_mobile_id"], Data["mobile_icon_id"], Data["name"], Data["site_address"], Data["site_title"], Data["slug"], Data["social_media_urls"], Data["tag_line"], test.AnyTime{}, Data["verification_codes"], 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	SelectQuery(mock)
+	medium.SelectWithOutSpace(mock)
+	medium.SelectWithOutSpace(mock)
+	medium.SelectWithOutSpace(mock)
+	medium.SelectWithOutSpace(mock)
 }

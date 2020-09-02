@@ -91,7 +91,6 @@ func mediumInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 func mediumUpdateMock(mock sqlmock.Sqlmock, medium map[string]interface{}, err error) {
@@ -100,14 +99,25 @@ func mediumUpdateMock(mock sqlmock.Sqlmock, medium map[string]interface{}, err e
 		mock.ExpectExec(`UPDATE \"media\" SET (.+)  WHERE (.+) \"media\".\"id\" = `).
 			WithArgs(medium["alt_text"], medium["caption"], medium["description"], medium["dimensions"], medium["file_size"], medium["name"], medium["slug"], medium["title"], medium["type"], test.AnyTime{}, medium["url"], 1).
 			WillReturnError(errors.New("update failed"))
-		mock.ExpectRollback()
 	} else {
 		mock.ExpectExec(`UPDATE \"media\" SET (.+)  WHERE (.+) \"media\".\"id\" = `).
 			WithArgs(medium["alt_text"], medium["caption"], medium["description"], medium["dimensions"], medium["file_size"], medium["name"], medium["slug"], medium["title"], medium["type"], test.AnyTime{}, medium["url"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectCommit()
 	}
 
+}
+
+func mediumDeleteMock(mock sqlmock.Sqlmock) {
+	mediumPostExpect(mock, 0)
+	mediumCategoryExpect(mock, 0)
+	mediumSpaceExpect(mock, 0)
+	mediumRatingExpect(mock, 0)
+	mediumClaimantExpect(mock, 0)
+
+	mock.ExpectBegin()
+	mock.ExpectExec(deleteQuery).
+		WithArgs(test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
 }
 
 func SelectWithSpace(mock sqlmock.Sqlmock) {
