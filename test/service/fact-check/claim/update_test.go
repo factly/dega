@@ -32,6 +32,9 @@ var updatedClaim = map[string]interface{}{
 func TestClaimUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -94,6 +97,7 @@ func TestClaimUpdate(t *testing.T) {
 		SelectWithSpace(mock)
 
 		claimUpdateMock(mock, updatedClaim, nil)
+		mock.ExpectCommit()
 
 		result := e.PUT(path).
 			WithPath("claim_id", 1).
@@ -113,6 +117,7 @@ func TestClaimUpdate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		claimUpdateMock(mock, updatedClaim, nil)
+		mock.ExpectCommit()
 
 		result := e.PUT(path).
 			WithPath("claim_id", 1).
@@ -136,6 +141,7 @@ func TestClaimUpdate(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
 		claimUpdateMock(mock, updatedClaim, nil)
+		mock.ExpectCommit()
 
 		result := e.PUT(path).
 			WithPath("claim_id", 1).
@@ -188,4 +194,22 @@ func TestClaimUpdate(t *testing.T) {
 
 	})
 
+	t.Run("update claim when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		updatedClaim["slug"] = "claim"
+		test.CheckSpaceMock(mock)
+
+		SelectWithSpace(mock)
+
+		claimUpdateMock(mock, updatedClaim, nil)
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("claim_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedClaim).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
 }

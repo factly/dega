@@ -118,8 +118,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Commit()
-
 	// Update into meili index
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,
@@ -134,10 +132,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	err = meili.UpdateDocument(meiliObj)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, result)
 }

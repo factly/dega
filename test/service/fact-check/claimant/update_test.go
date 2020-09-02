@@ -24,6 +24,9 @@ var updatedClaimant = map[string]interface{}{
 func TestClaimantUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+	defer gock.DisableNetworking()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -86,6 +89,7 @@ func TestClaimantUpdate(t *testing.T) {
 		SelectWithSpace(mock)
 
 		claimantUpdateMock(mock, updatedClaimant, nil)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("claimant_id", 1).
@@ -104,6 +108,7 @@ func TestClaimantUpdate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		claimantUpdateMock(mock, updatedClaimant, nil)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("claimant_id", 1).
@@ -126,6 +131,7 @@ func TestClaimantUpdate(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
 		claimantUpdateMock(mock, updatedClaimant, nil)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("claimant_id", 1).
@@ -148,6 +154,7 @@ func TestClaimantUpdate(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
 		claimantUpdateMock(mock, updatedClaimant, errors.New("record not found"))
+		mock.ExpectRollback()
 
 		e.PUT(path).
 			WithPath("claimant_id", 1).
@@ -159,4 +166,22 @@ func TestClaimantUpdate(t *testing.T) {
 
 	})
 
+	t.Run("update claimant when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		updatedClaimant["slug"] = "toi"
+		test.CheckSpaceMock(mock)
+
+		SelectWithSpace(mock)
+
+		claimantUpdateMock(mock, updatedClaimant, nil)
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("claimant_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedClaimant).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
 }

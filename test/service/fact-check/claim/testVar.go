@@ -74,7 +74,6 @@ func claimInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
-	mock.ExpectCommit()
 }
 
 func claimantFKError(mock sqlmock.Sqlmock) {
@@ -98,9 +97,7 @@ func claimUpdateMock(mock sqlmock.Sqlmock, claim map[string]interface{}, err err
 		WithArgs(test.AnyTime{}, test.AnyTime{}, claim["claim_sources"], claim["claimant_id"], claim["description"], claim["rating_id"], claim["review"], claim["review_sources"], claim["review_tag_line"], claim["slug"], claim["title"],
 			test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	mock.ExpectCommit()
 	SelectWithOutSpace(mock, claim)
-
 }
 
 func SelectWithOutSpace(mock sqlmock.Sqlmock, claim map[string]interface{}) {

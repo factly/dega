@@ -70,14 +70,17 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	config.DB.Delete(&result)
+	tx := config.DB.Begin()
+	tx.Delete(&result)
 
 	err = meili.DeleteDocument(result.ID, "claim")
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
+	tx.Commit()
 	renderx.JSON(w, http.StatusOK, nil)
 }
