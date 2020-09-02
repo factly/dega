@@ -23,14 +23,6 @@ var Data = map[string]interface{}{
 	"medium_id":   uint(1),
 }
 
-var dataWithoutSlug = map[string]interface{}{
-	"name":        "TOI",
-	"slug":        "",
-	"description": "article is validated",
-	"tag_line":    "sample tag line",
-	"medium_id":   uint(1),
-}
-
 var invalidData = map[string]interface{}{
 	"name": "a",
 }

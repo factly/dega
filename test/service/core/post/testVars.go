@@ -51,25 +51,6 @@ var postData = map[string]interface{}{
 	"published_date":     time.Time{},
 }
 
-var dataWithoutSlug = map[string]interface{}{
-	"title":              "Post",
-	"subtitle":           "post subtitle",
-	"slug":               "",
-	"status":             "published",
-	"excerpt":            "post excerpt",
-	"description":        test.NilJsonb(),
-	"is_featured":        false,
-	"is_sticky":          true,
-	"is_highlighted":     true,
-	"featured_medium_id": uint(1),
-	"format_id":          uint(1),
-	"published_date":     time.Time{},
-	"category_ids":       []uint{1},
-	"tag_ids":            []uint{1},
-	"claim_ids":          []uint{1},
-	"author_ids":         []uint{1},
-}
-
 var invalidData = map[string]interface{}{
 	"title": "a",
 }

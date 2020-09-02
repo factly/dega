@@ -122,13 +122,16 @@ func TestFormatUpdate(t *testing.T) {
 		selectAfterUpdate(mock, updatedFormat)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.PUT(path).
 			WithPath("format_id", 1).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedFormat)
+		Data["slug"] = "article"
 
+		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("update format with different slug", func(t *testing.T) {

@@ -37,19 +37,6 @@ var Data = map[string]interface{}{
 	"dimensions":  "testdims",
 }
 
-var dataWithoutSlug = map[string]interface{}{
-	"name":        "Image",
-	"slug":        "",
-	"type":        "jpg",
-	"title":       "Sample image",
-	"description": "desc",
-	"caption":     "sample",
-	"alt_text":    "sample",
-	"file_size":   100,
-	"url":         nilJsonb(),
-	"dimensions":  "testdims",
-}
-
 var invalidData = map[string]interface{}{
 	"name": "a",
 }

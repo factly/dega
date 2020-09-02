@@ -118,12 +118,14 @@ func TestMediumUpdate(t *testing.T) {
 		SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.PUT(path).
 			WithPath("medium_id", 1).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedMedium)
+		Data["slug"] = "image"
 		test.ExpectationsMet(t, mock)
 
 	})

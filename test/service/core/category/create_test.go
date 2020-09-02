@@ -100,7 +100,7 @@ func TestCategoryCreate(t *testing.T) {
 		Data["slug"] = ""
 		res := e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).JSON().Object()
 		Data["slug"] = "test-category"

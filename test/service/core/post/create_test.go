@@ -96,12 +96,13 @@ func TestClaimCreate(t *testing.T) {
 		postAuthorInsertMock(mock)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
-
+		Data["slug"] = "post"
 		test.ExpectationsMet(t, mock)
 	})
 
@@ -119,7 +120,7 @@ func TestClaimCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 
@@ -140,7 +141,7 @@ func TestClaimCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 

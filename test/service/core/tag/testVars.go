@@ -22,11 +22,6 @@ var Data = map[string]interface{}{
 	"slug": "elections",
 }
 
-var dataWithoutSlug = map[string]interface{}{
-	"name": "Elections",
-	"slug": "",
-}
-
 var invalidData = map[string]interface{}{
 	"name": "a",
 }

@@ -60,9 +60,9 @@ func TestFormatCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(data).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(data)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
 
 	})
@@ -76,11 +76,14 @@ func TestFormatCreate(t *testing.T) {
 		formatInsertMock(mock)
 		mock.ExpectCommit()
 
-		e.POST(basePath).
+		Data["slug"] = ""
+		res := e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(data)
+			Status(http.StatusCreated).JSON().Object()
+		Data["slug"] = "article"
+		res.ContainsMap(Data)
 
 		test.ExpectationsMet(t, mock)
 	})
@@ -96,7 +99,7 @@ func TestFormatCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(data).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)

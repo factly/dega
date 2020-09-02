@@ -111,13 +111,14 @@ func TestTagUpdate(t *testing.T) {
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
 
+		Data["slug"] = ""
 		e.PUT(path).
 			WithPath("tag_id", 1).
 			WithHeaders(headers).
-			WithJSON(dataWithoutSlug).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedTag)
-
+		Data["slug"] = "elections"
 	})
 
 	t.Run("update tag with different slug", func(t *testing.T) {

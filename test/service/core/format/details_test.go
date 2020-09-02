@@ -50,7 +50,7 @@ func TestFormatDetails(t *testing.T) {
 			WithPath("format_id", 1).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(data)
+			Status(http.StatusOK).JSON().Object().ContainsMap(Data)
 	})
 
 }

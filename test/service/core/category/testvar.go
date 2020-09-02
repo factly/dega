@@ -28,13 +28,6 @@ var invalidData map[string]interface{} = map[string]interface{}{
 	"slg": "test-category",
 }
 
-var dataWithoutSlug map[string]interface{} = map[string]interface{}{
-	"name":        "Test category",
-	"description": "Test Description",
-	"parent_id":   0,
-	"medium_id":   1,
-}
-
 var categorylist []map[string]interface{} = []map[string]interface{}{
 	{
 		"name":        "Test category 1",
