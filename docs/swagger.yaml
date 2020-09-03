@@ -132,7 +132,6 @@ definitions:
     - dimensions
     - file_size
     - name
-    - slug
     - title
     - type
     type: object
@@ -597,6 +596,21 @@ definitions:
     - name
     - numeric_value
     type: object
+  search.searchQuery:
+    properties:
+      facetFilters:
+        items:
+          type: string
+        type: array
+      filters:
+        type: string
+      limit:
+        type: integer
+      q:
+        type: string
+    required:
+    - q
+    type: object
   space.orgWithSpace:
     properties:
       created_at:
@@ -677,7 +691,7 @@ definitions:
     required:
     - name
     type: object
-host: localhost:8000
+host: localhost:6000
 info:
   contact:
     email: support@swagger.io
@@ -1359,6 +1373,33 @@ paths:
       summary: Update a post by id
       tags:
       - Post
+  /core/search:
+    post:
+      description: Global search for all entities
+      operationId: search-entities
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Search
+        in: body
+        name: Search
+        schema:
+          $ref: '#/definitions/search.searchQuery'
+      produces:
+      - application/json
+      responses:
+        "200": {}
+      summary: Global search for all entities
+      tags:
+      - Search
   /core/spaces:
     get:
       description: Get all spaces
@@ -1643,7 +1684,7 @@ paths:
       summary: Update a tag by id
       tags:
       - Tag
-  /factcheck/claimants:
+  /fact-check/claimants:
     get:
       description: Get all claimants
       operationId: get-all-claimants
@@ -1712,7 +1753,7 @@ paths:
       summary: Create claimant
       tags:
       - Claimant
-  /factcheck/claimants/{claimant_id}:
+  /fact-check/claimants/{claimant_id}:
     delete:
       description: Delete claimant by ID
       operationId: delete-claimant-by-id
@@ -1800,7 +1841,7 @@ paths:
       summary: Update a claimant by id
       tags:
       - Claimant
-  /factcheck/claims:
+  /fact-check/claims:
     get:
       description: Get all claims
       operationId: get-all-claims
@@ -1869,7 +1910,7 @@ paths:
       summary: Create claim
       tags:
       - Claim
-  /factcheck/claims/{claim_id}:
+  /fact-check/claims/{claim_id}:
     delete:
       description: Delete claim by ID
       operationId: delete-claim-by-id
@@ -1892,35 +1933,6 @@ paths:
       responses:
         "200": {}
       summary: Delete a claim
-      tags:
-      - Claim
-    get:
-      description: Get claim by ID
-      operationId: get-claim-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Claim ID
-        in: path
-        name: claim_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.Claim'
-      summary: Show a claim by id
       tags:
       - Claim
     put:
@@ -1957,7 +1969,7 @@ paths:
       summary: Update a claim by id
       tags:
       - Claim
-  /factcheck/ratings:
+  /fact-check/ratings:
     get:
       description: Get all ratings
       operationId: get-all-ratings
@@ -2026,7 +2038,7 @@ paths:
       summary: Create rating
       tags:
       - Rating
-  /factcheck/ratings/{rating_id}:
+  /fact-check/ratings/{rating_id}:
     delete:
       description: Delete rating by ID
       operationId: delete-rating-by-id

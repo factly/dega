@@ -14,7 +14,7 @@
         },
         "version": "1.0"
     },
-    "host": "localhost:8000",
+    "host": "localhost:6000",
     "basePath": "/",
     "paths": {
         "/core/authors": {
@@ -998,6 +998,46 @@
                 }
             }
         },
+        "/core/search": {
+            "post": {
+                "description": "Global search for all entities",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Global search for all entities",
+                "operationId": "search-entities",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Search",
+                        "name": "Search",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/search.searchQuery"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
         "/core/spaces": {
             "get": {
                 "description": "Get all spaces",
@@ -1414,7 +1454,7 @@
                 }
             }
         },
-        "/factcheck/claimants": {
+        "/fact-check/claimants": {
             "get": {
                 "description": "Get all claimants",
                 "produces": [
@@ -1516,7 +1556,7 @@
                 }
             }
         },
-        "/factcheck/claimants/{claimant_id}": {
+        "/fact-check/claimants/{claimant_id}": {
             "get": {
                 "description": "Get claimant by ID",
                 "produces": [
@@ -1644,7 +1684,7 @@
                 }
             }
         },
-        "/factcheck/claims": {
+        "/fact-check/claims": {
             "get": {
                 "description": "Get all claims",
                 "produces": [
@@ -1746,49 +1786,7 @@
                 }
             }
         },
-        "/factcheck/claims/{claim_id}": {
-            "get": {
-                "description": "Get claim by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Claim"
-                ],
-                "summary": "Show a claim by id",
-                "operationId": "get-claim-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Claim ID",
-                        "name": "claim_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Claim"
-                        }
-                    }
-                }
-            },
+        "/fact-check/claims/{claim_id}": {
             "put": {
                 "description": "Update claim by ID",
                 "produces": [
@@ -1874,7 +1872,7 @@
                 }
             }
         },
-        "/factcheck/ratings": {
+        "/fact-check/ratings": {
             "get": {
                 "description": "Get all ratings",
                 "produces": [
@@ -1976,7 +1974,7 @@
                 }
             }
         },
-        "/factcheck/ratings/{rating_id}": {
+        "/fact-check/ratings/{rating_id}": {
             "get": {
                 "description": "Get rating by ID",
                 "produces": [
@@ -2274,7 +2272,6 @@
                 "dimensions",
                 "file_size",
                 "name",
-                "slug",
                 "title",
                 "type"
             ],
@@ -2996,6 +2993,29 @@
                     "type": "integer"
                 },
                 "slug": {
+                    "type": "string"
+                }
+            }
+        },
+        "search.searchQuery": {
+            "type": "object",
+            "required": [
+                "q"
+            ],
+            "properties": {
+                "facetFilters": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "filters": {
+                    "type": "string"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "q": {
                     "type": "string"
                 }
             }

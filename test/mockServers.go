@@ -88,6 +88,12 @@ func KetoGock() {
 }
 
 func MeiliGock() {
+	gock.New(config.MeiliURL + "/indexes/dega/search").
+		HeaderPresent("X-Meili-API-Key").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(MeiliHits)
+
 	gock.New(config.MeiliURL).
 		Post("/indexes/dega/documents").
 		HeaderPresent("X-Meili-API-Key").
