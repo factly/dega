@@ -1013,6 +1013,46 @@ var doc = `{
                 }
             }
         },
+        "/core/search": {
+            "post": {
+                "description": "Global search for all entities",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Search"
+                ],
+                "summary": "Global search for all entities",
+                "operationId": "search-entities",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Search",
+                        "name": "Search",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/search.searchQuery"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {}
+                }
+            }
+        },
         "/core/spaces": {
             "get": {
                 "description": "Get all spaces",
@@ -1429,7 +1469,7 @@ var doc = `{
                 }
             }
         },
-        "/factcheck/claimants": {
+        "/fact-check/claimants": {
             "get": {
                 "description": "Get all claimants",
                 "produces": [
@@ -1531,7 +1571,7 @@ var doc = `{
                 }
             }
         },
-        "/factcheck/claimants/{claimant_id}": {
+        "/fact-check/claimants/{claimant_id}": {
             "get": {
                 "description": "Get claimant by ID",
                 "produces": [
@@ -1659,7 +1699,7 @@ var doc = `{
                 }
             }
         },
-        "/factcheck/claims": {
+        "/fact-check/claims": {
             "get": {
                 "description": "Get all claims",
                 "produces": [
@@ -1761,49 +1801,7 @@ var doc = `{
                 }
             }
         },
-        "/factcheck/claims/{claim_id}": {
-            "get": {
-                "description": "Get claim by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Claim"
-                ],
-                "summary": "Show a claim by id",
-                "operationId": "get-claim-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Claim ID",
-                        "name": "claim_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Claim"
-                        }
-                    }
-                }
-            },
+        "/fact-check/claims/{claim_id}": {
             "put": {
                 "description": "Update claim by ID",
                 "produces": [
@@ -1889,7 +1887,7 @@ var doc = `{
                 }
             }
         },
-        "/factcheck/ratings": {
+        "/fact-check/ratings": {
             "get": {
                 "description": "Get all ratings",
                 "produces": [
@@ -1991,7 +1989,7 @@ var doc = `{
                 }
             }
         },
-        "/factcheck/ratings/{rating_id}": {
+        "/fact-check/ratings/{rating_id}": {
             "get": {
                 "description": "Get rating by ID",
                 "produces": [
@@ -2289,7 +2287,6 @@ var doc = `{
                 "dimensions",
                 "file_size",
                 "name",
-                "slug",
                 "title",
                 "type"
             ],
@@ -3015,6 +3012,29 @@ var doc = `{
                 }
             }
         },
+        "search.searchQuery": {
+            "type": "object",
+            "required": [
+                "q"
+            ],
+            "properties": {
+                "facetFilters": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "filters": {
+                    "type": "string"
+                },
+                "limit": {
+                    "type": "integer"
+                },
+                "q": {
+                    "type": "string"
+                }
+            }
+        },
         "space.orgWithSpace": {
             "type": "object",
             "properties": {
@@ -3151,7 +3171,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
-	Host:        "localhost:8000",
+	Host:        "localhost:6000",
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "Dega API",
