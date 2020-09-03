@@ -140,3 +140,35 @@ var Dummy_SingleMock = map[string]interface{}{
 var ReturnUpdate = map[string]interface{}{
 	"updateId": 1,
 }
+
+var MeiliHits = map[string]interface{}{
+	"hits": []map[string]interface{}{
+		{
+			"description": "Test claimant",
+			"id":          2,
+			"kind":        "claimant",
+			"medium_id":   2,
+			"name":        "Tester",
+			"object_id":   "claimant_2",
+			"slug":        "tester",
+			"space_id":    1,
+			"tag_line":    "A claimant for testing",
+		},
+		{
+			"description": "this is test category",
+			"id":          3,
+			"kind":        "category",
+			"medium_id":   2,
+			"name":        "Test category",
+			"object_id":   "category_3",
+			"slug":        "test-category",
+			"space_id":    1,
+		},
+	},
+	"offset":           0,
+	"limit":            20,
+	"nbHits":           7,
+	"exhaustiveNbHits": false,
+	"processingTimeMs": 2,
+	"query":            "test",
+}
