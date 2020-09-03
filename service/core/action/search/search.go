@@ -80,13 +80,13 @@ func search(w http.ResponseWriter, r *http.Request) {
 		id := hitMap["id"].(float64)
 
 		if _, found := objectIDMap[kind]; !found {
-			fmt.Println("here")
 			objectIDMap[kind] = make([]uint, 0)
-			fmt.Println("here")
 		}
 
 		objectIDMap[kind] = append(objectIDMap[kind], uint(id))
 	}
 
-	renderx.JSON(w, http.StatusOK, nil)
+	response := util.LoadObjects(objectIDMap)
+
+	renderx.JSON(w, http.StatusOK, response)
 }
