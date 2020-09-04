@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net/http"
-	"os"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -15,24 +14,9 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
-	"github.com/joho/godotenv"
 )
 
-const defaultPort = "8080"
-const defaultMode = "prod"
-
 func main() {
-	godotenv.Load()
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = defaultPort
-	}
-
-	mode := os.Getenv("MODE")
-	if mode == "" {
-		mode = defaultMode
-	}
-
 	router := chi.NewRouter()
 
 	cors := cors.New(cors.Options{
@@ -52,15 +36,14 @@ func main() {
 	router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
 
-	config.SetupDB()
+	config.SetupVars()
+	config.SetupDB(config.DSN)
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
 	router.Handle("/query", loaders.DataloaderMiddleware(srv))
 
-	if mode == "dev" {
-		router.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	}
+	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
-	log.Fatal(http.ListenAndServe(":"+port, router))
+	log.Printf("connect to http://localhost:%s/ for GraphQL playground", "8000")
+	log.Fatal(http.ListenAndServe(":8000", router))
 }

@@ -33,20 +33,14 @@ type PostsPaging struct {
 
 // PostTag model
 type PostTag struct {
-	ID          int       `json:"id"`
-	CreatedDate time.Time `json:"created_date"`
-	UpdatedDate time.Time `json:"updated_date"`
-	TagID       int       `json:"tag_id"`
-	PostID      int       `gorm:"column:post_id" json:"post_id"`
+	TagID  int `json:"tag_id"`
+	PostID int `gorm:"column:post_id" json:"post_id"`
 }
 
 // PostCategory model
 type PostCategory struct {
-	ID          int       `json:"id"`
-	CreatedDate time.Time `json:"created_date"`
-	UpdatedDate time.Time `json:"updated_date"`
-	CategoryID  int       `json:"category_id"`
-	PostID      int       `json:"post_id"`
+	CategoryID int `json:"category_id"`
+	PostID     int `json:"post_id"`
 }
 
 // PostAuthor model

@@ -1,11 +1,14 @@
-FROM golang:latest
+FROM golang:1.14.2-alpine3.11
+
 WORKDIR /app
-COPY go.mod go.sum ./
-RUN go mod download
-ENV PORT 8080
-ENV MONGO_URI mongodb://localhost:27017
-ENV MODE prod
+
 COPY . .
-RUN go build -o main .
-EXPOSE ${PORT}
-CMD ["./main"]
+
+RUN go mod download
+ENV DSN $DSN
+ENV KAVACH $KAVACH
+ENV MODE dev
+
+RUN go get github.com/githubnemo/CompileDaemon
+
+ENTRYPOINT CompileDaemon -exclude-dir=.git --build="go build server.go" --command="./server -dsn=${DSN} -kavach=${KAVACH}"

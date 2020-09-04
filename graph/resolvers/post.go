@@ -85,17 +85,17 @@ func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.
 	return claims, nil
 }
 
-func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error) {
-	postAuthors := []models.PostAuthor{}
+func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.User, error) {
+	postUsers := []models.PostAuthor{}
 
 	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
 		PostID: obj.ID,
-	}).Find(&postAuthors)
+	}).Find(&postUsers)
 
 	var allUserID []string
 
-	for _, postAuthor := range postAuthors {
-		allUserID = append(allUserID, fmt.Sprint(postAuthor.AuthorID))
+	for _, postUser := range postUsers {
+		allUserID = append(allUserID, fmt.Sprint(postUser.AuthorID))
 	}
 
 	users, _ := loaders.GetUserLoader(ctx).LoadAll(allUserID)

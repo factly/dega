@@ -2,12 +2,14 @@ package loaders
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
+	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 )
 
@@ -172,16 +174,27 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 			maxBatch: 100,
 			wait:     1 * time.Millisecond,
 			fetch: func(ids []string) ([]*models.User, []error) {
-				keys := util.Converter(ids)
+				rctx := r.Context()
+
+				sID, err := validator.GetSpace(rctx)
+
+				if err != nil {
+					return nil, nil
+				}
+				fmt.Print(sID)
+
+				// config.DB.Table("spaces").First()
+
+				//keys := util.Converter(ids)
 
 				result := make([]*models.User, 0)
 
-				err := config.DB.Model(&models.User{}).Where(keys).Order("id desc").Find(&result).Error
+				//err = config.DB.Model(&models.User{}).Where(keys).Order("id desc").Find(&result).Error
 
-				if err != nil {
-					logger.Error(err)
-					return nil, nil
-				}
+				// if err != nil {
+				// 	logger.Error(err)
+				// 	return nil, nil
+				// }
 
 				return result, nil
 			},

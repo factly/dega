@@ -1,3 +1,22 @@
+type Space {
+  id: ID!
+  created_date: Time
+  updated_date: Time
+  name: String!
+  slug: String!
+  site_title: String
+  tag_line: String
+  description: String
+  site_address: String
+  logo: Medium
+  logo_mobile: Medium
+  fav_icon: Medium
+  mobile_icon: Medium
+  verification_codes: Any
+  social_media_urls: Any
+  contact_info: Any
+}
+
 type Category {
   id: ID!
   created_date: Time
@@ -65,7 +84,7 @@ type Post {
   medium: Medium
   categories: [Category!]!
   tags: [Tag!]!
-  degaUsers: [User!]!
+  users: [User!]!
   claims: [Claim]
 }
 
@@ -217,6 +236,7 @@ type Schemas {
 }
 
 type Query {
+  space: Space
   categories(ids: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
   category(id: Int!): Category
   tags(ids: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
