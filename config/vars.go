@@ -23,9 +23,9 @@ func SetupVars() {
 		log.Fatal("Please pass dsn flag")
 	}
 
-	// if kavach == "" {
-	// 	log.Fatal("Please pass dsn flag")
-	// }
+	if kavach == "" {
+		log.Fatal("Please pass dsn flag")
+	}
 
 	DSN = dsn
 	KavachURL = kavach

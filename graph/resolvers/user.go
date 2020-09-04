@@ -2,8 +2,13 @@ package resolvers
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"net/http"
 
+	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/models"
+	"github.com/factly/dega-api/graph/validator"
 )
 
 func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error) {
@@ -14,7 +19,50 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 }
 
 func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) {
+	sID, err := validator.GetSpace(ctx)
 
-	var result *models.User
-	return result, nil
+	if err != nil {
+		return nil, nil
+	}
+
+	space := &models.Space{}
+	space.ID = sID
+
+	config.DB.First(space)
+
+	userMap := make(map[int]models.User)
+	url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
+
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, nil
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-User", fmt.Sprint(id))
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	defer resp.Body.Close()
+
+	users := []models.User{}
+	err = json.NewDecoder(resp.Body).Decode(&users)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	for _, u := range users {
+		userMap[u.ID] = u
+	}
+
+	if user, found := userMap[id]; found {
+		return &user, nil
+	}
+
+	return nil, nil
 }

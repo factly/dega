@@ -2,6 +2,7 @@ package loaders
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -181,20 +182,50 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				if err != nil {
 					return nil, nil
 				}
-				fmt.Print(sID)
 
-				// config.DB.Table("spaces").First()
+				space := &models.Space{}
+				space.ID = sID
 
-				//keys := util.Converter(ids)
+				config.DB.First(space)
+
+				keys := util.Converter(ids)
 
 				result := make([]*models.User, 0)
 
-				//err = config.DB.Model(&models.User{}).Where(keys).Order("id desc").Find(&result).Error
+				userMap := make(map[int]models.User)
+				url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
 
-				// if err != nil {
-				// 	logger.Error(err)
-				// 	return nil, nil
-				// }
+				req, err := http.NewRequest("GET", url, nil)
+				if err != nil {
+					return result, nil
+				}
+				req.Header.Set("Content-Type", "application/json")
+				req.Header.Set("X-User", fmt.Sprint(keys[0]))
+				client := &http.Client{}
+				resp, err := client.Do(req)
+
+				if err != nil {
+					return result, nil
+				}
+
+				defer resp.Body.Close()
+
+				users := []models.User{}
+				err = json.NewDecoder(resp.Body).Decode(&users)
+
+				if err != nil {
+					return result, nil
+				}
+
+				for _, u := range users {
+					userMap[u.ID] = u
+				}
+
+				for _, key := range keys {
+					if user, found := userMap[key]; found {
+						result = append(result, &user)
+					}
+				}
 
 				return result, nil
 			},
