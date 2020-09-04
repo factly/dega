@@ -92,7 +92,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"slug":          result.Slug,
 		"description":   result.Description,
 		"numeric_value": result.NumericValue,
-		"medium_id":     result.MediumID,
 		"space_id":      result.SpaceID,
 	}
 

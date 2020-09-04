@@ -135,10 +135,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"site_address":    result.SiteAddress,
 		"tag_line":        result.TagLine,
 		"organisation_id": result.OrganisationID,
-		"logo_id":         result.LogoID,
-		"logo_mobile_id":  result.LogoMobileID,
-		"fav_icon_id":     result.FavIconID,
-		"mobile_icon_id":  result.MobileIconID,
 	}
 
 	err = meili.AddDocument(meiliObj)
