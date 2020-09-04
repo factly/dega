@@ -310,22 +310,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":                 result.ID,
-		"kind":               "post",
-		"title":              result.Title,
-		"subtitle":           result.Subtitle,
-		"slug":               result.Slug,
-		"status":             result.Status,
-		"excerpt":            result.Excerpt,
-		"description":        result.Description,
-		"is_featured":        result.IsFeatured,
-		"is_sticky":          result.IsSticky,
-		"is_highlighted":     result.IsHighlighted,
-		"featured_medium_id": result.FeaturedMediumID,
-		"published_date":     result.PublishedDate.Unix(),
-		"space_id":           result.SpaceID,
-		"tag_ids":            post.TagIDs,
-		"category_ids":       post.CategoryIDs,
+		"id":             result.ID,
+		"kind":           "post",
+		"title":          result.Title,
+		"subtitle":       result.Subtitle,
+		"slug":           result.Slug,
+		"status":         result.Status,
+		"excerpt":        result.Excerpt,
+		"description":    result.Description,
+		"is_featured":    result.IsFeatured,
+		"is_sticky":      result.IsSticky,
+		"is_highlighted": result.IsHighlighted,
+		"published_date": result.PublishedDate.Unix(),
+		"space_id":       result.SpaceID,
+		"tag_ids":        post.TagIDs,
+		"category_ids":   post.CategoryIDs,
 	}
 
 	err = meili.UpdateDocument(meiliObj)

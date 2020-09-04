@@ -131,7 +131,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"kind":        "category",
 		"name":        result.Name,
 		"slug":        result.Slug,
-		"medium_id":   result.MediumID,
 		"description": result.Description,
 		"space_id":    result.SpaceID,
 	}

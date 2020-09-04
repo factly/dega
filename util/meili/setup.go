@@ -32,4 +32,11 @@ func SetupMeiliSearch() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// Add searchable attributes in index
+	searchableAttributes := []string{"name", "slug", "description", "title", "subtitle", "excerpt", "site_title", "site_address", "tag_line", "review", "review_tag_line"}
+	_, err = Client.Settings("dega").UpdateSearchableAttributes(searchableAttributes)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
