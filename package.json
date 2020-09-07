@@ -97,7 +97,6 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
-    "testResultsProcessor": "jest-sonar-reporter",
     "collectCoverageFrom": [
       "src/**/*.js",
       "!src/index.js"
