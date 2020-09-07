@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
+	"github.com/factly/dega-api/util"
 )
 
 func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error) {
@@ -66,8 +67,13 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 		return nil, nil
 	}
 
+	offset, pageLimit := util.Parse(limit, page)
+	upperLimit := offset + pageLimit
+	if upperLimit > len(users) {
+		upperLimit = len(users)
+	}
 	result := models.UsersPaging{}
-	result.Nodes = users
+	result.Nodes = users[offset:upperLimit]
 	result.Total = len(users)
 
 	return &result, nil

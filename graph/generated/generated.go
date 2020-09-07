@@ -1805,7 +1805,6 @@ type Post {
   claims: [Claim]
 }
 
-
 type User {
   id: ID!
   created_date: Time

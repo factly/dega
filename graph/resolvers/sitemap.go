@@ -2,7 +2,9 @@ package resolvers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"net/http"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -60,7 +62,70 @@ func (r *sitemapsResolver) Tags(ctx context.Context, obj *models.Sitemaps) ([]*m
 
 func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error) {
 
-	nodes := make([]*models.Sitemap, 0)
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, nil
+	}
+
+	post := &models.Post{}
+	post.SpaceID = sID
+
+	err = config.DB.First(post).Error
+	if err != nil {
+		return nil, nil
+	}
+
+	postAuthor := &models.PostAuthor{}
+	postAuthor.PostID = post.ID
+
+	err = config.DB.First(postAuthor).Error
+	if err != nil {
+		return nil, nil
+	}
+
+	space := &models.Space{}
+	space.ID = sID
+
+	err = config.DB.First(space).Error
+	if err != nil {
+		return nil, nil
+	}
+
+	url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
+
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, nil
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("X-User", fmt.Sprint(postAuthor.AuthorID))
+	client := &http.Client{}
+	resp, err := client.Do(req)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	defer resp.Body.Close()
+
+	users := []*models.User{}
+	err = json.NewDecoder(resp.Body).Decode(&users)
+
+	if err != nil {
+		return nil, nil
+	}
+
+	nodes := []*models.Sitemap{}
+
+	for _, user := range users {
+		sitemap := &models.Sitemap{
+			ID:          fmt.Sprint(user.ID),
+			Slug:        fmt.Sprint(user.ID),
+			CreatedDate: user.CreatedDate,
+		}
+		nodes = append(nodes, sitemap)
+	}
 	return nodes, nil
 }
 
