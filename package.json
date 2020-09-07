@@ -26,6 +26,7 @@
     "antd": "^4.3.4",
     "axios": "^0.19.2",
     "deep-equal": "^2.0.3",
+    "jest-sonar-reporter": "^2.0.0",
     "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -96,6 +97,7 @@
     "snapshotSerializers": [
       "enzyme-to-json/serializer"
     ],
+    "testResultsProcessor": "jest-sonar-reporter",
     "collectCoverageFrom": [
       "src/**/*.js",
       "!src/index.js"
