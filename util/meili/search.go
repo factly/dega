@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/meilisearch/meilisearch-go"
 )
 
 // SearchWithoutQuery calls meili without q
@@ -47,10 +48,23 @@ func SearchWithoutQuery(filters string, kind string) (map[string]interface{}, er
 	return result, nil
 }
 
+// SearchWithQuery calls meili with q
+func SearchWithQuery(q, filters, kind string) ([]interface{}, error) {
+	result, err := Client.Search("dega").Search(meilisearch.SearchRequest{
+		Query:        q,
+		Filters:      filters,
+		FacetFilters: []string{"kind:" + kind},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+	return result.Hits, nil
+}
+
 // GetIDArray gets array of IDs for search results
-func GetIDArray(result map[string]interface{}) []uint {
+func GetIDArray(hits []interface{}) []uint {
 	arr := make([]uint, 0)
-	hits := result["hits"].([]interface{})
 
 	if len(hits) == 0 {
 		return arr

@@ -35,6 +35,8 @@ type paging struct {
 // @Param page query string false "page number"
 // @Param tag query string false "Tags"
 // @Param format query string false "Format"
+// @Param q query string false "Query"
+// @Param sort query string false "Sort"
 // @Param category query string false "Category"
 // @Success 200 {array} postData
 // @Router /core/posts [get]
@@ -51,6 +53,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 	filterTagIDs := r.URL.Query().Get("tag")
 	filterCategoryIDs := r.URL.Query().Get("category")
 	filterFormatIDs := r.URL.Query().Get("format")
+	searchQuery := r.URL.Query().Get("q")
+	sort := r.URL.Query().Get("sort")
 
 	filters := generateFilters(filterTagIDs, filterCategoryIDs, filterFormatIDs)
 	filteredPostIDs := make([]uint, 0)
@@ -59,24 +63,28 @@ func list(w http.ResponseWriter, r *http.Request) {
 		filters = fmt.Sprint(filters, " AND space_id=", sID)
 
 		// Search posts with filter
-		result, err := meili.SearchWithoutQuery(filters, "post")
+		var hits []interface{}
+		var result map[string]interface{}
+
+		if searchQuery != "" {
+			hits, err = meili.SearchWithQuery(searchQuery, filters, "post")
+		} else {
+			result, err = meili.SearchWithoutQuery(filters, "post")
+			hits = result["hits"].([]interface{})
+		}
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
 
-		filteredPostIDs = meili.GetIDArray(result)
+		filteredPostIDs = meili.GetIDArray(hits)
 		if len(filteredPostIDs) == 0 {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 			return
 		}
 	}
-
-	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
-		SpaceID: uint(sID),
-	})
 
 	result := paging{}
 	result.Nodes = make([]postData, 0)
@@ -85,10 +93,18 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
+	if sort == "" {
+		sort = "asc"
+	}
+
+	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
+		SpaceID: uint(sID),
+	}).Count(&result.Total).Order("created_at " + sort).Offset(offset).Limit(limit)
+
 	if len(filteredPostIDs) > 0 {
-		err = tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Where(filteredPostIDs).Find(&posts).Error
+		err = tx.Where(filteredPostIDs).Find(&posts).Error
 	} else {
-		err = tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts).Error
+		err = tx.Find(&posts).Error
 	}
 
 	if err != nil {

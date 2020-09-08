@@ -31,6 +31,8 @@ type paging struct {
 // @Param limit query string false "limit per page"
 // @Param rating query string false "Ratings"
 // @Param claimant query string false "Claimants"
+// @Param q query string false "Query"
+// @Param sort query string false "Sort"
 // @Param page query string false "page number"
 // @Success 200 {Object} paging
 // @Router /fact-check/claims [get]
@@ -46,6 +48,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 	// Filters
 	filterRatingID := r.URL.Query().Get("rating")
 	filterClaimantID := r.URL.Query().Get("claimant")
+	searchQuery := r.URL.Query().Get("q")
+	sort := r.URL.Query().Get("sort")
 
 	filters := generateFilters(filterRatingID, filterClaimantID)
 	filteredClaimIDs := make([]uint, 0)
@@ -53,8 +57,16 @@ func list(w http.ResponseWriter, r *http.Request) {
 	if filters != "" {
 		filters = fmt.Sprint(filters, " AND space_id=", sID)
 
-		// Search posts with filter
-		result, err := meili.SearchWithoutQuery(filters, "claim")
+		// Search claims with filter
+		var hits []interface{}
+		var result map[string]interface{}
+
+		if searchQuery != "" {
+			hits, err = meili.SearchWithQuery(searchQuery, filters, "claim")
+		} else {
+			result, err = meili.SearchWithoutQuery(filters, "claim")
+			hits = result["hits"].([]interface{})
+		}
 
 		if err != nil {
 			loggerx.Error(err)
@@ -62,7 +74,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		filteredClaimIDs = meili.GetIDArray(result)
+		filteredClaimIDs = meili.GetIDArray(hits)
 		if len(filteredClaimIDs) == 0 {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -75,9 +87,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
+	if sort == "" {
+		sort = "asc"
+	}
+
 	tx := config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
 		SpaceID: uint(sID),
-	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit)
+	}).Count(&result.Total).Order("created_at " + sort).Offset(offset).Limit(limit)
 
 	if len(filteredClaimIDs) > 0 {
 		err = tx.Where(filteredClaimIDs).Find(&result.Nodes).Error

@@ -835,6 +835,18 @@ var doc = `{
                     },
                     {
                         "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "Category",
                         "name": "category",
                         "in": "query"
@@ -1753,6 +1765,18 @@ var doc = `{
                         "type": "string",
                         "description": "Claimants",
                         "name": "claimant",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
                         "in": "query"
                     },
                     {

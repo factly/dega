@@ -1247,6 +1247,14 @@ paths:
         in: query
         name: format
         type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      - description: Sort
+        in: query
+        name: sort
+        type: string
       - description: Category
         in: query
         name: category
@@ -1875,6 +1883,14 @@ paths:
       - description: Claimants
         in: query
         name: claimant
+        type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      - description: Sort
+        in: query
+        name: sort
         type: string
       - description: page number
         in: query
