@@ -93,7 +93,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	if sort == "" {
+	if sort != "asc" {
 		sort = "desc"
 	}
 
