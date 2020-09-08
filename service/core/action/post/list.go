@@ -3,6 +3,7 @@ package post
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -32,8 +33,9 @@ type paging struct {
 // @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
-// @Param format query string false "format type"
-// @Param filters query string false "Filters"
+// @Param tag query string false "Tags"
+// @Param format query string false "Format"
+// @Param category query string false "Category"
 // @Success 200 {array} postData
 // @Router /core/posts [get]
 func list(w http.ResponseWriter, r *http.Request) {
@@ -45,21 +47,20 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
-		SpaceID: uint(sID),
-	})
+	// Filters
+	filterTagIDs := r.URL.Query().Get("tag")
+	filterCategoryIDs := r.URL.Query().Get("category")
+	filterFormatIDs := r.URL.Query().Get("format")
 
-	filters := r.URL.Query().Get("filters")
+	filters := generateFilters(filterTagIDs, filterCategoryIDs, filterFormatIDs)
 	filteredPostIDs := make([]uint, 0)
 
 	if filters != "" {
 		filters = fmt.Sprint(filters, " AND space_id=", sID)
 
-		fmt.Println(filters)
 		// Search posts with filter
-		result, err := meili.SearchWithoutQuery(filters)
+		result, err := meili.SearchWithoutQuery(filters, "post")
 
-		fmt.Println("Result: ", result)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -79,6 +80,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 			filteredPostIDs = append(filteredPostIDs, uint(id))
 		}
 	}
+
+	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
+		SpaceID: uint(sID),
+	})
 
 	result := paging{}
 	result.Nodes = make([]postData, 0)
@@ -160,4 +165,53 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
+}
+
+func generateFilters(tagIDs string, categoryIDs string, formatID string) string {
+	if tagIDs == "" && categoryIDs == "" && formatID == "" {
+		return ""
+	}
+
+	tagFilter := ""
+	if tagIDs != "" {
+		tagsArr := strings.Split(tagIDs, ",")
+		for i, tag := range tagsArr {
+			if i == len(tagsArr)-1 {
+				tagFilter = fmt.Sprint(tagFilter, "tag_ids=", tag)
+			} else {
+				tagFilter = fmt.Sprint(tagFilter, "tag_ids=", tag, " AND ")
+			}
+		}
+	}
+
+	catFilter := ""
+	if categoryIDs != "" {
+		categoriesArr := strings.Split(categoryIDs, ",")
+		for i, cat := range categoriesArr {
+			if i == len(categoriesArr)-1 {
+				catFilter = fmt.Sprint(catFilter, "category_ids=", cat)
+			} else {
+				catFilter = fmt.Sprint(catFilter, "category_ids=", cat, " AND ")
+			}
+		}
+	}
+
+	filters := ""
+	if tagFilter != "" {
+		filters = fmt.Sprint(filters, tagFilter, " AND ")
+	}
+
+	if catFilter != "" {
+		filters = fmt.Sprint(filters, catFilter, " AND ")
+	}
+
+	if formatID != "" {
+		filters = fmt.Sprint(filters, "format_id=", formatID)
+	}
+
+	if filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
 }

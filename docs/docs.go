@@ -823,14 +823,20 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "format type",
+                        "description": "Tags",
+                        "name": "tag",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Format",
                         "name": "format",
                         "in": "query"
                     },
                     {
                         "type": "string",
-                        "description": "Filters",
-                        "name": "filters",
+                        "description": "Category",
+                        "name": "category",
                         "in": "query"
                     }
                 ],
@@ -1735,6 +1741,12 @@ var doc = `{
                         "type": "string",
                         "description": "limit per page",
                         "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filters",
+                        "name": "filters",
                         "in": "query"
                     },
                     {

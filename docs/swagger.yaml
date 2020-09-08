@@ -1239,13 +1239,17 @@ paths:
         in: query
         name: page
         type: string
-      - description: format type
+      - description: Tags
+        in: query
+        name: tag
+        type: string
+      - description: Format
         in: query
         name: format
         type: string
-      - description: Filters
+      - description: Category
         in: query
-        name: filters
+        name: category
         type: string
       produces:
       - application/json
@@ -1863,6 +1867,10 @@ paths:
       - description: limit per page
         in: query
         name: limit
+        type: string
+      - description: Filters
+        in: query
+        name: filters
         type: string
       - description: page number
         in: query

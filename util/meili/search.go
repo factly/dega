@@ -9,11 +9,11 @@ import (
 )
 
 // SearchWithoutQuery calls meili without q
-func SearchWithoutQuery(filters string) (map[string]interface{}, error) {
+func SearchWithoutQuery(filters string, kind string) (map[string]interface{}, error) {
 
 	body := map[string]interface{}{
 		"filters":      filters,
-		"facetFilters": []string{"kind:post"},
+		"facetFilters": []string{"kind:" + kind},
 	}
 
 	buf := new(bytes.Buffer)
