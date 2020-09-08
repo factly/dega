@@ -1243,6 +1243,10 @@ paths:
         in: query
         name: format
         type: string
+      - description: Filters
+        in: query
+        name: filters
+        type: string
       produces:
       - application/json
       responses:

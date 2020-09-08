@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
@@ -32,6 +33,7 @@ type paging struct {
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Param format query string false "format type"
+// @Param filters query string false "Filters"
 // @Success 200 {array} postData
 // @Router /core/posts [get]
 func list(w http.ResponseWriter, r *http.Request) {
@@ -47,18 +49,34 @@ func list(w http.ResponseWriter, r *http.Request) {
 		SpaceID: uint(sID),
 	})
 
-	format := r.URL.Query().Get("format")
+	filters := r.URL.Query().Get("filters")
+	filteredPostIDs := make([]uint, 0)
 
-	if format != "" {
-		f := model.Format{}
-		err = config.DB.Where(&model.Format{
-			SpaceID: uint(sID),
-			Slug:    format,
-		}).First(&f).Error
-		if err == nil {
-			tx = tx.Where(&model.Post{
-				FormatID: f.ID,
-			})
+	if filters != "" {
+		filters = fmt.Sprint(filters, " AND space_id=", sID)
+
+		fmt.Println(filters)
+		// Search posts with filter
+		result, err := meili.SearchWithoutQuery(filters)
+
+		fmt.Println("Result: ", result)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+
+		hits := result["hits"].([]interface{})
+
+		if len(hits) == 0 {
+			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+			return
+		}
+
+		for _, hit := range hits {
+			hitMap := hit.(map[string]interface{})
+			id := hitMap["id"].(float64)
+			filteredPostIDs = append(filteredPostIDs, uint(id))
 		}
 	}
 
@@ -69,7 +87,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	err = tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts).Error
+	if len(filteredPostIDs) > 0 {
+		err = tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Where(filteredPostIDs).Find(&posts).Error
+	} else {
+		err = tx.Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&posts).Error
+	}
 
 	if err != nil {
 		loggerx.Error(err)

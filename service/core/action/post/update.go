@@ -321,10 +321,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"is_featured":    result.IsFeatured,
 		"is_sticky":      result.IsSticky,
 		"is_highlighted": result.IsHighlighted,
+		"format_id":      result.FormatID,
 		"published_date": result.PublishedDate.Unix(),
 		"space_id":       result.SpaceID,
 		"tag_ids":        post.TagIDs,
 		"category_ids":   post.CategoryIDs,
+	}
+
+	if result.Format.Slug == "factcheck" {
+		meiliObj["claim_ids"] = post.ClaimIDs
 	}
 
 	err = meili.UpdateDocument(meiliObj)

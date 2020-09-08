@@ -826,6 +826,12 @@ var doc = `{
                         "description": "format type",
                         "name": "format",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Filters",
+                        "name": "filters",
+                        "in": "query"
                     }
                 ],
                 "responses": {
