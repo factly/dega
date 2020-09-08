@@ -1247,6 +1247,10 @@ paths:
         in: query
         name: format
         type: string
+      - description: Author
+        in: query
+        name: author
+        type: string
       - description: Query
         in: query
         name: q

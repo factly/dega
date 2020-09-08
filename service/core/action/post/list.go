@@ -35,6 +35,7 @@ type paging struct {
 // @Param page query string false "page number"
 // @Param tag query string false "Tags"
 // @Param format query string false "Format"
+// @Param author query string false "Author"
 // @Param q query string false "Query"
 // @Param sort query string false "Sort"
 // @Param category query string false "Category"
@@ -52,11 +53,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 	// Filters
 	filterTagIDs := r.URL.Query().Get("tag")
 	filterCategoryIDs := r.URL.Query().Get("category")
+	filterAuthorIDs := r.URL.Query().Get("author")
 	filterFormatIDs := r.URL.Query().Get("format")
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
-	filters := generateFilters(filterTagIDs, filterCategoryIDs, filterFormatIDs)
+	filters := generateFilters(filterTagIDs, filterCategoryIDs, filterAuthorIDs, filterFormatIDs)
 	filteredPostIDs := make([]uint, 0)
 
 	if filters != "" {
@@ -176,8 +178,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusOK, result)
 }
 
-func generateFilters(tagIDs string, categoryIDs string, formatID string) string {
-	if tagIDs == "" && categoryIDs == "" && formatID == "" {
+func generateFilters(tagIDs, categoryIDs, authorIDs, formatID string) string {
+	if tagIDs == "" && categoryIDs == "" && formatID == "" && authorIDs == "" {
 		return ""
 	}
 
@@ -193,6 +195,13 @@ func generateFilters(tagIDs string, categoryIDs string, formatID string) string 
 		categoriesArr := strings.Split(categoryIDs, ",")
 		for _, cat := range categoriesArr {
 			filters = fmt.Sprint(filters, "category_ids=", cat, " AND ")
+		}
+	}
+
+	if authorIDs != "" {
+		authorArr := strings.Split(authorIDs, ",")
+		for _, author := range authorArr {
+			filters = fmt.Sprint(filters, "author_ids=", author, " AND ")
 		}
 	}
 

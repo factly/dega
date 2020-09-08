@@ -174,6 +174,7 @@ func TestPostList(t *testing.T) {
 			WithQueryObject(map[string]interface{}{
 				"tag":      "2",
 				"category": "2",
+				"author":   "2",
 			}).
 			Expect().
 			Status(http.StatusOK).
@@ -198,6 +199,7 @@ func TestPostList(t *testing.T) {
 				"tag":      "2",
 				"category": "2",
 				"q":        "test",
+				"author":   "1,2",
 			}).
 			Expect().
 			Status(http.StatusOK).
@@ -243,8 +245,9 @@ func TestPostList(t *testing.T) {
 		e.GET(basePath).
 			WithHeaders(headers).
 			WithQueryObject(map[string]interface{}{
-				"tag": "2",
-				"q":   "test",
+				"tag":    "2",
+				"q":      "test",
+				"author": "1",
 			}).
 			Expect().
 			Status(http.StatusInternalServerError)

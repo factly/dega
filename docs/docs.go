@@ -835,6 +835,12 @@ var doc = `{
                     },
                     {
                         "type": "string",
+                        "description": "Author",
+                        "name": "author",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "Query",
                         "name": "q",
                         "in": "query"

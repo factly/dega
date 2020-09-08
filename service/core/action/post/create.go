@@ -170,6 +170,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"space_id":       result.SpaceID,
 		"tag_ids":        post.TagIDs,
 		"category_ids":   post.CategoryIDs,
+		"author_ids":     post.AuthorIDs,
 	}
 
 	if result.Format.Slug == "factcheck" {
