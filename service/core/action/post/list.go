@@ -60,24 +60,17 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		// Search posts with filter
 		result, err := meili.SearchWithoutQuery(filters, "post")
-
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
 
-		hits := result["hits"].([]interface{})
-
-		if len(hits) == 0 {
+		filteredPostIDs = meili.GetIDArray(result)
+		if len(filteredPostIDs) == 0 {
+			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 			return
-		}
-
-		for _, hit := range hits {
-			hitMap := hit.(map[string]interface{})
-			id := hitMap["id"].(float64)
-			filteredPostIDs = append(filteredPostIDs, uint(id))
 		}
 	}
 
@@ -172,37 +165,19 @@ func generateFilters(tagIDs string, categoryIDs string, formatID string) string 
 		return ""
 	}
 
-	tagFilter := ""
+	filters := ""
 	if tagIDs != "" {
 		tagsArr := strings.Split(tagIDs, ",")
-		for i, tag := range tagsArr {
-			if i == len(tagsArr)-1 {
-				tagFilter = fmt.Sprint(tagFilter, "tag_ids=", tag)
-			} else {
-				tagFilter = fmt.Sprint(tagFilter, "tag_ids=", tag, " AND ")
-			}
+		for _, tag := range tagsArr {
+			filters = fmt.Sprint(filters, "tag_ids=", tag, " AND ")
 		}
 	}
 
-	catFilter := ""
 	if categoryIDs != "" {
 		categoriesArr := strings.Split(categoryIDs, ",")
-		for i, cat := range categoriesArr {
-			if i == len(categoriesArr)-1 {
-				catFilter = fmt.Sprint(catFilter, "category_ids=", cat)
-			} else {
-				catFilter = fmt.Sprint(catFilter, "category_ids=", cat, " AND ")
-			}
+		for _, cat := range categoriesArr {
+			filters = fmt.Sprint(filters, "category_ids=", cat, " AND ")
 		}
-	}
-
-	filters := ""
-	if tagFilter != "" {
-		filters = fmt.Sprint(filters, tagFilter, " AND ")
-	}
-
-	if catFilter != "" {
-		filters = fmt.Sprint(filters, catFilter, " AND ")
 	}
 
 	if formatID != "" {

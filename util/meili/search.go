@@ -46,3 +46,21 @@ func SearchWithoutQuery(filters string, kind string) (map[string]interface{}, er
 
 	return result, nil
 }
+
+// GetIDArray gets array of IDs for search results
+func GetIDArray(result map[string]interface{}) []uint {
+	arr := make([]uint, 0)
+	hits := result["hits"].([]interface{})
+
+	if len(hits) == 0 {
+		return arr
+	}
+
+	for _, hit := range hits {
+		hitMap := hit.(map[string]interface{})
+		id := hitMap["id"].(float64)
+		arr = append(arr, uint(id))
+	}
+
+	return arr
+}

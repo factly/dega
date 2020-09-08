@@ -62,17 +62,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		hits := result["hits"].([]interface{})
-
-		if len(hits) == 0 {
+		filteredClaimIDs = meili.GetIDArray(result)
+		if len(filteredClaimIDs) == 0 {
+			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 			return
-		}
-
-		for _, hit := range hits {
-			hitMap := hit.(map[string]interface{})
-			id := hitMap["id"].(float64)
-			filteredClaimIDs = append(filteredClaimIDs, uint(id))
 		}
 	}
 
