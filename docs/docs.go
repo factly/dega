@@ -1745,8 +1745,14 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "Filters",
-                        "name": "filters",
+                        "description": "Ratings",
+                        "name": "rating",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Claimants",
+                        "name": "claimant",
                         "in": "query"
                     },
                     {

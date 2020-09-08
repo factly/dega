@@ -1868,9 +1868,13 @@ paths:
         in: query
         name: limit
         type: string
-      - description: Filters
+      - description: Ratings
         in: query
-        name: filters
+        name: rating
+        type: string
+      - description: Claimants
+        in: query
+        name: claimant
         type: string
       - description: page number
         in: query
