@@ -31,6 +31,35 @@ var Data = map[string]interface{}{
 	"review_sources":  "TOI",
 }
 
+var claimList = []map[string]interface{}{
+	{
+		"title":           "Claim 1",
+		"slug":            "claim-test",
+		"claim_date":      time.Time{},
+		"checked_date":    time.Time{},
+		"claim_sources":   "GOI",
+		"description":     test.NilJsonb(),
+		"claimant_id":     uint(1),
+		"rating_id":       uint(1),
+		"review":          "Succesfully reviewed",
+		"review_tag_line": "tag line",
+		"review_sources":  "TOI",
+	},
+	{
+		"title":           "Claim 2",
+		"slug":            "claim-test",
+		"claim_date":      time.Time{},
+		"checked_date":    time.Time{},
+		"claim_sources":   "GOI",
+		"description":     test.NilJsonb(),
+		"claimant_id":     uint(1),
+		"rating_id":       uint(1),
+		"review":          "Succesfully reviewed",
+		"review_tag_line": "tag line",
+		"review_sources":  "TOI",
+	},
+}
+
 var invalidData = map[string]interface{}{
 	"title": "a",
 }
@@ -60,6 +89,19 @@ func claimInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
+}
+
+func claimListMock(mock sqlmock.Sqlmock) {
+	test.CheckSpaceMock(mock)
+	claimCountQuery(mock, len(claimList))
+
+	mock.ExpectQuery(selectQuery).
+		WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(1, time.Now(), time.Now(), nil, claimList[0]["title"], claimList[0]["slug"], claimList[0]["claim_date"], claimList[0]["checked_date"], claimList[0]["claim_sources"],
+				claimList[0]["description"], claimList[0]["claimant_id"], claimList[0]["rating_id"], claimList[0]["review"], claimList[0]["review_tag_line"], claimList[0]["review_sources"], 1))
+
+	rating.SelectWithOutSpace(mock, rating.Data)
+	claimant.SelectWithOutSpace(mock, claimant.Data)
 }
 
 func claimantFKError(mock sqlmock.Sqlmock) {
