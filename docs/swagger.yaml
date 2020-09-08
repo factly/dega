@@ -1239,9 +1239,29 @@ paths:
         in: query
         name: page
         type: string
-      - description: format type
+      - description: Tags
+        in: query
+        name: tag
+        type: string
+      - description: Format
         in: query
         name: format
+        type: string
+      - description: Author
+        in: query
+        name: author
+        type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      - description: Sort
+        in: query
+        name: sort
+        type: string
+      - description: Category
+        in: query
+        name: category
         type: string
       produces:
       - application/json
@@ -1859,6 +1879,22 @@ paths:
       - description: limit per page
         in: query
         name: limit
+        type: string
+      - description: Ratings
+        in: query
+        name: rating
+        type: string
+      - description: Claimants
+        in: query
+        name: claimant
+        type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      - description: Sort
+        in: query
+        name: sort
         type: string
       - description: page number
         in: query

@@ -13,4 +13,4 @@ ENV MEILI_KEY $MEILI_KEY
 
 RUN go get github.com/githubnemo/CompileDaemon
 
-ENTRYPOINT CompileDaemon -exclude-dir=.git -exclude-dir=docs --build="go build main.go" --command="./main -dsn=${DSN} -kavach=${KAVACH} -keto=${KETO} -meili=${MEILI_URL} -meiliKey ${MEILI_KEY}"
+ENTRYPOINT CompileDaemon -exclude-dir=.git -exclude-dir=docs --build="go build main.go" --command="./main -dsn=${DSN} -kavach=${KAVACH} -keto=${KETO} -meili=${MEILI_URL} -meiliKey=${MEILI_KEY}"

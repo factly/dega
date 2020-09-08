@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/format"
@@ -20,6 +21,8 @@ import (
 func TestPostList(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -27,37 +30,6 @@ func TestPostList(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	postList := []map[string]interface{}{
-		{
-			"title":              "Post 1",
-			"subtitle":           "post subtitle 1",
-			"slug":               "post-1",
-			"status":             "published",
-			"excerpt":            "post excerpt",
-			"description":        test.NilJsonb(),
-			"is_featured":        false,
-			"is_sticky":          true,
-			"is_highlighted":     true,
-			"featured_medium_id": uint(1),
-			"format_id":          uint(1),
-			"published_date":     time.Time{},
-		},
-		{
-			"title":              "Post 2",
-			"subtitle":           "post subtitle",
-			"slug":               "post-2",
-			"status":             "published",
-			"excerpt":            "post excerpt",
-			"description":        test.NilJsonb(),
-			"is_featured":        false,
-			"is_sticky":          true,
-			"is_highlighted":     true,
-			"featured_medium_id": uint(1),
-			"format_id":          uint(1),
-			"published_date":     time.Time{},
-		},
-	}
 
 	t.Run("get empty list of posts", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -192,5 +164,94 @@ func TestPostList(t *testing.T) {
 
 		test.ExpectationsMet(t, mock)
 
+	})
+
+	t.Run("get list of posts based on filters", func(t *testing.T) {
+		postListMock(mock)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"tag":      "2",
+				"category": "2",
+				"author":   "2",
+			}).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(postList)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(postList[0])
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("get list of posts based on filters and query", func(t *testing.T) {
+		postListMock(mock)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"tag":      "2",
+				"category": "2",
+				"q":        "test",
+				"author":   "1,2",
+			}).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(postList)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(postList[0])
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("when query does not match any post", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		test.DisableMeiliGock(testServer.URL)
+
+		gock.New(config.MeiliURL + "/indexes/dega/search").
+			HeaderPresent("X-Meili-API-Key").
+			Persist().
+			Reply(http.StatusOK).
+			JSON(test.EmptyMeili)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"tag":      "2",
+				"category": "2",
+				"q":        "test",
+			}).
+			Expect().
+			Status(http.StatusNotFound)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("when meili is down", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		test.DisableMeiliGock(testServer.URL)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"tag":    "2",
+				"q":      "test",
+				"author": "1",
+			}).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
 	})
 }

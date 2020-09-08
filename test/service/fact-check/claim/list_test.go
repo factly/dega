@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/fact-check/claimant"
@@ -18,6 +19,8 @@ import (
 func TestClaimList(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -25,35 +28,6 @@ func TestClaimList(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	claimList := []map[string]interface{}{
-		{
-			"title":           "Claim 1",
-			"slug":            "claim-test",
-			"claim_date":      time.Time{},
-			"checked_date":    time.Time{},
-			"claim_sources":   "GOI",
-			"description":     test.NilJsonb(),
-			"claimant_id":     uint(1),
-			"rating_id":       uint(1),
-			"review":          "Succesfully reviewed",
-			"review_tag_line": "tag line",
-			"review_sources":  "TOI",
-		},
-		{
-			"title":           "Claim 2",
-			"slug":            "claim-test",
-			"claim_date":      time.Time{},
-			"checked_date":    time.Time{},
-			"claim_sources":   "GOI",
-			"description":     test.NilJsonb(),
-			"claimant_id":     uint(1),
-			"rating_id":       uint(1),
-			"review":          "Succesfully reviewed",
-			"review_tag_line": "tag line",
-			"review_sources":  "TOI",
-		},
-	}
 
 	t.Run("get empty list of claims", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -133,5 +107,92 @@ func TestClaimList(t *testing.T) {
 
 		test.ExpectationsMet(t, mock)
 
+	})
+
+	t.Run("get list of claims based on filters", func(t *testing.T) {
+		claimListMock(mock)
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"claimant": "2",
+				"rating":   "2",
+			}).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(claimList)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(claimList[0])
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("get list of claims based on filters and query", func(t *testing.T) {
+		claimListMock(mock)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"claimant": "2",
+				"rating":   "2",
+				"q":        "test",
+			}).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(claimList)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(claimList[0])
+
+		test.ExpectationsMet(t, mock)
+
+	})
+
+	t.Run("when query does not match any claim", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		test.DisableMeiliGock(testServer.URL)
+
+		gock.New(config.MeiliURL + "/indexes/dega/search").
+			HeaderPresent("X-Meili-API-Key").
+			Persist().
+			Reply(http.StatusOK).
+			JSON(test.EmptyMeili)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"claimant": "2",
+				"rating":   "2",
+				"q":        "test",
+			}).
+			Expect().
+			Status(http.StatusNotFound)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("when meili is down", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		test.DisableMeiliGock(testServer.URL)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"claimant":  "2",
+				"format_id": "2",
+				"q":         "test",
+			}).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
 	})
 }

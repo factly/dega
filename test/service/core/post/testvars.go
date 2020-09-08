@@ -52,6 +52,37 @@ var postData = map[string]interface{}{
 	"published_date":     time.Time{},
 }
 
+var postList = []map[string]interface{}{
+	{
+		"title":              "Post 1",
+		"subtitle":           "post subtitle 1",
+		"slug":               "post-1",
+		"status":             "published",
+		"excerpt":            "post excerpt",
+		"description":        test.NilJsonb(),
+		"is_featured":        false,
+		"is_sticky":          true,
+		"is_highlighted":     true,
+		"featured_medium_id": uint(1),
+		"format_id":          uint(1),
+		"published_date":     time.Time{},
+	},
+	{
+		"title":              "Post 2",
+		"subtitle":           "post subtitle",
+		"slug":               "post-2",
+		"status":             "published",
+		"excerpt":            "post excerpt",
+		"description":        test.NilJsonb(),
+		"is_featured":        false,
+		"is_sticky":          true,
+		"is_highlighted":     true,
+		"featured_medium_id": uint(1),
+		"format_id":          uint(1),
+		"published_date":     time.Time{},
+	},
+}
+
 var invalidData = map[string]interface{}{
 	"title": "a",
 }
@@ -88,6 +119,41 @@ func postInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectExec(`INSERT INTO "post_categories"`).
 		WithArgs(1, 1, 1, 1).
 		WillReturnResult(sqlmock.NewResult(0, 1))
+}
+
+func postListMock(mock sqlmock.Sqlmock) {
+	test.CheckSpaceMock(mock)
+	postCountQuery(mock, len(postList))
+
+	mock.ExpectQuery(selectQuery).
+		WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(1, time.Now(), time.Now(), nil, postList[0]["title"], postList[0]["subtitle"], postList[0]["slug"], postList[0]["status"], postList[0]["excerpt"],
+				postList[0]["description"], postList[0]["is_featured"], postList[0]["is_sticky"], postList[0]["is_highlighted"], postList[0]["featured_medium_id"], postList[0]["format_id"], postList[0]["published_date"], 1))
+
+	medium.SelectWithOutSpace(mock)
+	format.SelectWithOutSpace(mock)
+
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
+		WithArgs(sqlmock.AnyArg()).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}).
+			AddRow(1, time.Now(), time.Now(), nil, "Tag test 1", "tag-test-1", 1))
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+		WithArgs(sqlmock.AnyArg()).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}).
+			AddRow(1, time.Now(), time.Now(), nil, "Tag test 1", "tag-test-1", 1))
+
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
+		WithArgs(sqlmock.AnyArg()).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
+
+	claim.SelectWithOutSpace(mock, claim.Data)
+
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
+		WithArgs(sqlmock.AnyArg()).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
+
 }
 
 func preloadMock(mock sqlmock.Sqlmock) {
