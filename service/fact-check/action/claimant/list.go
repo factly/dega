@@ -44,15 +44,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	err = config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
+	config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
 		SpaceID: uint(sID),
-	}).Count(&result.Total).Offset(offset).Order("id desc").Limit(limit).Find(&result.Nodes).Error
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
+	}).Count(&result.Total).Offset(offset).Order("id desc").Limit(limit).Find(&result.Nodes)
 
 	renderx.JSON(w, http.StatusOK, result)
 }
