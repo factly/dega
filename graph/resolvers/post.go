@@ -172,6 +172,20 @@ func (r *queryResolver) Posts(ctx context.Context, formats []int, categories []i
 		}
 	}
 
+	if len(users) > 0 {
+		rows := []models.Post{}
+		tx := config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_users ON post_users.post_id = posts.id").Where("post_users.user_id in (?)", users).Where("posts.space_id in (?)", sID)
+		if len(pIDs) > 0 {
+			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
+		} else {
+			tx.Scan(&rows)
+		}
+		pIDs = []int{}
+		for _, row := range rows {
+			pIDs = append(pIDs, row.ID)
+		}
+	}
+
 	if len(formats) > 0 {
 		rows := []models.Post{}
 		tx := config.DB.Table("posts").Select("posts.id").Where("posts.format_id in (?)", formats).Where("posts.space_id in (?)", sID)
