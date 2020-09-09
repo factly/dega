@@ -38,6 +38,9 @@ export const getPosts = (query) => {
     if (query.sort_by) {
       params.append('sort', query.sort_by);
     }
+    if (query.q) {
+      params.append('q', query.q);
+    }
     return axios
       .get(POSTS_API, {
         params: params,

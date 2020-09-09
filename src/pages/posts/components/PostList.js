@@ -51,6 +51,7 @@ function PostList() {
       category: values.categories,
       format: values.formats,
       sort_by: values.sort_by,
+      q: values.q,
     };
 
     setFilters(filterValue);
@@ -66,7 +67,7 @@ function PostList() {
         onFinish={(values) => onSave(values)}
         style={{ maxWidth: '100%' }}
       >
-        <Form.Item name="post" label="Query" style={{ width: '25%' }}>
+        <Form.Item name="q" label="Query" style={{ width: '25%' }}>
           <Input placeholder="search post" />
         </Form.Item>
         <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
