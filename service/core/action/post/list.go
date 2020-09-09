@@ -104,9 +104,15 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}).Count(&result.Total).Order("created_at " + sort).Offset(offset).Limit(limit)
 
 	if len(filteredPostIDs) > 0 {
-		tx.Where(filteredPostIDs).Find(&posts)
+		err = tx.Where(filteredPostIDs).Find(&posts).Error
 	} else {
-		tx.Find(&posts)
+		err = tx.Find(&posts).Error
+	}
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
 	}
 
 	var postIDs []uint

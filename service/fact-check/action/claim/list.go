@@ -96,9 +96,15 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}).Count(&result.Total).Order("created_at " + sort).Offset(offset).Limit(limit)
 
 	if len(filteredClaimIDs) > 0 {
-		tx.Where(filteredClaimIDs).Find(&result.Nodes)
+		err = tx.Where(filteredClaimIDs).Find(&result.Nodes).Error
 	} else {
-		tx.Find(&result.Nodes)
+		err = tx.Find(&result.Nodes).Error
+	}
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
