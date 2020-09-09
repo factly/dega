@@ -1,6 +1,7 @@
 package format
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -85,6 +86,26 @@ func TestFormatCreate(t *testing.T) {
 		Data["slug"] = "factcheck"
 		res.ContainsMap(Data)
 
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("creating format fails", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		slugCheckMock(mock)
+
+		mock.ExpectBegin()
+		mock.ExpectQuery(`INSERT INTO "formats"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], "", 1).
+			WillReturnError(errors.New("cannot create format"))
+		mock.ExpectRollback()
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
 

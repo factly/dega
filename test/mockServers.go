@@ -125,3 +125,23 @@ func DisableMeiliGock(serverURL string) {
 	gock.New(serverURL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 }
+
+func DisableKavachGock(serverURL string) {
+	gock.Off()
+
+	MeiliGock()
+	KetoGock()
+
+	gock.New(serverURL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+}
+
+func DisableKetoGock(serverURL string) {
+	gock.Off()
+
+	MeiliGock()
+	KavachGock()
+
+	gock.New(serverURL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+}

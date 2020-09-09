@@ -96,6 +96,29 @@ func TestPostUpdate(t *testing.T) {
 
 	})
 
+	t.Run("updating post fails", func(t *testing.T) {
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		preUpdateMock(mock, updatePost, false)
+		mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
+			WithArgs(updatePost["description"], updatePost["excerpt"], updatePost["featured_medium_id"], updatePost["format_id"],
+				updatePost["is_highlighted"], updatePost["is_sticky"], updatePost["slug"], updatePost["status"], updatePost["subtitle"], updatePost["title"],
+				test.AnyTime{}, 1).
+			WillReturnError(errors.New("cannot update post"))
+
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("update post", func(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)

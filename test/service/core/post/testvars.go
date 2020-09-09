@@ -228,8 +228,7 @@ func postAuthorInsertMock(mock sqlmock.Sqlmock) {
 			AddRow(1))
 }
 
-func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
-
+func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	postSelectWithSpace(mock)
 
 	// preload tags & categories
@@ -264,7 +263,10 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 	// Check medium & format belong to same space or not
 	medium.SelectWithSpace(mock)
 	format.SelectWithSpace(mock)
+}
 
+func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
+	preUpdateMock(mock, post, slugCheckRequired)
 	//update post
 	mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
 		WithArgs(post["description"], post["excerpt"], post["featured_medium_id"], post["format_id"],
