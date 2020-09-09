@@ -1,6 +1,7 @@
 package post
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -74,6 +75,33 @@ func TestClaimCreate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
+
+		test.ExpectationsMet(t, mock)
+
+	})
+
+	t.Run("creating post claims fail", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		slugCheckMock(mock, Data)
+
+		tag.SelectWithOutSpace(mock, tag.Data)
+		category.SelectWithOutSpace(mock)
+
+		postInsertMock(mock)
+		postSelectWithOutSpace(mock, Data)
+		mock.ExpectQuery(`INSERT INTO "post_claims"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+			WillReturnError(errors.New("cannot create post_claims"))
+
+		mock.ExpectRollback()
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
 
 		test.ExpectationsMet(t, mock)
 

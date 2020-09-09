@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
@@ -15,6 +16,7 @@ import (
 func TestDetails(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -37,4 +39,20 @@ func TestDetails(t *testing.T) {
 			JSON().Object().Value("name").Equal(id[len(id)-1])
 
 	})
+
+	t.Run("when keto cannot fetch policies", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+		gock.New(config.KetoURL).
+			Post("/engines/acp/ory/regex/allowed").
+			Persist().
+			Reply(http.StatusOK)
+
+		test.CheckSpaceMock(mock)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusServiceUnavailable)
+	})
+
 }

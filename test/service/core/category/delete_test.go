@@ -1,6 +1,7 @@
 package category
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -105,4 +106,51 @@ func TestCategoryDelete(t *testing.T) {
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
+
+	t.Run("updating children categories fail", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		categoryPostAssociation(mock, 0)
+
+		mock.ExpectBegin()
+		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+)`).
+			WithArgs(nil, test.AnyTime{}, 1, 1).
+			WillReturnError(errors.New("cannot update categories"))
+		mock.ExpectRollback()
+
+		e.DELETE(path).
+			WithPath("category_id", "1").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("deleting categories fail", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		categoryPostAssociation(mock, 0)
+
+		mock.ExpectBegin()
+		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+)`).
+			WithArgs(nil, test.AnyTime{}, 1, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		mock.ExpectExec(deleteQuery).
+			WithArgs(test.AnyTime{}, 1).
+			WillReturnError(errors.New("cannot delete categories"))
+		mock.ExpectRollback()
+
+		e.DELETE(path).
+			WithPath("category_id", "1").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
 }

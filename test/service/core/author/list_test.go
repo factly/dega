@@ -61,4 +61,15 @@ func TestList(t *testing.T) {
 			Expect().
 			Status(http.StatusUnauthorized)
 	})
+
+	t.Run("Request to kavach fails", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		test.DisableKavachGock(testServer.URL)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusServiceUnavailable)
+	})
 }

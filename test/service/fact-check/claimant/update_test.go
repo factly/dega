@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -142,6 +143,39 @@ func TestClaimantUpdate(t *testing.T) {
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedClaimant)
 		test.ExpectationsMet(t, mock)
 
+	})
+
+	t.Run("update claimant with medium_id = 0", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		SelectWithSpace(mock)
+
+		mock.ExpectBegin()
+		mock.ExpectExec(`UPDATE \"claimants\" SET (.+)  WHERE (.+) \"claimants\".\"id\" = `).
+			WithArgs(nil, test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		mock.ExpectQuery(selectQuery).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows(columns).
+				AddRow(1, time.Now(), time.Now(), nil, updatedClaimant["name"], updatedClaimant["slug"], updatedClaimant["medium_id"], updatedClaimant["description"], updatedClaimant["tag_line"], 1))
+
+		mock.ExpectExec(`UPDATE \"claimants\" SET (.+)  WHERE (.+) \"claimants\".\"id\" = `).
+			WithArgs(updatedClaimant["description"], updatedClaimant["name"], updatedClaimant["slug"], updatedClaimant["tag_line"], test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		SelectWithOutSpace(mock, updatedClaimant)
+
+		mock.ExpectCommit()
+
+		updatedClaimant["medium_id"] = 0
+		e.PUT(path).
+			WithPath("claimant_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedClaimant).
+			Expect().
+			Status(http.StatusOK)
+		updatedClaimant["medium_id"] = 1
+		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("medium not found", func(t *testing.T) {

@@ -104,3 +104,31 @@ func updateMock(mock sqlmock.Sqlmock) {
 	medium.SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)
 }
+
+func oneMediaIDZeroMock(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows(Columns).
+			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+
+	mock.ExpectBegin()
+	mock.ExpectExec(`UPDATE \"spaces\" SET (.+)  WHERE (.+) \"spaces\".\"id\" = `).
+		WithArgs(nil, test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	SelectQuery(mock)
+
+	medium.SelectWithSpace(mock)
+	medium.SelectWithSpace(mock)
+	medium.SelectWithSpace(mock)
+
+	mock.ExpectExec(`UPDATE \"spaces\" SET (.+)  WHERE (.+) \"spaces\".\"id\" = `).
+		WithArgs(Data["contact_info"], Data["description"], 1, 1, 1, Data["name"], Data["site_address"], Data["site_title"], Data["slug"], Data["social_media_urls"], Data["tag_line"], test.AnyTime{}, Data["verification_codes"], 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	SelectQuery(mock)
+	medium.SelectWithOutSpace(mock)
+	medium.SelectWithOutSpace(mock)
+	medium.SelectWithOutSpace(mock)
+	medium.SelectWithOutSpace(mock)
+	mock.ExpectCommit()
+}

@@ -1,6 +1,7 @@
 package category
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -8,6 +9,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -155,6 +157,27 @@ func TestCategoryUpdate(t *testing.T) {
 		res.ContainsMap(Data)
 		Data["medium_id"] = 1
 
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("updating category fails", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		mock.ExpectBegin()
+		medium.SelectWithSpace(mock)
+		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
+			WithArgs(Data["description"], Data["medium_id"], Data["name"], Data["slug"], test.AnyTime{}, 1).
+			WillReturnError(errors.New("cannot update category"))
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("category_id", 1).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
 
