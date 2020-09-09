@@ -14,6 +14,7 @@ import (
 func TestCreatePolicy(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -32,6 +33,17 @@ func TestCreatePolicy(t *testing.T) {
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).JSON().Object().Value("name").Equal(policy_test["name"])
+	})
+
+	t.Run("when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		e.POST(basePath).
+			WithJSON(policy_test).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
 	})
 
 }

@@ -228,8 +228,7 @@ func postAuthorInsertMock(mock sqlmock.Sqlmock) {
 			AddRow(1))
 }
 
-func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
-
+func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	postSelectWithSpace(mock)
 
 	// preload tags & categories
@@ -264,8 +263,9 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 	// Check medium & format belong to same space or not
 	medium.SelectWithSpace(mock)
 	format.SelectWithSpace(mock)
+}
 
-	//update post
+func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
 		WithArgs(post["description"], post["excerpt"], post["featured_medium_id"], post["format_id"],
 			post["is_highlighted"], post["is_sticky"], post["slug"], post["status"], post["subtitle"], post["title"],
@@ -298,6 +298,9 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
 			AddRow(1, time.Now(), time.Now(), nil, 2, 1))
 
+}
+
+func updatePostClaimsMock(mock sqlmock.Sqlmock) {
 	mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
 		WithArgs(test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
@@ -314,6 +317,9 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
 	claim.SelectWithOutSpace(mock, claim.Data)
 
+}
+
+func updatePostAuthorMock(mock sqlmock.Sqlmock) {
 	mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
 		WithArgs(test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
@@ -325,7 +331,13 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 			AddRow(1))
 
 	postAuthorSelectMock(mock)
+}
 
+func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
+	preUpdateMock(mock, post, slugCheckRequired)
+	updateQueryMock(mock, post, slugCheckRequired)
+	updatePostClaimsMock(mock)
+	updatePostAuthorMock(mock)
 }
 
 func deleteMock(mock sqlmock.Sqlmock) {

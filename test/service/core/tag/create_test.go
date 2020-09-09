@@ -1,6 +1,7 @@
 package tag
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -63,6 +64,27 @@ func TestTagCreate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+		test.ExpectationsMet(t, mock)
+
+	})
+
+	t.Run("creating tag fails", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		slugCheckMock(mock)
+
+		mock.ExpectBegin()
+		mock.ExpectQuery(`INSERT INTO "tags"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], "", 1).
+			WillReturnError(errors.New("cannot create tag"))
+		mock.ExpectRollback()
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 
 	})

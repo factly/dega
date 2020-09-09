@@ -71,6 +71,16 @@ func TestSpaceUpdate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
+	t.Run("When kavach is down", func(t *testing.T) {
+		test.DisableKavachGock(testServer.URL)
+		e.POST(basePath).
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusServiceUnavailable)
+		test.MockServer()
+	})
+
 	t.Run("space record does not exist", func(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
@@ -168,6 +178,79 @@ func TestSpaceUpdate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("update space when logo_id = 0", func(t *testing.T) {
+		oneMediaIDZeroMock(mock)
+
+		Data["logo_id"] = 0
+		e.PUT(path).
+			WithPath("space_id", "1").
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusOK)
+		Data["logo_id"] = 1
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("update space when logo_mobile_id = 0", func(t *testing.T) {
+		oneMediaIDZeroMock(mock)
+
+		Data["logo_mobile_id"] = 0
+		e.PUT(path).
+			WithPath("space_id", "1").
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusOK)
+		Data["logo_mobile_id"] = 1
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("update space when fav_icon_id = 0", func(t *testing.T) {
+		oneMediaIDZeroMock(mock)
+
+		Data["fav_icon_id"] = 0
+		e.PUT(path).
+			WithPath("space_id", "1").
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusOK)
+		Data["fav_icon_id"] = 1
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("update space when mobile_icon_id = 0", func(t *testing.T) {
+		oneMediaIDZeroMock(mock)
+
+		Data["mobile_icon_id"] = 0
+		e.PUT(path).
+			WithPath("space_id", "1").
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusOK)
+		Data["mobile_icon_id"] = 1
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("update a space when kavach is down", func(t *testing.T) {
+		test.DisableKavachGock(testServer.URL)
+
+		e.PUT(path).
+			WithPath("space_id", "1").
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusServiceUnavailable)
 
 		test.ExpectationsMet(t, mock)
 	})
