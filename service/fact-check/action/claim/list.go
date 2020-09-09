@@ -76,8 +76,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		filteredClaimIDs = meili.GetIDArray(hits)
 		if len(filteredClaimIDs) == 0 {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+			renderx.JSON(w, http.StatusOK, paging{
+				Nodes: make([]model.Claim, 0),
+				Total: 0,
+			})
 			return
 		}
 	}
