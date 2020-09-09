@@ -45,11 +45,11 @@ function PostForm({ onCreate, data = {} }) {
     setVisible(true);
   };
 
-  const handleOk = (e) => {
+  const handleOk = () => {
     setVisible(false);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setVisible(false);
   };
 

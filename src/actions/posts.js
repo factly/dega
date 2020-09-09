@@ -18,9 +18,29 @@ import { addClaims } from './claims';
 export const getPosts = (query) => {
   return (dispatch) => {
     dispatch(loadingPosts());
+
+    const params = new URLSearchParams();
+    if (query.category && query.category.length > 0) {
+      query.category.map((each) => params.append('category', each));
+    }
+    if (query.tag && query.tag.length > 0) {
+      query.tag.map((each) => params.append('tag', each));
+    }
+    if (query.format && query.format.length > 0) {
+      query.format.map((each) => params.append('format', each));
+    }
+    if (query.page) {
+      params.append('page', query.page);
+    }
+    if (query.limit) {
+      params.append('limit', query.limit);
+    }
+    if (query.sort_by) {
+      params.append('sort', query.sort_by);
+    }
     return axios
       .get(POSTS_API, {
-        params: query,
+        params: params,
       })
       .then((response) => {
         dispatch(
