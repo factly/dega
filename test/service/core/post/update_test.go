@@ -96,6 +96,23 @@ func TestPostUpdate(t *testing.T) {
 
 	})
 
+	t.Run("update post", func(t *testing.T) {
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		updateMock(mock, updatePost, false)
+		mock.ExpectCommit()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusOK).JSON().Object().ContainsMap(postData)
+
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("updating post fails", func(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
@@ -119,20 +136,99 @@ func TestPostUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update post", func(t *testing.T) {
+	t.Run("deleting old post_claims fails", func(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
 
-		updateMock(mock, updatePost, false)
-		mock.ExpectCommit()
+		preUpdateMock(mock, updatePost, false)
+		updateQueryMock(mock, updatePost, false)
+		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
+			WithArgs(test.AnyTime{}, 1).
+			WillReturnError(errors.New("cannot delete post_claims"))
+
+		mock.ExpectRollback()
 
 		e.PUT(path).
 			WithPath("post_id", 1).
 			WithHeaders(headers).
 			WithJSON(updatePost).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(postData)
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
 
+	t.Run("adding post_claims fails", func(t *testing.T) {
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		preUpdateMock(mock, updatePost, false)
+		updateQueryMock(mock, updatePost, false)
+		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
+			WithArgs(test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		mock.ExpectQuery(`INSERT INTO "post_claims"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+			WillReturnError(errors.New("cannot create post_claims"))
+
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("deleting old post_authors fails", func(t *testing.T) {
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		preUpdateMock(mock, updatePost, false)
+		updateQueryMock(mock, updatePost, false)
+		updatePostClaimsMock(mock)
+
+		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
+			WithArgs(test.AnyTime{}, 1).
+			WillReturnError(errors.New("cannot delete post_authors"))
+
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("creating post_authors fails", func(t *testing.T) {
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		preUpdateMock(mock, updatePost, false)
+		updateQueryMock(mock, updatePost, false)
+		updatePostClaimsMock(mock)
+
+		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
+			WithArgs(test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		mock.ExpectQuery(`INSERT INTO "post_authors"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+			WillReturnError(errors.New("cannot create post_authors"))
+
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
 
