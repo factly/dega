@@ -56,7 +56,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	if filters != "" {
 		filters = fmt.Sprint(filters, " AND space_id=", sID)
+	}
 
+	if filters != "" || searchQuery != "" {
 		// Search claims with filter
 		var hits []interface{}
 		var result map[string]interface{}
