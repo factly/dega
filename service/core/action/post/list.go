@@ -82,8 +82,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		filteredPostIDs = meili.GetIDArray(hits)
 		if len(filteredPostIDs) == 0 {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+			renderx.JSON(w, http.StatusOK, paging{
+				Nodes: make([]postData, 0),
+				Total: 0,
+			})
 			return
 		}
 	}
