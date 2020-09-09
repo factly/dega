@@ -187,7 +187,7 @@ type ComplexityRoot struct {
 		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Formats    func(childComplexity int) int
 		Post       func(childComplexity int, id int) int
-		Posts      func(childComplexity int, formats []string, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Posts      func(childComplexity int, formats []int, categories []int, tags []int, users []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Ratings    func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Sitemap    func(childComplexity int) int
 		Space      func(childComplexity int) int
@@ -331,7 +331,7 @@ type QueryResolver interface {
 	Tags(ctx context.Context, ids []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
 	Tag(ctx context.Context, id int) (*models.Tag, error)
 	Formats(ctx context.Context) (*models.FormatsPaging, error)
-	Posts(ctx context.Context, formats []string, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
+	Posts(ctx context.Context, formats []int, categories []int, tags []int, users []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Post(ctx context.Context, id int) (*models.Post, error)
 	Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error)
 	User(ctx context.Context, id int) (*models.User, error)
@@ -1092,7 +1092,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Posts(childComplexity, args["formats"].([]string), args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
+		return e.complexity.Query.Posts(childComplexity, args["formats"].([]int), args["categories"].([]int), args["tags"].([]int), args["users"].([]int), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.ratings":
 		if e.complexity.Query.Ratings == nil {
@@ -1958,7 +1958,7 @@ type Query {
   tags(ids: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   tag(id: Int!): Tag
   formats: FormatsPaging
-  posts(formats: [String!], categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  posts(formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int!): Post
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
   user(id: Int!): User
@@ -2178,37 +2178,37 @@ func (ec *executionContext) field_Query_post_args(ctx context.Context, rawArgs m
 func (ec *executionContext) field_Query_posts_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 []string
+	var arg0 []int
 	if tmp, ok := rawArgs["formats"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("formats"))
-		arg0, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		arg0, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["formats"] = arg0
-	var arg1 []string
+	var arg1 []int
 	if tmp, ok := rawArgs["categories"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("categories"))
-		arg1, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		arg1, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["categories"] = arg1
-	var arg2 []string
+	var arg2 []int
 	if tmp, ok := rawArgs["tags"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("tags"))
-		arg2, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		arg2, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["tags"] = arg2
-	var arg3 []string
+	var arg3 []int
 	if tmp, ok := rawArgs["users"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("users"))
-		arg3, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		arg3, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -5662,7 +5662,7 @@ func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.Coll
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Posts(rctx, args["formats"].([]string), args["categories"].([]string), args["tags"].([]string), args["users"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
+		return ec.resolvers.Query().Posts(rctx, args["formats"].([]int), args["categories"].([]int), args["tags"].([]int), args["users"].([]int), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

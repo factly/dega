@@ -241,7 +241,7 @@ type Query {
   tags(ids: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   tag(id: Int!): Tag
   formats: FormatsPaging
-  posts(formats: [String!], categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  posts(formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int!): Post
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
   user(id: Int!): User

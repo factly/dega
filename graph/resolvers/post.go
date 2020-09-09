@@ -122,7 +122,7 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 	return result, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context, formats []string, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+func (r *queryResolver) Posts(ctx context.Context, formats []int, categories []int, tags []int, users []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	order := "created_at desc"
 	pageSortBy := "created_at"
@@ -152,7 +152,7 @@ func (r *queryResolver) Posts(ctx context.Context, formats []string, categories 
 
 	if len(categories) > 0 {
 		rows := []models.Post{}
-		config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN categories ON categories.id = post_categories.category_id").Where("categories.slug in (?)", categories).Where("posts.space_id in (?)", sID).Scan(&rows)
+		config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Where("post_categories.category_id in (?)", categories).Where("posts.space_id in (?)", sID).Scan(&rows)
 		for _, row := range rows {
 			pIDs = append(pIDs, row.ID)
 		}
@@ -160,7 +160,7 @@ func (r *queryResolver) Posts(ctx context.Context, formats []string, categories 
 
 	if len(tags) > 0 {
 		rows := []models.Post{}
-		tx := config.DB.Table("posts").Select("posts.id").Where("posts.id IN (?)", pIDs).Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN tags ON tags.id = post_tags.tag_id").Where("posts.space_id in (?)", sID).Where("tags.slug in (?)", tags)
+		tx := config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Where("post_tags.tag_id in (?)", tags).Where("posts.space_id in (?)", sID)
 		if len(pIDs) > 0 {
 			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
 		} else {
@@ -174,7 +174,7 @@ func (r *queryResolver) Posts(ctx context.Context, formats []string, categories 
 
 	if len(formats) > 0 {
 		rows := []models.Post{}
-		tx := config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN formats ON formats.id = posts.format_id").Where("posts.space_id in (?)", sID).Where("formats.slug in (?)", formats)
+		tx := config.DB.Table("posts").Select("posts.id").Where("posts.format_id in (?)", formats).Where("posts.space_id in (?)", sID)
 		if len(pIDs) > 0 {
 			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
 		} else {
