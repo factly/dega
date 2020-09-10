@@ -93,7 +93,7 @@ function CategoryList() {
         layout="inline"
         onFinish={(values) =>
           setFilters({
-            sort_by: values.sort_by,
+            sort_by: values.sort,
             q: values.q,
           })
         }

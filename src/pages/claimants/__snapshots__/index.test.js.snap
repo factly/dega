@@ -32,179 +32,393 @@ exports[`Claimants List component should render the component 1`] = `
     style={Object {}}
   >
     <div
-      className="ant-table-wrapper"
+      className="ant-space ant-space-vertical"
     >
       <div
-        className="ant-spin-nested-loading"
+        className="ant-space-item"
+        style={
+          Object {
+            "marginBottom": 8,
+          }
+        }
       >
-        <div
-          className="ant-spin-container"
+        <form
+          className="ant-form ant-form-inline"
+          id="filters"
+          onSubmit={[Function]}
+          style={
+            Object {
+              "maxWidth": "100%",
+            }
+          }
         >
           <div
-            className="ant-table ant-table-bordered ant-table-empty"
+            className="ant-row ant-form-item"
+            style={
+              Object {
+                "width": "25%",
+              }
+            }
           >
             <div
-              className="ant-table-container"
+              className="ant-col ant-form-item-label"
+              style={Object {}}
+            >
+              <label
+                className=""
+                htmlFor="filters_q"
+                title="Query"
+              >
+                Query
+              </label>
+            </div>
+            <div
+              className="ant-col ant-form-item-control"
+              style={Object {}}
             >
               <div
-                className="ant-table-content"
-                onScroll={[Function]}
-                style={Object {}}
+                className="ant-form-item-control-input"
               >
-                <table
-                  style={
-                    Object {
-                      "tableLayout": "auto",
-                    }
-                  }
+                <div
+                  className="ant-form-item-control-input-content"
                 >
-                  <colgroup>
-                    <col
-                      style={
-                        Object {
-                          "minWidth": undefined,
-                          "width": undefined,
-                        }
-                      }
-                    />
-                    <col
-                      style={
-                        Object {
-                          "minWidth": undefined,
-                          "width": undefined,
-                        }
-                      }
-                    />
-                    <col
-                      style={
-                        Object {
-                          "minWidth": "20%",
-                          "width": "20%",
-                        }
-                      }
-                    />
-                    <col
-                      style={
-                        Object {
-                          "minWidth": "30%",
-                          "width": "30%",
-                        }
-                      }
-                    />
-                  </colgroup>
-                  <thead
-                    className="ant-table-thead"
+                  <input
+                    className="ant-input"
+                    id="filters_q"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    placeholder="search post"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="ant-row ant-form-item"
+            style={
+              Object {
+                "width": "15%",
+              }
+            }
+          >
+            <div
+              className="ant-col ant-form-item-label"
+              style={Object {}}
+            >
+              <label
+                className=""
+                htmlFor="filters_sort"
+                title="sort"
+              >
+                sort
+              </label>
+            </div>
+            <div
+              className="ant-col ant-form-item-control"
+              style={Object {}}
+            >
+              <div
+                className="ant-form-item-control-input"
+              >
+                <div
+                  className="ant-form-item-control-input-content"
+                >
+                  <div
+                    className="ant-select ant-select-single ant-select-show-arrow"
+                    onBlur={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    onKeyUp={[Function]}
+                    onMouseDown={[Function]}
                   >
-                    <tr>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
+                    <div
+                      className="ant-select-selector"
+                      onMouseDown={[Function]}
+                    >
+                      <span
+                        className="ant-select-selection-search"
                       >
-                        Name
-                      </th>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Slug
-                      </th>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Tag Line
-                      </th>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Description
-                      </th>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody
-                    className="ant-table-tbody"
-                  >
-                    <tr
-                      className="ant-table-placeholder"
+                        <input
+                          aria-activedescendant="filters_sort_list_0"
+                          aria-autocomplete="list"
+                          aria-controls="filters_sort_list"
+                          aria-haspopup="listbox"
+                          aria-owns="filters_sort_list"
+                          autoComplete="off"
+                          className="ant-select-selection-search-input"
+                          id="filters_sort"
+                          onChange={[Function]}
+                          onCompositionEnd={[Function]}
+                          onCompositionStart={[Function]}
+                          onKeyDown={[Function]}
+                          onMouseDown={[Function]}
+                          onPaste={[Function]}
+                          readOnly={true}
+                          role="combobox"
+                          style={
+                            Object {
+                              "opacity": 0,
+                            }
+                          }
+                          unselectable="on"
+                          value=""
+                        />
+                      </span>
+                      <span
+                        className="ant-select-selection-placeholder"
+                      />
+                    </div>
+                    <span
+                      aria-hidden={true}
+                      className="ant-select-arrow"
+                      onMouseDown={[Function]}
                       style={
                         Object {
-                          "display": null,
+                          "WebkitUserSelect": "none",
+                          "userSelect": "none",
+                        }
+                      }
+                      unselectable="on"
+                    >
+                      <span
+                        aria-label="down"
+                        className="anticon anticon-down ant-select-suffix"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          className=""
+                          data-icon="down"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="ant-row ant-form-item"
+            style={Object {}}
+          >
+            <div
+              className="ant-col ant-form-item-control"
+              style={Object {}}
+            >
+              <div
+                className="ant-form-item-control-input"
+              >
+                <div
+                  className="ant-form-item-control-input-content"
+                >
+                  <button
+                    className="ant-btn ant-btn-primary"
+                    onClick={[Function]}
+                    type="submit"
+                  >
+                    <span>
+                      Submit
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        className="ant-space-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-table-wrapper"
+        >
+          <div
+            className="ant-spin-nested-loading"
+          >
+            <div
+              className="ant-spin-container"
+            >
+              <div
+                className="ant-table ant-table-bordered ant-table-empty"
+              >
+                <div
+                  className="ant-table-container"
+                >
+                  <div
+                    className="ant-table-content"
+                    onScroll={[Function]}
+                    style={Object {}}
+                  >
+                    <table
+                      style={
+                        Object {
+                          "tableLayout": "auto",
                         }
                       }
                     >
-                      <td
-                        className="ant-table-cell"
-                        colSpan={5}
-                        rowSpan={null}
-                        style={Object {}}
+                      <colgroup>
+                        <col
+                          style={
+                            Object {
+                              "minWidth": undefined,
+                              "width": undefined,
+                            }
+                          }
+                        />
+                        <col
+                          style={
+                            Object {
+                              "minWidth": undefined,
+                              "width": undefined,
+                            }
+                          }
+                        />
+                        <col
+                          style={
+                            Object {
+                              "minWidth": "20%",
+                              "width": "20%",
+                            }
+                          }
+                        />
+                        <col
+                          style={
+                            Object {
+                              "minWidth": "30%",
+                              "width": "30%",
+                            }
+                          }
+                        />
+                      </colgroup>
+                      <thead
+                        className="ant-table-thead"
                       >
-                        <div
-                          className="ant-empty ant-empty-normal"
+                        <tr>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Name
+                          </th>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Slug
+                          </th>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Tag Line
+                          </th>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Description
+                          </th>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        className="ant-table-tbody"
+                      >
+                        <tr
+                          className="ant-table-placeholder"
+                          style={
+                            Object {
+                              "display": null,
+                            }
+                          }
                         >
-                          <div
-                            className="ant-empty-image"
+                          <td
+                            className="ant-table-cell"
+                            colSpan={5}
+                            rowSpan={null}
+                            style={Object {}}
                           >
-                            <svg
-                              className="ant-empty-img-simple"
-                              height="41"
-                              viewBox="0 0 64 41"
-                              width="64"
-                              xmlns="http://www.w3.org/2000/svg"
+                            <div
+                              className="ant-empty ant-empty-normal"
                             >
-                              <g
-                                fill="none"
-                                fillRule="evenodd"
-                                transform="translate(0 1)"
+                              <div
+                                className="ant-empty-image"
                               >
-                                <ellipse
-                                  className="ant-empty-img-simple-ellipse"
-                                  cx="32"
-                                  cy="33"
-                                  rx="32"
-                                  ry="7"
-                                />
-                                <g
-                                  className="ant-empty-img-simple-g"
-                                  fillRule="nonzero"
+                                <svg
+                                  className="ant-empty-img-simple"
+                                  height="41"
+                                  viewBox="0 0 64 41"
+                                  width="64"
+                                  xmlns="http://www.w3.org/2000/svg"
                                 >
-                                  <path
-                                    d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
-                                  />
-                                  <path
-                                    className="ant-empty-img-simple-path"
-                                    d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
-                                  />
-                                </g>
-                              </g>
-                            </svg>
-                          </div>
-                          <p
-                            className="ant-empty-description"
-                          >
-                            No Data
-                          </p>
-                        </div>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                                  <g
+                                    fill="none"
+                                    fillRule="evenodd"
+                                    transform="translate(0 1)"
+                                  >
+                                    <ellipse
+                                      className="ant-empty-img-simple-ellipse"
+                                      cx="32"
+                                      cy="33"
+                                      rx="32"
+                                      ry="7"
+                                    />
+                                    <g
+                                      className="ant-empty-img-simple-g"
+                                      fillRule="nonzero"
+                                    >
+                                      <path
+                                        d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                                      />
+                                      <path
+                                        className="ant-empty-img-simple-path"
+                                        d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                      />
+                                    </g>
+                                  </g>
+                                </svg>
+                              </div>
+                              <p
+                                className="ant-empty-description"
+                              >
+                                No Data
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -247,315 +461,529 @@ exports[`Claimants List component should render the component with data 1`] = `
     style={Object {}}
   >
     <div
-      className="ant-table-wrapper"
+      className="ant-space ant-space-vertical"
     >
       <div
-        className="ant-spin-nested-loading"
+        className="ant-space-item"
+        style={
+          Object {
+            "marginBottom": 8,
+          }
+        }
       >
-        <div
-          className="ant-spin-container"
+        <form
+          className="ant-form ant-form-inline"
+          id="filters"
+          onSubmit={[Function]}
+          style={
+            Object {
+              "maxWidth": "100%",
+            }
+          }
         >
           <div
-            className="ant-table ant-table-bordered"
+            className="ant-row ant-form-item"
+            style={
+              Object {
+                "width": "25%",
+              }
+            }
           >
             <div
-              className="ant-table-container"
+              className="ant-col ant-form-item-label"
+              style={Object {}}
+            >
+              <label
+                className=""
+                htmlFor="filters_q"
+                title="Query"
+              >
+                Query
+              </label>
+            </div>
+            <div
+              className="ant-col ant-form-item-control"
+              style={Object {}}
             >
               <div
-                className="ant-table-content"
-                onScroll={[Function]}
-                style={Object {}}
+                className="ant-form-item-control-input"
               >
-                <table
-                  style={
-                    Object {
-                      "tableLayout": "auto",
-                    }
-                  }
+                <div
+                  className="ant-form-item-control-input-content"
                 >
-                  <colgroup>
-                    <col
-                      style={
-                        Object {
-                          "minWidth": undefined,
-                          "width": undefined,
-                        }
-                      }
-                    />
-                    <col
-                      style={
-                        Object {
-                          "minWidth": undefined,
-                          "width": undefined,
-                        }
-                      }
-                    />
-                    <col
-                      style={
-                        Object {
-                          "minWidth": "20%",
-                          "width": "20%",
-                        }
-                      }
-                    />
-                    <col
-                      style={
-                        Object {
-                          "minWidth": "30%",
-                          "width": "30%",
-                        }
-                      }
-                    />
-                  </colgroup>
-                  <thead
-                    className="ant-table-thead"
-                  >
-                    <tr>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Name
-                      </th>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Slug
-                      </th>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Tag Line
-                      </th>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Description
-                      </th>
-                      <th
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody
-                    className="ant-table-tbody"
-                  >
-                    <tr
-                      className="ant-table-row ant-table-row-level-0"
-                      data-row-key={1}
-                      onClick={[Function]}
-                      style={Object {}}
-                    >
-                      <td
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        claimant
-                      </td>
-                      <td
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        slug
-                      </td>
-                      <td
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        <div
-                          className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                          style={
-                            Object {
-                              "WebkitLineClamp": 2,
-                            }
-                          }
-                        >
-                          tag line
-                        </div>
-                      </td>
-                      <td
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        <div
-                          className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                          style={
-                            Object {
-                              "WebkitLineClamp": 2,
-                            }
-                          }
-                        >
-                          description
-                        </div>
-                      </td>
-                      <td
-                        className="ant-table-cell"
-                        colSpan={null}
-                        rowSpan={null}
-                        style={Object {}}
-                      >
-                        <span>
-                          <a
-                            className="ant-dropdown-link"
-                            href="/claimants/1/edit"
-                            onClick={[Function]}
-                            style={
-                              Object {
-                                "marginRight": 8,
-                              }
-                            }
-                          >
-                            <button
-                              className="ant-btn"
-                              onClick={[Function]}
-                              type="button"
-                            >
-                              <span>
-                                Edit
-                              </span>
-                            </button>
-                          </a>
-                          <a
-                            className="ant-dropdown-link"
-                            href="/"
-                            onClick={[Function]}
-                            onKeyDown={[Function]}
-                            onMouseDown={[Function]}
-                            onTouchStart={[Function]}
-                          >
-                            <button
-                              className="ant-btn"
-                              onClick={[Function]}
-                              type="button"
-                            >
-                              <span>
-                                Delete
-                              </span>
-                            </button>
-                          </a>
-                        </span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                  <input
+                    className="ant-input"
+                    id="filters_q"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    placeholder="search post"
+                    type="text"
+                    value=""
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <ul
-            className="ant-pagination ant-table-pagination ant-table-pagination-right"
-            style={Object {}}
-            unselectable="unselectable"
+          <div
+            className="ant-row ant-form-item"
+            style={
+              Object {
+                "width": "15%",
+              }
+            }
           >
-            <li
-              aria-disabled={true}
-              className="ant-pagination-prev ant-pagination-disabled"
-              onClick={[Function]}
-              onKeyPress={[Function]}
-              tabIndex={null}
-              title="Previous Page"
+            <div
+              className="ant-col ant-form-item-label"
+              style={Object {}}
             >
-              <button
-                className="ant-pagination-item-link"
-                disabled={true}
-                tabIndex={-1}
-                type="button"
+              <label
+                className=""
+                htmlFor="filters_sort"
+                title="sort"
               >
-                <span
-                  aria-label="left"
-                  className="anticon anticon-left"
-                  role="img"
+                sort
+              </label>
+            </div>
+            <div
+              className="ant-col ant-form-item-control"
+              style={Object {}}
+            >
+              <div
+                className="ant-form-item-control-input"
+              >
+                <div
+                  className="ant-form-item-control-input-content"
                 >
-                  <svg
-                    aria-hidden="true"
-                    className=""
-                    data-icon="left"
-                    fill="currentColor"
-                    focusable="false"
-                    height="1em"
-                    viewBox="64 64 896 896"
-                    width="1em"
+                  <div
+                    className="ant-select ant-select-single ant-select-show-arrow"
+                    onBlur={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    onKeyUp={[Function]}
+                    onMouseDown={[Function]}
                   >
-                    <path
-                      d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </li>
-            <li
-              className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
-              onClick={[Function]}
-              onKeyPress={[Function]}
-              tabIndex="0"
-              title={1}
+                    <div
+                      className="ant-select-selector"
+                      onMouseDown={[Function]}
+                    >
+                      <span
+                        className="ant-select-selection-search"
+                      >
+                        <input
+                          aria-activedescendant="filters_sort_list_0"
+                          aria-autocomplete="list"
+                          aria-controls="filters_sort_list"
+                          aria-haspopup="listbox"
+                          aria-owns="filters_sort_list"
+                          autoComplete="off"
+                          className="ant-select-selection-search-input"
+                          id="filters_sort"
+                          onChange={[Function]}
+                          onCompositionEnd={[Function]}
+                          onCompositionStart={[Function]}
+                          onKeyDown={[Function]}
+                          onMouseDown={[Function]}
+                          onPaste={[Function]}
+                          readOnly={true}
+                          role="combobox"
+                          style={
+                            Object {
+                              "opacity": 0,
+                            }
+                          }
+                          unselectable="on"
+                          value=""
+                        />
+                      </span>
+                      <span
+                        className="ant-select-selection-placeholder"
+                      />
+                    </div>
+                    <span
+                      aria-hidden={true}
+                      className="ant-select-arrow"
+                      onMouseDown={[Function]}
+                      style={
+                        Object {
+                          "WebkitUserSelect": "none",
+                          "userSelect": "none",
+                        }
+                      }
+                      unselectable="on"
+                    >
+                      <span
+                        aria-label="down"
+                        className="anticon anticon-down ant-select-suffix"
+                        role="img"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          className=""
+                          data-icon="down"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
+                        >
+                          <path
+                            d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="ant-row ant-form-item"
+            style={Object {}}
+          >
+            <div
+              className="ant-col ant-form-item-control"
+              style={Object {}}
             >
-              <a
-                rel="nofollow"
+              <div
+                className="ant-form-item-control-input"
               >
-                1
-              </a>
-            </li>
-            <li
-              aria-disabled={true}
-              className="ant-pagination-next ant-pagination-disabled"
-              onClick={[Function]}
-              onKeyPress={[Function]}
-              tabIndex={null}
-              title="Next Page"
-            >
-              <button
-                className="ant-pagination-item-link"
-                disabled={true}
-                tabIndex={-1}
-                type="button"
-              >
-                <span
-                  aria-label="right"
-                  className="anticon anticon-right"
-                  role="img"
+                <div
+                  className="ant-form-item-control-input-content"
                 >
-                  <svg
-                    aria-hidden="true"
-                    className=""
-                    data-icon="right"
-                    fill="currentColor"
-                    focusable="false"
-                    height="1em"
-                    viewBox="64 64 896 896"
-                    width="1em"
+                  <button
+                    className="ant-btn ant-btn-primary"
+                    onClick={[Function]}
+                    type="submit"
                   >
-                    <path
-                      d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
-                    />
-                  </svg>
-                </span>
-              </button>
-            </li>
-          </ul>
+                    <span>
+                      Submit
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div
+        className="ant-space-item"
+        style={Object {}}
+      >
+        <div
+          className="ant-table-wrapper"
+        >
+          <div
+            className="ant-spin-nested-loading"
+          >
+            <div
+              className="ant-spin-container"
+            >
+              <div
+                className="ant-table ant-table-bordered"
+              >
+                <div
+                  className="ant-table-container"
+                >
+                  <div
+                    className="ant-table-content"
+                    onScroll={[Function]}
+                    style={Object {}}
+                  >
+                    <table
+                      style={
+                        Object {
+                          "tableLayout": "auto",
+                        }
+                      }
+                    >
+                      <colgroup>
+                        <col
+                          style={
+                            Object {
+                              "minWidth": undefined,
+                              "width": undefined,
+                            }
+                          }
+                        />
+                        <col
+                          style={
+                            Object {
+                              "minWidth": undefined,
+                              "width": undefined,
+                            }
+                          }
+                        />
+                        <col
+                          style={
+                            Object {
+                              "minWidth": "20%",
+                              "width": "20%",
+                            }
+                          }
+                        />
+                        <col
+                          style={
+                            Object {
+                              "minWidth": "30%",
+                              "width": "30%",
+                            }
+                          }
+                        />
+                      </colgroup>
+                      <thead
+                        className="ant-table-thead"
+                      >
+                        <tr>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Name
+                          </th>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Slug
+                          </th>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Tag Line
+                          </th>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Description
+                          </th>
+                          <th
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        className="ant-table-tbody"
+                      >
+                        <tr
+                          className="ant-table-row ant-table-row-level-0"
+                          data-row-key={1}
+                          onClick={[Function]}
+                          style={Object {}}
+                        >
+                          <td
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            claimant
+                          </td>
+                          <td
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            slug
+                          </td>
+                          <td
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
+                              style={
+                                Object {
+                                  "WebkitLineClamp": 2,
+                                }
+                              }
+                            >
+                              tag line
+                            </div>
+                          </td>
+                          <td
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
+                              style={
+                                Object {
+                                  "WebkitLineClamp": 2,
+                                }
+                              }
+                            >
+                              description
+                            </div>
+                          </td>
+                          <td
+                            className="ant-table-cell"
+                            colSpan={null}
+                            rowSpan={null}
+                            style={Object {}}
+                          >
+                            <span>
+                              <a
+                                className="ant-dropdown-link"
+                                href="/claimants/1/edit"
+                                onClick={[Function]}
+                                style={
+                                  Object {
+                                    "marginRight": 8,
+                                  }
+                                }
+                              >
+                                <button
+                                  className="ant-btn"
+                                  onClick={[Function]}
+                                  type="button"
+                                >
+                                  <span>
+                                    Edit
+                                  </span>
+                                </button>
+                              </a>
+                              <a
+                                className="ant-dropdown-link"
+                                href="/"
+                                onClick={[Function]}
+                                onKeyDown={[Function]}
+                                onMouseDown={[Function]}
+                                onTouchStart={[Function]}
+                              >
+                                <button
+                                  className="ant-btn"
+                                  onClick={[Function]}
+                                  type="button"
+                                >
+                                  <span>
+                                    Delete
+                                  </span>
+                                </button>
+                              </a>
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <ul
+                className="ant-pagination ant-table-pagination ant-table-pagination-right"
+                style={Object {}}
+                unselectable="unselectable"
+              >
+                <li
+                  aria-disabled={true}
+                  className="ant-pagination-prev ant-pagination-disabled"
+                  onClick={[Function]}
+                  onKeyPress={[Function]}
+                  tabIndex={null}
+                  title="Previous Page"
+                >
+                  <button
+                    className="ant-pagination-item-link"
+                    disabled={true}
+                    tabIndex={-1}
+                    type="button"
+                  >
+                    <span
+                      aria-label="left"
+                      className="anticon anticon-left"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className=""
+                        data-icon="left"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+                <li
+                  className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+                  onClick={[Function]}
+                  onKeyPress={[Function]}
+                  tabIndex="0"
+                  title={1}
+                >
+                  <a
+                    rel="nofollow"
+                  >
+                    1
+                  </a>
+                </li>
+                <li
+                  aria-disabled={true}
+                  className="ant-pagination-next ant-pagination-disabled"
+                  onClick={[Function]}
+                  onKeyPress={[Function]}
+                  tabIndex={null}
+                  title="Next Page"
+                >
+                  <button
+                    className="ant-pagination-item-link"
+                    disabled={true}
+                    tabIndex={-1}
+                    type="button"
+                  >
+                    <span
+                      aria-label="right"
+                      className="anticon anticon-right"
+                      role="img"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className=""
+                        data-icon="right"
+                        fill="currentColor"
+                        focusable="false"
+                        height="1em"
+                        viewBox="64 64 896 896"
+                        width="1em"
+                      >
+                        <path
+                          d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
