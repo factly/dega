@@ -12,11 +12,30 @@ import { addRatings } from './ratings';
 import { addClaimants } from './claimants';
 
 export const getClaims = (query) => {
+  const params = new URLSearchParams();
+  if (query.claimant && query.claimant.length > 0) {
+    query.claimant.map((each) => params.append('claimant', each));
+  }
+  if (query.rating && query.rating.length > 0) {
+    query.rating.map((each) => params.append('rating', each));
+  }
+  if (query.page) {
+    params.append('page', query.page);
+  }
+  if (query.limit) {
+    params.append('limit', query.limit);
+  }
+  if (query.sort_by) {
+    params.append('sort', query.sort_by);
+  }
+  if (query.q) {
+    params.append('q', query.q);
+  }
   return (dispatch) => {
     dispatch(loadingClaims());
     return axios
       .get(CLAIMS_API, {
-        params: query,
+        params: params,
       })
       .then((response) => {
         dispatch(
