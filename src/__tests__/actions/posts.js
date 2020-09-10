@@ -116,7 +116,15 @@ describe('posts actions', () => {
     expect(actions.resetPosts()).toEqual(resetPostsRequestAction);
   });
   it('should create actions to fetch posts success', () => {
-    const query = { page: 1, limit: 5 };
+    const query = {
+      page: 1,
+      limit: 5,
+      q: 'post',
+      sort_by: 'asc',
+      tag: [21],
+      category: [33],
+      format: [42],
+    };
     const posts = [post];
     const resp = { data: { nodes: posts, total: 1 } };
     axios.get.mockResolvedValue(resp);
@@ -205,12 +213,17 @@ describe('posts actions', () => {
       },
     ];
 
+    const params = new URLSearchParams(
+      'category=33&tag=21&format=42&page=1&limit=5&sort=asc&q=post',
+    );
+
+    console.log('params', params);
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getPosts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to fetch posts success without any optional fields', () => {
@@ -303,12 +316,14 @@ describe('posts actions', () => {
       },
     ];
 
+    const params = new URLSearchParams('page=1&limit=5');
+
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getPosts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should throw error on fetch posts without required field format', () => {
@@ -319,10 +334,11 @@ describe('posts actions', () => {
 
     const query = { page: 1, limit: 5 };
     const store = mockStore({ initialState });
+    const params = new URLSearchParams('page=1&limit=5');
 
     store.dispatch(actions.getPosts(query)).catch((err) => expect(err).toBeInstanceOf(TypeError));
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to fetch posts failure', () => {
@@ -344,13 +360,14 @@ describe('posts actions', () => {
         },
       },
     ];
+    const params = new URLSearchParams('page=1&limit=5');
 
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getPosts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to get post by id success', () => {

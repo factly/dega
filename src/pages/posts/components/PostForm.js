@@ -54,7 +54,6 @@ function PostForm({ onCreate, data = {} }) {
   };
 
   const onClaimCreate = (values) => {
-    console.log('onclaimCreate');
     dispatch(addClaim(values)).then(() => setVisible(false));
   };
 
