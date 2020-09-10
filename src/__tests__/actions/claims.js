@@ -85,7 +85,14 @@ describe('claims actions', () => {
     expect(actions.resetClaims()).toEqual(resetClaimsRequestAction);
   });
   it('should create actions to fetch claims success', () => {
-    const query = { page: 1, limit: 5 };
+    const query = {
+      page: 1,
+      limit: 5,
+      rating: [100],
+      claimant: [11],
+      q: 'claimant',
+      sort_by: 'asc',
+    };
     const claims = [claim];
     const resp = { data: { nodes: claims, total: 1 } };
     axios.get.mockResolvedValue(resp);
@@ -129,12 +136,14 @@ describe('claims actions', () => {
       },
     ];
 
+    const params = new URLSearchParams('claimant=11&rating=100&page=1&limit=5&sort=asc&q=claimant');
+
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getClaims(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to fetch claims list without claimants and ratings', () => {
@@ -144,10 +153,11 @@ describe('claims actions', () => {
     axios.get.mockResolvedValue(resp);
 
     const store = mockStore({ initialState });
+    const params = new URLSearchParams('page=1&limit=5');
 
     store.dispatch(actions.getClaims(query)).catch((err) => expect(err).toBeInstanceOf(TypeError));
     expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to fetch claims list with claimants but not ratings', () => {
@@ -160,10 +170,11 @@ describe('claims actions', () => {
     axios.get.mockResolvedValue(resp);
 
     const store = mockStore({ initialState });
+    const params = new URLSearchParams('page=1&limit=5');
 
     store.dispatch(actions.getClaims(query)).catch((err) => expect(err).toBeInstanceOf(TypeError));
     expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to fetch claims list with ratings but not claimants', () => {
@@ -176,10 +187,11 @@ describe('claims actions', () => {
     axios.get.mockResolvedValue(resp);
 
     const store = mockStore({ initialState });
+    const params = new URLSearchParams('page=1&limit=5');
 
     store.dispatch(actions.getClaims(query)).catch((err) => expect(err).toBeInstanceOf(TypeError));
     expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to fetch claims failure', () => {
@@ -203,11 +215,12 @@ describe('claims actions', () => {
     ];
 
     const store = mockStore({ initialState });
+    const params = new URLSearchParams('page=1&limit=5');
     store
       .dispatch(actions.getClaims(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to get claim by id success', () => {

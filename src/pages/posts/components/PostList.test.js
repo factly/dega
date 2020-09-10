@@ -358,24 +358,6 @@ describe('Posts List component', () => {
       expect(image.props().src).toEqual('http://example.com');
       expect(image.props().alt).toEqual('example');
     });
-    it('should check image url and alt_text', () => {
-      store = mockStore(state);
-      let wrapper;
-      act(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <Router>
-              <PostList />
-            </Router>
-          </Provider>,
-        );
-      });
-
-      const image = wrapper.find('img');
-      expect(image.length).toEqual(1);
-      expect(image.props().src).toEqual('http://example.com');
-      expect(image.props().alt).toEqual('example');
-    });
 
     it('should submit filters', () => {
       store = mockStore(state);

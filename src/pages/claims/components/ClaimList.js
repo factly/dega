@@ -1,23 +1,63 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
+import { Popconfirm, Button, Table, Select, Form, Space, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClaims, deleteClaim } from '../../../actions/claims';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { claimSelector } from '../../../selectors/claims';
+import Selector from '../../../components/Selector';
+import deepEqual from 'deep-equal';
 
 function ClaimList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
+  const [filters, setFilters] = React.useState();
+  const [form] = Form.useForm();
+  const { Option } = Select;
 
-  const { claims, total, loading } = useSelector((state) => claimSelector(state, page));
+  const { claims, total, loading } = useSelector((state) => {
+    let query = {
+      page,
+    };
+    if (filters) {
+      query = { ...query, ...filters };
+    }
+    const node = state.claims.req.find((item) => {
+      return deepEqual(item.query, query);
+    });
+
+    if (node) {
+      const list = node.data.map((element) => {
+        let claim = state.claims.details[element];
+        claim.claimant = state.claimants.details[claim.claimant_id].name;
+        claim.rating = state.ratings.details[claim.rating_id].name;
+        return claim;
+      });
+      return {
+        claims: list,
+        total: node.total,
+        loading: state.claims.loading,
+      };
+    }
+    return { claims: [], total: 0, loading: state.claims.loading };
+  });
 
   React.useEffect(() => {
     fetchClaims();
-  }, [page]);
+  }, [page, filters]);
 
   const fetchClaims = () => {
-    dispatch(getClaims({ page: page }));
+    dispatch(getClaims({ page: page, ...filters }));
+  };
+
+  const onSave = (values) => {
+    let filterValue = {
+      claimant: values.claimants,
+      rating: values.ratings,
+      sort_by: values.sort_by,
+      q: values.q,
+    };
+
+    setFilters(filterValue);
   };
 
   const columns = [
@@ -67,19 +107,50 @@ function ClaimList() {
   ];
 
   return (
-    <Table
-      bordered
-      columns={columns}
-      dataSource={claims}
-      loading={loading}
-      rowKey={'id'}
-      pagination={{
-        total: total,
-        current: page,
-        pageSize: 5,
-        onChange: (pageNumber, pageSize) => setPage(pageNumber),
-      }}
-    />
+    <Space direction="vertical">
+      <Form
+        initialValues={filters}
+        form={form}
+        name="filters"
+        layout="inline"
+        onFinish={(values) => onSave(values)}
+        style={{ maxWidth: '100%' }}
+      >
+        <Form.Item name="q" label="Query" style={{ width: '25%' }}>
+          <Input placeholder="search post" />
+        </Form.Item>
+        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
+          <Select>
+            <Option value="desc">Latest</Option>
+            <Option value="asc">Old</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item name="claimants" label="claimant" style={{ width: '15%' }}>
+          <Selector mode="multiple" action="Claimants" />
+        </Form.Item>
+        <Form.Item name="ratings" label="ratings" style={{ width: '15%' }}>
+          <Selector mode="multiple" action="Ratings" />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+      <Table
+        bordered
+        columns={columns}
+        dataSource={claims}
+        loading={loading}
+        rowKey={'id'}
+        pagination={{
+          total: total,
+          current: page,
+          pageSize: 5,
+          onChange: (pageNumber, pageSize) => setPage(pageNumber),
+        }}
+      />
+    </Space>
   );
 }
 

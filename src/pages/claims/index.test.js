@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
 import ClaimsList from './index';
+import { shallow } from 'enzyme';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -39,15 +40,13 @@ describe('Claims List component', () => {
   });
   it('should render the component', () => {
     useSelector.mockImplementation(() => ({}));
-    const tree = renderer
-      .create(
-        <Provider store={store}>
-          <Router>
-            <ClaimsList />
-          </Router>
-        </Provider>,
-      )
-      .toJSON();
+    const tree = shallow(
+      <Provider store={store}>
+        <Router>
+          <ClaimsList />
+        </Router>
+      </Provider>,
+    );
     expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
@@ -58,15 +57,13 @@ describe('Claims List component', () => {
       total: 1,
       loading: false,
     }));
-    const tree = renderer
-      .create(
-        <Provider store={store}>
-          <Router>
-            <ClaimsList />
-          </Router>
-        </Provider>,
-      )
-      .toJSON();
+    const tree = shallow(
+      <Provider store={store}>
+        <Router>
+          <ClaimsList />
+        </Router>
+      </Provider>,
+    );
     expect(tree).toMatchSnapshot();
   });
 });
