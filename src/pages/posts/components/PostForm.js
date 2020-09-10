@@ -45,16 +45,15 @@ function PostForm({ onCreate, data = {} }) {
     setVisible(true);
   };
 
-  const handleOk = (e) => {
+  const handleOk = () => {
     setVisible(false);
   };
 
-  const handleCancel = (e) => {
+  const handleCancel = () => {
     setVisible(false);
   };
 
   const onClaimCreate = (values) => {
-    console.log('onclaimCreate');
     dispatch(addClaim(values)).then(() => setVisible(false));
   };
 

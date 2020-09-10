@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import renderer, { act } from 'react-test-renderer';
-import { useSelector, useDispatch } from 'react-redux';
+import { act } from 'react-dom/test-utils';
+import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Popconfirm, Button, List } from 'antd';
 
 import '../../../matchMedia.mock';
@@ -15,7 +15,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
+  ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
 jest.mock('../../../actions/posts', () => ({
@@ -23,9 +23,184 @@ jest.mock('../../../actions/posts', () => ({
   deletePost: jest.fn(),
 }));
 
+let state = {
+  posts: {
+    req: [
+      {
+        data: [1],
+        total: 1,
+        query: {
+          page: 1,
+        },
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2020-09-09T06:53:03.018593Z',
+        updated_at: '2020-09-09T10:51:20.681562Z',
+        deleted_at: null,
+        title: 'Explainer: The US Presidential Debates – History & Format',
+        subtitle: '',
+        slug: 'explainer-the-us-presidential-debates-history-format',
+        status: 'Publish',
+        excerpt:
+          'One of the unique aspects of the US Presidential election is the face to face debate of the Presidential nominees. ',
+        description: {
+          time: 1599648677547,
+          blocks: [
+            {
+              data: {
+                text:
+                  'The United States of America (USA) is one of the oldest modern democracies in the world. Over its existence as a democracy for nearly two and half centuries, it has developed institutions and practices which strengthen the idea of democracy. Democracy wrests the choice in the people to choose a government to preside over the administration. Hence it is imperative that the people know about the political party or the individual that they would be voting for. This knowledge includes – the ideology, stance on various issues, vision etc.&nbsp;',
+              },
+              type: 'paragraph',
+            },
+          ],
+          version: '2.18.0',
+        },
+        is_featured: false,
+        is_sticky: false,
+        is_highlighted: false,
+        featured_medium_id: 1,
+        medium: { id: 1, url: 'http://example.com', alt_text: 'example' },
+        format_id: 1,
+        format: 1,
+        published_date: '0001-01-01T00:00:00Z',
+        space_id: 1,
+        tags: [1],
+        categories: [1],
+        authors: [],
+        claims: [],
+      },
+    },
+    loading: false,
+  },
+  categories: {
+    req: [
+      {
+        data: [1],
+        query: {
+          page: 1,
+        },
+        total: 1,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2020-09-09T06:49:36.566567Z',
+        updated_at: '2020-09-09T06:49:36.566567Z',
+        deleted_at: null,
+        name: 'Andhra Pradesh',
+        slug: 'andhra-pradesh',
+        description: '',
+        parent_id: 0,
+        medium_id: 0,
+        space_id: 1,
+      },
+    },
+    loading: false,
+  },
+  tags: {
+    req: [
+      {
+        data: [1],
+        query: {
+          page: 1,
+        },
+        total: 1,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2020-09-09T06:48:23.158897Z',
+        updated_at: '2020-09-09T06:48:23.158897Z',
+        deleted_at: null,
+        name: 'cricket',
+        slug: 'cricket',
+        description: '',
+        space_id: 1,
+        posts: null,
+      },
+    },
+    loading: false,
+  },
+  formats: {
+    req: [
+      {
+        data: [1],
+        query: {
+          page: 1,
+        },
+        total: 1,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2020-09-09T06:48:10.839241Z',
+        updated_at: '2020-09-09T06:48:10.839241Z',
+        deleted_at: null,
+        name: 'Factcheck',
+        slug: 'factcheck',
+        description: '',
+        space_id: 1,
+      },
+    },
+    loading: false,
+  },
+  media: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  authors: {
+    req: [
+      {
+        data: [1],
+        query: {
+          page: 1,
+        },
+        total: 1,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2020-07-27T06:16:26.418566Z',
+        updated_at: '2020-07-27T06:16:26.418566Z',
+        deleted_at: null,
+        email: 'harsha@factly.in',
+        first_name: '',
+        last_name: '',
+        birth_date: '',
+        gender: '',
+      },
+    },
+    loading: false,
+  },
+  ratings: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  claimants: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  claims: {
+    req: [],
+    details: {},
+    loading: false,
+  },
+};
+
+let mockedDispatch, store;
+
 describe('Posts List component', () => {
-  let store;
-  let mockedDispatch;
   describe('snapshot component', () => {
     beforeEach(() => {
       store = mockStore({});
@@ -34,46 +209,42 @@ describe('Posts List component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<PostList />).toJSON();
-      expect(tree).toMatchSnapshot();
-      expect(useSelector).toHaveBeenCalled();
-    });
-    it('should match component when loading', () => {
-      useSelector.mockImplementation((state) => ({
-        posts: [],
-        total: 0,
-        loading: true,
-      }));
-      const tree = renderer.create(<PostList />).toJSON();
-      expect(tree).toMatchSnapshot();
-      expect(useSelector).toHaveBeenCalled();
-    });
-    it('should match component with posts', () => {
-      useSelector.mockImplementation((state) => ({
-        posts: [{ id: 1, name: 'post' }],
-        total: 1,
-        loading: false,
-      }));
-
-      let component;
-      act(() => {
-        component = renderer.create(
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
           <Router>
             <PostList />
-          </Router>,
-        );
-      });
-      const tree = component.toJSON();
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match component when loading', () => {
+      state.posts.loading = true;
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <PostList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match component with posts', () => {
+      state.posts.loading = false;
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <PostList />
+          </Router>
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
 
-      expect(useSelector).toHaveBeenCalled();
-      expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(useSelector).toHaveReturnedWith({
-        posts: [{ id: 1, name: 'post' }],
-        total: 1,
-        loading: false,
-      });
+      expect(mockedDispatch).toHaveBeenCalledTimes(4);
+
       expect(getPosts).toHaveBeenCalledWith({ page: 1 });
     });
   });
@@ -84,9 +255,17 @@ describe('Posts List component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should change the page', () => {
-      useSelector.mockImplementation((state) => ({}));
-
-      const wrapper = shallow(<PostList />);
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostList />
+            </Router>
+          </Provider>,
+        );
+      });
       const list = wrapper.find(List);
       list.props().pagination.onChange(2);
       wrapper.update();
@@ -94,27 +273,19 @@ describe('Posts List component', () => {
       expect(updatedList.props().pagination.current).toEqual(2);
     });
     it('should delete post', () => {
-      useSelector.mockImplementation((state) => ({
-        posts: [
-          {
-            id: 1,
-            name: 'name',
-            slug: 'slug',
-            description: 'description',
-            tag_line: 'tag_line',
-            medium_id: 1,
-          },
-        ],
-        total: 1,
-        loading: false,
-      }));
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostList />
+            </Router>
+          </Provider>,
+        );
+      });
 
-      const wrapper = mount(
-        <Router>
-          <PostList />
-        </Router>,
-      );
-      const button = wrapper.find(Button).at(1);
+      const button = wrapper.find(Button).at(2);
       expect(button.text()).toEqual('Delete');
 
       button.simulate('click');
@@ -128,65 +299,142 @@ describe('Posts List component', () => {
       expect(getPosts).toHaveBeenCalledWith({ page: 1 });
     });
     it('should edit post', () => {
-      useSelector.mockImplementation((state) => ({
-        posts: [
-          {
-            id: 1,
-            title: 'title',
-            excerpt: 'excerpt',
-            medium: { url: 'http://example.com', alt_text: 'example' },
-          },
-        ],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <PostList />
-        </Router>,
-      );
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostList />
+            </Router>
+          </Provider>,
+        );
+      });
       const link = wrapper.find(Link).at(1);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
       expect(link.prop('to')).toEqual('/posts/1/edit');
     });
     it('should have no delete and edit buttons', () => {
-      useSelector.mockImplementation((state) => ({}));
-
+      store = mockStore({
+        posts: {
+          req: [],
+        },
+        tags: {
+          req: [],
+        },
+        categories: {
+          req: [],
+        },
+        formats: {
+          req: [],
+        },
+      });
       const wrapper = mount(
-        <Router>
+        <Provider store={store}>
           <PostList />
-        </Router>,
+        </Provider>,
       );
 
       const button = wrapper.find(Button);
-      expect(button.length).toEqual(0);
+      expect(button.text()).toEqual('Submit');
+      expect(button.length).toEqual(1);
     });
     it('should check image url and alt_text', () => {
-      useSelector.mockImplementation((state) => ({
-        posts: [
-          {
-            id: 1,
-            title: 'title',
-            excerpt: 'excerpt',
-            medium: { url: 'http://example.com', alt_text: 'example' },
-          },
-        ],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <PostList />
-        </Router>,
-      );
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostList />
+            </Router>
+          </Provider>,
+        );
+      });
 
       const image = wrapper.find('img');
       expect(image.length).toEqual(1);
       expect(image.props().src).toEqual('http://example.com');
       expect(image.props().alt).toEqual('example');
+    });
+    it('should check image url and alt_text', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostList />
+            </Router>
+          </Provider>,
+        );
+      });
+
+      const image = wrapper.find('img');
+      expect(image.length).toEqual(1);
+      expect(image.props().src).toEqual('http://example.com');
+      expect(image.props().alt).toEqual('example');
+    });
+
+    it('should submit filters', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostList />
+            </Router>
+          </Provider>,
+        );
+        wrapper
+          .find('FormItem')
+          .at(0)
+          .find('Input')
+          .simulate('change', { target: { value: 'fact check' } });
+        wrapper
+          .find('FormItem')
+          .at(1)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: 'asc' } });
+        wrapper
+          .find('FormItem')
+          .at(2)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: [1] } });
+        wrapper
+          .find('FormItem')
+          .at(3)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: [1] } });
+        wrapper
+          .find('FormItem')
+          .at(4)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: [1] } });
+
+        const submitButtom = wrapper.find('Button').at(1);
+        submitButtom.simulate('submit');
+      });
+
+      setTimeout(() => {
+        expect(getPosts).toHaveBeenCalledWith({
+          page: 1,
+          q: 'fact check',
+          tag: [1],
+          category: [1],
+          format: [1],
+        });
+      }, 0);
     });
   });
 });

@@ -219,7 +219,7 @@ describe('Posts List component', () => {
           </Provider>,
         );
       });
-      // console.log(wrapper.debug());
+
       wrapper.find(PostEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.updatePost).toHaveBeenCalledWith({
