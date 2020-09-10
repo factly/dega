@@ -217,7 +217,6 @@ describe('posts actions', () => {
       'category=33&tag=21&format=42&page=1&limit=5&sort=asc&q=post',
     );
 
-    console.log('params', params);
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getPosts(query))
