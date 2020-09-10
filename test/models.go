@@ -170,10 +170,10 @@ var MeiliHits = map[string]interface{}{
 			"format_id": 3,
 		},
 		{
-			"object_id":       "claim_5",
+			"object_id":       "claim_2",
 			"kind":            "claim",
 			"description":     "This is a test claim",
-			"id":              5,
+			"id":              2,
 			"slug":            "test-claim",
 			"space_id":        1,
 			"title":           "Test Claim",

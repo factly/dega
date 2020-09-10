@@ -17,6 +17,7 @@ import (
 func TestCategoryList(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -107,4 +108,39 @@ func TestCategoryList(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 
 	})
+
+	t.Run("get list of categories based on search query q", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		mock.ExpectQuery(countQuery).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(len(categorylist)))
+
+		mock.ExpectQuery(selectQuery).
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(1, time.Now(), time.Now(), nil, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["parent_id"], categorylist[0]["medium_id"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["medium_id"], 1))
+
+		medium.SelectWithOutSpace(mock)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"q":    "test",
+				"sort": "asc",
+			}).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(categorylist)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(categorylist[0])
+
+		test.ExpectationsMet(t, mock)
+
+	})
+
 }
