@@ -1,22 +1,42 @@
 import React from 'react';
-import { Popconfirm, Button, Typography, Table } from 'antd';
+import { Popconfirm, Button, Typography, Table, Space, Form, Select, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
-import { entitySelector } from '../../../selectors';
+import deepEqual from 'deep-equal';
 
 function TagList() {
   const dispatch = useDispatch();
   const [page, setPage] = React.useState(1);
+  const [filters, setFilters] = React.useState();
+  const [form] = Form.useForm();
+  const { Option } = Select;
 
-  const { tags, total, loading } = useSelector((state) => entitySelector(state, page, 'tags'));
+  const { tags, total, loading } = useSelector((state) => {
+    let query = {
+      page,
+      ...filters,
+    };
+
+    const node = state.tags.req.find((item) => {
+      return deepEqual(item.query, query);
+    });
+
+    if (node)
+      return {
+        tags: node.data.map((element) => state.tags.details[element]),
+        total: node.total,
+        loading: state.tags.loading,
+      };
+    return { tags: [], total: 0, loading: state.tags.loading };
+  });
 
   React.useEffect(() => {
     fetchTags();
-  }, [page]);
+  }, [page, filters]);
 
   const fetchTags = () => {
-    dispatch(getTags({ page: page }));
+    dispatch(getTags({ page: page, ...filters }));
   };
 
   const columns = [
@@ -64,19 +84,49 @@ function TagList() {
   ];
 
   return (
-    <Table
-      bordered
-      columns={columns}
-      dataSource={tags}
-      loading={loading}
-      rowKey={'id'}
-      pagination={{
-        total: total,
-        current: page,
-        pageSize: 5,
-        onChange: (pageNumber, pageSize) => setPage(pageNumber),
-      }}
-    />
+    <Space direction={'vertical'}>
+      <Form
+        initialValues={filters}
+        form={form}
+        name="filters"
+        layout="inline"
+        onFinish={(values) =>
+          setFilters({
+            sort_by: values.sort_by,
+            q: values.q,
+          })
+        }
+        style={{ maxWidth: '100%' }}
+      >
+        <Form.Item name="q" label="Query" style={{ width: '25%' }}>
+          <Input placeholder="search post" />
+        </Form.Item>
+        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
+          <Select>
+            <Option value="desc">Latest</Option>
+            <Option value="asc">Old</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+      <Table
+        bordered
+        columns={columns}
+        dataSource={tags}
+        loading={loading}
+        rowKey={'id'}
+        pagination={{
+          total: total,
+          current: page,
+          pageSize: 5,
+          onChange: (pageNumber, pageSize) => setPage(pageNumber),
+        }}
+      />
+    </Space>
   );
 }
 
