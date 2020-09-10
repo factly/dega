@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
@@ -16,6 +17,7 @@ import (
 func TestClaimantList(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
@@ -100,4 +102,76 @@ func TestClaimantList(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 
 	})
+
+	t.Run("get list of claimants based on search query q", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		claimantCountQuery(mock, len(claimantlist))
+
+		mock.ExpectQuery(selectQuery).
+			WillReturnRows(sqlmock.NewRows(columns).
+				AddRow(1, time.Now(), time.Now(), nil, claimantlist[0]["name"], claimantlist[0]["slug"], claimantlist[0]["medium_id"], claimantlist[0]["description"], claimantlist[0]["numeric_value"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["numeric_value"], 1))
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"q":    "test",
+				"sort": "asc",
+			}).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(claimantlist)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(claimantlist[0])
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("when query does not match any claimant", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		test.DisableMeiliGock(testServer.URL)
+
+		gock.New(config.MeiliURL + "/indexes/dega/search").
+			HeaderPresent("X-Meili-API-Key").
+			Persist().
+			Reply(http.StatusOK).
+			JSON(test.EmptyMeili)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"q":    "test",
+				"sort": "asc",
+			}).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			Value("total").
+			Equal(0)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("search with query q when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"q":    "test",
+				"sort": "asc",
+			}).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
 }

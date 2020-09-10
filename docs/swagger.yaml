@@ -1743,6 +1743,14 @@ paths:
         in: query
         name: page
         type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      - description: Sort
+        in: query
+        name: sort
+        type: string
       produces:
       - application/json
       responses:
