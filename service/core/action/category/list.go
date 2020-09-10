@@ -1,11 +1,13 @@
 package category
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
@@ -28,6 +30,8 @@ type paging struct {
 // @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
+// @Param q query string false "Query"
+// @Param sort query string false "Sort"
 // @Success 200 {object} paging
 // @Router /core/categories [get]
 func list(w http.ResponseWriter, r *http.Request) {
@@ -40,15 +44,52 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	searchQuery := r.URL.Query().Get("q")
+	sort := r.URL.Query().Get("sort")
+
+	filteredCategoryIDs := make([]uint, 0)
+
+	if searchQuery != "" {
+
+		filters := fmt.Sprint("space_id=", sID)
+		var hits []interface{}
+
+		hits, err = meili.SearchWithQuery(searchQuery, filters, "category")
+
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+
+		filteredCategoryIDs = meili.GetIDArray(hits)
+		if len(filteredCategoryIDs) == 0 {
+			renderx.JSON(w, http.StatusOK, paging{
+				Nodes: make([]model.Category, 0),
+				Total: 0,
+			})
+			return
+		}
+	}
+
+	if sort != "asc" {
+		sort = "desc"
+	}
+
 	result := paging{}
 	result.Nodes = make([]model.Category, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	err = config.DB.Model(&model.Category{}).Preload("Medium").Where(&model.Category{
+	tx := config.DB.Model(&model.Category{}).Preload("Medium").Where(&model.Category{
 		SpaceID: uint(sID),
-	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
+	}).Count(&result.Total).Order("created_at " + sort).Offset(offset).Limit(limit)
 
+	if len(filteredCategoryIDs) > 0 {
+		err = tx.Where(filteredCategoryIDs).Find(&result.Nodes).Error
+	} else {
+		err = tx.Find(&result.Nodes).Error
+	}
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
