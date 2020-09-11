@@ -46,12 +46,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Filters
-	filterRatingID := r.URL.Query().Get("rating")
-	filterClaimantID := r.URL.Query().Get("claimant")
+	filterRatingIDs := r.URL.Query().Get("rating")
+	filterClaimantIDs := r.URL.Query().Get("claimant")
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
-	filters := generateFilters(filterRatingID, filterClaimantID)
+	filters := generateFilters(filterRatingIDs, filterClaimantIDs)
 	filteredClaimIDs := make([]uint, 0)
 
 	if filters != "" {
@@ -114,18 +114,18 @@ func list(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusOK, result)
 }
 
-func generateFilters(ratingID, claimantID string) string {
-	if ratingID == "" && claimantID == "" {
+func generateFilters(ratingIDs, claimantIDs string) string {
+	if ratingIDs == "" && claimantIDs == "" {
 		return ""
 	}
 
 	filters := ""
 
-	if ratingID != "" {
-		filters = fmt.Sprint(filters, "rating_id=", ratingID, " AND ")
+	if ratingIDs != "" {
+		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(ratingIDs, "rating_id"), " AND ")
 	}
-	if claimantID != "" {
-		filters = fmt.Sprint(filters, "claimant_id=", claimantID)
+	if claimantIDs != "" {
+		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
 	}
 	if filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
