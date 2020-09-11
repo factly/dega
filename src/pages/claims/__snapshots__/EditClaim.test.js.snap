@@ -872,6 +872,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                             loading={true}
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select claimants"
                                             transitionName="slide-up"
                                           >
@@ -902,6 +903,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select claimants"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -934,6 +936,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                 }
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select claimants"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1852,6 +1855,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                             loading={true}
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select ratings"
                                             transitionName="slide-up"
                                           >
@@ -1882,6 +1886,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select ratings"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1914,6 +1919,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                 }
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select ratings"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6371,6 +6377,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                             loading={true}
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select claimants"
                                             transitionName="slide-up"
                                           >
@@ -6401,6 +6408,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select claimants"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6433,6 +6441,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                 }
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select claimants"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7351,6 +7360,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                             loading={true}
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select ratings"
                                             transitionName="slide-up"
                                           >
@@ -7381,6 +7391,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select ratings"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7413,6 +7424,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                 }
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select ratings"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}

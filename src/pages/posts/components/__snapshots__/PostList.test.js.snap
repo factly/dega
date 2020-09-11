@@ -1235,6 +1235,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select tags"
                                                 transitionName="slide-up"
                                               >
@@ -1258,6 +1259,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select tags"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1283,6 +1285,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select tags"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1930,6 +1933,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select categories"
                                                 transitionName="slide-up"
                                               >
@@ -1953,6 +1957,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select categories"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1978,6 +1983,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select categories"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -2625,6 +2631,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select formats"
                                                 transitionName="slide-up"
                                               >
@@ -2648,6 +2655,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select formats"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -2673,6 +2681,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select formats"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -5976,6 +5985,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select tags"
                                                 transitionName="slide-up"
                                               >
@@ -5999,6 +6009,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select tags"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6024,6 +6035,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select tags"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6671,6 +6683,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select categories"
                                                 transitionName="slide-up"
                                               >
@@ -6694,6 +6707,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select categories"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6719,6 +6733,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select categories"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7366,6 +7381,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select formats"
                                                 transitionName="slide-up"
                                               >
@@ -7389,6 +7405,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select formats"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7414,6 +7431,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select formats"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -10693,6 +10711,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select tags"
                                                 transitionName="slide-up"
                                               >
@@ -10716,6 +10735,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select tags"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -10741,6 +10761,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select tags"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -11388,6 +11409,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select categories"
                                                 transitionName="slide-up"
                                               >
@@ -11411,6 +11433,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select categories"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -11436,6 +11459,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select categories"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -12083,6 +12107,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select formats"
                                                 transitionName="slide-up"
                                               >
@@ -12106,6 +12131,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select formats"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -12131,6 +12157,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select formats"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}

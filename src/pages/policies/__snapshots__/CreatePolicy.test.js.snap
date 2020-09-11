@@ -642,6 +642,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select authors"
                                                 transitionName="slide-up"
                                               >
@@ -665,6 +666,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select authors"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -690,6 +692,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select authors"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -706,25 +709,13 @@ exports[`Policies create component snapshot testing should render the component 
                                                       <SelectTrigger
                                                         containerWidth={null}
                                                         dropdownClassName=""
-                                                        empty={false}
+                                                        empty={true}
                                                         getTriggerDOMNode={[Function]}
                                                         popupElement={
                                                           <ForwardRef(OptionList)
                                                             childrenAsData={true}
                                                             defaultActiveFirstOption={true}
-                                                            flattenOptions={
-                                                              Array [
-                                                                Object {
-                                                                  "data": Object {
-                                                                    "children": "author@aut.co",
-                                                                    "key": "authors1",
-                                                                    "value": 1,
-                                                                  },
-                                                                  "groupOption": false,
-                                                                  "key": "authors1",
-                                                                },
-                                                              ]
-                                                            }
+                                                            flattenOptions={Array []}
                                                             height={128}
                                                             id="rc_select_TEST_OR_SSR"
                                                             itemHeight={24}
@@ -740,15 +731,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                             onScroll={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            options={
-                                                              Array [
-                                                                Object {
-                                                                  "children": "author@aut.co",
-                                                                  "key": "authors1",
-                                                                  "value": 1,
-                                                                },
-                                                              ]
-                                                            }
+                                                            options={Array []}
                                                             prefixCls="ant-select"
                                                             searchValue=""
                                                             values={Set {}}
@@ -841,19 +824,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                               <ForwardRef(OptionList)
                                                                 childrenAsData={true}
                                                                 defaultActiveFirstOption={true}
-                                                                flattenOptions={
-                                                                  Array [
-                                                                    Object {
-                                                                      "data": Object {
-                                                                        "children": "author@aut.co",
-                                                                        "key": "authors1",
-                                                                        "value": 1,
-                                                                      },
-                                                                      "groupOption": false,
-                                                                      "key": "authors1",
-                                                                    },
-                                                                  ]
-                                                                }
+                                                                flattenOptions={Array []}
                                                                 height={128}
                                                                 id="rc_select_TEST_OR_SSR"
                                                                 itemHeight={24}
@@ -869,15 +840,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                                 onScroll={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                options={
-                                                                  Array [
-                                                                    Object {
-                                                                      "children": "author@aut.co",
-                                                                      "key": "authors1",
-                                                                      "value": 1,
-                                                                    },
-                                                                  ]
-                                                                }
+                                                                options={Array []}
                                                                 prefixCls="ant-select"
                                                                 searchValue=""
                                                                 values={Set {}}
@@ -886,7 +849,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                             </div>
                                                           }
                                                           popupAlign={Object {}}
-                                                          popupClassName=""
+                                                          popupClassName="ant-select-dropdown-empty"
                                                           popupPlacement="bottomLeft"
                                                           popupStyle={
                                                             Object {

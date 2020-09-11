@@ -1235,6 +1235,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select claimants"
                                                 transitionName="slide-up"
                                               >
@@ -1258,6 +1259,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select claimants"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1283,6 +1285,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select claimants"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1930,6 +1933,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select ratings"
                                                 transitionName="slide-up"
                                               >
@@ -1953,6 +1957,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select ratings"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1978,6 +1983,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select ratings"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6547,6 +6553,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select claimants"
                                                 transitionName="slide-up"
                                               >
@@ -6570,6 +6577,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select claimants"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6595,6 +6603,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select claimants"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7242,6 +7251,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select ratings"
                                                 transitionName="slide-up"
                                               >
@@ -7265,6 +7275,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select ratings"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7290,6 +7301,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select ratings"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -11835,6 +11847,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select claimants"
                                                 transitionName="slide-up"
                                               >
@@ -11858,6 +11871,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select claimants"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -11883,6 +11897,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select claimants"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
@@ -12530,6 +12545,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                 mode="multiple"
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select ratings"
                                                 transitionName="slide-up"
                                               >
@@ -12553,6 +12569,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select ratings"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -12578,6 +12595,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                     }
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select ratings"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
