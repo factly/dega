@@ -200,6 +200,7 @@ func TestPostList(t *testing.T) {
 				"category": "2",
 				"q":        "test",
 				"author":   "1,2",
+				"format":   "2,3",
 			}).
 			Expect().
 			Status(http.StatusOK).

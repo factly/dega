@@ -3,7 +3,9 @@ package meili
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/meilisearch/meilisearch-go"
@@ -77,4 +79,21 @@ func GetIDArray(hits []interface{}) []uint {
 	}
 
 	return arr
+}
+
+// GenerateFieldFilter generates filter in form "(field=x OR field=y OR ...)"
+func GenerateFieldFilter(ids string, field string) string {
+	filter := "("
+	arr := strings.Split(strings.TrimSpace(ids), ",")
+	for i, id := range arr {
+		id = strings.TrimSpace(id)
+		if id != "" {
+			if i == len(arr)-1 {
+				filter = fmt.Sprint(filter, field, "=", id, ")")
+				break
+			}
+			filter = fmt.Sprint(filter, field, "=", id, " OR ")
+		}
+	}
+	return filter
 }
