@@ -17,7 +17,7 @@ func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*m
 		return nil, nil
 	}
 
-	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(*obj.MediumID))
 }
 
 func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
