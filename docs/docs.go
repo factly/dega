@@ -1560,6 +1560,18 @@ var doc = `{
                         "description": "page number",
                         "name": "page",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
+                        "in": "query"
                     }
                 ],
                 "responses": {
