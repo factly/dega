@@ -82,13 +82,12 @@ func GetIDArray(hits []interface{}) []uint {
 }
 
 // GenerateFieldFilter generates filter in form "(field=x OR field=y OR ...)"
-func GenerateFieldFilter(ids string, field string) string {
+func GenerateFieldFilter(ids []string, field string) string {
 	filter := "("
-	arr := strings.Split(strings.TrimSpace(ids), ",")
-	for i, id := range arr {
+	for i, id := range ids {
 		id = strings.TrimSpace(id)
 		if id != "" {
-			if i == len(arr)-1 {
+			if i == len(ids)-1 {
 				filter = fmt.Sprint(filter, field, "=", id, ")")
 				break
 			}

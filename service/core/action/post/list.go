@@ -3,6 +3,7 @@ package post
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -50,14 +51,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Filters
-	filterTagIDs := r.URL.Query().Get("tag")
-	filterCategoryIDs := r.URL.Query().Get("category")
-	filterAuthorIDs := r.URL.Query().Get("author")
-	filterFormatIDs := r.URL.Query().Get("format")
+	u, _ := url.Parse(r.URL.String())
+	queryMap := u.Query()
+
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
-	filters := generateFilters(filterTagIDs, filterCategoryIDs, filterAuthorIDs, filterFormatIDs)
+	filters := generateFilters(queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["format"])
 	filteredPostIDs := make([]uint, 0)
 
 	if filters != "" {
@@ -181,25 +181,21 @@ func list(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusOK, result)
 }
 
-func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs string) string {
-	if tagIDs == "" && categoryIDs == "" && formatIDs == "" && authorIDs == "" {
-		return ""
-	}
-
+func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs []string) string {
 	filters := ""
-	if tagIDs != "" {
+	if len(tagIDs) > 0 {
 		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
 	}
 
-	if categoryIDs != "" {
+	if len(categoryIDs) > 0 {
 		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
 	}
 
-	if authorIDs != "" {
+	if len(authorIDs) > 0 {
 		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(authorIDs, "author_ids"), " AND ")
 	}
 
-	if formatIDs != "" {
+	if len(formatIDs) > 0 {
 		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(formatIDs, "format_id"), " AND ")
 	}
 
