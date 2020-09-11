@@ -132,5 +132,7 @@ fabric.properties
 
 .env
 
+server
+
 #logs
 *.log
