@@ -972,6 +972,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select claimants"
                                           transitionName="slide-up"
                                         >
@@ -998,6 +999,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select claimants"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1026,6 +1028,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select claimants"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1943,6 +1946,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select ratings"
                                           transitionName="slide-up"
                                         >
@@ -1969,6 +1973,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select ratings"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1997,6 +2002,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select ratings"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6720,6 +6726,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select claimants"
                                           transitionName="slide-up"
                                         >
@@ -6746,6 +6753,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select claimants"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6774,6 +6782,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select claimants"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7697,6 +7706,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select ratings"
                                           transitionName="slide-up"
                                         >
@@ -7723,6 +7733,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select ratings"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7751,6 +7762,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select ratings"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -12406,6 +12418,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select claimants"
                                           transitionName="slide-up"
                                         >
@@ -12432,6 +12445,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select claimants"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -12460,6 +12474,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select claimants"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -13377,6 +13392,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select ratings"
                                           transitionName="slide-up"
                                         >
@@ -13403,6 +13419,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select ratings"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -13431,6 +13448,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select ratings"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -18155,6 +18173,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select claimants"
                                           transitionName="slide-up"
                                         >
@@ -18181,6 +18200,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select claimants"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -18209,6 +18229,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select claimants"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -19132,6 +19153,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select ratings"
                                           transitionName="slide-up"
                                         >
@@ -19158,6 +19180,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select ratings"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -19186,6 +19209,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select ratings"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -23734,6 +23758,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select claimants"
                                           transitionName="slide-up"
                                         >
@@ -23760,6 +23785,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select claimants"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -23788,6 +23814,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select claimants"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
@@ -24694,6 +24721,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
                                           loading={false}
                                           onChange={[Function]}
                                           onPopupScroll={[Function]}
+                                          onSearch={[Function]}
                                           placeholder="Select ratings"
                                           transitionName="slide-up"
                                         >
@@ -24720,6 +24748,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
                                             }
                                             onChange={[Function]}
                                             onPopupScroll={[Function]}
+                                            onSearch={[Function]}
                                             placeholder="Select ratings"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
@@ -24748,6 +24777,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
                                               }
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select ratings"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
