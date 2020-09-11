@@ -199,7 +199,7 @@ func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs []string) string 
 		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(formatIDs, "format_id"), " AND ")
 	}
 
-	if filters[len(filters)-5:] == " AND " {
+	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
 	}
 

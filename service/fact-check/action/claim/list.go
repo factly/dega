@@ -125,7 +125,7 @@ func generateFilters(ratingIDs, claimantIDs []string) string {
 	if len(claimantIDs) > 0 {
 		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
 	}
-	if filters[len(filters)-5:] == " AND " {
+	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
 	}
 
