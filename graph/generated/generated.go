@@ -50,20 +50,13 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
-	Author struct {
-		Image func(childComplexity int) int
-		Name  func(childComplexity int) int
-		Type  func(childComplexity int) int
-		URL   func(childComplexity int) int
-	}
-
 	CategoriesPaging struct {
 		Nodes func(childComplexity int) int
 		Total func(childComplexity int) int
 	}
 
 	Category struct {
-		CreatedDate func(childComplexity int) int
+		CreatedAt   func(childComplexity int) int
 		Description func(childComplexity int) int
 		ID          func(childComplexity int) int
 		Medium      func(childComplexity int) int
@@ -71,7 +64,7 @@ type ComplexityRoot struct {
 		ParentID    func(childComplexity int) int
 		Slug        func(childComplexity int) int
 		SpaceID     func(childComplexity int) int
-		UpdatedDate func(childComplexity int) int
+		UpdatedAt   func(childComplexity int) int
 	}
 
 	Claim struct {
@@ -79,7 +72,7 @@ type ComplexityRoot struct {
 		ClaimDate     func(childComplexity int) int
 		ClaimSource   func(childComplexity int) int
 		Claimant      func(childComplexity int) int
-		CreatedDate   func(childComplexity int) int
+		CreatedAt     func(childComplexity int) int
 		Description   func(childComplexity int) int
 		ID            func(childComplexity int) int
 		Rating        func(childComplexity int) int
@@ -89,11 +82,11 @@ type ComplexityRoot struct {
 		Slug          func(childComplexity int) int
 		SpaceID       func(childComplexity int) int
 		Title         func(childComplexity int) int
-		UpdatedDate   func(childComplexity int) int
+		UpdatedAt     func(childComplexity int) int
 	}
 
 	Claimant struct {
-		CreatedDate func(childComplexity int) int
+		CreatedAt   func(childComplexity int) int
 		Description func(childComplexity int) int
 		ID          func(childComplexity int) int
 		Medium      func(childComplexity int) int
@@ -101,7 +94,7 @@ type ComplexityRoot struct {
 		Slug        func(childComplexity int) int
 		SpaceID     func(childComplexity int) int
 		TagLine     func(childComplexity int) int
-		UpdatedDate func(childComplexity int) int
+		UpdatedAt   func(childComplexity int) int
 	}
 
 	ClaimantsPaging struct {
@@ -115,13 +108,13 @@ type ComplexityRoot struct {
 	}
 
 	Format struct {
-		CreatedDate func(childComplexity int) int
+		CreatedAt   func(childComplexity int) int
 		Description func(childComplexity int) int
 		ID          func(childComplexity int) int
 		Name        func(childComplexity int) int
 		Slug        func(childComplexity int) int
 		SpaceID     func(childComplexity int) int
-		UpdatedDate func(childComplexity int) int
+		UpdatedAt   func(childComplexity int) int
 	}
 
 	FormatsPaging struct {
@@ -129,17 +122,10 @@ type ComplexityRoot struct {
 		Total func(childComplexity int) int
 	}
 
-	ItemReviewed struct {
-		Author        func(childComplexity int) int
-		DatePublished func(childComplexity int) int
-		Name          func(childComplexity int) int
-		Type          func(childComplexity int) int
-	}
-
 	Medium struct {
 		AltText     func(childComplexity int) int
 		Caption     func(childComplexity int) int
-		CreatedDate func(childComplexity int) int
+		CreatedAt   func(childComplexity int) int
 		Description func(childComplexity int) int
 		Dimensions  func(childComplexity int) int
 		FileSize    func(childComplexity int) int
@@ -150,13 +136,13 @@ type ComplexityRoot struct {
 		Title       func(childComplexity int) int
 		Type        func(childComplexity int) int
 		URL         func(childComplexity int) int
-		UpdatedDate func(childComplexity int) int
+		UpdatedAt   func(childComplexity int) int
 	}
 
 	Post struct {
 		Categories    func(childComplexity int) int
 		Claims        func(childComplexity int) int
-		CreatedDate   func(childComplexity int) int
+		CreatedAt     func(childComplexity int) int
 		Description   func(childComplexity int) int
 		Excerpt       func(childComplexity int) int
 		Format        func(childComplexity int) int
@@ -165,13 +151,14 @@ type ComplexityRoot struct {
 		IsHighlighted func(childComplexity int) int
 		IsSticky      func(childComplexity int) int
 		Medium        func(childComplexity int) int
+		Schemas       func(childComplexity int) int
 		Slug          func(childComplexity int) int
 		SpaceID       func(childComplexity int) int
 		Status        func(childComplexity int) int
 		Subtitle      func(childComplexity int) int
 		Tags          func(childComplexity int) int
 		Title         func(childComplexity int) int
-		UpdatedDate   func(childComplexity int) int
+		UpdatedAt     func(childComplexity int) int
 		Users         func(childComplexity int) int
 	}
 
@@ -198,7 +185,7 @@ type ComplexityRoot struct {
 	}
 
 	Rating struct {
-		CreatedDate  func(childComplexity int) int
+		CreatedAt    func(childComplexity int) int
 		Description  func(childComplexity int) int
 		ID           func(childComplexity int) int
 		Medium       func(childComplexity int) int
@@ -206,7 +193,7 @@ type ComplexityRoot struct {
 		NumericValue func(childComplexity int) int
 		Slug         func(childComplexity int) int
 		SpaceID      func(childComplexity int) int
-		UpdatedDate  func(childComplexity int) int
+		UpdatedAt    func(childComplexity int) int
 	}
 
 	RatingsPaging struct {
@@ -214,30 +201,10 @@ type ComplexityRoot struct {
 		Total func(childComplexity int) int
 	}
 
-	ReviewRating struct {
-		AlternateName func(childComplexity int) int
-		BestRating    func(childComplexity int) int
-		Image         func(childComplexity int) int
-		RatingValue   func(childComplexity int) int
-		Type          func(childComplexity int) int
-		WorstRating   func(childComplexity int) int
-	}
-
-	Schemas struct {
-		Author        func(childComplexity int) int
-		ClaimReviewed func(childComplexity int) int
-		Context       func(childComplexity int) int
-		DatePublished func(childComplexity int) int
-		ItemReviewed  func(childComplexity int) int
-		ReviewRating  func(childComplexity int) int
-		Type          func(childComplexity int) int
-		URL           func(childComplexity int) int
-	}
-
 	Sitemap struct {
-		CreatedDate func(childComplexity int) int
-		ID          func(childComplexity int) int
-		Slug        func(childComplexity int) int
+		CreatedAt func(childComplexity int) int
+		ID        func(childComplexity int) int
+		Slug      func(childComplexity int) int
 	}
 
 	Sitemaps struct {
@@ -253,7 +220,7 @@ type ComplexityRoot struct {
 
 	Space struct {
 		ContactInfo       func(childComplexity int) int
-		CreatedDate       func(childComplexity int) int
+		CreatedAt         func(childComplexity int) int
 		Description       func(childComplexity int) int
 		FavIcon           func(childComplexity int) int
 		ID                func(childComplexity int) int
@@ -266,18 +233,18 @@ type ComplexityRoot struct {
 		Slug              func(childComplexity int) int
 		SocialMediaUrls   func(childComplexity int) int
 		TagLine           func(childComplexity int) int
-		UpdatedDate       func(childComplexity int) int
+		UpdatedAt         func(childComplexity int) int
 		VerificationCodes func(childComplexity int) int
 	}
 
 	Tag struct {
-		CreatedDate func(childComplexity int) int
+		CreatedAt   func(childComplexity int) int
 		Description func(childComplexity int) int
 		ID          func(childComplexity int) int
 		Name        func(childComplexity int) int
 		Slug        func(childComplexity int) int
 		SpaceID     func(childComplexity int) int
-		UpdatedDate func(childComplexity int) int
+		UpdatedAt   func(childComplexity int) int
 	}
 
 	TagsPaging struct {
@@ -286,14 +253,14 @@ type ComplexityRoot struct {
 	}
 
 	User struct {
-		BirthDate   func(childComplexity int) int
-		CreatedDate func(childComplexity int) int
-		Email       func(childComplexity int) int
-		FirstName   func(childComplexity int) int
-		Gender      func(childComplexity int) int
-		ID          func(childComplexity int) int
-		LastName    func(childComplexity int) int
-		UpdatedDate func(childComplexity int) int
+		BirthDate func(childComplexity int) int
+		CreatedAt func(childComplexity int) int
+		Email     func(childComplexity int) int
+		FirstName func(childComplexity int) int
+		Gender    func(childComplexity int) int
+		ID        func(childComplexity int) int
+		LastName  func(childComplexity int) int
+		UpdatedAt func(childComplexity int) int
 	}
 
 	UsersPaging struct {
@@ -323,6 +290,7 @@ type PostResolver interface {
 	Tags(ctx context.Context, obj *models.Post) ([]*models.Tag, error)
 	Users(ctx context.Context, obj *models.Post) ([]*models.User, error)
 	Claims(ctx context.Context, obj *models.Post) ([]*models.Claim, error)
+	Schemas(ctx context.Context, obj *models.Post) (interface{}, error)
 }
 type QueryResolver interface {
 	Space(ctx context.Context) (*models.Space, error)
@@ -378,34 +346,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	_ = ec
 	switch typeName + "." + field {
 
-	case "Author.image":
-		if e.complexity.Author.Image == nil {
-			break
-		}
-
-		return e.complexity.Author.Image(childComplexity), true
-
-	case "Author.name":
-		if e.complexity.Author.Name == nil {
-			break
-		}
-
-		return e.complexity.Author.Name(childComplexity), true
-
-	case "Author.type":
-		if e.complexity.Author.Type == nil {
-			break
-		}
-
-		return e.complexity.Author.Type(childComplexity), true
-
-	case "Author.url":
-		if e.complexity.Author.URL == nil {
-			break
-		}
-
-		return e.complexity.Author.URL(childComplexity), true
-
 	case "CategoriesPaging.nodes":
 		if e.complexity.CategoriesPaging.Nodes == nil {
 			break
@@ -420,12 +360,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.CategoriesPaging.Total(childComplexity), true
 
-	case "Category.created_date":
-		if e.complexity.Category.CreatedDate == nil {
+	case "Category.created_at":
+		if e.complexity.Category.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Category.CreatedDate(childComplexity), true
+		return e.complexity.Category.CreatedAt(childComplexity), true
 
 	case "Category.description":
 		if e.complexity.Category.Description == nil {
@@ -476,12 +416,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Category.SpaceID(childComplexity), true
 
-	case "Category.updated_date":
-		if e.complexity.Category.UpdatedDate == nil {
+	case "Category.updated_at":
+		if e.complexity.Category.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Category.UpdatedDate(childComplexity), true
+		return e.complexity.Category.UpdatedAt(childComplexity), true
 
 	case "Claim.checked_date":
 		if e.complexity.Claim.CheckedDate == nil {
@@ -511,12 +451,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.Claimant(childComplexity), true
 
-	case "Claim.created_date":
-		if e.complexity.Claim.CreatedDate == nil {
+	case "Claim.created_at":
+		if e.complexity.Claim.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Claim.CreatedDate(childComplexity), true
+		return e.complexity.Claim.CreatedAt(childComplexity), true
 
 	case "Claim.description":
 		if e.complexity.Claim.Description == nil {
@@ -581,19 +521,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.Title(childComplexity), true
 
-	case "Claim.updated_date":
-		if e.complexity.Claim.UpdatedDate == nil {
+	case "Claim.updated_at":
+		if e.complexity.Claim.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Claim.UpdatedDate(childComplexity), true
+		return e.complexity.Claim.UpdatedAt(childComplexity), true
 
-	case "Claimant.created_date":
-		if e.complexity.Claimant.CreatedDate == nil {
+	case "Claimant.created_at":
+		if e.complexity.Claimant.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Claimant.CreatedDate(childComplexity), true
+		return e.complexity.Claimant.CreatedAt(childComplexity), true
 
 	case "Claimant.description":
 		if e.complexity.Claimant.Description == nil {
@@ -644,12 +584,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claimant.TagLine(childComplexity), true
 
-	case "Claimant.updated_date":
-		if e.complexity.Claimant.UpdatedDate == nil {
+	case "Claimant.updated_at":
+		if e.complexity.Claimant.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Claimant.UpdatedDate(childComplexity), true
+		return e.complexity.Claimant.UpdatedAt(childComplexity), true
 
 	case "ClaimantsPaging.nodes":
 		if e.complexity.ClaimantsPaging.Nodes == nil {
@@ -679,12 +619,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ClaimsPaging.Total(childComplexity), true
 
-	case "Format.created_date":
-		if e.complexity.Format.CreatedDate == nil {
+	case "Format.created_at":
+		if e.complexity.Format.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Format.CreatedDate(childComplexity), true
+		return e.complexity.Format.CreatedAt(childComplexity), true
 
 	case "Format.description":
 		if e.complexity.Format.Description == nil {
@@ -721,12 +661,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Format.SpaceID(childComplexity), true
 
-	case "Format.updated_date":
-		if e.complexity.Format.UpdatedDate == nil {
+	case "Format.updated_at":
+		if e.complexity.Format.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Format.UpdatedDate(childComplexity), true
+		return e.complexity.Format.UpdatedAt(childComplexity), true
 
 	case "FormatsPaging.nodes":
 		if e.complexity.FormatsPaging.Nodes == nil {
@@ -742,34 +682,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.FormatsPaging.Total(childComplexity), true
 
-	case "ItemReviewed.author":
-		if e.complexity.ItemReviewed.Author == nil {
-			break
-		}
-
-		return e.complexity.ItemReviewed.Author(childComplexity), true
-
-	case "ItemReviewed.datePublished":
-		if e.complexity.ItemReviewed.DatePublished == nil {
-			break
-		}
-
-		return e.complexity.ItemReviewed.DatePublished(childComplexity), true
-
-	case "ItemReviewed.name":
-		if e.complexity.ItemReviewed.Name == nil {
-			break
-		}
-
-		return e.complexity.ItemReviewed.Name(childComplexity), true
-
-	case "ItemReviewed.type":
-		if e.complexity.ItemReviewed.Type == nil {
-			break
-		}
-
-		return e.complexity.ItemReviewed.Type(childComplexity), true
-
 	case "Medium.alt_text":
 		if e.complexity.Medium.AltText == nil {
 			break
@@ -784,12 +696,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Medium.Caption(childComplexity), true
 
-	case "Medium.created_date":
-		if e.complexity.Medium.CreatedDate == nil {
+	case "Medium.created_at":
+		if e.complexity.Medium.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Medium.CreatedDate(childComplexity), true
+		return e.complexity.Medium.CreatedAt(childComplexity), true
 
 	case "Medium.description":
 		if e.complexity.Medium.Description == nil {
@@ -861,12 +773,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Medium.URL(childComplexity), true
 
-	case "Medium.updated_date":
-		if e.complexity.Medium.UpdatedDate == nil {
+	case "Medium.updated_at":
+		if e.complexity.Medium.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Medium.UpdatedDate(childComplexity), true
+		return e.complexity.Medium.UpdatedAt(childComplexity), true
 
 	case "Post.categories":
 		if e.complexity.Post.Categories == nil {
@@ -882,12 +794,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Post.Claims(childComplexity), true
 
-	case "Post.created_date":
-		if e.complexity.Post.CreatedDate == nil {
+	case "Post.created_at":
+		if e.complexity.Post.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Post.CreatedDate(childComplexity), true
+		return e.complexity.Post.CreatedAt(childComplexity), true
 
 	case "Post.description":
 		if e.complexity.Post.Description == nil {
@@ -945,6 +857,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Post.Medium(childComplexity), true
 
+	case "Post.schemas":
+		if e.complexity.Post.Schemas == nil {
+			break
+		}
+
+		return e.complexity.Post.Schemas(childComplexity), true
+
 	case "Post.slug":
 		if e.complexity.Post.Slug == nil {
 			break
@@ -987,12 +906,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Post.Title(childComplexity), true
 
-	case "Post.updated_date":
-		if e.complexity.Post.UpdatedDate == nil {
+	case "Post.updated_at":
+		if e.complexity.Post.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Post.UpdatedDate(childComplexity), true
+		return e.complexity.Post.UpdatedAt(childComplexity), true
 
 	case "Post.users":
 		if e.complexity.Post.Users == nil {
@@ -1168,12 +1087,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.Users(childComplexity, args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
-	case "Rating.created_date":
-		if e.complexity.Rating.CreatedDate == nil {
+	case "Rating.created_at":
+		if e.complexity.Rating.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Rating.CreatedDate(childComplexity), true
+		return e.complexity.Rating.CreatedAt(childComplexity), true
 
 	case "Rating.description":
 		if e.complexity.Rating.Description == nil {
@@ -1224,12 +1143,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Rating.SpaceID(childComplexity), true
 
-	case "Rating.updated_date":
-		if e.complexity.Rating.UpdatedDate == nil {
+	case "Rating.updated_at":
+		if e.complexity.Rating.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Rating.UpdatedDate(childComplexity), true
+		return e.complexity.Rating.UpdatedAt(childComplexity), true
 
 	case "RatingsPaging.nodes":
 		if e.complexity.RatingsPaging.Nodes == nil {
@@ -1245,110 +1164,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.RatingsPaging.Total(childComplexity), true
 
-	case "ReviewRating.alternateName":
-		if e.complexity.ReviewRating.AlternateName == nil {
+	case "Sitemap.created_at":
+		if e.complexity.Sitemap.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.ReviewRating.AlternateName(childComplexity), true
-
-	case "ReviewRating.bestRating":
-		if e.complexity.ReviewRating.BestRating == nil {
-			break
-		}
-
-		return e.complexity.ReviewRating.BestRating(childComplexity), true
-
-	case "ReviewRating.image":
-		if e.complexity.ReviewRating.Image == nil {
-			break
-		}
-
-		return e.complexity.ReviewRating.Image(childComplexity), true
-
-	case "ReviewRating.ratingValue":
-		if e.complexity.ReviewRating.RatingValue == nil {
-			break
-		}
-
-		return e.complexity.ReviewRating.RatingValue(childComplexity), true
-
-	case "ReviewRating.type":
-		if e.complexity.ReviewRating.Type == nil {
-			break
-		}
-
-		return e.complexity.ReviewRating.Type(childComplexity), true
-
-	case "ReviewRating.worstRating":
-		if e.complexity.ReviewRating.WorstRating == nil {
-			break
-		}
-
-		return e.complexity.ReviewRating.WorstRating(childComplexity), true
-
-	case "Schemas.author":
-		if e.complexity.Schemas.Author == nil {
-			break
-		}
-
-		return e.complexity.Schemas.Author(childComplexity), true
-
-	case "Schemas.claimReviewed":
-		if e.complexity.Schemas.ClaimReviewed == nil {
-			break
-		}
-
-		return e.complexity.Schemas.ClaimReviewed(childComplexity), true
-
-	case "Schemas.context":
-		if e.complexity.Schemas.Context == nil {
-			break
-		}
-
-		return e.complexity.Schemas.Context(childComplexity), true
-
-	case "Schemas.datePublished":
-		if e.complexity.Schemas.DatePublished == nil {
-			break
-		}
-
-		return e.complexity.Schemas.DatePublished(childComplexity), true
-
-	case "Schemas.itemReviewed":
-		if e.complexity.Schemas.ItemReviewed == nil {
-			break
-		}
-
-		return e.complexity.Schemas.ItemReviewed(childComplexity), true
-
-	case "Schemas.reviewRating":
-		if e.complexity.Schemas.ReviewRating == nil {
-			break
-		}
-
-		return e.complexity.Schemas.ReviewRating(childComplexity), true
-
-	case "Schemas.type":
-		if e.complexity.Schemas.Type == nil {
-			break
-		}
-
-		return e.complexity.Schemas.Type(childComplexity), true
-
-	case "Schemas.url":
-		if e.complexity.Schemas.URL == nil {
-			break
-		}
-
-		return e.complexity.Schemas.URL(childComplexity), true
-
-	case "Sitemap.created_date":
-		if e.complexity.Sitemap.CreatedDate == nil {
-			break
-		}
-
-		return e.complexity.Sitemap.CreatedDate(childComplexity), true
+		return e.complexity.Sitemap.CreatedAt(childComplexity), true
 
 	case "Sitemap.id":
 		if e.complexity.Sitemap.ID == nil {
@@ -1427,12 +1248,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Space.ContactInfo(childComplexity), true
 
-	case "Space.created_date":
-		if e.complexity.Space.CreatedDate == nil {
+	case "Space.created_at":
+		if e.complexity.Space.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Space.CreatedDate(childComplexity), true
+		return e.complexity.Space.CreatedAt(childComplexity), true
 
 	case "Space.description":
 		if e.complexity.Space.Description == nil {
@@ -1518,12 +1339,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Space.TagLine(childComplexity), true
 
-	case "Space.updated_date":
-		if e.complexity.Space.UpdatedDate == nil {
+	case "Space.updated_at":
+		if e.complexity.Space.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Space.UpdatedDate(childComplexity), true
+		return e.complexity.Space.UpdatedAt(childComplexity), true
 
 	case "Space.verification_codes":
 		if e.complexity.Space.VerificationCodes == nil {
@@ -1532,12 +1353,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Space.VerificationCodes(childComplexity), true
 
-	case "Tag.created_date":
-		if e.complexity.Tag.CreatedDate == nil {
+	case "Tag.created_at":
+		if e.complexity.Tag.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.Tag.CreatedDate(childComplexity), true
+		return e.complexity.Tag.CreatedAt(childComplexity), true
 
 	case "Tag.description":
 		if e.complexity.Tag.Description == nil {
@@ -1574,12 +1395,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.SpaceID(childComplexity), true
 
-	case "Tag.updated_date":
-		if e.complexity.Tag.UpdatedDate == nil {
+	case "Tag.updated_at":
+		if e.complexity.Tag.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.Tag.UpdatedDate(childComplexity), true
+		return e.complexity.Tag.UpdatedAt(childComplexity), true
 
 	case "TagsPaging.nodes":
 		if e.complexity.TagsPaging.Nodes == nil {
@@ -1602,12 +1423,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.BirthDate(childComplexity), true
 
-	case "User.created_date":
-		if e.complexity.User.CreatedDate == nil {
+	case "User.created_at":
+		if e.complexity.User.CreatedAt == nil {
 			break
 		}
 
-		return e.complexity.User.CreatedDate(childComplexity), true
+		return e.complexity.User.CreatedAt(childComplexity), true
 
 	case "User.email":
 		if e.complexity.User.Email == nil {
@@ -1644,12 +1465,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.LastName(childComplexity), true
 
-	case "User.updated_date":
-		if e.complexity.User.UpdatedDate == nil {
+	case "User.updated_at":
+		if e.complexity.User.UpdatedAt == nil {
 			break
 		}
 
-		return e.complexity.User.UpdatedDate(childComplexity), true
+		return e.complexity.User.UpdatedAt(childComplexity), true
 
 	case "UsersPaging.nodes":
 		if e.complexity.UsersPaging.Nodes == nil {
@@ -1717,8 +1538,8 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 var sources = []*ast.Source{
 	{Name: "graph/schema.graphql", Input: `type Space {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   site_title: String
@@ -1736,8 +1557,8 @@ var sources = []*ast.Source{
 
 type Category {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -1748,8 +1569,8 @@ type Category {
 
 type Tag {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -1758,8 +1579,8 @@ type Tag {
 
 type Format {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -1768,8 +1589,8 @@ type Format {
 
 type Medium {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String
   type: String!
@@ -1785,8 +1606,8 @@ type Medium {
 
 type Post {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   title: String!
   subtitle: String
   slug: String!
@@ -1796,19 +1617,20 @@ type Post {
   is_featured: Boolean
   is_sticky: Boolean
   is_highlighted: Boolean
-  space_id: Int!
   format: Format!
   medium: Medium
   categories: [Category!]!
   tags: [Tag!]!
   users: [User!]!
-  claims: [Claim]
+  claims: [Claim!]!
+  schemas: Any
+  space_id: Int!
 }
 
 type User {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   first_name: String!
   last_name: String
   email: String!
@@ -1818,8 +1640,8 @@ type User {
 
 type Rating {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -1830,8 +1652,8 @@ type Rating {
 
 type Claimant {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -1842,8 +1664,8 @@ type Claimant {
 
 type Claim {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   title: String!
   slug: String!
   claim_date: Time
@@ -1853,9 +1675,9 @@ type Claim {
   review: String
   review_tag_line: String
   review_sources: String
-  space_id: Int!
   rating: Rating!
   claimant: Claimant!
+  space_id: Int!
 }
 
 
@@ -1903,7 +1725,7 @@ type FormatsPaging {
 type Sitemap {
   slug: String!
   id: ID!
-  created_date: Time
+  created_at: Time
 }
 
 type Sitemaps {
@@ -1915,40 +1737,6 @@ type Sitemaps {
   claims: [Sitemap]
   claimants: [Sitemap]
   ratings: [Sitemap] 
-}
-
-type Author {
-  name: String
-  type: String!
-  url: String
-  image: String
-}
-
-type ReviewRating {
-  type: String!
-  ratingValue: Int!
-  bestRating: Int!
-  worstRating: Int!
-  image: String
-  alternateName: String!
-}
-
-type ItemReviewed {
-  type: String!
-  author: Author!
-  datePublished: Time
-  name: String
-}
-
-type Schemas {
-  context: String
-  type: String!
-  datePublished: Time
-  url: String
-  author: Author!
-  claimReviewed: String!
-  reviewRating: ReviewRating!
-  itemReviewed: ItemReviewed!
 }
 
 type Query {
@@ -2456,133 +2244,6 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _Author_name(ctx context.Context, field graphql.CollectedField, obj *models.Author) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Author",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Name, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Author_type(ctx context.Context, field graphql.CollectedField, obj *models.Author) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Author",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Type, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Author_url(ctx context.Context, field graphql.CollectedField, obj *models.Author) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Author",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.URL, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Author_image(ctx context.Context, field graphql.CollectedField, obj *models.Author) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Author",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Image, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _CategoriesPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.CategoriesPaging) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -2685,7 +2346,7 @@ func (ec *executionContext) _Category_id(ctx context.Context, field graphql.Coll
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Category_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+func (ec *executionContext) _Category_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2702,7 +2363,7 @@ func (ec *executionContext) _Category_created_date(ctx context.Context, field gr
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2716,7 +2377,7 @@ func (ec *executionContext) _Category_created_date(ctx context.Context, field gr
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Category_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+func (ec *executionContext) _Category_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2733,7 +2394,7 @@ func (ec *executionContext) _Category_updated_date(ctx context.Context, field gr
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2976,7 +2637,7 @@ func (ec *executionContext) _Claim_id(ctx context.Context, field graphql.Collect
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Claim_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+func (ec *executionContext) _Claim_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2993,7 +2654,7 @@ func (ec *executionContext) _Claim_created_date(ctx context.Context, field graph
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3007,7 +2668,7 @@ func (ec *executionContext) _Claim_created_date(ctx context.Context, field graph
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Claim_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+func (ec *executionContext) _Claim_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3024,7 +2685,7 @@ func (ec *executionContext) _Claim_updated_date(ctx context.Context, field graph
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3323,40 +2984,6 @@ func (ec *executionContext) _Claim_review_sources(ctx context.Context, field gra
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Claim_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Claim",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SpaceID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Claim_rating(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3425,6 +3052,40 @@ func (ec *executionContext) _Claim_claimant(ctx context.Context, field graphql.C
 	return ec.marshalNClaimant2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimant(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Claim_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Claim",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SpaceID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Claimant_id(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3459,7 +3120,7 @@ func (ec *executionContext) _Claimant_id(ctx context.Context, field graphql.Coll
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Claimant_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
+func (ec *executionContext) _Claimant_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3476,7 +3137,7 @@ func (ec *executionContext) _Claimant_created_date(ctx context.Context, field gr
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3490,7 +3151,7 @@ func (ec *executionContext) _Claimant_created_date(ctx context.Context, field gr
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Claimant_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
+func (ec *executionContext) _Claimant_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3507,7 +3168,7 @@ func (ec *executionContext) _Claimant_updated_date(ctx context.Context, field gr
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3886,7 +3547,7 @@ func (ec *executionContext) _Format_id(ctx context.Context, field graphql.Collec
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Format_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
+func (ec *executionContext) _Format_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3903,7 +3564,7 @@ func (ec *executionContext) _Format_created_date(ctx context.Context, field grap
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3917,7 +3578,7 @@ func (ec *executionContext) _Format_created_date(ctx context.Context, field grap
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Format_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
+func (ec *executionContext) _Format_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3934,7 +3595,7 @@ func (ec *executionContext) _Format_updated_date(ctx context.Context, field grap
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4149,136 +3810,6 @@ func (ec *executionContext) _FormatsPaging_total(ctx context.Context, field grap
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ItemReviewed_type(ctx context.Context, field graphql.CollectedField, obj *models.ItemReviewed) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ItemReviewed",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Type, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ItemReviewed_author(ctx context.Context, field graphql.CollectedField, obj *models.ItemReviewed) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ItemReviewed",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Author, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.Author)
-	fc.Result = res
-	return ec.marshalNAuthor2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐAuthor(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ItemReviewed_datePublished(ctx context.Context, field graphql.CollectedField, obj *models.ItemReviewed) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ItemReviewed",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DatePublished, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(time.Time)
-	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ItemReviewed_name(ctx context.Context, field graphql.CollectedField, obj *models.ItemReviewed) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ItemReviewed",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Name, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Medium_id(ctx context.Context, field graphql.CollectedField, obj *models.Medium) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -4313,7 +3844,7 @@ func (ec *executionContext) _Medium_id(ctx context.Context, field graphql.Collec
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Medium_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Medium) (ret graphql.Marshaler) {
+func (ec *executionContext) _Medium_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Medium) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4330,7 +3861,7 @@ func (ec *executionContext) _Medium_created_date(ctx context.Context, field grap
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4344,7 +3875,7 @@ func (ec *executionContext) _Medium_created_date(ctx context.Context, field grap
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Medium_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Medium) (ret graphql.Marshaler) {
+func (ec *executionContext) _Medium_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Medium) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4361,7 +3892,7 @@ func (ec *executionContext) _Medium_updated_date(ctx context.Context, field grap
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4774,7 +4305,7 @@ func (ec *executionContext) _Post_id(ctx context.Context, field graphql.Collecte
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Post_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
+func (ec *executionContext) _Post_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4791,7 +4322,7 @@ func (ec *executionContext) _Post_created_date(ctx context.Context, field graphq
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4805,7 +4336,7 @@ func (ec *executionContext) _Post_created_date(ctx context.Context, field graphq
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Post_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
+func (ec *executionContext) _Post_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4822,7 +4353,7 @@ func (ec *executionContext) _Post_updated_date(ctx context.Context, field graphq
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5124,40 +4655,6 @@ func (ec *executionContext) _Post_is_highlighted(ctx context.Context, field grap
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Post_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Post",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.SpaceID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Post_format(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -5349,11 +4846,79 @@ func (ec *executionContext) _Post_claims(ctx context.Context, field graphql.Coll
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]*models.Claim)
 	fc.Result = res
-	return ec.marshalOClaim2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaim(ctx, field.Selections, res)
+	return ec.marshalNClaim2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Post_schemas(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Post",
+		Field:    field,
+		Args:     nil,
+		IsMethod: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Post().Schemas(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Post_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:   "Post",
+		Field:    field,
+		Args:     nil,
+		IsMethod: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SpaceID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PostsPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.PostsPaging) (ret graphql.Marshaler) {
@@ -6038,7 +5603,7 @@ func (ec *executionContext) _Rating_id(ctx context.Context, field graphql.Collec
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Rating_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+func (ec *executionContext) _Rating_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -6055,7 +5620,7 @@ func (ec *executionContext) _Rating_created_date(ctx context.Context, field grap
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6069,7 +5634,7 @@ func (ec *executionContext) _Rating_created_date(ctx context.Context, field grap
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Rating_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+func (ec *executionContext) _Rating_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -6086,7 +5651,7 @@ func (ec *executionContext) _Rating_updated_date(ctx context.Context, field grap
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6366,470 +5931,6 @@ func (ec *executionContext) _RatingsPaging_total(ctx context.Context, field grap
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ReviewRating_type(ctx context.Context, field graphql.CollectedField, obj *models.ReviewRating) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ReviewRating",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Type, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ReviewRating_ratingValue(ctx context.Context, field graphql.CollectedField, obj *models.ReviewRating) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ReviewRating",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.RatingValue, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ReviewRating_bestRating(ctx context.Context, field graphql.CollectedField, obj *models.ReviewRating) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ReviewRating",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.BestRating, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ReviewRating_worstRating(ctx context.Context, field graphql.CollectedField, obj *models.ReviewRating) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ReviewRating",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.WorstRating, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ReviewRating_image(ctx context.Context, field graphql.CollectedField, obj *models.ReviewRating) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ReviewRating",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Image, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ReviewRating_alternateName(ctx context.Context, field graphql.CollectedField, obj *models.ReviewRating) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "ReviewRating",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.AlternateName, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Schemas_context(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Schemas",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Context, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Schemas_type(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Schemas",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Type, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Schemas_datePublished(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Schemas",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.DatePublished, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(time.Time)
-	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Schemas_url(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Schemas",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.URL, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Schemas_author(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Schemas",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Author, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.Author)
-	fc.Result = res
-	return ec.marshalNAuthor2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐAuthor(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Schemas_claimReviewed(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Schemas",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ClaimReviewed, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Schemas_reviewRating(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Schemas",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ReviewRating, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ReviewRating)
-	fc.Result = res
-	return ec.marshalNReviewRating2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐReviewRating(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Schemas_itemReviewed(ctx context.Context, field graphql.CollectedField, obj *models.Schemas) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:   "Schemas",
-		Field:    field,
-		Args:     nil,
-		IsMethod: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ItemReviewed, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.ItemReviewed)
-	fc.Result = res
-	return ec.marshalNItemReviewed2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐItemReviewed(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Sitemap_slug(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -6898,7 +5999,7 @@ func (ec *executionContext) _Sitemap_id(ctx context.Context, field graphql.Colle
 	return ec.marshalNID2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Sitemap_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
+func (ec *executionContext) _Sitemap_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -6915,7 +6016,7 @@ func (ec *executionContext) _Sitemap_created_date(ctx context.Context, field gra
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7211,7 +6312,7 @@ func (ec *executionContext) _Space_id(ctx context.Context, field graphql.Collect
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Space_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Space) (ret graphql.Marshaler) {
+func (ec *executionContext) _Space_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Space) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -7228,7 +6329,7 @@ func (ec *executionContext) _Space_created_date(ctx context.Context, field graph
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7242,7 +6343,7 @@ func (ec *executionContext) _Space_created_date(ctx context.Context, field graph
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Space_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Space) (ret graphql.Marshaler) {
+func (ec *executionContext) _Space_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Space) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -7259,7 +6360,7 @@ func (ec *executionContext) _Space_updated_date(ctx context.Context, field graph
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7716,7 +6817,7 @@ func (ec *executionContext) _Tag_id(ctx context.Context, field graphql.Collected
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Tag_created_date(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+func (ec *executionContext) _Tag_created_at(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -7733,7 +6834,7 @@ func (ec *executionContext) _Tag_created_date(ctx context.Context, field graphql
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7747,7 +6848,7 @@ func (ec *executionContext) _Tag_created_date(ctx context.Context, field graphql
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Tag_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+func (ec *executionContext) _Tag_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -7764,7 +6865,7 @@ func (ec *executionContext) _Tag_updated_date(ctx context.Context, field graphql
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8013,7 +7114,7 @@ func (ec *executionContext) _User_id(ctx context.Context, field graphql.Collecte
 	return ec.marshalNID2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _User_created_date(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_created_at(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -8030,7 +7131,7 @@ func (ec *executionContext) _User_created_date(ctx context.Context, field graphq
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDate, nil
+		return obj.CreatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8044,7 +7145,7 @@ func (ec *executionContext) _User_created_date(ctx context.Context, field graphq
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _User_updated_date(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+func (ec *executionContext) _User_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -8061,7 +7162,7 @@ func (ec *executionContext) _User_updated_date(ctx context.Context, field graphq
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.UpdatedDate, nil
+		return obj.UpdatedAt, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -9367,39 +8468,6 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 
 // region    **************************** object.gotpl ****************************
 
-var authorImplementors = []string{"Author"}
-
-func (ec *executionContext) _Author(ctx context.Context, sel ast.SelectionSet, obj *models.Author) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, authorImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("Author")
-		case "name":
-			out.Values[i] = ec._Author_name(ctx, field, obj)
-		case "type":
-			out.Values[i] = ec._Author_type(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "url":
-			out.Values[i] = ec._Author_url(ctx, field, obj)
-		case "image":
-			out.Values[i] = ec._Author_image(ctx, field, obj)
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
 var categoriesPagingImplementors = []string{"CategoriesPaging"}
 
 func (ec *executionContext) _CategoriesPaging(ctx context.Context, sel ast.SelectionSet, obj *models.CategoriesPaging) graphql.Marshaler {
@@ -9448,10 +8516,10 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "created_date":
-			out.Values[i] = ec._Category_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Category_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Category_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Category_updated_at(ctx, field, obj)
 		case "name":
 			out.Values[i] = ec._Category_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -9509,10 +8577,10 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "created_date":
-			out.Values[i] = ec._Claim_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Claim_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Claim_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Claim_updated_at(ctx, field, obj)
 		case "title":
 			out.Values[i] = ec._Claim_title(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -9546,11 +8614,6 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = ec._Claim_review_tag_line(ctx, field, obj)
 		case "review_sources":
 			out.Values[i] = ec._Claim_review_sources(ctx, field, obj)
-		case "space_id":
-			out.Values[i] = ec._Claim_space_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "rating":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -9579,6 +8642,11 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				}
 				return res
 			})
+		case "space_id":
+			out.Values[i] = ec._Claim_space_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -9606,10 +8674,10 @@ func (ec *executionContext) _Claimant(ctx context.Context, sel ast.SelectionSet,
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "created_date":
-			out.Values[i] = ec._Claimant_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Claimant_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Claimant_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Claimant_updated_at(ctx, field, obj)
 		case "name":
 			out.Values[i] = ec._Claimant_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -9731,10 +8799,10 @@ func (ec *executionContext) _Format(ctx context.Context, sel ast.SelectionSet, o
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "created_date":
-			out.Values[i] = ec._Format_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Format_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Format_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Format_updated_at(ctx, field, obj)
 		case "name":
 			out.Values[i] = ec._Format_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -9795,42 +8863,6 @@ func (ec *executionContext) _FormatsPaging(ctx context.Context, sel ast.Selectio
 	return out
 }
 
-var itemReviewedImplementors = []string{"ItemReviewed"}
-
-func (ec *executionContext) _ItemReviewed(ctx context.Context, sel ast.SelectionSet, obj *models.ItemReviewed) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, itemReviewedImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("ItemReviewed")
-		case "type":
-			out.Values[i] = ec._ItemReviewed_type(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "author":
-			out.Values[i] = ec._ItemReviewed_author(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "datePublished":
-			out.Values[i] = ec._ItemReviewed_datePublished(ctx, field, obj)
-		case "name":
-			out.Values[i] = ec._ItemReviewed_name(ctx, field, obj)
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
 var mediumImplementors = []string{"Medium"}
 
 func (ec *executionContext) _Medium(ctx context.Context, sel ast.SelectionSet, obj *models.Medium) graphql.Marshaler {
@@ -9847,10 +8879,10 @@ func (ec *executionContext) _Medium(ctx context.Context, sel ast.SelectionSet, o
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "created_date":
-			out.Values[i] = ec._Medium_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Medium_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Medium_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Medium_updated_at(ctx, field, obj)
 		case "name":
 			out.Values[i] = ec._Medium_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -9924,10 +8956,10 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "created_date":
-			out.Values[i] = ec._Post_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Post_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Post_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Post_updated_at(ctx, field, obj)
 		case "title":
 			out.Values[i] = ec._Post_title(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -9964,11 +8996,6 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 			out.Values[i] = ec._Post_is_sticky(ctx, field, obj)
 		case "is_highlighted":
 			out.Values[i] = ec._Post_is_highlighted(ctx, field, obj)
-		case "space_id":
-			out.Values[i] = ec._Post_space_id(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "format":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -10045,8 +9072,27 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 					}
 				}()
 				res = ec._Post_claims(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			})
+		case "schemas":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Post_schemas(ctx, field, obj)
+				return res
+			})
+		case "space_id":
+			out.Values[i] = ec._Post_space_id(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -10290,10 +9336,10 @@ func (ec *executionContext) _Rating(ctx context.Context, sel ast.SelectionSet, o
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "created_date":
-			out.Values[i] = ec._Rating_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Rating_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Rating_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Rating_updated_at(ctx, field, obj)
 		case "name":
 			out.Values[i] = ec._Rating_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -10370,108 +9416,6 @@ func (ec *executionContext) _RatingsPaging(ctx context.Context, sel ast.Selectio
 	return out
 }
 
-var reviewRatingImplementors = []string{"ReviewRating"}
-
-func (ec *executionContext) _ReviewRating(ctx context.Context, sel ast.SelectionSet, obj *models.ReviewRating) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, reviewRatingImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("ReviewRating")
-		case "type":
-			out.Values[i] = ec._ReviewRating_type(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "ratingValue":
-			out.Values[i] = ec._ReviewRating_ratingValue(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "bestRating":
-			out.Values[i] = ec._ReviewRating_bestRating(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "worstRating":
-			out.Values[i] = ec._ReviewRating_worstRating(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "image":
-			out.Values[i] = ec._ReviewRating_image(ctx, field, obj)
-		case "alternateName":
-			out.Values[i] = ec._ReviewRating_alternateName(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
-var schemasImplementors = []string{"Schemas"}
-
-func (ec *executionContext) _Schemas(ctx context.Context, sel ast.SelectionSet, obj *models.Schemas) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, schemasImplementors)
-
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("Schemas")
-		case "context":
-			out.Values[i] = ec._Schemas_context(ctx, field, obj)
-		case "type":
-			out.Values[i] = ec._Schemas_type(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "datePublished":
-			out.Values[i] = ec._Schemas_datePublished(ctx, field, obj)
-		case "url":
-			out.Values[i] = ec._Schemas_url(ctx, field, obj)
-		case "author":
-			out.Values[i] = ec._Schemas_author(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "claimReviewed":
-			out.Values[i] = ec._Schemas_claimReviewed(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "reviewRating":
-			out.Values[i] = ec._Schemas_reviewRating(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "itemReviewed":
-			out.Values[i] = ec._Schemas_itemReviewed(ctx, field, obj)
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
 var sitemapImplementors = []string{"Sitemap"}
 
 func (ec *executionContext) _Sitemap(ctx context.Context, sel ast.SelectionSet, obj *models.Sitemap) graphql.Marshaler {
@@ -10493,8 +9437,8 @@ func (ec *executionContext) _Sitemap(ctx context.Context, sel ast.SelectionSet, 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "created_date":
-			out.Values[i] = ec._Sitemap_created_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Sitemap_created_at(ctx, field, obj)
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -10632,10 +9576,10 @@ func (ec *executionContext) _Space(ctx context.Context, sel ast.SelectionSet, ob
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "created_date":
-			out.Values[i] = ec._Space_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Space_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Space_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Space_updated_at(ctx, field, obj)
 		case "name":
 			out.Values[i] = ec._Space_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -10758,10 +9702,10 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "created_date":
-			out.Values[i] = ec._Tag_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._Tag_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._Tag_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._Tag_updated_at(ctx, field, obj)
 		case "name":
 			out.Values[i] = ec._Tag_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -10838,10 +9782,10 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "created_date":
-			out.Values[i] = ec._User_created_date(ctx, field, obj)
-		case "updated_date":
-			out.Values[i] = ec._User_updated_date(ctx, field, obj)
+		case "created_at":
+			out.Values[i] = ec._User_created_at(ctx, field, obj)
+		case "updated_at":
+			out.Values[i] = ec._User_updated_at(ctx, field, obj)
 		case "first_name":
 			out.Values[i] = ec._User_first_name(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -11146,16 +10090,6 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) marshalNAuthor2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐAuthor(ctx context.Context, sel ast.SelectionSet, v *models.Author) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	return ec._Author(ctx, sel, v)
-}
-
 func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)
 	return res, graphql.WrapErrorWithInputPath(ctx, err)
@@ -11412,16 +10346,6 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNItemReviewed2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐItemReviewed(ctx context.Context, sel ast.SelectionSet, v *models.ItemReviewed) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	return ec._ItemReviewed(ctx, sel, v)
-}
-
 func (ec *executionContext) marshalNPost2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.Post) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -11518,16 +10442,6 @@ func (ec *executionContext) marshalNRating2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapi
 		return graphql.Null
 	}
 	return ec._Rating(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalNReviewRating2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐReviewRating(ctx context.Context, sel ast.SelectionSet, v *models.ReviewRating) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	return ec._ReviewRating(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNString2string(ctx context.Context, v interface{}) (string, error) {
@@ -11919,53 +10833,6 @@ func (ec *executionContext) marshalOCategory2ᚖgithubᚗcomᚋfactlyᚋdegaᚑa
 		return graphql.Null
 	}
 	return ec._Category(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOClaim2ᚕᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaim(ctx context.Context, sel ast.SelectionSet, v []*models.Claim) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOClaim2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaim(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-	return ret
-}
-
-func (ec *executionContext) marshalOClaim2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaim(ctx context.Context, sel ast.SelectionSet, v *models.Claim) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._Claim(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalOClaimantsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐClaimantsPaging(ctx context.Context, sel ast.SelectionSet, v *models.ClaimantsPaging) graphql.Marshaler {

@@ -7,8 +7,8 @@ import (
 // Format model
 type Format struct {
 	ID          int       `json:"id"`
-	CreatedDate time.Time `json:"created_date"`
-	UpdatedDate time.Time `json:"updated_date"`
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt   time.Time `json:"updated_at"`
 	Name        string    `json:"name"`
 	Slug        string    `json:"slug"`
 	Description *string   `json:"description"`

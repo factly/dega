@@ -30,9 +30,9 @@ func (r *sitemapsResolver) Categories(ctx context.Context, obj *models.Sitemaps)
 
 	for _, category := range categories {
 		sitemap := &models.Sitemap{
-			ID:          fmt.Sprint(category.ID),
-			Slug:        category.Slug,
-			CreatedDate: category.CreatedDate,
+			ID:        fmt.Sprint(category.ID),
+			Slug:      category.Slug,
+			CreatedAt: category.CreatedAt,
 		}
 		nodes = append(nodes, sitemap)
 	}
@@ -51,9 +51,9 @@ func (r *sitemapsResolver) Tags(ctx context.Context, obj *models.Sitemaps) ([]*m
 
 	for _, tag := range tags {
 		sitemap := &models.Sitemap{
-			ID:          fmt.Sprint(tag.ID),
-			Slug:        tag.Slug,
-			CreatedDate: tag.CreatedDate,
+			ID:        fmt.Sprint(tag.ID),
+			Slug:      tag.Slug,
+			CreatedAt: tag.CreatedAt,
 		}
 		nodes = append(nodes, sitemap)
 	}
@@ -120,9 +120,9 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 
 	for _, user := range users {
 		sitemap := &models.Sitemap{
-			ID:          fmt.Sprint(user.ID),
-			Slug:        fmt.Sprint(user.ID),
-			CreatedDate: user.CreatedDate,
+			ID:        fmt.Sprint(user.ID),
+			Slug:      fmt.Sprint(user.ID),
+			CreatedAt: user.CreatedAt,
 		}
 		nodes = append(nodes, sitemap)
 	}
@@ -141,9 +141,9 @@ func (r *sitemapsResolver) Formats(ctx context.Context, obj *models.Sitemaps) ([
 
 	for _, format := range formats {
 		sitemap := &models.Sitemap{
-			ID:          fmt.Sprint(format.ID),
-			Slug:        format.Slug,
-			CreatedDate: format.CreatedDate,
+			ID:        fmt.Sprint(format.ID),
+			Slug:      format.Slug,
+			CreatedAt: format.CreatedAt,
 		}
 		nodes = append(nodes, sitemap)
 	}
@@ -162,9 +162,9 @@ func (r *sitemapsResolver) Posts(ctx context.Context, obj *models.Sitemaps) ([]*
 
 	for _, post := range posts {
 		sitemap := &models.Sitemap{
-			ID:          fmt.Sprint(post.ID),
-			Slug:        post.Slug,
-			CreatedDate: post.CreatedDate,
+			ID:        fmt.Sprint(post.ID),
+			Slug:      post.Slug,
+			CreatedAt: post.CreatedAt,
 		}
 		nodes = append(nodes, sitemap)
 	}
@@ -183,9 +183,9 @@ func (r *sitemapsResolver) Claims(ctx context.Context, obj *models.Sitemaps) ([]
 
 	for _, claim := range claims {
 		sitemap := &models.Sitemap{
-			ID:          fmt.Sprint(claim.ID),
-			Slug:        claim.Slug,
-			CreatedDate: claim.CreatedDate,
+			ID:        fmt.Sprint(claim.ID),
+			Slug:      claim.Slug,
+			CreatedAt: claim.CreatedAt,
 		}
 		nodes = append(nodes, sitemap)
 	}
@@ -204,9 +204,9 @@ func (r *sitemapsResolver) Claimants(ctx context.Context, obj *models.Sitemaps) 
 
 	for _, claimant := range claimants {
 		sitemap := &models.Sitemap{
-			ID:          fmt.Sprint(claimant.ID),
-			Slug:        claimant.Slug,
-			CreatedDate: claimant.CreatedDate,
+			ID:        fmt.Sprint(claimant.ID),
+			Slug:      claimant.Slug,
+			CreatedAt: claimant.CreatedAt,
 		}
 		nodes = append(nodes, sitemap)
 	}
@@ -225,9 +225,9 @@ func (r *sitemapsResolver) Ratings(ctx context.Context, obj *models.Sitemaps) ([
 
 	for _, rating := range ratings {
 		sitemap := &models.Sitemap{
-			ID:          fmt.Sprint(rating.ID),
-			Slug:        rating.Slug,
-			CreatedDate: rating.CreatedDate,
+			ID:        fmt.Sprint(rating.ID),
+			Slug:      rating.Slug,
+			CreatedAt: rating.CreatedAt,
 		}
 		nodes = append(nodes, sitemap)
 	}

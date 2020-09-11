@@ -102,6 +102,47 @@ func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.U
 	return users, nil
 }
 
+func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface{}, error) {
+	result := make([]models.Schemas, 0)
+
+	postClaims := []models.PostClaim{}
+
+	config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
+		PostID: obj.ID,
+	}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Claimant").Find(&postClaims)
+
+	space := &models.Space{}
+	space.ID = obj.SpaceID
+
+	config.DB.First(&space)
+
+	for _, each := range postClaims {
+		schema := models.Schemas{}
+		schema.Context = "https://schema.org"
+		schema.Type = "ClaimReview"
+		schema.DatePublished = obj.CreatedAt
+		schema.URL = space.SiteAddress + "/" + obj.Slug
+		schema.ClaimReviewed = each.Claim.Title
+		schema.Author.Type = "Organization"
+		schema.Author.Name = space.Name
+		schema.Author.URL = &space.SiteAddress
+		schema.ReviewRating.Type = "Rating"
+		schema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
+		schema.ReviewRating.AlternateName = each.Claim.Rating.Name
+		// schema.ReviewRating.BestRating = 5
+		// schema.ReviewRating.WorstRating = 1
+		schema.ItemReviewed.Type = "Claim"
+		schema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
+		schema.ItemReviewed.Appearance = each.Claim.ClaimSource
+		schema.ItemReviewed.Author.Type = "Organization"
+		schema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
+
+		result = append(result, schema)
+	}
+
+	return result, nil
+}
+
 func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

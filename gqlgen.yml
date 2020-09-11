@@ -74,8 +74,6 @@ models:
     model: github.com/factly/dega-api/graph/models.ItemReviewed
   ReviewRating:
     model: github.com/factly/dega-api/graph/models.ReviewRating
-  Schemas:
-    model: github.com/factly/dega-api/graph/models.Schemas
   User:
     model: github.com/factly/dega-api/graph/models.User
   UsersPaging:
@@ -94,6 +92,8 @@ models:
         medium:
           resolver: true
         users:
+          resolver: true
+        schema:
           resolver: true
   PostsPaging:
     model: github.com/factly/dega-api/graph/models.PostsPaging
