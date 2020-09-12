@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import logo from '../../assets/logo.svg';
 import { toggleSider } from '../../actions/settings';
-import routes from '../../config/routesConfig';
+import { sidebarMenu } from '../../config/routesConfig';
 
 const { Sider } = Layout;
 
@@ -34,19 +34,21 @@ function Sidebar() {
         </span>
       </div>
       <Menu theme={navTheme} mode="inline" className="slider-menu">
-        {routes
-          .filter((each) => each.enableNavigation)
-          .map((route, index) => {
-            const { Icon } = route;
-            return (
-              <Menu.Item key={index}>
-                <Link to={route.path}>
-                  <Icon></Icon>
-                  <span>{route.title}</span>
-                </Link>
-              </Menu.Item>
-            );
-          })}
+        {sidebarMenu.map((menu, index) => (
+          <SubMenu key={index} title={menu.title}>
+            {menu.children.map((route, index) => {
+              const { Icon } = route;
+              return (
+                <Menu.Item key={index}>
+                  <Link to={route.path}>
+                    <Icon></Icon>
+                    <span>{route.title}</span>
+                  </Link>
+                </Menu.Item>
+              );
+            })}
+          </SubMenu>
+        ))}
       </Menu>
     </Sider>
   );
