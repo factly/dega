@@ -65,8 +65,8 @@ import Policies from '../pages/policies';
 import CreatePolicy from '../pages/policies/CreatePolicy';
 import EditPolicy from '../pages/policies/EditPolicy';
 
-export default [
-  {
+const routes = {
+  dashboard: {
     path: '/dashboard',
     Component: Dashboard,
     enableNavigation: true,
@@ -74,7 +74,23 @@ export default [
     Icon: DashboardOutlined,
     title: 'Dashboard',
   },
-  {
+  home: {
+    path: '/',
+    Component: Dashboard, // component is empty for now
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: DashboardOutlined,
+    title: 'Home',
+  },
+  analytics: {
+    path: '/analytics',
+    Component: Dashboard, // component is empty for now
+    enableNavigation: true,
+    enableBreadcrumb: true,
+    Icon: DashboardOutlined,
+    title: 'Analytics',
+  },
+  spaces: {
     path: '/spaces',
     Component: Spaces,
     enableNavigation: true,
@@ -82,7 +98,7 @@ export default [
     Icon: BorderlessTableOutlined,
     title: 'Spaces',
   },
-  {
+  spaceCreate: {
     path: '/spaces/create',
     Component: CreateSpace,
     enableNavigation: false,
@@ -90,7 +106,7 @@ export default [
     Icon: BorderlessTableOutlined,
     title: 'Create Space',
   },
-  {
+  spaceEdit: {
     path: '/spaces/:id/edit',
     Component: EditSpace,
     enableNavigation: false,
@@ -98,7 +114,7 @@ export default [
     Icon: BorderlessTableOutlined,
     title: 'Edit Space',
   },
-  {
+  categories: {
     path: '/categories',
     Component: Categories,
     enableNavigation: true,
@@ -106,7 +122,7 @@ export default [
     Icon: UnorderedListOutlined,
     title: 'Categories',
   },
-  {
+  categoryCreate: {
     path: '/categories/create',
     Component: CreateCategory,
     enableNavigation: false,
@@ -114,7 +130,7 @@ export default [
     Icon: UnorderedListOutlined,
     title: 'Create Category',
   },
-  {
+  categoryEdit: {
     path: '/categories/:id/edit',
     Component: EditCategory,
     enableNavigation: false,
@@ -122,7 +138,7 @@ export default [
     Icon: UnorderedListOutlined,
     title: 'Edit Category',
   },
-  {
+  policies: {
     path: '/policies',
     Component: Policies,
     enableNavigation: true,
@@ -130,7 +146,7 @@ export default [
     Icon: IdcardOutlined,
     title: 'Policies',
   },
-  {
+  policyCreate: {
     path: '/policies/create',
     Component: CreatePolicy,
     enableNavigation: false,
@@ -138,7 +154,7 @@ export default [
     Icon: IdcardOutlined,
     title: 'Create Policies',
   },
-  {
+  policyEdit: {
     path: '/policies/:id/edit',
     Component: EditPolicy,
     enableNavigation: false,
@@ -146,7 +162,7 @@ export default [
     Icon: IdcardOutlined,
     title: 'Edit Policies',
   },
-  {
+  formats: {
     path: '/formats',
     Component: Formats,
     enableNavigation: true,
@@ -154,7 +170,7 @@ export default [
     Icon: FileExclamationOutlined,
     title: 'Formats',
   },
-  {
+  formatCreate: {
     path: '/formats/create',
     Component: CreateFormat,
     enableNavigation: false,
@@ -162,7 +178,7 @@ export default [
     Icon: FileExclamationOutlined,
     title: 'Create Format',
   },
-  {
+  formatEdit: {
     path: '/formats/:id/edit',
     Component: EditFormat,
     enableNavigation: false,
@@ -170,7 +186,7 @@ export default [
     Icon: FileExclamationOutlined,
     title: 'Edit Format',
   },
-  {
+  tags: {
     path: '/tags',
     Component: Tags,
     enableNavigation: true,
@@ -178,7 +194,7 @@ export default [
     Icon: TagsOutlined,
     title: 'Tags',
   },
-  {
+  tagCreate: {
     path: '/tags/create',
     Component: CreateTag,
     enableNavigation: false,
@@ -186,7 +202,7 @@ export default [
     Icon: TagsOutlined,
     title: 'Create Tag',
   },
-  {
+  tagEdit: {
     path: '/tags/:id/edit',
     Component: EditTag,
     enableNavigation: false,
@@ -194,7 +210,7 @@ export default [
     Icon: TagsOutlined,
     title: 'Edit Tag',
   },
-  {
+  media: {
     path: '/media',
     Component: Media,
     enableNavigation: true,
@@ -202,7 +218,7 @@ export default [
     Icon: PictureOutlined,
     title: 'Media',
   },
-  {
+  mediaCreate: {
     path: '/media/upload',
     Component: UploadMedium,
     enableNavigation: false,
@@ -210,7 +226,7 @@ export default [
     Icon: PictureOutlined,
     title: 'Medium Upload',
   },
-  {
+  mediaEdit: {
     path: '/media/:id/edit',
     Component: EditMedium,
     enableNavigation: false,
@@ -218,7 +234,7 @@ export default [
     Icon: PictureOutlined,
     title: 'Edit Media',
   },
-  {
+  posts: {
     path: '/posts',
     Component: Posts,
     enableNavigation: true,
@@ -226,7 +242,7 @@ export default [
     Icon: FileDoneOutlined,
     title: 'Posts',
   },
-  {
+  postCreate: {
     path: '/posts/create',
     Component: CreatePost,
     enableNavigation: false,
@@ -234,7 +250,7 @@ export default [
     Icon: FileDoneOutlined,
     title: 'Add Posts',
   },
-  {
+  postEdit: {
     path: '/posts/:id/edit',
     Component: EditPost,
     enableNavigation: false,
@@ -242,7 +258,7 @@ export default [
     Icon: FileDoneOutlined,
     title: 'Edit Post',
   },
-  {
+  ratings: {
     path: '/ratings',
     Component: Ratings,
     enableNavigation: true,
@@ -250,7 +266,7 @@ export default [
     Icon: StarOutlined,
     title: 'Ratings',
   },
-  {
+  ratingCreate: {
     path: '/ratings/create',
     Component: CreateRating,
     enableNavigation: false,
@@ -258,7 +274,7 @@ export default [
     Icon: StarOutlined,
     title: 'Create Rating',
   },
-  {
+  reatingEdit: {
     path: '/ratings/:id/edit',
     Component: EditRating,
     enableNavigation: false,
@@ -266,7 +282,7 @@ export default [
     Icon: StarOutlined,
     title: 'Edit Rating',
   },
-  {
+  claimants: {
     path: '/claimants',
     Component: Claimants,
     enableNavigation: true,
@@ -274,7 +290,7 @@ export default [
     Icon: EyeOutlined,
     title: 'Claimants',
   },
-  {
+  claimantCreate: {
     path: '/claimants/create',
     Component: CreateClaimant,
     enableNavigation: false,
@@ -282,7 +298,7 @@ export default [
     Icon: EyeOutlined,
     title: 'Create Claimant',
   },
-  {
+  claimantEdit: {
     path: '/claimants/:id/edit',
     Component: EditClaimant,
     enableNavigation: false,
@@ -290,7 +306,7 @@ export default [
     Icon: EyeOutlined,
     title: 'Edit Claimant',
   },
-  {
+  claims: {
     path: '/claims',
     Component: Claims,
     enableNavigation: true,
@@ -298,7 +314,7 @@ export default [
     Icon: CheckCircleOutlined,
     title: 'Claims',
   },
-  {
+  claimCreate: {
     path: '/claims/create',
     Component: CreateClaim,
     enableNavigation: false,
@@ -306,7 +322,7 @@ export default [
     Icon: CheckCircleOutlined,
     title: 'Create Claim',
   },
-  {
+  claimEdit: {
     path: '/claims/:id/edit',
     Component: EditClaim,
     enableNavigation: false,
@@ -314,4 +330,25 @@ export default [
     Icon: CheckCircleOutlined,
     title: 'Edit Claim',
   },
+};
+
+export const sidebarMenu = [
+  {
+    title: 'Dashboard',
+    children: [routes.home, routes.analytics],
+  },
+  {
+    title: 'Core',
+    children: [routes.posts, routes.categories, routes.tags, routes.media, routes.formats],
+  },
+  {
+    title: 'Fact Checking',
+    children: [routes.claims, routes.claimants, routes.ratings],
+  },
+  {
+    title: 'Administration',
+    children: [routes.spaces, routes.policies],
+  },
 ];
+
+export default routes;
