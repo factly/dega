@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Select } from 'antd';
 import deepEqual from 'deep-equal';
 
-function Selector({ mode, value, onChange, action, display = 'name' }) {
+function Selector({ mode, value, onChange, action, display = 'name', placeholder }) {
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
 
@@ -18,6 +18,10 @@ function Selector({ mode, value, onChange, action, display = 'name' }) {
 
   if (!mode && value) {
     value = [value];
+  }
+
+  if (!placeholder) {
+    placeholder = `Select ${entity}`;
   }
 
   const onSearch = (value) => {
@@ -67,7 +71,7 @@ function Selector({ mode, value, onChange, action, display = 'name' }) {
       loading={loading}
       mode={mode}
       defaultValue={value}
-      placeholder={`Select ${entity}`}
+      placeholder={placeholder}
       onChange={(values) => onChange(values)}
       onSearch={(value) => onSearch(value)}
       filterOption={(input, option) =>
