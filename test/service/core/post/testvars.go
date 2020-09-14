@@ -23,7 +23,7 @@ var Data = map[string]interface{}{
 	"title":              "Post",
 	"subtitle":           "post subtitle",
 	"slug":               "post",
-	"status":             "published",
+	"status":             "draft",
 	"excerpt":            "post excerpt",
 	"description":        test.NilJsonb(),
 	"is_featured":        false,
@@ -31,7 +31,6 @@ var Data = map[string]interface{}{
 	"is_highlighted":     true,
 	"featured_medium_id": uint(1),
 	"format_id":          uint(1),
-	"published_date":     time.Time{},
 	"category_ids":       []uint{1},
 	"tag_ids":            []uint{1},
 	"claim_ids":          []uint{1},
@@ -41,7 +40,7 @@ var postData = map[string]interface{}{
 	"title":              "Post",
 	"subtitle":           "post subtitle",
 	"slug":               "post",
-	"status":             "published",
+	"status":             "draft",
 	"excerpt":            "post excerpt",
 	"description":        test.NilJsonb(),
 	"is_featured":        false,
@@ -49,7 +48,6 @@ var postData = map[string]interface{}{
 	"is_highlighted":     true,
 	"featured_medium_id": uint(1),
 	"format_id":          uint(1),
-	"published_date":     time.Time{},
 }
 
 var postList = []map[string]interface{}{
@@ -57,7 +55,7 @@ var postList = []map[string]interface{}{
 		"title":              "Post 1",
 		"subtitle":           "post subtitle 1",
 		"slug":               "post-1",
-		"status":             "published",
+		"status":             "draft",
 		"excerpt":            "post excerpt",
 		"description":        test.NilJsonb(),
 		"is_featured":        false,
@@ -65,13 +63,12 @@ var postList = []map[string]interface{}{
 		"is_highlighted":     true,
 		"featured_medium_id": uint(1),
 		"format_id":          uint(1),
-		"published_date":     time.Time{},
 	},
 	{
 		"title":              "Post 2",
 		"subtitle":           "post subtitle",
 		"slug":               "post-2",
-		"status":             "published",
+		"status":             "draft",
 		"excerpt":            "post excerpt",
 		"description":        test.NilJsonb(),
 		"is_featured":        false,
@@ -79,7 +76,6 @@ var postList = []map[string]interface{}{
 		"is_highlighted":     true,
 		"featured_medium_id": uint(1),
 		"format_id":          uint(1),
-		"published_date":     time.Time{},
 	},
 }
 
@@ -109,7 +105,7 @@ func postInsertMock(mock sqlmock.Sqlmock) {
 
 	mock.ExpectQuery(`INSERT INTO "posts"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["excerpt"],
-			Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1).
+			Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], test.AnyTime{}, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -268,7 +264,7 @@ func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckR
 func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
 		WithArgs(post["description"], post["excerpt"], post["featured_medium_id"], post["format_id"],
-			post["is_highlighted"], post["is_sticky"], post["slug"], post["status"], post["subtitle"], post["title"],
+			post["is_highlighted"], post["is_sticky"], post["slug"], post["subtitle"], post["title"],
 			test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectExec(`INSERT INTO "post_tags"`).

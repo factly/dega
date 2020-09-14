@@ -102,6 +102,13 @@ func publish(w http.ResponseWriter, r *http.Request) {
 		PublishedDate: publish.PublishedDate,
 	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
 	postClaims := []factCheckModel.PostClaim{}
 	config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 		PostID: uint(id),

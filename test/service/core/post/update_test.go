@@ -18,7 +18,7 @@ import (
 var updatePost = map[string]interface{}{
 	"title":              "Post",
 	"subtitle":           "post subtitle",
-	"status":             "published",
+	"status":             "draft",
 	"excerpt":            "post excerpt",
 	"description":        test.NilJsonb(),
 	"is_featured":        false,
@@ -26,7 +26,6 @@ var updatePost = map[string]interface{}{
 	"is_highlighted":     true,
 	"featured_medium_id": uint(1),
 	"format_id":          uint(1),
-	"published_date":     time.Time{},
 	"category_ids":       []uint{1},
 	"tag_ids":            []uint{1},
 	"claim_ids":          []uint{1},
@@ -120,7 +119,7 @@ func TestPostUpdate(t *testing.T) {
 		preUpdateMock(mock, updatePost, false)
 		mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
 			WithArgs(updatePost["description"], updatePost["excerpt"], updatePost["featured_medium_id"], updatePost["format_id"],
-				updatePost["is_highlighted"], updatePost["is_sticky"], updatePost["slug"], updatePost["status"], updatePost["subtitle"], updatePost["title"],
+				updatePost["is_highlighted"], updatePost["is_sticky"], updatePost["slug"], updatePost["subtitle"], updatePost["title"],
 				test.AnyTime{}, 1).
 			WillReturnError(errors.New("cannot update post"))
 
