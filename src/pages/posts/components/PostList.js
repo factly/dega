@@ -67,8 +67,8 @@ function PostList() {
         onFinish={(values) => onSave(values)}
         style={{ maxWidth: '100%' }}
       >
-        <Form.Item name="q" label="Query" style={{ width: '25%' }}>
-          <Input placeholder="search post" />
+        <Form.Item name="q" label="Search" style={{ width: '25%' }}>
+          <Input placeholder="search posts" />
         </Form.Item>
         <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
           <Select>
@@ -77,13 +77,13 @@ function PostList() {
           </Select>
         </Form.Item>
         <Form.Item name="tags" label="tags" style={{ width: '15%' }}>
-          <Selector mode="multiple" action="Tags" />
+          <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
         </Form.Item>
         <Form.Item name="categories" label="categories" style={{ width: '15%' }}>
-          <Selector mode="multiple" action="Categories" />
+          <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
         </Form.Item>
         <Form.Item name="formats" label="formats" style={{ width: '15%' }}>
-          <Selector mode="multiple" action="Formats" />
+          <Selector mode="multiple" action="Formats" placeholder="Filter Formats" />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">

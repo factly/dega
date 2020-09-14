@@ -98,8 +98,8 @@ function TagList() {
         }
         style={{ maxWidth: '100%' }}
       >
-        <Form.Item name="q" label="Query" style={{ width: '25%' }}>
-          <Input placeholder="search post" />
+        <Form.Item name="q" label="Search" style={{ width: '25%' }}>
+          <Input placeholder="search tags" />
         </Form.Item>
         <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
           <Select>

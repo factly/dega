@@ -134,7 +134,7 @@ exports[`Categories List component snapshot testing should match component when 
                       }
                     >
                       <FormItem
-                        label="Query"
+                        label="Search"
                         name="q"
                         style={
                           Object {
@@ -143,10 +143,10 @@ exports[`Categories List component snapshot testing should match component when 
                         }
                       >
                         <WrapperField
-                          label="Query"
+                          label="Search"
                           messageVariables={
                             Object {
-                              "label": "Query",
+                              "label": "Search",
                             }
                           }
                           name="q"
@@ -161,10 +161,10 @@ exports[`Categories List component snapshot testing should match component when 
                         >
                           <Field
                             key="_q"
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name={
@@ -201,7 +201,7 @@ exports[`Categories List component snapshot testing should match component when 
                               >
                                 <FormItemLabel
                                   htmlFor="filters_q"
-                                  label="Query"
+                                  label="Search"
                                   name="q"
                                   prefixCls="ant-form"
                                   required={false}
@@ -221,16 +221,16 @@ exports[`Categories List component snapshot testing should match component when 
                                       <label
                                         className=""
                                         htmlFor="filters_q"
-                                        title="Query"
+                                        title="Search"
                                       >
-                                        Query
+                                        Search
                                       </label>
                                     </div>
                                   </Col>
                                 </FormItemLabel>
                                 <FormItemInput
                                   errors={Array []}
-                                  label="Query"
+                                  label="Search"
                                   name={
                                     Array [
                                       "q",
@@ -266,7 +266,7 @@ exports[`Categories List component snapshot testing should match component when 
                                             <Input
                                               id="filters_q"
                                               onChange={[Function]}
-                                              placeholder="search post"
+                                              placeholder="search categories"
                                               type="text"
                                             >
                                               <ClearableLabeledInput
@@ -279,7 +279,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
                                                     onKeyDown={[Function]}
-                                                    placeholder="search post"
+                                                    placeholder="search categories"
                                                     type="text"
                                                   />
                                                 }
@@ -288,7 +288,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                 id="filters_q"
                                                 inputType="input"
                                                 onChange={[Function]}
-                                                placeholder="search post"
+                                                placeholder="search categories"
                                                 prefixCls="ant-input"
                                                 triggerFocus={[Function]}
                                                 type="text"
@@ -301,7 +301,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
-                                                  placeholder="search post"
+                                                  placeholder="search categories"
                                                   type="text"
                                                   value=""
                                                 />
@@ -5033,7 +5033,7 @@ exports[`Categories List component snapshot testing should match component with 
                       }
                     >
                       <FormItem
-                        label="Query"
+                        label="Search"
                         name="q"
                         style={
                           Object {
@@ -5042,10 +5042,10 @@ exports[`Categories List component snapshot testing should match component with 
                         }
                       >
                         <WrapperField
-                          label="Query"
+                          label="Search"
                           messageVariables={
                             Object {
-                              "label": "Query",
+                              "label": "Search",
                             }
                           }
                           name="q"
@@ -5060,10 +5060,10 @@ exports[`Categories List component snapshot testing should match component with 
                         >
                           <Field
                             key="_q"
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name={
@@ -5100,7 +5100,7 @@ exports[`Categories List component snapshot testing should match component with 
                               >
                                 <FormItemLabel
                                   htmlFor="filters_q"
-                                  label="Query"
+                                  label="Search"
                                   name="q"
                                   prefixCls="ant-form"
                                   required={false}
@@ -5120,16 +5120,16 @@ exports[`Categories List component snapshot testing should match component with 
                                       <label
                                         className=""
                                         htmlFor="filters_q"
-                                        title="Query"
+                                        title="Search"
                                       >
-                                        Query
+                                        Search
                                       </label>
                                     </div>
                                   </Col>
                                 </FormItemLabel>
                                 <FormItemInput
                                   errors={Array []}
-                                  label="Query"
+                                  label="Search"
                                   name={
                                     Array [
                                       "q",
@@ -5165,7 +5165,7 @@ exports[`Categories List component snapshot testing should match component with 
                                             <Input
                                               id="filters_q"
                                               onChange={[Function]}
-                                              placeholder="search post"
+                                              placeholder="search categories"
                                               type="text"
                                             >
                                               <ClearableLabeledInput
@@ -5178,7 +5178,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
                                                     onKeyDown={[Function]}
-                                                    placeholder="search post"
+                                                    placeholder="search categories"
                                                     type="text"
                                                   />
                                                 }
@@ -5187,7 +5187,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                 id="filters_q"
                                                 inputType="input"
                                                 onChange={[Function]}
-                                                placeholder="search post"
+                                                placeholder="search categories"
                                                 prefixCls="ant-input"
                                                 triggerFocus={[Function]}
                                                 type="text"
@@ -5200,7 +5200,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
-                                                  placeholder="search post"
+                                                  placeholder="search categories"
                                                   type="text"
                                                   value=""
                                                 />
@@ -9908,7 +9908,7 @@ exports[`Categories List component snapshot testing should render the component 
                       }
                     >
                       <FormItem
-                        label="Query"
+                        label="Search"
                         name="q"
                         style={
                           Object {
@@ -9917,10 +9917,10 @@ exports[`Categories List component snapshot testing should render the component 
                         }
                       >
                         <WrapperField
-                          label="Query"
+                          label="Search"
                           messageVariables={
                             Object {
-                              "label": "Query",
+                              "label": "Search",
                             }
                           }
                           name="q"
@@ -9935,10 +9935,10 @@ exports[`Categories List component snapshot testing should render the component 
                         >
                           <Field
                             key="_q"
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name={
@@ -9975,7 +9975,7 @@ exports[`Categories List component snapshot testing should render the component 
                               >
                                 <FormItemLabel
                                   htmlFor="filters_q"
-                                  label="Query"
+                                  label="Search"
                                   name="q"
                                   prefixCls="ant-form"
                                   required={false}
@@ -9995,16 +9995,16 @@ exports[`Categories List component snapshot testing should render the component 
                                       <label
                                         className=""
                                         htmlFor="filters_q"
-                                        title="Query"
+                                        title="Search"
                                       >
-                                        Query
+                                        Search
                                       </label>
                                     </div>
                                   </Col>
                                 </FormItemLabel>
                                 <FormItemInput
                                   errors={Array []}
-                                  label="Query"
+                                  label="Search"
                                   name={
                                     Array [
                                       "q",
@@ -10040,7 +10040,7 @@ exports[`Categories List component snapshot testing should render the component 
                                             <Input
                                               id="filters_q"
                                               onChange={[Function]}
-                                              placeholder="search post"
+                                              placeholder="search categories"
                                               type="text"
                                             >
                                               <ClearableLabeledInput
@@ -10053,7 +10053,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
                                                     onKeyDown={[Function]}
-                                                    placeholder="search post"
+                                                    placeholder="search categories"
                                                     type="text"
                                                   />
                                                 }
@@ -10062,7 +10062,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                 id="filters_q"
                                                 inputType="input"
                                                 onChange={[Function]}
-                                                placeholder="search post"
+                                                placeholder="search categories"
                                                 prefixCls="ant-input"
                                                 triggerFocus={[Function]}
                                                 type="text"
@@ -10075,7 +10075,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
-                                                  placeholder="search post"
+                                                  placeholder="search categories"
                                                   type="text"
                                                   value=""
                                                 />
