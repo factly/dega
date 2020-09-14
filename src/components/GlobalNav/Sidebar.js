@@ -34,13 +34,13 @@ function Sidebar() {
           {title}
         </span>
       </div>
-      <Menu theme={navTheme} mode="inline" className="slider-menu">
+      <Menu theme={navTheme} mode="inline" className="slider-menu" defaultSelectedKeys={['0.0']}>
         {sidebarMenu.map((menu, index) => (
           <SubMenu key={index} title={menu.title}>
-            {menu.children.map((route, index) => {
+            {menu.children.map((route, childIndex) => {
               const { Icon } = route;
               return (
-                <Menu.Item key={index}>
+                <Menu.Item key={`${index}.${childIndex}`}>
                   <Link to={route.path}>
                     <Icon></Icon>
                     <span>{route.title}</span>
