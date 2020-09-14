@@ -3,6 +3,7 @@ package post
 import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -36,14 +37,16 @@ type postData struct {
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/", list)
-	r.Post("/", create)
+	entity := "posts"
+
+	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
+	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
 
 	r.Route("/{post_id}", func(r chi.Router) {
-		r.Get("/", details)
-		r.Put("/", update)
-		r.Delete("/", delete)
-		r.Put("/publish", publish)
+		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
+		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
+		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
+		r.With(util.CheckKetoPolicy(entity, "publish")).Put("/publish", publish)
 	})
 
 	return r

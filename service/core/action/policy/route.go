@@ -2,6 +2,7 @@ package policy
 
 import (
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
 
@@ -16,12 +17,14 @@ type policyReq struct {
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Post("/", create)
-	r.Get("/", list)
+	entity := "policies"
+
+	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
+	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
 	r.Route("/{policy_id}", func(r chi.Router) {
-		r.Get("/", details)
-		r.Put("/", update)
-		r.Delete("/", delete)
+		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
+		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
+		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
 	})
 
 	return r

@@ -1,14 +1,12 @@
-package policy
+package util
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 )
@@ -19,72 +17,39 @@ type ketoAllowed struct {
 	Resource string `json:"resource"`
 }
 
-// Authorizer check the user permissions
-func Authorizer(h http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
-		url := strings.Trim(r.URL.Path, "/")
-		method := r.Method
-		path := strings.Split(url, "/")
-
-		if path[1] != "spaces" {
+// CheckKetoPolicy returns middleware that checks the permissions of user from keto server
+func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
+	return func(h http.Handler) http.Handler {
+		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			ctx := r.Context()
 
-			sID, err := util.GetSpace(ctx)
-
+			sID, err := GetSpace(ctx)
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			uID, err := util.GetUser(ctx)
-
+			uID, err := GetUser(ctx)
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
-
-			oID, err := util.GetOrganisation(ctx)
+			oID, err := GetOrganisation(ctx)
 
 			if err != nil {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			allowedServices := []string{"core", "fact-check"}
-			allowedEntities := []string{"authors", "categories", "formats", "media", "policies", "posts", "tags", "claims", "claimants", "fact-checks", "ratings", "search"}
-
-			actionMapper := map[string]string{
-				"GET":    "get",
-				"POST":   "create",
-				"PUT":    "update",
-				"DELETE": "delete",
-			}
-
-			if !(len(path) >= 2) {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			if !contains(allowedServices, path[0]) {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			if !contains(allowedEntities, path[1]) {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
 			commonString := fmt.Sprint(":org:", oID, ":app:dega:space:", sID, ":")
 
-			resource := fmt.Sprint("resources", commonString, path[1])
-			action := fmt.Sprint("actions", commonString, path[1], ":", actionMapper[method])
+			kresource := fmt.Sprint("resources", commonString, entity)
+			kaction := fmt.Sprint("actions", commonString, entity, ":", action)
 
 			result := ketoAllowed{}
 
-			result.Action = action
-			result.Resource = resource
+			result.Action = kaction
+			result.Resource = kresource
 			result.Subject = fmt.Sprint(uID)
 
 			buf := new(bytes.Buffer)
@@ -115,7 +80,8 @@ func Authorizer(h http.Handler) http.Handler {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
-		}
-		h.ServeHTTP(w, r)
-	})
+
+			h.ServeHTTP(w, r)
+		})
+	}
 }
