@@ -1,8 +1,6 @@
 package post
 
 import (
-	"time"
-
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/go-chi/chi"
@@ -14,7 +12,6 @@ type post struct {
 	Title            string         `json:"title" validate:"required,min=3,max=150"`
 	Subtitle         string         `json:"subtitle"`
 	Slug             string         `json:"slug"`
-	Status           string         `json:"status" validate:"required"`
 	Excerpt          string         `json:"excerpt" validate:"required,min=3,max=300"`
 	Description      postgres.Jsonb `json:"description"`
 	IsFeatured       bool           `json:"is_featured"`
@@ -22,7 +19,6 @@ type post struct {
 	IsHighlighted    bool           `json:"is_highlighted"`
 	FeaturedMediumID uint           `json:"featured_medium_id"`
 	FormatID         uint           `json:"format_id" validate:"required"`
-	PublishedDate    time.Time      `json:"published_date"`
 	SpaceID          uint           `json:"space_id"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`
@@ -47,6 +43,7 @@ func Router() chi.Router {
 		r.Get("/", details)
 		r.Put("/", update)
 		r.Delete("/", delete)
+		r.Put("/publish", publish)
 	})
 
 	return r

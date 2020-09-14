@@ -61,7 +61,7 @@ func Authorizer(h http.Handler) http.Handler {
 				"DELETE": "delete",
 			}
 
-			if !(len(path) == 2 || len(path) == 3) {
+			if !(len(path) >= 2) {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}

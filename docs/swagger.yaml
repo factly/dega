@@ -490,14 +490,10 @@ definitions:
         type: boolean
       is_sticky:
         type: boolean
-      published_date:
-        type: string
       slug:
         type: string
       space_id:
         type: integer
-      status:
-        type: string
       subtitle:
         type: string
       tag_ids:
@@ -509,7 +505,6 @@ definitions:
     required:
     - excerpt
     - format_id
-    - status
     - title
     type: object
   post.postData:
@@ -570,6 +565,13 @@ definitions:
         type: string
       updated_at:
         type: string
+    type: object
+  post.publishData:
+    properties:
+      published_date:
+        type: string
+    required:
+    - published_date
     type: object
   rating.paging:
     properties:
@@ -1399,6 +1401,41 @@ paths:
           schema:
             $ref: '#/definitions/post.postData'
       summary: Update a post by id
+      tags:
+      - Post
+  /core/posts/{post_id}/publish:
+    put:
+      description: Publish post by ID
+      operationId: publish-post-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      - description: PublishPost
+        in: body
+        name: PublishPost
+        schema:
+          $ref: '#/definitions/post.publishData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/post.postData'
+      summary: Publish a post by id
       tags:
       - Post
   /core/search:
