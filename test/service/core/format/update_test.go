@@ -85,7 +85,7 @@ func TestFormatUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
 			"name": "Article",
-			"slug": "factcheck",
+			"slug": "fact-check",
 		}
 
 		SelectWithSpace(mock)
@@ -107,13 +107,13 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Factcheck",
-			"slug": "factcheck-1",
+			"name": "Fact Check",
+			"slug": "fact-check",
 		}
 		SelectWithSpace(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
-			WithArgs("factcheck%", 1).
+			WithArgs("fact-check%", 1).
 			WillReturnRows(sqlmock.NewRows(columns).
 				AddRow(1, time.Now(), time.Now(), nil, updatedFormat["name"], "factcheck"))
 
@@ -129,7 +129,7 @@ func TestFormatUpdate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedFormat)
-		Data["slug"] = "factcheck"
+		Data["slug"] = "fact-check"
 
 		test.ExpectationsMet(t, mock)
 	})
@@ -169,6 +169,10 @@ func TestFormatUpdate(t *testing.T) {
 		}
 
 		SelectWithSpace(mock)
+
+		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
+			WithArgs(fmt.Sprint(updatedFormat["slug"], "%"), 1).
+			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
 		formatUpdateMock(mock, updatedFormat)
 

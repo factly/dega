@@ -15,8 +15,8 @@ var headers = map[string]string{
 }
 
 var Data = map[string]interface{}{
-	"name": "Factcheck",
-	"slug": "factcheck",
+	"name": "Fact Check",
+	"slug": "fact-check",
 }
 
 var invalidData = map[string]interface{}{

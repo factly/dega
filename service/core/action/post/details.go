@@ -63,7 +63,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if result.Format.Slug == "factcheck" {
+	if result.Format.Slug == "fact-check" {
 		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)

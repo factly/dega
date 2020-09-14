@@ -188,7 +188,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	var toCreateIDs []uint
 	var toDeleteIDs []uint
 
-	if result.Post.Format.Slug == "factcheck" {
+	if result.Post.Format.Slug == "fact-check" {
 		// fetch existing post claims
 		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
@@ -329,7 +329,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"author_ids":     post.AuthorIDs,
 	}
 
-	if result.Format.Slug == "factcheck" {
+	if result.Format.Slug == "fact-check" {
 		meiliObj["claim_ids"] = post.ClaimIDs
 	}
 

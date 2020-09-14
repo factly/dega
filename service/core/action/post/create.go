@@ -100,7 +100,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post)
 
-	if result.Format.Slug == "factcheck" {
+	if result.Format.Slug == "fact-check" {
 		// create post claim
 		for _, id := range post.ClaimIDs {
 			postClaim := &factCheckModel.PostClaim{}
@@ -172,7 +172,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"author_ids":     post.AuthorIDs,
 	}
 
-	if result.Format.Slug == "factcheck" {
+	if result.Format.Slug == "fact-check" {
 		meiliObj["claim_ids"] = post.ClaimIDs
 	}
 
