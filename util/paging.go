@@ -2,8 +2,8 @@ package util
 
 // Parse pagination
 func Parse(limit *int, page *int) (int, int) {
-	pageLimit := 0
-	pageNo := 10
+	pageLimit := 10
+	pageNo := 1
 
 	if limit != nil {
 		pageLimit = *limit
@@ -12,5 +12,5 @@ func Parse(limit *int, page *int) (int, int) {
 		pageNo = *page
 	}
 
-	return pageLimit, pageNo
+	return pageLimit * (pageNo - 1), pageNo
 }
