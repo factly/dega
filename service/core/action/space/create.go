@@ -3,13 +3,10 @@ package space
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -31,16 +28,10 @@ import (
 // @Success 201 {object} model.Space
 // @Router /core/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
 
 	space := &space{}
 
-	err = json.NewDecoder(r.Body).Decode(&space)
+	err := json.NewDecoder(r.Body).Decode(&space)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -57,41 +48,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if space.OrganisationID == 0 {
-		return
-	}
-
-	req, err := http.NewRequest("GET", config.KavachURL+"/organisations/"+strconv.Itoa(space.OrganisationID), nil)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-	req.Header.Set("X-User", strconv.Itoa(uID))
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-		return
-	}
-
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	org := orgWithSpace{}
-
-	err = json.Unmarshal(body, &org)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-		return
-	}
-
-	if org.Permission.Role != "owner" {
 		return
 	}
 

@@ -1,6 +1,7 @@
 package space
 
 import (
+	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -27,11 +28,13 @@ type space struct {
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Post("/", create)
+	entity := "spaces"
+
+	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
 	r.Get("/", my)
 	r.Route("/{space_id}", func(r chi.Router) {
-		r.Put("/", update)
-		r.Delete("/", delete)
+		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
+		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
 	})
 
 	return r
