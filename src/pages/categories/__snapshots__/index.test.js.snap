@@ -67,9 +67,9 @@ exports[`Categories List component should render the component 1`] = `
               <label
                 className=""
                 htmlFor="filters_q"
-                title="Query"
+                title="Search"
               >
-                Query
+                Search
               </label>
             </div>
             <div
@@ -89,7 +89,7 @@ exports[`Categories List component should render the component 1`] = `
                     onChange={[Function]}
                     onFocus={[Function]}
                     onKeyDown={[Function]}
-                    placeholder="search post"
+                    placeholder="search categories"
                     type="text"
                     value=""
                   />
@@ -488,9 +488,9 @@ exports[`Categories List component should render the component with data 1`] = `
               <label
                 className=""
                 htmlFor="filters_q"
-                title="Query"
+                title="Search"
               >
-                Query
+                Search
               </label>
             </div>
             <div
@@ -510,7 +510,7 @@ exports[`Categories List component should render the component with data 1`] = `
                     onChange={[Function]}
                     onFocus={[Function]}
                     onKeyDown={[Function]}
-                    placeholder="search post"
+                    placeholder="search categories"
                     type="text"
                     value=""
                   />

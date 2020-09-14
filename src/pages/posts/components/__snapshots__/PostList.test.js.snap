@@ -134,7 +134,7 @@ exports[`Posts List component snapshot component should match component when loa
                       }
                     >
                       <FormItem
-                        label="Query"
+                        label="Search"
                         name="q"
                         style={
                           Object {
@@ -143,10 +143,10 @@ exports[`Posts List component snapshot component should match component when loa
                         }
                       >
                         <WrapperField
-                          label="Query"
+                          label="Search"
                           messageVariables={
                             Object {
-                              "label": "Query",
+                              "label": "Search",
                             }
                           }
                           name="q"
@@ -161,10 +161,10 @@ exports[`Posts List component snapshot component should match component when loa
                         >
                           <Field
                             key="_q"
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name={
@@ -201,7 +201,7 @@ exports[`Posts List component snapshot component should match component when loa
                               >
                                 <FormItemLabel
                                   htmlFor="filters_q"
-                                  label="Query"
+                                  label="Search"
                                   name="q"
                                   prefixCls="ant-form"
                                   required={false}
@@ -221,16 +221,16 @@ exports[`Posts List component snapshot component should match component when loa
                                       <label
                                         className=""
                                         htmlFor="filters_q"
-                                        title="Query"
+                                        title="Search"
                                       >
-                                        Query
+                                        Search
                                       </label>
                                     </div>
                                   </Col>
                                 </FormItemLabel>
                                 <FormItemInput
                                   errors={Array []}
-                                  label="Query"
+                                  label="Search"
                                   name={
                                     Array [
                                       "q",
@@ -266,7 +266,7 @@ exports[`Posts List component snapshot component should match component when loa
                                             <Input
                                               id="filters_q"
                                               onChange={[Function]}
-                                              placeholder="search post"
+                                              placeholder="search posts"
                                               type="text"
                                             >
                                               <ClearableLabeledInput
@@ -279,7 +279,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
                                                     onKeyDown={[Function]}
-                                                    placeholder="search post"
+                                                    placeholder="search posts"
                                                     type="text"
                                                   />
                                                 }
@@ -288,7 +288,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                 id="filters_q"
                                                 inputType="input"
                                                 onChange={[Function]}
-                                                placeholder="search post"
+                                                placeholder="search posts"
                                                 prefixCls="ant-input"
                                                 triggerFocus={[Function]}
                                                 type="text"
@@ -301,7 +301,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
-                                                  placeholder="search post"
+                                                  placeholder="search posts"
                                                   type="text"
                                                   value=""
                                                 />
@@ -1224,6 +1224,7 @@ exports[`Posts List component snapshot component should match component when loa
                                               id="filters_tags"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Tags"
                                             >
                                               <Select
                                                 bordered={true}
@@ -1236,7 +1237,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select tags"
+                                                placeholder="Filter Tags"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -1260,7 +1261,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select tags"
+                                                  placeholder="Filter Tags"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -1286,7 +1287,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select tags"
+                                                    placeholder="Filter Tags"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -1536,7 +1537,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select tags
+                                                                    Filter Tags
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -1564,7 +1565,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select tags"
+                                                            placeholder="Filter Tags"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -1619,7 +1620,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select tags
+                                                                        Filter Tags
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -1671,7 +1672,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select tags"
+                                                                placeholder="Filter Tags"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -1744,7 +1745,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select tags
+                                                                  Filter Tags
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
@@ -1922,6 +1923,7 @@ exports[`Posts List component snapshot component should match component when loa
                                               id="filters_categories"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Categories"
                                             >
                                               <Select
                                                 bordered={true}
@@ -1934,7 +1936,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select categories"
+                                                placeholder="Filter Categories"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -1958,7 +1960,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select categories"
+                                                  placeholder="Filter Categories"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -1984,7 +1986,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select categories"
+                                                    placeholder="Filter Categories"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -2234,7 +2236,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select categories
+                                                                    Filter Categories
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -2262,7 +2264,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select categories"
+                                                            placeholder="Filter Categories"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -2317,7 +2319,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select categories
+                                                                        Filter Categories
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -2369,7 +2371,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select categories"
+                                                                placeholder="Filter Categories"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -2442,7 +2444,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select categories
+                                                                  Filter Categories
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
@@ -2620,6 +2622,7 @@ exports[`Posts List component snapshot component should match component when loa
                                               id="filters_formats"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Formats"
                                             >
                                               <Select
                                                 bordered={true}
@@ -2632,7 +2635,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select formats"
+                                                placeholder="Filter Formats"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -2656,7 +2659,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select formats"
+                                                  placeholder="Filter Formats"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -2682,7 +2685,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select formats"
+                                                    placeholder="Filter Formats"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -2932,7 +2935,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select formats
+                                                                    Filter Formats
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -2960,7 +2963,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select formats"
+                                                            placeholder="Filter Formats"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -3015,7 +3018,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select formats
+                                                                        Filter Formats
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -3067,7 +3070,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select formats"
+                                                                placeholder="Filter Formats"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -3140,7 +3143,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select formats
+                                                                  Filter Formats
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
@@ -4884,7 +4887,7 @@ exports[`Posts List component snapshot component should match component with pos
                       }
                     >
                       <FormItem
-                        label="Query"
+                        label="Search"
                         name="q"
                         style={
                           Object {
@@ -4893,10 +4896,10 @@ exports[`Posts List component snapshot component should match component with pos
                         }
                       >
                         <WrapperField
-                          label="Query"
+                          label="Search"
                           messageVariables={
                             Object {
-                              "label": "Query",
+                              "label": "Search",
                             }
                           }
                           name="q"
@@ -4911,10 +4914,10 @@ exports[`Posts List component snapshot component should match component with pos
                         >
                           <Field
                             key="_q"
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name={
@@ -4951,7 +4954,7 @@ exports[`Posts List component snapshot component should match component with pos
                               >
                                 <FormItemLabel
                                   htmlFor="filters_q"
-                                  label="Query"
+                                  label="Search"
                                   name="q"
                                   prefixCls="ant-form"
                                   required={false}
@@ -4971,16 +4974,16 @@ exports[`Posts List component snapshot component should match component with pos
                                       <label
                                         className=""
                                         htmlFor="filters_q"
-                                        title="Query"
+                                        title="Search"
                                       >
-                                        Query
+                                        Search
                                       </label>
                                     </div>
                                   </Col>
                                 </FormItemLabel>
                                 <FormItemInput
                                   errors={Array []}
-                                  label="Query"
+                                  label="Search"
                                   name={
                                     Array [
                                       "q",
@@ -5016,7 +5019,7 @@ exports[`Posts List component snapshot component should match component with pos
                                             <Input
                                               id="filters_q"
                                               onChange={[Function]}
-                                              placeholder="search post"
+                                              placeholder="search posts"
                                               type="text"
                                             >
                                               <ClearableLabeledInput
@@ -5029,7 +5032,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
                                                     onKeyDown={[Function]}
-                                                    placeholder="search post"
+                                                    placeholder="search posts"
                                                     type="text"
                                                   />
                                                 }
@@ -5038,7 +5041,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                 id="filters_q"
                                                 inputType="input"
                                                 onChange={[Function]}
-                                                placeholder="search post"
+                                                placeholder="search posts"
                                                 prefixCls="ant-input"
                                                 triggerFocus={[Function]}
                                                 type="text"
@@ -5051,7 +5054,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
-                                                  placeholder="search post"
+                                                  placeholder="search posts"
                                                   type="text"
                                                   value=""
                                                 />
@@ -5974,6 +5977,7 @@ exports[`Posts List component snapshot component should match component with pos
                                               id="filters_tags"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Tags"
                                             >
                                               <Select
                                                 bordered={true}
@@ -5986,7 +5990,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select tags"
+                                                placeholder="Filter Tags"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -6010,7 +6014,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select tags"
+                                                  placeholder="Filter Tags"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -6036,7 +6040,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select tags"
+                                                    placeholder="Filter Tags"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -6286,7 +6290,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select tags
+                                                                    Filter Tags
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -6314,7 +6318,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select tags"
+                                                            placeholder="Filter Tags"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -6369,7 +6373,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select tags
+                                                                        Filter Tags
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -6421,7 +6425,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select tags"
+                                                                placeholder="Filter Tags"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -6494,7 +6498,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select tags
+                                                                  Filter Tags
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
@@ -6672,6 +6676,7 @@ exports[`Posts List component snapshot component should match component with pos
                                               id="filters_categories"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Categories"
                                             >
                                               <Select
                                                 bordered={true}
@@ -6684,7 +6689,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select categories"
+                                                placeholder="Filter Categories"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -6708,7 +6713,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select categories"
+                                                  placeholder="Filter Categories"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -6734,7 +6739,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select categories"
+                                                    placeholder="Filter Categories"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -6984,7 +6989,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select categories
+                                                                    Filter Categories
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -7012,7 +7017,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select categories"
+                                                            placeholder="Filter Categories"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -7067,7 +7072,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select categories
+                                                                        Filter Categories
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -7119,7 +7124,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select categories"
+                                                                placeholder="Filter Categories"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -7192,7 +7197,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select categories
+                                                                  Filter Categories
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
@@ -7370,6 +7375,7 @@ exports[`Posts List component snapshot component should match component with pos
                                               id="filters_formats"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Formats"
                                             >
                                               <Select
                                                 bordered={true}
@@ -7382,7 +7388,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select formats"
+                                                placeholder="Filter Formats"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -7406,7 +7412,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select formats"
+                                                  placeholder="Filter Formats"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -7432,7 +7438,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select formats"
+                                                    placeholder="Filter Formats"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -7682,7 +7688,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select formats
+                                                                    Filter Formats
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -7710,7 +7716,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select formats"
+                                                            placeholder="Filter Formats"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -7765,7 +7771,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select formats
+                                                                        Filter Formats
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -7817,7 +7823,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select formats"
+                                                                placeholder="Filter Formats"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -7890,7 +7896,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select formats
+                                                                  Filter Formats
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
@@ -9610,7 +9616,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                       }
                     >
                       <FormItem
-                        label="Query"
+                        label="Search"
                         name="q"
                         style={
                           Object {
@@ -9619,10 +9625,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                         }
                       >
                         <WrapperField
-                          label="Query"
+                          label="Search"
                           messageVariables={
                             Object {
-                              "label": "Query",
+                              "label": "Search",
                             }
                           }
                           name="q"
@@ -9637,10 +9643,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                         >
                           <Field
                             key="_q"
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name={
@@ -9677,7 +9683,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                               >
                                 <FormItemLabel
                                   htmlFor="filters_q"
-                                  label="Query"
+                                  label="Search"
                                   name="q"
                                   prefixCls="ant-form"
                                   required={false}
@@ -9697,16 +9703,16 @@ exports[`Posts List component snapshot component should render the component 1`]
                                       <label
                                         className=""
                                         htmlFor="filters_q"
-                                        title="Query"
+                                        title="Search"
                                       >
-                                        Query
+                                        Search
                                       </label>
                                     </div>
                                   </Col>
                                 </FormItemLabel>
                                 <FormItemInput
                                   errors={Array []}
-                                  label="Query"
+                                  label="Search"
                                   name={
                                     Array [
                                       "q",
@@ -9742,7 +9748,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                             <Input
                                               id="filters_q"
                                               onChange={[Function]}
-                                              placeholder="search post"
+                                              placeholder="search posts"
                                               type="text"
                                             >
                                               <ClearableLabeledInput
@@ -9755,7 +9761,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                     onChange={[Function]}
                                                     onFocus={[Function]}
                                                     onKeyDown={[Function]}
-                                                    placeholder="search post"
+                                                    placeholder="search posts"
                                                     type="text"
                                                   />
                                                 }
@@ -9764,7 +9770,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                 id="filters_q"
                                                 inputType="input"
                                                 onChange={[Function]}
-                                                placeholder="search post"
+                                                placeholder="search posts"
                                                 prefixCls="ant-input"
                                                 triggerFocus={[Function]}
                                                 type="text"
@@ -9777,7 +9783,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
-                                                  placeholder="search post"
+                                                  placeholder="search posts"
                                                   type="text"
                                                   value=""
                                                 />
@@ -10700,6 +10706,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                               id="filters_tags"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Tags"
                                             >
                                               <Select
                                                 bordered={true}
@@ -10712,7 +10719,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select tags"
+                                                placeholder="Filter Tags"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -10736,7 +10743,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select tags"
+                                                  placeholder="Filter Tags"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -10762,7 +10769,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select tags"
+                                                    placeholder="Filter Tags"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -11012,7 +11019,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select tags
+                                                                    Filter Tags
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -11040,7 +11047,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select tags"
+                                                            placeholder="Filter Tags"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -11095,7 +11102,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select tags
+                                                                        Filter Tags
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -11147,7 +11154,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select tags"
+                                                                placeholder="Filter Tags"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -11220,7 +11227,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select tags
+                                                                  Filter Tags
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
@@ -11398,6 +11405,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                               id="filters_categories"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Categories"
                                             >
                                               <Select
                                                 bordered={true}
@@ -11410,7 +11418,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select categories"
+                                                placeholder="Filter Categories"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -11434,7 +11442,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select categories"
+                                                  placeholder="Filter Categories"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -11460,7 +11468,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select categories"
+                                                    placeholder="Filter Categories"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -11710,7 +11718,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select categories
+                                                                    Filter Categories
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -11738,7 +11746,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select categories"
+                                                            placeholder="Filter Categories"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -11793,7 +11801,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select categories
+                                                                        Filter Categories
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -11845,7 +11853,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select categories"
+                                                                placeholder="Filter Categories"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -11918,7 +11926,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select categories
+                                                                  Filter Categories
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
@@ -12096,6 +12104,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                               id="filters_formats"
                                               mode="multiple"
                                               onChange={[Function]}
+                                              placeholder="Filter Formats"
                                             >
                                               <Select
                                                 bordered={true}
@@ -12108,7 +12117,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                placeholder="Select formats"
+                                                placeholder="Filter Formats"
                                                 transitionName="slide-up"
                                               >
                                                 <Select
@@ -12132,7 +12141,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
-                                                  placeholder="Select formats"
+                                                  placeholder="Filter Formats"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
@@ -12158,7 +12167,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
                                                     onSearch={[Function]}
-                                                    placeholder="Select formats"
+                                                    placeholder="Filter Formats"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                     transitionName="slide-up"
@@ -12408,7 +12417,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
-                                                                    Select formats
+                                                                    Filter Formats
                                                                   </span>
                                                                 </div>,
                                                               }
@@ -12436,7 +12445,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                             onSearchSubmit={[Function]}
                                                             onSelect={[Function]}
                                                             onToggleOpen={[Function]}
-                                                            placeholder="Select formats"
+                                                            placeholder="Filter Formats"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
@@ -12491,7 +12500,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
-                                                                        Select formats
+                                                                        Filter Formats
                                                                       </span>
                                                                     </div>,
                                                                   }
@@ -12543,7 +12552,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                 onSearchSubmit={[Function]}
                                                                 onSelect={[Function]}
                                                                 onToggleOpen={[Function]}
-                                                                placeholder="Select formats"
+                                                                placeholder="Filter Formats"
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                                 searchValue=""
@@ -12616,7 +12625,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
-                                                                  Select formats
+                                                                  Filter Formats
                                                                 </span>
                                                               </SelectSelector>
                                                             </div>
