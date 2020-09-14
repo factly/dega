@@ -73,7 +73,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result.Post = model.Post{
 		Title:            post.Title,
 		Slug:             slug.Approve(postSlug, sID, config.DB.NewScope(&model.Post{}).TableName()),
-		Status:           post.Status,
+		Status:           "draft",
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      post.Description,
@@ -82,7 +82,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		IsSticky:         post.IsSticky,
 		FeaturedMediumID: post.FeaturedMediumID,
 		FormatID:         post.FormatID,
-		PublishedDate:    post.PublishedDate,
 		SpaceID:          post.SpaceID,
 	}
 
@@ -140,7 +139,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	for _, id := range post.AuthorIDs {
 		aID := fmt.Sprint(id)
-		if _, found := authors[aID]; found {
+		if _, found := authors[aID]; found && id != 0 {
 			author := model.PostAuthor{
 				AuthorID: id,
 				PostID:   result.Post.ID,

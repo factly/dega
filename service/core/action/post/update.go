@@ -161,7 +161,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
 		Title:            post.Title,
 		Slug:             postSlug,
-		Status:           post.Status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      post.Description,
@@ -170,7 +169,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsSticky:         post.IsSticky,
 		FormatID:         post.FormatID,
 		FeaturedMediumID: post.FeaturedMediumID,
-		PublishedDate:    post.PublishedDate,
 		Tags:             newTags,
 		Categories:       newCategories,
 	}).Preload("Medium").Preload("Format").First(&result.Post).Error
@@ -279,17 +277,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// creating new post authors
 	for _, id := range toCreateIDs {
-		postAuthor := &model.PostAuthor{}
-		postAuthor.AuthorID = uint(id)
-		postAuthor.PostID = result.ID
+		if id != 0 {
+			postAuthor := &model.PostAuthor{}
+			postAuthor.AuthorID = uint(id)
+			postAuthor.PostID = result.ID
 
-		err = tx.Model(&model.PostAuthor{}).Create(&postAuthor).Error
+			err = tx.Model(&model.PostAuthor{}).Create(&postAuthor).Error
 
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
+			if err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
 		}
 	}
 

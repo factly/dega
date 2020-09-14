@@ -1055,6 +1055,58 @@ var doc = `{
                 }
             }
         },
+        "/core/posts/{post_id}/publish": {
+            "put": {
+                "description": "Publish post by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Publish a post by id",
+                "operationId": "publish-post-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Post ID",
+                        "name": "post_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "PublishPost",
+                        "name": "PublishPost",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/post.publishData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            }
+        },
         "/core/search": {
             "post": {
                 "description": "Global search for all entities",
@@ -2907,7 +2959,6 @@ var doc = `{
             "required": [
                 "excerpt",
                 "format_id",
-                "status",
                 "title"
             ],
             "properties": {
@@ -2950,17 +3001,11 @@ var doc = `{
                 "is_sticky": {
                     "type": "boolean"
                 },
-                "published_date": {
-                    "type": "string"
-                },
                 "slug": {
                     "type": "string"
                 },
                 "space_id": {
                     "type": "integer"
-                },
-                "status": {
-                    "type": "string"
                 },
                 "subtitle": {
                     "type": "string"
@@ -3060,6 +3105,17 @@ var doc = `{
                     "type": "string"
                 },
                 "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "post.publishData": {
+            "type": "object",
+            "required": [
+                "published_date"
+            ],
+            "properties": {
+                "published_date": {
                     "type": "string"
                 }
             }
