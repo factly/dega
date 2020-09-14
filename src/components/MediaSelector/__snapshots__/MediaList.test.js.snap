@@ -36,7 +36,7 @@ exports[`Media List component snapshot testing should match component with data 
           }
         >
           <Input
-            placeholder="Basic usage"
+            placeholder="Search Media"
             type="text"
           >
             <ClearableLabeledInput
@@ -48,14 +48,14 @@ exports[`Media List component snapshot testing should match component with data 
                   onChange={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
-                  placeholder="Basic usage"
+                  placeholder="Search Media"
                   type="text"
                 />
               }
               focused={false}
               handleReset={[Function]}
               inputType="input"
-              placeholder="Basic usage"
+              placeholder="Search Media"
               prefixCls="ant-input"
               triggerFocus={[Function]}
               type="text"
@@ -67,7 +67,7 @@ exports[`Media List component snapshot testing should match component with data 
                 onChange={[Function]}
                 onFocus={[Function]}
                 onKeyDown={[Function]}
-                placeholder="Basic usage"
+                placeholder="Search Media"
                 type="text"
                 value=""
               />
@@ -645,7 +645,7 @@ exports[`Media List component snapshot testing should render the component with 
           }
         >
           <Input
-            placeholder="Basic usage"
+            placeholder="Search Media"
             type="text"
           >
             <ClearableLabeledInput
@@ -657,14 +657,14 @@ exports[`Media List component snapshot testing should render the component with 
                   onChange={[Function]}
                   onFocus={[Function]}
                   onKeyDown={[Function]}
-                  placeholder="Basic usage"
+                  placeholder="Search Media"
                   type="text"
                 />
               }
               focused={false}
               handleReset={[Function]}
               inputType="input"
-              placeholder="Basic usage"
+              placeholder="Search Media"
               prefixCls="ant-input"
               triggerFocus={[Function]}
               type="text"
@@ -676,7 +676,7 @@ exports[`Media List component snapshot testing should render the component with 
                 onChange={[Function]}
                 onFocus={[Function]}
                 onKeyDown={[Function]}
-                placeholder="Basic usage"
+                placeholder="Search Media"
                 type="text"
                 value=""
               />
