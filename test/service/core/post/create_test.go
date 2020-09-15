@@ -16,7 +16,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestClaimCreate(t *testing.T) {
+func TestPostCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
@@ -63,7 +63,7 @@ func TestClaimCreate(t *testing.T) {
 		tag.SelectWithOutSpace(mock, tag.Data)
 		category.SelectWithOutSpace(mock)
 
-		postInsertMock(mock)
+		postInsertMock(mock, Data)
 		postSelectWithOutSpace(mock, Data)
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)
@@ -89,7 +89,7 @@ func TestClaimCreate(t *testing.T) {
 		tag.SelectWithOutSpace(mock, tag.Data)
 		category.SelectWithOutSpace(mock)
 
-		postInsertMock(mock)
+		postInsertMock(mock, Data)
 		postSelectWithOutSpace(mock, Data)
 		mock.ExpectQuery(`INSERT INTO "post_claims"`).
 			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
@@ -116,7 +116,7 @@ func TestClaimCreate(t *testing.T) {
 		tag.SelectWithOutSpace(mock, tag.Data)
 		category.SelectWithOutSpace(mock)
 
-		postInsertMock(mock)
+		postInsertMock(mock, Data)
 
 		postSelectWithOutSpace(mock, Data)
 		postClaimInsertMock(mock)
@@ -185,7 +185,7 @@ func TestClaimCreate(t *testing.T) {
 		tag.SelectWithOutSpace(mock, tag.Data)
 		category.SelectWithOutSpace(mock)
 
-		postInsertMock(mock)
+		postInsertMock(mock, Data)
 		postSelectWithOutSpace(mock, Data)
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)

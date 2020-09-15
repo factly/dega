@@ -104,6 +104,7 @@ var paginationQuery = `SELECT \* FROM "posts" (.+) LIMIT 1 OFFSET 1`
 var basePath = "/core/posts"
 var path = "/core/posts/{post_id}"
 var publishPath = "/core/posts/{post_id}/publish"
+var templatePath = "/core/posts/{post_id}/templates"
 
 func slugCheckMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "posts"`)).
@@ -111,14 +112,14 @@ func slugCheckMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
-func postInsertMock(mock sqlmock.Sqlmock) {
+func postInsertMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
 	format.SelectWithSpace(mock)
 
 	mock.ExpectQuery(`INSERT INTO "posts"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["excerpt"],
-			Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], test.AnyTime{}, 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, post["title"], post["subtitle"], post["slug"], post["status"], post["excerpt"],
+			post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["featured_medium_id"], post["format_id"], test.AnyTime{}, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))

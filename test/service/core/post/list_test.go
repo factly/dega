@@ -199,8 +199,9 @@ func TestPostList(t *testing.T) {
 				"tag":      "2",
 				"category": "2",
 				"q":        "test",
-				"author":   "1,2",
-				"format":   "2,3",
+				"author":   "1",
+				"format":   "2",
+				"status":   "published",
 			}).
 			Expect().
 			Status(http.StatusOK).

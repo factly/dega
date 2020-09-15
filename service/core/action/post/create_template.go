@@ -66,13 +66,14 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 	err = tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&template).Error
 
-	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&template)
-
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
+
+	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&template)
 
 	tagIDs := make([]uint, 0)
 	categoryIDs := make([]uint, 0)
