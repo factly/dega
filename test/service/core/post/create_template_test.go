@@ -67,6 +67,17 @@ func TestPostTemplateCreate(t *testing.T) {
 
 	})
 
+	t.Run("invalid post id", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		e.POST(templatePath).
+			WithHeaders(headers).
+			WithPath("post_id", "abc").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusNotFound)
+	})
+
 	t.Run("post record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		mock.ExpectQuery(selectQuery).
