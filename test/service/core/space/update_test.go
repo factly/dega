@@ -71,16 +71,6 @@ func TestSpaceUpdate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
-	t.Run("When kavach is down", func(t *testing.T) {
-		test.DisableKavachGock(testServer.URL)
-		e.POST(basePath).
-			WithHeader("X-User", "1").
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusServiceUnavailable)
-		test.MockServer()
-	})
-
 	t.Run("space record does not exist", func(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
@@ -242,15 +232,15 @@ func TestSpaceUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update a space when kavach is down", func(t *testing.T) {
-		test.DisableKavachGock(testServer.URL)
+	t.Run("update a space when keto is down", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
 
 		e.PUT(path).
 			WithPath("space_id", "1").
 			WithHeader("X-User", "1").
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusServiceUnavailable)
+			Status(http.StatusUnauthorized)
 
 		test.ExpectationsMet(t, mock)
 	})

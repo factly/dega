@@ -64,15 +64,15 @@ func TestSpaceDelete(t *testing.T) {
 			Status(http.StatusNotFound)
 	})
 
-	t.Run("when kavach is down", func(t *testing.T) {
-		gock.Off()
+	t.Run("when keto is down", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
 		SelectQuery(mock)
 
 		e.DELETE(path).
 			WithPath("space_id", "1").
 			WithHeader("X-User", "1").
 			Expect().
-			Status(http.StatusServiceUnavailable)
+			Status(http.StatusUnauthorized)
 
 		test.ExpectationsMet(t, mock)
 	})

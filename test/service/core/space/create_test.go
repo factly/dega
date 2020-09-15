@@ -82,13 +82,13 @@ func TestSpaceCreate(t *testing.T) {
 			Status(http.StatusUnauthorized)
 	})
 
-	t.Run("When kavach is down", func(t *testing.T) {
-		gock.Off()
+	t.Run("When keto is down", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
 		e.POST(basePath).
 			WithHeader("X-User", "1").
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusServiceUnavailable)
+			Status(http.StatusUnauthorized)
 	})
 
 	t.Run("create a space when meili is down", func(t *testing.T) {
