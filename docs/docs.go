@@ -1205,13 +1205,6 @@ var doc = `{
                         "required": true
                     },
                     {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
                         "description": "Space Object",
                         "name": "Space",
                         "in": "body",
@@ -1247,13 +1240,6 @@ var doc = `{
                         "type": "string",
                         "description": "User ID",
                         "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
                         "in": "header",
                         "required": true
                     },
@@ -1298,13 +1284,6 @@ var doc = `{
                         "type": "string",
                         "description": "User ID",
                         "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
                         "in": "header",
                         "required": true
                     },

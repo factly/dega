@@ -1,8 +1,6 @@
 package space
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 
@@ -24,7 +22,6 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
-// @Param X-Space header string true "Space ID"
 // @Param space_id path string true "Space ID"
 // @Success 200
 // @Router /core/spaces/{space_id} [delete]
@@ -59,38 +56,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := http.NewRequest("GET", config.KavachURL+"/organisations/"+strconv.Itoa(result.OrganisationID), nil)
+	err = util.CheckSpaceKetoPermission("delete", uint(result.OrganisationID), uint(uID))
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-	req.Header.Set("X-User", strconv.Itoa(uID))
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-		return
-	}
-
-	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-
-	org := orgWithSpace{}
-
-	err = json.Unmarshal(body, &org)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-		return
-	}
-
-	if org.Permission.Role != "owner" {
+		errorx.Render(w, errorx.Parser(errorx.Message{
+			Code:    http.StatusUnauthorized,
+			Message: err.Error(),
+		}))
 		return
 	}
 
