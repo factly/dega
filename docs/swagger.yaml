@@ -1501,11 +1501,6 @@ paths:
         name: X-User
         required: true
         type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
       - description: Space Object
         in: body
         name: Space
@@ -1533,11 +1528,6 @@ paths:
         required: true
         type: string
       - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Space ID
         in: path
         name: space_id
         required: true
@@ -1556,11 +1546,6 @@ paths:
       - description: User ID
         in: header
         name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
         required: true
         type: string
       - description: Space ID

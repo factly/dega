@@ -3,6 +3,7 @@ package util
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -66,50 +67,28 @@ func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
 	}
 }
 
-// CheckSpaceKetoPolicy checks keto policy for operations on space
-func CheckSpaceKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
-	return func(h http.Handler) http.Handler {
-		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			ctx := r.Context()
+// CheckSpaceKetoPermission checks keto policy for operations on space
+func CheckSpaceKetoPermission(action string, oID, uID uint) error {
+	commonString := fmt.Sprint(":org:", oID, ":app:dega:spaces")
 
-			uID, err := GetUser(ctx)
-			if err != nil {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
+	kresource := fmt.Sprint("resources", commonString)
+	kaction := fmt.Sprint("actions", commonString, ":", action)
 
-			oID, err := GetOrganisation(ctx)
+	result := ketoAllowed{}
 
-			if err != nil {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
+	result.Action = kaction
+	result.Resource = kresource
+	result.Subject = fmt.Sprint(uID)
 
-			commonString := fmt.Sprint(":org:", oID, ":app:dega:spaces")
-
-			kresource := fmt.Sprint("resources", commonString)
-			kaction := fmt.Sprint("actions", commonString, ":", action)
-
-			result := ketoAllowed{}
-
-			result.Action = kaction
-			result.Resource = kresource
-			result.Subject = fmt.Sprint(uID)
-
-			resStatus, err := getPolicies(result)
-			if err != nil {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			if resStatus != 200 {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
-
-			h.ServeHTTP(w, r)
-		})
+	resStatus, err := getPolicies(result)
+	if err != nil {
+		return err
 	}
+
+	if resStatus != 200 {
+		return errors.New("not allowed")
+	}
+	return nil
 }
 
 func getPolicies(result ketoAllowed) (int, error) {

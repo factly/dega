@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -23,15 +24,20 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
-// @Param X-Space header string true "Space ID"
 // @Param Space body space true "Space Object"
 // @Success 201 {object} model.Space
 // @Router /core/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	space := &space{}
 
-	err := json.NewDecoder(r.Body).Decode(&space)
+	err = json.NewDecoder(r.Body).Decode(&space)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -48,6 +54,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if space.OrganisationID == 0 {
+		return
+	}
+
+	err = util.CheckSpaceKetoPermission("create", uint(space.OrganisationID), uint(uID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Message{
+			Code:    http.StatusUnauthorized,
+			Message: err.Error(),
+		}))
 		return
 	}
 

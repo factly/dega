@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -18,26 +19,30 @@ const OrganisationIDKey ctxKeyOrganisationID = 0
 func GenerateOrganisation(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		ctx := r.Context()
-		sID, err := GetSpace(ctx)
+		if strings.Split(strings.Trim(r.URL.Path, "/"), "/")[1] != "spaces" {
+			ctx := r.Context()
+			sID, err := GetSpace(ctx)
 
-		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
+			if err != nil {
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			space := &model.Space{}
+			space.ID = uint(sID)
+
+			err = config.DB.First(&space).Error
+
+			if err != nil {
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			ctx = context.WithValue(ctx, OrganisationIDKey, space.OrganisationID)
+			h.ServeHTTP(w, r.WithContext(ctx))
 			return
 		}
-
-		space := &model.Space{}
-		space.ID = uint(sID)
-
-		err = config.DB.First(&space).Error
-
-		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-
-		ctx = context.WithValue(ctx, OrganisationIDKey, space.OrganisationID)
-		h.ServeHTTP(w, r.WithContext(ctx))
+		h.ServeHTTP(w, r)
 	})
 }
 

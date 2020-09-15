@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 type ctxKeySpaceID int
@@ -16,21 +17,25 @@ const SpaceIDKey ctxKeySpaceID = 0
 func CheckSpace(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		space := r.Header.Get("X-Space")
-		if space == "" {
-			w.WriteHeader(http.StatusUnauthorized)
+		if strings.Split(strings.Trim(r.URL.Path, "/"), "/")[1] != "spaces" {
+			space := r.Header.Get("X-Space")
+			if space == "" {
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			uid, err := strconv.Atoi(space)
+			if err != nil {
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+			ctx := r.Context()
+
+			ctx = context.WithValue(ctx, SpaceIDKey, uid)
+			h.ServeHTTP(w, r.WithContext(ctx))
 			return
 		}
-
-		uid, err := strconv.Atoi(space)
-		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
-		ctx := r.Context()
-
-		ctx = context.WithValue(ctx, SpaceIDKey, uid)
-		h.ServeHTTP(w, r.WithContext(ctx))
+		h.ServeHTTP(w, r)
 	})
 }
 

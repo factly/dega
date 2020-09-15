@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -21,11 +22,16 @@ import (
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
-// @Param X-Space header string true "Space ID"
 // @Param space_id path string true "Space ID"
 // @Success 200
 // @Router /core/spaces/{space_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	spaceID := chi.URLParam(r, "space_id")
 	sID, err := strconv.Atoi(spaceID)
@@ -47,6 +53,16 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if result.OrganisationID == 0 {
+		return
+	}
+
+	err = util.CheckSpaceKetoPermission("delete", uint(result.OrganisationID), uint(uID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Message{
+			Code:    http.StatusUnauthorized,
+			Message: err.Error(),
+		}))
 		return
 	}
 
