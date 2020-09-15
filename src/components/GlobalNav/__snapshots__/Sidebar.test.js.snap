@@ -19,7 +19,7 @@ exports[`Sidebar component snapshot testing should render the component 1`] = `
       className="menu-header"
       style={
         Object {
-          "backgroundColor": "#EA364A",
+          "backgroundColor": "#1890ff",
         }
       }
     >

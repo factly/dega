@@ -27,7 +27,7 @@ function Sidebar() {
         dispatch(toggleSider());
       }}
     >
-      <div className="menu-header" style={{ backgroundColor: '#EA364A' }}>
+      <div className="menu-header" style={{ backgroundColor: '#1890ff' }}>
         <img alt="logo" src={'https://degacms.com/img/dega.svg'} style={{ width: '40%' }} />
       </div>
       <Menu theme={navTheme} mode="inline" className="slider-menu">
