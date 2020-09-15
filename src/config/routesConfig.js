@@ -64,6 +64,8 @@ import EditClaim from '../pages/claims/EditClaim';
 import Policies from '../pages/policies';
 import CreatePolicy from '../pages/policies/CreatePolicy';
 import EditPolicy from '../pages/policies/EditPolicy';
+import GoogleFactCheck from '../pages/fact-check/GoogleFactCheck';
+import Factly from '../pages/fact-check/Factly';
 
 const routes = {
   dashboard: {
@@ -98,7 +100,7 @@ const routes = {
     Icon: BorderlessTableOutlined,
     title: 'Spaces',
   },
-  spaceCreate: {
+  createSpace: {
     path: '/spaces/create',
     Component: CreateSpace,
     enableNavigation: false,
@@ -106,7 +108,7 @@ const routes = {
     Icon: BorderlessTableOutlined,
     title: 'Create Space',
   },
-  spaceEdit: {
+  editSpace: {
     path: '/spaces/:id/edit',
     Component: EditSpace,
     enableNavigation: false,
@@ -122,7 +124,7 @@ const routes = {
     Icon: UnorderedListOutlined,
     title: 'Categories',
   },
-  categoryCreate: {
+  createCategory: {
     path: '/categories/create',
     Component: CreateCategory,
     enableNavigation: false,
@@ -130,7 +132,7 @@ const routes = {
     Icon: UnorderedListOutlined,
     title: 'Create Category',
   },
-  categoryEdit: {
+  editCategory: {
     path: '/categories/:id/edit',
     Component: EditCategory,
     enableNavigation: false,
@@ -146,7 +148,7 @@ const routes = {
     Icon: IdcardOutlined,
     title: 'Policies',
   },
-  policyCreate: {
+  createPolicy: {
     path: '/policies/create',
     Component: CreatePolicy,
     enableNavigation: false,
@@ -154,7 +156,7 @@ const routes = {
     Icon: IdcardOutlined,
     title: 'Create Policies',
   },
-  policyEdit: {
+  editPolicy: {
     path: '/policies/:id/edit',
     Component: EditPolicy,
     enableNavigation: false,
@@ -170,7 +172,7 @@ const routes = {
     Icon: FileExclamationOutlined,
     title: 'Formats',
   },
-  formatCreate: {
+  createFormat: {
     path: '/formats/create',
     Component: CreateFormat,
     enableNavigation: false,
@@ -178,7 +180,7 @@ const routes = {
     Icon: FileExclamationOutlined,
     title: 'Create Format',
   },
-  formatEdit: {
+  editFormat: {
     path: '/formats/:id/edit',
     Component: EditFormat,
     enableNavigation: false,
@@ -194,7 +196,7 @@ const routes = {
     Icon: TagsOutlined,
     title: 'Tags',
   },
-  tagCreate: {
+  createTag: {
     path: '/tags/create',
     Component: CreateTag,
     enableNavigation: false,
@@ -202,7 +204,7 @@ const routes = {
     Icon: TagsOutlined,
     title: 'Create Tag',
   },
-  tagEdit: {
+  editTag: {
     path: '/tags/:id/edit',
     Component: EditTag,
     enableNavigation: false,
@@ -218,7 +220,7 @@ const routes = {
     Icon: PictureOutlined,
     title: 'Media',
   },
-  mediaCreate: {
+  createMedia: {
     path: '/media/upload',
     Component: UploadMedium,
     enableNavigation: false,
@@ -226,7 +228,7 @@ const routes = {
     Icon: PictureOutlined,
     title: 'Medium Upload',
   },
-  mediaEdit: {
+  editMedium: {
     path: '/media/:id/edit',
     Component: EditMedium,
     enableNavigation: false,
@@ -242,7 +244,7 @@ const routes = {
     Icon: FileDoneOutlined,
     title: 'Posts',
   },
-  postCreate: {
+  createPost: {
     path: '/posts/create',
     Component: CreatePost,
     enableNavigation: false,
@@ -250,7 +252,7 @@ const routes = {
     Icon: FileDoneOutlined,
     title: 'Add Posts',
   },
-  postEdit: {
+  editPost: {
     path: '/posts/:id/edit',
     Component: EditPost,
     enableNavigation: false,
@@ -258,7 +260,7 @@ const routes = {
     Icon: FileDoneOutlined,
     title: 'Edit Post',
   },
-  raings: {
+  ratings: {
     path: '/ratings',
     Component: Ratings,
     enableNavigation: true,
@@ -266,7 +268,7 @@ const routes = {
     Icon: StarOutlined,
     title: 'Ratings',
   },
-  ratingCreate: {
+  createRating: {
     path: '/ratings/create',
     Component: CreateRating,
     enableNavigation: false,
@@ -274,7 +276,7 @@ const routes = {
     Icon: StarOutlined,
     title: 'Create Rating',
   },
-  reatingEdit: {
+  editRating: {
     path: '/ratings/:id/edit',
     Component: EditRating,
     enableNavigation: false,
@@ -290,7 +292,7 @@ const routes = {
     Icon: EyeOutlined,
     title: 'Claimants',
   },
-  claimantCreate: {
+  createClaimant: {
     path: '/claimants/create',
     Component: CreateClaimant,
     enableNavigation: false,
@@ -298,7 +300,7 @@ const routes = {
     Icon: EyeOutlined,
     title: 'Create Claimant',
   },
-  claimantEdit: {
+  editClaimant: {
     path: '/claimants/:id/edit',
     Component: EditClaimant,
     enableNavigation: false,
@@ -314,7 +316,7 @@ const routes = {
     Icon: CheckCircleOutlined,
     title: 'Claims',
   },
-  claimCreate: {
+  createClaim: {
     path: '/claims/create',
     Component: CreateClaim,
     enableNavigation: false,
@@ -322,7 +324,7 @@ const routes = {
     Icon: CheckCircleOutlined,
     title: 'Create Claim',
   },
-  claimEdit: {
+  editClaim: {
     path: '/claims/:id/edit',
     Component: EditClaim,
     enableNavigation: false,
@@ -330,23 +332,43 @@ const routes = {
     Icon: CheckCircleOutlined,
     title: 'Edit Claim',
   },
+  googleFactCheck: {
+    path: '/fact-check/google',
+    Component: GoogleFactCheck,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: CheckCircleOutlined,
+    title: 'Google',
+  },
+  factly: {
+    path: '/fact-check/factly',
+    Component: Factly,
+    enableNavigation: false,
+    enableBreadcrumb: true,
+    Icon: CheckCircleOutlined,
+    title: 'Factly',
+  },
 };
 
 export const sidebarMenu = [
   {
-    title: 'Dashboard',
+    title: 'DASHBOARD',
     children: [routes.home, routes.analytics],
   },
   {
-    title: 'Core',
+    title: 'CORE',
     children: [routes.posts, routes.categories, routes.tags, routes.media, routes.formats],
   },
   {
-    title: 'Fact Checking',
+    title: 'FACT CHECKING',
     children: [routes.claims, routes.claimants, routes.ratings],
+    subChildren: {
+      routes: [routes.googleFactCheck, routes.factly],
+      title: 'FACT CHECK SEARCH',
+    },
   },
   {
-    title: 'Administration',
+    title: 'ADMINSTRATION',
     children: [routes.spaces, routes.policies],
   },
 ];

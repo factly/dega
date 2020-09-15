@@ -2,11 +2,11 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import logo from '../../assets/logo.svg';
 import { toggleSider } from '../../actions/settings';
 import { sidebarMenu } from '../../config/routesConfig';
 
 const { Sider } = Layout;
+const { SubMenu } = Menu;
 
 function Sidebar() {
   const {
@@ -27,27 +27,39 @@ function Sidebar() {
         dispatch(toggleSider());
       }}
     >
-      <div className="menu-header">
-        <img alt="logo" className="menu-logo" src={logo} />
-        <span hidden={collapsed} className="menu-company">
-          {title}
-        </span>
+      <div className="menu-header" style={{ backgroundColor: '#EA364A' }}>
+        <img alt="logo" src={'https://degacms.com/img/dega.svg'} style={{ width: '40%' }} />
       </div>
       <Menu theme={navTheme} mode="inline" className="slider-menu">
         {sidebarMenu.map((menu, index) => (
-          <SubMenu key={index} title={menu.title}>
-            {menu.children.map((route, index) => {
+          <Menu.ItemGroup key={index} title={menu.title}>
+            <Menu.Divider style={{ width: '90%', margin: 'auto' }} />
+            {menu.children.map((route, childIndex) => {
               const { Icon } = route;
               return (
-                <Menu.Item key={index}>
+                <Menu.Item key={`${index}.${childIndex}`} icon={<Icon />}>
                   <Link to={route.path}>
-                    <Icon></Icon>
                     <span>{route.title}</span>
                   </Link>
                 </Menu.Item>
               );
             })}
-          </SubMenu>
+            {menu.subChildren ? (
+              <Menu.ItemGroup key={menu.subChildren.title} title={menu.subChildren.title}>
+                <Menu.Divider style={{ width: '90%', margin: 'auto' }} />
+                {menu.subChildren.routes.map((route, childIndex) => {
+                  const { Icon } = route;
+                  return (
+                    <Menu.Item key={`${index}.${childIndex}.${childIndex}`} icon={<Icon />}>
+                      <Link to={route.path}>
+                        <span>{route.title}</span>
+                      </Link>
+                    </Menu.Item>
+                  );
+                })}
+              </Menu.ItemGroup>
+            ) : null}
+          </Menu.ItemGroup>
         ))}
       </Menu>
     </Sider>
