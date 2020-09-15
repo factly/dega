@@ -1273,6 +1273,10 @@ paths:
         in: query
         name: category
         type: string
+      - description: Status
+        in: query
+        name: status
+        type: string
       produces:
       - application/json
       responses:
@@ -1436,6 +1440,36 @@ paths:
           schema:
             $ref: '#/definitions/post.postData'
       summary: Publish a post by id
+      tags:
+      - Post
+  /core/posts/{post_id}/templates:
+    post:
+      description: Create template
+      operationId: create-template
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Post ID
+        in: path
+        name: post_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Post'
+      summary: create template
       tags:
       - Post
   /core/search:
