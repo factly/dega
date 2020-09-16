@@ -14,7 +14,6 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -57,14 +56,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	// get all the admins of the organisation
 	adminRoleID := fmt.Sprint("roles:org:", oID, ":admin")
 
-	req, err := http.NewRequest("GET", config.KetoURL+"/engines/acp/ory/regex/roles/"+adminRoleID, nil)
-	if err != nil {
-		loggerx.Error(err)
-	}
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	resp, err := util.KetoGetRequest("/engines/acp/ory/regex/roles/" + adminRoleID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
@@ -87,14 +79,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// get all the polices for organisation
-	req, err = http.NewRequest("GET", config.KetoURL+"/engines/acp/ory/regex/policies", nil)
-	if err != nil {
-		loggerx.Error(err)
-	}
-	req.Header.Set("Content-Type", "application/json")
-
-	client = &http.Client{}
-	resp, err = client.Do(req)
+	resp, err = util.KetoGetRequest("/engines/acp/ory/regex/policies")
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
