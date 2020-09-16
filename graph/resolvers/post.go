@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -10,7 +11,6 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"github.com/jinzhu/gorm"
 )
 
 type postResolver struct{ *Resolver }
@@ -187,68 +187,28 @@ func (r *queryResolver) Posts(ctx context.Context, formats []int, categories []i
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	tx := config.DB.Model(&models.Post{}).Where(&models.Post{
+		SpaceID: sID,
+	}).Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id").Group("posts.id")
 
-	pIDs := make([]int, 0)
+	filterStr := ""
 
 	if len(categories) > 0 {
-		rows := []models.Post{}
-		config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Where("post_categories.category_id in (?)", categories).Where("posts.space_id in (?)", sID).Scan(&rows)
-		for _, row := range rows {
-			pIDs = append(pIDs, row.ID)
-		}
+		filterStr = filterStr + fmt.Sprint("post_categories.category_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(categories), " ", ",", -1), "[]"), ") AND ")
 	}
-
-	if len(tags) > 0 {
-		rows := []models.Post{}
-		tx := config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Where("post_tags.tag_id in (?)", tags).Where("posts.space_id in (?)", sID)
-		if len(pIDs) > 0 {
-			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
-		} else {
-			tx.Scan(&rows)
-		}
-		pIDs = []int{}
-		for _, row := range rows {
-			pIDs = append(pIDs, row.ID)
-		}
-	}
-
 	if len(users) > 0 {
-		rows := []models.Post{}
-		tx := config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_users ON post_users.post_id = posts.id").Where("post_users.user_id in (?)", users).Where("posts.space_id in (?)", sID)
-		if len(pIDs) > 0 {
-			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
-		} else {
-			tx.Scan(&rows)
-		}
-		pIDs = []int{}
-		for _, row := range rows {
-			pIDs = append(pIDs, row.ID)
-		}
+		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(users), " ", ",", -1), "[]"), ") AND ")
 	}
-
+	if len(tags) > 0 {
+		filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(tags), " ", ",", -1), "[]"), ") AND ")
+	}
 	if len(formats) > 0 {
-		rows := []models.Post{}
-		tx := config.DB.Table("posts").Select("posts.id").Where("posts.format_id in (?)", formats).Where("posts.space_id in (?)", sID)
-		if len(pIDs) > 0 {
-			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
-		} else {
-			tx.Scan(&rows)
-		}
-		pIDs = []int{}
-		for _, row := range rows {
-			pIDs = append(pIDs, row.ID)
-		}
-	}
-	var tx *gorm.DB
-
-	if len(pIDs) > 0 {
-		tx = config.DB.Model(&models.Post{}).Where(pIDs)
-	} else {
-		tx = config.DB.Model(&models.Post{}).Where("space_id in (?)", sID)
+		filterStr = filterStr + fmt.Sprint("posts.format_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(formats), " ", ",", -1), "[]"), ") AND ")
 	}
 
-	tx.Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	filterStr = strings.Trim(filterStr, " AND ")
+
+	tx.Where(filterStr).Count(&result.Total).Order(order).Find(&result.Nodes)
 
 	return result, nil
 }
