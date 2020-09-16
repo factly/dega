@@ -60,8 +60,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 
 	// delete all associations
-	tx.Model(&result).Association("Tags").Delete(result.Tags)
-	tx.Model(&result).Association("Categories").Delete(result.Categories)
+	if len(result.Tags) > 0 {
+		tx.Model(&result).Association("Tags").Delete(result.Tags)
+	}
+	if len(result.Categories) > 0 {
+		tx.Model(&result).Association("Categories").Delete(result.Categories)
+	}
 
 	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),

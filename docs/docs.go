@@ -868,6 +868,12 @@ var doc = `{
                         "description": "Category",
                         "name": "category",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Status",
+                        "name": "status",
+                        "in": "query"
                     }
                 ],
                 "responses": {
@@ -922,6 +928,51 @@ var doc = `{
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/posts/templates": {
+            "post": {
+                "description": "Create template",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "create template",
+                "operationId": "create-template",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "TemplateData",
+                        "name": "TemplateData",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/post.templateData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Post"
                         }
                     }
                 }
@@ -3096,6 +3147,17 @@ var doc = `{
             "properties": {
                 "published_date": {
                     "type": "string"
+                }
+            }
+        },
+        "post.templateData": {
+            "type": "object",
+            "required": [
+                "post_id"
+            ],
+            "properties": {
+                "post_id": {
+                    "type": "integer"
                 }
             }
         },

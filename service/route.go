@@ -35,7 +35,7 @@ func RegisterRoutes() http.Handler {
 		MaxAge:           300, // Maximum value not ignored by any of major browsers
 	}))
 
-	if envName, _ := os.LookupEnv("ENVIRONMENT_NAME"); envName == "development" {
+	if envName, _ := os.LookupEnv("MODE"); envName == "development" {
 		r.Get("/swagger/*", httpSwagger.WrapHandler)
 	}
 

@@ -39,6 +39,7 @@ type paging struct {
 // @Param q query string false "Query"
 // @Param sort query string false "Sort"
 // @Param category query string false "Category"
+// @Param status query string false "Status"
 // @Success 200 {array} postData
 // @Router /core/posts [get]
 func list(w http.ResponseWriter, r *http.Request) {
@@ -57,7 +58,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
-	filters := generateFilters(queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["format"])
+	filters := generateFilters(queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["format"], queryMap["status"])
 	filteredPostIDs := make([]uint, 0)
 
 	if filters != "" {
@@ -104,12 +105,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Count(&result.Total).Order("created_at " + sort).Offset(offset).Limit(limit)
+	}).Order("created_at " + sort).Offset(offset).Limit(limit)
 
 	if len(filteredPostIDs) > 0 {
-		err = tx.Where(filteredPostIDs).Find(&posts).Error
+		err = tx.Where(filteredPostIDs).Count(&result.Total).Find(&posts).Error
 	} else {
-		err = tx.Find(&posts).Error
+		err = tx.Where("status != ?", "template").Count(&result.Total).Find(&posts).Error
 	}
 
 	if err != nil {
@@ -181,7 +182,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusOK, result)
 }
 
-func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs []string) string {
+func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs, status []string) string {
 	filters := ""
 	if len(tagIDs) > 0 {
 		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
@@ -197,6 +198,10 @@ func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs []string) string 
 
 	if len(formatIDs) > 0 {
 		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(formatIDs, "format_id"), " AND ")
+	}
+
+	if len(status) > 0 {
+		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(status, "status"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {
