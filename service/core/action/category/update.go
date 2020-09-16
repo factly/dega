@@ -5,7 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -99,13 +98,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if category with same name exist
-	newCategoryName := strings.ToLower(strings.TrimSpace(category.Name))
-	var sameCat model.Category
-	err = config.DB.Model(&model.Category{}).Where(&model.Category{
-		SpaceID: uint(sID),
-	}).Where("name ILIKE ?", newCategoryName).First(&sameCat).Error
-
-	if err == nil && sameCat.ID != uint(id) {
+	if category.Name != result.Name && util.CheckName(uint(sID), category.Name, config.DB.NewScope(&model.Category{}).TableName()) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return

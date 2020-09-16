@@ -5,7 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -92,13 +91,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if format with same name exist
-	newFormatName := strings.ToLower(strings.TrimSpace(format.Name))
-	var sameFormat model.Format
-	err = config.DB.Model(&model.Format{}).Where(&model.Format{
-		SpaceID: uint(sID),
-	}).Where("name ILIKE ?", newFormatName).First(&sameFormat).Error
-
-	if err == nil && sameFormat.ID != uint(id) {
+	if format.Name != result.Name && util.CheckName(uint(sID), format.Name, config.DB.NewScope(&model.Format{}).TableName()) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return

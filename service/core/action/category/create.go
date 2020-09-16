@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"strings"
 
 	"github.com/factly/x/loggerx"
 
@@ -79,13 +78,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if category with same name exist
-	newCategoryName := strings.ToLower(strings.TrimSpace(category.Name))
-	var categoryCount int
-	config.DB.Model(&model.Category{}).Where(&model.Category{
-		SpaceID: uint(sID),
-	}).Where("name ILIKE ?", newCategoryName).Count(&categoryCount)
-
-	if categoryCount > 0 {
+	if util.CheckName(uint(sID), category.Name, config.DB.NewScope(&model.Category{}).TableName()) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return

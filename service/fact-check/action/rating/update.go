@@ -5,7 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
@@ -91,13 +90,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if rating with same name exist
-	newRatingName := strings.ToLower(strings.TrimSpace(rating.Name))
-	var sameRating model.Rating
-	err = config.DB.Model(&model.Rating{}).Where(&model.Rating{
-		SpaceID: uint(sID),
-	}).Where("name ILIKE ?", newRatingName).First(&sameRating).Error
-
-	if err == nil && sameRating.ID != uint(id) {
+	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, config.DB.NewScope(&model.Rating{}).TableName()) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
