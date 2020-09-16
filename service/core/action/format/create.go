@@ -63,6 +63,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		formatSlug = slug.Make(format.Name)
 	}
 
+	// Check if format with same name exist
+	if util.CheckName(uint(sID), format.Name, config.DB.NewScope(&model.Format{}).TableName()) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	result := &model.Format{
 		Name:        format.Name,
 		Description: format.Description,

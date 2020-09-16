@@ -63,6 +63,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		ratingSlug = slug.Make(rating.Name)
 	}
 
+	// Check if rating with same name exist
+	if util.CheckName(uint(sID), rating.Name, config.DB.NewScope(&model.Rating{}).TableName()) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	result := &model.Rating{
 		Name:         rating.Name,
 		Slug:         slug.Approve(ratingSlug, sID, config.DB.NewScope(&model.Rating{}).TableName()),

@@ -181,6 +181,24 @@ func TestCategoryUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("category with same name exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		Data["name"] = "New Category"
+		sameNameCount(mock, 1, Data["name"])
+
+		e.PUT(path).
+			WithPath("category_id", 1).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		Data["name"] = "Test Category"
+	})
+
 	t.Run("update category when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)

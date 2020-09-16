@@ -84,7 +84,7 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Article",
+			"name": "Fact Check",
 			"slug": "fact-check",
 		}
 
@@ -137,7 +137,7 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Article",
+			"name": "Fact Check",
 			"slug": "testing-slug",
 		}
 		SelectWithSpace(mock)
@@ -160,11 +160,29 @@ func TestFormatUpdate(t *testing.T) {
 
 	})
 
+	t.Run("format with same name exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatedFormat := map[string]interface{}{
+			"name": "Fact Chk",
+			"slug": "fact-check",
+		}
+
+		SelectWithSpace(mock)
+		sameNameCount(mock, 1, updatedFormat["name"])
+
+		e.PUT(path).
+			WithPath("format_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedFormat).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
+
 	t.Run("update format when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Article",
+			"name": "Fact Check",
 			"slug": "article",
 		}
 

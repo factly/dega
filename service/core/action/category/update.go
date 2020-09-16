@@ -97,6 +97,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		categorySlug = slug.Approve(slug.Make(category.Name), sID, config.DB.NewScope(&model.Category{}).TableName())
 	}
 
+	// Check if category with same name exist
+	if category.Name != result.Name && util.CheckName(uint(sID), category.Name, config.DB.NewScope(&model.Category{}).TableName()) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	if category.MediumID == 0 {

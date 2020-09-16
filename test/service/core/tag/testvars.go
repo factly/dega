@@ -3,6 +3,7 @@ package tag
 import (
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -52,6 +53,12 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(100, 1).
 		WillReturnRows(sqlmock.NewRows(Columns))
+}
+
+func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "tags"`)).
+		WithArgs(1, strings.ToLower(name.(string))).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func SelectWithSpaceMock(mock sqlmock.Sqlmock) {

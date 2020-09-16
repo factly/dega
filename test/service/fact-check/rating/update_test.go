@@ -201,6 +201,25 @@ func TestRatingUpdate(t *testing.T) {
 
 	})
 
+	t.Run("rating with same name exist", func(t *testing.T) {
+		updatedRating["slug"] = "true"
+		updatedRating["name"] = "New Rating"
+		test.CheckSpaceMock(mock)
+
+		SelectWithSpace(mock)
+
+		sameNameCount(mock, 1, updatedRating["name"])
+
+		e.PUT(path).
+			WithPath("rating_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedRating).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		updatedRating["name"] = "True"
+	})
+
 	t.Run("update rating when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		updatedRating["slug"] = "true"

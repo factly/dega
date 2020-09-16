@@ -90,6 +90,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		formatSlug = slug.Approve(slug.Make(format.Name), sID, config.DB.NewScope(&model.Format{}).TableName())
 	}
 
+	// Check if format with same name exist
+	if format.Name != result.Name && util.CheckName(uint(sID), format.Name, config.DB.NewScope(&model.Format{}).TableName()) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	tx := config.DB.Begin()
 	tx.Model(&result).Updates(model.Format{
 		Name:        format.Name,

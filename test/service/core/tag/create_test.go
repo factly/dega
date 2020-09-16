@@ -54,6 +54,8 @@ func TestTagCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		sameNameCount(mock, 0, Data["name"])
+
 		slugCheckMock(mock)
 
 		tagInsertMock(mock)
@@ -72,6 +74,8 @@ func TestTagCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		sameNameCount(mock, 0, Data["name"])
+
 		slugCheckMock(mock)
 
 		mock.ExpectBegin()
@@ -89,9 +93,25 @@ func TestTagCreate(t *testing.T) {
 
 	})
 
+	t.Run("tag with same name exist", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		sameNameCount(mock, 1, Data["name"])
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("create tag with slug is empty", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+
+		sameNameCount(mock, 0, Data["name"])
 
 		slugCheckMock(mock)
 
@@ -113,6 +133,8 @@ func TestTagCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 
 		test.CheckSpaceMock(mock)
+
+		sameNameCount(mock, 0, Data["name"])
 
 		slugCheckMock(mock)
 

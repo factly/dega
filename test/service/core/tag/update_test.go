@@ -145,6 +145,25 @@ func TestTagUpdate(t *testing.T) {
 
 	})
 
+	t.Run("tag with same name exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatedTag := map[string]interface{}{
+			"name": "NewElections",
+			"slug": "elections",
+		}
+
+		SelectWithSpaceMock(mock)
+
+		sameNameCount(mock, 1, updatedTag["name"])
+
+		e.PUT(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedTag).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
+
 	t.Run("update tag when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)

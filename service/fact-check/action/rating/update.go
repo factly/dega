@@ -89,6 +89,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		ratingSlug = slug.Approve(slug.Make(rating.Name), sID, config.DB.NewScope(&model.Rating{}).TableName())
 	}
 
+	// Check if rating with same name exist
+	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, config.DB.NewScope(&model.Rating{}).TableName()) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	if rating.MediumID == 0 {

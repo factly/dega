@@ -89,6 +89,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		tagSlug = slug.Approve(slug.Make(tag.Name), sID, config.DB.NewScope(&model.Tag{}).TableName())
 	}
 
+	// Check if tag with same name exist
+	if tag.Name != result.Name && util.CheckName(uint(sID), tag.Name, config.DB.NewScope(&model.Tag{}).TableName()) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	tx := config.DB.Begin()
 	tx.Model(&result).Updates(model.Tag{
 		Name:        tag.Name,

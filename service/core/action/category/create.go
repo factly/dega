@@ -77,6 +77,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		categorySlug = slug.Make(category.Name)
 	}
 
+	// Check if category with same name exist
+	if util.CheckName(uint(sID), category.Name, config.DB.NewScope(&model.Category{}).TableName()) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	result := &model.Category{
 		Name:        category.Name,
 		Description: category.Description,

@@ -64,6 +64,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		tagSlug = slug.Make(tag.Name)
 	}
 
+	// Check if tag with same name exist
+	if util.CheckName(uint(sID), tag.Name, config.DB.NewScope(&model.Tag{}).TableName()) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	result := &model.Tag{
 		Name:        tag.Name,
 		Slug:        slug.Approve(tagSlug, sID, config.DB.NewScope(&model.Tag{}).TableName()),
