@@ -110,7 +110,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	if len(filteredPostIDs) > 0 {
 		err = tx.Where(filteredPostIDs).Count(&result.Total).Find(&posts).Error
 	} else {
-		err = tx.Count(&result.Total).Find(&posts).Error
+		err = tx.Where("status != ?", "template").Count(&result.Total).Find(&posts).Error
 	}
 
 	if err != nil {

@@ -1,8 +1,9 @@
 package post
 
 import (
+	"encoding/json"
+	"errors"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -12,8 +13,12 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
-	"github.com/go-chi/chi"
+	"github.com/factly/x/validationx"
 )
+
+type templateData struct {
+	PostID uint `json:"post_id" validate:"required"`
+}
 
 // create - create template
 // @Summary create template
@@ -24,19 +29,10 @@ import (
 // @Consume json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param post_id path string true "Post ID"
+// @Param TemplateData body templateData false "TemplateData"
 // @Success 200 {object} model.Post
-// @Router /core/posts/{post_id}/templates [post]
+// @Router /core/posts/templates [post]
 func createTemplate(w http.ResponseWriter, r *http.Request) {
-	postID := chi.URLParam(r, "post_id")
-	id, err := strconv.Atoi(postID)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-		return
-	}
-
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -44,8 +40,24 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	templateReq := &templateData{}
+
+	err = json.NewDecoder(r.Body).Decode(&templateReq)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
+
+	validationError := validationx.Check(templateReq)
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
+
 	result := model.Post{}
-	result.ID = uint(id)
+	result.ID = uint(templateReq.PostID)
 
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),

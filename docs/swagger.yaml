@@ -573,6 +573,13 @@ definitions:
     required:
     - published_date
     type: object
+  post.templateData:
+    properties:
+      post_id:
+        type: integer
+    required:
+    - post_id
+    type: object
   rating.paging:
     properties:
       nodes:
@@ -1442,7 +1449,7 @@ paths:
       summary: Publish a post by id
       tags:
       - Post
-  /core/posts/{post_id}/templates:
+  /core/posts/templates:
     post:
       description: Create template
       operationId: create-template
@@ -1457,11 +1464,11 @@ paths:
         name: X-Space
         required: true
         type: string
-      - description: Post ID
-        in: path
-        name: post_id
-        required: true
-        type: string
+      - description: TemplateData
+        in: body
+        name: TemplateData
+        schema:
+          $ref: '#/definitions/post.templateData'
       produces:
       - application/json
       responses:

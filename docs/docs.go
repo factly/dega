@@ -933,6 +933,51 @@ var doc = `{
                 }
             }
         },
+        "/core/posts/templates": {
+            "post": {
+                "description": "Create template",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "create template",
+                "operationId": "create-template",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "TemplateData",
+                        "name": "TemplateData",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/post.templateData"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Post"
+                        }
+                    }
+                }
+            }
+        },
         "/core/posts/{post_id}": {
             "get": {
                 "description": "Get post by ID",
@@ -1108,50 +1153,6 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            }
-        },
-        "/core/posts/{post_id}/templates": {
-            "post": {
-                "description": "Create template",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "create template",
-                "operationId": "create-template",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.Post"
                         }
                     }
                 }
@@ -3146,6 +3147,17 @@ var doc = `{
             "properties": {
                 "published_date": {
                     "type": "string"
+                }
+            }
+        },
+        "post.templateData": {
+            "type": "object",
+            "required": [
+                "post_id"
+            ],
+            "properties": {
+                "post_id": {
+                    "type": "integer"
                 }
             }
         },
