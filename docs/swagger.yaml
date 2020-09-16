@@ -700,6 +700,15 @@ definitions:
     required:
     - name
     type: object
+  user.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Author'
+        type: array
+      total:
+        type: integer
+    type: object
 host: localhost:6000
 info:
   contact:
@@ -1783,6 +1792,31 @@ paths:
       summary: Update a tag by id
       tags:
       - Tag
+  /core/users:
+    get:
+      description: Get users with space access
+      operationId: get-space-users
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.paging'
+      summary: Get users with space access
+      tags:
+      - Users
   /fact-check/claimants:
     get:
       description: Get all claimants

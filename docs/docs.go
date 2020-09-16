@@ -1605,6 +1605,43 @@ var doc = `{
                 }
             }
         },
+        "/core/users": {
+            "get": {
+                "description": "Get users with space access",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get users with space access",
+                "operationId": "get-space-users",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user.paging"
+                        }
+                    }
+                }
+            }
+        },
         "/fact-check/claimants": {
             "get": {
                 "description": "Get all claimants",
@@ -3340,6 +3377,20 @@ var doc = `{
                 },
                 "slug": {
                     "type": "string"
+                }
+            }
+        },
+        "user.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Author"
+                    }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         }
