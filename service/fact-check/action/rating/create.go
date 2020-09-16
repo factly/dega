@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
@@ -61,6 +62,19 @@ func create(w http.ResponseWriter, r *http.Request) {
 		ratingSlug = rating.Slug
 	} else {
 		ratingSlug = slug.Make(rating.Name)
+	}
+
+	// Check if rating with same name exist
+	newRatingName := strings.ToLower(strings.TrimSpace(rating.Name))
+	var ratingCount int
+	config.DB.Model(&model.Rating{}).Where(&model.Rating{
+		SpaceID: uint(sID),
+	}).Where("name ILIKE ?", newRatingName).Count(&ratingCount)
+
+	if ratingCount > 0 {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
 	}
 
 	result := &model.Rating{

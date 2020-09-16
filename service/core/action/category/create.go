@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/factly/x/loggerx"
 
@@ -75,6 +76,19 @@ func create(w http.ResponseWriter, r *http.Request) {
 		categorySlug = category.Slug
 	} else {
 		categorySlug = slug.Make(category.Name)
+	}
+
+	// Check if category with same name exist
+	newCategoryName := strings.ToLower(strings.TrimSpace(category.Name))
+	var categoryCount int
+	config.DB.Model(&model.Category{}).Where(&model.Category{
+		SpaceID: uint(sID),
+	}).Where("name ILIKE ?", newCategoryName).Count(&categoryCount)
+
+	if categoryCount > 0 {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
 	}
 
 	result := &model.Category{

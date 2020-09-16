@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -62,6 +63,19 @@ func create(w http.ResponseWriter, r *http.Request) {
 		tagSlug = tag.Slug
 	} else {
 		tagSlug = slug.Make(tag.Name)
+	}
+
+	// Check if tag with same name exist
+	newTagName := strings.ToLower(strings.TrimSpace(tag.Name))
+	var tagCount int
+	config.DB.Model(&model.Tag{}).Where(&model.Tag{
+		SpaceID: uint(sID),
+	}).Where("name ILIKE ?", newTagName).Count(&tagCount)
+
+	if tagCount > 0 {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
 	}
 
 	result := &model.Tag{

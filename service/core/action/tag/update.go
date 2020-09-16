@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -87,6 +88,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		tagSlug = slug.Approve(tag.Slug, sID, config.DB.NewScope(&model.Tag{}).TableName())
 	} else {
 		tagSlug = slug.Approve(slug.Make(tag.Name), sID, config.DB.NewScope(&model.Tag{}).TableName())
+	}
+
+	// Check if tag with same name exist
+	newTagName := strings.ToLower(strings.TrimSpace(tag.Name))
+	var sameTag model.Tag
+	err = config.DB.Model(&model.Tag{}).Where(&model.Tag{
+		SpaceID: uint(sID),
+	}).Where("name ILIKE ?", newTagName).Find(&sameTag).Error
+
+	if err == nil && sameTag.ID != uint(id) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
 	}
 
 	tx := config.DB.Begin()

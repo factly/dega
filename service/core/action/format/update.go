@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -88,6 +89,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		formatSlug = slug.Approve(format.Slug, sID, config.DB.NewScope(&model.Format{}).TableName())
 	} else {
 		formatSlug = slug.Approve(slug.Make(format.Name), sID, config.DB.NewScope(&model.Format{}).TableName())
+	}
+
+	// Check if format with same name exist
+	newFormatName := strings.ToLower(strings.TrimSpace(format.Name))
+	var sameFormat model.Format
+	err = config.DB.Model(&model.Format{}).Where(&model.Format{
+		SpaceID: uint(sID),
+	}).Where("name ILIKE ?", newFormatName).Find(&sameFormat).Error
+
+	if err == nil && sameFormat.ID != uint(id) {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
 	}
 
 	tx := config.DB.Begin()
