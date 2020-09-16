@@ -95,6 +95,18 @@ var undecodablePublishData = map[string]interface{}{
 	"published_date": 43,
 }
 
+var templateData = map[string]interface{}{
+	"post_id": 1,
+}
+
+var invalidTemplateData = map[string]interface{}{
+	"posd": 1,
+}
+
+var undecodableTemplateData = map[string]interface{}{
+	"post_id": "dfdsf",
+}
+
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "title", "subtitle", "slug", "status", "excerpt",
 	"description", "is_featured", "is_sticky", "is_highlighted", "featured_medium_id", "format_id", "published_date", "space_id"}
 
@@ -104,7 +116,7 @@ var paginationQuery = `SELECT \* FROM "posts" (.+) LIMIT 1 OFFSET 1`
 var basePath = "/core/posts"
 var path = "/core/posts/{post_id}"
 var publishPath = "/core/posts/{post_id}/publish"
-var templatePath = "/core/posts/{post_id}/templates"
+var templatePath = "/core/posts/templates"
 
 func slugCheckMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "posts"`)).

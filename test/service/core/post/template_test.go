@@ -58,8 +58,7 @@ func TestPostTemplateCreate(t *testing.T) {
 
 		e.POST(templatePath).
 			WithHeaders(headers).
-			WithPath("post_id", "1").
-			WithJSON(Data).
+			WithJSON(templateData).
 			Expect().
 			Status(http.StatusOK)
 
@@ -67,15 +66,24 @@ func TestPostTemplateCreate(t *testing.T) {
 
 	})
 
-	t.Run("invalid post id", func(t *testing.T) {
+	t.Run("invalid template data body", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		e.POST(templatePath).
 			WithHeaders(headers).
-			WithPath("post_id", "abc").
-			WithJSON(Data).
+			WithJSON(invalidTemplateData).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusUnprocessableEntity)
+	})
+
+	t.Run("undecodable template data body", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		e.POST(templatePath).
+			WithHeaders(headers).
+			WithJSON(undecodableTemplateData).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
 	})
 
 	t.Run("post record not found", func(t *testing.T) {
@@ -86,8 +94,7 @@ func TestPostTemplateCreate(t *testing.T) {
 
 		e.POST(templatePath).
 			WithHeaders(headers).
-			WithPath("post_id", "1").
-			WithJSON(Data).
+			WithJSON(templateData).
 			Expect().
 			Status(http.StatusNotFound)
 
@@ -121,8 +128,7 @@ func TestPostTemplateCreate(t *testing.T) {
 
 		e.POST(templatePath).
 			WithHeaders(headers).
-			WithPath("post_id", "1").
-			WithJSON(Data).
+			WithJSON(templateData).
 			Expect().
 			Status(http.StatusInternalServerError)
 
@@ -153,8 +159,7 @@ func TestPostTemplateCreate(t *testing.T) {
 
 		e.POST(templatePath).
 			WithHeaders(headers).
-			WithPath("post_id", "1").
-			WithJSON(Data).
+			WithJSON(templateData).
 			Expect().
 			Status(http.StatusInternalServerError)
 
