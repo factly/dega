@@ -53,7 +53,7 @@ func TestCategoryCreate(t *testing.T) {
 	t.Run("create category without parent", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock, Data)
 
 		insertMock(mock)
@@ -90,7 +90,7 @@ func TestCategoryCreate(t *testing.T) {
 	t.Run("create category with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock, Data)
 
 		insertMock(mock)
@@ -113,7 +113,7 @@ func TestCategoryCreate(t *testing.T) {
 	t.Run("medium does not belong same space", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock, Data)
 
 		insertWithMediumError(mock)
@@ -130,7 +130,7 @@ func TestCategoryCreate(t *testing.T) {
 	t.Run("medium does not exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock, Data)
 
 		insertWithMediumError(mock)
@@ -147,7 +147,7 @@ func TestCategoryCreate(t *testing.T) {
 	t.Run("when category with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 1)
+		sameNameCount(mock, 1, Data["name"])
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -161,7 +161,7 @@ func TestCategoryCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock, Data)
 
 		insertMock(mock)

@@ -54,7 +54,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
 		formatInsertMock(mock)
@@ -73,7 +73,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
 		formatInsertMock(mock)
@@ -95,7 +95,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
 		mock.ExpectBegin()
@@ -115,7 +115,7 @@ func TestFormatCreate(t *testing.T) {
 	t.Run("format with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 1)
+		sameNameCount(mock, 1, Data["name"])
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -129,7 +129,7 @@ func TestFormatCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
 		formatInsertMock(mock)

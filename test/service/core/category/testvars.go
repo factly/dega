@@ -75,21 +75,10 @@ func slugCheckMock(mock sqlmock.Sqlmock, category map[string]interface{}) {
 		WillReturnRows(sqlmock.NewRows(Columns))
 }
 
-func sameNameCount(mock sqlmock.Sqlmock, count int) {
+func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
 	mock.ExpectQuery(countQuery).
-		WithArgs(1, strings.ToLower(Data["name"].(string))).
+		WithArgs(1, strings.ToLower(name.(string))).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
-}
-
-func sameNameFind(mock sqlmock.Sqlmock, found bool) {
-	mx := mock.ExpectQuery(selectQuery).
-		WithArgs(1, strings.ToLower(Data["name"].(string)))
-	if found {
-		mx.WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(2, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], 1))
-	} else {
-		mx.WillReturnRows(sqlmock.NewRows(Columns))
-	}
 }
 
 func insertMock(mock sqlmock.Sqlmock) {

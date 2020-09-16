@@ -54,7 +54,7 @@ func TestTagCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 
 		slugCheckMock(mock)
 
@@ -74,7 +74,7 @@ func TestTagCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 
 		slugCheckMock(mock)
 
@@ -97,7 +97,7 @@ func TestTagCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 1)
+		sameNameCount(mock, 1, Data["name"])
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -111,7 +111,7 @@ func TestTagCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 
 		slugCheckMock(mock)
 
@@ -134,7 +134,7 @@ func TestTagCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		sameNameCount(mock, 0)
+		sameNameCount(mock, 0, Data["name"])
 
 		slugCheckMock(mock)
 

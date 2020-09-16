@@ -83,8 +83,6 @@ func TestTagUpdate(t *testing.T) {
 
 		SelectWithSpaceMock(mock)
 
-		sameNameFind(mock, false)
-
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
 
@@ -109,8 +107,6 @@ func TestTagUpdate(t *testing.T) {
 			WithArgs("elections%", 1).
 			WillReturnRows(sqlmock.NewRows(Columns).
 				AddRow(1, time.Now(), time.Now(), nil, updatedTag["name"], "elections", 1))
-
-		sameNameFind(mock, false)
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
@@ -137,7 +133,6 @@ func TestTagUpdate(t *testing.T) {
 			WithArgs(fmt.Sprint(updatedTag["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
-		sameNameFind(mock, false)
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
 
@@ -153,13 +148,13 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("tag with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedTag := map[string]interface{}{
-			"name": "Elections",
+			"name": "NewElections",
 			"slug": "elections",
 		}
 
 		SelectWithSpaceMock(mock)
 
-		sameNameFind(mock, true)
+		sameNameCount(mock, 1, updatedTag["name"])
 
 		e.PUT(path).
 			WithPath("tag_id", 1).
@@ -179,7 +174,6 @@ func TestTagUpdate(t *testing.T) {
 
 		SelectWithSpaceMock(mock)
 
-		sameNameFind(mock, false)
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectRollback()
 
