@@ -26,7 +26,19 @@ jest.mock('../../../actions/policies', () => ({
 describe('Policies List component', () => {
   let store;
   let mockedDispatch;
-  const policy = { id: 1, name: 'policy', description: 'description' };
+  const policy = {
+    id: 1,
+    name: 'policy',
+    description: 'description',
+    users: [
+      {
+        id: 7,
+        email: 'ross.geller@gmail.com',
+        first_name: 'ross',
+        last_name: 'geller',
+      },
+    ],
+  };
 
   describe('snapshot testing', () => {
     beforeEach(() => {

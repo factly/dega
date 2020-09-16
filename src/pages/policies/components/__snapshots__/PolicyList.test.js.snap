@@ -54,6 +54,14 @@ exports[`Policies List component snapshot testing should match component when lo
                 <col
                   style={
                     Object {
+                      "minWidth": "20%",
+                      "width": "20%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
                       "minWidth": undefined,
                       "width": undefined,
                     }
@@ -62,8 +70,16 @@ exports[`Policies List component snapshot testing should match component when lo
                 <col
                   style={
                     Object {
-                      "minWidth": "50%",
-                      "width": "50%",
+                      "minWidth": "25%",
+                      "width": "25%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
+                      "minWidth": "15%",
+                      "width": "15%",
                     }
                   }
                 />
@@ -94,6 +110,14 @@ exports[`Policies List component snapshot testing should match component when lo
                     rowSpan={null}
                     style={Object {}}
                   >
+                    Members
+                  </th>
+                  <th
+                    className="ant-table-cell"
+                    colSpan={null}
+                    rowSpan={null}
+                    style={Object {}}
+                  >
                     Action
                   </th>
                 </tr>
@@ -111,7 +135,7 @@ exports[`Policies List component snapshot testing should match component when lo
                 >
                   <td
                     className="ant-table-cell"
-                    colSpan={3}
+                    colSpan={4}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -205,6 +229,14 @@ exports[`Policies List component snapshot testing should match component with po
                 <col
                   style={
                     Object {
+                      "minWidth": "20%",
+                      "width": "20%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
                       "minWidth": undefined,
                       "width": undefined,
                     }
@@ -213,8 +245,16 @@ exports[`Policies List component snapshot testing should match component with po
                 <col
                   style={
                     Object {
-                      "minWidth": "50%",
-                      "width": "50%",
+                      "minWidth": "25%",
+                      "width": "25%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
+                      "minWidth": "15%",
+                      "width": "15%",
                     }
                   }
                 />
@@ -238,6 +278,14 @@ exports[`Policies List component snapshot testing should match component with po
                     style={Object {}}
                   >
                     Description
+                  </th>
+                  <th
+                    className="ant-table-cell"
+                    colSpan={null}
+                    rowSpan={null}
+                    style={Object {}}
+                  >
+                    Members
                   </th>
                   <th
                     className="ant-table-cell"
@@ -282,6 +330,37 @@ exports[`Policies List component snapshot testing should match component with po
                     >
                       description
                     </div>
+                  </td>
+                  <td
+                    className="ant-table-cell"
+                    colSpan={null}
+                    rowSpan={null}
+                    style={Object {}}
+                  >
+                    <span
+                      className="ant-avatar ant-avatar-circle"
+                      onMouseEnter={[Function]}
+                      onMouseLeave={[Function]}
+                      style={
+                        Object {
+                          "float": "right",
+                          "margin": "1px",
+                        }
+                      }
+                    >
+                      <span
+                        className="ant-avatar-string"
+                        style={
+                          Object {
+                            "WebkitTransform": "scale(1) translateX(-50%)",
+                            "msTransform": "scale(1) translateX(-50%)",
+                            "transform": "scale(1) translateX(-50%)",
+                          }
+                        }
+                      >
+                        R
+                      </span>
+                    </span>
                   </td>
                   <td
                     className="ant-table-cell"
@@ -457,6 +536,14 @@ exports[`Policies List component snapshot testing should render the component 1`
                 <col
                   style={
                     Object {
+                      "minWidth": "20%",
+                      "width": "20%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
                       "minWidth": undefined,
                       "width": undefined,
                     }
@@ -465,8 +552,16 @@ exports[`Policies List component snapshot testing should render the component 1`
                 <col
                   style={
                     Object {
-                      "minWidth": "50%",
-                      "width": "50%",
+                      "minWidth": "25%",
+                      "width": "25%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
+                      "minWidth": "15%",
+                      "width": "15%",
                     }
                   }
                 />
@@ -497,6 +592,14 @@ exports[`Policies List component snapshot testing should render the component 1`
                     rowSpan={null}
                     style={Object {}}
                   >
+                    Members
+                  </th>
+                  <th
+                    className="ant-table-cell"
+                    colSpan={null}
+                    rowSpan={null}
+                    style={Object {}}
+                  >
                     Action
                   </th>
                 </tr>
@@ -514,7 +617,7 @@ exports[`Policies List component snapshot testing should render the component 1`
                 >
                   <td
                     className="ant-table-cell"
-                    colSpan={3}
+                    colSpan={4}
                     rowSpan={null}
                     style={Object {}}
                   >
