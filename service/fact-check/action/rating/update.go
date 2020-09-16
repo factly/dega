@@ -95,7 +95,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	var sameRating model.Rating
 	err = config.DB.Model(&model.Rating{}).Where(&model.Rating{
 		SpaceID: uint(sID),
-	}).Where("name ILIKE ?", newRatingName).Find(&sameRating).Error
+	}).Where("name ILIKE ?", newRatingName).First(&sameRating).Error
 
 	if err == nil && sameRating.ID != uint(id) {
 		loggerx.Error(err)

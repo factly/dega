@@ -80,6 +80,8 @@ func TestCategoryUpdate(t *testing.T) {
 
 		selectWithSpace(mock)
 
+		sameNameFind(mock, false)
+
 		updateMock(mock)
 		mock.ExpectCommit()
 
@@ -98,6 +100,7 @@ func TestCategoryUpdate(t *testing.T) {
 		selectWithSpace(mock)
 
 		slugCheckMock(mock, Data)
+		sameNameFind(mock, false)
 
 		updateMock(mock)
 		mock.ExpectCommit()
@@ -135,6 +138,7 @@ func TestCategoryUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		selectWithSpace(mock)
+		sameNameFind(mock, false)
 
 		Data["medium_id"] = 0
 		mock.ExpectBegin()
@@ -164,6 +168,7 @@ func TestCategoryUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		selectWithSpace(mock)
+		sameNameFind(mock, false)
 
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
@@ -181,11 +186,28 @@ func TestCategoryUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("category with same name exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		sameNameFind(mock, true)
+
+		e.PUT(path).
+			WithPath("category_id", 1).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("update category when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
 		selectWithSpace(mock)
+		sameNameFind(mock, false)
 
 		updateMock(mock)
 		mock.ExpectRollback()

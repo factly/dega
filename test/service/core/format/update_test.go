@@ -84,11 +84,12 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Article",
+			"name": "Fact Check",
 			"slug": "fact-check",
 		}
 
 		SelectWithSpace(mock)
+		sameNameFind(mock, false)
 
 		formatUpdateMock(mock, updatedFormat)
 
@@ -117,6 +118,7 @@ func TestFormatUpdate(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows(columns).
 				AddRow(1, time.Now(), time.Now(), nil, updatedFormat["name"], "factcheck"))
 
+		sameNameFind(mock, false)
 		formatUpdateMock(mock, updatedFormat)
 
 		selectAfterUpdate(mock, updatedFormat)
@@ -137,7 +139,7 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Article",
+			"name": "Fact Check",
 			"slug": "testing-slug",
 		}
 		SelectWithSpace(mock)
@@ -146,6 +148,7 @@ func TestFormatUpdate(t *testing.T) {
 			WithArgs(fmt.Sprint(updatedFormat["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
+		sameNameFind(mock, false)
 		formatUpdateMock(mock, updatedFormat)
 
 		selectAfterUpdate(mock, updatedFormat)
@@ -160,11 +163,29 @@ func TestFormatUpdate(t *testing.T) {
 
 	})
 
+	t.Run("format with same name exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		updatedFormat := map[string]interface{}{
+			"name": "Fact Check",
+			"slug": "fact-check",
+		}
+
+		SelectWithSpace(mock)
+		sameNameFind(mock, true)
+
+		e.PUT(path).
+			WithPath("format_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedFormat).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
+
 	t.Run("update format when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Article",
+			"name": "Fact Check",
 			"slug": "article",
 		}
 
@@ -174,6 +195,7 @@ func TestFormatUpdate(t *testing.T) {
 			WithArgs(fmt.Sprint(updatedFormat["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
+		sameNameFind(mock, false)
 		formatUpdateMock(mock, updatedFormat)
 
 		selectAfterUpdate(mock, updatedFormat)

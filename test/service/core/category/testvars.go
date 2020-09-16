@@ -3,6 +3,7 @@ package category
 import (
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -72,6 +73,23 @@ func slugCheckMock(mock sqlmock.Sqlmock, category map[string]interface{}) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "categories"`)).
 		WithArgs(fmt.Sprint(category["slug"], "%"), 1).
 		WillReturnRows(sqlmock.NewRows(Columns))
+}
+
+func sameNameCount(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(countQuery).
+		WithArgs(1, strings.ToLower(Data["name"].(string))).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+func sameNameFind(mock sqlmock.Sqlmock, found bool) {
+	mx := mock.ExpectQuery(selectQuery).
+		WithArgs(1, strings.ToLower(Data["name"].(string)))
+	if found {
+		mx.WillReturnRows(sqlmock.NewRows(Columns).
+			AddRow(2, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], 1))
+	} else {
+		mx.WillReturnRows(sqlmock.NewRows(Columns))
+	}
 }
 
 func insertMock(mock sqlmock.Sqlmock) {

@@ -103,7 +103,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	var sameCat model.Category
 	err = config.DB.Model(&model.Category{}).Where(&model.Category{
 		SpaceID: uint(sID),
-	}).Where("name ILIKE ?", newCategoryName).Find(&sameCat).Error
+	}).Where("name ILIKE ?", newCategoryName).First(&sameCat).Error
 
 	if err == nil && sameCat.ID != uint(id) {
 		loggerx.Error(err)

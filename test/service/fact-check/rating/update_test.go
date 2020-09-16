@@ -89,6 +89,8 @@ func TestRatingUpdate(t *testing.T) {
 
 		SelectWithSpace(mock)
 
+		sameNameFind(mock, false)
+
 		ratingUpdateMock(mock, updatedRating, nil)
 		mock.ExpectCommit()
 
@@ -107,6 +109,7 @@ func TestRatingUpdate(t *testing.T) {
 		SelectWithSpace(mock)
 
 		slugCheckMock(mock, Data)
+		sameNameFind(mock, false)
 
 		ratingUpdateMock(mock, updatedRating, nil)
 		mock.ExpectCommit()
@@ -127,6 +130,7 @@ func TestRatingUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		SelectWithSpace(mock)
+		sameNameFind(mock, false)
 
 		mock.ExpectBegin()
 		mock.ExpectExec(`UPDATE \"ratings\" SET (.+)  WHERE (.+) \"ratings\".\"id\" = `).
@@ -165,6 +169,7 @@ func TestRatingUpdate(t *testing.T) {
 			WithArgs(fmt.Sprint(updatedRating["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
+		sameNameFind(mock, false)
 		ratingUpdateMock(mock, updatedRating, nil)
 		mock.ExpectCommit()
 
@@ -188,6 +193,7 @@ func TestRatingUpdate(t *testing.T) {
 			WithArgs(fmt.Sprint(updatedRating["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
+		sameNameFind(mock, false)
 		ratingUpdateMock(mock, updatedRating, errors.New("record not found"))
 		mock.ExpectRollback()
 
@@ -201,6 +207,23 @@ func TestRatingUpdate(t *testing.T) {
 
 	})
 
+	t.Run("rating with same name exist", func(t *testing.T) {
+		updatedRating["slug"] = "true"
+		test.CheckSpaceMock(mock)
+
+		SelectWithSpace(mock)
+
+		sameNameFind(mock, true)
+
+		e.PUT(path).
+			WithPath("rating_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedRating).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("update rating when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		updatedRating["slug"] = "true"
@@ -208,6 +231,7 @@ func TestRatingUpdate(t *testing.T) {
 
 		SelectWithSpace(mock)
 
+		sameNameFind(mock, false)
 		ratingUpdateMock(mock, updatedRating, nil)
 		mock.ExpectRollback()
 

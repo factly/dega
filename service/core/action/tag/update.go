@@ -95,7 +95,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	var sameTag model.Tag
 	err = config.DB.Model(&model.Tag{}).Where(&model.Tag{
 		SpaceID: uint(sID),
-	}).Where("name ILIKE ?", newTagName).Find(&sameTag).Error
+	}).Where("name ILIKE ?", newTagName).First(&sameTag).Error
 
 	if err == nil && sameTag.ID != uint(id) {
 		loggerx.Error(err)

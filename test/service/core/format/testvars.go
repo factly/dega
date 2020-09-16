@@ -3,6 +3,7 @@ package format
 import (
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -45,6 +46,23 @@ func formatInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
+}
+
+func sameNameCount(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "formats"`)).
+		WithArgs(1, strings.ToLower(Data["name"].(string))).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+func sameNameFind(mock sqlmock.Sqlmock, found bool) {
+	mx := mock.ExpectQuery(selectQuery).
+		WithArgs(1, strings.ToLower(Data["name"].(string)))
+	if found {
+		mx.WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(2, time.Now(), time.Now(), nil, Data["name"], Data["slug"]))
+	} else {
+		mx.WillReturnRows(sqlmock.NewRows(columns))
+	}
 }
 
 //check format exits or not

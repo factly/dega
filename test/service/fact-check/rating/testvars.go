@@ -3,6 +3,7 @@ package rating
 import (
 	"fmt"
 	"regexp"
+	"strings"
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -95,6 +96,23 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(100, 1).
 		WillReturnRows(sqlmock.NewRows(columns))
+}
+
+func sameNameCount(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
+		WithArgs(1, strings.ToLower(Data["name"].(string))).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+func sameNameFind(mock sqlmock.Sqlmock, found bool) {
+	mx := mock.ExpectQuery(selectQuery).
+		WithArgs(1, strings.ToLower(Data["name"].(string)))
+	if found {
+		mx.WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(2, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["medium_id"], Data["description"], Data["numeric_value"], 1))
+	} else {
+		mx.WillReturnRows(sqlmock.NewRows(columns))
+	}
 }
 
 // check rating associated with any claim before deleting

@@ -54,6 +54,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		sameNameCount(mock, 0)
 		slugCheckMock(mock)
 
 		formatInsertMock(mock)
@@ -72,6 +73,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		sameNameCount(mock, 0)
 		slugCheckMock(mock)
 
 		formatInsertMock(mock)
@@ -93,6 +95,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		sameNameCount(mock, 0)
 		slugCheckMock(mock)
 
 		mock.ExpectBegin()
@@ -109,10 +112,24 @@ func TestFormatCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("format with same name exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		sameNameCount(mock, 1)
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("create format when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
+		sameNameCount(mock, 0)
 		slugCheckMock(mock)
 
 		formatInsertMock(mock)

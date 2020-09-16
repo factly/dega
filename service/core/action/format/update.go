@@ -96,7 +96,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	var sameFormat model.Format
 	err = config.DB.Model(&model.Format{}).Where(&model.Format{
 		SpaceID: uint(sID),
-	}).Where("name ILIKE ?", newFormatName).Find(&sameFormat).Error
+	}).Where("name ILIKE ?", newFormatName).First(&sameFormat).Error
 
 	if err == nil && sameFormat.ID != uint(id) {
 		loggerx.Error(err)
