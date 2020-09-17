@@ -93,7 +93,6 @@ func allpermissions(w http.ResponseWriter, r *http.Request) {
 	permissionMap := map[string][]model.Permission{}
 
 	spacePrefix := fmt.Sprint("id:org:", oID, ":app:dega:space:", sID, ":")
-	// permissions := make([]model.Permission, 0)
 
 	for _, pol := range policyList {
 		if strings.HasPrefix(pol.ID, spacePrefix) {
@@ -117,11 +116,15 @@ func allpermissions(w http.ResponseWriter, r *http.Request) {
 	result := make([]allPermissionRes, 0)
 
 	for id, permission := range permissionMap {
-		userpermission := allPermissionRes{
-			Author:      userMap[id],
-			Permissions: permission,
+
+		if aut, found := userMap[id]; found {
+			userpermission := allPermissionRes{
+				Author:      aut,
+				Permissions: permission,
+			}
+
+			result = append(result, userpermission)
 		}
-		result = append(result, userpermission)
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

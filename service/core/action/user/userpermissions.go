@@ -52,9 +52,11 @@ func userpermissions(w http.ResponseWriter, r *http.Request) {
 	// check if the user is admin of organisation
 	err = util.CheckSpaceKetoPermission("all", uint(oID), uint(uID))
 	if err == nil {
-		allPermission := model.Permission{
-			Resource: "all",
-			Actions:  []string{"all"},
+		allPermission := []model.Permission{
+			model.Permission{
+				Resource: "all",
+				Actions:  []string{"all"},
+			},
 		}
 		renderx.JSON(w, http.StatusOK, allPermission)
 		return

@@ -1,0 +1,85 @@
+package user
+
+import (
+	"net/http"
+	"net/http/httptest"
+	"testing"
+
+	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service"
+	"github.com/factly/dega-server/test"
+	"github.com/gavv/httpexpect"
+	"gopkg.in/h2non/gock.v1"
+)
+
+func TestListAllPermission(t *testing.T) {
+	mock := test.SetupMockDB()
+
+	test.MockServer()
+	defer gock.DisableNetworking()
+
+	testServer := httptest.NewServer(service.RegisterRoutes())
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer testServer.Close()
+
+	// create httpexpect instance
+	e := httpexpect.New(t, testServer.URL)
+
+	t.Run("get all users permissions", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		e.GET(permissionAllPath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(allPermissionResponse[0])
+	})
+
+	t.Run("if logged in user is not admin", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		gock.New(config.KetoURL + "/engines/acp/ory/regex/roles/(.+)").
+			Persist().
+			Reply(http.StatusNotFound)
+
+		e.GET(permissionAllPath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnauthorized)
+	})
+
+	t.Run("when keto is down", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		e.GET(permissionAllPath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnauthorized)
+	})
+
+	t.Run("when kavach is down", func(t *testing.T) {
+		gock.Off()
+		test.KetoGock()
+		gock.New(testServer.URL).EnableNetworking().Persist()
+		defer gock.DisableNetworking()
+
+		// test.DisableKavachGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		e.GET(permissionAllPath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Array().
+			Length().
+			Equal(0)
+	})
+}
