@@ -20,6 +20,9 @@ var MeiliURL string
 // MeiliKey meili search server url
 var MeiliKey string
 
+//GoogleKey  google API Key string
+var GoogleKey string
+
 // SetupVars setups all the config variables to run application
 func SetupVars() {
 	var dsn string
@@ -27,12 +30,14 @@ func SetupVars() {
 	var keto string
 	var meili string
 	var meiliKey string
+	var googleKey string
 
 	flag.StringVar(&dsn, "dsn", "", "Database connection string")
 	flag.StringVar(&kavach, "kavach", "", "Kavach connection string")
 	flag.StringVar(&keto, "keto", "", "Keto connection string")
 	flag.StringVar(&meili, "meili", "", "Meili connection string")
 	flag.StringVar(&meiliKey, "meiliKey", "", "Meili API Key string")
+	flag.StringVar(&googleKey, "googleKey", "", "Google API Key string")
 
 	flag.Parse()
 
@@ -56,9 +61,14 @@ func SetupVars() {
 		log.Fatal("Please pass meiliKey flag")
 	}
 
+	if googleKey == "" {
+		log.Fatal("Please pass googleKey flag")
+	}
+
 	DSN = dsn
 	KavachURL = kavach
 	KetoURL = keto
 	MeiliURL = meili
 	MeiliKey = meiliKey
+	GoogleKey = googleKey
 }
