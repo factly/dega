@@ -82,6 +82,9 @@ func publish(w http.ResponseWriter, r *http.Request) {
 		tx.Model(&model.PostAuthor{}).Create(&author)
 	}
 
+	result.Tags = make([]model.Tag, 0)
+	result.Categories = make([]model.Category, 0)
+
 	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
 		Status:        "published",
 		PublishedDate: time.Now(),

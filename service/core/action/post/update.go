@@ -75,6 +75,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	result := &postData{}
 	result.ID = uint(id)
+	result.Tags = make([]model.Tag, 0)
+	result.Categories = make([]model.Category, 0)
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factCheckModel.Claim, 0)
 
@@ -171,7 +173,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FeaturedMediumID: post.FeaturedMediumID,
 		Tags:             newTags,
 		Categories:       newCategories,
-	}).Preload("Medium").Preload("Format").First(&result.Post).Error
+	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
