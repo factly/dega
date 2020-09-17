@@ -192,6 +192,40 @@ export const addPost = (data) => {
   };
 };
 
+export const publishPost = (data) => {
+  return (dispatch) => {
+    dispatch(loadingPosts());
+    return axios
+      .put(POSTS_API + '/' + data.id + '/publish', data)
+      .then((response) => {
+        let post = response.data;
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMediaList([post.medium]));
+
+        dispatch(
+          getPostByID({
+            ...post,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
+          }),
+        );
+        dispatch(stopPostsLoading());
+        dispatch(addSuccessNotification('Post published'));
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(error.message));
+      });
+  };
+};
+
 export const updatePost = (data) => {
   return (dispatch) => {
     dispatch(loadingPosts());

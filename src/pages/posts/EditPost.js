@@ -2,7 +2,7 @@ import React from 'react';
 import PostEditForm from './components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
-import { updatePost, getPost } from '../../actions/posts';
+import { updatePost, getPost, publishPost } from '../../actions/posts';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -26,9 +26,12 @@ function EditPost() {
   if (loading) return <Skeleton />;
 
   const onUpdate = (values) => {
-    dispatch(updatePost({ ...post, ...values })).then(() => {
-      history.push('/posts');
-    });
+    if (values.status === 'Draft')
+      dispatch(updatePost({ ...post, ...values })).then(() => {
+        history.push('/posts');
+      });
+    if (values.status === 'Publish')
+      dispatch(publishPost({ ...post, ...values })).then(() => history.push('/posts'));
   };
   return <PostEditForm data={post} onCreate={onUpdate} />;
 }
