@@ -1,8 +1,6 @@
 package post
 
 import (
-	"encoding/json"
-	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -17,13 +15,8 @@ import (
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
-
-type publishData struct {
-	PublishedDate time.Time `json:"published_date" validate:"required"`
-}
 
 // publish - Publish post by id
 // @Summary Publish a post by id
@@ -35,7 +28,6 @@ type publishData struct {
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Param post_id path string true "Post ID"
-// @Param PublishPost body publishData false "PublishPost"
 // @Success 200 {object} postData
 // @Router /core/posts/{post_id}/publish [put]
 func publish(w http.ResponseWriter, r *http.Request) {
@@ -48,26 +40,17 @@ func publish(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	publish := &publishData{}
-
-	err = json.NewDecoder(r.Body).Decode(&publish)
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-		return
-	}
-
-	validationError := validationx.Check(publish)
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
@@ -89,17 +72,22 @@ func publish(w http.ResponseWriter, r *http.Request) {
 		PostID: uint(id),
 	}).Count(&totAuthors)
 
+	tx := config.DB.Begin()
+
 	if totAuthors == 0 {
-		loggerx.Error(errors.New("cannot publish post without authors"))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
-		return
+		author := model.PostAuthor{
+			AuthorID: uint(uID),
+			PostID:   uint(id),
+		}
+		tx.Model(&model.PostAuthor{}).Create(&author)
 	}
 
-	tx := config.DB.Begin()
+	result.Tags = make([]model.Tag, 0)
+	result.Categories = make([]model.Category, 0)
 
 	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
 		Status:        "published",
-		PublishedDate: publish.PublishedDate,
+		PublishedDate: time.Now(),
 	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
@@ -110,6 +98,7 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	}
 
 	postClaims := []factCheckModel.PostClaim{}
+	result.Claims = make([]factCheckModel.Claim, 0)
 	config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 		PostID: uint(id),
 	}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
@@ -127,7 +116,8 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	}
 
 	postAuthors := []model.PostAuthor{}
-	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+	result.Authors = make([]model.Author, 0)
+	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Find(&postAuthors)
 

@@ -87,14 +87,6 @@ var publishData = map[string]interface{}{
 	"published_date": time.Now(),
 }
 
-var invalidPublishData = map[string]interface{}{
-	"publed_date": time.Now(),
-}
-
-var undecodablePublishData = map[string]interface{}{
-	"published_date": 43,
-}
-
 var templateData = map[string]interface{}{
 	"post_id": 1,
 }
@@ -310,6 +302,15 @@ func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugChec
 	medium.SelectWithOutSpace(mock)
 	format.SelectWithOutSpace(mock)
 
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags" INNER JOIN "post_tags"`)).
+		WithArgs(sqlmock.AnyArg()).
+		WillReturnRows(sqlmock.NewRows(append(tag.Columns, []string{"tag_id", "post_id"}...)).
+			AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1, 1))
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
+		WithArgs(sqlmock.AnyArg()).
+		WillReturnRows(sqlmock.NewRows(append(category.Columns, []string{"category_id", "post_id"}...)).
+			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, 1, 1, 1))
+
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
@@ -379,7 +380,7 @@ func deleteMock(mock sqlmock.Sqlmock) {
 		WillReturnResult(sqlmock.NewResult(1, 1))
 }
 
-func publishMock(mock sqlmock.Sqlmock) {
+func prePublishMock(mock sqlmock.Sqlmock) {
 	test.CheckSpaceMock(mock)
 	postSelectWithSpace(mock)
 
@@ -387,6 +388,10 @@ func publishMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
 
 	mock.ExpectBegin()
+}
+
+func publishMock(mock sqlmock.Sqlmock) {
+
 	medium.SelectWithSpace(mock)
 	format.SelectWithSpace(mock)
 
