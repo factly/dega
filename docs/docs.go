@@ -1138,14 +1138,6 @@ var doc = `{
                         "name": "post_id",
                         "in": "path",
                         "required": true
-                    },
-                    {
-                        "description": "PublishPost",
-                        "name": "PublishPost",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/post.publishData"
-                        }
                     }
                 ],
                 "responses": {
@@ -3135,17 +3127,6 @@ var doc = `{
                     "type": "string"
                 },
                 "updated_at": {
-                    "type": "string"
-                }
-            }
-        },
-        "post.publishData": {
-            "type": "object",
-            "required": [
-                "published_date"
-            ],
-            "properties": {
-                "published_date": {
                     "type": "string"
                 }
             }

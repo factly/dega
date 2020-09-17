@@ -566,13 +566,6 @@ definitions:
       updated_at:
         type: string
     type: object
-  post.publishData:
-    properties:
-      published_date:
-        type: string
-    required:
-    - published_date
-    type: object
   post.templateData:
     properties:
       post_id:
@@ -1434,11 +1427,6 @@ paths:
         name: post_id
         required: true
         type: string
-      - description: PublishPost
-        in: body
-        name: PublishPost
-        schema:
-          $ref: '#/definitions/post.publishData'
       produces:
       - application/json
       responses:

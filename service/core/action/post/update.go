@@ -295,7 +295,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// fetch existing post authors
 	updatedPostAuthors := []model.PostAuthor{}
-	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Find(&updatedPostAuthors)
 

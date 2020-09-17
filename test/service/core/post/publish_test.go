@@ -39,30 +39,6 @@ func TestPostPublish(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("invalid publish data", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		e.PUT(publishPath).
-			WithPath("post_id", "1").
-			WithHeaders(headers).
-			WithJSON(invalidPublishData).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("undecodable publish data", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		e.PUT(publishPath).
-			WithPath("post_id", "1").
-			WithHeaders(headers).
-			WithJSON(undecodablePublishData).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-
-		test.ExpectationsMet(t, mock)
-	})
-
 	t.Run("post record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		recordNotFoundMock(mock)
@@ -84,17 +60,28 @@ func TestPostPublish(t *testing.T) {
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "post_authors"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
+		mock.ExpectBegin()
+		mock.ExpectQuery(`INSERT INTO "post_authors"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+			WillReturnRows(sqlmock.
+				NewRows([]string{"id"}).
+				AddRow(1))
+
+		publishMock(mock)
+		mock.ExpectCommit()
+
 		e.PUT(publishPath).
 			WithPath("post_id", "1").
 			WithHeaders(headers).
 			WithJSON(publishData).
 			Expect().
-			Status(http.StatusUnprocessableEntity)
+			Status(http.StatusOK)
 
 		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("publish a post", func(t *testing.T) {
+		prePublishMock(mock)
 		publishMock(mock)
 		mock.ExpectCommit()
 
@@ -110,6 +97,7 @@ func TestPostPublish(t *testing.T) {
 
 	t.Run("publish a post when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
+		prePublishMock(mock)
 		publishMock(mock)
 		mock.ExpectRollback()
 
