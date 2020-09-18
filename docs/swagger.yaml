@@ -738,10 +738,20 @@ definitions:
     properties:
       nodes:
         items:
-          $ref: '#/definitions/model.Author'
+          $ref: '#/definitions/user.userPolicy'
         type: array
       total:
         type: integer
+    type: object
+  user.userPolicy:
+    properties:
+      policy_ids:
+        items:
+          type: string
+        type: array
+      user:
+        $ref: '#/definitions/model.Author'
+        type: object
     type: object
 host: localhost:6000
 info:

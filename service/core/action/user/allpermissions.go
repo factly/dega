@@ -1,7 +1,6 @@
 package user
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -66,19 +65,10 @@ func allpermissions(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Get all policies
-	resp, err := util.KetoGetRequest("/engines/acp/ory/regex/policies")
+	policyList, err := policy.GetAllPolicies()
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-		return
-	}
-	defer resp.Body.Close()
-
-	var policyList []model.KetoPolicy
-	err = json.NewDecoder(resp.Body).Decode(&policyList)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 

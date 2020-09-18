@@ -1,9 +1,11 @@
 package policy
 
 import (
+	"encoding/json"
 	"strings"
 
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 )
 
 // Mapper map policy
@@ -68,4 +70,20 @@ func GetPermissions(ketoPolicy model.KetoPolicy, userID uint) []model.Permission
 	}
 
 	return permissions
+}
+
+// GetAllPolicies gives list of all keto policies
+func GetAllPolicies() ([]model.KetoPolicy, error) {
+	resp, err := util.KetoGetRequest("/engines/acp/ory/regex/policies")
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	var policyList []model.KetoPolicy
+	err = json.NewDecoder(resp.Body).Decode(&policyList)
+	if err != nil {
+		return nil, err
+	}
+	return policyList, nil
 }

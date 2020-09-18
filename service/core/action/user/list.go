@@ -8,8 +8,7 @@ import (
 	"strings"
 
 	"github.com/factly/dega-server/service/core/action/author"
-
-	"github.com/factly/dega-server/util/arrays"
+	"github.com/factly/dega-server/service/core/action/policy"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -21,8 +20,13 @@ import (
 
 // list response
 type paging struct {
-	Total int            `json:"total"`
-	Nodes []model.Author `json:"nodes"`
+	Total int          `json:"total"`
+	Nodes []userPolicy `json:"nodes"`
+}
+
+type userPolicy struct {
+	User      model.Author `json:"user"`
+	PolicyIDs []string     `json:"policy_ids"`
 }
 
 // list - Get users with space access
@@ -51,7 +55,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userIDs := make([]uint, 0)
+	userIDsMap := make(map[uint][]string, 0)
 
 	// get all the admins of the organisation
 	adminRoleID := fmt.Sprint("roles:org:", oID, ":admin")
@@ -75,23 +79,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	for _, member := range adminRole.Members {
 		memid, _ := strconv.Atoi(member)
-		userIDs = append(userIDs, uint(memid))
+		userIDsMap[uint(memid)] = []string{"admin"}
 	}
 
-	// get all the polices for organisation
-	resp, err = util.KetoGetRequest("/engines/acp/ory/regex/policies")
+	// Get all policies
+	policyList, err := policy.GetAllPolicies()
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-		return
-	}
-	defer resp.Body.Close()
-
-	var policyList []model.KetoPolicy
-	err = json.NewDecoder(resp.Body).Decode(&policyList)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
@@ -100,14 +95,20 @@ func list(w http.ResponseWriter, r *http.Request) {
 	// append subjects whose id has prefix for our space
 	for _, policy := range policyList {
 		if strings.HasPrefix(policy.ID, prefixName) {
+			policyNameTokens := strings.Split(policy.ID, ":")
+			policyID := policyNameTokens[len(policyNameTokens)-1]
+
 			for _, subject := range policy.Subjects {
 				subid, _ := strconv.Atoi(subject)
-				userIDs = append(userIDs, uint(subid))
+
+				if _, found := userIDsMap[uint(subid)]; !found {
+					userIDsMap[uint(subid)] = make([]string, 0)
+				}
+
+				userIDsMap[uint(subid)] = append(userIDsMap[uint(subid)], policyID)
 			}
 		}
 	}
-
-	userSet := arrays.RemoveDuplicate(userIDs)
 
 	// Fetch all the users
 	userMap, err := author.All(r.Context())
@@ -117,19 +118,23 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userlist := make([]model.Author, 0)
+	result := paging{}
 
-	for _, userID := range userSet {
-		userIDStr := fmt.Sprint(userID)
+	userlist := make([]userPolicy, 0)
+
+	for usrID, polID := range userIDsMap {
+		userIDStr := fmt.Sprint(usrID)
 		if user, found := userMap[userIDStr]; found {
-			userlist = append(userlist, user)
+			usrpol := userPolicy{
+				PolicyIDs: polID,
+				User:      user,
+			}
+			userlist = append(userlist, usrpol)
 		}
 	}
 
-	result := paging{
-		Total: len(userlist),
-		Nodes: userlist,
-	}
+	result.Nodes = userlist
+	result.Total = len(userlist)
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -3518,11 +3518,26 @@ var doc = `{
                 "nodes": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.Author"
+                        "$ref": "#/definitions/user.userPolicy"
                     }
                 },
                 "total": {
                     "type": "integer"
+                }
+            }
+        },
+        "user.userPolicy": {
+            "type": "object",
+            "properties": {
+                "policy_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "user": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Author"
                 }
             }
         }
