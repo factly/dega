@@ -512,7 +512,6 @@ definitions:
       title:
         type: string
     required:
-    - excerpt
     - format_id
     - title
     type: object
@@ -1472,6 +1471,37 @@ paths:
           schema:
             $ref: '#/definitions/post.postData'
       summary: Publish a post by id
+      tags:
+      - Post
+  /core/posts/publish:
+    post:
+      description: Create published post
+      operationId: add-published-post
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Post Object
+        in: body
+        name: Post
+        required: true
+        schema:
+          $ref: '#/definitions/post.post'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/post.postData'
+      summary: Create published post
       tags:
       - Post
   /core/posts/templates:

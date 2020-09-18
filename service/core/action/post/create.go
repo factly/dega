@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -41,9 +42,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	post := post{}
-	result := &postData{}
-	result.Authors = make([]model.Author, 0)
-	result.Claims = make([]factCheckModel.Claim, 0)
 
 	err = json.NewDecoder(r.Body).Decode(&post)
 
@@ -63,6 +61,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = uint(sID)
 
+	result := createPost(w, r, post, sID, "draft")
+
+	renderx.JSON(w, http.StatusCreated, result)
+}
+
+func createPost(w http.ResponseWriter, r *http.Request, post post, sID int, status string) *postData {
+	result := &postData{}
+	result.Authors = make([]model.Author, 0)
+	result.Claims = make([]factCheckModel.Claim, 0)
+
 	var postSlug string
 	if post.Slug != "" && slug.Check(post.Slug) {
 		postSlug = post.Slug
@@ -73,7 +81,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result.Post = model.Post{
 		Title:            post.Title,
 		Slug:             slug.Approve(postSlug, sID, config.DB.NewScope(&model.Post{}).TableName()),
-		Status:           "draft",
+		Status:           status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      post.Description,
@@ -85,17 +93,23 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:          post.SpaceID,
 	}
 
+	if status == "published" {
+		result.Post.PublishedDate = time.Now()
+	} else {
+		result.Post.PublishedDate = time.Time{}
+	}
+
 	config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&result.Post.Tags)
 	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 
 	tx := config.DB.Begin()
-	err = tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
+	err := tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
+		return nil
 	}
 
 	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post)
@@ -112,7 +126,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 				tx.Rollback()
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return
+				return nil
 			}
 		}
 
@@ -134,7 +148,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+		return nil
 	}
 
 	for _, id := range post.AuthorIDs {
@@ -181,9 +195,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+		return nil
 	}
 
 	tx.Commit()
-	renderx.JSON(w, http.StatusCreated, result)
+
+	return result
 }
