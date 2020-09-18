@@ -308,6 +308,15 @@ definitions:
       url:
         type: string
     type: object
+  model.Permission:
+    properties:
+      actions:
+        items:
+          type: string
+        type: array
+      resource:
+        type: string
+    type: object
   model.Post:
     properties:
       categories:
@@ -692,6 +701,34 @@ definitions:
         type: string
     required:
     - name
+    type: object
+  user.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/user.userPolicy'
+        type: array
+      total:
+        type: integer
+    type: object
+  user.policyRes:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  user.userPolicy:
+    properties:
+      policies:
+        items:
+          $ref: '#/definitions/user.policyRes'
+        type: array
+      user:
+        $ref: '#/definitions/model.Author'
+        type: object
     type: object
 host: localhost:6000
 info:
@@ -1771,6 +1808,58 @@ paths:
       summary: Update a tag by id
       tags:
       - Tag
+  /core/users:
+    get:
+      description: Get users with space access
+      operationId: get-space-users
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.paging'
+      summary: Get users with space access
+      tags:
+      - Users
+  /core/users/permissions:
+    get:
+      description: Get user's permission
+      operationId: get-users-permission
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/model.Permission'
+            type: array
+      summary: Get user's permission
+      tags:
+      - Users
   /fact-check/claimants:
     get:
       description: Get all claimants
