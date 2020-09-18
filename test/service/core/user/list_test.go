@@ -34,13 +34,9 @@ func TestListUsers(t *testing.T) {
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			Value("nodes").
-			Array().
-			Element(0).
-			Object().
-			Value("user").
-			Object().
-			ContainsMap(user)
+			Value("total").
+			Number().
+			Equal(2)
 	})
 
 	t.Run("get users when keto is down", func(t *testing.T) {

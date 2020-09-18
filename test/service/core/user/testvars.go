@@ -35,12 +35,3 @@ var allPermissionResponse = []map[string]interface{}{
 		"gender":     "male",
 	},
 }
-
-var user = map[string]interface{}{
-	"id":         1,
-	"deleted_at": nil,
-	"email":      "abc@abc.com",
-	"first_name": "abc",
-	"last_name":  "cba",
-	"gender":     "male",
-}
