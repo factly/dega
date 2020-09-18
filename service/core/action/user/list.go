@@ -55,7 +55,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userIDsMap := make(map[uint][]string, 0)
+	userIDsMap := make(map[uint][]string)
 
 	// get all the admins of the organisation
 	adminRoleID := fmt.Sprint("roles:org:", oID, ":admin")
