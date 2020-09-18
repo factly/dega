@@ -25,8 +25,14 @@ type paging struct {
 }
 
 type userPolicy struct {
-	User      model.Author `json:"user"`
-	PolicyIDs []string     `json:"policy_ids"`
+	User     model.Author `json:"user"`
+	Policies []policyRes  `json:"policies"`
+}
+
+type policyRes struct {
+	ID          string `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
 }
 
 // list - Get users with space access
@@ -55,7 +61,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userIDsMap := make(map[uint][]string)
+	userIDsMap := make(map[uint][]policyRes)
 
 	// get all the admins of the organisation
 	adminRoleID := fmt.Sprint("roles:org:", oID, ":admin")
@@ -79,7 +85,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	for _, member := range adminRole.Members {
 		memid, _ := strconv.Atoi(member)
-		userIDsMap[uint(memid)] = []string{"admin"}
+		userIDsMap[uint(memid)] = []policyRes{
+			policyRes{
+				ID:   "admin",
+				Name: "admin",
+			},
+		}
 	}
 
 	// Get all policies
@@ -102,10 +113,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 				subid, _ := strconv.Atoi(subject)
 
 				if _, found := userIDsMap[uint(subid)]; !found {
-					userIDsMap[uint(subid)] = make([]string, 0)
+					userIDsMap[uint(subid)] = make([]policyRes, 0)
 				}
-
-				userIDsMap[uint(subid)] = append(userIDsMap[uint(subid)], policyID)
+				polRes := policyRes{
+					ID:          policyID,
+					Name:        policyID,
+					Description: policy.Description,
+				}
+				userIDsMap[uint(subid)] = append(userIDsMap[uint(subid)], polRes)
 			}
 		}
 	}
@@ -122,12 +137,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	userlist := make([]userPolicy, 0)
 
-	for usrID, polID := range userIDsMap {
+	for usrID, pol := range userIDsMap {
 		userIDStr := fmt.Sprint(usrID)
 		if user, found := userMap[userIDStr]; found {
 			usrpol := userPolicy{
-				PolicyIDs: polID,
-				User:      user,
+				Policies: pol,
+				User:     user,
 			}
 			userlist = append(userlist, usrpol)
 		}

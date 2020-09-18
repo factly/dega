@@ -709,31 +709,6 @@ definitions:
     required:
     - name
     type: object
-  user.allPermissionRes:
-    properties:
-      birth_date:
-        type: string
-      created_at:
-        type: string
-      deleted_at:
-        type: string
-      email:
-        type: string
-      first_name:
-        type: string
-      gender:
-        type: string
-      id:
-        type: integer
-      last_name:
-        type: string
-      permissions:
-        items:
-          $ref: '#/definitions/model.Permission'
-        type: array
-      updated_at:
-        type: string
-    type: object
   user.paging:
     properties:
       nodes:
@@ -743,11 +718,20 @@ definitions:
       total:
         type: integer
     type: object
+  user.policyRes:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
   user.userPolicy:
     properties:
-      policy_ids:
+      policies:
         items:
-          type: string
+          $ref: '#/definitions/user.policyRes'
         type: array
       user:
         $ref: '#/definitions/model.Author'
@@ -1886,33 +1870,6 @@ paths:
               $ref: '#/definitions/model.Permission'
             type: array
       summary: Get user's permission
-      tags:
-      - Users
-  /core/users/permissions/list:
-    get:
-      description: Get all user's permission
-      operationId: get-all-users-permission
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/user.allPermissionRes'
-            type: array
-      summary: Get all user's permission
       tags:
       - Users
   /fact-check/claimants:

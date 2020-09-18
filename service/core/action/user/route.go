@@ -8,7 +8,6 @@ func Router() chi.Router {
 
 	r.Get("/", list)
 	r.Get("/permissions", userpermissions)
-	r.Get("/permissions/list", allpermissions)
 
 	return r
 }
