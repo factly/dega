@@ -40,6 +40,21 @@ func TestListAllPermission(t *testing.T) {
 			ContainsMap(allPermissionResponse[0])
 	})
 
+	t.Run("when cannot fetch policies from keto", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+
+		gock.New(config.KetoURL + "/engines/acp/ory/regex/allowed").
+			Persist().
+			Reply(http.StatusOK)
+
+		test.CheckSpaceMock(mock)
+
+		e.GET(permissionAllPath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
+	})
+
 	t.Run("if logged in user is not admin", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
 		test.CheckSpaceMock(mock)
@@ -70,7 +85,6 @@ func TestListAllPermission(t *testing.T) {
 		gock.New(testServer.URL).EnableNetworking().Persist()
 		defer gock.DisableNetworking()
 
-		// test.DisableKavachGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
 		e.GET(permissionAllPath).

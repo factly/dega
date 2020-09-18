@@ -74,7 +74,7 @@ func TestListUsersPermission(t *testing.T) {
 		e.GET(permissionPath).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusServiceUnavailable)
+			Status(http.StatusInternalServerError)
 
 		headers["X-User"] = "1"
 	})

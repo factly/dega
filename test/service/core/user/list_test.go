@@ -38,8 +38,9 @@ func TestListUsers(t *testing.T) {
 			Array().
 			Element(0).
 			Object().
-			Value("email").
-			Equal(test.Dummy_AuthorList[0]["email"])
+			Value("user").
+			Object().
+			ContainsMap(user)
 	})
 
 	t.Run("get users when keto is down", func(t *testing.T) {
@@ -64,6 +65,6 @@ func TestListUsers(t *testing.T) {
 		e.GET(path).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusServiceUnavailable)
+			Status(http.StatusInternalServerError)
 	})
 }
