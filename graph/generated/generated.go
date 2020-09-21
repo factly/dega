@@ -171,7 +171,7 @@ type ComplexityRoot struct {
 		Categories func(childComplexity int, ids []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Category   func(childComplexity int, id int) int
 		Claimants  func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Claims     func(childComplexity int, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Claims     func(childComplexity int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Formats    func(childComplexity int) int
 		Post       func(childComplexity int, id int) int
 		Posts      func(childComplexity int, formats []int, categories []int, tags []int, users []int, page *int, limit *int, sortBy *string, sortOrder *string) int
@@ -305,7 +305,7 @@ type QueryResolver interface {
 	User(ctx context.Context, id int) (*models.User, error)
 	Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error)
 	Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error)
-	Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error)
+	Claims(ctx context.Context, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error)
 	Sitemap(ctx context.Context) (*models.Sitemaps, error)
 }
 type RatingResolver interface {
@@ -980,7 +980,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Claims(childComplexity, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
+		return e.complexity.Query.Claims(childComplexity, args["ratings"].([]int), args["claimants"].([]int), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.formats":
 		if e.complexity.Query.Formats == nil {
@@ -1752,7 +1752,7 @@ type Query {
   user(id: Int!): User
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
-  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
+  claims(ratings: [Int!], claimants:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   sitemap: Sitemaps
 }
 
@@ -1891,19 +1891,19 @@ func (ec *executionContext) field_Query_claimants_args(ctx context.Context, rawA
 func (ec *executionContext) field_Query_claims_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 []string
+	var arg0 []int
 	if tmp, ok := rawArgs["ratings"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("ratings"))
-		arg0, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		arg0, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["ratings"] = arg0
-	var arg1 []string
+	var arg1 []int
 	if tmp, ok := rawArgs["claimants"]; ok {
 		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithField("claimants"))
-		arg1, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		arg1, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -5455,7 +5455,7 @@ func (ec *executionContext) _Query_claims(ctx context.Context, field graphql.Col
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Claims(rctx, args["ratings"].([]string), args["claimants"].([]string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
+		return ec.resolvers.Query().Claims(rctx, args["ratings"].([]int), args["claimants"].([]int), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11012,42 +11012,6 @@ func (ec *executionContext) unmarshalOString2string(ctx context.Context, v inter
 
 func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	return graphql.MarshalString(v)
-}
-
-func (ec *executionContext) unmarshalOString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		if tmp1, ok := v.([]interface{}); ok {
-			vSlice = tmp1
-		} else {
-			vSlice = []interface{}{v}
-		}
-	}
-	var err error
-	res := make([]string, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithFieldInputContext(ctx, graphql.NewFieldInputWithIndex(i))
-		res[i], err = ec.unmarshalNString2string(ctx, vSlice[i])
-		if err != nil {
-			return nil, graphql.WrapErrorWithInputPath(ctx, err)
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalOString2ᚕstringᚄ(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	for i := range v {
-		ret[i] = ec.marshalNString2string(ctx, sel, v[i])
-	}
-
-	return ret
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {

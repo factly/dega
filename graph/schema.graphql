@@ -214,7 +214,7 @@ type Query {
   user(id: Int!): User
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
-  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
+  claims(ratings: [Int!], claimants:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   sitemap: Sitemaps
 }
 

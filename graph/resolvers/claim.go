@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -10,7 +11,6 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"github.com/jinzhu/gorm"
 )
 
 func (r *claimResolver) Description(ctx context.Context, obj *models.Claim) (interface{}, error) {
@@ -26,7 +26,7 @@ func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*model
 	return loaders.GetClaimantLoader(ctx).Load(fmt.Sprint(obj.ClaimantID))
 }
 
-func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
+func (r *queryResolver) Claims(ctx context.Context, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	order := "created_at desc"
 	pageSortBy := "created_at"
@@ -51,39 +51,24 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 	result.Nodes = make([]*models.Claim, 0)
 
 	offset, pageLimit := util.Parse(page, limit)
-	cIDs := make([]int, 0)
+
+	tx := config.DB.Model(&models.Claim{}).Where(&models.Claim{
+		SpaceID: sID,
+	})
+
+	filterStr := ""
 
 	if len(ratings) > 0 {
-		rows := []models.Claim{}
-		config.DB.Table("claims").Select("claims.id").Joins("INNER JOIN ratings ON ratings.id = claims.rating_id").Where("claims.space_id in (?)", sID).Where("ratings.slug in (?)", ratings).Scan(&rows)
-
-		for _, row := range rows {
-			cIDs = append(cIDs, row.ID)
-		}
+		filterStr = filterStr + fmt.Sprint("claims.rating_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	if len(claimants) > 0 {
-		rows := []models.Claim{}
-		tx := config.DB.Table("claims").Select("claims.id").Joins("INNER JOIN claimants ON claimants.id = claims.claimant_id").Where("claims.space_id in (?)", sID).Where("claimants.slug in (?)", claimants)
-		if len(cIDs) > 0 {
-			tx.Where("claims.id IN (?)", cIDs).Scan(&rows)
-		} else {
-			tx.Scan(&rows)
-		}
-		cIDs = []int{}
-		for _, row := range rows {
-			cIDs = append(cIDs, row.ID)
-		}
+		filterStr = filterStr + fmt.Sprint("claims.claimant_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
 	}
 
-	var tx *gorm.DB
+	filterStr = strings.Trim(filterStr, " AND ")
 
-	if len(cIDs) > 0 {
-		tx = config.DB.Model(&models.Claim{}).Where(cIDs)
-	} else {
-		tx = config.DB.Model(&models.Claim{})
-	}
-	tx.Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Where(filterStr).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	return result, nil
 }

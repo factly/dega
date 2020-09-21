@@ -187,6 +187,8 @@ func (r *queryResolver) Posts(ctx context.Context, formats []int, categories []i
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
 
+	offset, pageLimit := util.Parse(page, limit)
+
 	tx := config.DB.Model(&models.Post{}).Where(&models.Post{
 		SpaceID: sID,
 	}).Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id").Group("posts.id")
@@ -208,7 +210,7 @@ func (r *queryResolver) Posts(ctx context.Context, formats []int, categories []i
 
 	filterStr = strings.Trim(filterStr, " AND ")
 
-	tx.Where(filterStr).Count(&result.Total).Order(order).Find(&result.Nodes)
+	tx.Where(filterStr).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	return result, nil
 }
