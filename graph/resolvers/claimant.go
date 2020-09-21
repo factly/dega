@@ -29,7 +29,7 @@ func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int, so
 	result := &models.ClaimantsPaging{}
 	result.Nodes = make([]*models.Claimant, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 
 	config.DB.Model(&models.Claimant{}).Where(&models.Claimant{
 		SpaceID: sID,

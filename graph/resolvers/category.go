@@ -69,7 +69,7 @@ func (r *queryResolver) Categories(ctx context.Context, ids []int, page *int, li
 	result := &models.CategoriesPaging{}
 	result.Nodes = make([]*models.Category, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 
 	var tx *gorm.DB
 

@@ -67,7 +67,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 		return nil, nil
 	}
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 	upperLimit := offset + pageLimit
 	if upperLimit > len(users) {
 		upperLimit = len(users)

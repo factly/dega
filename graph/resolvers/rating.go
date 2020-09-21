@@ -44,7 +44,7 @@ func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int, sort
 	result := &models.RatingsPaging{}
 	result.Nodes = make([]*models.Rating, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 
 	config.DB.Model(&models.Rating{}).Where(&models.Rating{
 		SpaceID: sID,

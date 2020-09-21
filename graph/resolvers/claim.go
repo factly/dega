@@ -50,7 +50,7 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []string, claimants 
 	result := &models.ClaimsPaging{}
 	result.Nodes = make([]*models.Claim, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 	cIDs := make([]int, 0)
 
 	if len(ratings) > 0 {
