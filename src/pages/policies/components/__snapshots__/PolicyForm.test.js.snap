@@ -660,6 +660,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                               mode="multiple"
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select authors"
                                               transitionName="slide-up"
                                             >
@@ -683,6 +684,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                 }
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select authors"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
@@ -708,6 +710,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select authors"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
@@ -5488,6 +5491,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                               mode="multiple"
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
+                                              onSearch={[Function]}
                                               placeholder="Select authors"
                                               transitionName="slide-up"
                                             >
@@ -5511,6 +5515,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                 }
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
+                                                onSearch={[Function]}
                                                 placeholder="Select authors"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
@@ -5536,6 +5541,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                   }
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
+                                                  onSearch={[Function]}
                                                   placeholder="Select authors"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}

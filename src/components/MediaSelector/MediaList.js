@@ -28,7 +28,7 @@ function MediaList({ onSelect, selected }) {
 
   return (
     <Space direction={'vertical'}>
-      <Input placeholder="Basic usage" />
+      <Input placeholder="Search Media" />
       <List
         grid={{
           gutter: 16,

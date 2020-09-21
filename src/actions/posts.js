@@ -18,9 +18,32 @@ import { addClaims } from './claims';
 export const getPosts = (query) => {
   return (dispatch) => {
     dispatch(loadingPosts());
+
+    const params = new URLSearchParams();
+    if (query.category && query.category.length > 0) {
+      query.category.map((each) => params.append('category', each));
+    }
+    if (query.tag && query.tag.length > 0) {
+      query.tag.map((each) => params.append('tag', each));
+    }
+    if (query.format && query.format.length > 0) {
+      query.format.map((each) => params.append('format', each));
+    }
+    if (query.page) {
+      params.append('page', query.page);
+    }
+    if (query.limit) {
+      params.append('limit', query.limit);
+    }
+    if (query.sort_by) {
+      params.append('sort', query.sort_by);
+    }
+    if (query.q) {
+      params.append('q', query.q);
+    }
     return axios
       .get(POSTS_API, {
-        params: query,
+        params: params,
       })
       .then((response) => {
         dispatch(
@@ -162,6 +185,40 @@ export const addPost = (data) => {
 
         dispatch(resetPosts());
         dispatch(addSuccessNotification('Post added'));
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(error.message));
+      });
+  };
+};
+
+export const publishPost = (data) => {
+  return (dispatch) => {
+    dispatch(loadingPosts());
+    return axios
+      .put(POSTS_API + '/' + data.id + '/publish', data)
+      .then((response) => {
+        let post = response.data;
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMediaList([post.medium]));
+
+        dispatch(
+          getPostByID({
+            ...post,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
+          }),
+        );
+        dispatch(stopPostsLoading());
+        dispatch(addSuccessNotification('Post published'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));

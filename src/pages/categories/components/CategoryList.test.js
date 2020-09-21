@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import renderer, { act } from 'react-test-renderer';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
@@ -13,9 +14,53 @@ import { getCategories, deleteCategory } from '../../../actions/categories';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+let mockedDispatch, store;
+
+let state = {
+  categories: {
+    req: [
+      {
+        data: [1, 2],
+        query: {
+          page: 1,
+        },
+        total: 2,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2020-09-09T06:49:36.566567Z',
+        updated_at: '2020-09-09T06:49:36.566567Z',
+        deleted_at: null,
+        name: 'Andhra Pradesh',
+        slug: 'andhra-pradesh',
+        description: '',
+        parent_id: 0,
+        medium_id: 0,
+        space_id: 1,
+        posts: null,
+      },
+      '2': {
+        id: 2,
+        created_at: '2020-09-09T06:49:54.027402Z',
+        updated_at: '2020-09-09T06:49:54.027402Z',
+        deleted_at: null,
+        name: 'Telangana',
+        slug: 'telangana',
+        description: '',
+        parent_id: 0,
+        medium_id: 0,
+        space_id: 1,
+        posts: null,
+      },
+    },
+    loading: false,
+  },
+};
 
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
+  ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
 jest.mock('../../../actions/categories', () => ({
@@ -24,8 +69,6 @@ jest.mock('../../../actions/categories', () => ({
 }));
 
 describe('Categories List component', () => {
-  let store;
-  let mockedDispatch;
   describe('snapshot testing', () => {
     beforeEach(() => {
       store = mockStore({});
@@ -34,46 +77,41 @@ describe('Categories List component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<CategoriesList />).toJSON();
-      expect(tree).toMatchSnapshot();
-      expect(useSelector).toHaveBeenCalled();
-    });
-    it('should match component when loading', () => {
-      useSelector.mockImplementation((state) => ({
-        categories: [],
-        total: 0,
-        loading: true,
-      }));
-      const tree = renderer.create(<CategoriesList />).toJSON();
-      expect(tree).toMatchSnapshot();
-      expect(useSelector).toHaveBeenCalled();
-    });
-    it('should match component with categories', () => {
-      useSelector.mockImplementation((state) => ({
-        categories: [{ id: 1, name: 'category' }],
-        total: 1,
-        loading: false,
-      }));
-
-      let component;
-      act(() => {
-        component = renderer.create(
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
           <Router>
             <CategoriesList />
-          </Router>,
-        );
-      });
-      const tree = component.toJSON();
+          </Router>
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
-
-      expect(useSelector).toHaveBeenCalled();
+    });
+    it('should match component when loading', () => {
+      state.categories.loading = true;
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <CategoriesList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match component with categories', () => {
+      state.categories.loading = false;
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <CategoriesList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(useSelector).toHaveReturnedWith({
-        categories: [{ id: 1, name: 'category' }],
-        total: 1,
-        loading: false,
-      });
+
       expect(getCategories).toHaveBeenCalledWith({ page: 1 });
     });
   });
@@ -84,9 +122,17 @@ describe('Categories List component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should change the page', () => {
-      useSelector.mockImplementation((state) => ({}));
-
-      const wrapper = shallow(<CategoriesList />);
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <CategoriesList />
+            </Router>
+          </Provider>,
+        );
+      });
       const table = wrapper.find(Table);
       table.props().pagination.onChange(3);
       wrapper.update();
@@ -94,20 +140,18 @@ describe('Categories List component', () => {
       expect(updatedTable.props().pagination.current).toEqual(3);
     });
     it('should delete category', () => {
-      useSelector.mockImplementation((state) => ({
-        categories: [
-          { id: 1, name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
-        ],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <CategoriesList />
-        </Router>,
-      );
-      const button = wrapper.find(Button).at(1);
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <CategoriesList />
+            </Router>
+          </Provider>,
+        );
+      });
+      const button = wrapper.find(Button).at(2);
       expect(button.text()).toEqual('Delete');
 
       button.simulate('click');
@@ -120,35 +164,76 @@ describe('Categories List component', () => {
       expect(getCategories).toHaveBeenCalledWith({ page: 1 });
     });
     it('should edit category', () => {
-      useSelector.mockImplementation((state) => ({
-        categories: [
-          { id: 1, name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
-        ],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <CategoriesList />
-        </Router>,
-      );
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <CategoriesList />
+            </Router>
+          </Provider>,
+        );
+      });
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
       expect(link.prop('to')).toEqual('/categories/1/edit');
     });
     it('should have no delete and edit buttons', () => {
-      useSelector.mockImplementation((state) => ({}));
-
-      const wrapper = mount(
-        <Router>
-          <CategoriesList />
-        </Router>,
-      );
+      store = mockStore({
+        categories: {
+          req: [],
+        },
+      });
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <CategoriesList />
+            </Router>
+          </Provider>,
+        );
+      });
 
       const button = wrapper.find(Button);
-      expect(button.length).toEqual(0);
+      expect(button.length).toEqual(1);
+    });
+    it('should submit filters', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <CategoriesList />
+            </Router>
+          </Provider>,
+        );
+        wrapper
+          .find('FormItem')
+          .at(0)
+          .find('Input')
+          .simulate('change', { target: { value: 'category' } });
+        wrapper
+          .find('FormItem')
+          .at(1)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: 'asc' } });
+
+        const submitButtom = wrapper.find('Button').at(1);
+        submitButtom.simulate('submit');
+      });
+
+      setTimeout(() => {
+        expect(getPosts).toHaveBeenCalledWith({
+          page: 1,
+          q: 'category',
+        });
+      }, 0);
     });
   });
 });

@@ -27,6 +27,7 @@ exports[`Categories List component Snapshot testing should render the component 
       mode="multiple"
       onChange={[Function]}
       onPopupScroll={[Function]}
+      onSearch={[Function]}
       placeholder="Select categories"
       transitionName="slide-up"
     >
@@ -50,6 +51,7 @@ exports[`Categories List component Snapshot testing should render the component 
         }
         onChange={[Function]}
         onPopupScroll={[Function]}
+        onSearch={[Function]}
         placeholder="Select categories"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -75,6 +77,7 @@ exports[`Categories List component Snapshot testing should render the component 
           }
           onChange={[Function]}
           onPopupScroll={[Function]}
+          onSearch={[Function]}
           placeholder="Select categories"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
@@ -569,6 +572,7 @@ exports[`Categories List component Snapshot testing should render the component 
       mode="multiple"
       onChange={[Function]}
       onPopupScroll={[Function]}
+      onSearch={[Function]}
       placeholder="Select categories"
       transitionName="slide-up"
     >
@@ -592,6 +596,7 @@ exports[`Categories List component Snapshot testing should render the component 
         }
         onChange={[Function]}
         onPopupScroll={[Function]}
+        onSearch={[Function]}
         placeholder="Select categories"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -617,6 +622,7 @@ exports[`Categories List component Snapshot testing should render the component 
           }
           onChange={[Function]}
           onPopupScroll={[Function]}
+          onSearch={[Function]}
           placeholder="Select categories"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}

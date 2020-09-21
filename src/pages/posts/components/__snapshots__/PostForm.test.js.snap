@@ -1238,6 +1238,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                     mode="multiple"
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select claims"
                                                     transitionName="slide-up"
                                                   >
@@ -1265,6 +1266,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select claims"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -1294,6 +1296,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select claims"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -3122,6 +3125,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                     mode="multiple"
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select categories"
                                                     transitionName="slide-up"
                                                   >
@@ -3149,6 +3153,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select categories"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -3178,6 +3183,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select categories"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -4197,6 +4203,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                     mode="multiple"
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select tags"
                                                     transitionName="slide-up"
                                                   >
@@ -4224,6 +4231,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select tags"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -4253,6 +4261,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select tags"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -5301,6 +5310,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                     loading={false}
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select formats"
                                                     transitionName="slide-up"
                                                   >
@@ -5327,6 +5337,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select formats"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -5355,6 +5366,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select formats"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6043,6 +6055,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                     mode="multiple"
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select authors"
                                                     transitionName="slide-up"
                                                   >
@@ -6070,6 +6083,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select authors"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -6099,6 +6113,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select authors"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7899,6 +7914,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                     mode="multiple"
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select claims"
                                                     transitionName="slide-up"
                                                   >
@@ -7922,6 +7938,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select claims"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -7947,6 +7964,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select claims"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -9427,6 +9445,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                     mode="multiple"
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select categories"
                                                     transitionName="slide-up"
                                                   >
@@ -9450,6 +9469,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select categories"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -9475,6 +9495,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select categories"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -10240,6 +10261,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                     mode="multiple"
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select tags"
                                                     transitionName="slide-up"
                                                   >
@@ -10263,6 +10285,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select tags"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -10288,6 +10311,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select tags"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -11094,6 +11118,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                     loading={false}
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select formats"
                                                     transitionName="slide-up"
                                                   >
@@ -11120,6 +11145,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select formats"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -11148,6 +11174,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select formats"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
@@ -11813,6 +11840,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                     mode="multiple"
                                                     onChange={[Function]}
                                                     onPopupScroll={[Function]}
+                                                    onSearch={[Function]}
                                                     placeholder="Select authors"
                                                     transitionName="slide-up"
                                                   >
@@ -11836,6 +11864,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                       }
                                                       onChange={[Function]}
                                                       onPopupScroll={[Function]}
+                                                      onSearch={[Function]}
                                                       placeholder="Select authors"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
@@ -11861,6 +11890,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                         }
                                                         onChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onSearch={[Function]}
                                                         placeholder="Select authors"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}

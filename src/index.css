@@ -18,3 +18,7 @@ code {
 .ce-block__content {
   max-width: none;
 }
+
+.ant-modal-content {
+  width: 800px;
+}

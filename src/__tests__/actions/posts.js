@@ -116,7 +116,15 @@ describe('posts actions', () => {
     expect(actions.resetPosts()).toEqual(resetPostsRequestAction);
   });
   it('should create actions to fetch posts success', () => {
-    const query = { page: 1, limit: 5 };
+    const query = {
+      page: 1,
+      limit: 5,
+      q: 'post',
+      sort_by: 'asc',
+      tag: [21],
+      category: [33],
+      format: [42],
+    };
     const posts = [post];
     const resp = { data: { nodes: posts, total: 1 } };
     axios.get.mockResolvedValue(resp);
@@ -205,12 +213,16 @@ describe('posts actions', () => {
       },
     ];
 
+    const params = new URLSearchParams(
+      'category=33&tag=21&format=42&page=1&limit=5&sort=asc&q=post',
+    );
+
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getPosts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to fetch posts success without any optional fields', () => {
@@ -303,12 +315,14 @@ describe('posts actions', () => {
       },
     ];
 
+    const params = new URLSearchParams('page=1&limit=5');
+
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getPosts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should throw error on fetch posts without required field format', () => {
@@ -319,10 +333,11 @@ describe('posts actions', () => {
 
     const query = { page: 1, limit: 5 };
     const store = mockStore({ initialState });
+    const params = new URLSearchParams('page=1&limit=5');
 
     store.dispatch(actions.getPosts(query)).catch((err) => expect(err).toBeInstanceOf(TypeError));
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to fetch posts failure', () => {
@@ -344,13 +359,14 @@ describe('posts actions', () => {
         },
       },
     ];
+    const params = new URLSearchParams('page=1&limit=5');
 
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getPosts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
-      params: query,
+      params: params,
     });
   });
   it('should create actions to get post by id success', () => {
@@ -841,6 +857,98 @@ describe('posts actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post);
   });
+  it('should create actions to publish post success', () => {
+    const resp = { data: post };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311 },
+          { id: 32, name: 'category 32', medium: undefined },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{ id: 601, name: 'Claimant 1', medium: 621 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 622, name: 'Medium-Rating 1' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{ id: 602, name: 'Rating 1', medium: 622 }],
+      },
+      {
+        type: ADD_CLAIMS,
+        payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+      },
+      {
+        type: ADD_FORMATS,
+        payload: [{ id: 41, name: 'Format 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_POST,
+        payload: {
+          id: 1,
+          name: 'Post 1',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: 41,
+          medium: 51,
+          claims: [61],
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Post published',
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.publishPost(post))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1' + '/publish', post);
+  });
   it('should create actions to update success without any optional fields', () => {
     const post_without_fields = { ...post };
     post_without_fields.categories = [];
@@ -966,6 +1074,31 @@ describe('posts actions', () => {
       .dispatch(actions.updatePost(post))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post);
+  });
+  it('should create actions to publish post failure', () => {
+    const errorMessage = 'Failed to publish post';
+    axios.put.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.publishPost(post))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1' + '/publish', post);
   });
   it('should create actions to delete post success', () => {
     axios.delete.mockResolvedValue();

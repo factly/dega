@@ -403,7 +403,7 @@ describe('Claims Create Form component', () => {
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(0);
     });
-    it.only('should call addClaimant', async (done) => {
+    it('should call addClaimant', async (done) => {
       await act(async () => {
         wrapper
           .find('FormItem')

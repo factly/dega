@@ -30,67 +30,70 @@ jest.mock('../../actions/posts', () => ({
   getPost: jest.fn(),
   updatePost: jest.fn(),
   addPost: jest.fn(),
+  publishPost: jest.fn(),
 }));
+
+let state = {
+  posts: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  authors: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  tags: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  categories: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  formats: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+
+  claims: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  claimants: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  ratings: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  media: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  spaces: {
+    orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
+    details: {
+      11: { id: 11, name: 'Space 11' },
+    },
+    loading: false,
+    selected: 11,
+  },
+};
 
 describe('Posts List component', () => {
   let store;
   let mockedDispatch;
-  store = mockStore({
-    posts: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    authors: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    tags: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    categories: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    formats: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-
-    claims: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    claimants: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    ratings: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    media: {
-      req: [],
-      details: {},
-      loading: true,
-    },
-    spaces: {
-      orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
-      details: {
-        11: { id: 11, name: 'Space 11' },
-      },
-      loading: false,
-      selected: 11,
-    },
-  });
+  store = mockStore(state);
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
   useDispatch.mockReturnValue(mockedDispatch);
@@ -128,71 +131,22 @@ describe('Posts List component', () => {
   });
   describe('component testing', () => {
     let wrapper;
+    state.posts = {
+      req: [],
+      details: {
+        1: {
+          id: 1,
+          title: 'Post-1',
+          slug: 'post-1',
+          tag_line: 'tag_line',
+          medium_id: 1,
+          format_id: 1,
+        },
+      },
+      loading: false,
+    };
     beforeEach(() => {
-      store = mockStore({
-        posts: {
-          req: [],
-          details: {
-            1: {
-              id: 1,
-              name: 'Post-1',
-              slug: 'post-1',
-              tag_line: 'tag_line',
-              medium_id: 1,
-              format_id: 1,
-            },
-          },
-          loading: false,
-        },
-        authors: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        tags: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        categories: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        formats: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        claims: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        claimants: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        ratings: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        media: {
-          req: [],
-          details: {},
-          loading: true,
-        },
-        spaces: {
-          orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
-          details: {
-            11: { id: 11, name: 'Space 11' },
-          },
-          loading: false,
-          selected: 11,
-        },
-      });
+      store = mockStore(state);
     });
     afterEach(() => {
       wrapper.unmount();
@@ -219,17 +173,44 @@ describe('Posts List component', () => {
           </Provider>,
         );
       });
-      // console.log(wrapper.debug());
-      wrapper.find(PostEditForm).props().onCreate({ test: 'test' });
+
+      wrapper.find(PostEditForm).props().onCreate({ status: 'Draft' });
       setTimeout(() => {
         expect(actions.updatePost).toHaveBeenCalledWith({
           id: 1,
-          name: 'Post-1',
+          title: 'Post-1',
           slug: 'post-1',
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 1,
-          test: 'test',
+          status: 'Draft',
+        });
+        expect(push).toHaveBeenCalledWith('/posts');
+        done();
+      }, 0);
+    });
+    it('should call publishPost', (done) => {
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      actions.publishPost.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditPost />
+          </Provider>,
+        );
+      });
+
+      wrapper.find(PostEditForm).props().onCreate({ status: 'Publish' });
+      setTimeout(() => {
+        expect(actions.publishPost).toHaveBeenCalledWith({
+          id: 1,
+          title: 'Post-1',
+          slug: 'post-1',
+          tag_line: 'tag_line',
+          medium_id: 1,
+          format_id: 1,
+          status: 'Publish',
         });
         expect(push).toHaveBeenCalledWith('/posts');
         done();

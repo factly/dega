@@ -82,7 +82,7 @@ describe('Posts Create Form component', () => {
       details: {
         '1': {
           name: 'Fact check',
-          slug: 'factcheck',
+          slug: 'fact-check',
         },
       },
       loading: true,

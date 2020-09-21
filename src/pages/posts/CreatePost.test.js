@@ -122,9 +122,9 @@ describe('Post create component', () => {
           </Provider>,
         );
       });
-      wrapper.find(PostCreateForm).props().onCreate({ test: 'test' });
+      wrapper.find(PostCreateForm).props().onCreate({ title: 'test', status: 'Draft' });
       setTimeout(() => {
-        expect(actions.addPost).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.addPost).toHaveBeenCalledWith({ title: 'test', status: 'Draft' });
         expect(push).toHaveBeenCalledWith('/posts');
         done();
       }, 0);
