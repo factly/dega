@@ -14,6 +14,7 @@ var DB *gorm.DB
 // SetupDB is database setuo
 func SetupDB(dsn interface{}) {
 
+	fmt.Println("connecting to database ...")
 	var err error
 	DB, err = gorm.Open("postgres", dsn)
 

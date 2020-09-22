@@ -105,12 +105,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Order("created_at " + sort).Offset(offset).Limit(limit)
+	}).Order("created_at " + sort)
 
 	if len(filteredPostIDs) > 0 {
-		err = tx.Where(filteredPostIDs).Count(&result.Total).Find(&posts).Error
+		err = tx.Where(filteredPostIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 	} else {
-		err = tx.Where("status != ?", "template").Count(&result.Total).Find(&posts).Error
+		err = tx.Where("status != ?", "template").Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 	}
 
 	if err != nil {
