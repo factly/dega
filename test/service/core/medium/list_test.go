@@ -16,6 +16,8 @@ import (
 func TestMediumList(t *testing.T) {
 	mock := test.SetupMockDB()
 
+	test.MockServer()
+
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
