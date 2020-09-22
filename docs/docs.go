@@ -933,6 +933,52 @@ var doc = `{
                 }
             }
         },
+        "/core/posts/publish": {
+            "post": {
+                "description": "Create published post",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Create published post",
+                "operationId": "add-published-post",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Post Object",
+                        "name": "Post",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/post.post"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/post.postData"
+                        }
+                    }
+                }
+            }
+        },
         "/core/posts/templates": {
             "post": {
                 "description": "Create template",
@@ -3070,7 +3116,6 @@ var doc = `{
         "post.post": {
             "type": "object",
             "required": [
-                "excerpt",
                 "format_id",
                 "title"
             ],
