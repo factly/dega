@@ -6,6 +6,7 @@ import { getPosts, deletePost } from '../../../actions/posts';
 import { Link } from 'react-router-dom';
 import Selector from '../../../components/Selector';
 import deepEqual from 'deep-equal';
+import Template from '../../../components/Template';
 
 function PostList() {
   const dispatch = useDispatch();
@@ -59,6 +60,7 @@ function PostList() {
 
   return (
     <Space direction="vertical">
+      <Template />
       <Form
         initialValues={filters}
         form={form}

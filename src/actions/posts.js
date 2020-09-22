@@ -185,6 +185,7 @@ export const addPost = (data) => {
 
         dispatch(resetPosts());
         dispatch(addSuccessNotification('Post added'));
+        return post;
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
