@@ -41,7 +41,11 @@ function PolicyForm({ data = {}, onCreate }) {
           <Form.Item
             label="Name"
             name="name"
-            rules={[{ required: true, message: 'Please input your name!' }]}
+            rules={[
+              { required: true, message: 'Please input your name!' },
+              { min: 3, message: 'Name must be minimum 3 characters.' },
+              { max: 50, message: 'Name must be maximum 50 characters.' },
+            ]}
           >
             <Input />
           </Form.Item>

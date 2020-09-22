@@ -51,6 +51,8 @@ const TagForm = ({ onCreate, data = {} }) => {
             required: true,
             message: 'Please enter tag name!',
           },
+          { min: 3, message: 'Name must be minimum 3 characters.' },
+          { max: 50, message: 'Name must be maximum 50 characters.' },
         ]}
       >
         <Input onChange={(e) => onTitleChange(e.target.value)} />
