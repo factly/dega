@@ -136,6 +136,14 @@ exports[`Policies create component snapshot testing should render the component 
                               "message": "Please input your name!",
                               "required": true,
                             },
+                            Object {
+                              "message": "Name must be minimum 3 characters.",
+                              "min": 3,
+                            },
+                            Object {
+                              "max": 50,
+                              "message": "Name must be maximum 50 characters.",
+                            },
                           ]
                         }
                       >
@@ -153,6 +161,14 @@ exports[`Policies create component snapshot testing should render the component 
                               Object {
                                 "message": "Please input your name!",
                                 "required": true,
+                              },
+                              Object {
+                                "message": "Name must be minimum 3 characters.",
+                                "min": 3,
+                              },
+                              Object {
+                                "max": 50,
+                                "message": "Name must be maximum 50 characters.",
                               },
                             ]
                           }
@@ -179,6 +195,14 @@ exports[`Policies create component snapshot testing should render the component 
                                   "message": "Please input your name!",
                                   "required": true,
                                 },
+                                Object {
+                                  "message": "Name must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 50,
+                                  "message": "Name must be maximum 50 characters.",
+                                },
                               ]
                             }
                             trigger="onChange"
@@ -204,6 +228,14 @@ exports[`Policies create component snapshot testing should render the component 
                                       Object {
                                         "message": "Please input your name!",
                                         "required": true,
+                                      },
+                                      Object {
+                                        "message": "Name must be minimum 3 characters.",
+                                        "min": 3,
+                                      },
+                                      Object {
+                                        "max": 50,
+                                        "message": "Name must be maximum 50 characters.",
                                       },
                                     ]
                                   }
@@ -240,6 +272,14 @@ exports[`Policies create component snapshot testing should render the component 
                                       Object {
                                         "message": "Please input your name!",
                                         "required": true,
+                                      },
+                                      Object {
+                                        "message": "Name must be minimum 3 characters.",
+                                        "min": 3,
+                                      },
+                                      Object {
+                                        "max": 50,
+                                        "message": "Name must be maximum 50 characters.",
                                       },
                                     ]
                                   }

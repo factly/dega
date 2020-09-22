@@ -664,6 +664,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                   "message": "Please input the title!",
                                   "required": true,
                                 },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
+                                },
                               ]
                             }
                           >
@@ -681,6 +689,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                   Object {
                                     "message": "Please input the title!",
                                     "required": true,
+                                  },
+                                  Object {
+                                    "message": "Title must be minimum 3 characters.",
+                                    "min": 3,
+                                  },
+                                  Object {
+                                    "max": 150,
+                                    "message": "Title must be maximum 150 characters.",
                                   },
                                 ]
                               }
@@ -707,6 +723,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                       "message": "Please input the title!",
                                       "required": true,
                                     },
+                                    Object {
+                                      "message": "Title must be minimum 3 characters.",
+                                      "min": 3,
+                                    },
+                                    Object {
+                                      "max": 150,
+                                      "message": "Title must be maximum 150 characters.",
+                                    },
                                   ]
                                 }
                                 trigger="onChange"
@@ -732,6 +756,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                           Object {
                                             "message": "Please input the title!",
                                             "required": true,
+                                          },
+                                          Object {
+                                            "message": "Title must be minimum 3 characters.",
+                                            "min": 3,
+                                          },
+                                          Object {
+                                            "max": 150,
+                                            "message": "Title must be maximum 150 characters.",
                                           },
                                         ]
                                       }
@@ -768,6 +800,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                           Object {
                                             "message": "Please input the title!",
                                             "required": true,
+                                          },
+                                          Object {
+                                            "message": "Title must be minimum 3 characters.",
+                                            "min": 3,
+                                          },
+                                          Object {
+                                            "max": 150,
+                                            "message": "Title must be maximum 150 characters.",
                                           },
                                         ]
                                       }
@@ -878,6 +918,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                   "message": "Please input excerpt!",
                                   "required": true,
                                 },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 300,
+                                  "message": "Title must be maximum 300 characters.",
+                                },
                               ]
                             }
                           >
@@ -895,6 +943,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                   Object {
                                     "message": "Please input excerpt!",
                                     "required": true,
+                                  },
+                                  Object {
+                                    "message": "Title must be minimum 3 characters.",
+                                    "min": 3,
+                                  },
+                                  Object {
+                                    "max": 300,
+                                    "message": "Title must be maximum 300 characters.",
                                   },
                                 ]
                               }
@@ -921,6 +977,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                       "message": "Please input excerpt!",
                                       "required": true,
                                     },
+                                    Object {
+                                      "message": "Title must be minimum 3 characters.",
+                                      "min": 3,
+                                    },
+                                    Object {
+                                      "max": 300,
+                                      "message": "Title must be maximum 300 characters.",
+                                    },
                                   ]
                                 }
                                 trigger="onChange"
@@ -946,6 +1010,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                           Object {
                                             "message": "Please input excerpt!",
                                             "required": true,
+                                          },
+                                          Object {
+                                            "message": "Title must be minimum 3 characters.",
+                                            "min": 3,
+                                          },
+                                          Object {
+                                            "max": 300,
+                                            "message": "Title must be maximum 300 characters.",
                                           },
                                         ]
                                       }
@@ -982,6 +1054,14 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                           Object {
                                             "message": "Please input excerpt!",
                                             "required": true,
+                                          },
+                                          Object {
+                                            "message": "Title must be minimum 3 characters.",
+                                            "min": 3,
+                                          },
+                                          Object {
+                                            "max": 300,
+                                            "message": "Title must be maximum 300 characters.",
                                           },
                                         ]
                                       }
@@ -7360,6 +7440,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                   "message": "Please input the title!",
                                   "required": true,
                                 },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
+                                },
                               ]
                             }
                           >
@@ -7377,6 +7465,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                   Object {
                                     "message": "Please input the title!",
                                     "required": true,
+                                  },
+                                  Object {
+                                    "message": "Title must be minimum 3 characters.",
+                                    "min": 3,
+                                  },
+                                  Object {
+                                    "max": 150,
+                                    "message": "Title must be maximum 150 characters.",
                                   },
                                 ]
                               }
@@ -7403,6 +7499,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                       "message": "Please input the title!",
                                       "required": true,
                                     },
+                                    Object {
+                                      "message": "Title must be minimum 3 characters.",
+                                      "min": 3,
+                                    },
+                                    Object {
+                                      "max": 150,
+                                      "message": "Title must be maximum 150 characters.",
+                                    },
                                   ]
                                 }
                                 trigger="onChange"
@@ -7428,6 +7532,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                           Object {
                                             "message": "Please input the title!",
                                             "required": true,
+                                          },
+                                          Object {
+                                            "message": "Title must be minimum 3 characters.",
+                                            "min": 3,
+                                          },
+                                          Object {
+                                            "max": 150,
+                                            "message": "Title must be maximum 150 characters.",
                                           },
                                         ]
                                       }
@@ -7464,6 +7576,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                           Object {
                                             "message": "Please input the title!",
                                             "required": true,
+                                          },
+                                          Object {
+                                            "message": "Title must be minimum 3 characters.",
+                                            "min": 3,
+                                          },
+                                          Object {
+                                            "max": 150,
+                                            "message": "Title must be maximum 150 characters.",
                                           },
                                         ]
                                       }
@@ -7571,6 +7691,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                   "message": "Please input excerpt!",
                                   "required": true,
                                 },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 300,
+                                  "message": "Title must be maximum 300 characters.",
+                                },
                               ]
                             }
                           >
@@ -7588,6 +7716,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                   Object {
                                     "message": "Please input excerpt!",
                                     "required": true,
+                                  },
+                                  Object {
+                                    "message": "Title must be minimum 3 characters.",
+                                    "min": 3,
+                                  },
+                                  Object {
+                                    "max": 300,
+                                    "message": "Title must be maximum 300 characters.",
                                   },
                                 ]
                               }
@@ -7614,6 +7750,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                       "message": "Please input excerpt!",
                                       "required": true,
                                     },
+                                    Object {
+                                      "message": "Title must be minimum 3 characters.",
+                                      "min": 3,
+                                    },
+                                    Object {
+                                      "max": 300,
+                                      "message": "Title must be maximum 300 characters.",
+                                    },
                                   ]
                                 }
                                 trigger="onChange"
@@ -7639,6 +7783,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                           Object {
                                             "message": "Please input excerpt!",
                                             "required": true,
+                                          },
+                                          Object {
+                                            "message": "Title must be minimum 3 characters.",
+                                            "min": 3,
+                                          },
+                                          Object {
+                                            "max": 300,
+                                            "message": "Title must be maximum 300 characters.",
                                           },
                                         ]
                                       }
@@ -7675,6 +7827,14 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                           Object {
                                             "message": "Please input excerpt!",
                                             "required": true,
+                                          },
+                                          Object {
+                                            "message": "Title must be minimum 3 characters.",
+                                            "min": 3,
+                                          },
+                                          Object {
+                                            "max": 300,
+                                            "message": "Title must be maximum 300 characters.",
                                           },
                                         ]
                                       }

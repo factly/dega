@@ -282,6 +282,14 @@ exports[`Claims Edit component snapshot testing should match component with empt
                           "message": "Please input the title!",
                           "required": true,
                         },
+                        Object {
+                          "message": "Title must be minimum 3 characters.",
+                          "min": 3,
+                        },
+                        Object {
+                          "max": 150,
+                          "message": "Title must be maximum 150 characters.",
+                        },
                       ]
                     }
                   >
@@ -299,6 +307,14 @@ exports[`Claims Edit component snapshot testing should match component with empt
                           Object {
                             "message": "Please input the title!",
                             "required": true,
+                          },
+                          Object {
+                            "message": "Title must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 150,
+                            "message": "Title must be maximum 150 characters.",
                           },
                         ]
                       }
@@ -325,6 +341,14 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               "message": "Please input the title!",
                               "required": true,
                             },
+                            Object {
+                              "message": "Title must be minimum 3 characters.",
+                              "min": 3,
+                            },
+                            Object {
+                              "max": 150,
+                              "message": "Title must be maximum 150 characters.",
+                            },
                           ]
                         }
                         trigger="onChange"
@@ -350,6 +374,14 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                   Object {
                                     "message": "Please input the title!",
                                     "required": true,
+                                  },
+                                  Object {
+                                    "message": "Title must be minimum 3 characters.",
+                                    "min": 3,
+                                  },
+                                  Object {
+                                    "max": 150,
+                                    "message": "Title must be maximum 150 characters.",
                                   },
                                 ]
                               }
@@ -387,6 +419,14 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                   Object {
                                     "message": "Please input the title!",
                                     "required": true,
+                                  },
+                                  Object {
+                                    "message": "Title must be minimum 3 characters.",
+                                    "min": 3,
+                                  },
+                                  Object {
+                                    "max": 150,
+                                    "message": "Title must be maximum 150 characters.",
                                   },
                                 ]
                               }
@@ -5784,6 +5824,14 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           "message": "Please input the title!",
                           "required": true,
                         },
+                        Object {
+                          "message": "Title must be minimum 3 characters.",
+                          "min": 3,
+                        },
+                        Object {
+                          "max": 150,
+                          "message": "Title must be maximum 150 characters.",
+                        },
                       ]
                     }
                   >
@@ -5801,6 +5849,14 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           Object {
                             "message": "Please input the title!",
                             "required": true,
+                          },
+                          Object {
+                            "message": "Title must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 150,
+                            "message": "Title must be maximum 150 characters.",
                           },
                         ]
                       }
@@ -5827,6 +5883,14 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               "message": "Please input the title!",
                               "required": true,
                             },
+                            Object {
+                              "message": "Title must be minimum 3 characters.",
+                              "min": 3,
+                            },
+                            Object {
+                              "max": 150,
+                              "message": "Title must be maximum 150 characters.",
+                            },
                           ]
                         }
                         trigger="onChange"
@@ -5852,6 +5916,14 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                   Object {
                                     "message": "Please input the title!",
                                     "required": true,
+                                  },
+                                  Object {
+                                    "message": "Title must be minimum 3 characters.",
+                                    "min": 3,
+                                  },
+                                  Object {
+                                    "max": 150,
+                                    "message": "Title must be maximum 150 characters.",
                                   },
                                 ]
                               }
@@ -5889,6 +5961,14 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                   Object {
                                     "message": "Please input the title!",
                                     "required": true,
+                                  },
+                                  Object {
+                                    "message": "Title must be minimum 3 characters.",
+                                    "min": 3,
+                                  },
+                                  Object {
+                                    "max": 150,
+                                    "message": "Title must be maximum 150 characters.",
                                   },
                                 ]
                               }
