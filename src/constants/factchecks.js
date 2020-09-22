@@ -1,0 +1,7 @@
+//Actions
+export const ADD_FACTCHECKS = 'ADD_FACTCHECKS';
+export const ADD_FACTCHECKS_REQUEST = 'ADD_FACTCHECKS_REQUEST';
+export const SET_FACTCHECKS_LOADING = 'SET_FACTCHECKS_LOADING';
+
+//API
+export const FACTCHECKS_API = '/fact-check/google';
