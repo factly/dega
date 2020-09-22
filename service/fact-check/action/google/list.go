@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/x/errorx"
@@ -41,7 +42,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	language := r.URL.Query().Get("language")
 
 	// googleapis for factchecks
-	url := "https://factchecktools.googleapis.com/v1alpha1/claims:search"
+	googleURL := "https://factchecktools.googleapis.com/v1alpha1/claims:search"
 
 	if query == "" {
 		loggerx.Error(errors.New("query can't be empty"))
@@ -54,7 +55,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	var factChecks map[string]interface{}
 
-	req, err := http.NewRequest("GET", url, nil)
+	req, err := http.NewRequest("GET", googleURL, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
