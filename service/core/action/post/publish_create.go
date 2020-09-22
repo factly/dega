@@ -53,7 +53,11 @@ func publishCreate(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = uint(sID)
 
-	result := createPost(w, r, post, sID, "published")
+	result, errMessage := createPost(r.Context(), post, "published")
+	if errMessage.Code != 0 {
+		errorx.Render(w, errorx.Parser(errMessage))
+		return
+	}
 
 	renderx.JSON(w, http.StatusCreated, result)
 }

@@ -1,6 +1,7 @@
 package post
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -61,15 +62,26 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = uint(sID)
 
-	result := createPost(w, r, post, sID, "draft")
+	result, errMessage := createPost(r.Context(), post, "draft")
+
+	if errMessage.Code != 0 {
+		errorx.Render(w, errorx.Parser(errMessage))
+		return
+	}
 
 	renderx.JSON(w, http.StatusCreated, result)
 }
 
-func createPost(w http.ResponseWriter, r *http.Request, post post, sID int, status string) *postData {
+func createPost(ctx context.Context, post post, status string) (*postData, errorx.Message) {
 	result := &postData{}
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factCheckModel.Claim, 0)
+
+	sID, err := util.GetSpace(ctx)
+	if err != nil {
+		loggerx.Error(err)
+		return nil, errorx.InternalServerError()
+	}
 
 	var postSlug string
 	if post.Slug != "" && slug.Check(post.Slug) {
@@ -103,13 +115,12 @@ func createPost(w http.ResponseWriter, r *http.Request, post post, sID int, stat
 	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 
 	tx := config.DB.Begin()
-	err := tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
+	err = tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return nil
+		return nil, errorx.DBError()
 	}
 
 	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post)
@@ -125,8 +136,7 @@ func createPost(w http.ResponseWriter, r *http.Request, post post, sID int, stat
 			if err != nil {
 				tx.Rollback()
 				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return nil
+				return nil, errorx.DBError()
 			}
 		}
 
@@ -143,12 +153,11 @@ func createPost(w http.ResponseWriter, r *http.Request, post post, sID int, stat
 	}
 
 	// Adding author
-	authors, err := author.All(r.Context())
+	authors, err := author.All(ctx)
 
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return nil
+		return nil, errorx.InternalServerError()
 	}
 
 	for _, id := range post.AuthorIDs {
@@ -194,11 +203,10 @@ func createPost(w http.ResponseWriter, r *http.Request, post post, sID int, stat
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return nil
+		return nil, errorx.InternalServerError()
 	}
 
 	tx.Commit()
 
-	return result
+	return result, errorx.Message{}
 }
