@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
@@ -129,4 +130,38 @@ func TestMediumList(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("when query does not match any post", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		test.DisableMeiliGock(testServer.URL)
+
+		gock.New(config.MeiliURL + "/indexes/dega/search").
+			HeaderPresent("X-Meili-API-Key").
+			Persist().
+			Reply(http.StatusOK).
+			JSON(test.EmptyMeili)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQuery("q", "test").
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": 0})
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("when meili is down", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		test.DisableMeiliGock(testServer.URL)
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQuery("q", "test").
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
 }
