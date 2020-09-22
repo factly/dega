@@ -99,4 +99,32 @@ func TestMediumList(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 
 	})
+
+	t.Run("get list of media filtered by q", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		countQuery(mock, len(mediumlist))
+
+		mock.ExpectQuery(selectQuery).
+			WithArgs(1, sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(columns).
+				AddRow(1, time.Now(), time.Now(), nil, mediumlist[0]["name"], mediumlist[0]["slug"], mediumlist[0]["type"], mediumlist[0]["title"], mediumlist[0]["description"], mediumlist[0]["caption"], mediumlist[0]["alt_text"], mediumlist[0]["file_size"], mediumlist[0]["url"], mediumlist[0]["dimensions"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, mediumlist[1]["name"], mediumlist[1]["slug"], mediumlist[1]["type"], mediumlist[1]["title"], mediumlist[1]["description"], mediumlist[1]["caption"], mediumlist[1]["alt_text"], mediumlist[1]["file_size"], mediumlist[1]["url"], mediumlist[1]["dimensions"], 1))
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQuery("q", "test").
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": len(mediumlist)}).
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(mediumlist[0])
+
+		test.ExpectationsMet(t, mock)
+	})
+
 }
