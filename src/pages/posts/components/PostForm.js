@@ -23,7 +23,9 @@ function PostForm({ onCreate, data = {} }) {
   const formats = useSelector((state) => state.formats.details);
 
   const [claimHide, setClaimHide] = React.useState(
-    data.format && formats[data.format] && formats[data.format].slug === 'factcheck' ? false : true,
+    data.format && formats[data.format] && formats[data.format].slug === 'fact-check'
+      ? false
+      : true,
   );
 
   const onSave = (values) => {
@@ -73,7 +75,7 @@ function PostForm({ onCreate, data = {} }) {
             const flag =
               form.getFieldValue('format') &&
               formats[form.getFieldValue('format')] &&
-              formats[form.getFieldValue('format')].slug === 'factcheck';
+              formats[form.getFieldValue('format')].slug === 'fact-check';
 
             setClaimHide(!flag);
           }

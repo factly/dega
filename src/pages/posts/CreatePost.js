@@ -9,7 +9,7 @@ function CreatePost() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addPost(values)).then(() => history.push('/posts'));
+    if (values.status === 'Draft') dispatch(addPost(values)).then(() => history.push('/posts'));
   };
   return <PostForm onCreate={onCreate} />;
 }

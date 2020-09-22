@@ -57,6 +57,14 @@ describe('Policies List component', () => {
           id: 1,
           name: 'policy',
           description: 'description',
+          users: [
+            {
+              id: 7,
+              email: 'ross.geller@gmail.com',
+              first_name: 'ross',
+              last_name: 'geller',
+            },
+          ],
         },
       ],
       total: 1,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button, Typography, Table } from 'antd';
+import { Popconfirm, Button, Typography, Table, Avatar, Tooltip } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies, deletePolicy } from '../../../actions/policies';
@@ -23,12 +23,11 @@ function PolicyList() {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
+    { title: 'Name', dataIndex: 'name', key: 'name', width: '20%' },
     {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
-      width: '50%',
       render: (_, record) => {
         return (
           <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
@@ -36,8 +35,30 @@ function PolicyList() {
       },
     },
     {
+      title: 'Members',
+      dataIndex: 'members',
+      key: 'members',
+      width: '25%',
+      render: (_, record) => {
+        const members = record.users.map((user, index) => (
+          <Tooltip
+            title={user.first_name + user.last_name}
+            placement="top"
+            key={index + '.' + user.first_name}
+          >
+            <Avatar key={index} style={{ float: 'right', margin: '1px' }}>
+              {user.email.charAt(0).toUpperCase()}
+            </Avatar>
+          </Tooltip>
+        ));
+
+        return <>{members}</>;
+      },
+    },
+    {
       title: 'Action',
       dataIndex: 'operation',
+      width: '15%',
       render: (_, record) => {
         return (
           <span>

@@ -11,7 +11,7 @@ function App() {
       <Router basename={process.env.PUBLIC_URL}>
         <BasicLayout>
           <Switch>
-            {routes.map((route) => (
+            {Object.values(routes).map((route) => (
               <Route key={route.path} exact path={route.path} component={route.Component} />
             ))}
           </Switch>
