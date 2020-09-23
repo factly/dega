@@ -4,4 +4,4 @@ export const ADD_GOOGLE_FACT_CHECKS_REQUEST = 'ADD_GOOGLE_FACT_CHECKS_REQUEST';
 export const SET_GOOGLE_FACT_CHECKS_LOADING = 'SET_GOOGLE_FACT_CHECKS_LOADING';
 
 //API
-export const FACTCHECKS_API = '/fact-check/google';
+export const GOOGLE_FACT_CHECKS_API = '/fact-check/google';

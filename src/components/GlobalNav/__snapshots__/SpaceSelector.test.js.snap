@@ -16,6 +16,7 @@ exports[`SpaceSelector component snapshot testing should render the component wi
 >
   <div
     className="ant-select-selector"
+    onClick={[Function]}
     onMouseDown={[Function]}
   >
     <span
@@ -43,6 +44,7 @@ exports[`SpaceSelector component snapshot testing should render the component wi
             "opacity": 0,
           }
         }
+        type="search"
         unselectable="on"
         value=""
       />
@@ -115,6 +117,7 @@ exports[`SpaceSelector component snapshot testing should render the component wi
 >
   <div
     className="ant-select-selector"
+    onClick={[Function]}
     onMouseDown={[Function]}
   >
     <span
@@ -141,6 +144,7 @@ exports[`SpaceSelector component snapshot testing should render the component wi
             "opacity": 0,
           }
         }
+        type="search"
         unselectable="on"
         value=""
       />

@@ -6,7 +6,6 @@ import deepEqual from 'deep-equal';
 
 const initialState = {
   req: [],
-  details: {},
   loading: true,
 };
 

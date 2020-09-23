@@ -112,22 +112,3 @@ function GoogleFactCheck() {
 }
 
 export default GoogleFactCheck;
-
-// {
-//   "text": "Video shows Russian doctors celebrating the new COVID-19 vaccine.",
-//   "claimant": "Facebook posts",
-//   "claimDate": "2020-09-08T02:48:10Z",
-//   "claimReview": [
-//     {
-//       "publisher": {
-//         "name": "BOOM",
-//         "site": "boomlive.in"
-//       },
-//       "url": "https://www.boomlive.in/world/video-from-saudi-arabia-shared-as-russian-doctors-celebrating-covid-19-vaccine-9654",
-//       "title": "Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine",
-//       "reviewDate": "2020-09-08T02:48:10Z",
-//       "textualRating": "False",
-//       "languageCode": "en"
-//     }
-//   ]
-// },
