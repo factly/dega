@@ -1,23 +1,39 @@
 import React from 'react';
-import { Popconfirm, Avatar, Button, Table } from 'antd';
+import { Popconfirm, Avatar, Button, Table, Space, Form, Input, Select } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia, deleteMedium } from '../../../actions/media';
 import { Link } from 'react-router-dom';
-import { entitySelector } from '../../../selectors';
+import deepEqual from 'deep-equal';
 
 function MediumList() {
   const dispatch = useDispatch();
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 10,
+  });
+  const [form] = Form.useForm();
+  const { Option } = Select;
 
-  const [page, setPage] = React.useState(1);
+  const { media, total, loading } = useSelector((state) => {
+    const node = state.media.req.find((item) => {
+      return deepEqual(item.query, filters);
+    });
 
-  const { media, total, loading } = useSelector((state) => entitySelector(state, page, 'media'));
+    if (node)
+      return {
+        media: node.data.map((element) => state.media.details[element]),
+        total: node.total,
+        loading: state.media.loading,
+      };
+    return { media: [], total: 0, loading: state.media.loading };
+  });
 
   React.useEffect(() => {
     fetchMedia();
-  }, [page]);
+  }, [filters]);
 
   const fetchMedia = () => {
-    dispatch(getMedia({ page: page }));
+    dispatch(getMedia(filters));
   };
 
   const columns = [
@@ -76,19 +92,50 @@ function MediumList() {
   ];
 
   return (
-    <Table
-      bordered
-      dataSource={media}
-      columns={columns}
-      loading={loading}
-      rowKey={'id'}
-      pagination={{
-        total: total,
-        current: page,
-        pageSize: 5,
-        onChange: (pageNumber, pageSize) => setPage(pageNumber),
-      }}
-    />
+    <Space direction={'vertical'}>
+      <Form
+        initialValues={filters}
+        form={form}
+        name="filters"
+        layout="inline"
+        onFinish={(values) =>
+          setFilters({
+            ...filters,
+            ...values,
+          })
+        }
+        style={{ maxWidth: '100%' }}
+      >
+        <Form.Item name="q" label="Search" style={{ width: '25%' }}>
+          <Input placeholder="search media" />
+        </Form.Item>
+        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
+          <Select>
+            <Option value="desc">Latest</Option>
+            <Option value="asc">Old</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+      <Table
+        bordered
+        dataSource={media}
+        columns={columns}
+        loading={loading}
+        rowKey={'id'}
+        pagination={{
+          total: total,
+          current: filters.page,
+          pageSize: 10,
+          onChange: (pageNumber, pageSize) =>
+            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+        }}
+      />
+    </Space>
   );
 }
 
