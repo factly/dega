@@ -42,6 +42,7 @@ exports[`Categories create component snapshot testing should render the componen
           >
             <div
               className="ant-select-selector"
+              onClick={[Function]}
               onMouseDown={[Function]}
             >
               <span
@@ -69,6 +70,7 @@ exports[`Categories create component snapshot testing should render the componen
                       "opacity": 0,
                     }
                   }
+                  type="search"
                   unselectable="on"
                   value=""
                 />
