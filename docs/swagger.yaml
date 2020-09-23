@@ -1118,6 +1118,14 @@ paths:
         name: X-Space
         required: true
         type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      - description: Sort
+        in: query
+        name: sort
+        type: string
       - description: limit per page
         in: query
         name: limit

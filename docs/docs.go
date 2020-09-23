@@ -590,6 +590,18 @@ var doc = `{
                     },
                     {
                         "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "limit per page",
                         "name": "limit",
                         "in": "query"
