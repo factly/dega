@@ -1,16 +1,21 @@
 package util
 
 // Parse pagination
-func Parse(limit *int, page *int) (int, int) {
-	pageLimit := 0
-	pageNo := 10
+func Parse(page *int, perPage *int) (int, int) {
+	offset := 0 // no. of records to skip
+	limit := 10 // limit
 
-	if limit != nil {
-		pageLimit = *limit
-	}
-	if page != nil {
-		pageNo = *page
+	if page == nil || perPage == nil {
+		return offset, limit
 	}
 
-	return pageLimit, pageNo
+	if *perPage > 0 && *perPage <= 20 {
+		limit = *perPage
+	}
+
+	if *page > 1 {
+		offset = (*page - 1) * limit
+	}
+
+	return offset, limit
 }

@@ -74,8 +74,6 @@ models:
     model: github.com/factly/dega-api/graph/models.ItemReviewed
   ReviewRating:
     model: github.com/factly/dega-api/graph/models.ReviewRating
-  Schemas:
-    model: github.com/factly/dega-api/graph/models.Schemas
   User:
     model: github.com/factly/dega-api/graph/models.User
   UsersPaging:
@@ -93,7 +91,9 @@ models:
           resolver: true
         medium:
           resolver: true
-        degaUsers:
+        users:
+          resolver: true
+        schema:
           resolver: true
   PostsPaging:
     model: github.com/factly/dega-api/graph/models.PostsPaging
@@ -120,6 +120,17 @@ models:
           resolver: true
   ClaimsPaging:
     model: github.com/factly/dega-api/graph/models.ClaimsPaging
+  Space:
+    model: github.com/factly/dega-api/graph/models.Space
+    fields:
+        fav_icon:
+          resolver: true
+        mobile_icon:
+          resolver: true
+        logo_mobile:
+          resolver: true
+        logo:
+          resolver: true
   Sitemap:
     model: github.com/factly/dega-api/graph/models.Sitemap
   Sitemaps:

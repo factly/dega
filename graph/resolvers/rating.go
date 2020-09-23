@@ -17,7 +17,7 @@ func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*model
 		return nil, nil
 	}
 
-	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(*obj.MediumID))
 }
 
 func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
@@ -44,7 +44,7 @@ func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int, sort
 	result := &models.RatingsPaging{}
 	result.Nodes = make([]*models.Rating, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 
 	config.DB.Model(&models.Rating{}).Where(&models.Rating{
 		SpaceID: sID,

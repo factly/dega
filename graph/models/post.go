@@ -9,8 +9,8 @@ import (
 // Post model
 type Post struct {
 	ID               int            `json:"id"`
-	CreatedDate      time.Time      `json:"created_date"`
-	UpdatedDate      time.Time      `json:"updated_date"`
+	CreatedAt        time.Time      `json:"created_at"`
+	UpdatedAt        time.Time      `json:"updated_at"`
 	Title            string         `json:"title"`
 	Subtitle         *string        `json:"subtitle"`
 	Slug             string         `json:"slug"`
@@ -33,36 +33,31 @@ type PostsPaging struct {
 
 // PostTag model
 type PostTag struct {
-	ID          int       `json:"id"`
-	CreatedDate time.Time `json:"created_date"`
-	UpdatedDate time.Time `json:"updated_date"`
-	TagID       int       `json:"tag_id"`
-	PostID      int       `gorm:"column:post_id" json:"post_id"`
+	TagID  int `json:"tag_id"`
+	PostID int `gorm:"column:post_id" json:"post_id"`
 }
 
 // PostCategory model
 type PostCategory struct {
-	ID          int       `json:"id"`
-	CreatedDate time.Time `json:"created_date"`
-	UpdatedDate time.Time `json:"updated_date"`
-	CategoryID  int       `json:"category_id"`
-	PostID      int       `json:"post_id"`
+	CategoryID int `json:"category_id"`
+	PostID     int `json:"post_id"`
 }
 
 // PostAuthor model
 type PostAuthor struct {
-	ID          int       `json:"id"`
-	CreatedDate time.Time `json:"created_date"`
-	UpdatedDate time.Time `json:"updated_date"`
-	AuthorID    int       `json:"author_id"`
-	PostID      int       `json:"post_id"`
+	ID        int       `json:"id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	AuthorID  int       `json:"author_id"`
+	PostID    int       `json:"post_id"`
 }
 
 // PostClaim model
 type PostClaim struct {
-	ID          int       `json:"id"`
-	CreatedDate time.Time `json:"created_date"`
-	UpdatedDate time.Time `json:"updated_date"`
-	ClaimID     int       `json:"claim_id"`
-	PostID      int       `gorm:"column:post_id" json:"post_id"`
+	ID        int       `json:"id"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	ClaimID   int       `json:"claim_id"`
+	PostID    int       `gorm:"column:post_id" json:"post_id"`
+	Claim     *Claim    `json:"claim"`
 }

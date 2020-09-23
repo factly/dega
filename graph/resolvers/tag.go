@@ -54,7 +54,7 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, page *int, limit *i
 	result := &models.TagsPaging{}
 	result.Nodes = make([]*models.Tag, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 
 	var tx *gorm.DB
 

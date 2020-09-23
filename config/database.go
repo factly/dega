@@ -3,7 +3,6 @@ package config
 import (
 	"fmt"
 	"log"
-	"os"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -13,11 +12,10 @@ import (
 var DB *gorm.DB
 
 // SetupDB is database setuo
-func SetupDB() {
+func SetupDB(dsn string) {
 
-	DSN := os.Getenv("DSN")
 	var err error
-	DB, err = gorm.Open("postgres", DSN)
+	DB, err = gorm.Open("postgres", dsn)
 
 	if err != nil {
 		log.Fatal(err)

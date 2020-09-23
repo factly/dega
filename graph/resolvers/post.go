@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -10,7 +11,6 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"github.com/jinzhu/gorm"
 )
 
 type postResolver struct{ *Resolver }
@@ -85,21 +85,62 @@ func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.
 	return claims, nil
 }
 
-func (r *postResolver) DegaUsers(ctx context.Context, obj *models.Post) ([]*models.User, error) {
-	postAuthors := []models.PostAuthor{}
+func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.User, error) {
+	postUsers := []models.PostAuthor{}
 
 	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
 		PostID: obj.ID,
-	}).Find(&postAuthors)
+	}).Find(&postUsers)
 
 	var allUserID []string
 
-	for _, postAuthor := range postAuthors {
-		allUserID = append(allUserID, fmt.Sprint(postAuthor.AuthorID))
+	for _, postUser := range postUsers {
+		allUserID = append(allUserID, fmt.Sprint(postUser.AuthorID))
 	}
 
 	users, _ := loaders.GetUserLoader(ctx).LoadAll(allUserID)
 	return users, nil
+}
+
+func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface{}, error) {
+	result := make([]models.Schemas, 0)
+
+	postClaims := []models.PostClaim{}
+
+	config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
+		PostID: obj.ID,
+	}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Claimant").Find(&postClaims)
+
+	space := &models.Space{}
+	space.ID = obj.SpaceID
+
+	config.DB.First(&space)
+
+	for _, each := range postClaims {
+		schema := models.Schemas{}
+		schema.Context = "https://schema.org"
+		schema.Type = "ClaimReview"
+		schema.DatePublished = obj.CreatedAt
+		schema.URL = space.SiteAddress + "/" + obj.Slug
+		schema.ClaimReviewed = each.Claim.Title
+		schema.Author.Type = "Organization"
+		schema.Author.Name = space.Name
+		schema.Author.URL = &space.SiteAddress
+		schema.ReviewRating.Type = "Rating"
+		schema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
+		schema.ReviewRating.AlternateName = each.Claim.Rating.Name
+		// schema.ReviewRating.BestRating = 5
+		// schema.ReviewRating.WorstRating = 1
+		schema.ItemReviewed.Type = "Claim"
+		schema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
+		schema.ItemReviewed.Appearance = each.Claim.ClaimSource
+		schema.ItemReviewed.Author.Type = "Organization"
+		schema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
+
+		result = append(result, schema)
+	}
+
+	return result, nil
 }
 
 func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) {
@@ -122,7 +163,7 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 	return result, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context, formats []string, categories []string, tags []string, users []string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+func (r *queryResolver) Posts(ctx context.Context, formats []int, categories []int, tags []int, users []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	order := "created_at desc"
 	pageSortBy := "created_at"
@@ -146,54 +187,30 @@ func (r *queryResolver) Posts(ctx context.Context, formats []string, categories 
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 
-	pIDs := make([]int, 0)
+	tx := config.DB.Model(&models.Post{}).Where(&models.Post{
+		SpaceID: sID,
+	}).Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id").Group("posts.id")
+
+	filterStr := ""
 
 	if len(categories) > 0 {
-		rows := []models.Post{}
-		config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN categories ON categories.id = post_categories.category_id").Where("categories.slug in (?)", categories).Where("posts.space_id in (?)", sID).Scan(&rows)
-		for _, row := range rows {
-			pIDs = append(pIDs, row.ID)
-		}
+		filterStr = filterStr + fmt.Sprint("post_categories.category_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(categories), " ", ",", -1), "[]"), ") AND ")
 	}
-
+	if len(users) > 0 {
+		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(users), " ", ",", -1), "[]"), ") AND ")
+	}
 	if len(tags) > 0 {
-		rows := []models.Post{}
-		tx := config.DB.Table("posts").Select("posts.id").Where("posts.id IN (?)", pIDs).Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN tags ON tags.id = post_tags.tag_id").Where("posts.space_id in (?)", sID).Where("tags.slug in (?)", tags)
-		if len(pIDs) > 0 {
-			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
-		} else {
-			tx.Scan(&rows)
-		}
-		pIDs = []int{}
-		for _, row := range rows {
-			pIDs = append(pIDs, row.ID)
-		}
+		filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(tags), " ", ",", -1), "[]"), ") AND ")
 	}
-
 	if len(formats) > 0 {
-		rows := []models.Post{}
-		tx := config.DB.Table("posts").Select("posts.id").Joins("INNER JOIN formats ON formats.id = posts.format_id").Where("posts.space_id in (?)", sID).Where("formats.slug in (?)", formats)
-		if len(pIDs) > 0 {
-			tx.Where("posts.id IN (?)", pIDs).Scan(&rows)
-		} else {
-			tx.Scan(&rows)
-		}
-		pIDs = []int{}
-		for _, row := range rows {
-			pIDs = append(pIDs, row.ID)
-		}
-	}
-	var tx *gorm.DB
-
-	if len(pIDs) > 0 {
-		tx = config.DB.Model(&models.Post{}).Where(pIDs)
-	} else {
-		tx = config.DB.Model(&models.Post{}).Where("space_id in (?)", sID)
+		filterStr = filterStr + fmt.Sprint("posts.format_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(formats), " ", ",", -1), "[]"), ") AND ")
 	}
 
-	tx.Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	filterStr = strings.Trim(filterStr, " AND ")
+
+	tx.Where(filterStr).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	return result, nil
 }

@@ -17,7 +17,7 @@ func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*m
 		return nil, nil
 	}
 
-	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(*obj.MediumID))
 }
 
 func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
@@ -29,7 +29,7 @@ func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int, so
 	result := &models.ClaimantsPaging{}
 	result.Nodes = make([]*models.Claimant, 0)
 
-	offset, pageLimit := util.Parse(limit, page)
+	offset, pageLimit := util.Parse(page, limit)
 
 	config.DB.Model(&models.Claimant{}).Where(&models.Claimant{
 		SpaceID: sID,

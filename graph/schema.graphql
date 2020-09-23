@@ -1,7 +1,26 @@
+type Space {
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  site_title: String
+  tag_line: String
+  description: String
+  site_address: String
+  logo: Medium
+  logo_mobile: Medium
+  fav_icon: Medium
+  mobile_icon: Medium
+  verification_codes: Any
+  social_media_urls: Any
+  contact_info: Any
+}
+
 type Category {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -12,8 +31,8 @@ type Category {
 
 type Tag {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -22,8 +41,8 @@ type Tag {
 
 type Format {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -32,8 +51,8 @@ type Format {
 
 type Medium {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String
   type: String!
@@ -49,8 +68,8 @@ type Medium {
 
 type Post {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   title: String!
   subtitle: String
   slug: String!
@@ -60,20 +79,20 @@ type Post {
   is_featured: Boolean
   is_sticky: Boolean
   is_highlighted: Boolean
-  space_id: Int!
   format: Format!
   medium: Medium
   categories: [Category!]!
   tags: [Tag!]!
-  degaUsers: [User!]!
-  claims: [Claim]
+  users: [User!]!
+  claims: [Claim!]!
+  schemas: Any
+  space_id: Int!
 }
-
 
 type User {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   first_name: String!
   last_name: String
   email: String!
@@ -83,8 +102,8 @@ type User {
 
 type Rating {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -95,8 +114,8 @@ type Rating {
 
 type Claimant {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   name: String!
   slug: String!
   description: String
@@ -107,8 +126,8 @@ type Claimant {
 
 type Claim {
   id: ID!
-  created_date: Time
-  updated_date: Time
+  created_at: Time
+  updated_at: Time
   title: String!
   slug: String!
   claim_date: Time
@@ -118,9 +137,9 @@ type Claim {
   review: String
   review_tag_line: String
   review_sources: String
-  space_id: Int!
   rating: Rating!
   claimant: Claimant!
+  space_id: Int!
 }
 
 
@@ -168,7 +187,7 @@ type FormatsPaging {
 type Sitemap {
   slug: String!
   id: ID!
-  created_date: Time
+  created_at: Time
 }
 
 type Sitemaps {
@@ -182,53 +201,20 @@ type Sitemaps {
   ratings: [Sitemap] 
 }
 
-type Author {
-  name: String
-  type: String!
-  url: String
-  image: String
-}
-
-type ReviewRating {
-  type: String!
-  ratingValue: Int!
-  bestRating: Int!
-  worstRating: Int!
-  image: String
-  alternateName: String!
-}
-
-type ItemReviewed {
-  type: String!
-  author: Author!
-  datePublished: Time
-  name: String
-}
-
-type Schemas {
-  context: String
-  type: String!
-  datePublished: Time
-  url: String
-  author: Author!
-  claimReviewed: String!
-  reviewRating: ReviewRating!
-  itemReviewed: ItemReviewed!
-}
-
 type Query {
+  space: Space
   categories(ids: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
   category(id: Int!): Category
   tags(ids: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   tag(id: Int!): Tag
   formats: FormatsPaging
-  posts(formats: [String!], categories: [String!], tags: [String!], users: [String!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  posts(formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int!): Post
   users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
   user(id: Int!): User
   ratings(page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
-  claims(ratings: [String!], claimants:[String!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
+  claims(ratings: [Int!], claimants:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   sitemap: Sitemaps
 }
 
