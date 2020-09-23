@@ -115,7 +115,10 @@ func TestMediumList(t *testing.T) {
 
 		e.GET(basePath).
 			WithHeaders(headers).
-			WithQuery("q", "test").
+			WithQueryObject(map[string]interface{}{
+				"q":    "test",
+				"sort": "asc",
+			}).
 			Expect().
 			Status(http.StatusOK).
 			JSON().

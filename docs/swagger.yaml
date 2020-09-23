@@ -1123,6 +1123,10 @@ paths:
         in: query
         name: q
         type: string
+      - description: Sort
+        in: query
+        name: sort
+        type: string
       - description: limit per page
         in: query
         name: limit

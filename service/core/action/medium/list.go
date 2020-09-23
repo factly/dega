@@ -29,6 +29,7 @@ type paging struct {
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Param q query string false "Query"
+// @Param sort query string false "Sort"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Success 200 {array} model.Medium
@@ -43,6 +44,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	searchQuery := r.URL.Query().Get("q")
+	sort := r.URL.Query().Get("sort")
 	var filteredMediumIDs []uint
 
 	if searchQuery != "" {
@@ -72,9 +74,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
+	if sort != "asc" {
+		sort = "desc"
+	}
+
 	tx := config.DB.Model(&model.Medium{}).Where(&model.Medium{
 		SpaceID: uint(sID),
-	}).Order("id desc")
+	}).Order("created_at " + sort)
 
 	if len(filteredMediumIDs) > 0 {
 		err = tx.Where(filteredMediumIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
