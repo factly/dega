@@ -4,7 +4,7 @@ import spaces from './spacesReducer';
 import categories from './categoriesReducer';
 import tags from './tagsReducer';
 import formats from './formatsReducer';
-import factchecks from './factchecksReducer';
+import googleFactChecks from './googleFactChecksReducer';
 import media from './mediaReducer';
 import authors from './authorsReducer';
 import posts from './postsReducer';
@@ -21,7 +21,7 @@ const appReducer = combineReducers({
   categories,
   tags,
   formats,
-  factchecks,
+  googleFactChecks,
   media,
   authors,
   posts,
