@@ -34,7 +34,7 @@ exports[`Sidebar component snapshot testing should render the component 1`] = `
       />
     </div>
     <ul
-      className="ant-menu slider-menu ant-menu-dark ant-menu-inline-collapsed ant-menu-root ant-menu-vertical"
+      className="ant-menu ant-menu-dark ant-menu-inline-collapsed slider-menu ant-menu-root ant-menu-vertical"
       onMouseEnter={[Function]}
       onTransitionEnd={[Function]}
       role="menu"

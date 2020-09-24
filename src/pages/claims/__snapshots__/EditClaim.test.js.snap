@@ -369,6 +369,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="title"
                               prefixCls="ant-form"
                               required={true}
+                              requiredMark={true}
                               rules={
                                 Array [
                                   Object {
@@ -498,7 +499,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -506,18 +507,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -610,6 +601,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="slug"
                               prefixCls="ant-form"
                               required={true}
+                              requiredMark={true}
                               rules={
                                 Array [
                                   Object {
@@ -727,7 +719,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -735,18 +727,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -827,6 +809,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="claimant"
                               prefixCls="ant-form"
                               required={true}
+                              requiredMark={true}
                               rules={
                                 Array [
                                   Object {
@@ -1182,6 +1165,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                                   readonly=""
                                                                   role="combobox"
                                                                   style="opacity: 0;"
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />
@@ -1237,6 +1221,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                       >
                                                         <div
                                                           className="ant-select-selector"
+                                                          onClick={[Function]}
                                                           onMouseDown={[Function]}
                                                         >
                                                           <SingleSelector
@@ -1270,6 +1255,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                                       readonly=""
                                                                       role="combobox"
                                                                       style="opacity: 0;"
+                                                                      type="search"
                                                                       unselectable="on"
                                                                       value=""
                                                                     />
@@ -1302,6 +1288,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                                   readonly=""
                                                                   role="combobox"
                                                                   style="opacity: 0;"
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />,
@@ -1385,6 +1372,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                                       "opacity": 0,
                                                                     }
                                                                   }
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />
@@ -1513,7 +1501,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -1521,18 +1509,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -1552,6 +1530,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                       >
                         <FormItemLabel
                           prefixCls="ant-form"
+                          requiredMark={true}
                         />
                         <FormItemInput
                           errors={Array []}
@@ -1671,7 +1650,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                   loading={false}
                                                   prefixCls="ant-btn"
                                                 >
-                                                  <ForwardRef
+                                                  <CSSMotion
                                                     motionName="ant-btn-loading-icon-motion"
                                                     onAppearActive={[Function]}
                                                     onAppearStart={[Function]}
@@ -1682,22 +1661,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                     removeOnLeave={true}
                                                     visible={false}
                                                   >
-                                                    <CSSMotion
-                                                      internalRef={null}
-                                                      motionAppear={true}
-                                                      motionEnter={true}
-                                                      motionLeave={true}
-                                                      motionName="ant-btn-loading-icon-motion"
-                                                      onAppearActive={[Function]}
-                                                      onAppearStart={[Function]}
-                                                      onEnterActive={[Function]}
-                                                      onEnterStart={[Function]}
-                                                      onLeaveActive={[Function]}
-                                                      onLeaveStart={[Function]}
-                                                      removeOnLeave={true}
-                                                      visible={false}
-                                                    />
-                                                  </ForwardRef>
+                                                    <DomWrapper />
+                                                  </CSSMotion>
                                                 </LoadingIcon>
                                                 <span
                                                   key=".0"
@@ -1713,7 +1678,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                   </Row>
                                 </div>
                               </div>
-                              <ForwardRef
+                              <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
                                 motionName="show-help"
@@ -1721,18 +1686,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                 removeOnLeave={true}
                                 visible={false}
                               >
-                                <CSSMotion
-                                  internalRef={null}
-                                  motionAppear={true}
-                                  motionDeadline={500}
-                                  motionEnter={true}
-                                  motionLeave={true}
-                                  motionName="show-help"
-                                  onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                />
-                              </ForwardRef>
+                                <DomWrapper />
+                              </CSSMotion>
                             </div>
                           </Col>
                         </FormItemInput>
@@ -1811,6 +1766,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="rating"
                               prefixCls="ant-form"
                               required={true}
+                              requiredMark={true}
                               rules={
                                 Array [
                                   Object {
@@ -2165,6 +2121,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                                   readonly=""
                                                                   role="combobox"
                                                                   style="opacity: 0;"
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />
@@ -2220,6 +2177,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                       >
                                                         <div
                                                           className="ant-select-selector"
+                                                          onClick={[Function]}
                                                           onMouseDown={[Function]}
                                                         >
                                                           <SingleSelector
@@ -2253,6 +2211,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                                       readonly=""
                                                                       role="combobox"
                                                                       style="opacity: 0;"
+                                                                      type="search"
                                                                       unselectable="on"
                                                                       value=""
                                                                     />
@@ -2285,6 +2244,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                                   readonly=""
                                                                   role="combobox"
                                                                   style="opacity: 0;"
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />,
@@ -2368,6 +2328,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                                                       "opacity": 0,
                                                                     }
                                                                   }
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />
@@ -2496,7 +2457,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -2504,18 +2465,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -2572,6 +2523,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="description"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -2631,7 +2583,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -2639,18 +2591,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -2715,6 +2657,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="claim_date"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -3501,7 +3444,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -3509,18 +3452,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -3577,6 +3510,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="checked_date"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -4363,7 +4297,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -4371,18 +4305,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -4439,6 +4363,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="claim_sources"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -4546,7 +4471,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -4554,18 +4479,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -4622,6 +4537,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="review"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -4729,7 +4645,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -4737,18 +4653,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -4805,6 +4711,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="review_tag_line"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -4912,7 +4819,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -4920,18 +4827,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -4988,6 +4885,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               name="review_sources"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -5095,7 +4993,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -5103,18 +5001,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -5134,6 +5022,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                       >
                         <FormItemLabel
                           prefixCls="ant-form"
+                          requiredMark={true}
                         />
                         <FormItemInput
                           errors={Array []}
@@ -5173,7 +5062,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                           loading={false}
                                           prefixCls="ant-btn"
                                         >
-                                          <ForwardRef
+                                          <CSSMotion
                                             motionName="ant-btn-loading-icon-motion"
                                             onAppearActive={[Function]}
                                             onAppearStart={[Function]}
@@ -5184,22 +5073,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                             removeOnLeave={true}
                                             visible={false}
                                           >
-                                            <CSSMotion
-                                              internalRef={null}
-                                              motionAppear={true}
-                                              motionEnter={true}
-                                              motionLeave={true}
-                                              motionName="ant-btn-loading-icon-motion"
-                                              onAppearActive={[Function]}
-                                              onAppearStart={[Function]}
-                                              onEnterActive={[Function]}
-                                              onEnterStart={[Function]}
-                                              onLeaveActive={[Function]}
-                                              onLeaveStart={[Function]}
-                                              removeOnLeave={true}
-                                              visible={false}
-                                            />
-                                          </ForwardRef>
+                                            <DomWrapper />
+                                          </CSSMotion>
                                         </LoadingIcon>
                                         <span
                                           key=".0"
@@ -5211,7 +5086,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                   </Button>
                                 </div>
                               </div>
-                              <ForwardRef
+                              <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
                                 motionName="show-help"
@@ -5219,18 +5094,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                 removeOnLeave={true}
                                 visible={false}
                               >
-                                <CSSMotion
-                                  internalRef={null}
-                                  motionAppear={true}
-                                  motionDeadline={500}
-                                  motionEnter={true}
-                                  motionLeave={true}
-                                  motionName="show-help"
-                                  onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                />
-                              </ForwardRef>
+                                <DomWrapper />
+                              </CSSMotion>
                             </div>
                           </Col>
                         </FormItemInput>
@@ -5249,6 +5114,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                     >
                       <FormItemLabel
                         prefixCls="ant-form"
+                        requiredMark={true}
                       />
                       <FormItemInput
                         errors={Array []}
@@ -5290,7 +5156,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                         loading={false}
                                         prefixCls="ant-btn"
                                       >
-                                        <ForwardRef
+                                        <CSSMotion
                                           motionName="ant-btn-loading-icon-motion"
                                           onAppearActive={[Function]}
                                           onAppearStart={[Function]}
@@ -5301,22 +5167,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                           removeOnLeave={true}
                                           visible={false}
                                         >
-                                          <CSSMotion
-                                            internalRef={null}
-                                            motionAppear={true}
-                                            motionEnter={true}
-                                            motionLeave={true}
-                                            motionName="ant-btn-loading-icon-motion"
-                                            onAppearActive={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
-                                            onLeaveStart={[Function]}
-                                            removeOnLeave={true}
-                                            visible={false}
-                                          />
-                                        </ForwardRef>
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </LoadingIcon>
                                       <span
                                         key=".0"
@@ -5346,7 +5198,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                         loading={false}
                                         prefixCls="ant-btn"
                                       >
-                                        <ForwardRef
+                                        <CSSMotion
                                           motionName="ant-btn-loading-icon-motion"
                                           onAppearActive={[Function]}
                                           onAppearStart={[Function]}
@@ -5357,22 +5209,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                           removeOnLeave={true}
                                           visible={false}
                                         >
-                                          <CSSMotion
-                                            internalRef={null}
-                                            motionAppear={true}
-                                            motionEnter={true}
-                                            motionLeave={true}
-                                            motionName="ant-btn-loading-icon-motion"
-                                            onAppearActive={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
-                                            onLeaveStart={[Function]}
-                                            removeOnLeave={true}
-                                            visible={false}
-                                          />
-                                        </ForwardRef>
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </LoadingIcon>
                                       <span
                                         key=".0"
@@ -5384,7 +5222,7 @@ exports[`Claims Edit component snapshot testing should match component with empt
                                 </Button>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -5392,18 +5230,8 @@ exports[`Claims Edit component snapshot testing should match component with empt
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -5911,6 +5739,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="title"
                               prefixCls="ant-form"
                               required={true}
+                              requiredMark={true}
                               rules={
                                 Array [
                                   Object {
@@ -6040,7 +5869,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -6048,18 +5877,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -6152,6 +5971,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="slug"
                               prefixCls="ant-form"
                               required={true}
+                              requiredMark={true}
                               rules={
                                 Array [
                                   Object {
@@ -6272,7 +6092,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -6280,18 +6100,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -6372,6 +6182,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="claimant"
                               prefixCls="ant-form"
                               required={true}
+                              requiredMark={true}
                               rules={
                                 Array [
                                   Object {
@@ -6727,6 +6538,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                                   readonly=""
                                                                   role="combobox"
                                                                   style="opacity: 0;"
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />
@@ -6782,6 +6594,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                       >
                                                         <div
                                                           className="ant-select-selector"
+                                                          onClick={[Function]}
                                                           onMouseDown={[Function]}
                                                         >
                                                           <SingleSelector
@@ -6815,6 +6628,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                                       readonly=""
                                                                       role="combobox"
                                                                       style="opacity: 0;"
+                                                                      type="search"
                                                                       unselectable="on"
                                                                       value=""
                                                                     />
@@ -6847,6 +6661,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                                   readonly=""
                                                                   role="combobox"
                                                                   style="opacity: 0;"
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />,
@@ -6930,6 +6745,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                                       "opacity": 0,
                                                                     }
                                                                   }
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />
@@ -7058,7 +6874,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -7066,18 +6882,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -7097,6 +6903,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                       >
                         <FormItemLabel
                           prefixCls="ant-form"
+                          requiredMark={true}
                         />
                         <FormItemInput
                           errors={Array []}
@@ -7216,7 +7023,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                   loading={false}
                                                   prefixCls="ant-btn"
                                                 >
-                                                  <ForwardRef
+                                                  <CSSMotion
                                                     motionName="ant-btn-loading-icon-motion"
                                                     onAppearActive={[Function]}
                                                     onAppearStart={[Function]}
@@ -7227,22 +7034,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                     removeOnLeave={true}
                                                     visible={false}
                                                   >
-                                                    <CSSMotion
-                                                      internalRef={null}
-                                                      motionAppear={true}
-                                                      motionEnter={true}
-                                                      motionLeave={true}
-                                                      motionName="ant-btn-loading-icon-motion"
-                                                      onAppearActive={[Function]}
-                                                      onAppearStart={[Function]}
-                                                      onEnterActive={[Function]}
-                                                      onEnterStart={[Function]}
-                                                      onLeaveActive={[Function]}
-                                                      onLeaveStart={[Function]}
-                                                      removeOnLeave={true}
-                                                      visible={false}
-                                                    />
-                                                  </ForwardRef>
+                                                    <DomWrapper />
+                                                  </CSSMotion>
                                                 </LoadingIcon>
                                                 <span
                                                   key=".0"
@@ -7258,7 +7051,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                   </Row>
                                 </div>
                               </div>
-                              <ForwardRef
+                              <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
                                 motionName="show-help"
@@ -7266,18 +7059,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                 removeOnLeave={true}
                                 visible={false}
                               >
-                                <CSSMotion
-                                  internalRef={null}
-                                  motionAppear={true}
-                                  motionDeadline={500}
-                                  motionEnter={true}
-                                  motionLeave={true}
-                                  motionName="show-help"
-                                  onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                />
-                              </ForwardRef>
+                                <DomWrapper />
+                              </CSSMotion>
                             </div>
                           </Col>
                         </FormItemInput>
@@ -7356,6 +7139,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="rating"
                               prefixCls="ant-form"
                               required={true}
+                              requiredMark={true}
                               rules={
                                 Array [
                                   Object {
@@ -7710,6 +7494,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                                   readonly=""
                                                                   role="combobox"
                                                                   style="opacity: 0;"
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />
@@ -7765,6 +7550,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                       >
                                                         <div
                                                           className="ant-select-selector"
+                                                          onClick={[Function]}
                                                           onMouseDown={[Function]}
                                                         >
                                                           <SingleSelector
@@ -7798,6 +7584,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                                       readonly=""
                                                                       role="combobox"
                                                                       style="opacity: 0;"
+                                                                      type="search"
                                                                       unselectable="on"
                                                                       value=""
                                                                     />
@@ -7830,6 +7617,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                                   readonly=""
                                                                   role="combobox"
                                                                   style="opacity: 0;"
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />,
@@ -7913,6 +7701,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                                       "opacity": 0,
                                                                     }
                                                                   }
+                                                                  type="search"
                                                                   unselectable="on"
                                                                   value=""
                                                                 />
@@ -8041,7 +7830,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -8049,18 +7838,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -8117,6 +7896,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="description"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -8178,7 +7958,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -8186,18 +7966,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -8262,6 +8032,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="claim_date"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -9131,7 +8902,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -9139,18 +8910,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -9207,6 +8968,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="checked_date"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -10076,7 +9838,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -10084,18 +9846,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -10152,6 +9904,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="claim_sources"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -10259,7 +10012,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -10267,18 +10020,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -10335,6 +10078,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="review"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -10442,7 +10186,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -10450,18 +10194,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -10518,6 +10252,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="review_tag_line"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -10625,7 +10360,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -10633,18 +10368,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -10701,6 +10426,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               name="review_sources"
                               prefixCls="ant-form"
                               required={false}
+                              requiredMark={true}
                             >
                               <Col
                                 className="ant-form-item-label"
@@ -10808,7 +10534,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       </Component>
                                     </div>
                                   </div>
-                                  <ForwardRef
+                                  <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
                                     motionName="show-help"
@@ -10816,18 +10542,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     removeOnLeave={true}
                                     visible={false}
                                   >
-                                    <CSSMotion
-                                      internalRef={null}
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionEnter={true}
-                                      motionLeave={true}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    />
-                                  </ForwardRef>
+                                    <DomWrapper />
+                                  </CSSMotion>
                                 </div>
                               </Col>
                             </FormItemInput>
@@ -10847,6 +10563,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                       >
                         <FormItemLabel
                           prefixCls="ant-form"
+                          requiredMark={true}
                         />
                         <FormItemInput
                           errors={Array []}
@@ -10886,7 +10603,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                           loading={false}
                                           prefixCls="ant-btn"
                                         >
-                                          <ForwardRef
+                                          <CSSMotion
                                             motionName="ant-btn-loading-icon-motion"
                                             onAppearActive={[Function]}
                                             onAppearStart={[Function]}
@@ -10897,22 +10614,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                             removeOnLeave={true}
                                             visible={false}
                                           >
-                                            <CSSMotion
-                                              internalRef={null}
-                                              motionAppear={true}
-                                              motionEnter={true}
-                                              motionLeave={true}
-                                              motionName="ant-btn-loading-icon-motion"
-                                              onAppearActive={[Function]}
-                                              onAppearStart={[Function]}
-                                              onEnterActive={[Function]}
-                                              onEnterStart={[Function]}
-                                              onLeaveActive={[Function]}
-                                              onLeaveStart={[Function]}
-                                              removeOnLeave={true}
-                                              visible={false}
-                                            />
-                                          </ForwardRef>
+                                            <DomWrapper />
+                                          </CSSMotion>
                                         </LoadingIcon>
                                         <span
                                           key=".0"
@@ -10924,7 +10627,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                   </Button>
                                 </div>
                               </div>
-                              <ForwardRef
+                              <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
                                 motionName="show-help"
@@ -10932,18 +10635,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                 removeOnLeave={true}
                                 visible={false}
                               >
-                                <CSSMotion
-                                  internalRef={null}
-                                  motionAppear={true}
-                                  motionDeadline={500}
-                                  motionEnter={true}
-                                  motionLeave={true}
-                                  motionName="show-help"
-                                  onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                />
-                              </ForwardRef>
+                                <DomWrapper />
+                              </CSSMotion>
                             </div>
                           </Col>
                         </FormItemInput>
@@ -10962,6 +10655,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                     >
                       <FormItemLabel
                         prefixCls="ant-form"
+                        requiredMark={true}
                       />
                       <FormItemInput
                         errors={Array []}
@@ -11003,7 +10697,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                         loading={false}
                                         prefixCls="ant-btn"
                                       >
-                                        <ForwardRef
+                                        <CSSMotion
                                           motionName="ant-btn-loading-icon-motion"
                                           onAppearActive={[Function]}
                                           onAppearStart={[Function]}
@@ -11014,22 +10708,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                           removeOnLeave={true}
                                           visible={false}
                                         >
-                                          <CSSMotion
-                                            internalRef={null}
-                                            motionAppear={true}
-                                            motionEnter={true}
-                                            motionLeave={true}
-                                            motionName="ant-btn-loading-icon-motion"
-                                            onAppearActive={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
-                                            onLeaveStart={[Function]}
-                                            removeOnLeave={true}
-                                            visible={false}
-                                          />
-                                        </ForwardRef>
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </LoadingIcon>
                                       <span
                                         key=".0"
@@ -11059,7 +10739,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                         loading={false}
                                         prefixCls="ant-btn"
                                       >
-                                        <ForwardRef
+                                        <CSSMotion
                                           motionName="ant-btn-loading-icon-motion"
                                           onAppearActive={[Function]}
                                           onAppearStart={[Function]}
@@ -11070,22 +10750,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                           removeOnLeave={true}
                                           visible={false}
                                         >
-                                          <CSSMotion
-                                            internalRef={null}
-                                            motionAppear={true}
-                                            motionEnter={true}
-                                            motionLeave={true}
-                                            motionName="ant-btn-loading-icon-motion"
-                                            onAppearActive={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
-                                            onLeaveStart={[Function]}
-                                            removeOnLeave={true}
-                                            visible={false}
-                                          />
-                                        </ForwardRef>
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </LoadingIcon>
                                       <span
                                         key=".0"
@@ -11097,7 +10763,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                 </Button>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -11105,18 +10771,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>

@@ -166,6 +166,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                 >
                   <div
                     className="ant-select-selector"
+                    onClick={[Function]}
                     onMouseDown={[Function]}
                   >
                     <span
@@ -193,6 +194,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                             "opacity": 0,
                           }
                         }
+                        type="search"
                         unselectable="on"
                         value=""
                       />
@@ -1147,6 +1149,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                 >
                   <div
                     className="ant-select-selector"
+                    onClick={[Function]}
                     onMouseDown={[Function]}
                   >
                     <span
@@ -1174,6 +1177,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                             "opacity": 0,
                           }
                         }
+                        type="search"
                         unselectable="on"
                         value=""
                       />
@@ -2109,6 +2113,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                 >
                   <div
                     className="ant-select-selector"
+                    onClick={[Function]}
                     onMouseDown={[Function]}
                   >
                     <span
@@ -2136,6 +2141,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                             "opacity": 0,
                           }
                         }
+                        type="search"
                         unselectable="on"
                         value=""
                       />
@@ -3088,6 +3094,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                 >
                   <div
                     className="ant-select-selector"
+                    onClick={[Function]}
                     onMouseDown={[Function]}
                   >
                     <span
@@ -3115,6 +3122,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                             "opacity": 0,
                           }
                         }
+                        type="search"
                         unselectable="on"
                         value=""
                       />
@@ -4048,6 +4056,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
                 >
                   <div
                     className="ant-select-selector"
+                    onClick={[Function]}
                     onMouseDown={[Function]}
                   >
                     <span
@@ -4075,6 +4084,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
                             "opacity": 0,
                           }
                         }
+                        type="search"
                         unselectable="on"
                         value=""
                       />
