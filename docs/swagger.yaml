@@ -701,6 +701,31 @@ definitions:
     required:
     - name
     type: object
+  user.allPermissionRes:
+    properties:
+      birth_date:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
+      permissions:
+        items:
+          $ref: '#/definitions/model.Permission'
+        type: array
+      updated_at:
+        type: string
+    type: object
   user.paging:
     properties:
       nodes:
@@ -1872,6 +1897,33 @@ paths:
       tags:
       - Users
   /core/users/permissions:
+    get:
+      description: Get all user's permission
+      operationId: get-all-users-permission
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/user.allPermissionRes'
+            type: array
+      summary: Get all user's permission
+      tags:
+      - Users
+  /core/users/permissions/my:
     get:
       description: Get user's permission
       operationId: get-users-permission
