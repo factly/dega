@@ -25,7 +25,7 @@ import (
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Success 200 {object} []model.Permission
-// @Router /core/users/permissions [get]
+// @Router /core/users/permissions/my [get]
 func userpermissions(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
@@ -53,8 +53,8 @@ func userpermissions(w http.ResponseWriter, r *http.Request) {
 	if err == nil {
 		allPermission := []model.Permission{
 			model.Permission{
-				Resource: "all",
-				Actions:  []string{"all"},
+				Resource: "admin",
+				Actions:  []string{"admin"},
 			},
 		}
 		renderx.JSON(w, http.StatusOK, allPermission)
