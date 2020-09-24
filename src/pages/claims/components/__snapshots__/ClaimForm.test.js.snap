@@ -9113,8 +9113,8 @@ exports[`Claims Create Form component snapshot testing should match component in
                                                         placeholder="Select date"
                                                         readOnly={true}
                                                         size={12}
-                                                        title="2020-12-11"
-                                                        value="2020-12-11"
+                                                        title="2020-12-12"
+                                                        value="2020-12-12"
                                                       />
                                                       <span
                                                         className="ant-picker-suffix"
@@ -10049,8 +10049,8 @@ exports[`Claims Create Form component snapshot testing should match component in
                                                         placeholder="Select date"
                                                         readOnly={true}
                                                         size={12}
-                                                        title="2020-12-11"
-                                                        value="2020-12-11"
+                                                        title="2020-12-12"
+                                                        value="2020-12-12"
                                                       />
                                                       <span
                                                         className="ant-picker-suffix"
@@ -20296,8 +20296,8 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                                         placeholder="Select date"
                                                         readOnly={true}
                                                         size={12}
-                                                        title="2020-12-11"
-                                                        value="2020-12-11"
+                                                        title="2020-12-12"
+                                                        value="2020-12-12"
                                                       />
                                                       <span
                                                         className="ant-picker-suffix"
@@ -21232,8 +21232,8 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                                         placeholder="Select date"
                                                         readOnly={true}
                                                         size={12}
-                                                        title="2020-12-11"
-                                                        value="2020-12-11"
+                                                        title="2020-12-12"
+                                                        value="2020-12-12"
                                                       />
                                                       <span
                                                         className="ant-picker-suffix"

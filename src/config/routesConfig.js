@@ -64,8 +64,8 @@ import EditClaim from '../pages/claims/EditClaim';
 import Policies from '../pages/policies';
 import CreatePolicy from '../pages/policies/CreatePolicy';
 import EditPolicy from '../pages/policies/EditPolicy';
-import GoogleFactCheck from '../pages/fact-check/GoogleFactCheck';
-import Factly from '../pages/fact-check/Factly';
+import GoogleFactCheck from '../pages/fact-checks/GoogleFactCheck';
+import Factly from '../pages/fact-checks/Factly';
 
 const routes = {
   dashboard: {
