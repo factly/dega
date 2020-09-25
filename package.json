@@ -14,6 +14,7 @@
     "@editorjs/list": "^1.5.0",
     "@editorjs/paragraph": "^2.7.0",
     "@editorjs/quote": "^2.3.0",
+    "@editorjs/raw": "^2.1.2",
     "@editorjs/table": "^1.2.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

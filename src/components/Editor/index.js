@@ -4,8 +4,12 @@ import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Paragraph from '@editorjs/paragraph';
 import Quote from '@editorjs/quote';
+import RawTool from '@editorjs/raw';
 import Table from '@editorjs/table';
 import UppyUploader from './UppyUploader';
+import TwitterEmbbed from './twitter';
+import YoutubeEmbbed from './youtube';
+import InstagramEmbbed from './instagram';
 import { useSelector } from 'react-redux';
 
 function Editor({ value, onChange }) {
@@ -20,7 +24,11 @@ function Editor({ value, onChange }) {
         list: List,
         paragraph: Paragraph,
         quote: Quote,
+        raw: RawTool,
         table: Table,
+        twitter: TwitterEmbbed,
+        youtube: YoutubeEmbbed,
+        instagram: InstagramEmbbed,
         uppy: {
           class: UppyUploader,
           config: {
@@ -30,7 +38,6 @@ function Editor({ value, onChange }) {
       },
       onChange: (value) =>
         value.saver.save().then((value) => {
-          console.log(value);
           onChange(value);
         }),
       data: value,
