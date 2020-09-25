@@ -1732,7 +1732,7 @@ var doc = `{
                 }
             }
         },
-        "/core/users/permissions/my": {
+        "/core/users/{user_id}/permissions": {
             "get": {
                 "description": "Get user's permission",
                 "produces": [
@@ -1756,6 +1756,13 @@ var doc = `{
                         "description": "Space ID",
                         "name": "X-Space",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
                         "required": true
                     }
                 ],
@@ -3608,7 +3615,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
-	Host:        "localhost:6000",
+	Host:        "localhost:7789",
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "Dega API",

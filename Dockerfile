@@ -10,6 +10,7 @@ ENV KETO $KETO
 ENV KAVACH $KAVACH
 ENV MEILI_URL $MEILI_URL
 ENV MEILI_KEY $MEILI_KEY
+ENV MODE $MODE
 
 RUN go get github.com/githubnemo/CompileDaemon
 
