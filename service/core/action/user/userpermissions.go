@@ -60,7 +60,7 @@ func userpermissions(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := make([]model.Permission, 0)
+	var result []model.Permission
 
 	// check if the user is admin of organisation
 	isAdmin := util.CheckSpaceKetoPermission("all", uint(oID), uint(uID))
