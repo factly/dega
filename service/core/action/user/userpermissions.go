@@ -30,6 +30,13 @@ import (
 // @Success 200 {object} []model.Permission
 // @Router /core/users/{user_id}/permissions [get]
 func userpermissions(w http.ResponseWriter, r *http.Request) {
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -53,25 +60,54 @@ func userpermissions(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	result := make([]model.Permission, 0)
+
 	// check if the user is admin of organisation
-	err = util.CheckSpaceKetoPermission("all", uint(oID), uint(id))
-	if err == nil {
-		allPermission := []model.Permission{
-			model.Permission{
-				Resource: "admin",
-				Actions:  []string{"admin"},
-			},
+	isAdmin := util.CheckSpaceKetoPermission("all", uint(oID), uint(uID))
+	if isAdmin == nil {
+		// logged user is admin and user_id is also admin's
+		if id == uID {
+			allPermission := []model.Permission{
+				model.Permission{
+					Resource: "admin",
+					Actions:  []string{"admin"},
+				},
+			}
+			renderx.JSON(w, http.StatusOK, allPermission)
+			return
 		}
-		renderx.JSON(w, http.StatusOK, allPermission)
-		return
+		result, err = getPermissions(oID, sID, id)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	} else {
+		// logged user not admin but asking his own permissions
+		if id == uID {
+			result, err = getPermissions(oID, sID, id)
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
+		} else {
+			// logged user not admin and asking other user's permission
+			errorx.Render(w, errorx.Parser(errorx.Message{
+				Message: "not allowed",
+				Code:    http.StatusUnauthorized,
+			}))
+			return
+		}
 	}
 
-	// Get all policies
+	renderx.JSON(w, http.StatusOK, result)
+}
+
+func getPermissions(oID, sID, uID int) ([]model.Permission, error) {
 	policyList, err := policy.GetAllPolicies()
 	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+		return nil, err
 	}
 
 	spacePrefix := fmt.Sprint("id:org:", oID, ":app:dega:space:", sID, ":")
@@ -81,18 +117,17 @@ func userpermissions(w http.ResponseWriter, r *http.Request) {
 		if strings.HasPrefix(pol.ID, spacePrefix) {
 			var isPresent bool = false
 			for _, user := range pol.Subjects {
-				if user == fmt.Sprint(id) {
+				if user == fmt.Sprint(uID) {
 					isPresent = true
 					break
 				}
 			}
 
 			if isPresent {
-				polPermission := policy.GetPermissions(pol, uint(id))
+				polPermission := policy.GetPermissions(pol, uint(uID))
 				permissions = append(permissions, polPermission...)
 			}
 		}
 	}
-
-	renderx.JSON(w, http.StatusOK, permissions)
+	return permissions, nil
 }
