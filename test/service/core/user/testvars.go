@@ -1,7 +1,7 @@
 package user
 
 var path string = "/core/users"
-var permissionPath string = "/core/users/permissions/my"
+var permissionPath string = "/core/users/{user_id}/permissions"
 var permissionAllPath string = "/core/users/permissions"
 
 var headers = map[string]string{

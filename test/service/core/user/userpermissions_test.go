@@ -26,7 +26,7 @@ func TestListUsersPermission(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("get logged in user's permissions", func(t *testing.T) {
+	t.Run("get logged in user not admin permissions", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
@@ -39,17 +39,34 @@ func TestListUsersPermission(t *testing.T) {
 			Reply(http.StatusOK).
 			JSON(test.Dummy_KetoPolicy)
 
-		headers["X-User"] = "2"
-
 		e.GET(permissionPath).
 			WithHeaders(headers).
+			WithPath("user_id", "1").
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Array().
 			Contains(permissionsResponse[0], permissionsResponse[1])
+	})
 
-		headers["X-User"] = "1"
+	t.Run("member requests other member's permissions", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		gock.New(config.KetoURL + "/engines/acp/ory/regex/roles/(.+)").
+			Persist().
+			Reply(http.StatusNotFound)
+
+		gock.New(config.KetoURL + "/engines/acp/ory/regex/policies").
+			Persist().
+			Reply(http.StatusOK).
+			JSON(test.Dummy_KetoPolicy)
+
+		e.GET(permissionPath).
+			WithHeaders(headers).
+			WithPath("user_id", "2").
+			Expect().
+			Status(http.StatusUnauthorized)
 	})
 
 	t.Run("get logged admin's permissions", func(t *testing.T) {
@@ -58,6 +75,7 @@ func TestListUsersPermission(t *testing.T) {
 
 		e.GET(permissionPath).
 			WithHeaders(headers).
+			WithPath("user_id", "1").
 			Expect().
 			Status(http.StatusOK).
 			JSON().
@@ -65,17 +83,29 @@ func TestListUsersPermission(t *testing.T) {
 			Contains(adminPermissionsResponse)
 	})
 
+	t.Run("admin requests member's permissions", func(t *testing.T) {
+		test.KetoGock()
+		test.CheckSpaceMock(mock)
+
+		e.GET(permissionPath).
+			WithHeaders(headers).
+			WithPath("user_id", "2").
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Array().
+			Contains(permissionsResponse[0], permissionsResponse[1])
+	})
+
 	t.Run("when keto is down", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		headers["X-User"] = "2"
-
 		e.GET(permissionPath).
 			WithHeaders(headers).
+			WithPath("user_id", "1").
 			Expect().
 			Status(http.StatusInternalServerError)
 
-		headers["X-User"] = "1"
 	})
 }
