@@ -97,6 +97,26 @@ func TestListUsersPermission(t *testing.T) {
 			Contains(permissionsResponse[0], permissionsResponse[1])
 	})
 
+	t.Run("logged in user is admin and cannot get policies", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+
+		gock.New(config.KetoURL).
+			Post("/engines/acp/ory/regex/allowed").
+			Persist().
+			Reply(http.StatusOK)
+
+		gock.New(config.KetoURL + "/engines/acp/ory/regex/policies").
+			Persist().
+			Reply(http.StatusNotFound)
+
+		e.GET(permissionPath).
+			WithHeaders(headers).
+			WithPath("user_id", "2").
+			Expect().
+			Status(http.StatusInternalServerError)
+	})
+
 	t.Run("when keto is down", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
 		test.CheckSpaceMock(mock)
@@ -106,6 +126,16 @@ func TestListUsersPermission(t *testing.T) {
 			WithPath("user_id", "1").
 			Expect().
 			Status(http.StatusInternalServerError)
+
+	})
+
+	t.Run("invalid user_id", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		e.GET(permissionPath).
+			WithHeaders(headers).
+			WithPath("user_id", "abc").
+			Expect().
+			Status(http.StatusNotFound)
 
 	})
 }
