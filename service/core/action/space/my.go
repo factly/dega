@@ -112,13 +112,9 @@ func my(w http.ResponseWriter, r *http.Request) {
 
 	for _, each := range allOrg {
 		spaceWithPermArr := []spaceWithPermissions{}
-		isOwner := false
-		if each.Permission.Role == "owner" {
-			isOwner = true
-		}
 		for _, space := range allSpaces {
 			if space.OrganisationID == int(each.ID) {
-				if !isOwner {
+				if each.Permission.Role != "owner" {
 					permissions := getUserPermissions(int(each.ID), int(space.ID), uID, policyList)
 					spaceWithPerm := spaceWithPermissions{
 						Space:       space,
