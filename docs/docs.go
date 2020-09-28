@@ -1692,86 +1692,6 @@ var doc = `{
                 }
             }
         },
-        "/core/users/permissions": {
-            "get": {
-                "description": "Get all user's permission",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Get all user's permission",
-                "operationId": "get-all-users-permission",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/user.allPermissionRes"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/core/users/permissions/my": {
-            "get": {
-                "description": "Get user's permission",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Users"
-                ],
-                "summary": "Get user's permission",
-                "operationId": "get-users-permission",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Permission"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/fact-check/claimants": {
             "get": {
                 "description": "Get all claimants",
@@ -3589,44 +3509,6 @@ var doc = `{
                     "type": "string"
                 },
                 "slug": {
-                    "type": "string"
-                }
-            }
-        },
-        "user.allPermissionRes": {
-            "type": "object",
-            "properties": {
-                "birth_date": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "first_name": {
-                    "type": "string"
-                },
-                "gender": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "last_name": {
-                    "type": "string"
-                },
-                "permissions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Permission"
-                    }
-                },
-                "updated_at": {
                     "type": "string"
                 }
             }
