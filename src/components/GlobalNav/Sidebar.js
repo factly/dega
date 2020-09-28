@@ -11,10 +11,29 @@ const { SubMenu } = Menu;
 function Sidebar() {
   const {
     sider: { collapsed },
-    title,
     navTheme,
   } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
+
+  const permission = useSelector((state) => {
+    const { selected } = state.spaces;
+
+    if (selected > 0) {
+      return state.spaces.details[selected].permissions;
+    }
+    return;
+  });
+
+  if (!permission) {
+    return null;
+  }
+
+  const resource = ['dashboard', 'analytics', 'googleFactCheck', 'factly', 'posts', 'policies'];
+
+  permission.forEach((each) => {
+    resource.push(each.resource);
+  });
+
   return (
     <Sider
       breakpoint="lg"
@@ -31,36 +50,22 @@ function Sidebar() {
         <img alt="logo" src={'https://degacms.com/img/dega.svg'} style={{ width: '40%' }} />
       </div>
       <Menu theme={navTheme} mode="inline" className="slider-menu">
-        {sidebarMenu.map((menu, index) => (
-          <Menu.ItemGroup key={index} title={menu.title}>
-            <Menu.Divider style={{ width: '90%', margin: 'auto' }} />
-            {menu.children.map((route, childIndex) => {
-              const { Icon } = route;
-              return (
-                <Menu.Item key={`${index}.${childIndex}`} icon={<Icon />}>
-                  <Link to={route.path}>
-                    <span>{route.title}</span>
-                  </Link>
-                </Menu.Item>
-              );
-            })}
-            {menu.subChildren ? (
-              <Menu.ItemGroup key={menu.subChildren.title} title={menu.subChildren.title}>
-                <Menu.Divider style={{ width: '90%', margin: 'auto' }} />
-                {menu.subChildren.routes.map((route, childIndex) => {
-                  const { Icon } = route;
-                  return (
-                    <Menu.Item key={`${index}.${childIndex}.${childIndex}`} icon={<Icon />}>
-                      <Link to={route.path}>
-                        <span>{route.title}</span>
-                      </Link>
-                    </Menu.Item>
-                  );
-                })}
-              </Menu.ItemGroup>
-            ) : null}
-          </Menu.ItemGroup>
-        ))}
+        {sidebarMenu.map((menu, index) => {
+          const { Icon } = menu;
+          return (
+            <SubMenu key={index} title={menu.title} icon={<Icon />}>
+              {menu.children.map((route, childIndex) => {
+                return resource.includes(route.resource) || resource.includes('admin') ? (
+                  <Menu.Item key={`${index}.${childIndex}`}>
+                    <Link to={route.path}>
+                      <span>{route.title}</span>
+                    </Link>
+                  </Menu.Item>
+                ) : null;
+              })}
+            </SubMenu>
+          );
+        })}
       </Menu>
     </Sider>
   );
