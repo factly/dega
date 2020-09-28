@@ -20,7 +20,7 @@ func Router() chi.Router {
 	entity := "policies"
 
 	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
-	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
+	r.Get("/", list)
 	r.Route("/{policy_id}", func(r chi.Router) {
 		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
 		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)

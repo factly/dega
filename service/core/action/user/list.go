@@ -25,8 +25,8 @@ type paging struct {
 }
 
 type userPolicy struct {
-	User     model.Author `json:"user"`
-	Policies []policyRes  `json:"policies"`
+	model.Author
+	Policies []policyRes `json:"policies"`
 }
 
 type policyRes struct {
@@ -142,7 +142,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		if user, found := userMap[userIDStr]; found {
 			usrpol := userPolicy{
 				Policies: pol,
-				User:     user,
+				Author:   user,
 			}
 			userlist = append(userlist, usrpol)
 		}
