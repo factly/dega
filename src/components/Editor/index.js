@@ -7,9 +7,7 @@ import Quote from '@editorjs/quote';
 import RawTool from '@editorjs/raw';
 import Table from '@editorjs/table';
 import UppyUploader from './UppyUploader';
-import TwitterEmbbed from './twitter';
-import YoutubeEmbbed from './youtube';
-import InstagramEmbbed from './instagram';
+import Embed from '@editorjs/embed';
 import { useSelector } from 'react-redux';
 
 function Editor({ value, onChange }) {
@@ -26,9 +24,26 @@ function Editor({ value, onChange }) {
         quote: Quote,
         raw: RawTool,
         table: Table,
-        twitter: TwitterEmbbed,
-        youtube: YoutubeEmbbed,
-        instagram: InstagramEmbbed,
+        embed: {
+          class: Embed,
+          config: {
+            services: {
+              youtube: true,
+              twitter: true,
+              instagram: true,
+              facebook: {
+                regex: /https?:\/\/www.facebook.com\/([^\/\?\&]*)\/(.*)/,
+                embedUrl:
+                  'https://www.facebook.com/plugins/post.php?href=https://www.facebook.com/<%= remote_id %>&width=500',
+                html:
+                  "<iframe scrolling='no' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; min-height: 500px; max-height: 1000px;'></iframe>",
+                height: 300,
+                width: 600,
+                id: (groups) => groups.join('/'),
+              },
+            },
+          },
+        },
         uppy: {
           class: UppyUploader,
           config: {
