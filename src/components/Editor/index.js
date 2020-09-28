@@ -4,8 +4,10 @@ import Header from '@editorjs/header';
 import List from '@editorjs/list';
 import Paragraph from '@editorjs/paragraph';
 import Quote from '@editorjs/quote';
+import RawTool from '@editorjs/raw';
 import Table from '@editorjs/table';
 import UppyUploader from './UppyUploader';
+import Embed from '@editorjs/embed';
 import { useSelector } from 'react-redux';
 
 function Editor({ value, onChange }) {
@@ -20,7 +22,28 @@ function Editor({ value, onChange }) {
         list: List,
         paragraph: Paragraph,
         quote: Quote,
+        raw: RawTool,
         table: Table,
+        embed: {
+          class: Embed,
+          config: {
+            services: {
+              youtube: true,
+              twitter: true,
+              instagram: true,
+              facebook: {
+                regex: /https?:\/\/www.facebook.com\/([^\/\?\&]*)\/(.*)/,
+                embedUrl:
+                  'https://www.facebook.com/plugins/post.php?href=https://www.facebook.com/<%= remote_id %>&width=500',
+                html:
+                  "<iframe scrolling='no' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; min-height: 500px; max-height: 1000px;'></iframe>",
+                height: 300,
+                width: 600,
+                id: (groups) => groups.join('/'),
+              },
+            },
+          },
+        },
         uppy: {
           class: UppyUploader,
           config: {
@@ -31,7 +54,6 @@ function Editor({ value, onChange }) {
       placeholder: 'Let`s write an awesome story!',
       onChange: (value) =>
         value.saver.save().then((value) => {
-          console.log(value);
           onChange(value);
         }),
       data: value,

@@ -82,6 +82,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 required: true,
                 message: 'Please input the title!',
               },
+              { min: 3, message: 'Title must be minimum 3 characters.' },
+              { max: 150, message: 'Title must be maximum 150 characters.' },
             ]}
           >
             <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
