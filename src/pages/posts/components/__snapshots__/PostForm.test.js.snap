@@ -1843,7 +1843,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                           key="1"
                                                                           motionAppear={false}
                                                                           motionName=""
-                                                                          onLeaveEnd={[Function]}
+                                                                          onVisibleChanged={[Function]}
                                                                           visible={true}
                                                                         >
                                                                           <DomWrapper>
@@ -3652,7 +3652,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                           key="1"
                                                                           motionAppear={false}
                                                                           motionName=""
-                                                                          onLeaveEnd={[Function]}
+                                                                          onVisibleChanged={[Function]}
                                                                           visible={true}
                                                                         >
                                                                           <DomWrapper>
@@ -4686,7 +4686,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                           key="1"
                                                                           motionAppear={false}
                                                                           motionName=""
-                                                                          onLeaveEnd={[Function]}
+                                                                          onVisibleChanged={[Function]}
                                                                           visible={true}
                                                                         >
                                                                           <DomWrapper>
@@ -6490,7 +6490,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                           key="1"
                                                                           motionAppear={false}
                                                                           motionName=""
-                                                                          onLeaveEnd={[Function]}
+                                                                          onVisibleChanged={[Function]}
                                                                           visible={true}
                                                                         >
                                                                           <DomWrapper>
