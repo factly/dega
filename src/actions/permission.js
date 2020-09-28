@@ -5,34 +5,25 @@ import {
   SET_PERMISSIONS_LOADING,
   ADD_PERMISSIONS,
 } from '../constants/permissions';
-import { ADD_USER_PERMISSION } from '../constants/spaces';
 import { addErrorNotification } from './notifications';
 
-export const getPermissions = (query) => {
+export const getPermissions = (id) => {
   return (dispatch) => {
     dispatch(loadingPermissionss());
     return axios
-      .get(PERMISSIONS_API + query.user_id + '/permissions')
+      .get(PERMISSIONS_API + id + '/permissions')
       .then((response) => {
-        dispatch(addPermissionList([{ data: response.data, user_id: parseInt(query.user_id) }]));
-        dispatch(addRequest([parseInt(query.user_id)]));
+        dispatch(addPermissionList([{ data: response.data, user_id: parseInt(id) }]));
+        dispatch(addRequest([parseInt(id)]));
         dispatch(stopLoading());
 
-        if (query.space_id > 0)
-          dispatch(addUserPermission({ permissions: response.data, id: query.space_id }));
-
-        return { data: response.data, user_id: parseInt(query.user_id) };
+        return { data: response.data, user_id: parseInt(id) };
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
       });
   };
 };
-
-export const addUserPermission = (data) => ({
-  type: ADD_USER_PERMISSION,
-  payload: data,
-});
 
 export const addPermissionList = (data) => ({
   type: ADD_PERMISSIONS,

@@ -12,11 +12,11 @@ code {
 }
 
 .ce-toolbar__content {
-  max-width: none;
+  max-width: 1000px;
 }
 
 .ce-block__content {
-  max-width: none;
+  max-width: 1000px;
 }
 
 .ant-modal-content {

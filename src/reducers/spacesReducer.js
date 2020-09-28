@@ -5,7 +5,6 @@ import {
   LOADING_SPACES,
   DELETE_SPACE_SUCCESS,
   UPDATE_SPACE_SUCCESS,
-  ADD_USER_PERMISSION,
 } from '../constants/spaces';
 
 const initialState = {
@@ -84,17 +83,5 @@ export default function spacesReducer(state = initialState, action = {}) {
       return initialState;
     default:
       return state;
-
-    case ADD_USER_PERMISSION:
-      return {
-        ...state,
-        details: {
-          ...state.details,
-          [action.payload.id]: {
-            ...state.details[action.payload.id],
-            permissions: action.payload.permissions,
-          },
-        },
-      };
   }
 }

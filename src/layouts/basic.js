@@ -5,7 +5,6 @@ import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
-import { getPermissions } from '../actions/permission';
 import './basic.css';
 
 function BasicLayout(props) {
@@ -22,12 +21,6 @@ function BasicLayout(props) {
   React.useEffect(() => {
     dispatch(getSpaces());
   }, [dispatch]);
-
-  React.useEffect(() => {
-    if (orgs.length > 0) {
-      dispatch(getPermissions({ user_id: orgs[0].permission.id, space_id: selected }));
-    }
-  }, [selected]);
 
   React.useEffect(() => {
     if (type && message && description) {

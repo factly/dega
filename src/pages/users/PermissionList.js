@@ -34,10 +34,10 @@ function PermissionList() {
   }, []);
 
   const fetchPermissions = () => {
-    dispatch(getPermissions({ user_id: id }));
+    dispatch(getPermissions(id));
   };
 
-  if (details.length === 0) {
+  if (loading) {
     return null;
   }
 
