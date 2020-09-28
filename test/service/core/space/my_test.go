@@ -62,7 +62,12 @@ func TestSpaceMy(t *testing.T) {
 
 	t.Run("when keto is down", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		test.CheckSpaceMock(mock)
+		SelectQuery(mock)
+
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
 
 		e.GET(basePath).
 			WithHeader("X-User", "1").
@@ -81,7 +86,12 @@ func TestSpaceMy(t *testing.T) {
 
 	t.Run("when member requests his spaces", func(t *testing.T) {
 		test.DisableKavachGock(testServer.URL)
-		test.CheckSpaceMock(mock)
+		SelectQuery(mock)
+
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
 
 		gock.New(config.KavachURL + "/organisations/my").
 			Persist().
