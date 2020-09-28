@@ -46,7 +46,6 @@ function UppyUploader({ onUpload }) {
     .use(GoogleDrive, { companionUrl: window.REACT_APP_COMPANION_URL });
 
   uppy.on('complete', (result) => {
-    console.log(result);
     const successful = result.successful[0];
     const upload = {};
 
