@@ -5,6 +5,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
@@ -59,12 +60,48 @@ func TestSpaceMy(t *testing.T) {
 			Status(http.StatusUnauthorized)
 	})
 
+	t.Run("when keto is down", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+		SelectQuery(mock)
+
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+
+		e.GET(basePath).
+			WithHeader("X-User", "1").
+			Expect().
+			Status(http.StatusInternalServerError)
+	})
+
 	t.Run("when kavach is down", func(t *testing.T) {
-		gock.Off()
+		test.DisableKavachGock(testServer.URL)
 
 		e.GET(basePath).
 			WithHeader("X-User", "1").
 			Expect().
 			Status(http.StatusServiceUnavailable)
 	})
+
+	t.Run("when member requests his spaces", func(t *testing.T) {
+		test.DisableKavachGock(testServer.URL)
+		SelectQuery(mock)
+
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock)
+
+		gock.New(config.KavachURL + "/organisations/my").
+			Persist().
+			Reply(http.StatusOK).
+			JSON(test.Dummy_Org_Member_List)
+
+		e.GET(basePath).
+			WithHeader("X-User", "1").
+			Expect().
+			Status(http.StatusOK)
+	})
+
 }

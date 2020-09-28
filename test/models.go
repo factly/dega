@@ -23,6 +23,27 @@ var Dummy_Org = map[string]interface{}{
 	},
 }
 
+var Dummy_Org_Member_List = []map[string]interface{}{
+	map[string]interface{}{
+		"id":         1,
+		"created_at": time.Now(),
+		"updated_at": time.Now(),
+		"deleted_at": nil,
+		"title":      "test org",
+		"permission": map[string]interface{}{
+			"id":              1,
+			"created_at":      time.Now(),
+			"updated_at":      time.Now(),
+			"deleted_at":      nil,
+			"user_id":         1,
+			"user":            nil,
+			"organisation_id": 1,
+			"organisation":    nil,
+			"role":            "member",
+		},
+	},
+}
+
 var Dummy_OrgList = []map[string]interface{}{
 	Dummy_Org,
 }
