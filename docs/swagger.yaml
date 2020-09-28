@@ -636,7 +636,7 @@ definitions:
         type: string
       spaces:
         items:
-          $ref: '#/definitions/model.Space'
+          $ref: '#/definitions/space.spaceWithPermissions'
         type: array
       title:
         type: string
@@ -690,6 +690,61 @@ definitions:
     - name
     - organisation_id
     type: object
+  space.spaceWithPermissions:
+    properties:
+      contact_info:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      fav_icon:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      fav_icon_id:
+        type: integer
+      id:
+        type: integer
+      logo:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      logo_id:
+        type: integer
+      logo_mobile:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      logo_mobile_id:
+        type: integer
+      mobile_icon:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      mobile_icon_id:
+        type: integer
+      name:
+        type: string
+      organisation_id:
+        type: integer
+      permissions:
+        items:
+          $ref: '#/definitions/model.Permission'
+        type: array
+      site_address:
+        type: string
+      site_title:
+        type: string
+      slug:
+        type: string
+      social_media_urls:
+        type: string
+      tag_line:
+        type: string
+      updated_at:
+        type: string
+      verification_codes:
+        type: string
+    type: object
   tag.tag:
     properties:
       description:
@@ -700,31 +755,6 @@ definitions:
         type: string
     required:
     - name
-    type: object
-  user.allPermissionRes:
-    properties:
-      birth_date:
-        type: string
-      created_at:
-        type: string
-      deleted_at:
-        type: string
-      email:
-        type: string
-      first_name:
-        type: string
-      gender:
-        type: string
-      id:
-        type: integer
-      last_name:
-        type: string
-      permissions:
-        items:
-          $ref: '#/definitions/model.Permission'
-        type: array
-      updated_at:
-        type: string
     type: object
   user.paging:
     properties:

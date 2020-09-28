@@ -3420,7 +3420,7 @@ var doc = `{
                 "spaces": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.Space"
+                        "$ref": "#/definitions/space.spaceWithPermissions"
                     }
                 },
                 "title": {
@@ -3502,6 +3502,87 @@ var doc = `{
                 }
             }
         },
+        "space.spaceWithPermissions": {
+            "type": "object",
+            "properties": {
+                "contact_info": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fav_icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "fav_icon_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "logo": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_id": {
+                    "type": "integer"
+                },
+                "logo_mobile": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_mobile_id": {
+                    "type": "integer"
+                },
+                "mobile_icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "mobile_icon_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Permission"
+                    }
+                },
+                "site_address": {
+                    "type": "string"
+                },
+                "site_title": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "social_media_urls": {
+                    "type": "string"
+                },
+                "tag_line": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "verification_codes": {
+                    "type": "string"
+                }
+            }
+        },
         "tag.tag": {
             "type": "object",
             "required": [
@@ -3515,44 +3596,6 @@ var doc = `{
                     "type": "string"
                 },
                 "slug": {
-                    "type": "string"
-                }
-            }
-        },
-        "user.allPermissionRes": {
-            "type": "object",
-            "properties": {
-                "birth_date": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "email": {
-                    "type": "string"
-                },
-                "first_name": {
-                    "type": "string"
-                },
-                "gender": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "last_name": {
-                    "type": "string"
-                },
-                "permissions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Permission"
-                    }
-                },
-                "updated_at": {
                     "type": "string"
                 }
             }
