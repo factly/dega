@@ -2,11 +2,11 @@ package space
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
-	"strings"
+
+	"github.com/factly/dega-server/service/core/action/user"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/policy"
@@ -115,7 +115,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 		for _, space := range allSpaces {
 			if space.OrganisationID == int(each.ID) {
 				if each.Permission.Role != "owner" {
-					permissions := getUserPermissions(int(each.ID), int(space.ID), uID, policyList)
+					permissions := user.GetPermissions(int(each.ID), int(space.ID), uID, policyList)
 					spaceWithPerm := spaceWithPermissions{
 						Space:       space,
 						Permissions: permissions,
@@ -135,27 +135,4 @@ func my(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
-}
-
-func getUserPermissions(oID, sID, uID int, policyList []model.KetoPolicy) []model.Permission {
-	spacePrefix := fmt.Sprint("id:org:", oID, ":app:dega:space:", sID, ":")
-	permissions := make([]model.Permission, 0)
-
-	for _, pol := range policyList {
-		if strings.HasPrefix(pol.ID, spacePrefix) {
-			var isPresent bool = false
-			for _, user := range pol.Subjects {
-				if user == fmt.Sprint(uID) {
-					isPresent = true
-					break
-				}
-			}
-
-			if isPresent {
-				polPermission := policy.GetPermissions(pol, uint(uID))
-				permissions = append(permissions, polPermission...)
-			}
-		}
-	}
-	return permissions
 }

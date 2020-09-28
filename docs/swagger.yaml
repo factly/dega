@@ -776,13 +776,28 @@ definitions:
     type: object
   user.userPolicy:
     properties:
+      birth_date:
+        type: string
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      last_name:
+        type: string
       policies:
         items:
           $ref: '#/definitions/user.policyRes'
         type: array
-      user:
-        $ref: '#/definitions/model.Author'
-        type: object
+      updated_at:
+        type: string
     type: object
 host: localhost:7789
 info:
@@ -1956,33 +1971,6 @@ paths:
               $ref: '#/definitions/model.Permission'
             type: array
       summary: Get user's permission
-      tags:
-      - Users
-  /core/users/permissions:
-    get:
-      description: Get all user's permission
-      operationId: get-all-users-permission
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/user.allPermissionRes'
-            type: array
-      summary: Get all user's permission
       tags:
       - Users
   /fact-check/claimants:
