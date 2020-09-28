@@ -374,6 +374,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                         "message": "Please input the title!",
                         "required": true,
                       },
+                      Object {
+                        "message": "Title must be minimum 3 characters.",
+                        "min": 3,
+                      },
+                      Object {
+                        "max": 150,
+                        "message": "Title must be maximum 150 characters.",
+                      },
                     ]
                   }
                 >
@@ -391,6 +399,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                         Object {
                           "message": "Please input the title!",
                           "required": true,
+                        },
+                        Object {
+                          "message": "Title must be minimum 3 characters.",
+                          "min": 3,
+                        },
+                        Object {
+                          "max": 150,
+                          "message": "Title must be maximum 150 characters.",
                         },
                       ]
                     }
@@ -416,6 +432,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                           Object {
                             "message": "Please input the title!",
                             "required": true,
+                          },
+                          Object {
+                            "message": "Title must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 150,
+                            "message": "Title must be maximum 150 characters.",
                           },
                         ]
                       }
@@ -443,6 +467,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -480,6 +512,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -5956,6 +5996,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                         "message": "Please input the title!",
                         "required": true,
                       },
+                      Object {
+                        "message": "Title must be minimum 3 characters.",
+                        "min": 3,
+                      },
+                      Object {
+                        "max": 150,
+                        "message": "Title must be maximum 150 characters.",
+                      },
                     ]
                   }
                 >
@@ -5973,6 +6021,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                         Object {
                           "message": "Please input the title!",
                           "required": true,
+                        },
+                        Object {
+                          "message": "Title must be minimum 3 characters.",
+                          "min": 3,
+                        },
+                        Object {
+                          "max": 150,
+                          "message": "Title must be maximum 150 characters.",
                         },
                       ]
                     }
@@ -5998,6 +6054,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                           Object {
                             "message": "Please input the title!",
                             "required": true,
+                          },
+                          Object {
+                            "message": "Title must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 150,
+                            "message": "Title must be maximum 150 characters.",
                           },
                         ]
                       }
@@ -6025,6 +6089,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -6062,6 +6134,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -11476,6 +11556,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                         "message": "Please input the title!",
                         "required": true,
                       },
+                      Object {
+                        "message": "Title must be minimum 3 characters.",
+                        "min": 3,
+                      },
+                      Object {
+                        "max": 150,
+                        "message": "Title must be maximum 150 characters.",
+                      },
                     ]
                   }
                 >
@@ -11493,6 +11581,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                         Object {
                           "message": "Please input the title!",
                           "required": true,
+                        },
+                        Object {
+                          "message": "Title must be minimum 3 characters.",
+                          "min": 3,
+                        },
+                        Object {
+                          "max": 150,
+                          "message": "Title must be maximum 150 characters.",
                         },
                       ]
                     }
@@ -11518,6 +11614,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           Object {
                             "message": "Please input the title!",
                             "required": true,
+                          },
+                          Object {
+                            "message": "Title must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 150,
+                            "message": "Title must be maximum 150 characters.",
                           },
                         ]
                       }
@@ -11545,6 +11649,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -11582,6 +11694,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -17059,6 +17179,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                         "message": "Please input the title!",
                         "required": true,
                       },
+                      Object {
+                        "message": "Title must be minimum 3 characters.",
+                        "min": 3,
+                      },
+                      Object {
+                        "max": 150,
+                        "message": "Title must be maximum 150 characters.",
+                      },
                     ]
                   }
                 >
@@ -17076,6 +17204,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                         Object {
                           "message": "Please input the title!",
                           "required": true,
+                        },
+                        Object {
+                          "message": "Title must be minimum 3 characters.",
+                          "min": 3,
+                        },
+                        Object {
+                          "max": 150,
+                          "message": "Title must be maximum 150 characters.",
                         },
                       ]
                     }
@@ -17101,6 +17237,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           Object {
                             "message": "Please input the title!",
                             "required": true,
+                          },
+                          Object {
+                            "message": "Title must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 150,
+                            "message": "Title must be maximum 150 characters.",
                           },
                         ]
                       }
@@ -17128,6 +17272,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -17165,6 +17317,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -22480,6 +22640,14 @@ exports[`Claims Create Form component snapshot testing should render the compone
                         "message": "Please input the title!",
                         "required": true,
                       },
+                      Object {
+                        "message": "Title must be minimum 3 characters.",
+                        "min": 3,
+                      },
+                      Object {
+                        "max": 150,
+                        "message": "Title must be maximum 150 characters.",
+                      },
                     ]
                   }
                 >
@@ -22497,6 +22665,14 @@ exports[`Claims Create Form component snapshot testing should render the compone
                         Object {
                           "message": "Please input the title!",
                           "required": true,
+                        },
+                        Object {
+                          "message": "Title must be minimum 3 characters.",
+                          "min": 3,
+                        },
+                        Object {
+                          "max": 150,
+                          "message": "Title must be maximum 150 characters.",
                         },
                       ]
                     }
@@ -22522,6 +22698,14 @@ exports[`Claims Create Form component snapshot testing should render the compone
                           Object {
                             "message": "Please input the title!",
                             "required": true,
+                          },
+                          Object {
+                            "message": "Title must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 150,
+                            "message": "Title must be maximum 150 characters.",
                           },
                         ]
                       }
@@ -22549,6 +22733,14 @@ exports[`Claims Create Form component snapshot testing should render the compone
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }
@@ -22586,6 +22778,14 @@ exports[`Claims Create Form component snapshot testing should render the compone
                                 Object {
                                   "message": "Please input the title!",
                                   "required": true,
+                                },
+                                Object {
+                                  "message": "Title must be minimum 3 characters.",
+                                  "min": 3,
+                                },
+                                Object {
+                                  "max": 150,
+                                  "message": "Title must be maximum 150 characters.",
                                 },
                               ]
                             }

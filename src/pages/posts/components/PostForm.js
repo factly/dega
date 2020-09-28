@@ -121,6 +121,8 @@ function PostForm({ onCreate, data = {} }) {
                     required: true,
                     message: 'Please input the title!',
                   },
+                  { min: 3, message: 'Title must be minimum 3 characters.' },
+                  { max: 150, message: 'Title must be maximum 150 characters.' },
                 ]}
               >
                 <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
@@ -133,6 +135,8 @@ function PostForm({ onCreate, data = {} }) {
                     required: true,
                     message: 'Please input excerpt!',
                   },
+                  { min: 3, message: 'Title must be minimum 3 characters.' },
+                  { max: 300, message: 'Title must be maximum 300 characters.' },
                 ]}
               >
                 <Input.TextArea rows={4} placeholder="excerpt" />

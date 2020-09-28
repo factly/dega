@@ -67,7 +67,11 @@ const SpaceCreateForm = ({ onCreate }) => {
             <Form.Item
               name="name"
               noStyle
-              rules={[{ required: true, message: 'Name is required' }]}
+              rules={[
+                { required: true, message: 'Name is required' },
+                { min: 3, message: 'Name must be minimum 3 characters.' },
+                { max: 50, message: 'Name must be maximum 50 characters.' },
+              ]}
             >
               <Input
                 style={{ width: '60%' }}
