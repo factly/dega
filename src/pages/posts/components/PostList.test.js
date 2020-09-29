@@ -243,7 +243,7 @@ describe('Posts List component', () => {
       );
       expect(tree).toMatchSnapshot();
 
-      expect(mockedDispatch).toHaveBeenCalledTimes(4);
+      expect(mockedDispatch).toHaveBeenCalledTimes(5);
 
       expect(getPosts).toHaveBeenCalledWith({ page: 1 });
     });
@@ -285,7 +285,7 @@ describe('Posts List component', () => {
         );
       });
 
-      const button = wrapper.find(Button).at(2);
+      const button = wrapper.find(Button).at(3);
       expect(button.text()).toEqual('Delete');
 
       button.simulate('click');
@@ -310,7 +310,7 @@ describe('Posts List component', () => {
           </Provider>,
         );
       });
-      const link = wrapper.find(Link).at(1);
+      const link = wrapper.find(Link).at(2);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
       expect(link.prop('to')).toEqual('/posts/1/edit');
@@ -332,13 +332,14 @@ describe('Posts List component', () => {
       });
       const wrapper = mount(
         <Provider store={store}>
-          <PostList />
+          <Router>
+            <PostList />
+          </Router>
         </Provider>,
       );
 
-      const button = wrapper.find(Button);
-      expect(button.text()).toEqual('Submit');
-      expect(button.length).toEqual(1);
+      const button = wrapper.find(Button).at(0);
+      expect(button.text()).toEqual('Create New');
     });
     it('should check image url and alt_text', () => {
       store = mockStore(state);

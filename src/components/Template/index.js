@@ -17,6 +17,7 @@ function Template() {
     const node = state.posts.req.find((item) => {
       let query = {
         page,
+        status: 'template',
       };
 
       return deepEqual(item.query, query);
@@ -35,7 +36,7 @@ function Template() {
     fetchEntities();
   }, [page]);
   const fetchEntities = () => {
-    dispatch(getPosts({ page: page }));
+    dispatch(getPosts({ page: page, status: 'template' }));
   };
 
   const matrix = [];
@@ -62,7 +63,6 @@ function Template() {
     <div onClick={(e) => e.stopPropagation()}>
       <Button
         onClick={() => {
-          console.log(show);
           setShow(!show);
         }}
       >
@@ -72,6 +72,13 @@ function Template() {
   );
 
   if (loading) return <Spin style={{ marginLeft: '50%' }} />;
+
+  if (posts.length === 0)
+    return (
+      <Link to="/posts/create">
+        <Button>Create New</Button>
+      </Link>
+    );
 
   return (
     <Collapse defaultActiveKey={['1']}>

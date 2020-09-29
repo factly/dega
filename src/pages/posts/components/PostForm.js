@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Form, Input, Button, Space, Statistic } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Statistic, Select } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -15,12 +15,15 @@ import { addTag } from '../../../actions/tags';
 function PostForm({ onCreate, data = {} }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const { Option } = Select;
 
   const [category, setCategory] = React.useState('');
   const [tag, setTag] = React.useState('');
   const [visible, setVisible] = React.useState(false);
 
   const formats = useSelector((state) => state.formats.details);
+
+  if (!data.status) data.status = 'draft';
 
   const [claimHide, setClaimHide] = React.useState(
     data.format && formats[data.format] && formats[data.format].slug === 'fact-check'
@@ -83,33 +86,9 @@ function PostForm({ onCreate, data = {} }) {
       >
         <Space direction="vertical">
           <Form.Item name="status" style={{ float: 'right' }}>
-            <Input.Group compact>
-              <Button
-                type="secondary"
-                htmlType="submit"
-                icon={<SaveOutlined />}
-                onClick={() =>
-                  form.setFieldsValue({
-                    status: 'Draft',
-                  })
-                }
-              >
-                Draft
-              </Button>
-
-              <Button
-                type="primary"
-                htmlType="submit"
-                icon={<ToTopOutlined />}
-                onClick={() =>
-                  form.setFieldsValue({
-                    status: 'Publish',
-                  })
-                }
-              >
-                Publish
-              </Button>
-            </Input.Group>
+            <Button type="secondary" htmlType="submit">
+              Submit
+            </Button>
           </Form.Item>
           <Row gutter={16}>
             <Col span={18}>
@@ -154,7 +133,19 @@ function PostForm({ onCreate, data = {} }) {
             </Col>
             <Col span={6}>
               <Form.Item label="Status" name="status">
-                {data.status ? <Statistic /> : null}
+                <Select>
+                  <Option key={'draft'} value={'draft'}>
+                    Draft
+                  </Option>
+                  <Option key={'publish'} value={'publish'}>
+                    Publish
+                  </Option>
+                  {data.id ? (
+                    <Option key={'template'} value={'template'}>
+                      Template
+                    </Option>
+                  ) : null}
+                </Select>
               </Form.Item>
               <Form.Item name="featured_medium_id" label="Image">
                 <MediaSelector />

@@ -223,7 +223,7 @@ describe('Posts Create Form component', () => {
           excerpt: 'excerpt of post',
           slug: 'post-1',
           featured_medium_id: 1,
-          status: 'Publish',
+          status: 'draft',
           format: 1,
           format_id: 1,
           author_ids: [1],
@@ -277,7 +277,7 @@ describe('Posts Create Form component', () => {
           excerpt: 'excerpt of post',
           slug: 'post-test',
           featured_medium_id: 1,
-          status: 'Draft',
+          status: 'draft',
           format: 1,
           format_id: 1,
           author_ids: [1],
@@ -321,7 +321,7 @@ describe('Posts Create Form component', () => {
         );
       });
       await act(async () => {
-        const addClaimButton = wrapper.find('Button').at(2);
+        const addClaimButton = wrapper.find('Button').at(1);
         addClaimButton.simulate('click');
       });
       wrapper.update();

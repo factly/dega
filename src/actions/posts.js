@@ -41,6 +41,9 @@ export const getPosts = (query) => {
     if (query.q) {
       params.append('q', query.q);
     }
+    if (query.status) {
+      params.append('status', query.status);
+    }
     return axios
       .get(POSTS_API, {
         params: params,
@@ -186,6 +189,74 @@ export const addPost = (data) => {
         dispatch(resetPosts());
         dispatch(addSuccessNotification('Post added'));
         return post;
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(error.message));
+      });
+  };
+};
+
+export const publish = (data) => {
+  return (dispatch) => {
+    dispatch(loadingPosts());
+    return axios
+      .post(POSTS_API + '/publish', data)
+      .then((response) => {
+        let post = response.data;
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMediaList([post.medium]));
+
+        dispatch(
+          getPostByID({
+            ...post,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
+          }),
+        );
+        dispatch(stopPostsLoading());
+        dispatch(addSuccessNotification('Post published'));
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(error.message));
+      });
+  };
+};
+
+export const addTemplate = (data) => {
+  return (dispatch) => {
+    dispatch(loadingPosts());
+    return axios
+      .post(POSTS_API + '/templates', data)
+      .then((response) => {
+        let post = response.data;
+        dispatch(addTags(post.tags));
+        dispatch(addCategories(post.categories));
+        dispatch(addAuthors(post.authors));
+        dispatch(addClaims(post.claims));
+        dispatch(addFormats([post.format]));
+        if (post.medium) dispatch(addMediaList([post.medium]));
+
+        dispatch(
+          getPostByID({
+            ...post,
+            authors: post.authors.map((author) => author.id),
+            categories: post.categories.map((category) => category.id),
+            tags: post.tags.map((tag) => tag.id),
+            format: post.format.id,
+            claims: post.claims.map((claim) => claim.id),
+            medium: post.medium?.id,
+          }),
+        );
+        dispatch(stopPostsLoading());
+        dispatch(addSuccessNotification('Template created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
