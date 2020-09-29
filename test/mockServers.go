@@ -74,11 +74,16 @@ func KetoGock() {
 		Reply(http.StatusOK).
 		JSON(Dummy_KetoPolicy)
 
-		// GET and POST POLICY - returns a list of policies and post policy
+	// GET and POST POLICY - returns a list of policies and post policy
 	gock.New(config.KetoURL + "/engines/acp/ory/regex/policies").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_KetoPolicy)
+
+	gock.New(config.KetoURL + "/engines/acp/ory/regex/roles/(.+)").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(Dummy_Role)
 
 	// Creates a mock server for keto for provisioning Policy.Authorizer module.
 	gock.New(config.KetoURL).

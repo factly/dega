@@ -23,6 +23,27 @@ var Dummy_Org = map[string]interface{}{
 	},
 }
 
+var Dummy_Org_Member_List = []map[string]interface{}{
+	map[string]interface{}{
+		"id":         1,
+		"created_at": time.Now(),
+		"updated_at": time.Now(),
+		"deleted_at": nil,
+		"title":      "test org",
+		"permission": map[string]interface{}{
+			"id":              1,
+			"created_at":      time.Now(),
+			"updated_at":      time.Now(),
+			"deleted_at":      nil,
+			"user_id":         1,
+			"user":            nil,
+			"organisation_id": 1,
+			"organisation":    nil,
+			"role":            "member",
+		},
+	},
+}
+
 var Dummy_OrgList = []map[string]interface{}{
 	Dummy_Org,
 }
@@ -83,16 +104,18 @@ var Dummy_KetoPolicy = []map[string]interface{}{
 		"id":          "id:org:1:app:dega:space:1:test-policy-4",
 		"description": "",
 		"subjects": []string{
-			"",
+			"1",
+			"2",
 		},
 		"resources": []string{
-			"resources:org:12:app:dega:space:16:policies",
+			"resources:org:1:app:dega:space:1:categories",
+			"resources:org:1:app:dega:space:1:tags",
 		},
 		"actions": []string{
-			"actions:org:12:app:dega:space:16:policies:get",
-			"actions:org:12:app:dega:space:16:policies:create",
-			"actions:org:12:app:dega:space:16:policies:update",
-			"actions:org:12:app:dega:space:16:policies:delete",
+			"actions:org:1:app:dega:space:1:categories:get",
+			"actions:org:1:app:dega:space:1:categories:create",
+			"actions:org:1:app:dega:space:1:tags:update",
+			"actions:org:1:app:dega:space:1:tags:delete",
 		},
 		"effect":     "allow",
 		"conditions": nil,
@@ -101,7 +124,7 @@ var Dummy_KetoPolicy = []map[string]interface{}{
 		"id":          "id:org:1:app:dega:space:1:test-policy-0",
 		"description": "",
 		"subjects": []string{
-			"",
+			"1",
 		},
 		"resources": []string{
 			"resources:org:12:app:dega:space:18:policies",
@@ -114,6 +137,13 @@ var Dummy_KetoPolicy = []map[string]interface{}{
 		},
 		"effect":     "allow",
 		"conditions": nil,
+	},
+}
+
+var Dummy_Role = map[string]interface{}{
+	"id": "roles:org:1:admin",
+	"members": []string{
+		"1",
 	},
 }
 

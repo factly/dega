@@ -107,6 +107,7 @@ var paginationQuery = `SELECT \* FROM "posts" (.+) LIMIT 1 OFFSET 1`
 
 var basePath = "/core/posts"
 var path = "/core/posts/{post_id}"
+var publishBasePath = "/core/posts/publish"
 var publishPath = "/core/posts/{post_id}/publish"
 var templatePath = "/core/posts/templates"
 
