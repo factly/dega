@@ -10,7 +10,7 @@ const initialState = {
   loading: true,
 };
 
-export default function permissions(state = initialState, action = {}) {
+export default function permissionsReducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_PERMISSIONS_LOADING:
       return {
@@ -27,15 +27,11 @@ export default function permissions(state = initialState, action = {}) {
       if (action.payload.length === 0) {
         return state;
       }
-
       return {
         ...state,
         details: {
           ...state.details,
-          ...action.payload.reduce(
-            (obj, item) => Object.assign(obj, { [item.user_id]: item.data }),
-            {},
-          ),
+          [action.payload.user_id]: action.payload.data,
         },
       };
 

@@ -133,10 +133,6 @@ function PostForm({ onCreate, data = {} }) {
               <Form.Item
                 name="excerpt"
                 rules={[
-                  {
-                    required: true,
-                    message: 'Please input excerpt!',
-                  },
                   { min: 3, message: 'Title must be minimum 3 characters.' },
                   { max: 300, message: 'Title must be maximum 300 characters.' },
                 ]}

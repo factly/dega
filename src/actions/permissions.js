@@ -9,11 +9,11 @@ import { addErrorNotification } from './notifications';
 
 export const getPermissions = (id) => {
   return (dispatch) => {
-    dispatch(loadingPermissionss());
+    dispatch(loadingPermissions());
     return axios
       .get(PERMISSIONS_API + id + '/permissions')
       .then((response) => {
-        dispatch(addPermissionList([{ data: response.data, user_id: parseInt(id) }]));
+        dispatch(addPermission({ data: response.data, user_id: parseInt(id) }));
         dispatch(addRequest([parseInt(id)]));
         dispatch(stopLoading());
 
@@ -25,7 +25,7 @@ export const getPermissions = (id) => {
   };
 };
 
-export const addPermissionList = (data) => ({
+export const addPermission = (data) => ({
   type: ADD_PERMISSIONS,
   payload: data,
 });
@@ -35,7 +35,7 @@ export const addRequest = (data) => ({
   payload: data,
 });
 
-export const loadingPermissionss = () => ({
+export const loadingPermissions = () => ({
   type: SET_PERMISSIONS_LOADING,
   payload: true,
 });

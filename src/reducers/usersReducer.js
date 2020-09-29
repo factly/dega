@@ -5,7 +5,7 @@ const initialState = {
   loading: true,
 };
 
-export default function users(state = initialState, action = {}) {
+export default function usersReducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_USERS_LOADING:
       return {

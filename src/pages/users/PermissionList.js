@@ -3,7 +3,7 @@ import { Space, Typography, Skeleton, Checkbox } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getPermissions } from '../../actions/permission';
+import { getPermissions } from '../../actions/permissions';
 
 const options = [
   { label: 'Get', value: 'get' },

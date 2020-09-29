@@ -2,13 +2,11 @@ import axios from 'axios';
 import { USERS_API, ADD_USERS_REQUEST, SET_USERS_LOADING } from '../constants/users';
 import { addErrorNotification } from './notifications';
 
-export const getUsers = (query) => {
+export const getUsers = () => {
   return (dispatch) => {
     dispatch(loadingUsers());
     return axios
-      .get(USERS_API, {
-        params: query,
-      })
+      .get(USERS_API)
       .then((response) => {
         dispatch(
           addRequest({

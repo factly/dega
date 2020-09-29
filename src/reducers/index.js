@@ -13,8 +13,8 @@ import claimants from './claimantsReducer';
 import claims from './claimsReducer';
 import notifications from './notificationsReducer';
 import policies from './policiesReducer';
-import permissions from './permissions';
-import users from './userReducer';
+import permissions from './permissionsReducer';
+import users from './usersReducer';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
 
 const appReducer = combineReducers({

@@ -3,7 +3,6 @@ import { Space, Typography, Table, Tag } from 'antd';
 import { getUsers } from '../../actions/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Avatar from 'antd/lib/avatar/avatar';
 
 function Users() {
   const dispatch = useDispatch();
@@ -26,9 +25,13 @@ function Users() {
       render: (_, record) => {
         return (
           <Typography key={record.id}>
-            <Link to={`/users/${record.id}/permissions`}>
-              {record.first_name + ' ' + record.last_name}
-            </Link>
+            {record.policies[0].id != 'admin' ? (
+              <Link to={`/users/${record.id}/permissions`}>
+                {record.first_name + ' ' + record.last_name}
+              </Link>
+            ) : (
+              record.first_name + ' ' + record.last_name
+            )}
           </Typography>
         );
       },

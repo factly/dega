@@ -129,7 +129,7 @@ describe('Spaces Edit component', () => {
               mobile_icon_id: 1,
               social_media_urls: {
                 facebook: 'fb.com',
-                twitetr: 'twitter.com',
+                twitter: 'twitter.com',
                 pintrest: 'pinterest.com',
                 instagram: 'instagram.com',
               },

@@ -13,9 +13,7 @@ function BasicLayout(props) {
   const { Footer, Content } = Layout;
   const { children } = props;
   const dispatch = useDispatch();
-  const { selected, orgs } = useSelector((state) => {
-    return state.spaces;
-  });
+  const { selected, orgs } = useSelector((state) => state.spaces);
   const { type, message, description } = useSelector((state) => state.notifications);
 
   React.useEffect(() => {
