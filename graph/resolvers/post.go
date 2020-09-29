@@ -103,7 +103,7 @@ func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.U
 }
 
 func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface{}, error) {
-	result := make([]models.Schemas, 0)
+	result := make([]interface{}, 0)
 
 	postClaims := []models.PostClaim{}
 
@@ -114,31 +114,48 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 	space := &models.Space{}
 	space.ID = obj.SpaceID
 
-	config.DB.First(&space)
+	config.DB.Preload("Logo").First(&space)
 
 	for _, each := range postClaims {
-		schema := models.Schemas{}
-		schema.Context = "https://schema.org"
-		schema.Type = "ClaimReview"
-		schema.DatePublished = obj.CreatedAt
-		schema.URL = space.SiteAddress + "/" + obj.Slug
-		schema.ClaimReviewed = each.Claim.Title
-		schema.Author.Type = "Organization"
-		schema.Author.Name = space.Name
-		schema.Author.URL = &space.SiteAddress
-		schema.ReviewRating.Type = "Rating"
-		schema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
-		schema.ReviewRating.AlternateName = each.Claim.Rating.Name
-		// schema.ReviewRating.BestRating = 5
-		// schema.ReviewRating.WorstRating = 1
-		schema.ItemReviewed.Type = "Claim"
-		schema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
-		schema.ItemReviewed.Appearance = each.Claim.ClaimSource
-		schema.ItemReviewed.Author.Type = "Organization"
-		schema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
+		claimSchema := models.FactCheckSchema{}
+		claimSchema.Context = "https://schema.org"
+		claimSchema.Type = "ClaimReview"
+		claimSchema.DatePublished = obj.CreatedAt
+		claimSchema.URL = space.SiteAddress + "/" + obj.Slug
+		claimSchema.ClaimReviewed = each.Claim.Title
+		claimSchema.Author.Type = "Organization"
+		claimSchema.Author.Name = space.Name
+		claimSchema.Author.URL = &space.SiteAddress
+		claimSchema.ReviewRating.Type = "Rating"
+		claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
+		claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
+		// claimSchema.ReviewRating.BestRating = 5
+		// claimSchema.ReviewRating.WorstRating = 1
+		claimSchema.ItemReviewed.Type = "Claim"
+		claimSchema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
+		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSource
+		claimSchema.ItemReviewed.Author.Type = "Organization"
+		claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
 
-		result = append(result, schema)
+		result = append(result, claimSchema)
 	}
+
+	articleSchema := models.ArticleSchema{}
+	articleSchema.Context = "https://schema.org"
+	articleSchema.Type = "NewsArticle"
+	articleSchema.Headline = obj.Title
+	articleSchema.Image = append(articleSchema.Image, models.Image{
+		Type: "ImageObject",
+		URL:  space.Logo.URL})
+	articleSchema.DatePublished = obj.PublishedDate
+	articleSchema.Author.Type = "Person"
+	articleSchema.Author.Name = " " // TODO: Add Author name
+	articleSchema.Publisher.Type = "Organization"
+	articleSchema.Publisher.Name = space.Name
+	articleSchema.Publisher.Logo.Type = "ImageObject"
+	articleSchema.Publisher.Logo.URL = space.Logo.URL
+
+	result = append(result, articleSchema)
 
 	return result, nil
 }

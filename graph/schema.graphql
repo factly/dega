@@ -79,6 +79,7 @@ type Post {
   is_featured: Boolean
   is_sticky: Boolean
   is_highlighted: Boolean
+  published_date: Time
   format: Format!
   medium: Medium
   categories: [Category!]!

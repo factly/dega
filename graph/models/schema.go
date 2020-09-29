@@ -28,8 +28,8 @@ type ReviewRating struct {
 	AlternateName string `json:"alternateName"`
 }
 
-// Schemas for factcheck
-type Schemas struct {
+// FactCheckSchema for factcheck
+type FactCheckSchema struct {
 	Context       string       `json:"@context"`
 	Type          string       `json:"@type"`
 	DatePublished time.Time    `json:"datePublished"`
@@ -38,4 +38,28 @@ type Schemas struct {
 	Author        Author       `json:"author"`
 	ReviewRating  ReviewRating `json:"reviewRating"`
 	ItemReviewed  ItemReviewed `json:"itemReviewed"`
+}
+
+// Image for article
+type Image struct {
+	Type string `json:"@type"`
+	URL  string `json:"url"`
+}
+
+// Publisher for article
+type Publisher struct {
+	Type string `json:"@type"`
+	Name string `json:"name"`
+	Logo Image  `json:"logo"`
+}
+
+// ArticleSchema for article
+type ArticleSchema struct {
+	Context       string    `json:"@context"`
+	Type          string    `json:"@type"`
+	Headline      string    `json:"headline"`
+	Image         []Image   `json:"image"`
+	DatePublished time.Time `json:"datePublished"`
+	Author        Author    `json:"author"`
+	Publisher     Publisher `json:"publisher"`
 }

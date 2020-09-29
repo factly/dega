@@ -20,6 +20,7 @@ type Post struct {
 	IsFeatured       *bool          `json:"is_featured"`
 	IsSticky         *bool          `json:"is_sticky"`
 	IsHighlighted    *bool          `json:"is_highlighted"`
+	PublishedDate    time.Time      `json:"published_date"`
 	SpaceID          int            `json:"space_id"`
 	FormatID         int            `json:"format_id"`
 	FeaturedMediumID int            `json:"featured_medium_id"`
