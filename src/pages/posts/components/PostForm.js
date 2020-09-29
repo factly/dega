@@ -115,7 +115,6 @@ function PostForm({ onCreate, data = {} }) {
             <Col span={18}>
               <Form.Item
                 name="title"
-                label="Title"
                 rules={[
                   {
                     required: true,
@@ -125,21 +124,20 @@ function PostForm({ onCreate, data = {} }) {
                   { max: 150, message: 'Title must be maximum 150 characters.' },
                 ]}
               >
-                <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
+                <Input
+                  bordered={false}
+                  placeholder="Add title for the post"
+                  onChange={(e) => onTitleChange(e.target.value)}
+                />
               </Form.Item>
               <Form.Item
                 name="excerpt"
-                label="Excerpt"
                 rules={[
-                  {
-                    required: true,
-                    message: 'Please input excerpt!',
-                  },
                   { min: 3, message: 'Title must be minimum 3 characters.' },
                   { max: 300, message: 'Title must be maximum 300 characters.' },
                 ]}
               >
-                <Input.TextArea rows={4} placeholder="excerpt" />
+                <Input.TextArea bordered={false} rows={4} placeholder="excerpt" />
               </Form.Item>
               <Form.Item name="claims" label="Claims" hidden={claimHide} key={!visible}>
                 <Selector mode="multiple" display={'title'} action="Claims" />
@@ -150,7 +148,7 @@ function PostForm({ onCreate, data = {} }) {
                 </Button>
               </Form.Item>
 
-              <Form.Item name="description" label="Description">
+              <Form.Item name="description">
                 <Editor />
               </Form.Item>
             </Col>

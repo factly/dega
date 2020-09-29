@@ -769,7 +769,7 @@ exports[`Claims Create Form component snapshot testing should match component in
         >
           <label
             className=""
-            htmlFor="create-space_social_media_urls_twitetr"
+            htmlFor="create-space_social_media_urls_twitter"
             title="Twitter"
           >
             Twitter
@@ -787,7 +787,7 @@ exports[`Claims Create Form component snapshot testing should match component in
             >
               <input
                 className="ant-input"
-                id="create-space_social_media_urls_twitetr"
+                id="create-space_social_media_urls_twitter"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}
@@ -1752,7 +1752,7 @@ exports[`Claims Create Form component snapshot testing should match component in
         >
           <label
             className=""
-            htmlFor="create-space_social_media_urls_twitetr"
+            htmlFor="create-space_social_media_urls_twitter"
             title="Twitter"
           >
             Twitter
@@ -1770,7 +1770,7 @@ exports[`Claims Create Form component snapshot testing should match component in
             >
               <input
                 className="ant-input"
-                id="create-space_social_media_urls_twitetr"
+                id="create-space_social_media_urls_twitter"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}
@@ -2714,7 +2714,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
         >
           <label
             className=""
-            htmlFor="create-space_social_media_urls_twitetr"
+            htmlFor="create-space_social_media_urls_twitter"
             title="Twitter"
           >
             Twitter
@@ -2732,7 +2732,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
             >
               <input
                 className="ant-input"
-                id="create-space_social_media_urls_twitetr"
+                id="create-space_social_media_urls_twitter"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}
@@ -3695,7 +3695,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
         >
           <label
             className=""
-            htmlFor="create-space_social_media_urls_twitetr"
+            htmlFor="create-space_social_media_urls_twitter"
             title="Twitter"
           >
             Twitter
@@ -3713,7 +3713,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
             >
               <input
                 className="ant-input"
-                id="create-space_social_media_urls_twitetr"
+                id="create-space_social_media_urls_twitter"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}
@@ -4659,7 +4659,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
         >
           <label
             className=""
-            htmlFor="create-space_social_media_urls_twitetr"
+            htmlFor="create-space_social_media_urls_twitter"
             title="Twitter"
           >
             Twitter
@@ -4677,7 +4677,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
             >
               <input
                 className="ant-input"
-                id="create-space_social_media_urls_twitetr"
+                id="create-space_social_media_urls_twitter"
                 onBlur={[Function]}
                 onChange={[Function]}
                 onFocus={[Function]}

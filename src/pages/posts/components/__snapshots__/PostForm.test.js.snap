@@ -662,7 +662,6 @@ exports[`Posts Create Form component snapshot testing should match component wit
                             }
                           >
                             <FormItem
-                              label="Title"
                               name="title"
                               rules={
                                 Array [
@@ -682,12 +681,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                               }
                             >
                               <WrapperField
-                                label="Title"
-                                messageVariables={
-                                  Object {
-                                    "label": "Title",
-                                  }
-                                }
+                                messageVariables={Object {}}
                                 name="title"
                                 onReset={[Function]}
                                 rules={
@@ -711,12 +705,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                               >
                                 <Field
                                   key="_title"
-                                  label="Title"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Title",
-                                    }
-                                  }
+                                  messageVariables={Object {}}
                                   name={
                                     Array [
                                       "title",
@@ -753,7 +742,6 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                     >
                                       <FormItemLabel
                                         htmlFor="title"
-                                        label="Title"
                                         name="title"
                                         prefixCls="ant-form"
                                         required={true}
@@ -774,27 +762,9 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                             },
                                           ]
                                         }
-                                      >
-                                        <Col
-                                          className="ant-form-item-label"
-                                        >
-                                          <div
-                                            className="ant-col ant-form-item-label"
-                                            style={Object {}}
-                                          >
-                                            <label
-                                              className="ant-form-item-required"
-                                              htmlFor="title"
-                                              title="Title"
-                                            >
-                                              Title
-                                            </label>
-                                          </div>
-                                        </Col>
-                                      </FormItemLabel>
+                                      />
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Title"
                                         name={
                                           Array [
                                             "title",
@@ -840,23 +810,24 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                   value="Post-1"
                                                 >
                                                   <Input
+                                                    bordered={false}
                                                     id="title"
                                                     onChange={[Function]}
-                                                    placeholder="title"
+                                                    placeholder="Add title for the post"
                                                     type="text"
                                                     value="Post-1"
                                                   >
                                                     <ClearableLabeledInput
-                                                      bordered={true}
+                                                      bordered={false}
                                                       element={
                                                         <input
-                                                          className="ant-input"
+                                                          className="ant-input ant-input-borderless"
                                                           id="title"
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
                                                           onKeyDown={[Function]}
-                                                          placeholder="title"
+                                                          placeholder="Add title for the post"
                                                           type="text"
                                                           value="Post-1"
                                                         />
@@ -866,20 +837,20 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                       id="title"
                                                       inputType="input"
                                                       onChange={[Function]}
-                                                      placeholder="title"
+                                                      placeholder="Add title for the post"
                                                       prefixCls="ant-input"
                                                       triggerFocus={[Function]}
                                                       type="text"
                                                       value="Post-1"
                                                     >
                                                       <input
-                                                        className="ant-input"
+                                                        className="ant-input ant-input-borderless"
                                                         id="title"
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
                                                         onFocus={[Function]}
                                                         onKeyDown={[Function]}
-                                                        placeholder="title"
+                                                        placeholder="Add title for the post"
                                                         type="text"
                                                         value="Post-1"
                                                       />
@@ -907,14 +878,9 @@ exports[`Posts Create Form component snapshot testing should match component wit
                               </WrapperField>
                             </FormItem>
                             <FormItem
-                              label="Excerpt"
                               name="excerpt"
                               rules={
                                 Array [
-                                  Object {
-                                    "message": "Please input excerpt!",
-                                    "required": true,
-                                  },
                                   Object {
                                     "message": "Title must be minimum 3 characters.",
                                     "min": 3,
@@ -927,20 +893,11 @@ exports[`Posts Create Form component snapshot testing should match component wit
                               }
                             >
                               <WrapperField
-                                label="Excerpt"
-                                messageVariables={
-                                  Object {
-                                    "label": "Excerpt",
-                                  }
-                                }
+                                messageVariables={Object {}}
                                 name="excerpt"
                                 onReset={[Function]}
                                 rules={
                                   Array [
-                                    Object {
-                                      "message": "Please input excerpt!",
-                                      "required": true,
-                                    },
                                     Object {
                                       "message": "Title must be minimum 3 characters.",
                                       "min": 3,
@@ -956,12 +913,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                               >
                                 <Field
                                   key="_excerpt"
-                                  label="Excerpt"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Excerpt",
-                                    }
-                                  }
+                                  messageVariables={Object {}}
                                   name={
                                     Array [
                                       "excerpt",
@@ -970,10 +922,6 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                   onReset={[Function]}
                                   rules={
                                     Array [
-                                      Object {
-                                        "message": "Please input excerpt!",
-                                        "required": true,
-                                      },
                                       Object {
                                         "message": "Title must be minimum 3 characters.",
                                         "min": 3,
@@ -998,17 +946,12 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                     >
                                       <FormItemLabel
                                         htmlFor="excerpt"
-                                        label="Excerpt"
                                         name="excerpt"
                                         prefixCls="ant-form"
-                                        required={true}
+                                        required={false}
                                         requiredMark={true}
                                         rules={
                                           Array [
-                                            Object {
-                                              "message": "Please input excerpt!",
-                                              "required": true,
-                                            },
                                             Object {
                                               "message": "Title must be minimum 3 characters.",
                                               "min": 3,
@@ -1019,27 +962,9 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                             },
                                           ]
                                         }
-                                      >
-                                        <Col
-                                          className="ant-form-item-label"
-                                        >
-                                          <div
-                                            className="ant-col ant-form-item-label"
-                                            style={Object {}}
-                                          >
-                                            <label
-                                              className="ant-form-item-required"
-                                              htmlFor="excerpt"
-                                              title="Excerpt"
-                                            >
-                                              Excerpt
-                                            </label>
-                                          </div>
-                                        </Col>
-                                      </FormItemLabel>
+                                      />
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Excerpt"
                                         name={
                                           Array [
                                             "excerpt",
@@ -1049,10 +974,6 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                         prefixCls="ant-form"
                                         rules={
                                           Array [
-                                            Object {
-                                              "message": "Please input excerpt!",
-                                              "required": true,
-                                            },
                                             Object {
                                               "message": "Title must be minimum 3 characters.",
                                               "min": 3,
@@ -1085,6 +1006,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                   value="excerpt of post"
                                                 >
                                                   <TextArea
+                                                    bordered={false}
                                                     id="excerpt"
                                                     onChange={[Function]}
                                                     placeholder="excerpt"
@@ -1092,10 +1014,10 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                     value="excerpt of post"
                                                   >
                                                     <ClearableLabeledInput
-                                                      bordered={true}
+                                                      bordered={false}
                                                       element={
                                                         <TextArea
-                                                          className=""
+                                                          className="ant-input-borderless"
                                                           id="excerpt"
                                                           onChange={[Function]}
                                                           placeholder="excerpt"
@@ -1115,7 +1037,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                       value="excerpt of post"
                                                     >
                                                       <TextArea
-                                                        className=""
+                                                        className="ant-input-borderless"
                                                         id="excerpt"
                                                         onChange={[Function]}
                                                         placeholder="excerpt"
@@ -1124,7 +1046,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                         value="excerpt of post"
                                                       >
                                                         <ResizableTextArea
-                                                          className=""
+                                                          className="ant-input-borderless"
                                                           id="excerpt"
                                                           onChange={[Function]}
                                                           onKeyDown={[Function]}
@@ -1138,7 +1060,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                             onResize={[Function]}
                                                           >
                                                             <textarea
-                                                              className="ant-input"
+                                                              className="ant-input ant-input-borderless"
                                                               id="excerpt"
                                                               onChange={[Function]}
                                                               onKeyDown={[Function]}
@@ -2135,16 +2057,10 @@ exports[`Posts Create Form component snapshot testing should match component wit
                               </Row>
                             </FormItem>
                             <FormItem
-                              label="Description"
                               name="description"
                             >
                               <WrapperField
-                                label="Description"
-                                messageVariables={
-                                  Object {
-                                    "label": "Description",
-                                  }
-                                }
+                                messageVariables={Object {}}
                                 name="description"
                                 onReset={[Function]}
                                 trigger="onChange"
@@ -2152,12 +2068,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                               >
                                 <Field
                                   key="_description"
-                                  label="Description"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Description",
-                                    }
-                                  }
+                                  messageVariables={Object {}}
                                   name={
                                     Array [
                                       "description",
@@ -2178,32 +2089,13 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                     >
                                       <FormItemLabel
                                         htmlFor="description"
-                                        label="Description"
                                         name="description"
                                         prefixCls="ant-form"
                                         required={false}
                                         requiredMark={true}
-                                      >
-                                        <Col
-                                          className="ant-form-item-label"
-                                        >
-                                          <div
-                                            className="ant-col ant-form-item-label"
-                                            style={Object {}}
-                                          >
-                                            <label
-                                              className=""
-                                              htmlFor="description"
-                                              title="Description"
-                                            >
-                                              Description
-                                            </label>
-                                          </div>
-                                        </Col>
-                                      </FormItemLabel>
+                                      />
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Description"
                                         name={
                                           Array [
                                             "description",
@@ -7236,7 +7128,6 @@ exports[`Posts Create Form component snapshot testing should render the componen
                             }
                           >
                             <FormItem
-                              label="Title"
                               name="title"
                               rules={
                                 Array [
@@ -7256,12 +7147,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                               }
                             >
                               <WrapperField
-                                label="Title"
-                                messageVariables={
-                                  Object {
-                                    "label": "Title",
-                                  }
-                                }
+                                messageVariables={Object {}}
                                 name="title"
                                 onReset={[Function]}
                                 rules={
@@ -7285,12 +7171,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                               >
                                 <Field
                                   key="_title"
-                                  label="Title"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Title",
-                                    }
-                                  }
+                                  messageVariables={Object {}}
                                   name={
                                     Array [
                                       "title",
@@ -7327,7 +7208,6 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                     >
                                       <FormItemLabel
                                         htmlFor="title"
-                                        label="Title"
                                         name="title"
                                         prefixCls="ant-form"
                                         required={true}
@@ -7348,27 +7228,9 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                             },
                                           ]
                                         }
-                                      >
-                                        <Col
-                                          className="ant-form-item-label"
-                                        >
-                                          <div
-                                            className="ant-col ant-form-item-label"
-                                            style={Object {}}
-                                          >
-                                            <label
-                                              className="ant-form-item-required"
-                                              htmlFor="title"
-                                              title="Title"
-                                            >
-                                              Title
-                                            </label>
-                                          </div>
-                                        </Col>
-                                      </FormItemLabel>
+                                      />
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Title"
                                         name={
                                           Array [
                                             "title",
@@ -7413,22 +7275,23 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                   update={1}
                                                 >
                                                   <Input
+                                                    bordered={false}
                                                     id="title"
                                                     onChange={[Function]}
-                                                    placeholder="title"
+                                                    placeholder="Add title for the post"
                                                     type="text"
                                                   >
                                                     <ClearableLabeledInput
-                                                      bordered={true}
+                                                      bordered={false}
                                                       element={
                                                         <input
-                                                          className="ant-input"
+                                                          className="ant-input ant-input-borderless"
                                                           id="title"
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
                                                           onKeyDown={[Function]}
-                                                          placeholder="title"
+                                                          placeholder="Add title for the post"
                                                           type="text"
                                                         />
                                                       }
@@ -7437,20 +7300,20 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                       id="title"
                                                       inputType="input"
                                                       onChange={[Function]}
-                                                      placeholder="title"
+                                                      placeholder="Add title for the post"
                                                       prefixCls="ant-input"
                                                       triggerFocus={[Function]}
                                                       type="text"
                                                       value=""
                                                     >
                                                       <input
-                                                        className="ant-input"
+                                                        className="ant-input ant-input-borderless"
                                                         id="title"
                                                         onBlur={[Function]}
                                                         onChange={[Function]}
                                                         onFocus={[Function]}
                                                         onKeyDown={[Function]}
-                                                        placeholder="title"
+                                                        placeholder="Add title for the post"
                                                         type="text"
                                                         value=""
                                                       />
@@ -7478,14 +7341,9 @@ exports[`Posts Create Form component snapshot testing should render the componen
                               </WrapperField>
                             </FormItem>
                             <FormItem
-                              label="Excerpt"
                               name="excerpt"
                               rules={
                                 Array [
-                                  Object {
-                                    "message": "Please input excerpt!",
-                                    "required": true,
-                                  },
                                   Object {
                                     "message": "Title must be minimum 3 characters.",
                                     "min": 3,
@@ -7498,20 +7356,11 @@ exports[`Posts Create Form component snapshot testing should render the componen
                               }
                             >
                               <WrapperField
-                                label="Excerpt"
-                                messageVariables={
-                                  Object {
-                                    "label": "Excerpt",
-                                  }
-                                }
+                                messageVariables={Object {}}
                                 name="excerpt"
                                 onReset={[Function]}
                                 rules={
                                   Array [
-                                    Object {
-                                      "message": "Please input excerpt!",
-                                      "required": true,
-                                    },
                                     Object {
                                       "message": "Title must be minimum 3 characters.",
                                       "min": 3,
@@ -7527,12 +7376,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                               >
                                 <Field
                                   key="_excerpt"
-                                  label="Excerpt"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Excerpt",
-                                    }
-                                  }
+                                  messageVariables={Object {}}
                                   name={
                                     Array [
                                       "excerpt",
@@ -7541,10 +7385,6 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                   onReset={[Function]}
                                   rules={
                                     Array [
-                                      Object {
-                                        "message": "Please input excerpt!",
-                                        "required": true,
-                                      },
                                       Object {
                                         "message": "Title must be minimum 3 characters.",
                                         "min": 3,
@@ -7569,17 +7409,12 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                     >
                                       <FormItemLabel
                                         htmlFor="excerpt"
-                                        label="Excerpt"
                                         name="excerpt"
                                         prefixCls="ant-form"
-                                        required={true}
+                                        required={false}
                                         requiredMark={true}
                                         rules={
                                           Array [
-                                            Object {
-                                              "message": "Please input excerpt!",
-                                              "required": true,
-                                            },
                                             Object {
                                               "message": "Title must be minimum 3 characters.",
                                               "min": 3,
@@ -7590,27 +7425,9 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                             },
                                           ]
                                         }
-                                      >
-                                        <Col
-                                          className="ant-form-item-label"
-                                        >
-                                          <div
-                                            className="ant-col ant-form-item-label"
-                                            style={Object {}}
-                                          >
-                                            <label
-                                              className="ant-form-item-required"
-                                              htmlFor="excerpt"
-                                              title="Excerpt"
-                                            >
-                                              Excerpt
-                                            </label>
-                                          </div>
-                                        </Col>
-                                      </FormItemLabel>
+                                      />
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Excerpt"
                                         name={
                                           Array [
                                             "excerpt",
@@ -7620,10 +7437,6 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                         prefixCls="ant-form"
                                         rules={
                                           Array [
-                                            Object {
-                                              "message": "Please input excerpt!",
-                                              "required": true,
-                                            },
                                             Object {
                                               "message": "Title must be minimum 3 characters.",
                                               "min": 3,
@@ -7655,16 +7468,17 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                   update={1}
                                                 >
                                                   <TextArea
+                                                    bordered={false}
                                                     id="excerpt"
                                                     onChange={[Function]}
                                                     placeholder="excerpt"
                                                     rows={4}
                                                   >
                                                     <ClearableLabeledInput
-                                                      bordered={true}
+                                                      bordered={false}
                                                       element={
                                                         <TextArea
-                                                          className=""
+                                                          className="ant-input-borderless"
                                                           id="excerpt"
                                                           onChange={[Function]}
                                                           placeholder="excerpt"
@@ -7683,7 +7497,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                       value=""
                                                     >
                                                       <TextArea
-                                                        className=""
+                                                        className="ant-input-borderless"
                                                         id="excerpt"
                                                         onChange={[Function]}
                                                         placeholder="excerpt"
@@ -7692,7 +7506,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                         value=""
                                                       >
                                                         <ResizableTextArea
-                                                          className=""
+                                                          className="ant-input-borderless"
                                                           id="excerpt"
                                                           onChange={[Function]}
                                                           onKeyDown={[Function]}
@@ -7706,7 +7520,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                             onResize={[Function]}
                                                           >
                                                             <textarea
-                                                              className="ant-input"
+                                                              className="ant-input ant-input-borderless"
                                                               id="excerpt"
                                                               onChange={[Function]}
                                                               onKeyDown={[Function]}
@@ -8458,16 +8272,10 @@ exports[`Posts Create Form component snapshot testing should render the componen
                               </Row>
                             </FormItem>
                             <FormItem
-                              label="Description"
                               name="description"
                             >
                               <WrapperField
-                                label="Description"
-                                messageVariables={
-                                  Object {
-                                    "label": "Description",
-                                  }
-                                }
+                                messageVariables={Object {}}
                                 name="description"
                                 onReset={[Function]}
                                 trigger="onChange"
@@ -8475,12 +8283,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                               >
                                 <Field
                                   key="_description"
-                                  label="Description"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Description",
-                                    }
-                                  }
+                                  messageVariables={Object {}}
                                   name={
                                     Array [
                                       "description",
@@ -8501,32 +8304,13 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                     >
                                       <FormItemLabel
                                         htmlFor="description"
-                                        label="Description"
                                         name="description"
                                         prefixCls="ant-form"
                                         required={false}
                                         requiredMark={true}
-                                      >
-                                        <Col
-                                          className="ant-form-item-label"
-                                        >
-                                          <div
-                                            className="ant-col ant-form-item-label"
-                                            style={Object {}}
-                                          >
-                                            <label
-                                              className=""
-                                              htmlFor="description"
-                                              title="Description"
-                                            >
-                                              Description
-                                            </label>
-                                          </div>
-                                        </Col>
-                                      </FormItemLabel>
+                                      />
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Description"
                                         name={
                                           Array [
                                             "description",

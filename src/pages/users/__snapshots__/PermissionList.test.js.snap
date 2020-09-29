@@ -1,0 +1,594 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tags List component snapshot testing should match component when loading 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <PermissionList />
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;
+
+exports[`Tags List component snapshot testing should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <PermissionList>
+        <Space
+          direction="vertical"
+        >
+          <div
+            className="ant-space ant-space-vertical"
+          >
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={0}
+              key="ant-space-item-0"
+              marginDirection="marginRight"
+              size="small"
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <div
+                  key="categories"
+                >
+                  <Typography>
+                    <article
+                      className="ant-typography"
+                    >
+                      Categories
+                       
+                    </article>
+                  </Typography>
+                  <br />
+                  <CheckboxGroup
+                    key="categories"
+                    options={
+                      Array [
+                        Object {
+                          "label": "Get",
+                          "value": "get",
+                        },
+                        Object {
+                          "label": "Create",
+                          "value": "create",
+                        },
+                        Object {
+                          "label": "Update",
+                          "value": "update",
+                        },
+                        Object {
+                          "label": "Delete",
+                          "value": "delete",
+                        },
+                      ]
+                    }
+                    value={
+                      Array [
+                        "get",
+                        "create",
+                        "update",
+                        "delete",
+                      ]
+                    }
+                  >
+                    <div
+                      className="ant-checkbox-group"
+                    >
+                      <Checkbox
+                        checked={true}
+                        className="ant-checkbox-group-item"
+                        indeterminate={false}
+                        key="get"
+                        prefixCls="ant-checkbox"
+                        value="get"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item"
+                        >
+                          <Checkbox
+                            checked={true}
+                            className=""
+                            defaultChecked={false}
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            prefixCls="ant-checkbox"
+                            style={Object {}}
+                            type="checkbox"
+                            value="get"
+                          >
+                            <span
+                              className="ant-checkbox ant-checkbox-checked"
+                              style={Object {}}
+                            >
+                              <input
+                                checked={true}
+                                className="ant-checkbox-input"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                type="checkbox"
+                                value="get"
+                              />
+                              <span
+                                className="ant-checkbox-inner"
+                              />
+                            </span>
+                          </Checkbox>
+                          <span>
+                            Get
+                          </span>
+                        </label>
+                      </Checkbox>
+                      <Checkbox
+                        checked={true}
+                        className="ant-checkbox-group-item"
+                        indeterminate={false}
+                        key="create"
+                        prefixCls="ant-checkbox"
+                        value="create"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item"
+                        >
+                          <Checkbox
+                            checked={true}
+                            className=""
+                            defaultChecked={false}
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            prefixCls="ant-checkbox"
+                            style={Object {}}
+                            type="checkbox"
+                            value="create"
+                          >
+                            <span
+                              className="ant-checkbox ant-checkbox-checked"
+                              style={Object {}}
+                            >
+                              <input
+                                checked={true}
+                                className="ant-checkbox-input"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                type="checkbox"
+                                value="create"
+                              />
+                              <span
+                                className="ant-checkbox-inner"
+                              />
+                            </span>
+                          </Checkbox>
+                          <span>
+                            Create
+                          </span>
+                        </label>
+                      </Checkbox>
+                      <Checkbox
+                        checked={true}
+                        className="ant-checkbox-group-item"
+                        indeterminate={false}
+                        key="update"
+                        prefixCls="ant-checkbox"
+                        value="update"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item"
+                        >
+                          <Checkbox
+                            checked={true}
+                            className=""
+                            defaultChecked={false}
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            prefixCls="ant-checkbox"
+                            style={Object {}}
+                            type="checkbox"
+                            value="update"
+                          >
+                            <span
+                              className="ant-checkbox ant-checkbox-checked"
+                              style={Object {}}
+                            >
+                              <input
+                                checked={true}
+                                className="ant-checkbox-input"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                type="checkbox"
+                                value="update"
+                              />
+                              <span
+                                className="ant-checkbox-inner"
+                              />
+                            </span>
+                          </Checkbox>
+                          <span>
+                            Update
+                          </span>
+                        </label>
+                      </Checkbox>
+                      <Checkbox
+                        checked={true}
+                        className="ant-checkbox-group-item"
+                        indeterminate={false}
+                        key="delete"
+                        prefixCls="ant-checkbox"
+                        value="delete"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item"
+                        >
+                          <Checkbox
+                            checked={true}
+                            className=""
+                            defaultChecked={false}
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            prefixCls="ant-checkbox"
+                            style={Object {}}
+                            type="checkbox"
+                            value="delete"
+                          >
+                            <span
+                              className="ant-checkbox ant-checkbox-checked"
+                              style={Object {}}
+                            >
+                              <input
+                                checked={true}
+                                className="ant-checkbox-input"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                type="checkbox"
+                                value="delete"
+                              />
+                              <span
+                                className="ant-checkbox-inner"
+                              />
+                            </span>
+                          </Checkbox>
+                          <span>
+                            Delete
+                          </span>
+                        </label>
+                      </Checkbox>
+                    </div>
+                  </CheckboxGroup>
+                  <br />
+                  <br />
+                </div>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              size="small"
+            >
+              <div
+                className="ant-space-item"
+                style={Object {}}
+              >
+                <div
+                  key="tags"
+                >
+                  <Typography>
+                    <article
+                      className="ant-typography"
+                    >
+                      Tags
+                       
+                    </article>
+                  </Typography>
+                  <br />
+                  <CheckboxGroup
+                    key="tags"
+                    options={
+                      Array [
+                        Object {
+                          "label": "Get",
+                          "value": "get",
+                        },
+                        Object {
+                          "label": "Create",
+                          "value": "create",
+                        },
+                        Object {
+                          "label": "Update",
+                          "value": "update",
+                        },
+                        Object {
+                          "label": "Delete",
+                          "value": "delete",
+                        },
+                      ]
+                    }
+                    value={
+                      Array [
+                        "get",
+                        "create",
+                      ]
+                    }
+                  >
+                    <div
+                      className="ant-checkbox-group"
+                    >
+                      <Checkbox
+                        checked={true}
+                        className="ant-checkbox-group-item"
+                        indeterminate={false}
+                        key="get"
+                        prefixCls="ant-checkbox"
+                        value="get"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item"
+                        >
+                          <Checkbox
+                            checked={true}
+                            className=""
+                            defaultChecked={false}
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            prefixCls="ant-checkbox"
+                            style={Object {}}
+                            type="checkbox"
+                            value="get"
+                          >
+                            <span
+                              className="ant-checkbox ant-checkbox-checked"
+                              style={Object {}}
+                            >
+                              <input
+                                checked={true}
+                                className="ant-checkbox-input"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                type="checkbox"
+                                value="get"
+                              />
+                              <span
+                                className="ant-checkbox-inner"
+                              />
+                            </span>
+                          </Checkbox>
+                          <span>
+                            Get
+                          </span>
+                        </label>
+                      </Checkbox>
+                      <Checkbox
+                        checked={true}
+                        className="ant-checkbox-group-item"
+                        indeterminate={false}
+                        key="create"
+                        prefixCls="ant-checkbox"
+                        value="create"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper ant-checkbox-wrapper-checked ant-checkbox-group-item"
+                        >
+                          <Checkbox
+                            checked={true}
+                            className=""
+                            defaultChecked={false}
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            prefixCls="ant-checkbox"
+                            style={Object {}}
+                            type="checkbox"
+                            value="create"
+                          >
+                            <span
+                              className="ant-checkbox ant-checkbox-checked"
+                              style={Object {}}
+                            >
+                              <input
+                                checked={true}
+                                className="ant-checkbox-input"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                type="checkbox"
+                                value="create"
+                              />
+                              <span
+                                className="ant-checkbox-inner"
+                              />
+                            </span>
+                          </Checkbox>
+                          <span>
+                            Create
+                          </span>
+                        </label>
+                      </Checkbox>
+                      <Checkbox
+                        checked={false}
+                        className="ant-checkbox-group-item"
+                        indeterminate={false}
+                        key="update"
+                        prefixCls="ant-checkbox"
+                        value="update"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                        >
+                          <Checkbox
+                            checked={false}
+                            className=""
+                            defaultChecked={false}
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            prefixCls="ant-checkbox"
+                            style={Object {}}
+                            type="checkbox"
+                            value="update"
+                          >
+                            <span
+                              className="ant-checkbox"
+                              style={Object {}}
+                            >
+                              <input
+                                checked={false}
+                                className="ant-checkbox-input"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                type="checkbox"
+                                value="update"
+                              />
+                              <span
+                                className="ant-checkbox-inner"
+                              />
+                            </span>
+                          </Checkbox>
+                          <span>
+                            Update
+                          </span>
+                        </label>
+                      </Checkbox>
+                      <Checkbox
+                        checked={false}
+                        className="ant-checkbox-group-item"
+                        indeterminate={false}
+                        key="delete"
+                        prefixCls="ant-checkbox"
+                        value="delete"
+                      >
+                        <label
+                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                        >
+                          <Checkbox
+                            checked={false}
+                            className=""
+                            defaultChecked={false}
+                            onBlur={[Function]}
+                            onChange={[Function]}
+                            onFocus={[Function]}
+                            prefixCls="ant-checkbox"
+                            style={Object {}}
+                            type="checkbox"
+                            value="delete"
+                          >
+                            <span
+                              className="ant-checkbox"
+                              style={Object {}}
+                            >
+                              <input
+                                checked={false}
+                                className="ant-checkbox-input"
+                                onBlur={[Function]}
+                                onChange={[Function]}
+                                onFocus={[Function]}
+                                type="checkbox"
+                                value="delete"
+                              />
+                              <span
+                                className="ant-checkbox-inner"
+                              />
+                            </span>
+                          </Checkbox>
+                          <span>
+                            Delete
+                          </span>
+                        </label>
+                      </Checkbox>
+                    </div>
+                  </CheckboxGroup>
+                  <br />
+                  <br />
+                </div>
+              </div>
+            </Item>
+          </div>
+        </Space>
+      </PermissionList>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;

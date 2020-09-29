@@ -125,7 +125,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           <Form.Item name={['social_media_urls', 'facebook']} label="Facebook">
             <Input style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name={['social_media_urls', 'twitetr']} label="Twitter">
+          <Form.Item name={['social_media_urls', 'twitter']} label="Twitter">
             <Input style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item name={['social_media_urls', 'pintrest']} label="Pintrest">

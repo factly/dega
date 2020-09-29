@@ -24,7 +24,7 @@ const data = {
   mobile_icon_id: 1,
   social_media_urls: {
     facebook: 'fb.com',
-    twitetr: 'twitter.com',
+    twitter: 'twitter.com',
     pintrest: 'pinterest.com',
     instagram: 'instagram.com',
   },
@@ -183,7 +183,7 @@ describe('Claims Create Form component', () => {
           mobile_icon_id: 1,
           social_media_urls: {
             facebook: 'fb.com',
-            twitetr: 'twitter.com',
+            twitter: 'twitter.com',
             pintrest: 'pinterest.com',
             instagram: 'instagram.com',
           },
@@ -301,7 +301,7 @@ describe('Claims Create Form component', () => {
           mobile_icon_id: 5,
           social_media_urls: {
             facebook: 'm.fb.com',
-            twitetr: 'm.twitter.com',
+            twitter: 'm.twitter.com',
             pintrest: 'm.pin.com',
             instagram: 'm.insta.com',
           },
