@@ -43,6 +43,26 @@ describe('Sidebar component', () => {
         collapsed: true,
       },
     },
+    spaces: {
+      details: {
+        '1': {
+          id: 1,
+          created_at: '2020-09-23T06:11:32.986694Z',
+          updated_at: '2020-09-23T06:11:32.986694Z',
+          name: 'English',
+          slug: 'english',
+          organisation_id: 1,
+          permissions: [
+            {
+              resource: 'posts',
+              actions: ['create'],
+            },
+          ],
+        },
+      },
+      loading: false,
+      selected: 1,
+    },
   };
   store = mockStore(() => state);
   store.dispatch = jest.fn(() => ({}));
@@ -61,6 +81,19 @@ describe('Sidebar component', () => {
         .toJSON();
       expect(tree).toMatchSnapshot();
     });
+    it('should not render the component when no space', () => {
+      store = mockStore({ settings: state.settings, spaces: { selected: 0 } });
+      const tree = renderer
+        .create(
+          <Provider store={store}>
+            <Router>
+              <Sidebar />
+            </Router>
+          </Provider>,
+        )
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
   });
   describe('component testing', () => {
     let wrapper;
@@ -68,6 +101,7 @@ describe('Sidebar component', () => {
       actions.toggleSider.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
+      store = mockStore(state);
 
       wrapper = mount(
         <Provider store={store}>

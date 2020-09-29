@@ -4,6 +4,7 @@ import spaces from './spacesReducer';
 import categories from './categoriesReducer';
 import tags from './tagsReducer';
 import formats from './formatsReducer';
+import googleFactChecks from './googleFactChecksReducer';
 import media from './mediaReducer';
 import authors from './authorsReducer';
 import posts from './postsReducer';
@@ -12,6 +13,8 @@ import claimants from './claimantsReducer';
 import claims from './claimsReducer';
 import notifications from './notificationsReducer';
 import policies from './policiesReducer';
+import permissions from './permissionsReducer';
+import users from './usersReducer';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
 
 const appReducer = combineReducers({
@@ -20,6 +23,7 @@ const appReducer = combineReducers({
   categories,
   tags,
   formats,
+  googleFactChecks,
   media,
   authors,
   posts,
@@ -28,6 +32,8 @@ const appReducer = combineReducers({
   claims,
   notifications,
   policies,
+  permissions,
+  users,
 });
 
 const rootReducer = (state, action) => {

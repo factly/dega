@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 
-import { useSelector, useDispatch, Provider } from 'react-redux';
+import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { act } from 'react-dom/test-utils';
 import thunk from 'redux-thunk';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';

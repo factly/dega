@@ -55,6 +55,7 @@ exports[`Spaces create component snapshot testing should render the component 1`
               >
                 <div
                   className="ant-select-selector"
+                  onClick={[Function]}
                   onMouseDown={[Function]}
                 >
                   <span
@@ -82,6 +83,7 @@ exports[`Spaces create component snapshot testing should render the component 1`
                           "opacity": 0,
                         }
                       }
+                      type="search"
                       unselectable="on"
                       value=""
                     />

@@ -151,6 +151,14 @@ exports[`Policy Create Form component snapshot testing should match component wi
                             "message": "Please input your name!",
                             "required": true,
                           },
+                          Object {
+                            "message": "Name must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 50,
+                            "message": "Name must be maximum 50 characters.",
+                          },
                         ]
                       }
                     >
@@ -168,6 +176,14 @@ exports[`Policy Create Form component snapshot testing should match component wi
                             Object {
                               "message": "Please input your name!",
                               "required": true,
+                            },
+                            Object {
+                              "message": "Name must be minimum 3 characters.",
+                              "min": 3,
+                            },
+                            Object {
+                              "max": 50,
+                              "message": "Name must be maximum 50 characters.",
                             },
                           ]
                         }
@@ -194,6 +210,14 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 "message": "Please input your name!",
                                 "required": true,
                               },
+                              Object {
+                                "message": "Name must be minimum 3 characters.",
+                                "min": 3,
+                              },
+                              Object {
+                                "max": 50,
+                                "message": "Name must be maximum 50 characters.",
+                              },
                             ]
                           }
                           trigger="onChange"
@@ -214,11 +238,20 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 name="name"
                                 prefixCls="ant-form"
                                 required={true}
+                                requiredMark={true}
                                 rules={
                                   Array [
                                     Object {
                                       "message": "Please input your name!",
                                       "required": true,
+                                    },
+                                    Object {
+                                      "message": "Name must be minimum 3 characters.",
+                                      "min": 3,
+                                    },
+                                    Object {
+                                      "max": 50,
+                                      "message": "Name must be maximum 50 characters.",
                                     },
                                   ]
                                 }
@@ -255,6 +288,14 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                     Object {
                                       "message": "Please input your name!",
                                       "required": true,
+                                    },
+                                    Object {
+                                      "message": "Name must be minimum 3 characters.",
+                                      "min": 3,
+                                    },
+                                    Object {
+                                      "max": 50,
+                                      "message": "Name must be maximum 50 characters.",
                                     },
                                   ]
                                 }
@@ -324,7 +365,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </Component>
                                       </div>
                                     </div>
-                                    <ForwardRef
+                                    <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
                                       motionName="show-help"
@@ -332,18 +373,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                       removeOnLeave={true}
                                       visible={false}
                                     >
-                                      <CSSMotion
-                                        internalRef={null}
-                                        motionAppear={true}
-                                        motionDeadline={500}
-                                        motionEnter={true}
-                                        motionLeave={true}
-                                        motionName="show-help"
-                                        onLeaveEnd={[Function]}
-                                        removeOnLeave={true}
-                                        visible={false}
-                                      />
-                                    </ForwardRef>
+                                      <DomWrapper />
+                                    </CSSMotion>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -400,6 +431,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 name="description"
                                 prefixCls="ant-form"
                                 required={false}
+                                requiredMark={true}
                               >
                                 <Col
                                   className="ant-form-item-label"
@@ -505,7 +537,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </Component>
                                       </div>
                                     </div>
-                                    <ForwardRef
+                                    <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
                                       motionName="show-help"
@@ -513,18 +545,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                       removeOnLeave={true}
                                       visible={false}
                                     >
-                                      <CSSMotion
-                                        internalRef={null}
-                                        motionAppear={true}
-                                        motionDeadline={500}
-                                        motionEnter={true}
-                                        motionLeave={true}
-                                        motionName="show-help"
-                                        onLeaveEnd={[Function]}
-                                        removeOnLeave={true}
-                                        visible={false}
-                                      />
-                                    </ForwardRef>
+                                      <DomWrapper />
+                                    </CSSMotion>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -595,6 +617,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 name="users"
                                 prefixCls="ant-form"
                                 required={false}
+                                requiredMark={true}
                               >
                                 <Col
                                   className="ant-form-item-label"
@@ -905,6 +928,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                                     readonly=""
                                                                     role="combobox"
                                                                     style="opacity: 0;"
+                                                                    type="search"
                                                                     unselectable="on"
                                                                     value=""
                                                                   />
@@ -957,6 +981,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                         >
                                                           <div
                                                             className="ant-select-selector"
+                                                            onClick={[Function]}
                                                             onMouseDown={[Function]}
                                                           >
                                                             <SelectSelector
@@ -987,6 +1012,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                                         readonly=""
                                                                         role="combobox"
                                                                         style="opacity: 0;"
+                                                                        type="search"
                                                                         unselectable="on"
                                                                         value=""
                                                                       />
@@ -1024,6 +1050,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                                     readonly=""
                                                                     role="combobox"
                                                                     style="opacity: 0;"
+                                                                    type="search"
                                                                     unselectable="on"
                                                                     value=""
                                                                   />,
@@ -1109,6 +1136,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                                         "opacity": 0,
                                                                       }
                                                                     }
+                                                                    type="search"
                                                                     unselectable="on"
                                                                     value=""
                                                                   />
@@ -1138,7 +1166,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </Component>
                                       </div>
                                     </div>
-                                    <ForwardRef
+                                    <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
                                       motionName="show-help"
@@ -1146,18 +1174,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                       removeOnLeave={true}
                                       visible={false}
                                     >
-                                      <CSSMotion
-                                        internalRef={null}
-                                        motionAppear={true}
-                                        motionDeadline={500}
-                                        motionEnter={true}
-                                        motionLeave={true}
-                                        motionName="show-help"
-                                        onLeaveEnd={[Function]}
-                                        removeOnLeave={true}
-                                        visible={false}
-                                      />
-                                    </ForwardRef>
+                                      <DomWrapper />
+                                    </CSSMotion>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -1235,6 +1253,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -1323,7 +1342,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -1369,7 +1388,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -1415,7 +1434,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -1461,7 +1480,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -1504,7 +1523,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -1512,18 +1531,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -1597,6 +1606,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -1685,7 +1695,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -1731,7 +1741,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -1777,7 +1787,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -1823,7 +1833,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -1866,7 +1876,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -1874,18 +1884,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -1959,6 +1959,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -2047,7 +2048,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2093,7 +2094,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2139,7 +2140,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2185,7 +2186,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2228,7 +2229,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -2236,18 +2237,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -2321,6 +2312,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -2409,7 +2401,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2455,7 +2447,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2501,7 +2493,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2547,7 +2539,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2590,7 +2582,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -2598,18 +2590,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -2683,6 +2665,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -2771,7 +2754,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2817,7 +2800,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2863,7 +2846,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2909,7 +2892,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -2952,7 +2935,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -2960,18 +2943,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -3045,6 +3018,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -3133,7 +3107,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3179,7 +3153,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3225,7 +3199,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3271,7 +3245,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3314,7 +3288,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -3322,18 +3296,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -3407,6 +3371,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -3495,7 +3460,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3541,7 +3506,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3587,7 +3552,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3633,7 +3598,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3676,7 +3641,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -3684,18 +3649,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -3769,6 +3724,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -3857,7 +3813,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3903,7 +3859,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3949,7 +3905,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -3995,7 +3951,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4038,7 +3994,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -4046,18 +4002,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -4131,6 +4077,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -4219,7 +4166,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4265,7 +4212,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4311,7 +4258,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4357,7 +4304,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4400,7 +4347,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -4408,18 +4355,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -4493,6 +4430,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -4581,7 +4519,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4627,7 +4565,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4673,7 +4611,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4719,7 +4657,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -4762,7 +4700,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -4770,18 +4708,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -4808,7 +4736,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                     loading={false}
                     prefixCls="ant-btn"
                   >
-                    <ForwardRef
+                    <CSSMotion
                       motionName="ant-btn-loading-icon-motion"
                       onAppearActive={[Function]}
                       onAppearStart={[Function]}
@@ -4819,22 +4747,8 @@ exports[`Policy Create Form component snapshot testing should match component wi
                       removeOnLeave={true}
                       visible={false}
                     >
-                      <CSSMotion
-                        internalRef={null}
-                        motionAppear={true}
-                        motionEnter={true}
-                        motionLeave={true}
-                        motionName="ant-btn-loading-icon-motion"
-                        onAppearActive={[Function]}
-                        onAppearStart={[Function]}
-                        onEnterActive={[Function]}
-                        onEnterStart={[Function]}
-                        onLeaveActive={[Function]}
-                        onLeaveStart={[Function]}
-                        removeOnLeave={true}
-                        visible={false}
-                      />
-                    </ForwardRef>
+                      <DomWrapper />
+                    </CSSMotion>
                   </LoadingIcon>
                   <span
                     key=".0"
@@ -4985,6 +4899,14 @@ exports[`Policy Create Form component snapshot testing should render the compone
                             "message": "Please input your name!",
                             "required": true,
                           },
+                          Object {
+                            "message": "Name must be minimum 3 characters.",
+                            "min": 3,
+                          },
+                          Object {
+                            "max": 50,
+                            "message": "Name must be maximum 50 characters.",
+                          },
                         ]
                       }
                     >
@@ -5002,6 +4924,14 @@ exports[`Policy Create Form component snapshot testing should render the compone
                             Object {
                               "message": "Please input your name!",
                               "required": true,
+                            },
+                            Object {
+                              "message": "Name must be minimum 3 characters.",
+                              "min": 3,
+                            },
+                            Object {
+                              "max": 50,
+                              "message": "Name must be maximum 50 characters.",
                             },
                           ]
                         }
@@ -5028,6 +4958,14 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 "message": "Please input your name!",
                                 "required": true,
                               },
+                              Object {
+                                "message": "Name must be minimum 3 characters.",
+                                "min": 3,
+                              },
+                              Object {
+                                "max": 50,
+                                "message": "Name must be maximum 50 characters.",
+                              },
                             ]
                           }
                           trigger="onChange"
@@ -5048,11 +4986,20 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 name="name"
                                 prefixCls="ant-form"
                                 required={true}
+                                requiredMark={true}
                                 rules={
                                   Array [
                                     Object {
                                       "message": "Please input your name!",
                                       "required": true,
+                                    },
+                                    Object {
+                                      "message": "Name must be minimum 3 characters.",
+                                      "min": 3,
+                                    },
+                                    Object {
+                                      "max": 50,
+                                      "message": "Name must be maximum 50 characters.",
                                     },
                                   ]
                                 }
@@ -5089,6 +5036,14 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                     Object {
                                       "message": "Please input your name!",
                                       "required": true,
+                                    },
+                                    Object {
+                                      "message": "Name must be minimum 3 characters.",
+                                      "min": 3,
+                                    },
+                                    Object {
+                                      "max": 50,
+                                      "message": "Name must be maximum 50 characters.",
                                     },
                                   ]
                                 }
@@ -5155,7 +5110,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </Component>
                                       </div>
                                     </div>
-                                    <ForwardRef
+                                    <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
                                       motionName="show-help"
@@ -5163,18 +5118,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                       removeOnLeave={true}
                                       visible={false}
                                     >
-                                      <CSSMotion
-                                        internalRef={null}
-                                        motionAppear={true}
-                                        motionDeadline={500}
-                                        motionEnter={true}
-                                        motionLeave={true}
-                                        motionName="show-help"
-                                        onLeaveEnd={[Function]}
-                                        removeOnLeave={true}
-                                        visible={false}
-                                      />
-                                    </ForwardRef>
+                                      <DomWrapper />
+                                    </CSSMotion>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -5231,6 +5176,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 name="description"
                                 prefixCls="ant-form"
                                 required={false}
+                                requiredMark={true}
                               >
                                 <Col
                                   className="ant-form-item-label"
@@ -5336,7 +5282,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </Component>
                                       </div>
                                     </div>
-                                    <ForwardRef
+                                    <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
                                       motionName="show-help"
@@ -5344,18 +5290,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                       removeOnLeave={true}
                                       visible={false}
                                     >
-                                      <CSSMotion
-                                        internalRef={null}
-                                        motionAppear={true}
-                                        motionDeadline={500}
-                                        motionEnter={true}
-                                        motionLeave={true}
-                                        motionName="show-help"
-                                        onLeaveEnd={[Function]}
-                                        removeOnLeave={true}
-                                        visible={false}
-                                      />
-                                    </ForwardRef>
+                                      <DomWrapper />
+                                    </CSSMotion>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -5426,6 +5362,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 name="users"
                                 prefixCls="ant-form"
                                 required={false}
+                                requiredMark={true}
                               >
                                 <Col
                                   className="ant-form-item-label"
@@ -5736,6 +5673,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                                     readonly=""
                                                                     role="combobox"
                                                                     style="opacity: 0;"
+                                                                    type="search"
                                                                     unselectable="on"
                                                                     value=""
                                                                   />
@@ -5788,6 +5726,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                         >
                                                           <div
                                                             className="ant-select-selector"
+                                                            onClick={[Function]}
                                                             onMouseDown={[Function]}
                                                           >
                                                             <SelectSelector
@@ -5818,6 +5757,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                                         readonly=""
                                                                         role="combobox"
                                                                         style="opacity: 0;"
+                                                                        type="search"
                                                                         unselectable="on"
                                                                         value=""
                                                                       />
@@ -5855,6 +5795,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                                     readonly=""
                                                                     role="combobox"
                                                                     style="opacity: 0;"
+                                                                    type="search"
                                                                     unselectable="on"
                                                                     value=""
                                                                   />,
@@ -5940,6 +5881,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                                         "opacity": 0,
                                                                       }
                                                                     }
+                                                                    type="search"
                                                                     unselectable="on"
                                                                     value=""
                                                                   />
@@ -5969,7 +5911,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </Component>
                                       </div>
                                     </div>
-                                    <ForwardRef
+                                    <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
                                       motionName="show-help"
@@ -5977,18 +5919,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                       removeOnLeave={true}
                                       visible={false}
                                     >
-                                      <CSSMotion
-                                        internalRef={null}
-                                        motionAppear={true}
-                                        motionDeadline={500}
-                                        motionEnter={true}
-                                        motionLeave={true}
-                                        motionName="show-help"
-                                        onLeaveEnd={[Function]}
-                                        removeOnLeave={true}
-                                        visible={false}
-                                      />
-                                    </ForwardRef>
+                                      <DomWrapper />
+                                    </CSSMotion>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -6066,6 +5998,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -6154,7 +6087,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6200,7 +6133,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6246,7 +6179,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6292,7 +6225,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6335,7 +6268,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -6343,18 +6276,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -6428,6 +6351,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -6516,7 +6440,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6562,7 +6486,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6608,7 +6532,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6654,7 +6578,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6697,7 +6621,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -6705,18 +6629,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -6790,6 +6704,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -6878,7 +6793,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6924,7 +6839,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -6970,7 +6885,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7016,7 +6931,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7059,7 +6974,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -7067,18 +6982,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -7152,6 +7057,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -7240,7 +7146,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7286,7 +7192,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7332,7 +7238,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7378,7 +7284,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7421,7 +7327,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -7429,18 +7335,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -7514,6 +7410,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -7602,7 +7499,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7648,7 +7545,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7694,7 +7591,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7740,7 +7637,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -7783,7 +7680,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -7791,18 +7688,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -7876,6 +7763,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -7964,7 +7852,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8010,7 +7898,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8056,7 +7944,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8102,7 +7990,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8145,7 +8033,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -8153,18 +8041,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -8238,6 +8116,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -8326,7 +8205,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8372,7 +8251,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8418,7 +8297,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8464,7 +8343,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8507,7 +8386,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -8515,18 +8394,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -8600,6 +8469,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -8688,7 +8558,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8734,7 +8604,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8780,7 +8650,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8826,7 +8696,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -8869,7 +8739,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -8877,18 +8747,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -8962,6 +8822,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -9050,7 +8911,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -9096,7 +8957,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -9142,7 +9003,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -9188,7 +9049,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -9231,7 +9092,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -9239,18 +9100,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -9324,6 +9175,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         prefixCls="ant-form"
                         required={false}
+                        requiredMark={true}
                       >
                         <Col
                           className="ant-form-item-label"
@@ -9412,7 +9264,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="get"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -9458,7 +9310,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="create"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -9504,7 +9356,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="update"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -9550,7 +9402,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                           value="delete"
                                         >
                                           <label
-                                            className="ant-checkbox-group-item ant-checkbox-wrapper"
+                                            className="ant-checkbox-wrapper ant-checkbox-group-item"
                                           >
                                             <Checkbox
                                               checked={false}
@@ -9593,7 +9445,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 </Component>
                               </div>
                             </div>
-                            <ForwardRef
+                            <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
                               motionName="show-help"
@@ -9601,18 +9453,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                               removeOnLeave={true}
                               visible={false}
                             >
-                              <CSSMotion
-                                internalRef={null}
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionEnter={true}
-                                motionLeave={true}
-                                motionName="show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
-                              />
-                            </ForwardRef>
+                              <DomWrapper />
+                            </CSSMotion>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -9639,7 +9481,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                     loading={false}
                     prefixCls="ant-btn"
                   >
-                    <ForwardRef
+                    <CSSMotion
                       motionName="ant-btn-loading-icon-motion"
                       onAppearActive={[Function]}
                       onAppearStart={[Function]}
@@ -9650,22 +9492,8 @@ exports[`Policy Create Form component snapshot testing should render the compone
                       removeOnLeave={true}
                       visible={false}
                     >
-                      <CSSMotion
-                        internalRef={null}
-                        motionAppear={true}
-                        motionEnter={true}
-                        motionLeave={true}
-                        motionName="ant-btn-loading-icon-motion"
-                        onAppearActive={[Function]}
-                        onAppearStart={[Function]}
-                        onEnterActive={[Function]}
-                        onEnterStart={[Function]}
-                        onLeaveActive={[Function]}
-                        onLeaveStart={[Function]}
-                        removeOnLeave={true}
-                        visible={false}
-                      />
-                    </ForwardRef>
+                      <DomWrapper />
+                    </CSSMotion>
                   </LoadingIcon>
                   <span
                     key=".0"

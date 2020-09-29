@@ -55,6 +55,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
               >
                 <div
                   className="ant-select-selector"
+                  onClick={[Function]}
                   onMouseDown={[Function]}
                 >
                   <span
@@ -82,6 +83,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           "opacity": 0,
                         }
                       }
+                      type="search"
                       unselectable="on"
                       value=""
                     />
@@ -431,6 +433,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
               >
                 <div
                   className="ant-select-selector"
+                  onClick={[Function]}
                   onMouseDown={[Function]}
                 >
                   <span
@@ -458,6 +461,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           "opacity": 0,
                         }
                       }
+                      type="search"
                       unselectable="on"
                       value=""
                     />
