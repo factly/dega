@@ -3,6 +3,8 @@ package test
 import (
 	"net/http"
 
+	"github.com/factly/dega-server/service/fact-check/action/google"
+
 	"github.com/factly/dega-server/config"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -119,6 +121,15 @@ func MeiliGock() {
 		Persist().
 		Reply(http.StatusAccepted).
 		JSON(ReturnUpdate)
+}
+
+func GoogleFactCheckGock() {
+
+	gock.New(google.GoogleURL).
+		Persist().
+		Reply(http.StatusOK).
+		JSON(GoogleResponse)
+
 }
 
 func DisableMeiliGock(serverURL string) {

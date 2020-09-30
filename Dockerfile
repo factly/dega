@@ -11,6 +11,7 @@ ENV KAVACH $KAVACH
 ENV MEILI_URL $MEILI_URL
 ENV MEILI_KEY $MEILI_KEY
 ENV MODE $MODE
+ENV GOOGLE_KEY $GOOGLE_KEY
 
 RUN go get github.com/githubnemo/CompileDaemon
 
@@ -18,4 +19,4 @@ RUN go get github.com/githubnemo/CompileDaemon
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait
 RUN chmod +x /wait
 
-ENTRYPOINT /wait && CompileDaemon -exclude-dir=.git -exclude-dir=docs --build="go build main.go" --command="./main -dsn=${DSN} -kavach=${KAVACH} -keto=${KETO} -meili=${MEILI_URL} -meiliKey=${MEILI_KEY}"
+ENTRYPOINT /wait && CompileDaemon -exclude-dir=.git -exclude-dir=docs --build="go build main.go" --command="./main -dsn=${DSN} -kavach=${KAVACH} -keto=${KETO} -meili=${MEILI_URL} -meiliKey=${MEILI_KEY} -googleKey=${GOOGLE_KEY}"

@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/service/fact-check/action/claim"
 	"github.com/factly/dega-server/service/fact-check/action/claimant"
+	"github.com/factly/dega-server/service/fact-check/action/google"
 	"github.com/factly/dega-server/service/fact-check/action/rating"
 )
 
@@ -17,6 +18,7 @@ func Router() http.Handler {
 	r.Mount("/claimants", claimant.Router())
 	r.Mount("/ratings", rating.Router())
 	r.Mount("/claims", claim.Router())
+	r.Mount("/google", google.Router())
 
 	return r
 }
