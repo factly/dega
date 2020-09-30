@@ -13,6 +13,9 @@ import (
 	"github.com/factly/x/renderx"
 )
 
+// googleapis for factchecks
+var GoogleURL = "https://factchecktools.googleapis.com/v1alpha1/claims:search"
+
 // list response
 type paging struct {
 	Total    int           `json:"total"`
@@ -40,9 +43,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 	language := r.URL.Query().Get("language")
 	pageToken := r.URL.Query().Get("pageToken")
 
-	// googleapis for factchecks
-	googleURL := "https://factchecktools.googleapis.com/v1alpha1/claims:search"
-
 	if query == "" {
 		loggerx.Error(errors.New("query can't be empty"))
 		errorx.Render(w, errorx.Parser(errorx.Message{Message: "query can't be empty",
@@ -52,7 +52,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	var factChecks map[string]interface{}
 
-	req, err := http.NewRequest("GET", googleURL, nil)
+	req, err := http.NewRequest("GET", GoogleURL, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

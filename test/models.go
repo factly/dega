@@ -234,3 +234,27 @@ var EmptyMeili = map[string]interface{}{
 	"processingTimeMs": 2,
 	"query":            "test",
 }
+
+var GoogleResponse = map[string]interface{}{
+	"claims": []map[string]interface{}{
+		map[string]interface{}{
+			"text":      "Shopkeepers sleeping inside shops due to Modi govt's handling of COVID-19",
+			"claimant":  "Social media",
+			"claimDate": "2016-06-20T00:00:00Z",
+			"claimReview": []map[string]interface{}{
+				map[string]interface{}{
+					"publisher": map[string]interface{}{
+						"name": "Alt News",
+						"site": "altnews.in",
+					},
+					"url":           "https://www.altnews.in/congress-rohan-gupta-shares-old-images-of-shopkeeper-falling-a-sleep-to-target-pm-modi/",
+					"title":         "Photos of shopkeepers sleeping inside shops from 2019 shared as recent",
+					"reviewDate":    "2020-09-28T00:00:00Z",
+					"textualRating": "False",
+					"languageCode":  "en",
+				},
+			},
+		},
+	},
+	"nextPageToken": "CBQ",
+}

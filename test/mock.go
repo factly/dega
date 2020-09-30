@@ -7,6 +7,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/factly/dega-server/service/fact-check/action/google"
 	"github.com/factly/dega-server/util/meili"
 	"github.com/meilisearch/meilisearch-go"
 
@@ -31,6 +32,7 @@ func SetupMockDB() sqlmock.Sqlmock {
 	config.KetoURL = "http://keto:6644"
 	config.MeiliURL = "http://meili:7700"
 	config.MeiliKey = "password"
+	google.GoogleURL = "http://googlefactchecktest.com"
 
 	meili.Client = meilisearch.NewClient(meilisearch.Config{
 		Host:   config.MeiliURL,
