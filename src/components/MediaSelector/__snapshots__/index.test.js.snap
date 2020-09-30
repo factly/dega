@@ -124,7 +124,6 @@ exports[`Media List component snapshot testing should match component with data 
             }
           >
             <img
-              src="some-url"
               width="100%"
             />
           </div>

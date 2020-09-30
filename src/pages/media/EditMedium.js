@@ -45,7 +45,7 @@ function EditMedium() {
   return (
     <Row>
       <Col span={'12'}>
-        <img src={media.url} alt={'space'} style={{ width: '100%' }} />
+        <img src={media.url?.raw} alt={'space'} style={{ width: '100%' }} />
       </Col>
       <Col span={'12'}>
         <Form

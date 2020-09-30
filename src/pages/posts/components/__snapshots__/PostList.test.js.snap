@@ -393,7 +393,7 @@ exports[`Posts List component snapshot component should match component when loa
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -402,10 +402,10 @@ exports[`Posts List component snapshot component should match component when loa
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -420,10 +420,10 @@ exports[`Posts List component snapshot component should match component when loa
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -460,7 +460,7 @@ exports[`Posts List component snapshot component should match component when loa
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -481,16 +481,16 @@ exports[`Posts List component snapshot component should match component when loa
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -1140,7 +1140,7 @@ exports[`Posts List component snapshot component should match component when loa
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="tags"
+                          label="Tags"
                           name="tags"
                           style={
                             Object {
@@ -1149,10 +1149,10 @@ exports[`Posts List component snapshot component should match component when loa
                           }
                         >
                           <WrapperField
-                            label="tags"
+                            label="Tags"
                             messageVariables={
                               Object {
-                                "label": "tags",
+                                "label": "Tags",
                               }
                             }
                             name="tags"
@@ -1167,10 +1167,10 @@ exports[`Posts List component snapshot component should match component when loa
                           >
                             <Field
                               key="_tags"
-                              label="tags"
+                              label="Tags"
                               messageVariables={
                                 Object {
-                                  "label": "tags",
+                                  "label": "Tags",
                                 }
                               }
                               name={
@@ -1207,7 +1207,7 @@ exports[`Posts List component snapshot component should match component when loa
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_tags"
-                                    label="tags"
+                                    label="Tags"
                                     name="tags"
                                     prefixCls="ant-form"
                                     required={false}
@@ -1228,16 +1228,16 @@ exports[`Posts List component snapshot component should match component when loa
                                         <label
                                           className=""
                                           htmlFor="filters_tags"
-                                          title="tags"
+                                          title="Tags"
                                         >
-                                          tags
+                                          Tags
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="tags"
+                                    label="Tags"
                                     name={
                                       Array [
                                         "tags",
@@ -1835,7 +1835,7 @@ exports[`Posts List component snapshot component should match component when loa
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="categories"
+                          label="Categories"
                           name="categories"
                           style={
                             Object {
@@ -1844,10 +1844,10 @@ exports[`Posts List component snapshot component should match component when loa
                           }
                         >
                           <WrapperField
-                            label="categories"
+                            label="Categories"
                             messageVariables={
                               Object {
-                                "label": "categories",
+                                "label": "Categories",
                               }
                             }
                             name="categories"
@@ -1862,10 +1862,10 @@ exports[`Posts List component snapshot component should match component when loa
                           >
                             <Field
                               key="_categories"
-                              label="categories"
+                              label="Categories"
                               messageVariables={
                                 Object {
-                                  "label": "categories",
+                                  "label": "Categories",
                                 }
                               }
                               name={
@@ -1902,7 +1902,7 @@ exports[`Posts List component snapshot component should match component when loa
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_categories"
-                                    label="categories"
+                                    label="Categories"
                                     name="categories"
                                     prefixCls="ant-form"
                                     required={false}
@@ -1923,16 +1923,16 @@ exports[`Posts List component snapshot component should match component when loa
                                         <label
                                           className=""
                                           htmlFor="filters_categories"
-                                          title="categories"
+                                          title="Categories"
                                         >
-                                          categories
+                                          Categories
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="categories"
+                                    label="Categories"
                                     name={
                                       Array [
                                         "categories",
@@ -2530,7 +2530,7 @@ exports[`Posts List component snapshot component should match component when loa
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="formats"
+                          label="Formats"
                           name="formats"
                           style={
                             Object {
@@ -2539,10 +2539,10 @@ exports[`Posts List component snapshot component should match component when loa
                           }
                         >
                           <WrapperField
-                            label="formats"
+                            label="Formats"
                             messageVariables={
                               Object {
-                                "label": "formats",
+                                "label": "Formats",
                               }
                             }
                             name="formats"
@@ -2557,10 +2557,10 @@ exports[`Posts List component snapshot component should match component when loa
                           >
                             <Field
                               key="_formats"
-                              label="formats"
+                              label="Formats"
                               messageVariables={
                                 Object {
-                                  "label": "formats",
+                                  "label": "Formats",
                                 }
                               }
                               name={
@@ -2597,7 +2597,7 @@ exports[`Posts List component snapshot component should match component when loa
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_formats"
-                                    label="formats"
+                                    label="Formats"
                                     name="formats"
                                     prefixCls="ant-form"
                                     required={false}
@@ -2618,16 +2618,16 @@ exports[`Posts List component snapshot component should match component when loa
                                         <label
                                           className=""
                                           htmlFor="filters_formats"
-                                          title="formats"
+                                          title="Formats"
                                         >
-                                          formats
+                                          Formats
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="formats"
+                                    label="Formats"
                                     name={
                                       Array [
                                         "formats",
@@ -3368,7 +3368,9 @@ exports[`Posts List component snapshot component should match component when loa
                         "medium": Object {
                           "alt_text": "example",
                           "id": 1,
-                          "url": "http://example.com",
+                          "url": Object {
+                            "raw": "http://example.com",
+                          },
                         },
                         "published_date": "0001-01-01T00:00:00Z",
                         "slug": "explainer-the-us-presidential-debates-history-format",
@@ -4836,61 +4838,7 @@ exports[`Posts List component snapshot component should match component with pos
                   }
                 }
               >
-                <Template>
-                  <Link
-                    to="/posts/create"
-                  >
-                    <LinkAnchor
-                      href="/posts/create"
-                      navigate={[Function]}
-                    >
-                      <a
-                        href="/posts/create"
-                        onClick={[Function]}
-                      >
-                        <Button
-                          block={false}
-                          ghost={false}
-                          htmlType="button"
-                          loading={false}
-                        >
-                          <Wave>
-                            <button
-                              className="ant-btn"
-                              onClick={[Function]}
-                              type="button"
-                            >
-                              <LoadingIcon
-                                existIcon={false}
-                                loading={false}
-                                prefixCls="ant-btn"
-                              >
-                                <CSSMotion
-                                  motionName="ant-btn-loading-icon-motion"
-                                  onAppearActive={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
-                                  onLeaveStart={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                >
-                                  <DomWrapper />
-                                </CSSMotion>
-                              </LoadingIcon>
-                              <span
-                                key=".0"
-                              >
-                                Create New
-                              </span>
-                            </button>
-                          </Wave>
-                        </Button>
-                      </a>
-                    </LinkAnchor>
-                  </Link>
-                </Template>
+                <Template />
               </div>
             </Item>
             <Item
@@ -5187,7 +5135,7 @@ exports[`Posts List component snapshot component should match component with pos
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -5196,10 +5144,10 @@ exports[`Posts List component snapshot component should match component with pos
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -5214,10 +5162,10 @@ exports[`Posts List component snapshot component should match component with pos
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -5254,7 +5202,7 @@ exports[`Posts List component snapshot component should match component with pos
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -5275,16 +5223,16 @@ exports[`Posts List component snapshot component should match component with pos
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -5934,7 +5882,7 @@ exports[`Posts List component snapshot component should match component with pos
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="tags"
+                          label="Tags"
                           name="tags"
                           style={
                             Object {
@@ -5943,10 +5891,10 @@ exports[`Posts List component snapshot component should match component with pos
                           }
                         >
                           <WrapperField
-                            label="tags"
+                            label="Tags"
                             messageVariables={
                               Object {
-                                "label": "tags",
+                                "label": "Tags",
                               }
                             }
                             name="tags"
@@ -5961,10 +5909,10 @@ exports[`Posts List component snapshot component should match component with pos
                           >
                             <Field
                               key="_tags"
-                              label="tags"
+                              label="Tags"
                               messageVariables={
                                 Object {
-                                  "label": "tags",
+                                  "label": "Tags",
                                 }
                               }
                               name={
@@ -6001,7 +5949,7 @@ exports[`Posts List component snapshot component should match component with pos
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_tags"
-                                    label="tags"
+                                    label="Tags"
                                     name="tags"
                                     prefixCls="ant-form"
                                     required={false}
@@ -6022,16 +5970,16 @@ exports[`Posts List component snapshot component should match component with pos
                                         <label
                                           className=""
                                           htmlFor="filters_tags"
-                                          title="tags"
+                                          title="Tags"
                                         >
-                                          tags
+                                          Tags
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="tags"
+                                    label="Tags"
                                     name={
                                       Array [
                                         "tags",
@@ -6629,7 +6577,7 @@ exports[`Posts List component snapshot component should match component with pos
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="categories"
+                          label="Categories"
                           name="categories"
                           style={
                             Object {
@@ -6638,10 +6586,10 @@ exports[`Posts List component snapshot component should match component with pos
                           }
                         >
                           <WrapperField
-                            label="categories"
+                            label="Categories"
                             messageVariables={
                               Object {
-                                "label": "categories",
+                                "label": "Categories",
                               }
                             }
                             name="categories"
@@ -6656,10 +6604,10 @@ exports[`Posts List component snapshot component should match component with pos
                           >
                             <Field
                               key="_categories"
-                              label="categories"
+                              label="Categories"
                               messageVariables={
                                 Object {
-                                  "label": "categories",
+                                  "label": "Categories",
                                 }
                               }
                               name={
@@ -6696,7 +6644,7 @@ exports[`Posts List component snapshot component should match component with pos
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_categories"
-                                    label="categories"
+                                    label="Categories"
                                     name="categories"
                                     prefixCls="ant-form"
                                     required={false}
@@ -6717,16 +6665,16 @@ exports[`Posts List component snapshot component should match component with pos
                                         <label
                                           className=""
                                           htmlFor="filters_categories"
-                                          title="categories"
+                                          title="Categories"
                                         >
-                                          categories
+                                          Categories
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="categories"
+                                    label="Categories"
                                     name={
                                       Array [
                                         "categories",
@@ -7324,7 +7272,7 @@ exports[`Posts List component snapshot component should match component with pos
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="formats"
+                          label="Formats"
                           name="formats"
                           style={
                             Object {
@@ -7333,10 +7281,10 @@ exports[`Posts List component snapshot component should match component with pos
                           }
                         >
                           <WrapperField
-                            label="formats"
+                            label="Formats"
                             messageVariables={
                               Object {
-                                "label": "formats",
+                                "label": "Formats",
                               }
                             }
                             name="formats"
@@ -7351,10 +7299,10 @@ exports[`Posts List component snapshot component should match component with pos
                           >
                             <Field
                               key="_formats"
-                              label="formats"
+                              label="Formats"
                               messageVariables={
                                 Object {
-                                  "label": "formats",
+                                  "label": "Formats",
                                 }
                               }
                               name={
@@ -7391,7 +7339,7 @@ exports[`Posts List component snapshot component should match component with pos
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_formats"
-                                    label="formats"
+                                    label="Formats"
                                     name="formats"
                                     prefixCls="ant-form"
                                     required={false}
@@ -7412,16 +7360,16 @@ exports[`Posts List component snapshot component should match component with pos
                                         <label
                                           className=""
                                           htmlFor="filters_formats"
-                                          title="formats"
+                                          title="Formats"
                                         >
-                                          formats
+                                          Formats
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="formats"
+                                    label="Formats"
                                     name={
                                       Array [
                                         "formats",
@@ -8162,7 +8110,9 @@ exports[`Posts List component snapshot component should match component with pos
                         "medium": Object {
                           "alt_text": "example",
                           "id": 1,
-                          "url": "http://example.com",
+                          "url": Object {
+                            "raw": "http://example.com",
+                          },
                         },
                         "published_date": "0001-01-01T00:00:00Z",
                         "slug": "explainer-the-us-presidential-debates-history-format",
@@ -9606,61 +9556,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                   }
                 }
               >
-                <Template>
-                  <Link
-                    to="/posts/create"
-                  >
-                    <LinkAnchor
-                      href="/posts/create"
-                      navigate={[Function]}
-                    >
-                      <a
-                        href="/posts/create"
-                        onClick={[Function]}
-                      >
-                        <Button
-                          block={false}
-                          ghost={false}
-                          htmlType="button"
-                          loading={false}
-                        >
-                          <Wave>
-                            <button
-                              className="ant-btn"
-                              onClick={[Function]}
-                              type="button"
-                            >
-                              <LoadingIcon
-                                existIcon={false}
-                                loading={false}
-                                prefixCls="ant-btn"
-                              >
-                                <CSSMotion
-                                  motionName="ant-btn-loading-icon-motion"
-                                  onAppearActive={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
-                                  onLeaveStart={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                >
-                                  <DomWrapper />
-                                </CSSMotion>
-                              </LoadingIcon>
-                              <span
-                                key=".0"
-                              >
-                                Create New
-                              </span>
-                            </button>
-                          </Wave>
-                        </Button>
-                      </a>
-                    </LinkAnchor>
-                  </Link>
-                </Template>
+                <Template />
               </div>
             </Item>
             <Item
@@ -9957,7 +9853,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -9966,10 +9862,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -9984,10 +9880,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -10024,7 +9920,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -10045,16 +9941,16 @@ exports[`Posts List component snapshot component should render the component 1`]
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -10704,7 +10600,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="tags"
+                          label="Tags"
                           name="tags"
                           style={
                             Object {
@@ -10713,10 +10609,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                           }
                         >
                           <WrapperField
-                            label="tags"
+                            label="Tags"
                             messageVariables={
                               Object {
-                                "label": "tags",
+                                "label": "Tags",
                               }
                             }
                             name="tags"
@@ -10731,10 +10627,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                           >
                             <Field
                               key="_tags"
-                              label="tags"
+                              label="Tags"
                               messageVariables={
                                 Object {
-                                  "label": "tags",
+                                  "label": "Tags",
                                 }
                               }
                               name={
@@ -10771,7 +10667,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_tags"
-                                    label="tags"
+                                    label="Tags"
                                     name="tags"
                                     prefixCls="ant-form"
                                     required={false}
@@ -10792,16 +10688,16 @@ exports[`Posts List component snapshot component should render the component 1`]
                                         <label
                                           className=""
                                           htmlFor="filters_tags"
-                                          title="tags"
+                                          title="Tags"
                                         >
-                                          tags
+                                          Tags
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="tags"
+                                    label="Tags"
                                     name={
                                       Array [
                                         "tags",
@@ -11399,7 +11295,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="categories"
+                          label="Categories"
                           name="categories"
                           style={
                             Object {
@@ -11408,10 +11304,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                           }
                         >
                           <WrapperField
-                            label="categories"
+                            label="Categories"
                             messageVariables={
                               Object {
-                                "label": "categories",
+                                "label": "Categories",
                               }
                             }
                             name="categories"
@@ -11426,10 +11322,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                           >
                             <Field
                               key="_categories"
-                              label="categories"
+                              label="Categories"
                               messageVariables={
                                 Object {
-                                  "label": "categories",
+                                  "label": "Categories",
                                 }
                               }
                               name={
@@ -11466,7 +11362,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_categories"
-                                    label="categories"
+                                    label="Categories"
                                     name="categories"
                                     prefixCls="ant-form"
                                     required={false}
@@ -11487,16 +11383,16 @@ exports[`Posts List component snapshot component should render the component 1`]
                                         <label
                                           className=""
                                           htmlFor="filters_categories"
-                                          title="categories"
+                                          title="Categories"
                                         >
-                                          categories
+                                          Categories
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="categories"
+                                    label="Categories"
                                     name={
                                       Array [
                                         "categories",
@@ -12094,7 +11990,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="formats"
+                          label="Formats"
                           name="formats"
                           style={
                             Object {
@@ -12103,10 +11999,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                           }
                         >
                           <WrapperField
-                            label="formats"
+                            label="Formats"
                             messageVariables={
                               Object {
-                                "label": "formats",
+                                "label": "Formats",
                               }
                             }
                             name="formats"
@@ -12121,10 +12017,10 @@ exports[`Posts List component snapshot component should render the component 1`]
                           >
                             <Field
                               key="_formats"
-                              label="formats"
+                              label="Formats"
                               messageVariables={
                                 Object {
-                                  "label": "formats",
+                                  "label": "Formats",
                                 }
                               }
                               name={
@@ -12161,7 +12057,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_formats"
-                                    label="formats"
+                                    label="Formats"
                                     name="formats"
                                     prefixCls="ant-form"
                                     required={false}
@@ -12182,16 +12078,16 @@ exports[`Posts List component snapshot component should render the component 1`]
                                         <label
                                           className=""
                                           htmlFor="filters_formats"
-                                          title="formats"
+                                          title="Formats"
                                         >
-                                          formats
+                                          Formats
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="formats"
+                                    label="Formats"
                                     name={
                                       Array [
                                         "formats",
@@ -12932,7 +12828,9 @@ exports[`Posts List component snapshot component should render the component 1`]
                         "medium": Object {
                           "alt_text": "example",
                           "id": 1,
-                          "url": "http://example.com",
+                          "url": Object {
+                            "raw": "http://example.com",
+                          },
                         },
                         "published_date": "0001-01-01T00:00:00Z",
                         "slug": "explainer-the-us-presidential-debates-history-format",

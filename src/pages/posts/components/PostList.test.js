@@ -63,7 +63,7 @@ let state = {
         is_sticky: false,
         is_highlighted: false,
         featured_medium_id: 1,
-        medium: { id: 1, url: 'http://example.com', alt_text: 'example' },
+        medium: { id: 1, url: { raw: 'http://example.com' }, alt_text: 'example' },
         format_id: 1,
         format: 1,
         published_date: '0001-01-01T00:00:00Z',
@@ -153,7 +153,13 @@ let state = {
   },
   media: {
     req: [],
-    details: {},
+    details: {
+      '1': {
+        id: 1,
+        url: { raw: 'http://example.com' },
+        alt_text: 'example',
+      },
+    },
     loading: true,
   },
   authors: {
@@ -285,7 +291,7 @@ describe('Posts List component', () => {
         );
       });
 
-      const button = wrapper.find(Button).at(3);
+      const button = wrapper.find(Button).at(2);
       expect(button.text()).toEqual('Delete');
 
       button.simulate('click');
@@ -310,10 +316,9 @@ describe('Posts List component', () => {
           </Provider>,
         );
       });
-      const link = wrapper.find(Link).at(2);
-      const button = link.find(Button).at(0);
+
+      const button = wrapper.find(Button).at(1);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/posts/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({
@@ -339,7 +344,7 @@ describe('Posts List component', () => {
       );
 
       const button = wrapper.find(Button).at(0);
-      expect(button.text()).toEqual('Create New');
+      expect(button.text()).toEqual('Submit');
     });
     it('should check image url and alt_text', () => {
       store = mockStore(state);

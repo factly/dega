@@ -40,7 +40,7 @@ function MediumList() {
     {
       title: 'Display',
       key: 'display',
-      render: (_, record) => <Avatar shape="square" size={174} src={record.url} />,
+      render: (_, record) => <Avatar shape="square" size={174} src={record.url?.raw} />,
       width: '15%',
     },
     {

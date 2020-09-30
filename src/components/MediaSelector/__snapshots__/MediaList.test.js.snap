@@ -180,10 +180,9 @@ exports[`Media List component snapshot testing should match component with data 
                                           onClick={[Function]}
                                           shape="square"
                                           size={174}
-                                          src="some-url"
                                         >
                                           <span
-                                            className="ant-avatar ant-avatar-square ant-avatar-image"
+                                            className="ant-avatar ant-avatar-square"
                                             onClick={[Function]}
                                             style={
                                               Object {
@@ -194,10 +193,21 @@ exports[`Media List component snapshot testing should match component with data 
                                               }
                                             }
                                           >
-                                            <img
-                                              onError={[Function]}
-                                              src="some-url"
-                                            />
+                                            <ResizeObserver
+                                              onResize={[Function]}
+                                            >
+                                              <span
+                                                className="ant-avatar-string"
+                                                style={
+                                                  Object {
+                                                    "WebkitTransform": "scale(1) translateX(-50%)",
+                                                    "lineHeight": "174px",
+                                                    "msTransform": "scale(1) translateX(-50%)",
+                                                    "transform": "scale(1) translateX(-50%)",
+                                                  }
+                                                }
+                                              />
+                                            </ResizeObserver>
                                           </span>
                                         </Avatar>
                                         <Animate

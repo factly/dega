@@ -1478,11 +1478,12 @@ exports[`Media List component snapshot testing should match component when loadi
                                             class="ant-table-cell"
                                           >
                                             <span
-                                              class="ant-avatar ant-avatar-square ant-avatar-image"
+                                              class="ant-avatar ant-avatar-square"
                                               style="width: 174px; height: 174px; line-height: 174px; font-size: 18px;"
                                             >
-                                              <img
-                                                src="http://storage.googleapis.com/sample.png"
+                                              <span
+                                                class="ant-avatar-string"
+                                                style="line-height: 174px; transform: scale(1) translateX(-50%);"
                                               />
                                             </span>
                                           </td>
@@ -1716,11 +1717,12 @@ exports[`Media List component snapshot testing should match component when loadi
                                                   class="ant-table-cell"
                                                 >
                                                   <span
-                                                    class="ant-avatar ant-avatar-square ant-avatar-image"
+                                                    class="ant-avatar ant-avatar-square"
                                                     style="width: 174px; height: 174px; line-height: 174px; font-size: 18px;"
                                                   >
-                                                    <img
-                                                      src="http://storage.googleapis.com/sample.png"
+                                                    <span
+                                                      class="ant-avatar-string"
+                                                      style="line-height: 174px; transform: scale(1) translateX(-50%);"
                                                     />
                                                   </span>
                                                 </td>
@@ -2513,10 +2515,9 @@ exports[`Media List component snapshot testing should match component when loadi
                                                   <Avatar
                                                     shape="square"
                                                     size={174}
-                                                    src="http://storage.googleapis.com/sample.png"
                                                   >
                                                     <span
-                                                      className="ant-avatar ant-avatar-square ant-avatar-image"
+                                                      className="ant-avatar ant-avatar-square"
                                                       style={
                                                         Object {
                                                           "fontSize": 18,
@@ -2526,10 +2527,21 @@ exports[`Media List component snapshot testing should match component when loadi
                                                         }
                                                       }
                                                     >
-                                                      <img
-                                                        onError={[Function]}
-                                                        src="http://storage.googleapis.com/sample.png"
-                                                      />
+                                                      <ResizeObserver
+                                                        onResize={[Function]}
+                                                      >
+                                                        <span
+                                                          className="ant-avatar-string"
+                                                          style={
+                                                            Object {
+                                                              "WebkitTransform": "scale(1) translateX(-50%)",
+                                                              "lineHeight": "174px",
+                                                              "msTransform": "scale(1) translateX(-50%)",
+                                                              "transform": "scale(1) translateX(-50%)",
+                                                            }
+                                                          }
+                                                        />
+                                                      </ResizeObserver>
                                                     </span>
                                                   </Avatar>
                                                 </td>
@@ -5290,11 +5302,12 @@ exports[`Media List component snapshot testing should match component with media
                                             class="ant-table-cell"
                                           >
                                             <span
-                                              class="ant-avatar ant-avatar-square ant-avatar-image"
+                                              class="ant-avatar ant-avatar-square"
                                               style="width: 174px; height: 174px; line-height: 174px; font-size: 18px;"
                                             >
-                                              <img
-                                                src="http://storage.googleapis.com/sample.png"
+                                              <span
+                                                class="ant-avatar-string"
+                                                style="line-height: 174px; transform: scale(1) translateX(-50%);"
                                               />
                                             </span>
                                           </td>
@@ -5528,11 +5541,12 @@ exports[`Media List component snapshot testing should match component with media
                                                   class="ant-table-cell"
                                                 >
                                                   <span
-                                                    class="ant-avatar ant-avatar-square ant-avatar-image"
+                                                    class="ant-avatar ant-avatar-square"
                                                     style="width: 174px; height: 174px; line-height: 174px; font-size: 18px;"
                                                   >
-                                                    <img
-                                                      src="http://storage.googleapis.com/sample.png"
+                                                    <span
+                                                      class="ant-avatar-string"
+                                                      style="line-height: 174px; transform: scale(1) translateX(-50%);"
                                                     />
                                                   </span>
                                                 </td>
@@ -6325,10 +6339,9 @@ exports[`Media List component snapshot testing should match component with media
                                                   <Avatar
                                                     shape="square"
                                                     size={174}
-                                                    src="http://storage.googleapis.com/sample.png"
                                                   >
                                                     <span
-                                                      className="ant-avatar ant-avatar-square ant-avatar-image"
+                                                      className="ant-avatar ant-avatar-square"
                                                       style={
                                                         Object {
                                                           "fontSize": 18,
@@ -6338,10 +6351,21 @@ exports[`Media List component snapshot testing should match component with media
                                                         }
                                                       }
                                                     >
-                                                      <img
-                                                        onError={[Function]}
-                                                        src="http://storage.googleapis.com/sample.png"
-                                                      />
+                                                      <ResizeObserver
+                                                        onResize={[Function]}
+                                                      >
+                                                        <span
+                                                          className="ant-avatar-string"
+                                                          style={
+                                                            Object {
+                                                              "WebkitTransform": "scale(1) translateX(-50%)",
+                                                              "lineHeight": "174px",
+                                                              "msTransform": "scale(1) translateX(-50%)",
+                                                              "transform": "scale(1) translateX(-50%)",
+                                                            }
+                                                          }
+                                                        />
+                                                      </ResizeObserver>
                                                     </span>
                                                   </Avatar>
                                                 </td>
@@ -9102,11 +9126,12 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                             class="ant-table-cell"
                                           >
                                             <span
-                                              class="ant-avatar ant-avatar-square ant-avatar-image"
+                                              class="ant-avatar ant-avatar-square"
                                               style="width: 174px; height: 174px; line-height: 174px; font-size: 18px;"
                                             >
-                                              <img
-                                                src="http://storage.googleapis.com/sample.png"
+                                              <span
+                                                class="ant-avatar-string"
+                                                style="line-height: 174px; transform: scale(1) translateX(-50%);"
                                               />
                                             </span>
                                           </td>
@@ -9340,11 +9365,12 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                   class="ant-table-cell"
                                                 >
                                                   <span
-                                                    class="ant-avatar ant-avatar-square ant-avatar-image"
+                                                    class="ant-avatar ant-avatar-square"
                                                     style="width: 174px; height: 174px; line-height: 174px; font-size: 18px;"
                                                   >
-                                                    <img
-                                                      src="http://storage.googleapis.com/sample.png"
+                                                    <span
+                                                      class="ant-avatar-string"
+                                                      style="line-height: 174px; transform: scale(1) translateX(-50%);"
                                                     />
                                                   </span>
                                                 </td>
@@ -10137,10 +10163,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                   <Avatar
                                                     shape="square"
                                                     size={174}
-                                                    src="http://storage.googleapis.com/sample.png"
                                                   >
                                                     <span
-                                                      className="ant-avatar ant-avatar-square ant-avatar-image"
+                                                      className="ant-avatar ant-avatar-square"
                                                       style={
                                                         Object {
                                                           "fontSize": 18,
@@ -10150,10 +10175,21 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                         }
                                                       }
                                                     >
-                                                      <img
-                                                        onError={[Function]}
-                                                        src="http://storage.googleapis.com/sample.png"
-                                                      />
+                                                      <ResizeObserver
+                                                        onResize={[Function]}
+                                                      >
+                                                        <span
+                                                          className="ant-avatar-string"
+                                                          style={
+                                                            Object {
+                                                              "WebkitTransform": "scale(1) translateX(-50%)",
+                                                              "lineHeight": "174px",
+                                                              "msTransform": "scale(1) translateX(-50%)",
+                                                              "transform": "scale(1) translateX(-50%)",
+                                                            }
+                                                          }
+                                                        />
+                                                      </ResizeObserver>
                                                     </span>
                                                   </Avatar>
                                                 </td>

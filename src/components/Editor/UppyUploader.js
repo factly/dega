@@ -38,14 +38,14 @@ class UppyUploader {
     };
   }
   render() {
-    if (this.data.url) {
-      this.nodes.wrapper.children[1].src = this.data.url;
+    if (this.data.url.raw) {
+      this.nodes.wrapper.children[1].src = this.data.url.raw;
     }
     return this.nodes.wrapper;
   }
 
   rendered() {
-    if (!this.data.url) {
+    if (!this.data.url.raw) {
       const uppy = Uppy({
         debug: true,
         autoProceed: true,
@@ -110,7 +110,7 @@ class UppyUploader {
           .then((res) => {
             this.data = res.data;
             this.nodes.wrapper.children[0].style.display = 'none';
-            this.nodes.wrapper.children[1].src = this.data.url;
+            this.nodes.wrapper.children[1].src = this.data.url.raw;
           })
           .catch((error) => {
             this.api.notifier.show({

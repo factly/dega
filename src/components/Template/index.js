@@ -1,10 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Row, Col, Spin, Collapse, Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { Card, Spin, Collapse, Button, List } from 'antd';
 import deepEqual from 'deep-equal';
 import { addPost, getPosts } from '../../actions/posts';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function Template() {
   const dispatch = useDispatch();
@@ -13,7 +12,7 @@ function Template() {
   const { Panel } = Collapse;
   const [page, setPage] = React.useState(1);
   const [show, setShow] = React.useState(false);
-  const { posts, total, loading } = useSelector((state) => {
+  const { posts, loading } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       let query = {
         page,
@@ -29,7 +28,7 @@ function Template() {
         total: node.total,
         loading: state.posts.loading,
       };
-    return { posts: [], total: 0, loading: state.posts.loading };
+    return { posts: [], loading: state.posts.loading };
   });
 
   React.useEffect(() => {
@@ -39,26 +38,6 @@ function Template() {
     dispatch(getPosts({ page: page, status: 'template' }));
   };
 
-  const matrix = [];
-
-  for (var i = 0; i < total / 4 + 1; i++) {
-    const row = posts.slice(i * 4, (i + 1) * 4).map((post) => (
-      <Col span={6}>
-        <Card
-          bordered={false}
-          cover={<img alt="example" src="https://i.stack.imgur.com/2hxGZ.png" />}
-          onClick={() => {
-            dispatch(addPost({ ...post, status: null })).then((res) =>
-              history.push(`/posts/${res.id}/edit`),
-            );
-          }}
-        >
-          <Meta description={post.title} />
-        </Card>
-      </Col>
-    ));
-    matrix.push(row);
-  }
   const genExtra = () => (
     <div onClick={(e) => e.stopPropagation()}>
       <Button
@@ -73,48 +52,36 @@ function Template() {
 
   if (loading) return <Spin style={{ marginLeft: '50%' }} />;
 
-  if (posts.length === 0)
-    return (
-      <Link to="/posts/create">
-        <Button>Create New</Button>
-      </Link>
-    );
+  if (posts.length === 0) return null;
 
   return (
     <Collapse defaultActiveKey={['1']}>
       <Panel header="Templates" key="1" extra={genExtra()}>
-        {!show ? (
-          <Row>
-            <Col span={3}>
-              <Link to="/posts/create">
-                <Card
-                  bordered={false}
-                  cover={
-                    <PlusOutlined
-                      style={{ fontSize: '150px', marginTop: '50%', color: '#1890ff' }}
-                    />
-                  }
-                >
-                  <Meta description={'create new post'} />
-                </Card>
-              </Link>
-            </Col>
-            {posts.slice(0, 4).map((post) => (
-              <Col span={5}>
-                <Link to={`/posts/create/${post.id}`}>
-                  <Card
-                    bordered={false}
-                    cover={<img alt="example" src="https://i.stack.imgur.com/2hxGZ.png" />}
-                  >
-                    <Meta description={post.title} />
-                  </Card>
-                </Link>
-              </Col>
-            ))}
-          </Row>
-        ) : (
-          matrix.map((each) => <Row>{each.map((e) => e)}</Row>)
-        )}
+        <List
+          grid={{ gutter: 16, column: 5 }}
+          dataSource={show ? posts : posts.slice(0, 5)}
+          renderItem={(item) => (
+            <List.Item>
+              <Card
+                bordered={false}
+                cover={
+                  <img
+                    alt="example"
+                    src="https://www.wesa.fm/sites/wesa/files/styles/medium/public/201610/Fact-CheckGraphics-Template-08.png"
+                    height="230"
+                  />
+                }
+                onClick={() => {
+                  dispatch(addPost({ ...item, status: null })).then((res) =>
+                    history.push(`/posts/${res.id}/edit`),
+                  );
+                }}
+              >
+                <Meta description={item.title} />
+              </Card>
+            </List.Item>
+          )}
+        />
       </Panel>
     </Collapse>
   );

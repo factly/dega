@@ -99,7 +99,7 @@ function GoogleFactCheck() {
                 <Typography>
                   <b>{each.publisher.name}</b> rating : <b>{each.textualRating}</b>
                 </Typography>
-                <a href={each.url} target={'blank'}>
+                <a href={each.url?.raw} target={'blank'}>
                   {each.title}
                 </a>
               </>

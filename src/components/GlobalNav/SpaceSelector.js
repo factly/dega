@@ -28,7 +28,7 @@ function SpaceSelector() {
             <Option key={'space-' + details[space].id} value={details[space].id}>
               <Avatar
                 size="small"
-                src={details[space].logo ? details[space].logo.url : DEFAULT_IMAGE}
+                src={details[space].logo ? details[space].logo.url?.raw : DEFAULT_IMAGE}
               />{' '}
               {details[space].name}
             </Option>

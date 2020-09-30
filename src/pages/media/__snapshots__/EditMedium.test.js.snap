@@ -274,7 +274,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
   >
     <img
       alt="space"
-      src="some-url"
       style={
         Object {
           "width": "100%",
