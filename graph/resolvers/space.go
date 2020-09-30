@@ -11,6 +11,10 @@ import (
 	"github.com/factly/dega-api/graph/validator"
 )
 
+func (r *spaceResolver) ID(ctx context.Context, obj *models.Space) (string, error) {
+	return fmt.Sprint(obj.ID), nil
+}
+
 func (r *spaceResolver) Logo(ctx context.Context, obj *models.Space) (*models.Medium, error) {
 	if obj.LogoID == 0 {
 		return nil, nil

@@ -13,8 +13,15 @@ import (
 	"github.com/factly/dega-api/util"
 )
 
-func (r *claimResolver) Description(ctx context.Context, obj *models.Claim) (interface{}, error) {
+func (r *claimResolver) ID(ctx context.Context, obj *models.Claim) (string, error) {
+	return fmt.Sprint(obj.ID), nil
+}
 
+func (r *claimResolver) SpaceID(ctx context.Context, obj *models.Claim) (int, error) {
+	return int(obj.SpaceID), nil
+}
+
+func (r *claimResolver) Description(ctx context.Context, obj *models.Claim) (interface{}, error) {
 	return obj.Description, nil
 }
 

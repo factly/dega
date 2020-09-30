@@ -36,13 +36,13 @@ func CheckSpace() func(http.Handler) http.Handler {
 }
 
 // GetSpace return space ID
-func GetSpace(ctx context.Context) (int, error) {
+func GetSpace(ctx context.Context) (uint, error) {
 	if ctx == nil {
 		return 0, errors.New("context not found")
 	}
 	spaceID := ctx.Value(SpaceIDKey)
 	if spaceID != nil {
-		return spaceID.(int), nil
+		return uint(spaceID.(int)), nil
 	}
 	return 0, errors.New("something went wrong")
 }

@@ -13,12 +13,21 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-func (r *categoryResolver) ParentID(ctx context.Context, obj *models.Category) (int, error) {
-	return int(obj.ID), nil
+func (r *categoryResolver) ID(ctx context.Context, obj *models.Category) (string, error) {
+	return fmt.Sprint(obj.ID), nil
+}
+
+func (r *categoryResolver) ParentID(ctx context.Context, obj *models.Category) (*int, error) {
+	dummyID := int(obj.ParentID)
+	return &dummyID, nil
+}
+
+func (r *categoryResolver) SpaceID(ctx context.Context, obj *models.Category) (int, error) {
+	return int(obj.SpaceID), nil
 }
 
 func (r *categoryResolver) Medium(ctx context.Context, obj *models.Category) (*models.Medium, error) {
-	if obj.MediumID == nil {
+	if obj.MediumID == 0 {
 		return nil, nil
 	}
 
@@ -34,7 +43,7 @@ func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category,
 	result := &models.Category{}
 
 	err = config.DB.Model(&models.Category{}).Where(&models.Category{
-		ID:      id,
+		ID:      uint(id),
 		SpaceID: sID,
 	}).First(&result).Error
 

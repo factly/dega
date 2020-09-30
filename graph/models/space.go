@@ -8,7 +8,7 @@ import (
 
 // Space model
 type Space struct {
-	ID                int            `json:"id"`
+	ID                uint           `gorm:"primary_key" json:"id"`
 	CreatedAt         time.Time      `json:"created_at"`
 	UpdatedAt         time.Time      `json:"updated_at"`
 	Name              string         `gorm:"column:name" json:"name"`
