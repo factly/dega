@@ -38,14 +38,14 @@ class UppyUploader {
     };
   }
   render() {
-    if (this.data.url.raw) {
+    if (this.data.url) {
       this.nodes.wrapper.children[1].src = this.data.url.raw;
     }
     return this.nodes.wrapper;
   }
 
   rendered() {
-    if (!this.data.url.raw) {
+    if (!this.data.url) {
       const uppy = Uppy({
         debug: true,
         autoProceed: true,
@@ -103,7 +103,8 @@ class UppyUploader {
         upload['slug'] = successful.response.body.key;
         upload['title'] = successful.meta.caption ? successful.meta.caption : ' ';
         upload['type'] = successful.meta.type;
-        upload['url'] = successful.uploadURL;
+        upload['url'] = {};
+        upload['url']['raw'] = successful.uploadURL;
 
         axios
           .post(MEDIA_API, upload)
