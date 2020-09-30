@@ -2193,6 +2193,67 @@ var doc = `{
                 }
             }
         },
+        "/fact-check/google": {
+            "get": {
+                "description": "Get all google fact checks",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Claimant"
+                ],
+                "summary": "Show all google fact checks",
+                "operationId": "get-all-google-fact-checks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "query",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Page Token",
+                        "name": "pageToken",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "language code",
+                        "name": "language",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/google.paging"
+                        }
+                    }
+                }
+            }
+        },
         "/fact-check/ratings": {
             "get": {
                 "description": "Get all ratings",
@@ -2580,6 +2641,23 @@ var doc = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/model.Format"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "google.paging": {
+            "type": "object",
+            "properties": {
+                "nextPage": {
+                    "type": "string"
+                },
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "type": "object"
                     }
                 },
                 "total": {
@@ -3183,6 +3261,9 @@ var doc = `{
                 },
                 "space_id": {
                     "type": "integer"
+                },
+                "status": {
+                    "type": "string"
                 },
                 "subtitle": {
                     "type": "string"

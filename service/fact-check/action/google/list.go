@@ -3,7 +3,6 @@ package google
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -11,14 +10,14 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
 
 // list response
 type paging struct {
-	Total int           `json:"total"`
-	Nodes []interface{} `json:"nodes"`
+	Total    int           `json:"total"`
+	Nodes    []interface{} `json:"nodes"`
+	NextPage string        `json:"nextPage"`
 }
 
 // list - Get all google fact checks
@@ -29,9 +28,8 @@ type paging struct {
 // @Produce  json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param limit query string false "limit per page"
-// @Param page query string false "page number"
 // @Param query query string false "Query"
+// @Param pageToken query string false "Page Token"
 // @Param language query string false "language code"
 // @Param sort query string false "Sort"
 // @Success 200 {object} paging
@@ -40,6 +38,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	query := r.URL.Query().Get("query")
 	language := r.URL.Query().Get("language")
+	pageToken := r.URL.Query().Get("pageToken")
 
 	// googleapis for factchecks
 	googleURL := "https://factchecktools.googleapis.com/v1alpha1/claims:search"
@@ -50,8 +49,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 			Code: http.StatusUnprocessableEntity}))
 		return
 	}
-
-	offset, limit := paginationx.Parse(r.URL.Query())
 
 	var factChecks map[string]interface{}
 
@@ -65,10 +62,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 	q := url.Values{}
 	q.Add("key", config.GoogleKey)
 	q.Add("query", query)
-	q.Add("pageSize", fmt.Sprint(limit))
-	q.Add("offset", fmt.Sprint(offset))
 	if language != "" {
 		q.Add("languageCode", language)
+	}
+	if pageToken != "" {
+		q.Add("pageToken", pageToken)
 	}
 
 	req.URL.RawQuery = q.Encode()
@@ -94,8 +92,16 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := paging{}
-	result.Nodes = (factChecks["claims"]).([]interface{})
-	result.Total = len(result.Nodes)
+	result.Nodes = make([]interface{}, 0)
+
+	if claims, found := factChecks["claims"]; found {
+		result.Nodes = (claims).([]interface{})
+		result.Total = len(result.Nodes)
+	}
+
+	if nextPageToken, found := factChecks["nextPageToken"]; found {
+		result.NextPage = nextPageToken.(string)
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
 }
