@@ -14,6 +14,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/search"
 	"github.com/factly/dega-server/service/core/action/space"
 	"github.com/factly/dega-server/service/core/action/tag"
+	"github.com/factly/dega-server/service/core/action/user"
 )
 
 // Router - CRUD servies
@@ -29,6 +30,7 @@ func Router() http.Handler {
 	r.Mount("/policies", policy.Router())
 	r.Mount("/authors", author.Router())
 	r.Mount("/search", search.Router())
+	r.Mount("/users", user.Router())
 
 	return r
 }

@@ -6,7 +6,10 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/factly/dega-server/service/core/action/user"
+
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/policy"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
@@ -21,10 +24,15 @@ type organisationUser struct {
 
 type orgWithSpace struct {
 	config.Base
-	Title      string           `gorm:"column:title" json:"title"`
-	Slug       string           `gorm:"column:slug;unique_index" json:"slug"`
-	Permission organisationUser `json:"permission"`
-	Spaces     []model.Space    `json:"spaces"`
+	Title      string                 `gorm:"column:title" json:"title"`
+	Slug       string                 `gorm:"column:slug;unique_index" json:"slug"`
+	Permission organisationUser       `json:"permission"`
+	Spaces     []spaceWithPermissions `json:"spaces"`
+}
+
+type spaceWithPermissions struct {
+	model.Space
+	Permissions []model.Permission `json:"permissions"`
 }
 
 // list - Get all spaces for a user
@@ -45,6 +53,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Fetched all organisations of the user
 	req, err := http.NewRequest("GET", config.KavachURL+"/organisations/my", nil)
 	if err != nil {
 		loggerx.Error(err)
@@ -81,20 +90,47 @@ func my(w http.ResponseWriter, r *http.Request) {
 		allOrgIDs = append(allOrgIDs, int(each.ID))
 	}
 
+	// Fetched all the spaces related to all the organisations
 	var allSpaces = make([]model.Space, 0)
 
 	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
 
+	// fetch all the keto policies
+	policyList, err := policy.GetAllPolicies()
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	adminPerm := model.Permission{
+		Resource: "admin",
+		Actions:  []string{"admin"},
+	}
+
 	result := make([]orgWithSpace, 0)
 
 	for _, each := range allOrg {
-		eachOrgWithAllSpaces := []model.Space{}
+		spaceWithPermArr := []spaceWithPermissions{}
 		for _, space := range allSpaces {
 			if space.OrganisationID == int(each.ID) {
-				eachOrgWithAllSpaces = append(eachOrgWithAllSpaces, space)
+				if each.Permission.Role != "owner" {
+					permissions := user.GetPermissions(int(each.ID), int(space.ID), uID, policyList)
+					spaceWithPerm := spaceWithPermissions{
+						Space:       space,
+						Permissions: permissions,
+					}
+					spaceWithPermArr = append(spaceWithPermArr, spaceWithPerm)
+				} else {
+					adminSpaceWithPerm := spaceWithPermissions{
+						Space:       space,
+						Permissions: []model.Permission{adminPerm},
+					}
+					spaceWithPermArr = append(spaceWithPermArr, adminSpaceWithPerm)
+				}
 			}
 		}
-		each.Spaces = eachOrgWithAllSpaces
+		each.Spaces = spaceWithPermArr
 		result = append(result, each)
 	}
 

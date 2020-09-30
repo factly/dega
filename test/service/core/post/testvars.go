@@ -107,6 +107,7 @@ var paginationQuery = `SELECT \* FROM "posts" (.+) LIMIT 1 OFFSET 1`
 
 var basePath = "/core/posts"
 var path = "/core/posts/{post_id}"
+var publishBasePath = "/core/posts/publish"
 var publishPath = "/core/posts/{post_id}/publish"
 var templatePath = "/core/posts/templates"
 
@@ -197,6 +198,14 @@ func postSelectWithSpace(mock sqlmock.Sqlmock) {
 				Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1))
 }
 
+func postSelectPublishedWithSpace(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(1, 1).
+		WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(1, time.Now(), time.Now(), nil, Data["title"], Data["subtitle"], Data["slug"], "published", Data["excerpt"],
+				Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1))
+}
+
 //check post exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
@@ -243,8 +252,6 @@ func postAuthorInsertMock(mock sqlmock.Sqlmock) {
 }
 
 func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
-	postSelectWithSpace(mock)
-
 	// preload tags & categories
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
 		WithArgs(sqlmock.AnyArg()).
@@ -273,6 +280,20 @@ func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckR
 	mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
 		WithArgs(1, 1).
 		WillReturnResult(sqlmock.NewResult(0, 1))
+}
+
+func preUpdateDraftMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
+	postSelectWithSpace(mock)
+	preUpdateMock(mock, post, slugCheckRequired)
+
+	// Check medium & format belong to same space or not
+	medium.SelectWithSpace(mock)
+	format.SelectWithSpace(mock)
+}
+
+func preUpdatePublishedMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
+	postSelectPublishedWithSpace(mock)
+	preUpdateMock(mock, post, slugCheckRequired)
 
 	// Check medium & format belong to same space or not
 	medium.SelectWithSpace(mock)
@@ -285,6 +306,18 @@ func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugChec
 			post["is_highlighted"], post["is_sticky"], post["slug"], post["subtitle"], post["title"],
 			test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
+	postUpdateQueryMock(mock, post)
+}
+
+func updatePublishedQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
+	mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
+		WithArgs(post["description"], post["excerpt"], post["featured_medium_id"], post["format_id"],
+			post["is_highlighted"], post["is_sticky"], post["slug"], post["status"], post["subtitle"], post["title"], test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	postUpdateQueryMock(mock, post)
+}
+
+func postUpdateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	mock.ExpectExec(`INSERT INTO "post_tags"`).
 		WithArgs(1, 1, 1, 1).
 		WillReturnResult(sqlmock.NewResult(0, 1))
@@ -320,7 +353,6 @@ func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugChec
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
 			AddRow(1, time.Now(), time.Now(), nil, 2, 1))
-
 }
 
 func updatePostClaimsMock(mock sqlmock.Sqlmock) {
@@ -357,7 +389,7 @@ func updatePostAuthorMock(mock sqlmock.Sqlmock) {
 }
 
 func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
-	preUpdateMock(mock, post, slugCheckRequired)
+	preUpdateDraftMock(mock, post, slugCheckRequired)
 	updateQueryMock(mock, post, slugCheckRequired)
 	updatePostClaimsMock(mock)
 	updatePostAuthorMock(mock)

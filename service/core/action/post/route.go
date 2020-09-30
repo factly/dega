@@ -13,8 +13,9 @@ type post struct {
 	Title            string         `json:"title" validate:"required,min=3,max=150"`
 	Subtitle         string         `json:"subtitle"`
 	Slug             string         `json:"slug"`
-	Excerpt          string         `json:"excerpt" validate:"required,min=3,max=300"`
+	Excerpt          string         `json:"excerpt"`
 	Description      postgres.Jsonb `json:"description"`
+	Status           string         `json:"status"`
 	IsFeatured       bool           `json:"is_featured"`
 	IsSticky         bool           `json:"is_sticky"`
 	IsHighlighted    bool           `json:"is_highlighted"`
@@ -42,6 +43,7 @@ func Router() chi.Router {
 	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
 	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
 	r.With(util.CheckKetoPolicy(entity, "update")).Post("/templates", createTemplate)
+	r.With(util.CheckKetoPolicy(entity, "publish")).Post("/publish", publishCreate)
 
 	r.Route("/{post_id}", func(r chi.Router) {
 		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)

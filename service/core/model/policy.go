@@ -10,6 +10,12 @@ type KetoPolicy struct {
 	Description string   `json:"description"`
 }
 
+// KetoRole model
+type KetoRole struct {
+	ID      string   `json:"id"`
+	Members []string `json:"members"`
+}
+
 // Permission model
 type Permission struct {
 	Resource string   `json:"resource"`
