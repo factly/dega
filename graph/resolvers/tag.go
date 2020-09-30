@@ -2,13 +2,23 @@ package resolvers
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/factly/dega-api/config"
+	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 	"github.com/jinzhu/gorm"
 )
+
+func (r *tagResolver) ID(ctx context.Context, obj *models.Tag) (string, error) {
+	return fmt.Sprint(obj.ID), nil
+}
+
+func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error) {
+	return int(obj.SpaceID), nil
+}
 
 func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 	sID, err := validator.GetSpace(ctx)
@@ -19,7 +29,7 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 	result := &models.Tag{}
 
 	err = config.DB.Model(&models.Tag{}).Where(&models.Tag{
-		ID:      int(id),
+		ID:      uint(id),
 		SpaceID: sID,
 	}).First(&result).Error
 
@@ -70,3 +80,8 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, page *int, limit *i
 
 	return result, nil
 }
+
+// Tag model resolver
+func (r *Resolver) Tag() generated.TagResolver { return &tagResolver{r} }
+
+type tagResolver struct{ *Resolver }

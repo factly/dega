@@ -6,13 +6,13 @@ import (
 
 // Format model
 type Format struct {
-	ID          int       `json:"id"`
+	ID          uint      `gorm:"primary_key" json:"id"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
-	Name        string    `json:"name"`
-	Slug        string    `json:"slug"`
-	Description *string   `json:"description"`
-	SpaceID     int       `json:"space_id"`
+	Name        string    `gorm:"column:name" json:"name" validate:"required"`
+	Slug        string    `gorm:"column:slug" json:"slug" validate:"required"`
+	Description string    `gorm:"column:description" json:"description"`
+	SpaceID     uint      `gorm:"column:space_id" json:"space_id"`
 }
 
 // FormatsPaging model

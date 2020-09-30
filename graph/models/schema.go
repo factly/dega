@@ -6,9 +6,9 @@ import (
 
 // Author of Factcheck
 type Author struct {
-	Name string  `json:"name"`
-	Type string  `json:"@type"`
-	URL  *string `json:"url"`
+	Name string `json:"name"`
+	Type string `json:"@type"`
+	URL  string `json:"url"`
 }
 
 // ItemReviewed type
@@ -23,8 +23,8 @@ type ItemReviewed struct {
 type ReviewRating struct {
 	Type          string `json:"@type"`
 	RatingValue   int    `json:"ratingValue"`
-	BestRating    *int   `json:"bestRating"`
-	WorstRating   *int   `json:"worstRating"`
+	BestRating    int    `json:"bestRating"`
+	WorstRating   int    `json:"worstRating"`
 	AlternateName string `json:"alternateName"`
 }
 
@@ -60,6 +60,6 @@ type ArticleSchema struct {
 	Headline      string    `json:"headline"`
 	Image         []Image   `json:"image"`
 	DatePublished time.Time `json:"datePublished"`
-	Author        Author    `json:"author"`
+	Author        []Author  `json:"author"`
 	Publisher     Publisher `json:"publisher"`
 }

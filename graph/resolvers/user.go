@@ -7,10 +7,15 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-api/config"
+	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 )
+
+func (r *userResolver) ID(ctx context.Context, obj *models.User) (string, error) {
+	return fmt.Sprint(obj.ID), nil
+}
 
 func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error) {
 	sID, err := validator.GetSpace(ctx)
@@ -91,7 +96,7 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 
 	config.DB.First(space)
 
-	userMap := make(map[int]models.User)
+	userMap := make(map[uint]models.User)
 	url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
@@ -121,9 +126,14 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 		userMap[u.ID] = u
 	}
 
-	if user, found := userMap[id]; found {
+	if user, found := userMap[uint(id)]; found {
 		return &user, nil
 	}
 
 	return nil, nil
 }
+
+// User model resolver
+func (r *Resolver) User() generated.UserResolver { return &userResolver{r} }
+
+type userResolver struct{ *Resolver }

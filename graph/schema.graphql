@@ -59,9 +59,9 @@ type Medium {
   title: String!
   description: String
   caption: String
-  file_size: String!
+  file_size: Int!
   alt_text: String!
-  url: String!
+  url: Any!
   dimensions: String!
   space_id: Int!
 }
@@ -133,7 +133,7 @@ type Claim {
   slug: String!
   claim_date: Time
   checked_date: Time
-  claim_source: String
+  claim_sources: String
   description: Any
   review: String
   review_tag_line: String

@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -16,6 +17,14 @@ import (
 type postResolver struct{ *Resolver }
 
 func (r *Resolver) Post() generated.PostResolver { return &postResolver{r} }
+
+func (r *postResolver) ID(ctx context.Context, obj *models.Post) (string, error) {
+	return fmt.Sprint(obj.ID), nil
+}
+
+func (r *postResolver) SpaceID(ctx context.Context, obj *models.Post) (int, error) {
+	return int(obj.SpaceID), nil
+}
 
 func (r *postResolver) Description(ctx context.Context, obj *models.Post) (interface{}, error) {
 	return obj.Description, nil
@@ -125,20 +134,38 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.ClaimReviewed = each.Claim.Title
 		claimSchema.Author.Type = "Organization"
 		claimSchema.Author.Name = space.Name
-		claimSchema.Author.URL = &space.SiteAddress
+		claimSchema.Author.URL = space.SiteAddress
 		claimSchema.ReviewRating.Type = "Rating"
 		claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
 		claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
-		// claimSchema.ReviewRating.BestRating = 5
-		// claimSchema.ReviewRating.WorstRating = 1
+		claimSchema.ReviewRating.BestRating = 5
+		claimSchema.ReviewRating.WorstRating = 1
 		claimSchema.ItemReviewed.Type = "Claim"
-		claimSchema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
-		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSource
+		claimSchema.ItemReviewed.DatePublished = each.Claim.CheckedDate
+		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
 		claimSchema.ItemReviewed.Author.Type = "Organization"
 		claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
 
 		result = append(result, claimSchema)
 	}
+
+	postAuthors := []models.PostAuthor{}
+
+	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
+		PostID: obj.ID,
+	}).Find(&postAuthors)
+
+	var allAuthorID []string
+
+	for _, postAuthor := range postAuthors {
+		allAuthorID = append(allAuthorID, fmt.Sprint(postAuthor.AuthorID))
+	}
+
+	authors, _ := loaders.GetUserLoader(ctx).LoadAll(allAuthorID)
+
+	jsonLogo := map[string]string{}
+	rawLogo, _ := space.Logo.URL.RawMessage.MarshalJSON()
+	json.Unmarshal(rawLogo, &jsonLogo)
 
 	articleSchema := models.ArticleSchema{}
 	articleSchema.Context = "https://schema.org"
@@ -146,14 +173,18 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 	articleSchema.Headline = obj.Title
 	articleSchema.Image = append(articleSchema.Image, models.Image{
 		Type: "ImageObject",
-		URL:  space.Logo.URL})
+		URL:  jsonLogo["raw"]})
 	articleSchema.DatePublished = obj.PublishedDate
-	articleSchema.Author.Type = "Person"
-	articleSchema.Author.Name = " " // TODO: Add Author name
+	for _, eachAuthor := range authors {
+		articleSchema.Author = append(articleSchema.Author, models.Author{
+			Type: "Person",
+			Name: eachAuthor.FirstName + " " + eachAuthor.LastName,
+		})
+	}
 	articleSchema.Publisher.Type = "Organization"
 	articleSchema.Publisher.Name = space.Name
 	articleSchema.Publisher.Logo.Type = "ImageObject"
-	articleSchema.Publisher.Logo.URL = space.Logo.URL
+	articleSchema.Publisher.Logo.URL = jsonLogo["raw"]
 
 	result = append(result, articleSchema)
 
@@ -169,7 +200,7 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 	result := &models.Post{}
 
 	err = config.DB.Model(&models.Post{}).Where(&models.Post{
-		ID:      int(id),
+		ID:      uint(id),
 		SpaceID: sID,
 	}).First(&result).Error
 

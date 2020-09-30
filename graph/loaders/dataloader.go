@@ -53,7 +53,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					return nil, nil
 				}
 
-				ratingsMap := map[int]*models.Rating{}
+				ratingsMap := map[uint]*models.Rating{}
 
 				for _, rating := range ratings {
 					ratingsMap[rating.ID] = rating
@@ -89,7 +89,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					return nil, nil
 				}
 
-				claimantsMap := map[int]*models.Claimant{}
+				claimantsMap := map[uint]*models.Claimant{}
 
 				for _, claimant := range claimants {
 					claimantsMap[claimant.ID] = claimant
@@ -125,7 +125,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					return nil, nil
 				}
 
-				mediaMap := map[int]*models.Medium{}
+				mediaMap := map[uint]*models.Medium{}
 
 				for _, medium := range media {
 					mediaMap[medium.ID] = medium
@@ -161,7 +161,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					return nil, nil
 				}
 
-				formatsMap := map[int]*models.Format{}
+				formatsMap := map[uint]*models.Format{}
 
 				for _, format := range formats {
 					formatsMap[format.ID] = format
@@ -197,7 +197,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					return nil, nil
 				}
 
-				claimsMap := map[int]*models.Claim{}
+				claimsMap := map[uint]*models.Claim{}
 
 				for _, claim := range claims {
 					claimsMap[claim.ID] = claim
@@ -233,7 +233,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					return nil, nil
 				}
 
-				categoriesMap := map[int]*models.Category{}
+				categoriesMap := map[uint]*models.Category{}
 
 				for _, category := range categories {
 					categoriesMap[category.ID] = category
@@ -269,7 +269,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					return nil, nil
 				}
 
-				tagsMap := map[int]*models.Tag{}
+				tagsMap := map[uint]*models.Tag{}
 
 				for _, tag := range tags {
 					tagsMap[tag.ID] = tag
@@ -311,7 +311,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				result := make([]*models.User, 0)
 
-				userMap := make(map[int]models.User)
+				userMap := make(map[uint]models.User)
 				url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
 
 				req, err := http.NewRequest("GET", url, nil)

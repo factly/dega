@@ -6,15 +6,15 @@ import (
 
 // Rating model
 type Rating struct {
-	ID           int       `json:"id"`
+	ID           uint      `gorm:"primary_key" json:"id"`
 	CreatedAt    time.Time `json:"created_at"`
 	UpdatedAt    time.Time `json:"updated_at"`
-	Name         string    `json:"name"`
-	Slug         string    `json:"slug"`
-	Description  *string   `json:"description"`
-	NumericValue int       `json:"numeric_value"`
-	MediumID     *int      `json:"medium_id"`
-	SpaceID      int       `json:"space_id"`
+	Name         string    `gorm:"column:name" json:"name"`
+	Slug         string    `gorm:"column:slug" json:"slug"`
+	Description  string    `gorm:"column:description" json:"description"`
+	NumericValue int       `gorm:"column:numeric_value" json:"numeric_value"`
+	MediumID     uint      `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
+	SpaceID      uint      `gorm:"column:space_id" json:"space_id"`
 }
 
 // RatingsPaging model

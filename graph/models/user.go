@@ -4,14 +4,14 @@ import "time"
 
 // User model
 type User struct {
-	ID        int       `json:"id"`
+	ID        uint      `gorm:"primary_key" json:"id"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
-	FirstName string    `json:"first_name"`
-	LastName  *string   `json:"last_name"`
-	Email     string    `json:"email"`
-	BirthDate *string   `json:"birth_date"`
-	Gender    *string   `json:"gender"`
+	Email     string    `gorm:"column:email;unique_index" json:"email"`
+	FirstName string    `gorm:"column:first_name" json:"first_name"`
+	LastName  string    `gorm:"column:last_name" json:"last_name"`
+	BirthDate string    `gorm:"column:birth_date" json:"birth_date"`
+	Gender    string    `gorm:"column:gender" json:"gender"`
 }
 
 // UsersPaging model

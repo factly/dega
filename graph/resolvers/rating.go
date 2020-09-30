@@ -12,12 +12,20 @@ import (
 	"github.com/factly/dega-api/util"
 )
 
+func (r *ratingResolver) ID(ctx context.Context, obj *models.Rating) (string, error) {
+	return fmt.Sprint(obj.ID), nil
+}
+
+func (r *ratingResolver) SpaceID(ctx context.Context, obj *models.Rating) (int, error) {
+	return int(obj.SpaceID), nil
+}
+
 func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
-	if obj.MediumID == nil {
+	if obj.MediumID == 0 {
 		return nil, nil
 	}
 
-	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(*obj.MediumID))
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
 func (r *queryResolver) Ratings(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
