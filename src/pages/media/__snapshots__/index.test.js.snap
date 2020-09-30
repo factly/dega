@@ -847,7 +847,7 @@ exports[`Media List component should render the component with data 1`] = `
                             style={Object {}}
                           >
                             <span
-                              className="ant-avatar ant-avatar-square ant-avatar-image"
+                              className="ant-avatar ant-avatar-square"
                               style={
                                 Object {
                                   "fontSize": 18,
@@ -857,9 +857,16 @@ exports[`Media List component should render the component with data 1`] = `
                                 }
                               }
                             >
-                              <img
-                                onError={[Function]}
-                                src="some-url"
+                              <span
+                                className="ant-avatar-string"
+                                style={
+                                  Object {
+                                    "WebkitTransform": "scale(1) translateX(-50%)",
+                                    "lineHeight": "174px",
+                                    "msTransform": "scale(1) translateX(-50%)",
+                                    "transform": "scale(1) translateX(-50%)",
+                                  }
+                                }
                               />
                             </span>
                           </td>

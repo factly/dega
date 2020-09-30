@@ -58,7 +58,8 @@ function UppyUploader({ onUpload }) {
     upload['slug'] = successful.response.body.key;
     upload['title'] = successful.meta.caption ? successful.meta.caption : '';
     upload['type'] = successful.meta.type;
-    upload['url'] = successful.uploadURL;
+    upload['url'] = {};
+    upload['url']['raw'] = successful.uploadURL;
 
     onUpload(upload);
   });

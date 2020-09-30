@@ -31,6 +31,7 @@ jest.mock('../../actions/posts', () => ({
   updatePost: jest.fn(),
   addPost: jest.fn(),
   publishPost: jest.fn(),
+  addTemplate: jest.fn(),
 }));
 
 let state = {
@@ -174,7 +175,7 @@ describe('Posts List component', () => {
         );
       });
 
-      wrapper.find(PostEditForm).props().onCreate({ status: 'Draft' });
+      wrapper.find(PostEditForm).props().onCreate({ status: 'draft' });
       setTimeout(() => {
         expect(actions.updatePost).toHaveBeenCalledWith({
           id: 1,
@@ -183,7 +184,7 @@ describe('Posts List component', () => {
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 1,
-          status: 'Draft',
+          status: 'draft',
         });
         expect(push).toHaveBeenCalledWith('/posts');
         done();
@@ -201,7 +202,7 @@ describe('Posts List component', () => {
         );
       });
 
-      wrapper.find(PostEditForm).props().onCreate({ status: 'Publish' });
+      wrapper.find(PostEditForm).props().onCreate({ status: 'publish' });
       setTimeout(() => {
         expect(actions.publishPost).toHaveBeenCalledWith({
           id: 1,
@@ -210,7 +211,28 @@ describe('Posts List component', () => {
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 1,
-          status: 'Publish',
+          status: 'publish',
+        });
+        expect(push).toHaveBeenCalledWith('/posts');
+        done();
+      }, 0);
+    });
+    it('should call addTemplate', (done) => {
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      actions.addTemplate.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditPost />
+          </Provider>,
+        );
+      });
+
+      wrapper.find(PostEditForm).props().onCreate({ status: 'template' });
+      setTimeout(() => {
+        expect(actions.addTemplate).toHaveBeenCalledWith({
+          post_id: 1,
         });
         expect(push).toHaveBeenCalledWith('/posts');
         done();

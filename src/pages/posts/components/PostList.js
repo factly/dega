@@ -6,6 +6,7 @@ import { getPosts, deletePost } from '../../../actions/posts';
 import { Link } from 'react-router-dom';
 import Selector from '../../../components/Selector';
 import deepEqual from 'deep-equal';
+import Template from '../../../components/Template';
 
 function PostList() {
   const dispatch = useDispatch();
@@ -30,7 +31,12 @@ function PostList() {
 
     if (node)
       return {
-        posts: node.data.map((element) => state.posts.details[element]),
+        posts: node.data.map((element) => {
+          const post = state.posts.details[element];
+
+          post.medium = state.media.details[post.featured_medium_id];
+          return post;
+        }),
         total: node.total,
         loading: state.posts.loading,
       };
@@ -59,6 +65,7 @@ function PostList() {
 
   return (
     <Space direction="vertical">
+      <Template />
       <Form
         initialValues={filters}
         form={form}
@@ -70,19 +77,19 @@ function PostList() {
         <Form.Item name="q" label="Search" style={{ width: '25%' }}>
           <Input placeholder="search posts" />
         </Form.Item>
-        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
+        <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
           <Select>
             <Option value="desc">Latest</Option>
             <Option value="asc">Old</Option>
           </Select>
         </Form.Item>
-        <Form.Item name="tags" label="tags" style={{ width: '15%' }}>
+        <Form.Item name="tags" label="Tags" style={{ width: '15%' }}>
           <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
         </Form.Item>
-        <Form.Item name="categories" label="categories" style={{ width: '15%' }}>
+        <Form.Item name="categories" label="Categories" style={{ width: '15%' }}>
           <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
         </Form.Item>
-        <Form.Item name="formats" label="formats" style={{ width: '15%' }}>
+        <Form.Item name="formats" label="Formats" style={{ width: '15%' }}>
           <Selector mode="multiple" action="Formats" placeholder="Filter Formats" />
         </Form.Item>
         <Form.Item>
@@ -123,7 +130,7 @@ function PostList() {
             ]}
             extra={
               item.medium ? (
-                <img width={272} alt={item.medium.alt_text} src={item.medium.url} />
+                <img width={272} alt={item.medium.alt_text} src={item.medium.url?.raw} />
               ) : null
             }
           >

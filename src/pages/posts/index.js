@@ -6,7 +6,7 @@ import PostList from './components/PostList';
 function Posts() {
   return (
     <Space direction="vertical">
-      <Link key="1" to="/posts/create">
+      <Link to="/posts/create">
         <Button>Create New</Button>
       </Link>
       <PostList />

@@ -27,6 +27,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../../actions/posts', () => ({
   getPosts: jest.fn(),
   addPost: jest.fn(),
+  publish: jest.fn(),
 }));
 
 describe('Post create component', () => {
@@ -122,9 +123,27 @@ describe('Post create component', () => {
           </Provider>,
         );
       });
-      wrapper.find(PostCreateForm).props().onCreate({ title: 'test', status: 'Draft' });
+      wrapper.find(PostCreateForm).props().onCreate({ title: 'test', status: 'draft' });
       setTimeout(() => {
-        expect(actions.addPost).toHaveBeenCalledWith({ title: 'test', status: 'Draft' });
+        expect(actions.addPost).toHaveBeenCalledWith({ title: 'test', status: 'draft' });
+        expect(push).toHaveBeenCalledWith('/posts');
+        done();
+      }, 0);
+    });
+    it('should call publish', (done) => {
+      actions.publish.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <CreatePost />
+          </Provider>,
+        );
+      });
+      wrapper.find(PostCreateForm).props().onCreate({ title: 'test', status: 'publish' });
+      setTimeout(() => {
+        expect(actions.publish).toHaveBeenCalledWith({ title: 'test', status: 'publish' });
         expect(push).toHaveBeenCalledWith('/posts');
         done();
       }, 0);

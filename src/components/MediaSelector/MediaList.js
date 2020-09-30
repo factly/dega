@@ -47,10 +47,20 @@ function MediaList({ onSelect, selected }) {
           <List.Item>
             {selected && item.id === selected.id ? (
               <Badge dot>
-                <Avatar onClick={() => onSelect(null)} shape="square" size={174} src={item.url} />
+                <Avatar
+                  onClick={() => onSelect(null)}
+                  shape="square"
+                  size={174}
+                  src={item.url?.raw}
+                />
               </Badge>
             ) : (
-              <Avatar onClick={() => onSelect(item)} shape="square" size={174} src={item.url} />
+              <Avatar
+                onClick={() => onSelect(item)}
+                shape="square"
+                size={174}
+                src={item.url?.raw}
+              />
             )}
           </List.Item>
         )}
