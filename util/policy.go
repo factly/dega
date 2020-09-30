@@ -10,7 +10,8 @@ import (
 	"github.com/factly/dega-server/config"
 )
 
-type ketoAllowed struct {
+// KetoAllowed is request object to check permissions of user
+type KetoAllowed struct {
 	Subject  string `json:"subject"`
 	Action   string `json:"action"`
 	Resource string `json:"resource"`
@@ -45,13 +46,13 @@ func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
 			kresource := fmt.Sprint("resources", commonString, entity)
 			kaction := fmt.Sprint("actions", commonString, entity, ":", action)
 
-			result := ketoAllowed{}
+			result := KetoAllowed{}
 
 			result.Action = kaction
 			result.Resource = kresource
 			result.Subject = fmt.Sprint(uID)
 
-			resStatus, err := getPolicies(result)
+			resStatus, err := IsAllowed(result)
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
@@ -74,13 +75,13 @@ func CheckSpaceKetoPermission(action string, oID, uID uint) error {
 	kresource := fmt.Sprint("resources", commonString)
 	kaction := fmt.Sprint("actions", commonString, ":", action)
 
-	result := ketoAllowed{}
+	result := KetoAllowed{}
 
 	result.Action = kaction
 	result.Resource = kresource
 	result.Subject = fmt.Sprint(uID)
 
-	resStatus, err := getPolicies(result)
+	resStatus, err := IsAllowed(result)
 	if err != nil {
 		return err
 	}
@@ -91,7 +92,8 @@ func CheckSpaceKetoPermission(action string, oID, uID uint) error {
 	return nil
 }
 
-func getPolicies(result ketoAllowed) (int, error) {
+// IsAllowed checks if keto policy allows user to action on resource
+func IsAllowed(result KetoAllowed) (int, error) {
 	buf := new(bytes.Buffer)
 
 	err := json.NewEncoder(buf).Encode(&result)

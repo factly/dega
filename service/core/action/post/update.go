@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -47,6 +48,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sID, err := util.GetSpace(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	oID, err := util.GetOrganisation(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -160,7 +175,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
+	updatedPost := model.Post{
 		Title:            post.Title,
 		Slug:             postSlug,
 		Subtitle:         post.Subtitle,
@@ -173,7 +188,29 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FeaturedMediumID: post.FeaturedMediumID,
 		Tags:             newTags,
 		Categories:       newCategories,
-	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
+	}
+
+	// Check if post status is changed back to draft from published
+	if result.Post.Status == "published" && post.Status == "draft" {
+		status, err := getPublishPermissions(oID, sID, uID)
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+
+		if status == http.StatusOK {
+			updatedPost.Status = "draft"
+			updatedPost.PublishedDate = time.Time{}
+		} else {
+			tx.Rollback()
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+	}
+
+	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -344,4 +381,24 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	tx.Commit()
 	renderx.JSON(w, http.StatusOK, result)
+}
+
+func getPublishPermissions(oID, sID, uID int) (int, error) {
+	commonString := fmt.Sprint(":org:", oID, ":app:dega:space:", sID, ":")
+
+	kresource := fmt.Sprint("resources", commonString, "posts")
+	kaction := fmt.Sprint("actions", commonString, "posts:publish")
+
+	result := util.KetoAllowed{}
+
+	result.Action = kaction
+	result.Resource = kresource
+	result.Subject = fmt.Sprint(uID)
+
+	resStatus, err := util.IsAllowed(result)
+	if err != nil {
+		return 0, err
+	}
+
+	return resStatus, nil
 }

@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
@@ -116,7 +117,7 @@ func TestPostUpdate(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
 
-		preUpdateMock(mock, updatePost, false)
+		preUpdateDraftMock(mock, updatePost, false)
 		mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
 			WithArgs(updatePost["description"], updatePost["excerpt"], updatePost["featured_medium_id"], updatePost["format_id"],
 				updatePost["is_highlighted"], updatePost["is_sticky"], updatePost["slug"], updatePost["subtitle"], updatePost["title"],
@@ -135,11 +136,86 @@ func TestPostUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("change post status back to draft", func(t *testing.T) {
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		preUpdatePublishedMock(mock, updatePost, false)
+		updatePublishedQueryMock(mock, updatePost, false)
+		updatePostClaimsMock(mock)
+		updatePostAuthorMock(mock)
+
+		mock.ExpectCommit()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusOK).JSON().Object().ContainsMap(postData)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("user does not have publish permission when changing post status back to draft", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+		gock.New(config.KetoURL).
+			Post("/engines/acp/ory/regex/allowed").
+			Reply(http.StatusOK)
+
+		gock.New(config.KetoURL).
+			Post("/engines/acp/ory/regex/allowed").
+			Reply(http.StatusForbidden)
+
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		postSelectPublishedWithSpace(mock)
+		preUpdateMock(mock, updatePost, false)
+
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusUnauthorized)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("keto down when changing post status back to draft", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+		gock.New(config.KetoURL).
+			Post("/engines/acp/ory/regex/allowed").
+			Reply(http.StatusOK)
+
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		postSelectPublishedWithSpace(mock)
+		preUpdateMock(mock, updatePost, false)
+
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	test.MockServer()
+
 	t.Run("deleting old post_claims fails", func(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
 
-		preUpdateMock(mock, updatePost, false)
+		preUpdateDraftMock(mock, updatePost, false)
 		updateQueryMock(mock, updatePost, false)
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
@@ -160,7 +236,7 @@ func TestPostUpdate(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
 
-		preUpdateMock(mock, updatePost, false)
+		preUpdateDraftMock(mock, updatePost, false)
 		updateQueryMock(mock, updatePost, false)
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
@@ -185,7 +261,7 @@ func TestPostUpdate(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
 
-		preUpdateMock(mock, updatePost, false)
+		preUpdateDraftMock(mock, updatePost, false)
 		updateQueryMock(mock, updatePost, false)
 		updatePostClaimsMock(mock)
 
@@ -208,7 +284,7 @@ func TestPostUpdate(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
 
-		preUpdateMock(mock, updatePost, false)
+		preUpdateDraftMock(mock, updatePost, false)
 		updateQueryMock(mock, updatePost, false)
 		updatePostClaimsMock(mock)
 

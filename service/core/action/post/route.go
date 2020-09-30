@@ -15,6 +15,7 @@ type post struct {
 	Slug             string         `json:"slug"`
 	Excerpt          string         `json:"excerpt"`
 	Description      postgres.Jsonb `json:"description"`
+	Status           string         `json:"status"`
 	IsFeatured       bool           `json:"is_featured"`
 	IsSticky         bool           `json:"is_sticky"`
 	IsHighlighted    bool           `json:"is_highlighted"`
