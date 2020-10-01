@@ -28,7 +28,16 @@ function Sidebar() {
     return null;
   }
 
-  const resource = ['dashboard', 'analytics', 'googleFactCheck', 'factly', 'posts', 'policies'];
+  const resource = [
+    'home',
+    'dashboard',
+    'analytics',
+    'googlefactcheck',
+    'factly',
+    'posts',
+    'policies',
+    'users',
+  ];
 
   permission.forEach((each) => {
     resource.push(each.resource);
@@ -55,7 +64,8 @@ function Sidebar() {
           return (
             <SubMenu key={index} title={menu.title} icon={<Icon />}>
               {menu.children.map((route, childIndex) => {
-                return resource.includes(route.resource) || resource.includes('admin') ? (
+                return resource.includes(route.title.toLowerCase()) ||
+                  resource.includes('admin') ? (
                   <Menu.Item key={`${index}.${childIndex}`}>
                     <Link to={route.path}>
                       <span>{route.title}</span>

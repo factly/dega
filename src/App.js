@@ -4,6 +4,7 @@ import 'antd/dist/antd.css';
 import BasicLayout from './layouts/basic';
 //Routes
 import routes from './config/routesConfig';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -11,9 +12,19 @@ function App() {
       <Router basename={process.env.PUBLIC_URL}>
         <BasicLayout>
           <Switch>
-            {Object.values(routes).map((route) => (
-              <Route key={route.path} exact path={route.path} component={route.Component} />
-            ))}
+            {Object.values(routes).map((route) =>
+              route.permission ? (
+                <ProtectedRoute
+                  key={route.path}
+                  permission={route.permission}
+                  exact
+                  path={route.path}
+                  component={route.Component}
+                />
+              ) : (
+                <Route key={route.path} exact path={route.path} component={route.Component} />
+              ),
+            )}
           </Switch>
         </BasicLayout>
       </Router>
