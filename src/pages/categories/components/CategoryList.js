@@ -8,19 +8,16 @@ import deepEqual from 'deep-equal';
 
 function CategoryList() {
   const dispatch = useDispatch();
-  const [page, setPage] = React.useState(1);
-  const [filters, setFilters] = React.useState();
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 5,
+  });
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const { categories, total, loading } = useSelector((state) => {
-    let query = {
-      page,
-      ...filters,
-    };
-
     const node = state.categories.req.find((item) => {
-      return deepEqual(item.query, query);
+      return deepEqual(item.query, filters);
     });
 
     if (node)
@@ -34,10 +31,10 @@ function CategoryList() {
 
   React.useEffect(() => {
     fetchCategories();
-  }, [page, filters]);
+  }, [filters]);
 
   const fetchCategories = () => {
-    dispatch(getCategories({ page: page, ...filters }));
+    dispatch(getCategories(filters));
   };
 
   const columns = [
@@ -91,12 +88,7 @@ function CategoryList() {
         form={form}
         name="filters"
         layout="inline"
-        onFinish={(values) =>
-          setFilters({
-            sort_by: values.sort,
-            q: values.q,
-          })
-        }
+        onFinish={(values) => setFilters({ ...filters, sort_by: values.sort, q: values.q })}
         style={{ maxWidth: '100%' }}
       >
         <Form.Item name="q" label="Search" style={{ width: '25%' }}>
@@ -122,9 +114,10 @@ function CategoryList() {
         rowKey={'id'}
         pagination={{
           total: total,
-          current: page,
-          pageSize: 5,
-          onChange: (pageNumber, pageSize) => setPage(pageNumber),
+          current: filters.page,
+          pageSize: filters.limit,
+          onChange: (pageNumber, pageSize) =>
+            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}
       />
     </Space>

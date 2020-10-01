@@ -31,6 +31,7 @@ let state = {
         total: 1,
         query: {
           page: 1,
+          limit: 5,
         },
       },
     ],
@@ -82,6 +83,7 @@ let state = {
         data: [1],
         query: {
           page: 1,
+          limit: 5,
         },
         total: 1,
       },
@@ -108,6 +110,7 @@ let state = {
         data: [1],
         query: {
           page: 1,
+          limit: 5,
         },
         total: 1,
       },
@@ -133,6 +136,7 @@ let state = {
         data: [1],
         query: {
           page: 1,
+          limit: 5,
         },
         total: 1,
       },
@@ -168,6 +172,7 @@ let state = {
         data: [1],
         query: {
           page: 1,
+          limit: 5,
         },
         total: 1,
       },
@@ -251,7 +256,7 @@ describe('Posts List component', () => {
 
       expect(mockedDispatch).toHaveBeenCalledTimes(5);
 
-      expect(getPosts).toHaveBeenCalledWith({ page: 1 });
+      expect(getPosts).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
   });
   describe('component testing', () => {
@@ -302,7 +307,7 @@ describe('Posts List component', () => {
 
       expect(deletePost).toHaveBeenCalled();
       expect(deletePost).toHaveBeenCalledWith(1);
-      expect(getPosts).toHaveBeenCalledWith({ page: 1 });
+      expect(getPosts).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
     it('should edit post', () => {
       store = mockStore(state);
@@ -417,6 +422,7 @@ describe('Posts List component', () => {
       setTimeout(() => {
         expect(getPosts).toHaveBeenCalledWith({
           page: 1,
+          limit: 5,
           q: 'fact check',
           tag: [1],
           category: [1],

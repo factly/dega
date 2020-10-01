@@ -84,6 +84,12 @@ exports[`Claims List component snapshot testing should match component when load
                       "validateFields": [Function],
                     }
                   }
+                  initialValues={
+                    Object {
+                      "limit": 5,
+                      "page": 1,
+                    }
+                  }
                   layout="inline"
                   name="filters"
                   onFinish={[Function]}
@@ -121,6 +127,12 @@ exports[`Claims List component snapshot testing should match component when load
                         }
                       }
                       id="filters"
+                      initialValues={
+                        Object {
+                          "limit": 5,
+                          "page": 1,
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -1297,25 +1309,13 @@ exports[`Claims List component snapshot testing should match component when load
                                                         <SelectTrigger
                                                           containerWidth={null}
                                                           dropdownClassName=""
-                                                          empty={false}
+                                                          empty={true}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
                                                               childrenAsData={true}
                                                               defaultActiveFirstOption={true}
-                                                              flattenOptions={
-                                                                Array [
-                                                                  Object {
-                                                                    "data": Object {
-                                                                      "children": "Whatsapp",
-                                                                      "key": "claimants1",
-                                                                      "value": 1,
-                                                                    },
-                                                                    "groupOption": false,
-                                                                    "key": "claimants1",
-                                                                  },
-                                                                ]
-                                                              }
+                                                              flattenOptions={Array []}
                                                               height={128}
                                                               id="rc_select_TEST_OR_SSR"
                                                               itemHeight={24}
@@ -1331,15 +1331,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                               onScroll={[Function]}
                                                               onSelect={[Function]}
                                                               onToggleOpen={[Function]}
-                                                              options={
-                                                                Array [
-                                                                  Object {
-                                                                    "children": "Whatsapp",
-                                                                    "key": "claimants1",
-                                                                    "value": 1,
-                                                                  },
-                                                                ]
-                                                              }
+                                                              options={Array []}
                                                               prefixCls="ant-select"
                                                               searchValue=""
                                                               values={Set {}}
@@ -1432,19 +1424,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                                 <ForwardRef(OptionList)
                                                                   childrenAsData={true}
                                                                   defaultActiveFirstOption={true}
-                                                                  flattenOptions={
-                                                                    Array [
-                                                                      Object {
-                                                                        "data": Object {
-                                                                          "children": "Whatsapp",
-                                                                          "key": "claimants1",
-                                                                          "value": 1,
-                                                                        },
-                                                                        "groupOption": false,
-                                                                        "key": "claimants1",
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  flattenOptions={Array []}
                                                                   height={128}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   itemHeight={24}
@@ -1460,15 +1440,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                                   onScroll={[Function]}
                                                                   onSelect={[Function]}
                                                                   onToggleOpen={[Function]}
-                                                                  options={
-                                                                    Array [
-                                                                      Object {
-                                                                        "children": "Whatsapp",
-                                                                        "key": "claimants1",
-                                                                        "value": 1,
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  options={Array []}
                                                                   prefixCls="ant-select"
                                                                   searchValue=""
                                                                   values={Set {}}
@@ -1477,7 +1449,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                               </div>
                                                             }
                                                             popupAlign={Object {}}
-                                                            popupClassName=""
+                                                            popupClassName="ant-select-dropdown-empty"
                                                             popupPlacement="bottomLeft"
                                                             popupStyle={
                                                               Object {
@@ -1991,25 +1963,13 @@ exports[`Claims List component snapshot testing should match component when load
                                                         <SelectTrigger
                                                           containerWidth={null}
                                                           dropdownClassName=""
-                                                          empty={false}
+                                                          empty={true}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
                                                               childrenAsData={true}
                                                               defaultActiveFirstOption={true}
-                                                              flattenOptions={
-                                                                Array [
-                                                                  Object {
-                                                                    "data": Object {
-                                                                      "children": "True",
-                                                                      "key": "ratings1",
-                                                                      "value": 1,
-                                                                    },
-                                                                    "groupOption": false,
-                                                                    "key": "ratings1",
-                                                                  },
-                                                                ]
-                                                              }
+                                                              flattenOptions={Array []}
                                                               height={128}
                                                               id="rc_select_TEST_OR_SSR"
                                                               itemHeight={24}
@@ -2025,15 +1985,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                               onScroll={[Function]}
                                                               onSelect={[Function]}
                                                               onToggleOpen={[Function]}
-                                                              options={
-                                                                Array [
-                                                                  Object {
-                                                                    "children": "True",
-                                                                    "key": "ratings1",
-                                                                    "value": 1,
-                                                                  },
-                                                                ]
-                                                              }
+                                                              options={Array []}
                                                               prefixCls="ant-select"
                                                               searchValue=""
                                                               values={Set {}}
@@ -2126,19 +2078,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                                 <ForwardRef(OptionList)
                                                                   childrenAsData={true}
                                                                   defaultActiveFirstOption={true}
-                                                                  flattenOptions={
-                                                                    Array [
-                                                                      Object {
-                                                                        "data": Object {
-                                                                          "children": "True",
-                                                                          "key": "ratings1",
-                                                                          "value": 1,
-                                                                        },
-                                                                        "groupOption": false,
-                                                                        "key": "ratings1",
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  flattenOptions={Array []}
                                                                   height={128}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   itemHeight={24}
@@ -2154,15 +2094,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                                   onScroll={[Function]}
                                                                   onSelect={[Function]}
                                                                   onToggleOpen={[Function]}
-                                                                  options={
-                                                                    Array [
-                                                                      Object {
-                                                                        "children": "True",
-                                                                        "key": "ratings1",
-                                                                        "value": 1,
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  options={Array []}
                                                                   prefixCls="ant-select"
                                                                   searchValue=""
                                                                   values={Set {}}
@@ -2171,7 +2103,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                               </div>
                                                             }
                                                             popupAlign={Object {}}
-                                                            popupClassName=""
+                                                            popupClassName="ant-select-dropdown-empty"
                                                             popupPlacement="bottomLeft"
                                                             popupStyle={
                                                               Object {
@@ -5347,6 +5279,12 @@ exports[`Claims List component snapshot testing should match component with clai
                       "validateFields": [Function],
                     }
                   }
+                  initialValues={
+                    Object {
+                      "limit": 5,
+                      "page": 1,
+                    }
+                  }
                   layout="inline"
                   name="filters"
                   onFinish={[Function]}
@@ -5384,6 +5322,12 @@ exports[`Claims List component snapshot testing should match component with clai
                         }
                       }
                       id="filters"
+                      initialValues={
+                        Object {
+                          "limit": 5,
+                          "page": 1,
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -6560,25 +6504,13 @@ exports[`Claims List component snapshot testing should match component with clai
                                                         <SelectTrigger
                                                           containerWidth={null}
                                                           dropdownClassName=""
-                                                          empty={false}
+                                                          empty={true}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
                                                               childrenAsData={true}
                                                               defaultActiveFirstOption={true}
-                                                              flattenOptions={
-                                                                Array [
-                                                                  Object {
-                                                                    "data": Object {
-                                                                      "children": "Whatsapp",
-                                                                      "key": "claimants1",
-                                                                      "value": 1,
-                                                                    },
-                                                                    "groupOption": false,
-                                                                    "key": "claimants1",
-                                                                  },
-                                                                ]
-                                                              }
+                                                              flattenOptions={Array []}
                                                               height={128}
                                                               id="rc_select_TEST_OR_SSR"
                                                               itemHeight={24}
@@ -6594,15 +6526,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                               onScroll={[Function]}
                                                               onSelect={[Function]}
                                                               onToggleOpen={[Function]}
-                                                              options={
-                                                                Array [
-                                                                  Object {
-                                                                    "children": "Whatsapp",
-                                                                    "key": "claimants1",
-                                                                    "value": 1,
-                                                                  },
-                                                                ]
-                                                              }
+                                                              options={Array []}
                                                               prefixCls="ant-select"
                                                               searchValue=""
                                                               values={Set {}}
@@ -6695,19 +6619,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                                 <ForwardRef(OptionList)
                                                                   childrenAsData={true}
                                                                   defaultActiveFirstOption={true}
-                                                                  flattenOptions={
-                                                                    Array [
-                                                                      Object {
-                                                                        "data": Object {
-                                                                          "children": "Whatsapp",
-                                                                          "key": "claimants1",
-                                                                          "value": 1,
-                                                                        },
-                                                                        "groupOption": false,
-                                                                        "key": "claimants1",
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  flattenOptions={Array []}
                                                                   height={128}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   itemHeight={24}
@@ -6723,15 +6635,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                                   onScroll={[Function]}
                                                                   onSelect={[Function]}
                                                                   onToggleOpen={[Function]}
-                                                                  options={
-                                                                    Array [
-                                                                      Object {
-                                                                        "children": "Whatsapp",
-                                                                        "key": "claimants1",
-                                                                        "value": 1,
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  options={Array []}
                                                                   prefixCls="ant-select"
                                                                   searchValue=""
                                                                   values={Set {}}
@@ -6740,7 +6644,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                               </div>
                                                             }
                                                             popupAlign={Object {}}
-                                                            popupClassName=""
+                                                            popupClassName="ant-select-dropdown-empty"
                                                             popupPlacement="bottomLeft"
                                                             popupStyle={
                                                               Object {
@@ -7254,25 +7158,13 @@ exports[`Claims List component snapshot testing should match component with clai
                                                         <SelectTrigger
                                                           containerWidth={null}
                                                           dropdownClassName=""
-                                                          empty={false}
+                                                          empty={true}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
                                                               childrenAsData={true}
                                                               defaultActiveFirstOption={true}
-                                                              flattenOptions={
-                                                                Array [
-                                                                  Object {
-                                                                    "data": Object {
-                                                                      "children": "True",
-                                                                      "key": "ratings1",
-                                                                      "value": 1,
-                                                                    },
-                                                                    "groupOption": false,
-                                                                    "key": "ratings1",
-                                                                  },
-                                                                ]
-                                                              }
+                                                              flattenOptions={Array []}
                                                               height={128}
                                                               id="rc_select_TEST_OR_SSR"
                                                               itemHeight={24}
@@ -7288,15 +7180,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                               onScroll={[Function]}
                                                               onSelect={[Function]}
                                                               onToggleOpen={[Function]}
-                                                              options={
-                                                                Array [
-                                                                  Object {
-                                                                    "children": "True",
-                                                                    "key": "ratings1",
-                                                                    "value": 1,
-                                                                  },
-                                                                ]
-                                                              }
+                                                              options={Array []}
                                                               prefixCls="ant-select"
                                                               searchValue=""
                                                               values={Set {}}
@@ -7389,19 +7273,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                                 <ForwardRef(OptionList)
                                                                   childrenAsData={true}
                                                                   defaultActiveFirstOption={true}
-                                                                  flattenOptions={
-                                                                    Array [
-                                                                      Object {
-                                                                        "data": Object {
-                                                                          "children": "True",
-                                                                          "key": "ratings1",
-                                                                          "value": 1,
-                                                                        },
-                                                                        "groupOption": false,
-                                                                        "key": "ratings1",
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  flattenOptions={Array []}
                                                                   height={128}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   itemHeight={24}
@@ -7417,15 +7289,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                                   onScroll={[Function]}
                                                                   onSelect={[Function]}
                                                                   onToggleOpen={[Function]}
-                                                                  options={
-                                                                    Array [
-                                                                      Object {
-                                                                        "children": "True",
-                                                                        "key": "ratings1",
-                                                                        "value": 1,
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  options={Array []}
                                                                   prefixCls="ant-select"
                                                                   searchValue=""
                                                                   values={Set {}}
@@ -7434,7 +7298,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                               </div>
                                                             }
                                                             popupAlign={Object {}}
-                                                            popupClassName=""
+                                                            popupClassName="ant-select-dropdown-empty"
                                                             popupPlacement="bottomLeft"
                                                             popupStyle={
                                                               Object {
@@ -10586,6 +10450,12 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                       "validateFields": [Function],
                     }
                   }
+                  initialValues={
+                    Object {
+                      "limit": 5,
+                      "page": 1,
+                    }
+                  }
                   layout="inline"
                   name="filters"
                   onFinish={[Function]}
@@ -10623,6 +10493,12 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                         }
                       }
                       id="filters"
+                      initialValues={
+                        Object {
+                          "limit": 5,
+                          "page": 1,
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -11799,25 +11675,13 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                         <SelectTrigger
                                                           containerWidth={null}
                                                           dropdownClassName=""
-                                                          empty={false}
+                                                          empty={true}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
                                                               childrenAsData={true}
                                                               defaultActiveFirstOption={true}
-                                                              flattenOptions={
-                                                                Array [
-                                                                  Object {
-                                                                    "data": Object {
-                                                                      "children": "Whatsapp",
-                                                                      "key": "claimants1",
-                                                                      "value": 1,
-                                                                    },
-                                                                    "groupOption": false,
-                                                                    "key": "claimants1",
-                                                                  },
-                                                                ]
-                                                              }
+                                                              flattenOptions={Array []}
                                                               height={128}
                                                               id="rc_select_TEST_OR_SSR"
                                                               itemHeight={24}
@@ -11833,15 +11697,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                               onScroll={[Function]}
                                                               onSelect={[Function]}
                                                               onToggleOpen={[Function]}
-                                                              options={
-                                                                Array [
-                                                                  Object {
-                                                                    "children": "Whatsapp",
-                                                                    "key": "claimants1",
-                                                                    "value": 1,
-                                                                  },
-                                                                ]
-                                                              }
+                                                              options={Array []}
                                                               prefixCls="ant-select"
                                                               searchValue=""
                                                               values={Set {}}
@@ -11934,19 +11790,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                 <ForwardRef(OptionList)
                                                                   childrenAsData={true}
                                                                   defaultActiveFirstOption={true}
-                                                                  flattenOptions={
-                                                                    Array [
-                                                                      Object {
-                                                                        "data": Object {
-                                                                          "children": "Whatsapp",
-                                                                          "key": "claimants1",
-                                                                          "value": 1,
-                                                                        },
-                                                                        "groupOption": false,
-                                                                        "key": "claimants1",
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  flattenOptions={Array []}
                                                                   height={128}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   itemHeight={24}
@@ -11962,15 +11806,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                   onScroll={[Function]}
                                                                   onSelect={[Function]}
                                                                   onToggleOpen={[Function]}
-                                                                  options={
-                                                                    Array [
-                                                                      Object {
-                                                                        "children": "Whatsapp",
-                                                                        "key": "claimants1",
-                                                                        "value": 1,
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  options={Array []}
                                                                   prefixCls="ant-select"
                                                                   searchValue=""
                                                                   values={Set {}}
@@ -11979,7 +11815,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                               </div>
                                                             }
                                                             popupAlign={Object {}}
-                                                            popupClassName=""
+                                                            popupClassName="ant-select-dropdown-empty"
                                                             popupPlacement="bottomLeft"
                                                             popupStyle={
                                                               Object {
@@ -12493,25 +12329,13 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                         <SelectTrigger
                                                           containerWidth={null}
                                                           dropdownClassName=""
-                                                          empty={false}
+                                                          empty={true}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
                                                               childrenAsData={true}
                                                               defaultActiveFirstOption={true}
-                                                              flattenOptions={
-                                                                Array [
-                                                                  Object {
-                                                                    "data": Object {
-                                                                      "children": "True",
-                                                                      "key": "ratings1",
-                                                                      "value": 1,
-                                                                    },
-                                                                    "groupOption": false,
-                                                                    "key": "ratings1",
-                                                                  },
-                                                                ]
-                                                              }
+                                                              flattenOptions={Array []}
                                                               height={128}
                                                               id="rc_select_TEST_OR_SSR"
                                                               itemHeight={24}
@@ -12527,15 +12351,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                               onScroll={[Function]}
                                                               onSelect={[Function]}
                                                               onToggleOpen={[Function]}
-                                                              options={
-                                                                Array [
-                                                                  Object {
-                                                                    "children": "True",
-                                                                    "key": "ratings1",
-                                                                    "value": 1,
-                                                                  },
-                                                                ]
-                                                              }
+                                                              options={Array []}
                                                               prefixCls="ant-select"
                                                               searchValue=""
                                                               values={Set {}}
@@ -12628,19 +12444,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                 <ForwardRef(OptionList)
                                                                   childrenAsData={true}
                                                                   defaultActiveFirstOption={true}
-                                                                  flattenOptions={
-                                                                    Array [
-                                                                      Object {
-                                                                        "data": Object {
-                                                                          "children": "True",
-                                                                          "key": "ratings1",
-                                                                          "value": 1,
-                                                                        },
-                                                                        "groupOption": false,
-                                                                        "key": "ratings1",
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  flattenOptions={Array []}
                                                                   height={128}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   itemHeight={24}
@@ -12656,15 +12460,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                   onScroll={[Function]}
                                                                   onSelect={[Function]}
                                                                   onToggleOpen={[Function]}
-                                                                  options={
-                                                                    Array [
-                                                                      Object {
-                                                                        "children": "True",
-                                                                        "key": "ratings1",
-                                                                        "value": 1,
-                                                                      },
-                                                                    ]
-                                                                  }
+                                                                  options={Array []}
                                                                   prefixCls="ant-select"
                                                                   searchValue=""
                                                                   values={Set {}}
@@ -12673,7 +12469,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                               </div>
                                                             }
                                                             popupAlign={Object {}}
-                                                            popupClassName=""
+                                                            popupClassName="ant-select-dropdown-empty"
                                                             popupPlacement="bottomLeft"
                                                             popupStyle={
                                                               Object {

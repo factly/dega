@@ -84,6 +84,12 @@ exports[`Categories List component snapshot testing should match component when 
                       "validateFields": [Function],
                     }
                   }
+                  initialValues={
+                    Object {
+                      "limit": 5,
+                      "page": 1,
+                    }
+                  }
                   layout="inline"
                   name="filters"
                   onFinish={[Function]}
@@ -121,6 +127,12 @@ exports[`Categories List component snapshot testing should match component when 
                         }
                       }
                       id="filters"
+                      initialValues={
+                        Object {
+                          "limit": 5,
+                          "page": 1,
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -4908,6 +4920,12 @@ exports[`Categories List component snapshot testing should match component with 
                       "validateFields": [Function],
                     }
                   }
+                  initialValues={
+                    Object {
+                      "limit": 5,
+                      "page": 1,
+                    }
+                  }
                   layout="inline"
                   name="filters"
                   onFinish={[Function]}
@@ -4945,6 +4963,12 @@ exports[`Categories List component snapshot testing should match component with 
                         }
                       }
                       id="filters"
+                      initialValues={
+                        Object {
+                          "limit": 5,
+                          "page": 1,
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -9708,6 +9732,12 @@ exports[`Categories List component snapshot testing should render the component 
                       "validateFields": [Function],
                     }
                   }
+                  initialValues={
+                    Object {
+                      "limit": 5,
+                      "page": 1,
+                    }
+                  }
                   layout="inline"
                   name="filters"
                   onFinish={[Function]}
@@ -9745,6 +9775,12 @@ exports[`Categories List component snapshot testing should render the component 
                         }
                       }
                       id="filters"
+                      initialValues={
+                        Object {
+                          "limit": 5,
+                          "page": 1,
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}

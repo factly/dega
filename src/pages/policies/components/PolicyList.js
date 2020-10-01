@@ -4,22 +4,35 @@ import { Popconfirm, Button, Typography, Table, Avatar, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies, deletePolicy } from '../../../actions/policies';
 import { Link } from 'react-router-dom';
-import { entitySelector } from '../../../selectors';
+import deepEqual from 'deep-equal';
 
 function PolicyList() {
   const dispatch = useDispatch();
-  const [page, setPage] = React.useState(1);
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 5,
+  });
 
-  const { policies, total, loading } = useSelector((state) =>
-    entitySelector(state, page, 'policies'),
-  );
+  const { policies, total, loading } = useSelector((state) => {
+    const node = state.policies.req.find((item) => {
+      return deepEqual(item.query, filters);
+    });
+
+    if (node)
+      return {
+        policies: node.data.map((element) => state.policies.details[element]),
+        total: node.total,
+        loading: state.policies.loading,
+      };
+    return { policies: [], total: 0, loading: state.policies.loading };
+  });
 
   React.useEffect(() => {
     fetchPolicies();
-  }, [page]);
+  }, [filters]);
 
   const fetchPolicies = () => {
-    dispatch(getPolicies({ page: page }));
+    dispatch(getPolicies(filters));
   };
 
   const columns = [
@@ -91,9 +104,9 @@ function PolicyList() {
       rowKey={'name'}
       pagination={{
         total: total,
-        current: page,
-        pageSize: 5,
-        onChange: (pageNumber, pageSize) => setPage(pageNumber),
+        current: filters.page,
+        pageSize: filters.limit,
+        onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
       }}
     />
   );

@@ -3,22 +3,34 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link } from 'react-router-dom';
-import { entitySelector } from '../../../selectors';
+import deepEqual from 'deep-equal';
 
 function FormatList() {
   const dispatch = useDispatch();
-  const [page, setPage] = React.useState(1);
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 5,
+  });
+  const { formats, total, loading } = useSelector((state) => {
+    const node = state.formats.req.find((item) => {
+      return deepEqual(item.query, filters);
+    });
 
-  const { formats, total, loading } = useSelector((state) =>
-    entitySelector(state, page, 'formats'),
-  );
+    if (node)
+      return {
+        formats: node.data.map((element) => state.formats.details[element]),
+        total: node.total,
+        loading: state.formats.loading,
+      };
+    return { formats: [], total: 0, loading: state.formats.loading };
+  });
 
   React.useEffect(() => {
     fetchFormats();
-  }, [page]);
+  }, [filters]);
 
   const fetchFormats = () => {
-    dispatch(getFormats({ page: page }));
+    dispatch(getFormats(filters));
   };
 
   const columns = [
@@ -73,9 +85,9 @@ function FormatList() {
       rowKey={'id'}
       pagination={{
         total: total,
-        current: page,
-        pageSize: 5,
-        onChange: (pageNumber, pageSize) => setPage(pageNumber),
+        current: filters.page,
+        pageSize: filters.limit,
+        onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
       }}
     />
   );

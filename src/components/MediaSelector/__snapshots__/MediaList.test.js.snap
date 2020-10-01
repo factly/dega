@@ -117,7 +117,7 @@ exports[`Media List component snapshot testing should match component with data 
                 Object {
                   "current": 1,
                   "onChange": [Function],
-                  "pageSize": 5,
+                  "pageSize": 8,
                   "total": undefined,
                 }
               }
@@ -265,7 +265,7 @@ exports[`Media List component snapshot testing should match component with data 
                     current={1}
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
-                    pageSize={5}
+                    pageSize={8}
                   >
                     <LocaleReceiver
                       componentName="Pagination"
@@ -352,7 +352,7 @@ exports[`Media List component snapshot testing should match component with data 
                         }
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
-                        pageSize={5}
+                        pageSize={8}
                         prefixCls="ant-pagination"
                         prevIcon={
                           <button
@@ -612,7 +612,7 @@ exports[`Media List component snapshot testing should match component with data 
                                 "prev_page": "Previous Page",
                               }
                             }
-                            pageSize={5}
+                            pageSize={8}
                             pageSizeOptions={
                               Array [
                                 "10",
@@ -741,7 +741,7 @@ exports[`Media List component snapshot testing should render the component with 
                 Object {
                   "current": 1,
                   "onChange": [Function],
-                  "pageSize": 5,
+                  "pageSize": 8,
                   "total": 0,
                 }
               }
@@ -832,7 +832,7 @@ exports[`Media List component snapshot testing should render the component with 
                     current={0}
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
-                    pageSize={5}
+                    pageSize={8}
                     total={0}
                   >
                     <LocaleReceiver
@@ -920,7 +920,7 @@ exports[`Media List component snapshot testing should render the component with 
                         }
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
-                        pageSize={5}
+                        pageSize={8}
                         prefixCls="ant-pagination"
                         prevIcon={
                           <button
@@ -1180,7 +1180,7 @@ exports[`Media List component snapshot testing should render the component with 
                                 "prev_page": "Previous Page",
                               }
                             }
-                            pageSize={5}
+                            pageSize={8}
                             pageSizeOptions={
                               Array [
                                 "10",

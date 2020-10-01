@@ -9,7 +9,7 @@ function MediumList() {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
-    limit: 10,
+    limit: 5,
   });
   const [form] = Form.useForm();
   const { Option } = Select;
@@ -130,7 +130,7 @@ function MediumList() {
         pagination={{
           total: total,
           current: filters.page,
-          pageSize: 10,
+          pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}

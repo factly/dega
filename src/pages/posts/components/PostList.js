@@ -14,19 +14,14 @@ function PostList() {
   const { Option } = Select;
   const [form] = Form.useForm();
 
-  const [page, setPage] = React.useState(1);
-
-  const [filters, setFilters] = React.useState();
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 5,
+  });
 
   const { posts, total, loading } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
-      let query = {
-        page,
-      };
-      if (filters) {
-        query = { ...query, ...filters };
-      }
-      return deepEqual(item.query, query);
+      return deepEqual(item.query, filters);
     });
 
     if (node)
@@ -45,10 +40,10 @@ function PostList() {
 
   React.useEffect(() => {
     fetchPosts();
-  }, [page, filters]);
+  }, [filters]);
 
   const fetchPosts = () => {
-    dispatch(getPosts({ page: page, ...filters }));
+    dispatch(getPosts(filters));
   };
 
   const onSave = (values) => {
@@ -60,7 +55,7 @@ function PostList() {
       q: values.q,
     };
 
-    setFilters(filterValue);
+    setFilters({ ...filters, ...filterValue });
   };
 
   return (
@@ -106,9 +101,10 @@ function PostList() {
         dataSource={posts}
         pagination={{
           total: total,
-          current: page,
-          pageSize: 5,
-          onChange: (pageNumber, pageSize) => setPage(pageNumber),
+          current: filters.page,
+          pageSize: filters.limit,
+          onChange: (pageNumber, pageSize) =>
+            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}
         renderItem={(item) => (
           <List.Item

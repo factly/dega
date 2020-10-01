@@ -32,7 +32,7 @@ let state = {
         data: [1],
         query: {
           page: 1,
-          limit: 10,
+          limit: 5,
         },
         total: 1,
       },
@@ -104,7 +104,7 @@ describe('Media List component', () => {
       expect(tree).toMatchSnapshot();
 
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 10 });
+      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
   });
   describe('component testing', () => {
@@ -153,7 +153,7 @@ describe('Media List component', () => {
         .simulate('click');
       expect(actions.deleteMedium).toHaveBeenCalled();
       expect(actions.deleteMedium).toHaveBeenCalledWith(1);
-      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 10 });
+      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
     it('should edit medium', () => {
       store = mockStore(state);
@@ -223,6 +223,7 @@ describe('Media List component', () => {
       setTimeout(() => {
         expect(getPosts).toHaveBeenCalledWith({
           page: 1,
+          limit: 5,
           q: 'tag',
         });
       }, 0);

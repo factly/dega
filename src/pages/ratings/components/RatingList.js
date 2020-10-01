@@ -4,22 +4,35 @@ import { Popconfirm, Button, Typography, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRatings, deleteRating } from '../../../actions/ratings';
 import { Link } from 'react-router-dom';
-import { entitySelector } from '../../../selectors';
+import deepEqual from 'deep-equal';
 
 function RatingList() {
   const dispatch = useDispatch();
-  const [page, setPage] = React.useState(1);
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 5,
+  });
 
-  const { ratings, total, loading } = useSelector((state) =>
-    entitySelector(state, page, 'ratings'),
-  );
+  const { ratings, total, loading } = useSelector((state) => {
+    const node = state.ratings.req.find((item) => {
+      return deepEqual(item.query, filters);
+    });
+
+    if (node)
+      return {
+        ratings: node.data.map((element) => state.ratings.details[element]),
+        total: node.total,
+        loading: state.ratings.loading,
+      };
+    return { ratings: [], total: 0, loading: state.ratings.loading };
+  });
 
   React.useEffect(() => {
     fetchRatings();
-  }, [page]);
+  }, [filters]);
 
   const fetchRatings = () => {
-    dispatch(getRatings({ page: page }));
+    dispatch(getRatings(filters));
   };
 
   const columns = [
@@ -75,9 +88,9 @@ function RatingList() {
       rowKey={'id'}
       pagination={{
         total: total,
-        current: page,
-        pageSize: 5,
-        onChange: (pageNumber, pageSize) => setPage(pageNumber),
+        current: filters.page,
+        pageSize: filters.limit,
+        onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
       }}
     />
   );
