@@ -72,196 +72,293 @@ const routes = {
     path: '/',
     Component: Dashboard, // component is empty for now
     title: 'Home',
-    resource: 'dashboard',
   },
   analytics: {
     path: '/analytics',
     Component: Dashboard, // component is empty for now
     title: 'Analytics',
-    resource: 'analytics',
   },
   spaces: {
     path: '/spaces',
     Component: Spaces,
     title: 'Spaces',
-    resource: 'spaces',
   },
   createSpace: {
     path: '/spaces/create',
     Component: CreateSpace,
     title: 'Create Space',
+    permission: {
+      resource: 'spaces',
+      action: 'create',
+    },
   },
   editSpace: {
     path: '/spaces/:id/edit',
     Component: EditSpace,
     title: 'Edit Space',
+    permission: {
+      resource: 'spaces',
+      action: 'edit',
+    },
   },
   categories: {
     path: '/categories',
     Component: Categories,
     title: 'Categories',
-    resource: 'categories',
+    permission: {
+      resource: 'categories',
+      action: 'get',
+    },
   },
   createCategory: {
     path: '/categories/create',
     Component: CreateCategory,
     title: 'Create Category',
+    permission: {
+      resource: 'categories',
+      action: 'create',
+    },
   },
   editCategory: {
     path: '/categories/:id/edit',
     Component: EditCategory,
     title: 'Edit Category',
+    permission: {
+      resource: 'categories',
+      action: 'edit',
+    },
   },
   policies: {
     path: '/policies',
     Component: Policies,
     title: 'Policies',
-    resource: 'policies',
   },
   createPolicy: {
     path: '/policies/create',
     Component: CreatePolicy,
     title: 'Create Policies',
+    permission: {
+      resource: 'policies',
+      action: 'create',
+    },
   },
   editPolicy: {
     path: '/policies/:id/edit',
     Component: EditPolicy,
     title: 'Edit Policies',
+    permission: {
+      resource: 'policies',
+      action: 'edit',
+    },
   },
   formats: {
     path: '/formats',
     Component: Formats,
     title: 'Formats',
-    resource: 'formats',
+    permission: {
+      resource: 'formats',
+      action: 'get',
+    },
   },
   createFormat: {
     path: '/formats/create',
     Component: CreateFormat,
     title: 'Create Format',
+    permission: {
+      resource: 'formats',
+      action: 'create',
+    },
   },
   editFormat: {
     path: '/formats/:id/edit',
     Component: EditFormat,
     title: 'Edit Format',
+    permission: {
+      resource: 'formats',
+      action: 'edit',
+    },
   },
   tags: {
     path: '/tags',
     Component: Tags,
     title: 'Tags',
-    resource: 'tags',
+    permission: {
+      resource: 'tags',
+      action: 'get',
+    },
   },
   createTag: {
     path: '/tags/create',
     Component: CreateTag,
     title: 'Create Tag',
+    permission: {
+      resource: 'tags',
+      action: 'create',
+    },
   },
   editTag: {
     path: '/tags/:id/edit',
     Component: EditTag,
     title: 'Edit Tag',
+    permission: {
+      resource: 'tags',
+      action: 'edit',
+    },
   },
   media: {
     path: '/media',
     Component: Media,
     title: 'Media',
-    resource: 'media',
+    permission: {
+      resource: 'media',
+      action: 'get',
+    },
   },
   createMedia: {
     path: '/media/upload',
     Component: UploadMedium,
     title: 'Medium Upload',
+    permission: {
+      resource: 'media',
+      action: 'create',
+    },
   },
   editMedium: {
     path: '/media/:id/edit',
     Component: EditMedium,
     title: 'Edit Media',
+    permission: {
+      resource: 'media',
+      action: 'edit',
+    },
   },
   posts: {
     path: '/posts',
     Component: Posts,
     title: 'Posts',
-    resource: 'posts',
   },
   createPost: {
     path: '/posts/create',
     Component: CreatePost,
     title: 'Add Posts',
+    permission: {
+      resource: 'posts',
+      action: 'create',
+    },
   },
   editPost: {
     path: '/posts/:id/edit',
     Component: EditPost,
     title: 'Edit Post',
+    permission: {
+      resource: 'posts',
+      action: 'edit',
+    },
   },
   ratings: {
     path: '/ratings',
     Component: Ratings,
     title: 'Ratings',
-    resource: 'ratings',
+    permission: {
+      resource: 'ratings',
+      action: 'get',
+    },
   },
   createRating: {
     path: '/ratings/create',
     Component: CreateRating,
     title: 'Create Rating',
+    permission: {
+      resource: 'ratings',
+      action: 'create',
+    },
   },
   editRating: {
     path: '/ratings/:id/edit',
     Component: EditRating,
     title: 'Edit Rating',
+    permission: {
+      resource: 'ratings',
+      action: 'edit',
+    },
   },
   claimants: {
     path: '/claimants',
     Component: Claimants,
     title: 'Claimants',
-    resource: 'claimants',
+    permission: {
+      resource: 'claimants',
+      action: 'get',
+    },
   },
   createClaimant: {
     path: '/claimants/create',
     Component: CreateClaimant,
     title: 'Create Claimant',
+    permission: {
+      resource: 'claimants',
+      action: 'create',
+    },
   },
   editClaimant: {
     path: '/claimants/:id/edit',
     Component: EditClaimant,
     title: 'Edit Claimant',
+    permission: {
+      resource: 'claimants',
+      action: 'edit',
+    },
   },
   claims: {
     path: '/claims',
     Component: Claims,
     title: 'Claims',
-    resource: 'claims',
+    permission: {
+      resource: 'claims',
+      action: 'get',
+    },
   },
   createClaim: {
     path: '/claims/create',
     Component: CreateClaim,
     title: 'Create Claim',
+    permission: {
+      resource: 'claims',
+      action: 'create',
+    },
   },
   editClaim: {
     path: '/claims/:id/edit',
     Component: EditClaim,
     title: 'Edit Claim',
+    permission: {
+      action: 'edit',
+      resource: 'claims',
+    },
   },
   googleFactCheck: {
     path: '/fact-check/google',
     Component: GoogleFactCheck,
     title: 'Google',
-    resource: 'googleFactCheck',
   },
   factly: {
     path: '/fact-check/factly',
     Component: Factly,
     title: 'Factly',
-    resource: 'factly',
   },
   users: {
     path: '/users',
     Component: Users,
     title: 'Users',
-    resource: 'users',
   },
   usersPermission: {
     path: '/users/:id/permissions',
     Component: PermissionList,
     title: 'Users Permission ',
+    permission: {
+      resource: 'users',
+      action: 'get',
+    },
   },
 };
 
