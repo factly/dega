@@ -1186,6 +1186,37 @@ paths:
       summary: Update a format by id
       tags:
       - Format
+  /core/formats/default:
+    post:
+      description: Create Default Formats
+      operationId: add-default-formats
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Format'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create Default Formats
+      tags:
+      - Format
   /core/media:
     get:
       description: Get all media
@@ -2491,6 +2522,37 @@ paths:
           schema:
             $ref: '#/definitions/model.Rating'
       summary: Update a rating by id
+      tags:
+      - Rating
+  /fact-check/ratings/default:
+    post:
+      description: Create Default Ratings
+      operationId: add-default-ratings
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Format'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create Default Ratings
       tags:
       - Rating
 swagger: "2.0"

@@ -22,6 +22,7 @@ func Router() chi.Router {
 
 	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
 	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
+	r.With(util.CheckKetoPolicy(entity, "create")).Post("/default", createDefaults)
 
 	r.Route("/{rating_id}", func(r chi.Router) {
 		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)

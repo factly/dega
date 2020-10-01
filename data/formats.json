@@ -1,0 +1,12 @@
+[
+    {
+        "name": "Article",
+        "slug": "article",
+        "description": "Article"
+    },
+    {
+        "name": "Fact Check",
+        "slug": "fact-check",
+        "description": "Fact Check"
+    }
+]
