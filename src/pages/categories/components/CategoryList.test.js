@@ -23,6 +23,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
+          limit: 5,
         },
         total: 2,
       },
@@ -112,7 +113,7 @@ describe('Categories List component', () => {
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
 
-      expect(getCategories).toHaveBeenCalledWith({ page: 1 });
+      expect(getCategories).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
   });
   describe('component testing', () => {
@@ -161,7 +162,7 @@ describe('Categories List component', () => {
         .simulate('click');
       expect(deleteCategory).toHaveBeenCalled();
       expect(deleteCategory).toHaveBeenCalledWith(1);
-      expect(getCategories).toHaveBeenCalledWith({ page: 1 });
+      expect(getCategories).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
     it('should edit category', () => {
       store = mockStore(state);
@@ -231,6 +232,7 @@ describe('Categories List component', () => {
       setTimeout(() => {
         expect(getPosts).toHaveBeenCalledWith({
           page: 1,
+          limit: 5,
           q: 'category',
         });
       }, 0);

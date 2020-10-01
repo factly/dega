@@ -23,6 +23,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
+          limit: 5,
         },
         total: 2,
       },
@@ -110,7 +111,7 @@ describe('Claimants List component', () => {
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
 
-      expect(getClaimants).toHaveBeenCalledWith({ page: 1 });
+      expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
   });
   describe('component testing', () => {
@@ -160,7 +161,7 @@ describe('Claimants List component', () => {
       setTimeout(() => {
         expect(deleteClaimant).toHaveBeenCalled();
         expect(deleteClaimant).toHaveBeenCalledWith(1);
-        expect(getClaimants).toHaveBeenCalledWith({ page: 1 });
+        expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 5 });
       });
     });
     it('should edit claimant', () => {
@@ -230,6 +231,7 @@ describe('Claimants List component', () => {
       setTimeout(() => {
         expect(getPosts).toHaveBeenCalledWith({
           page: 1,
+          limit: 5,
           q: 'claimant',
         });
       }, 0);

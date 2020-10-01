@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import renderer, { act } from 'react-test-renderer';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { Provider, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { Popconfirm, Button, Table } from 'antd';
+import { act } from 'react-dom/test-utils';
 
 import '../../../matchMedia.mock';
 import FormatList from './FormatList';
@@ -14,8 +15,48 @@ import { getFormats, deleteFormat } from '../../../actions/formats';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+let store, mockedDispatch;
+
+let state = {
+  formats: {
+    req: [
+      {
+        data: [2, 1],
+        query: {
+          page: 1,
+          limit: 5,
+        },
+        total: 2,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2020-09-25T07:23:38.40006Z',
+        updated_at: '2020-09-25T07:23:38.40006Z',
+        deleted_at: null,
+        name: 'Fact check',
+        slug: 'fact-check',
+        description: '',
+        space_id: 1,
+      },
+      '2': {
+        id: 2,
+        created_at: '2020-09-25T07:24:11.008257Z',
+        updated_at: '2020-09-25T07:24:11.008257Z',
+        deleted_at: null,
+        name: 'Article',
+        slug: 'article',
+        description: '',
+        space_id: 1,
+      },
+    },
+    loading: false,
+  },
+};
+
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
+  ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
 jest.mock('../../../actions/formats', () => ({
@@ -24,9 +65,6 @@ jest.mock('../../../actions/formats', () => ({
 }));
 
 describe('Formats List component', () => {
-  let store;
-  let mockedDispatch;
-
   describe('snapshot testing', () => {
     beforeEach(() => {
       store = mockStore({});
@@ -35,83 +73,80 @@ describe('Formats List component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<FormatList />).toJSON();
-      expect(tree).toMatchSnapshot();
-      expect(useSelector).toHaveBeenCalled();
-    });
-    it('should match component when loading', () => {
-      useSelector.mockImplementation((state) => ({
-        formats: [],
-        total: 0,
-        loading: true,
-      }));
-      const tree = renderer.create(<FormatList />).toJSON();
-      expect(tree).toMatchSnapshot();
-      expect(useSelector).toHaveBeenCalled();
-    });
-    it('should match component with formats', () => {
-      useSelector.mockImplementation((state) => ({
-        formats: [{ id: 1, name: 'format' }],
-        total: 1,
-        loading: false,
-      }));
-
-      let component;
-      act(() => {
-        component = renderer.create(
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
           <Router>
             <FormatList />
-          </Router>,
-        );
-      });
-      const tree = component.toJSON();
+          </Router>
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
-
-      expect(useSelector).toHaveBeenCalled();
+    });
+    it('should match component when loading', () => {
+      state.formats.loading = true;
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <FormatList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match component with formats', () => {
+      state.formats.loading = false;
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <FormatList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(useSelector).toHaveReturnedWith({
-        formats: [{ id: 1, name: 'format' }],
-        total: 1,
-        loading: false,
-      });
-      expect(getFormats).toHaveBeenCalledWith({ page: 1 });
+
+      expect(getFormats).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
   });
   describe('component testing', () => {
-    const format = {
-      id: 1,
-      name: 'format',
-      slug: 'slug',
-      description: 'description',
-    };
     beforeEach(() => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should change the page', () => {
-      useSelector.mockImplementation((state) => ({}));
-
-      const wrapper = shallow(<FormatList />);
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <FormatList />
+            </Router>
+          </Provider>,
+        );
+      });
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(2);
+      table.props().pagination.onChange(1);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(2);
+      expect(updatedTable.props().pagination.current).toEqual(1);
     });
     it('should delete format', () => {
-      useSelector.mockImplementation((state) => ({
-        formats: [format],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <FormatList />
-        </Router>,
-      );
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <FormatList />
+            </Router>
+          </Provider>,
+        );
+      });
       const button = wrapper.find(Button).at(1);
       expect(button.text()).toEqual('Delete');
 
@@ -120,37 +155,44 @@ describe('Formats List component', () => {
       popconfirm
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
-      setTimeout(() => {
-        expect(deleteFormat).toHaveBeenCalled();
-        expect(deleteFormat).toHaveBeenCalledWith(1);
-        expect(getFormats).toHaveBeenCalledWith({ page: 1 });
-      });
+
+      expect(deleteFormat).toHaveBeenCalled();
+      expect(deleteFormat).toHaveBeenCalledWith(2);
+      expect(getFormats).toHaveBeenCalledWith({ page: 1 });
     });
     it('should edit format', () => {
-      useSelector.mockImplementation((state) => ({
-        formats: [format],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <FormatList />
-        </Router>,
-      );
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <FormatList />
+            </Router>
+          </Provider>,
+        );
+      });
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/formats/1/edit');
+      expect(link.prop('to')).toEqual('/formats/2/edit');
     });
     it('should have no delete and edit buttons', () => {
-      useSelector.mockImplementation((state) => ({}));
-
-      const wrapper = mount(
-        <Router>
-          <FormatList />
-        </Router>,
-      );
+      store = mockStore({
+        formats: {
+          req: [],
+        },
+      });
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <FormatList />
+            </Router>
+          </Provider>,
+        );
+      });
 
       const button = wrapper.find(Button);
       expect(button.length).toEqual(0);

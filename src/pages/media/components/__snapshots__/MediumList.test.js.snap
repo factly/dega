@@ -86,7 +86,7 @@ exports[`Media List component snapshot testing should match component when loadi
                   }
                   initialValues={
                     Object {
-                      "limit": 10,
+                      "limit": 5,
                       "page": 1,
                     }
                   }
@@ -129,7 +129,7 @@ exports[`Media List component snapshot testing should match component when loadi
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 10,
+                          "limit": 5,
                           "page": 1,
                         }
                       }
@@ -1268,7 +1268,7 @@ exports[`Media List component snapshot testing should match component when loadi
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 10,
+                      "pageSize": 5,
                       "total": 1,
                     }
                   }
@@ -1546,7 +1546,7 @@ exports[`Media List component snapshot testing should match component when loadi
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 10,
+                                "pageSize": 5,
                                 "total": 1,
                               }
                             }
@@ -1784,7 +1784,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 10,
+                                      "pageSize": 5,
                                       "total": 1,
                                     },
                                     "prefixCls": "ant-table",
@@ -3467,7 +3467,7 @@ exports[`Media List component snapshot testing should match component when loadi
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={10}
+                            pageSize={5}
                             total={1}
                           >
                             <LocaleReceiver
@@ -3555,7 +3555,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={10}
+                                pageSize={5}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -3815,7 +3815,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={10}
+                                    pageSize={5}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -3934,7 +3934,7 @@ exports[`Media List component snapshot testing should match component with media
                   }
                   initialValues={
                     Object {
-                      "limit": 10,
+                      "limit": 5,
                       "page": 1,
                     }
                   }
@@ -3977,7 +3977,7 @@ exports[`Media List component snapshot testing should match component with media
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 10,
+                          "limit": 5,
                           "page": 1,
                         }
                       }
@@ -5116,7 +5116,7 @@ exports[`Media List component snapshot testing should match component with media
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 10,
+                      "pageSize": 5,
                       "total": 1,
                     }
                   }
@@ -5370,7 +5370,7 @@ exports[`Media List component snapshot testing should match component with media
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 10,
+                                "pageSize": 5,
                                 "total": 1,
                               }
                             }
@@ -5608,7 +5608,7 @@ exports[`Media List component snapshot testing should match component with media
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 10,
+                                      "pageSize": 5,
                                       "total": 1,
                                     },
                                     "prefixCls": "ant-table",
@@ -7291,7 +7291,7 @@ exports[`Media List component snapshot testing should match component with media
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={10}
+                            pageSize={5}
                             total={1}
                           >
                             <LocaleReceiver
@@ -7379,7 +7379,7 @@ exports[`Media List component snapshot testing should match component with media
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={10}
+                                pageSize={5}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -7639,7 +7639,7 @@ exports[`Media List component snapshot testing should match component with media
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={10}
+                                    pageSize={5}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -7758,7 +7758,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                   }
                   initialValues={
                     Object {
-                      "limit": 10,
+                      "limit": 5,
                       "page": 1,
                     }
                   }
@@ -7801,7 +7801,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 10,
+                          "limit": 5,
                           "page": 1,
                         }
                       }
@@ -8940,7 +8940,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 10,
+                      "pageSize": 5,
                       "total": 1,
                     }
                   }
@@ -9194,7 +9194,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 10,
+                                "pageSize": 5,
                                 "total": 1,
                               }
                             }
@@ -9432,7 +9432,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 10,
+                                      "pageSize": 5,
                                       "total": 1,
                                     },
                                     "prefixCls": "ant-table",
@@ -11115,7 +11115,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={10}
+                            pageSize={5}
                             total={1}
                           >
                             <LocaleReceiver
@@ -11203,7 +11203,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={10}
+                                pageSize={5}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -11463,7 +11463,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={10}
+                                    pageSize={5}
                                     pageSizeOptions={
                                       Array [
                                         "10",

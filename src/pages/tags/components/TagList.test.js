@@ -5,7 +5,7 @@ import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import { act } from 'react-dom/test-utils';
 import thunk from 'redux-thunk';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
@@ -33,6 +33,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
+          limit: 5,
         },
         total: 2,
       },
@@ -77,7 +78,7 @@ describe('Tags List component', () => {
     });
     it('should render the component', () => {
       store = mockStore(state);
-      const tree = mount(
+      const tree = shallow(
         <Provider store={store}>
           <Router>
             <TagList />
@@ -89,7 +90,7 @@ describe('Tags List component', () => {
     it('should match component when loading', () => {
       state.tags.loading = true;
       store = mockStore(state);
-      const tree = mount(
+      const tree = shallow(
         <Provider store={store}>
           <Router>
             <TagList />
@@ -101,7 +102,7 @@ describe('Tags List component', () => {
     it('should match component with tags', () => {
       state.tags.loading = false;
       store = mockStore(state);
-      const tree = mount(
+      const tree = shallow(
         <Provider store={store}>
           <Router>
             <TagList />
@@ -109,10 +110,6 @@ describe('Tags List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-
-      expect(mockedDispatch).toHaveBeenCalledTimes(1);
-
-      expect(getTags).toHaveBeenCalledWith({ page: 1 });
     });
   });
   describe('component testing', () => {
@@ -162,7 +159,7 @@ describe('Tags List component', () => {
 
       expect(deleteTag).toHaveBeenCalled();
       expect(deleteTag).toHaveBeenCalledWith(1);
-      expect(getTags).toHaveBeenCalledWith({ page: 1 });
+      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
     it('should edit tag', () => {
       store = mockStore(state);
@@ -233,6 +230,7 @@ describe('Tags List component', () => {
       setTimeout(() => {
         expect(getPosts).toHaveBeenCalledWith({
           page: 1,
+          limit: 5,
           q: 'tag',
         });
       }, 0);

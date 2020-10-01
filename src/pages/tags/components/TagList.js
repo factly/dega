@@ -7,19 +7,16 @@ import deepEqual from 'deep-equal';
 
 function TagList() {
   const dispatch = useDispatch();
-  const [page, setPage] = React.useState(1);
-  const [filters, setFilters] = React.useState();
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 5,
+  });
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const { tags, total, loading } = useSelector((state) => {
-    let query = {
-      page,
-      ...filters,
-    };
-
     const node = state.tags.req.find((item) => {
-      return deepEqual(item.query, query);
+      return deepEqual(item.query, filters);
     });
 
     if (node)
@@ -33,10 +30,10 @@ function TagList() {
 
   React.useEffect(() => {
     fetchTags();
-  }, [page, filters]);
+  }, [filters]);
 
   const fetchTags = () => {
-    dispatch(getTags({ page: page, ...filters }));
+    dispatch(getTags(filters));
   };
 
   const columns = [
@@ -92,6 +89,7 @@ function TagList() {
         layout="inline"
         onFinish={(values) =>
           setFilters({
+            ...filters,
             sort_by: values.sort,
             q: values.q,
           })
@@ -121,9 +119,10 @@ function TagList() {
         rowKey={'id'}
         pagination={{
           total: total,
-          current: page,
+          current: filters.page,
           pageSize: 5,
-          onChange: (pageNumber, pageSize) => setPage(pageNumber),
+          onChange: (pageNumber, pageSize) =>
+            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}
       />
     </Space>

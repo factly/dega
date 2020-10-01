@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-import renderer, { act } from 'react-test-renderer';
-import { useSelector, useDispatch } from 'react-redux';
+
+import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { shallow, mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
@@ -13,9 +14,52 @@ import { getRatings, deleteRating } from '../../../actions/ratings';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
+let mockedDispatch, store;
+
+let state = {
+  ratings: {
+    req: [
+      {
+        data: [2, 1],
+        query: {
+          page: 1,
+          limit: 5,
+        },
+        total: 2,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2020-10-01T06:25:37.717922Z',
+        updated_at: '2020-10-01T06:25:37.717922Z',
+        deleted_at: null,
+        name: 'True',
+        slug: 'true',
+        description: '',
+        numeric_value: 5,
+        medium_id: 0,
+        space_id: 1,
+      },
+      '2': {
+        id: 2,
+        created_at: '2020-10-01T06:25:47.227933Z',
+        updated_at: '2020-10-01T06:25:47.227933Z',
+        deleted_at: null,
+        name: 'False',
+        slug: 'false',
+        description: '',
+        numeric_value: 1,
+        medium_id: 0,
+        space_id: 1,
+      },
+    },
+    loading: false,
+  },
+};
 
 jest.mock('react-redux', () => ({
-  useSelector: jest.fn(),
+  ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
 jest.mock('../../../actions/ratings', () => ({
@@ -24,16 +68,6 @@ jest.mock('../../../actions/ratings', () => ({
 }));
 
 describe('Ratings List component', () => {
-  let store;
-  let mockedDispatch;
-  const rating = {
-    id: 1,
-    name: 'rating',
-    slug: 'slug',
-    description: 'description',
-    numeric_value: 2,
-  };
-
   describe('snapshot testing', () => {
     beforeEach(() => {
       store = mockStore({});
@@ -42,47 +76,39 @@ describe('Ratings List component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockImplementation((state) => ({}));
-      const tree = renderer.create(<RatingList />).toJSON();
-      expect(tree).toMatchSnapshot();
-      expect(useSelector).toHaveBeenCalled();
-    });
-    it('should match component when loading', () => {
-      useSelector.mockImplementation((state) => ({
-        ratings: [],
-        total: 0,
-        loading: true,
-      }));
-      const tree = renderer.create(<RatingList />).toJSON();
-      expect(tree).toMatchSnapshot();
-      expect(useSelector).toHaveBeenCalled();
-    });
-    it('should match component with ratings', () => {
-      useSelector.mockImplementation((state) => ({
-        ratings: [rating],
-        total: 1,
-        loading: false,
-      }));
-
-      let component;
-      act(() => {
-        component = renderer.create(
+      store = mockStore(state);
+      const tree = shallow(
+        <Provider store={store}>
           <Router>
             <RatingList />
-          </Router>,
-        );
-      });
-      const tree = component.toJSON();
+          </Router>
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
-
-      expect(useSelector).toHaveBeenCalled();
-      expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(useSelector).toHaveReturnedWith({
-        ratings: [rating],
-        total: 1,
-        loading: false,
-      });
-      expect(getRatings).toHaveBeenCalledWith({ page: 1 });
+    });
+    it('should match component when loading', () => {
+      state.ratings.loading = true;
+      store = mockStore(state);
+      const tree = shallow(
+        <Provider store={store}>
+          <Router>
+            <RatingList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+    it('should match component with ratings', () => {
+      state.ratings.loading = false;
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <RatingList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
@@ -92,25 +118,33 @@ describe('Ratings List component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should change the page', () => {
-      useSelector.mockImplementation((state) => ({}));
-
-      const wrapper = shallow(<RatingList />);
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <RatingList />
+            </Router>
+          </Provider>,
+        );
+      });
       const table = wrapper.find(Table);
       table.props().pagination.onChange(2);
       setTimeout(() => expect(table.props().pagination.current).toEqual(2));
     });
     it('should delete rating', () => {
-      useSelector.mockImplementation((state) => ({
-        ratings: [rating],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <RatingList />
-        </Router>,
-      );
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <RatingList />
+            </Router>
+          </Provider>,
+        );
+      });
       const button = wrapper.find(Button).at(1);
       expect(button.text()).toEqual('Delete');
 
@@ -121,34 +155,42 @@ describe('Ratings List component', () => {
         .simulate('click');
 
       expect(deleteRating).toHaveBeenCalled();
-      expect(deleteRating).toHaveBeenCalledWith(1);
-      expect(getRatings).toHaveBeenCalledWith({ page: 1 });
+      expect(deleteRating).toHaveBeenCalledWith(2);
+      expect(getRatings).toHaveBeenCalledWith({ page: 1, limit: 5 });
     });
     it('should edit rating', () => {
-      useSelector.mockImplementation((state) => ({
-        ratings: [rating],
-        total: 1,
-        loading: false,
-      }));
-
-      const wrapper = mount(
-        <Router>
-          <RatingList />
-        </Router>,
-      );
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <RatingList />
+            </Router>
+          </Provider>,
+        );
+      });
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text()).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/ratings/1/edit');
+      expect(link.prop('to')).toEqual('/ratings/2/edit');
     });
     it('should have no delete and edit buttons', () => {
-      useSelector.mockImplementation((state) => ({}));
-
-      const wrapper = mount(
-        <Router>
-          <RatingList />
-        </Router>,
-      );
+      store = mockStore({
+        ratings: {
+          req: [],
+        },
+      });
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <RatingList />
+            </Router>
+          </Provider>,
+        );
+      });
 
       const button = wrapper.find(Button);
       expect(button.length).toEqual(0);

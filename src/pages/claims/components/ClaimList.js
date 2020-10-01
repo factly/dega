@@ -9,20 +9,16 @@ import deepEqual from 'deep-equal';
 
 function ClaimList() {
   const dispatch = useDispatch();
-  const [page, setPage] = React.useState(1);
-  const [filters, setFilters] = React.useState();
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 5,
+  });
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const { claims, total, loading } = useSelector((state) => {
-    let query = {
-      page,
-    };
-    if (filters) {
-      query = { ...query, ...filters };
-    }
     const node = state.claims.req.find((item) => {
-      return deepEqual(item.query, query);
+      return deepEqual(item.query, filters);
     });
 
     if (node) {
@@ -43,10 +39,10 @@ function ClaimList() {
 
   React.useEffect(() => {
     fetchClaims();
-  }, [page, filters]);
+  }, [filters]);
 
   const fetchClaims = () => {
-    dispatch(getClaims({ page: page, ...filters }));
+    dispatch(getClaims(filters));
   };
 
   const onSave = (values) => {
@@ -57,7 +53,7 @@ function ClaimList() {
       q: values.q,
     };
 
-    setFilters(filterValue);
+    setFilters({ ...filters, ...filterValue });
   };
 
   const columns = [
@@ -145,9 +141,10 @@ function ClaimList() {
         rowKey={'id'}
         pagination={{
           total: total,
-          current: page,
+          current: filters.page,
           pageSize: 5,
-          onChange: (pageNumber, pageSize) => setPage(pageNumber),
+          onChange: (pageNumber, pageSize) =>
+            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}
       />
     </Space>
