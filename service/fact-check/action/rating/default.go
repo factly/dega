@@ -1,4 +1,4 @@
-package format
+package rating
 
 import (
 	"encoding/json"
@@ -7,25 +7,28 @@ import (
 	"os"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 )
 
-// createDefaults - Create Default Formats
-// @Summary Create Default Formats
-// @Description Create Default Formats
-// @Tags Format
-// @ID add-default-formats
+// DataFile default json data file
+var DataFile = "./data/ratings.json"
+
+// createDefaults - Create Default Ratings
+// @Summary Create Default Ratings
+// @Description Create Default Ratings
+// @Tags Rating
+// @ID add-default-ratings
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Success 201 {object} model.Format
 // @Failure 400 {array} string
-// @Router /core/formats/default [post]
+// @Router /fact-check/ratings/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
@@ -34,7 +37,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jsonFile, err := os.Open("./data/formats.json")
+	jsonFile, err := os.Open(DataFile)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -43,18 +46,23 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 
 	defer jsonFile.Close()
 
-	formats := make([]model.Format, 0)
+	ratings := make([]model.Rating, 0)
 
 	byteValue, _ := ioutil.ReadAll(jsonFile)
-	json.Unmarshal(byteValue, &formats)
+	err = json.Unmarshal(byteValue, &ratings)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	tx := config.DB.Begin()
 
-	for i := range formats {
-		formats[i].SpaceID = uint(sID)
-		tx.Model(&model.Format{}).Create(&formats[i])
+	for i := range ratings {
+		ratings[i].SpaceID = uint(sID)
+		tx.Model(&model.Rating{}).Create(&ratings[i])
 
-		err = insertIntoMeili(formats[i])
+		err = insertIntoMeili(ratings[i])
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -65,5 +73,5 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	renderx.JSON(w, http.StatusCreated, formats)
+	renderx.JSON(w, http.StatusCreated, ratings)
 }
