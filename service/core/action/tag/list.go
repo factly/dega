@@ -82,12 +82,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Model(&model.Tag{}).Where(&model.Tag{
 		SpaceID: uint(sID),
-	}).Count(&result.Total).Order("created_at " + sort).Offset(offset).Limit(limit)
+	}).Order("created_at " + sort)
 
 	if len(filteredTagIDs) > 0 {
-		err = tx.Where(filteredTagIDs).Find(&result.Nodes).Error
+		err = tx.Where(filteredTagIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 	} else {
-		err = tx.Find(&result.Nodes).Error
+		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 	}
 
 	if err != nil {

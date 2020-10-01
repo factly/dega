@@ -83,12 +83,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Model(&model.Category{}).Preload("Medium").Where(&model.Category{
 		SpaceID: uint(sID),
-	}).Count(&result.Total).Order("created_at " + sort).Offset(offset).Limit(limit)
+	}).Order("created_at " + sort)
 
 	if len(filteredCategoryIDs) > 0 {
-		err = tx.Where(filteredCategoryIDs).Find(&result.Nodes).Error
+		err = tx.Where(filteredCategoryIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 	} else {
-		err = tx.Find(&result.Nodes).Error
+		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 	}
 	if err != nil {
 		loggerx.Error(err)

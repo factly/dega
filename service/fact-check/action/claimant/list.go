@@ -82,12 +82,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
 		SpaceID: uint(sID),
-	}).Count(&result.Total).Offset(offset).Order("created_at " + sort).Limit(limit)
+	}).Order("created_at " + sort)
 
 	if len(filteredClaimantIDs) > 0 {
-		err = tx.Where(filteredClaimantIDs).Find(&result.Nodes).Error
+		err = tx.Where(filteredClaimantIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 	} else {
-		err = tx.Find(&result.Nodes).Error
+		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 	}
 
 	if err != nil {
