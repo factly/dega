@@ -105,7 +105,7 @@ function PolicyList() {
       pagination={{
         total: total,
         current: filters.page,
-        pageSize: 5,
+        pageSize: filters.limit,
         onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
       }}
     />

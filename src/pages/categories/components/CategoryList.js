@@ -115,7 +115,7 @@ function CategoryList() {
         pagination={{
           total: total,
           current: filters.page,
-          pageSize: 5,
+          pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}

@@ -2,15 +2,19 @@ import React from 'react';
 import { List, Avatar, Badge, Space, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia } from '../../actions/media';
+import deepEqual from 'deep-equal';
 
 function MediaList({ onSelect, selected }) {
   const dispatch = useDispatch();
 
-  const [page, setPage] = React.useState(1);
+  const [filters, setFilters] = React.useState({
+    page: 1,
+    limit: 8,
+  });
 
   const { media, total } = useSelector((state) => {
     const node = state.media.req.find((item) => {
-      return item.query.page === page;
+      return deepEqual(item.query, filters);
     });
 
     if (node)
@@ -23,8 +27,8 @@ function MediaList({ onSelect, selected }) {
   });
 
   React.useEffect(() => {
-    dispatch(getMedia({ page: page }));
-  }, [dispatch, page]);
+    dispatch(getMedia(filters));
+  }, [dispatch, filters]);
 
   return (
     <Space direction={'vertical'}>
@@ -35,12 +39,12 @@ function MediaList({ onSelect, selected }) {
           md: 4,
         }}
         pagination={{
-          current: page,
-          onChange: (value) => {
-            setPage(value);
-          },
+          current: filters.page,
           total: total,
-          pageSize: 5,
+          pageSize: filters.limit,
+          onChange: (pageNumber, pageSize) => {
+            setFilters({ page: pageNumber, limit: pageSize });
+          },
         }}
         dataSource={media}
         renderItem={(item) => (
