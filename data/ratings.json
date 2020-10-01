@@ -1,0 +1,32 @@
+[
+    {
+        "name": "True",
+        "slug": "true",
+        "description": "True",
+        "numeric_value": 5
+    },
+    {
+        "name": "Partly True",
+        "slug": "partly-true",
+        "description": "Partly True",
+        "numeric_value": 4
+    },
+    {
+        "name": "Misleading",
+        "slug": "misleading",
+        "description": "Misleading",
+        "numeric_value": 3
+    },
+    {
+        "name": "Partly False",
+        "slug": "partly-false",
+        "description": "Partly False",
+        "numeric_value": 2
+    },
+    {
+        "name": "False",
+        "slug": "false",
+        "description": "False",
+        "numeric_value": 1
+    }
+]

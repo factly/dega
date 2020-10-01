@@ -87,17 +87,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Insert into meili index
-	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "format",
-		"name":        result.Name,
-		"slug":        result.Slug,
-		"description": result.Description,
-		"space_id":    result.SpaceID,
-	}
-
-	err = meili.AddDocument(meiliObj)
+	err = insertIntoMeili(*result)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
@@ -107,4 +97,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
+}
+
+func insertIntoMeili(format model.Format) error {
+	meiliObj := map[string]interface{}{
+		"id":          format.ID,
+		"kind":        "format",
+		"name":        format.Name,
+		"slug":        format.Slug,
+		"description": format.Description,
+		"space_id":    format.SpaceID,
+	}
+
+	return meili.AddDocument(meiliObj)
 }

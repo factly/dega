@@ -24,6 +24,39 @@ var Data = map[string]interface{}{
 	"medium_id":     uint(1),
 }
 
+var defaultData = []map[string]interface{}{
+	{
+		"name":          "True",
+		"slug":          "true",
+		"description":   "True",
+		"numeric_value": 5,
+	},
+	{
+		"name":          "Partly True",
+		"slug":          "partly-true",
+		"description":   "Partly True",
+		"numeric_value": 4,
+	},
+	{
+		"name":          "Misleading",
+		"slug":          "misleading",
+		"description":   "Misleading",
+		"numeric_value": 3,
+	},
+	{
+		"name":          "Partly False",
+		"slug":          "partly-false",
+		"description":   "Partly False",
+		"numeric_value": 2,
+	},
+	{
+		"name":          "False",
+		"slug":          "false",
+		"description":   "False",
+		"numeric_value": 1,
+	},
+}
+
 var invalidData = map[string]interface{}{
 	"name":          "a",
 	"numeric_value": 0,
@@ -36,6 +69,7 @@ var deleteQuery = regexp.QuoteMeta(`UPDATE "ratings" SET "deleted_at"=`)
 var paginationQuery = `SELECT \* FROM "ratings" (.+) LIMIT 1 OFFSET 1`
 
 var basePath = "/fact-check/ratings"
+var defaultsPath = "/fact-check/ratings/default"
 var path = "/fact-check/ratings/{rating_id}"
 
 func slugCheckMock(mock sqlmock.Sqlmock, rating map[string]interface{}) {

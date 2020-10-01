@@ -91,18 +91,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&model.Rating{}).Preload("Medium").First(&result)
 
-	// Insert into meili index
-	meiliObj := map[string]interface{}{
-		"id":            result.ID,
-		"kind":          "rating",
-		"name":          result.Name,
-		"slug":          result.Slug,
-		"description":   result.Description,
-		"numeric_value": result.NumericValue,
-		"space_id":      result.SpaceID,
-	}
-
-	err = meili.AddDocument(meiliObj)
+	err = insertIntoMeili(*result)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
@@ -112,4 +101,18 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
+}
+
+func insertIntoMeili(rating model.Rating) error {
+	meiliObj := map[string]interface{}{
+		"id":            rating.ID,
+		"kind":          "rating",
+		"name":          rating.Name,
+		"slug":          rating.Slug,
+		"description":   rating.Description,
+		"numeric_value": rating.NumericValue,
+		"space_id":      rating.SpaceID,
+	}
+
+	return meili.AddDocument(meiliObj)
 }

@@ -24,6 +24,19 @@ var invalidData = map[string]interface{}{
 	"name": "a",
 }
 
+var defaultData = []map[string]interface{}{
+	{
+		"name":        "Article",
+		"slug":        "article",
+		"description": "Article",
+	},
+	{
+		"name":        "Fact Check",
+		"slug":        "fact-check",
+		"description": "Fact Check",
+	},
+}
+
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "formats"`)
@@ -31,6 +44,7 @@ var deleteQuery = regexp.QuoteMeta(`UPDATE "formats" SET "deleted_at"=`)
 var paginationQuery = `SELECT \* FROM "formats" (.+) LIMIT 1 OFFSET 1`
 
 var basePath = "/core/formats"
+var defaultsPath = "/core/formats/default"
 var path = "/core/formats/{format_id}"
 
 func slugCheckMock(mock sqlmock.Sqlmock) {
