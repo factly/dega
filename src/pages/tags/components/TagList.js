@@ -98,7 +98,7 @@ function TagList() {
         <Form.Item name="q" label="Search" style={{ width: '25%' }}>
           <Input placeholder="search tags" />
         </Form.Item>
-        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
+        <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
           <Select>
             <Option value="desc">Latest</Option>
             <Option value="asc">Old</Option>
