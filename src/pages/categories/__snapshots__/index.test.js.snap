@@ -112,9 +112,9 @@ exports[`Categories List component should render the component 1`] = `
               <label
                 className=""
                 htmlFor="filters_sort"
-                title="sort"
+                title="Sort"
               >
-                sort
+                Sort
               </label>
             </div>
             <div
@@ -535,9 +535,9 @@ exports[`Categories List component should render the component with data 1`] = `
               <label
                 className=""
                 htmlFor="filters_sort"
-                title="sort"
+                title="Sort"
               >
-                sort
+                Sort
               </label>
             </div>
             <div

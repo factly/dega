@@ -91,7 +91,7 @@ describe('claims actions', () => {
       rating: [100],
       claimant: [11],
       q: 'claimant',
-      sort_by: 'asc',
+      sort: 'asc',
     };
     const claims = [claim];
     const resp = { data: { nodes: claims, total: 1 } };

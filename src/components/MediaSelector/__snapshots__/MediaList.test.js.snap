@@ -43,6 +43,7 @@ exports[`Media List component snapshot testing should match component with data 
             }
           >
             <Input
+              onChange={[Function]}
               placeholder="Search Media"
               type="text"
             >
@@ -62,6 +63,7 @@ exports[`Media List component snapshot testing should match component with data 
                 focused={false}
                 handleReset={[Function]}
                 inputType="input"
+                onChange={[Function]}
                 placeholder="Search Media"
                 prefixCls="ant-input"
                 triggerFocus={[Function]}
@@ -118,7 +120,7 @@ exports[`Media List component snapshot testing should match component with data 
                   "current": 1,
                   "onChange": [Function],
                   "pageSize": 8,
-                  "total": undefined,
+                  "total": 1,
                 }
               }
               renderItem={[Function]}
@@ -266,6 +268,7 @@ exports[`Media List component snapshot testing should match component with data 
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
                     pageSize={8}
+                    total={1}
                   >
                     <LocaleReceiver
                       componentName="Pagination"
@@ -370,7 +373,7 @@ exports[`Media List component snapshot testing should match component with data 
                         showQuickJumper={false}
                         showTitle={true}
                         style={Object {}}
-                        total={0}
+                        total={1}
                         totalBoundaryShowSizeChanger={50}
                       >
                         <ul
@@ -468,9 +471,9 @@ exports[`Media List component snapshot testing should match component with data 
                             </button>
                           </li>
                           <Pager
-                            className="ant-pagination-disabled"
+                            active={true}
                             itemRender={[Function]}
-                            key="noPager"
+                            key="1"
                             locale={
                               Object {
                                 "items_per_page": "/ page",
@@ -487,21 +490,21 @@ exports[`Media List component snapshot testing should match component with data 
                             }
                             onClick={[Function]}
                             onKeyPress={[Function]}
-                            page={0}
+                            page={1}
                             rootPrefixCls="ant-pagination"
                             showTitle={true}
                           >
                             <li
-                              className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
+                              className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
                               onClick={[Function]}
                               onKeyPress={[Function]}
                               tabIndex="0"
-                              title={0}
+                              title={1}
                             >
                               <a
                                 rel="nofollow"
                               >
-                                0
+                                1
                               </a>
                             </li>
                           </Pager>
@@ -678,6 +681,7 @@ exports[`Media List component snapshot testing should render the component with 
             }
           >
             <Input
+              onChange={[Function]}
               placeholder="Search Media"
               type="text"
             >
@@ -697,6 +701,7 @@ exports[`Media List component snapshot testing should render the component with 
                 focused={false}
                 handleReset={[Function]}
                 inputType="input"
+                onChange={[Function]}
                 placeholder="Search Media"
                 prefixCls="ant-input"
                 triggerFocus={[Function]}
