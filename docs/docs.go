@@ -2601,6 +2601,9 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "is_featured": {
+                    "type": "boolean"
+                },
                 "medium_id": {
                     "type": "integer"
                 },
@@ -2845,6 +2848,9 @@ var doc = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "is_featured": {
+                    "type": "boolean"
                 },
                 "medium": {
                     "type": "object",
@@ -3281,6 +3287,9 @@ var doc = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "is_featured": {
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"
@@ -3724,6 +3733,9 @@ var doc = `{
             "properties": {
                 "description": {
                     "type": "string"
+                },
+                "is_featured": {
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"

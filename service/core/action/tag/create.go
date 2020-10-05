@@ -76,6 +76,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Slug:        slug.Approve(tagSlug, sID, config.DB.NewScope(&model.Tag{}).TableName()),
 		Description: tag.Description,
 		SpaceID:     uint(sID),
+		IsFeatured:  tag.IsFeatured,
 	}
 
 	tx := config.DB.Begin()

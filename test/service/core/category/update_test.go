@@ -143,7 +143,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		SelectWithOutSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
-			WithArgs(Data["description"], Data["name"], Data["slug"], test.AnyTime{}, 1).
+			WithArgs(Data["description"], Data["is_featured"], Data["name"], Data["slug"], test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		SelectWithOutSpace(mock)
 		mock.ExpectCommit()
@@ -168,7 +168,7 @@ func TestCategoryUpdate(t *testing.T) {
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
-			WithArgs(Data["description"], Data["medium_id"], Data["name"], Data["slug"], test.AnyTime{}, 1).
+			WithArgs(Data["description"], Data["is_featured"], Data["medium_id"], Data["name"], Data["slug"], test.AnyTime{}, 1).
 			WillReturnError(errors.New("cannot update category"))
 		mock.ExpectRollback()
 

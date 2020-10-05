@@ -12,6 +12,7 @@ type category struct {
 	Description string `json:"description"`
 	ParentID    uint   `json:"parent_id"`
 	MediumID    uint   `json:"medium_id"`
+	IsFeatured  bool   `json:"is_featured"`
 }
 
 // Router - Group of category router
