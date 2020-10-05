@@ -120,7 +120,7 @@ describe('posts actions', () => {
       page: 1,
       limit: 5,
       q: 'post',
-      sort_by: 'asc',
+      sort: 'asc',
       tag: [21],
       category: [33],
       format: [42],

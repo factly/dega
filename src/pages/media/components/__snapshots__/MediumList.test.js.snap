@@ -349,7 +349,7 @@ exports[`Media List component snapshot testing should match component when loadi
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -358,10 +358,10 @@ exports[`Media List component snapshot testing should match component when loadi
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -376,10 +376,10 @@ exports[`Media List component snapshot testing should match component when loadi
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -416,7 +416,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -437,16 +437,16 @@ exports[`Media List component snapshot testing should match component when loadi
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -4197,7 +4197,7 @@ exports[`Media List component snapshot testing should match component with media
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -4206,10 +4206,10 @@ exports[`Media List component snapshot testing should match component with media
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -4224,10 +4224,10 @@ exports[`Media List component snapshot testing should match component with media
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -4264,7 +4264,7 @@ exports[`Media List component snapshot testing should match component with media
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -4285,16 +4285,16 @@ exports[`Media List component snapshot testing should match component with media
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -8021,7 +8021,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -8030,10 +8030,10 @@ exports[`Media List component snapshot testing should render the component 1`] =
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -8048,10 +8048,10 @@ exports[`Media List component snapshot testing should render the component 1`] =
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -8088,7 +8088,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -8109,16 +8109,16 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",

@@ -90,8 +90,7 @@ function TagList() {
         onFinish={(values) =>
           setFilters({
             ...filters,
-            sort_by: values.sort,
-            q: values.q,
+            ...values,
           })
         }
         style={{ maxWidth: '100%' }}
@@ -99,7 +98,7 @@ function TagList() {
         <Form.Item name="q" label="Search" style={{ width: '25%' }}>
           <Input placeholder="search tags" />
         </Form.Item>
-        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
+        <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
           <Select>
             <Option value="desc">Latest</Option>
             <Option value="asc">Old</Option>

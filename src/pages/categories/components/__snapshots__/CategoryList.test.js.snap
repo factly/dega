@@ -349,7 +349,7 @@ exports[`Categories List component snapshot testing should match component when 
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -358,10 +358,10 @@ exports[`Categories List component snapshot testing should match component when 
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -376,10 +376,10 @@ exports[`Categories List component snapshot testing should match component when 
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -416,7 +416,7 @@ exports[`Categories List component snapshot testing should match component when 
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -437,16 +437,16 @@ exports[`Categories List component snapshot testing should match component when 
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -5185,7 +5185,7 @@ exports[`Categories List component snapshot testing should match component with 
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -5194,10 +5194,10 @@ exports[`Categories List component snapshot testing should match component with 
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -5212,10 +5212,10 @@ exports[`Categories List component snapshot testing should match component with 
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -5252,7 +5252,7 @@ exports[`Categories List component snapshot testing should match component with 
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -5273,16 +5273,16 @@ exports[`Categories List component snapshot testing should match component with 
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -9997,7 +9997,7 @@ exports[`Categories List component snapshot testing should render the component 
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -10006,10 +10006,10 @@ exports[`Categories List component snapshot testing should render the component 
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -10024,10 +10024,10 @@ exports[`Categories List component snapshot testing should render the component 
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -10064,7 +10064,7 @@ exports[`Categories List component snapshot testing should render the component 
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -10085,16 +10085,16 @@ exports[`Categories List component snapshot testing should render the component 
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",

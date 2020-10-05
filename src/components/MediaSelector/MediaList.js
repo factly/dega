@@ -20,19 +20,28 @@ function MediaList({ onSelect, selected }) {
     if (node)
       return {
         media: node.data.map((element) => state.media.details[element]),
-        total: state.media.total,
+        total: node.total,
       };
 
     return { media: [], total: 0 };
   });
 
   React.useEffect(() => {
-    dispatch(getMedia(filters));
+    fetchMedia();
   }, [dispatch, filters]);
+
+  const fetchMedia = () => {
+    dispatch(getMedia(filters));
+  };
 
   return (
     <Space direction={'vertical'}>
-      <Input placeholder="Search Media" />
+      <Input
+        placeholder="Search Media"
+        onChange={(e) =>
+          e.target.value ? setFilters({ ...filters, q: e.target.value }) : setFilters(filters)
+        }
+      />
       <List
         grid={{
           gutter: 16,

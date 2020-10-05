@@ -153,7 +153,7 @@ exports[`Claims List component snapshot testing should match component when load
                         }
                       >
                         <FormItem
-                          label="Query"
+                          label="Search"
                           name="q"
                           style={
                             Object {
@@ -162,10 +162,10 @@ exports[`Claims List component snapshot testing should match component when load
                           }
                         >
                           <WrapperField
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name="q"
@@ -180,10 +180,10 @@ exports[`Claims List component snapshot testing should match component when load
                           >
                             <Field
                               key="_q"
-                              label="Query"
+                              label="Search"
                               messageVariables={
                                 Object {
-                                  "label": "Query",
+                                  "label": "Search",
                                 }
                               }
                               name={
@@ -220,7 +220,7 @@ exports[`Claims List component snapshot testing should match component when load
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_q"
-                                    label="Query"
+                                    label="Search"
                                     name="q"
                                     prefixCls="ant-form"
                                     required={false}
@@ -241,16 +241,16 @@ exports[`Claims List component snapshot testing should match component when load
                                         <label
                                           className=""
                                           htmlFor="filters_q"
-                                          title="Query"
+                                          title="Search"
                                         >
-                                          Query
+                                          Search
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="Query"
+                                    label="Search"
                                     name={
                                       Array [
                                         "q",
@@ -349,7 +349,7 @@ exports[`Claims List component snapshot testing should match component when load
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -358,10 +358,10 @@ exports[`Claims List component snapshot testing should match component when load
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -376,10 +376,10 @@ exports[`Claims List component snapshot testing should match component when load
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -416,7 +416,7 @@ exports[`Claims List component snapshot testing should match component when load
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -437,16 +437,16 @@ exports[`Claims List component snapshot testing should match component when load
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -1096,7 +1096,7 @@ exports[`Claims List component snapshot testing should match component when load
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="claimant"
+                          label="Claimants"
                           name="claimants"
                           style={
                             Object {
@@ -1105,10 +1105,10 @@ exports[`Claims List component snapshot testing should match component when load
                           }
                         >
                           <WrapperField
-                            label="claimant"
+                            label="Claimants"
                             messageVariables={
                               Object {
-                                "label": "claimant",
+                                "label": "Claimants",
                               }
                             }
                             name="claimants"
@@ -1123,10 +1123,10 @@ exports[`Claims List component snapshot testing should match component when load
                           >
                             <Field
                               key="_claimants"
-                              label="claimant"
+                              label="Claimants"
                               messageVariables={
                                 Object {
-                                  "label": "claimant",
+                                  "label": "Claimants",
                                 }
                               }
                               name={
@@ -1163,7 +1163,7 @@ exports[`Claims List component snapshot testing should match component when load
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_claimants"
-                                    label="claimant"
+                                    label="Claimants"
                                     name="claimants"
                                     prefixCls="ant-form"
                                     required={false}
@@ -1184,16 +1184,16 @@ exports[`Claims List component snapshot testing should match component when load
                                         <label
                                           className=""
                                           htmlFor="filters_claimants"
-                                          title="claimant"
+                                          title="Claimants"
                                         >
-                                          claimant
+                                          Claimants
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="claimant"
+                                    label="Claimants"
                                     name={
                                       Array [
                                         "claimants",
@@ -1750,7 +1750,7 @@ exports[`Claims List component snapshot testing should match component when load
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="ratings"
+                          label="Ratings"
                           name="ratings"
                           style={
                             Object {
@@ -1759,10 +1759,10 @@ exports[`Claims List component snapshot testing should match component when load
                           }
                         >
                           <WrapperField
-                            label="ratings"
+                            label="Ratings"
                             messageVariables={
                               Object {
-                                "label": "ratings",
+                                "label": "Ratings",
                               }
                             }
                             name="ratings"
@@ -1777,10 +1777,10 @@ exports[`Claims List component snapshot testing should match component when load
                           >
                             <Field
                               key="_ratings"
-                              label="ratings"
+                              label="Ratings"
                               messageVariables={
                                 Object {
-                                  "label": "ratings",
+                                  "label": "Ratings",
                                 }
                               }
                               name={
@@ -1817,7 +1817,7 @@ exports[`Claims List component snapshot testing should match component when load
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_ratings"
-                                    label="ratings"
+                                    label="Ratings"
                                     name="ratings"
                                     prefixCls="ant-form"
                                     required={false}
@@ -1838,16 +1838,16 @@ exports[`Claims List component snapshot testing should match component when load
                                         <label
                                           className=""
                                           htmlFor="filters_ratings"
-                                          title="ratings"
+                                          title="Ratings"
                                         >
-                                          ratings
+                                          Ratings
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="ratings"
+                                    label="Ratings"
                                     name={
                                       Array [
                                         "ratings",
@@ -5348,7 +5348,7 @@ exports[`Claims List component snapshot testing should match component with clai
                         }
                       >
                         <FormItem
-                          label="Query"
+                          label="Search"
                           name="q"
                           style={
                             Object {
@@ -5357,10 +5357,10 @@ exports[`Claims List component snapshot testing should match component with clai
                           }
                         >
                           <WrapperField
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name="q"
@@ -5375,10 +5375,10 @@ exports[`Claims List component snapshot testing should match component with clai
                           >
                             <Field
                               key="_q"
-                              label="Query"
+                              label="Search"
                               messageVariables={
                                 Object {
-                                  "label": "Query",
+                                  "label": "Search",
                                 }
                               }
                               name={
@@ -5415,7 +5415,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_q"
-                                    label="Query"
+                                    label="Search"
                                     name="q"
                                     prefixCls="ant-form"
                                     required={false}
@@ -5436,16 +5436,16 @@ exports[`Claims List component snapshot testing should match component with clai
                                         <label
                                           className=""
                                           htmlFor="filters_q"
-                                          title="Query"
+                                          title="Search"
                                         >
-                                          Query
+                                          Search
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="Query"
+                                    label="Search"
                                     name={
                                       Array [
                                         "q",
@@ -5544,7 +5544,7 @@ exports[`Claims List component snapshot testing should match component with clai
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -5553,10 +5553,10 @@ exports[`Claims List component snapshot testing should match component with clai
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -5571,10 +5571,10 @@ exports[`Claims List component snapshot testing should match component with clai
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -5611,7 +5611,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -5632,16 +5632,16 @@ exports[`Claims List component snapshot testing should match component with clai
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -6291,7 +6291,7 @@ exports[`Claims List component snapshot testing should match component with clai
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="claimant"
+                          label="Claimants"
                           name="claimants"
                           style={
                             Object {
@@ -6300,10 +6300,10 @@ exports[`Claims List component snapshot testing should match component with clai
                           }
                         >
                           <WrapperField
-                            label="claimant"
+                            label="Claimants"
                             messageVariables={
                               Object {
-                                "label": "claimant",
+                                "label": "Claimants",
                               }
                             }
                             name="claimants"
@@ -6318,10 +6318,10 @@ exports[`Claims List component snapshot testing should match component with clai
                           >
                             <Field
                               key="_claimants"
-                              label="claimant"
+                              label="Claimants"
                               messageVariables={
                                 Object {
-                                  "label": "claimant",
+                                  "label": "Claimants",
                                 }
                               }
                               name={
@@ -6358,7 +6358,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_claimants"
-                                    label="claimant"
+                                    label="Claimants"
                                     name="claimants"
                                     prefixCls="ant-form"
                                     required={false}
@@ -6379,16 +6379,16 @@ exports[`Claims List component snapshot testing should match component with clai
                                         <label
                                           className=""
                                           htmlFor="filters_claimants"
-                                          title="claimant"
+                                          title="Claimants"
                                         >
-                                          claimant
+                                          Claimants
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="claimant"
+                                    label="Claimants"
                                     name={
                                       Array [
                                         "claimants",
@@ -6945,7 +6945,7 @@ exports[`Claims List component snapshot testing should match component with clai
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="ratings"
+                          label="Ratings"
                           name="ratings"
                           style={
                             Object {
@@ -6954,10 +6954,10 @@ exports[`Claims List component snapshot testing should match component with clai
                           }
                         >
                           <WrapperField
-                            label="ratings"
+                            label="Ratings"
                             messageVariables={
                               Object {
-                                "label": "ratings",
+                                "label": "Ratings",
                               }
                             }
                             name="ratings"
@@ -6972,10 +6972,10 @@ exports[`Claims List component snapshot testing should match component with clai
                           >
                             <Field
                               key="_ratings"
-                              label="ratings"
+                              label="Ratings"
                               messageVariables={
                                 Object {
-                                  "label": "ratings",
+                                  "label": "Ratings",
                                 }
                               }
                               name={
@@ -7012,7 +7012,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_ratings"
-                                    label="ratings"
+                                    label="Ratings"
                                     name="ratings"
                                     prefixCls="ant-form"
                                     required={false}
@@ -7033,16 +7033,16 @@ exports[`Claims List component snapshot testing should match component with clai
                                         <label
                                           className=""
                                           htmlFor="filters_ratings"
-                                          title="ratings"
+                                          title="Ratings"
                                         >
-                                          ratings
+                                          Ratings
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="ratings"
+                                    label="Ratings"
                                     name={
                                       Array [
                                         "ratings",
@@ -10519,7 +10519,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                         }
                       >
                         <FormItem
-                          label="Query"
+                          label="Search"
                           name="q"
                           style={
                             Object {
@@ -10528,10 +10528,10 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           }
                         >
                           <WrapperField
-                            label="Query"
+                            label="Search"
                             messageVariables={
                               Object {
-                                "label": "Query",
+                                "label": "Search",
                               }
                             }
                             name="q"
@@ -10546,10 +10546,10 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           >
                             <Field
                               key="_q"
-                              label="Query"
+                              label="Search"
                               messageVariables={
                                 Object {
-                                  "label": "Query",
+                                  "label": "Search",
                                 }
                               }
                               name={
@@ -10586,7 +10586,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_q"
-                                    label="Query"
+                                    label="Search"
                                     name="q"
                                     prefixCls="ant-form"
                                     required={false}
@@ -10607,16 +10607,16 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                         <label
                                           className=""
                                           htmlFor="filters_q"
-                                          title="Query"
+                                          title="Search"
                                         >
-                                          Query
+                                          Search
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="Query"
+                                    label="Search"
                                     name={
                                       Array [
                                         "q",
@@ -10715,7 +10715,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="sort"
+                          label="Sort"
                           name="sort"
                           style={
                             Object {
@@ -10724,10 +10724,10 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           }
                         >
                           <WrapperField
-                            label="sort"
+                            label="Sort"
                             messageVariables={
                               Object {
-                                "label": "sort",
+                                "label": "Sort",
                               }
                             }
                             name="sort"
@@ -10742,10 +10742,10 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           >
                             <Field
                               key="_sort"
-                              label="sort"
+                              label="Sort"
                               messageVariables={
                                 Object {
-                                  "label": "sort",
+                                  "label": "Sort",
                                 }
                               }
                               name={
@@ -10782,7 +10782,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_sort"
-                                    label="sort"
+                                    label="Sort"
                                     name="sort"
                                     prefixCls="ant-form"
                                     required={false}
@@ -10803,16 +10803,16 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                         <label
                                           className=""
                                           htmlFor="filters_sort"
-                                          title="sort"
+                                          title="Sort"
                                         >
-                                          sort
+                                          Sort
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="sort"
+                                    label="Sort"
                                     name={
                                       Array [
                                         "sort",
@@ -11462,7 +11462,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="claimant"
+                          label="Claimants"
                           name="claimants"
                           style={
                             Object {
@@ -11471,10 +11471,10 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           }
                         >
                           <WrapperField
-                            label="claimant"
+                            label="Claimants"
                             messageVariables={
                               Object {
-                                "label": "claimant",
+                                "label": "Claimants",
                               }
                             }
                             name="claimants"
@@ -11489,10 +11489,10 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           >
                             <Field
                               key="_claimants"
-                              label="claimant"
+                              label="Claimants"
                               messageVariables={
                                 Object {
-                                  "label": "claimant",
+                                  "label": "Claimants",
                                 }
                               }
                               name={
@@ -11529,7 +11529,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_claimants"
-                                    label="claimant"
+                                    label="Claimants"
                                     name="claimants"
                                     prefixCls="ant-form"
                                     required={false}
@@ -11550,16 +11550,16 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                         <label
                                           className=""
                                           htmlFor="filters_claimants"
-                                          title="claimant"
+                                          title="Claimants"
                                         >
-                                          claimant
+                                          Claimants
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="claimant"
+                                    label="Claimants"
                                     name={
                                       Array [
                                         "claimants",
@@ -12116,7 +12116,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           </WrapperField>
                         </FormItem>
                         <FormItem
-                          label="ratings"
+                          label="Ratings"
                           name="ratings"
                           style={
                             Object {
@@ -12125,10 +12125,10 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           }
                         >
                           <WrapperField
-                            label="ratings"
+                            label="Ratings"
                             messageVariables={
                               Object {
-                                "label": "ratings",
+                                "label": "Ratings",
                               }
                             }
                             name="ratings"
@@ -12143,10 +12143,10 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                           >
                             <Field
                               key="_ratings"
-                              label="ratings"
+                              label="Ratings"
                               messageVariables={
                                 Object {
-                                  "label": "ratings",
+                                  "label": "Ratings",
                                 }
                               }
                               name={
@@ -12183,7 +12183,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                 >
                                   <FormItemLabel
                                     htmlFor="filters_ratings"
-                                    label="ratings"
+                                    label="Ratings"
                                     name="ratings"
                                     prefixCls="ant-form"
                                     required={false}
@@ -12204,16 +12204,16 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                         <label
                                           className=""
                                           htmlFor="filters_ratings"
-                                          title="ratings"
+                                          title="Ratings"
                                         >
-                                          ratings
+                                          Ratings
                                         </label>
                                       </div>
                                     </Col>
                                   </FormItemLabel>
                                   <FormItemInput
                                     errors={Array []}
-                                    label="ratings"
+                                    label="Ratings"
                                     name={
                                       Array [
                                         "ratings",

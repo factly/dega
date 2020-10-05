@@ -51,7 +51,7 @@ function PostList() {
       tag: values.tags,
       category: values.categories,
       format: values.formats,
-      sort_by: values.sort_by,
+      sort: values.sort,
       q: values.q,
     };
 
