@@ -1,14 +1,18 @@
 import React from 'react';
 import { Checkbox } from 'antd';
 
-const options = [
-  { label: 'Get', value: 'get' },
-  { label: 'Create', value: 'create' },
-  { label: 'Update', value: 'update' },
-  { label: 'Delete', value: 'delete' },
-];
+function Permission({ value, onChange, entity }) {
+  const options = [
+    { label: 'Get', value: 'get' },
+    { label: 'Create', value: 'create' },
+    { label: 'Update', value: 'update' },
+    { label: 'Delete', value: 'delete' },
+  ];
 
-function Permission({ value, onChange }) {
+  if (entity === 'posts') {
+    options.push({ label: 'Publish', value: 'publish' });
+  }
+
   return (
     <Checkbox.Group value={value} options={options} onChange={(actions) => onChange(actions)} />
   );

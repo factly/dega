@@ -4,15 +4,15 @@ import Selector from '../../../components/Selector';
 import Permission from '../../../components/Permission';
 
 const entities = [
+  'posts',
   'categories',
   'tags',
   'formats',
   'media',
-  'posts',
+  'factchecks',
+  'claims',
   'claimants',
   'ratings',
-  'claims',
-  'factchecks',
   'policies',
 ];
 
@@ -59,9 +59,13 @@ function PolicyForm({ data = {}, onCreate }) {
           </Form.Item>
         </Col>
       </Row>
-      {entities.map((item) => (
-        <Form.Item key={'permissions-' + item} name={['permissions', item]} label={item}>
-          <Permission />
+      {entities.map((entity) => (
+        <Form.Item
+          key={'permissions-' + entity}
+          name={['permissions', entity]}
+          label={entity[0].toUpperCase() + entity.slice(1)}
+        >
+          <Permission entity={entity} />
         </Form.Item>
       ))}
       <Button type="primary" htmlType="submit">

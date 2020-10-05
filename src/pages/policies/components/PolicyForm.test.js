@@ -21,6 +21,19 @@ const mockStore = configureMockStore(middlewares);
 
 let onCreate, store;
 
+const permissions = {
+  posts: ['get', 'create', 'update', 'delete'],
+  categories: ['get', 'create', 'update', 'delete'],
+  tags: ['get', 'create', 'update', 'delete'],
+  formats: ['get', 'create', 'update', 'delete'],
+  media: ['get', 'create', 'update', 'delete'],
+  factchecks: ['get', 'create', 'update', 'delete'],
+  claims: ['get', 'create', 'update', 'delete'],
+  claimants: ['get', 'create', 'update', 'delete'],
+  ratings: ['get', 'create', 'update', 'delete'],
+  policies: ['get', 'create', 'update', 'delete'],
+};
+
 describe('Policy Create Form component', () => {
   store = mockStore({
     policies: {
@@ -109,18 +122,7 @@ describe('Policy Create Form component', () => {
         name: 'name',
         description: 'description',
         users: [1, 2],
-        permissions: {
-          categories: ['get', 'create', 'update', 'delete'],
-          tags: ['get', 'create', 'update', 'delete'],
-          formats: ['get', 'create', 'update', 'delete'],
-          media: ['get', 'create', 'update', 'delete'],
-          posts: ['get', 'create', 'update', 'delete'],
-          claimants: ['get', 'create', 'update', 'delete'],
-          ratings: ['get', 'create', 'update', 'delete'],
-          claims: ['get', 'create', 'update', 'delete'],
-          factchecks: ['get', 'create', 'update', 'delete'],
-          policies: ['get', 'create', 'update', 'delete'],
-        },
+        permissions: permissions,
       };
       act(() => {
         wrapper = mount(
@@ -142,15 +144,15 @@ describe('Policy Create Form component', () => {
           description: 'description',
           users: ['1', '2'],
           permissions: [
+            { resource: 'posts', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'categories', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'tags', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'formats', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'media', actions: ['get', 'create', 'update', 'delete'] },
-            { resource: 'posts', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'factchecks', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'claims', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'claimants', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'ratings', actions: ['get', 'create', 'update', 'delete'] },
-            { resource: 'claims', actions: ['get', 'create', 'update', 'delete'] },
-            { resource: 'factchecks', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'policies', actions: ['get', 'create', 'update', 'delete'] },
           ],
         });
@@ -250,15 +252,15 @@ describe('Policy Create Form component', () => {
           description: 'description',
           users: ['1', '2'],
           permissions: [
+            { resource: 'posts', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'categories', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'tags', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'formats', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'media', actions: ['get', 'create', 'update', 'delete'] },
-            { resource: 'posts', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'factchecks', actions: ['get', 'create', 'update', 'delete'] },
+            { resource: 'claims', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'claimants', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'ratings', actions: ['get', 'create', 'update', 'delete'] },
-            { resource: 'claims', actions: ['get', 'create', 'update', 'delete'] },
-            { resource: 'factchecks', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'policies', actions: ['get', 'create', 'update', 'delete'] },
           ],
         });
