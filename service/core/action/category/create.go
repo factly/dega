@@ -91,6 +91,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		ParentID:    category.ParentID,
 		MediumID:    category.MediumID,
 		SpaceID:     uint(sID),
+		IsFeatured:  category.IsFeatured,
 	}
 	tx := config.DB.Begin()
 	err = tx.Model(&model.Category{}).Create(&result).Error

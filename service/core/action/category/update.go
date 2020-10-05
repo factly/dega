@@ -123,6 +123,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Description: category.Description,
 		ParentID:    category.ParentID,
 		MediumID:    category.MediumID,
+		IsFeatured:  category.IsFeatured,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {

@@ -9,6 +9,7 @@ import (
 type tag struct {
 	Name        string `json:"name" validate:"required,min=3,max=50"`
 	Slug        string `json:"slug"`
+	IsFeatured  bool   `json:"is_featured"`
 	Description string `json:"description"`
 }
 

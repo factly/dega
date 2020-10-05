@@ -2586,6 +2586,9 @@
                 "description": {
                     "type": "string"
                 },
+                "is_featured": {
+                    "type": "boolean"
+                },
                 "medium_id": {
                     "type": "integer"
                 },
@@ -2830,6 +2833,9 @@
                 },
                 "id": {
                     "type": "integer"
+                },
+                "is_featured": {
+                    "type": "boolean"
                 },
                 "medium": {
                     "type": "object",
@@ -3266,6 +3272,9 @@
                 },
                 "id": {
                     "type": "integer"
+                },
+                "is_featured": {
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"
@@ -3709,6 +3718,9 @@
             "properties": {
                 "description": {
                     "type": "string"
+                },
+                "is_featured": {
+                    "type": "boolean"
                 },
                 "name": {
                     "type": "string"

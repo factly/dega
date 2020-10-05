@@ -101,6 +101,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Name:        tag.Name,
 		Slug:        tagSlug,
 		Description: tag.Description,
+		IsFeatured:  tag.IsFeatured,
 	}).First(&result)
 
 	// Update into meili index
