@@ -90,8 +90,7 @@ function TagList() {
         onFinish={(values) =>
           setFilters({
             ...filters,
-            sort_by: values.sort,
-            q: values.q,
+            ...values,
           })
         }
         style={{ maxWidth: '100%' }}

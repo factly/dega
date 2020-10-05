@@ -88,13 +88,13 @@ function CategoryList() {
         form={form}
         name="filters"
         layout="inline"
-        onFinish={(values) => setFilters({ ...filters, sort_by: values.sort, q: values.q })}
+        onFinish={(values) => setFilters({ ...filters, ...values })}
         style={{ maxWidth: '100%' }}
       >
         <Form.Item name="q" label="Search" style={{ width: '25%' }}>
           <Input placeholder="search categories" />
         </Form.Item>
-        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
+        <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
           <Select>
             <Option value="desc">Latest</Option>
             <Option value="asc">Old</Option>

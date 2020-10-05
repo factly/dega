@@ -35,8 +35,8 @@ export const getPosts = (query) => {
     if (query.limit) {
       params.append('limit', query.limit);
     }
-    if (query.sort_by) {
-      params.append('sort', query.sort_by);
+    if (query.sort) {
+      params.append('sort', query.sort);
     }
     if (query.q) {
       params.append('q', query.q);

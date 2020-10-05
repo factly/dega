@@ -49,7 +49,7 @@ function ClaimList() {
     let filterValue = {
       claimant: values.claimants,
       rating: values.ratings,
-      sort_by: values.sort_by,
+      sort: values.sort,
       q: values.q,
     };
 
@@ -112,19 +112,19 @@ function ClaimList() {
         onFinish={(values) => onSave(values)}
         style={{ maxWidth: '100%' }}
       >
-        <Form.Item name="q" label="Query" style={{ width: '25%' }}>
+        <Form.Item name="q" label="Search" style={{ width: '25%' }}>
           <Input placeholder="search post" />
         </Form.Item>
-        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
+        <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
           <Select>
             <Option value="desc">Latest</Option>
             <Option value="asc">Old</Option>
           </Select>
         </Form.Item>
-        <Form.Item name="claimants" label="claimant" style={{ width: '15%' }}>
+        <Form.Item name="claimants" label="Claimants" style={{ width: '15%' }}>
           <Selector mode="multiple" action="Claimants" />
         </Form.Item>
-        <Form.Item name="ratings" label="ratings" style={{ width: '15%' }}>
+        <Form.Item name="ratings" label="Ratings" style={{ width: '15%' }}>
           <Selector mode="multiple" action="Ratings" />
         </Form.Item>
         <Form.Item>
