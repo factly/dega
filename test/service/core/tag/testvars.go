@@ -16,15 +16,16 @@ var headers = map[string]string{
 }
 
 var Data = map[string]interface{}{
-	"name": "Elections",
-	"slug": "elections",
+	"name":        "Elections",
+	"slug":        "elections",
+	"is_featured": true,
 }
 
 var invalidData = map[string]interface{}{
 	"name": "a",
 }
 
-var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}
+var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "is_featured", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "tags"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "tags" SET "deleted_at"=`)
@@ -42,7 +43,7 @@ func slugCheckMock(mock sqlmock.Sqlmock) {
 func tagInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	mock.ExpectQuery(`INSERT INTO "tags"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], "", 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], "", Data["is_featured"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -65,14 +66,14 @@ func SelectWithSpaceMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["is_featured"], 1))
 }
 
 func SelectWithOutSpace(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, tag["name"], tag["slug"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, tag["name"], tag["slug"], Data["is_featured"], 1))
 }
 
 // check tag associated with any post before deleting
@@ -85,7 +86,7 @@ func tagPostExpect(mock sqlmock.Sqlmock, count int) {
 func tagUpdateMock(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 	mock.ExpectBegin()
 	mock.ExpectExec(`UPDATE \"tags\" SET (.+)  WHERE (.+) \"tags\".\"id\" = `).
-		WithArgs(tag["name"], tag["slug"], test.AnyTime{}, 1).
+		WithArgs(tag["is_featured"], tag["name"], tag["slug"], test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	SelectWithOutSpace(mock, tag)
 }

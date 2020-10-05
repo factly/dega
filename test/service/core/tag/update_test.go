@@ -77,8 +77,9 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("update tag", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedTag := map[string]interface{}{
-			"name": "Elections",
-			"slug": "elections",
+			"name":        "Elections",
+			"slug":        "elections",
+			"is_featured": true,
 		}
 
 		SelectWithSpaceMock(mock)
@@ -98,15 +99,16 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("update tag by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedTag := map[string]interface{}{
-			"name": "Elections",
-			"slug": "elections-1",
+			"name":        "Elections",
+			"slug":        "elections-1",
+			"is_featured": true,
 		}
 		SelectWithSpaceMock(mock)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
 			WithArgs("elections%", 1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, updatedTag["name"], "elections", 1))
+				AddRow(1, time.Now(), time.Now(), nil, updatedTag["name"], "elections", false, 1))
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
@@ -124,8 +126,9 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("update tag with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedTag := map[string]interface{}{
-			"name": "Elections",
-			"slug": "testing-slug",
+			"name":        "Elections",
+			"slug":        "testing-slug",
+			"is_featured": true,
 		}
 		SelectWithSpaceMock(mock)
 
@@ -148,8 +151,9 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("tag with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedTag := map[string]interface{}{
-			"name": "NewElections",
-			"slug": "elections",
+			"name":        "NewElections",
+			"slug":        "elections",
+			"is_featured": true,
 		}
 
 		SelectWithSpaceMock(mock)
@@ -168,8 +172,9 @@ func TestTagUpdate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 		updatedTag := map[string]interface{}{
-			"name": "Elections",
-			"slug": "elections",
+			"name":        "Elections",
+			"slug":        "elections",
+			"is_featured": true,
 		}
 
 		SelectWithSpaceMock(mock)
