@@ -27,7 +27,6 @@ const permissions = {
   tags: ['get', 'create', 'update', 'delete'],
   formats: ['get', 'create', 'update', 'delete'],
   media: ['get', 'create', 'update', 'delete'],
-  factchecks: ['get', 'create', 'update', 'delete'],
   claims: ['get', 'create', 'update', 'delete'],
   claimants: ['get', 'create', 'update', 'delete'],
   ratings: ['get', 'create', 'update', 'delete'],
@@ -149,7 +148,6 @@ describe('Policy Create Form component', () => {
             { resource: 'tags', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'formats', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'media', actions: ['get', 'create', 'update', 'delete'] },
-            { resource: 'factchecks', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'claims', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'claimants', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'ratings', actions: ['get', 'create', 'update', 'delete'] },
@@ -233,12 +231,6 @@ describe('Policy Create Form component', () => {
           .find('Permission')
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
-        wrapper
-          .find('FormItem')
-          .at(12)
-          .find('Permission')
-          .props()
-          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -257,7 +249,6 @@ describe('Policy Create Form component', () => {
             { resource: 'tags', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'formats', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'media', actions: ['get', 'create', 'update', 'delete'] },
-            { resource: 'factchecks', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'claims', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'claimants', actions: ['get', 'create', 'update', 'delete'] },
             { resource: 'ratings', actions: ['get', 'create', 'update', 'delete'] },

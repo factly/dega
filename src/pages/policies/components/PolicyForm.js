@@ -9,7 +9,6 @@ const entities = [
   'tags',
   'formats',
   'media',
-  'factchecks',
   'claims',
   'claimants',
   'ratings',
