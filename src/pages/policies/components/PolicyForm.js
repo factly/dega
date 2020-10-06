@@ -1,19 +1,60 @@
 import React from 'react';
-import { Row, Col, Form, Input, Button } from 'antd';
+import { Row, Col, Form, Input, Button, Checkbox } from 'antd';
 import Selector from '../../../components/Selector';
-import Permission from '../../../components/Permission';
+
+const options = [
+  { label: 'Get', value: 'get' },
+  { label: 'Create', value: 'create' },
+  { label: 'Update', value: 'update' },
+  { label: 'Delete', value: 'delete' },
+];
 
 const entities = [
-  'categories',
-  'tags',
-  'formats',
-  'media',
-  'posts',
-  'claimants',
-  'ratings',
-  'claims',
-  'factchecks',
-  'policies',
+  {
+    name: 'posts',
+    label: 'Posts',
+    options: [...options, { label: 'Publish', value: 'publish' }],
+  },
+  {
+    name: 'categories',
+    label: 'Categories',
+    options: options,
+  },
+  {
+    name: 'tags',
+    label: 'Tags',
+    options: options,
+  },
+  {
+    name: 'formats',
+    label: 'Formats',
+    options: options,
+  },
+  {
+    name: 'media',
+    label: 'Media',
+    options: options,
+  },
+  {
+    name: 'claims',
+    label: 'Claims',
+    options: options,
+  },
+  {
+    name: 'claimants',
+    label: 'Claimants',
+    options: options,
+  },
+  {
+    name: 'ratings',
+    label: 'Ratings',
+    options: options,
+  },
+  {
+    name: 'policies',
+    label: 'policies',
+    options: options,
+  },
 ];
 
 function PolicyForm({ data = {}, onCreate }) {
@@ -59,9 +100,13 @@ function PolicyForm({ data = {}, onCreate }) {
           </Form.Item>
         </Col>
       </Row>
-      {entities.map((item) => (
-        <Form.Item key={'permissions-' + item} name={['permissions', item]} label={item}>
-          <Permission />
+      {entities.map((entity, index) => (
+        <Form.Item
+          key={'permissions-' + index}
+          name={['permissions', entity.name]}
+          label={entity.label}
+        >
+          <Checkbox.Group options={entity.options} />
         </Form.Item>
       ))}
       <Button type="primary" htmlType="submit">
