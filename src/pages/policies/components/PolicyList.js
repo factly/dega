@@ -6,7 +6,7 @@ import { getPolicies, deletePolicy } from '../../../actions/policies';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
-function PolicyList() {
+function PolicyList({ actions }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -81,13 +81,17 @@ function PolicyList() {
               }}
               to={`/policies/${record.id}/edit`}
             >
-              <Button>Edit</Button>
+              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
+                Edit
+              </Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
               onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
             >
-              <Button>Delete</Button>
+              <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                Delete
+              </Button>
             </Popconfirm>
           </span>
         );

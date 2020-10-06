@@ -5,7 +5,7 @@ import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
-function TagList() {
+function TagList({ actions }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -63,14 +63,18 @@ function TagList() {
               }}
               to={`/tags/${record.id}/edit`}
             >
-              <Button>Edit</Button>
+              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
+                Edit
+              </Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
               onConfirm={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button>Delete</Button>
+                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                  Delete
+                </Button>
               </Link>
             </Popconfirm>
           </span>

@@ -10,13 +10,18 @@ function ProtectedRoute({ component: Component, permission: permission, ...rest 
     return details[selected] ? details[selected].permissions : [];
   });
 
-  if (
-    userPermission.findIndex(
-      (each) =>
-        each.resource === 'admin' || (each.resource === resource && each.actions.includes(action)),
-    ) > -1
-  )
-    return <Route {...rest} render={(props) => <Component {...rest} {...props} />} />;
+  const node = userPermission.findIndex(
+    (each) =>
+      each.resource === 'admin' || (each.resource === resource && each.actions.includes(action)),
+  );
+
+  if (node > -1)
+    return (
+      <Route
+        {...rest}
+        render={(props) => <Component {...rest} {...props} permission={userPermission[node]} />}
+      />
+    );
 
   return (
     <Route

@@ -18,6 +18,7 @@ exports[`Policies List component should render the component 1`] = `
     >
       <button
         className="ant-btn"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -225,6 +226,7 @@ exports[`Policies List component should render the component with data 1`] = `
     >
       <button
         className="ant-btn"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -420,6 +422,7 @@ exports[`Policies List component should render the component with data 1`] = `
                           >
                             <button
                               className="ant-btn"
+                              disabled={true}
                               onClick={[Function]}
                               type="button"
                             >
@@ -428,18 +431,36 @@ exports[`Policies List component should render the component with data 1`] = `
                               </span>
                             </button>
                           </a>
-                          <button
-                            className="ant-btn"
+                          <span
+                            className="ant-popover-disabled-compatible-wrapper"
                             onClick={[Function]}
-                            onKeyDown={[Function]}
                             onMouseDown={[Function]}
                             onTouchStart={[Function]}
-                            type="button"
+                            style={
+                              Object {
+                                "cursor": "not-allowed",
+                                "display": "inline-block",
+                                "width": null,
+                              }
+                            }
                           >
-                            <span>
-                              Delete
-                            </span>
-                          </button>
+                            <button
+                              className="ant-btn"
+                              disabled={true}
+                              onClick={[Function]}
+                              onKeyDown={[Function]}
+                              style={
+                                Object {
+                                  "pointerEvents": "none",
+                                }
+                              }
+                              type="button"
+                            >
+                              <span>
+                                Delete
+                              </span>
+                            </button>
+                          </span>
                         </span>
                       </td>
                     </tr>

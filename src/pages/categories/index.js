@@ -3,13 +3,16 @@ import CategoryList from './components/CategoryList';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 
-function Categories() {
+function Categories({ permission }) {
+  const { actions } = permission;
   return (
     <Space direction="vertical">
       <Link key="1" to="/categories/create">
-        <Button>Create New</Button>
+        <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
+          Create New
+        </Button>
       </Link>
-      <CategoryList />
+      <CategoryList actions={actions} />
     </Space>
   );
 }

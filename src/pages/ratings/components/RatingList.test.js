@@ -80,7 +80,7 @@ describe('Ratings List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <RatingList />
+            <RatingList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -92,7 +92,7 @@ describe('Ratings List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <RatingList />
+            <RatingList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -104,7 +104,7 @@ describe('Ratings List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <RatingList />
+            <RatingList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -124,7 +124,7 @@ describe('Ratings List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <RatingList />
+              <RatingList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -140,7 +140,7 @@ describe('Ratings List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <RatingList />
+              <RatingList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -165,7 +165,7 @@ describe('Ratings List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <RatingList />
+              <RatingList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -186,7 +186,7 @@ describe('Ratings List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <RatingList />
+              <RatingList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

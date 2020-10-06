@@ -33,7 +33,14 @@ exports[`Ratings List component snapshot testing should match component when loa
   }
 >
   <BrowserRouter>
-    <RatingList />
+    <RatingList
+      actions={
+        Array [
+          "update",
+          "delete",
+        ]
+      }
+    />
   </BrowserRouter>
 </ContextProvider>
 `;
@@ -74,7 +81,14 @@ exports[`Ratings List component snapshot testing should match component with rat
         }
       }
     >
-      <RatingList>
+      <RatingList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Table
           bordered={true}
           columns={
@@ -1576,6 +1590,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                 >
                                                   <Button
                                                     block={false}
+                                                    disabled={false}
                                                     ghost={false}
                                                     htmlType="button"
                                                     loading={false}
@@ -1583,6 +1598,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                     <Wave>
                                                       <button
                                                         className="ant-btn"
+                                                        disabled={false}
                                                         onClick={[Function]}
                                                         type="button"
                                                       >
@@ -2235,6 +2251,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -2242,6 +2259,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -2559,6 +2577,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                 >
                                                   <Button
                                                     block={false}
+                                                    disabled={false}
                                                     ghost={false}
                                                     htmlType="button"
                                                     loading={false}
@@ -2566,6 +2585,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                     <Wave>
                                                       <button
                                                         className="ant-btn"
+                                                        disabled={false}
                                                         onClick={[Function]}
                                                         type="button"
                                                       >
@@ -3218,6 +3238,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -3225,6 +3246,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -3689,7 +3711,14 @@ exports[`Ratings List component snapshot testing should render the component 1`]
   }
 >
   <BrowserRouter>
-    <RatingList />
+    <RatingList
+      actions={
+        Array [
+          "update",
+          "delete",
+        ]
+      }
+    />
   </BrowserRouter>
 </ContextProvider>
 `;

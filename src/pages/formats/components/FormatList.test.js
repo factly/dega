@@ -77,7 +77,7 @@ describe('Formats List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <FormatList />
+            <FormatList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -89,7 +89,7 @@ describe('Formats List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <FormatList />
+            <FormatList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -101,7 +101,7 @@ describe('Formats List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <FormatList />
+            <FormatList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -124,7 +124,7 @@ describe('Formats List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <FormatList />
+              <FormatList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -142,7 +142,7 @@ describe('Formats List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <FormatList />
+              <FormatList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -167,7 +167,7 @@ describe('Formats List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <FormatList />
+              <FormatList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -188,7 +188,7 @@ describe('Formats List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <FormatList />
+              <FormatList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

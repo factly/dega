@@ -5,7 +5,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import PostList from './index';
+import Posts from './index';
 import { shallow } from 'enzyme';
 
 const middlewares = [thunk];
@@ -42,7 +42,7 @@ describe('Posts List component', () => {
     const tree = shallow(
       <Provider store={store}>
         <Router>
-          <PostList />
+          <Posts permission={{ actions: ['create'] }} />
         </Router>
       </Provider>,
     );
@@ -65,7 +65,7 @@ describe('Posts List component', () => {
     const tree = shallow(
       <Provider store={store}>
         <Router>
-          <PostList />
+          <Posts permission={{ actions: ['create'] }} />
         </Router>
       </Provider>,
     );

@@ -73,7 +73,7 @@ describe('Media List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MediumList />
+            <MediumList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -85,7 +85,7 @@ describe('Media List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MediumList />
+            <MediumList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -97,7 +97,7 @@ describe('Media List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MediumList />
+            <MediumList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -120,7 +120,7 @@ describe('Media List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MediumList />
+              <MediumList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -138,7 +138,7 @@ describe('Media List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MediumList />
+              <MediumList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -162,7 +162,7 @@ describe('Media List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MediumList />
+              <MediumList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -183,7 +183,7 @@ describe('Media List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MediumList />
+              <MediumList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -199,7 +199,7 @@ describe('Media List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MediumList />
+              <MediumList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

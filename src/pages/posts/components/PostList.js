@@ -8,7 +8,7 @@ import Selector from '../../../components/Selector';
 import deepEqual from 'deep-equal';
 import Template from '../../../components/Template';
 
-function PostList() {
+function PostList({ actions }) {
   const dispatch = useDispatch();
 
   const { Option } = Select;
@@ -115,13 +115,23 @@ function PostList() {
                 }}
                 to={`/posts/${item.id}/edit`}
               >
-                <Button icon={<EditOutlined />}>Edit</Button>
+                <Button
+                  icon={<EditOutlined />}
+                  disabled={!(actions.includes('admin') || actions.includes('update'))}
+                >
+                  Edit
+                </Button>
               </Link>,
               <Popconfirm
                 title="Sure to cancel?"
                 onConfirm={() => dispatch(deletePost(item.id)).then(() => fetchPosts())}
               >
-                <Button icon={<DeleteOutlined />}>Delete</Button>
+                <Button
+                  icon={<DeleteOutlined />}
+                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                >
+                  Delete
+                </Button>
               </Popconfirm>,
             ]}
             extra={

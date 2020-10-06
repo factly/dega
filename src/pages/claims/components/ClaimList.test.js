@@ -141,7 +141,7 @@ describe('Claims List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimList />
+            <ClaimList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -153,7 +153,7 @@ describe('Claims List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimList />
+            <ClaimList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -166,7 +166,7 @@ describe('Claims List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimList />
+            <ClaimList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -190,7 +190,7 @@ describe('Claims List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimList />
+              <ClaimList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -208,7 +208,7 @@ describe('Claims List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimList />
+              <ClaimList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -232,7 +232,7 @@ describe('Claims List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimList />
+              <ClaimList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -259,7 +259,7 @@ describe('Claims List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimList />
+              <ClaimList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -275,7 +275,7 @@ describe('Claims List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimList />
+              <ClaimList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

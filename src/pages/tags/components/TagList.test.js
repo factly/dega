@@ -81,7 +81,7 @@ describe('Tags List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <TagList />
+            <TagList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -93,7 +93,7 @@ describe('Tags List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <TagList />
+            <TagList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -105,7 +105,7 @@ describe('Tags List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <TagList />
+            <TagList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -125,7 +125,7 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList />
+              <TagList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -143,7 +143,7 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList />
+              <TagList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -168,7 +168,7 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList />
+              <TagList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -189,7 +189,7 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList />
+              <TagList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -206,7 +206,7 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList />
+              <TagList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

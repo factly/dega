@@ -18,6 +18,7 @@ exports[`Formats List component should render the component 1`] = `
     >
       <button
         className="ant-btn"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -217,6 +218,7 @@ exports[`Formats List component should render the component with data 1`] = `
     >
       <button
         className="ant-btn"
+        disabled={false}
         onClick={[Function]}
         type="button"
       >
@@ -382,6 +384,7 @@ exports[`Formats List component should render the component with data 1`] = `
                           >
                             <button
                               className="ant-btn"
+                              disabled={true}
                               onClick={[Function]}
                               type="button"
                             >
@@ -400,6 +403,7 @@ exports[`Formats List component should render the component with data 1`] = `
                           >
                             <button
                               className="ant-btn"
+                              disabled={true}
                               onClick={[Function]}
                               type="button"
                             >

@@ -33,7 +33,14 @@ exports[`Tags List component snapshot testing should match component when loadin
   }
 >
   <BrowserRouter>
-    <TagList />
+    <TagList
+      actions={
+        Array [
+          "update",
+          "delete",
+        ]
+      }
+    />
   </BrowserRouter>
 </ContextProvider>
 `;
@@ -71,7 +78,14 @@ exports[`Tags List component snapshot testing should match component with tags 1
   }
 >
   <BrowserRouter>
-    <TagList />
+    <TagList
+      actions={
+        Array [
+          "update",
+          "delete",
+        ]
+      }
+    />
   </BrowserRouter>
 </ContextProvider>
 `;
@@ -109,7 +123,14 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
   }
 >
   <BrowserRouter>
-    <TagList />
+    <TagList
+      actions={
+        Array [
+          "update",
+          "delete",
+        ]
+      }
+    />
   </BrowserRouter>
 </ContextProvider>
 `;
