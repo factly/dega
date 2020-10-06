@@ -7,6 +7,7 @@ import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
 import PolicyCreateForm from './PolicyForm';
+import { Checkbox } from 'antd';
 
 const data = { id: 1, name: 'Policy 1' };
 
@@ -180,55 +181,55 @@ describe('Policy Create Form component', () => {
         wrapper
           .find('FormItem')
           .at(3)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(4)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(5)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(6)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(7)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(8)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(9)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(10)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(11)
-          .find('Permission')
+          .find(Checkbox.Group)
           .props()
           .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
 
