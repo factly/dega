@@ -26,7 +26,7 @@ var DataFile = "./data/ratings.json"
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Success 201 {object} model.Format
+// @Success 201 {object} []model.Rating
 // @Failure 400 {array} string
 // @Router /fact-check/ratings/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {

@@ -15,6 +15,18 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// details - Get policy by ID
+// @Summary Get policy by ID
+// @Description Get policy by ID
+// @Tags Policy
+// @ID get-policy-by-id
+// @Consume json
+// @Produce json
+// @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
+// @Param policy_id path string true "Policy ID"
+// @Success 200 {object} model.Policy
+// @Router /core/policies/{policy_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 	spaceID, err := util.GetSpace(r.Context())
 

@@ -3,7 +3,6 @@ package policy
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
@@ -14,6 +13,18 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// delete - Delete policy by ID
+// @Summary Delete policy by ID
+// @Description GeDeletet policy by ID
+// @Tags Policy
+// @ID delete-policy-by-id
+// @Consume json
+// @Produce json
+// @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
+// @Param policy_id path string true "Policy ID"
+// @Success 200 {object} model.Policy
+// @Router /core/policies/{policy_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 	spaceID, err := util.GetSpace(r.Context())
 
@@ -33,12 +44,6 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	/* delete old policy */
 	policyId := chi.URLParam(r, "policy_id")
-	id, err := strconv.Atoi(policyId)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-		return
-	}
 
 	policyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":"+policyId)
 
@@ -61,7 +66,8 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	defer resp.Body.Close()
 
-	err = meili.DeleteDocument(uint(id), "policy")
+	objectID := fmt.Sprint("policy_", policyId)
+	_, err = meili.Client.Documents("dega").Delete(objectID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

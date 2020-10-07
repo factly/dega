@@ -15,6 +15,19 @@ import (
 	"github.com/go-chi/chi"
 )
 
+// update - Update policy
+// @Summary Update policy
+// @Description Update policy
+// @Tags Policy
+// @ID update-policy
+// @Consume json
+// @Produce json
+// @Param X-User header string true "User ID"
+// @Param X-Space header string true "Space ID"
+// @Param Policy body policyReq true "Policy Object"
+// @Param policy_id path string true "Policy ID"
+// @Success 200 {object} model.Policy
+// @Router /core/policies/{policy_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 	spaceID, err := util.GetSpace(r.Context())
 
@@ -40,8 +53,18 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/* delete old policy */
+	/* create new policy */
+	policyReq := policyReq{}
 
+	err = json.NewDecoder(r.Body).Decode(&policyReq)
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
+
+	/* delete old policy */
 	commanPolicyString := fmt.Sprint(":org:", organisationID, ":app:dega:space:", spaceID, ":")
 	policyID := chi.URLParam(r, "policy_id")
 
@@ -66,19 +89,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	defer resp.Body.Close()
 
-	/* create new policy */
-	policyReq := policyReq{}
-
-	err = json.NewDecoder(r.Body).Decode(&policyReq)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-		return
-	}
-
 	/* User req */
-
 	result := Mapper(Composer(organisationID, spaceID, policyReq), author.Mapper(organisationID, userID))
 
 	// Update into meili index
