@@ -85,5 +85,5 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	renderx.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusCreated, result)
 }

@@ -24,4 +24,5 @@ var policy_test = map[string]interface{}{
 }
 
 var basePath = "/core/policies"
+var defaultsPath = "/core/policies/default"
 var path = "/core/policies/{policy_id}"
