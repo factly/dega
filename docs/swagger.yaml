@@ -1582,6 +1582,39 @@ paths:
       summary: Update policy
       tags:
       - Policy
+  /core/policies/default:
+    post:
+      description: Create Default Policies
+      operationId: add-default-policies
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/model.Policy'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create Default Policies
+      tags:
+      - Policy
   /core/posts:
     get:
       description: Get all posts
@@ -2743,7 +2776,9 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/model.Format'
+            items:
+              $ref: '#/definitions/model.Rating'
+            type: array
         "400":
           description: Bad Request
           schema:

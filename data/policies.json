@@ -1,0 +1,128 @@
+[
+    {
+        "name": "Editor",
+        "Description": "Editor",
+        "permissions": [
+            {
+                "resource": "categories",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "tags",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "formats",
+                "actions": ["get"]
+            },
+            {
+                "resource": "media",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "posts",
+                "actions": ["get", "create", "update", "delete", "publish"]
+            },
+            {
+                "resource": "claimants",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "ratings",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "claims",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "factchecks",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "policies",
+                "actions": ["get"]
+            }
+        ]
+    },
+    {
+        "name": "Author",
+        "Description": "Author",
+        "permissions": [
+            {
+                "resource": "categories",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "tags",
+                "actions": ["get", "create", "update", "delete"]
+            },
+            {
+                "resource": "formats",
+                "actions": ["get"]
+            },
+            {
+                "resource": "media",
+                "actions": ["get", "create", "update"]
+            },
+            {
+                "resource": "posts",
+                "actions": ["get", "create", "update"]
+            },
+            {
+                "resource": "claimants",
+                "actions": ["get", "create", "update"]
+            },
+            {
+                "resource": "ratings",
+                "actions": ["get"]
+            },
+            {
+                "resource": "claims",
+                "actions": ["get", "create", "update"]
+            },
+            {
+                "resource": "factchecks",
+                "actions": ["get", "create", "update"]
+            },
+            {
+                "resource": "policies",
+                "actions": ["get"]
+            }
+        ]
+    },
+    {
+        "name": "Contributor",
+        "Description": "Contributor",
+        "permissions": [
+            {
+                "resource": "formats",
+                "actions": ["get"]
+            },
+            {
+                "resource": "media",
+                "actions": ["get", "create"]
+            },
+            {
+                "resource": "posts",
+                "actions": ["get", "create", "update"]
+            },
+            {
+                "resource": "claimants",
+                "actions": ["get", "create"]
+            },
+            {
+                "resource": "ratings",
+                "actions": ["get"]
+            },
+            {
+                "resource": "claims",
+                "actions": ["get", "create", "update"]
+            },
+            {
+                "resource": "factchecks",
+                "actions": ["get", "create", "update"]
+            }
+        ]
+    }
+]

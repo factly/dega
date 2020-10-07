@@ -934,6 +934,55 @@ var doc = `{
                 }
             }
         },
+        "/core/policies/default": {
+            "post": {
+                "description": "Create Default Policies",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Policy"
+                ],
+                "summary": "Create Default Policies",
+                "operationId": "add-default-policies",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Policy"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/core/policies/{policy_id}": {
             "get": {
                 "description": "Get policy by ID",
@@ -2651,7 +2700,10 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/model.Format"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Rating"
+                            }
                         }
                     },
                     "400": {

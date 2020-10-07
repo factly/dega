@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/service/core/action/author"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
@@ -61,6 +62,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	result := Mapper(Composer(organisationID, spaceID, policyReq), author.Mapper(organisationID, userID))
 
+	err = insertIntoMeili(result)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	renderx.JSON(w, http.StatusOK, result)
+}
+
+func insertIntoMeili(result model.Policy) error {
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,
@@ -69,12 +81,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"description": result.Description,
 	}
 
-	err = meili.AddDocument(meiliObj)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	renderx.JSON(w, http.StatusOK, result)
+	return meili.AddDocument(meiliObj)
 }
