@@ -37,6 +37,17 @@ func TestUpdate(t *testing.T) {
 			JSON().Object().Value("id").Equal(policy_test["name"])
 	})
 
+	t.Run("undecodable policy body", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		e.PUT(path).
+			WithPath("policy_id", 1).
+			WithJSON(undecodable_policy).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
+
 	t.Run("Invalid Header", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 

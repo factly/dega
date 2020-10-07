@@ -35,6 +35,16 @@ func TestCreatePolicy(t *testing.T) {
 			Status(http.StatusOK).JSON().Object().Value("name").Equal(policy_test["name"])
 	})
 
+	t.Run("undecodable policy body", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		e.POST(basePath).
+			WithJSON(undecodable_policy).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
+
 	t.Run("when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
