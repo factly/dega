@@ -2,9 +2,10 @@ import React from 'react';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import PostList from './components/PostList';
+import getUserPermission from '../../utils/getUserPermission';
 
-function Posts({ permission }) {
-  const { actions } = permission;
+function Posts() {
+  const actions = getUserPermission({ resource: 'posts', action: 'get' });
   return (
     <Space direction="vertical">
       <Link to="/posts/create">

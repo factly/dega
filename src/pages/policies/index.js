@@ -2,9 +2,10 @@ import React from 'react';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
 import PolicyList from './components/PolicyList';
+import getUserPermission from '../../utils/getUserPermission';
 
-function Policies({ permission }) {
-  const { actions } = permission;
+function Policies() {
+  const actions = getUserPermission({ resource: 'policies', action: 'get' });
   return (
     <Space direction="vertical">
       <Link to="/policies/create">

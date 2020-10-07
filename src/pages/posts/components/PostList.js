@@ -125,6 +125,7 @@ function PostList({ actions }) {
               <Popconfirm
                 title="Sure to cancel?"
                 onConfirm={() => dispatch(deletePost(item.id)).then(() => fetchPosts())}
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
               >
                 <Button
                   icon={<DeleteOutlined />}
