@@ -33,7 +33,15 @@ exports[`Posts List component should render the component 1`] = `
   }
 >
   <BrowserRouter>
-    <Posts />
+    <Posts
+      permission={
+        Object {
+          "actions": Array [
+            "create",
+          ],
+        }
+      }
+    />
   </BrowserRouter>
 </ContextProvider>
 `;
@@ -71,7 +79,15 @@ exports[`Posts List component should render the component with data 1`] = `
   }
 >
   <BrowserRouter>
-    <Posts />
+    <Posts
+      permission={
+        Object {
+          "actions": Array [
+            "create",
+          ],
+        }
+      }
+    />
   </BrowserRouter>
 </ContextProvider>
 `;

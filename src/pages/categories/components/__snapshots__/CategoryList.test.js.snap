@@ -36,7 +36,14 @@ exports[`Categories List component snapshot testing should match component when 
         }
       }
     >
-      <CategoryList>
+      <CategoryList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -2746,6 +2753,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -2753,6 +2761,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -3405,6 +3414,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -3412,6 +3422,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -3735,6 +3746,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -3742,6 +3754,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -4394,6 +4407,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -4401,6 +4415,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -4872,7 +4887,14 @@ exports[`Categories List component snapshot testing should match component with 
         }
       }
     >
-      <CategoryList>
+      <CategoryList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -7558,6 +7580,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -7565,6 +7588,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -8217,6 +8241,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -8224,6 +8249,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -8547,6 +8573,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -8554,6 +8581,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -9206,6 +9234,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -9213,6 +9242,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -9684,7 +9714,14 @@ exports[`Categories List component snapshot testing should render the component 
         }
       }
     >
-      <CategoryList>
+      <CategoryList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -12370,6 +12407,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -12377,6 +12415,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -13029,6 +13068,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -13036,6 +13076,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -13359,6 +13400,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -13366,6 +13408,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -14018,6 +14061,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -14025,6 +14069,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >

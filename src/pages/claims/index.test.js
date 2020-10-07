@@ -1,12 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import { useDispatch, useSelector, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import ClaimsList from './index';
+import Claims from './index';
 import { shallow } from 'enzyme';
 
 const middlewares = [thunk];
@@ -43,7 +42,7 @@ describe('Claims List component', () => {
     const tree = shallow(
       <Provider store={store}>
         <Router>
-          <ClaimsList />
+          <Claims permission={{ actions: ['create'] }} />
         </Router>
       </Provider>,
     );
@@ -60,7 +59,7 @@ describe('Claims List component', () => {
     const tree = shallow(
       <Provider store={store}>
         <Router>
-          <ClaimsList />
+          <Claims permission={{ actions: ['create'] }} />
         </Router>
       </Provider>,
     );

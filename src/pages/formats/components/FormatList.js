@@ -5,7 +5,7 @@ import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
-function FormatList() {
+function FormatList({ actions }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -60,14 +60,18 @@ function FormatList() {
               }}
               to={`/formats/${record.id}/edit`}
             >
-              <Button>Edit</Button>
+              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
+                Edit
+              </Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
               onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button>Delete</Button>
+                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                  Delete
+                </Button>
               </Link>
             </Popconfirm>
           </span>

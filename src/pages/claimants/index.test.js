@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import ClaimantList from './index';
+import Claimants from './index';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -43,7 +43,7 @@ describe('Claimants List component', () => {
       .create(
         <Provider store={store}>
           <Router>
-            <ClaimantList />
+            <Claimants permission={{ actions: ['create'] }} />
           </Router>
         </Provider>,
       )
@@ -69,7 +69,7 @@ describe('Claimants List component', () => {
       .create(
         <Provider store={store}>
           <Router>
-            <ClaimantList />
+            <Claimants permission={{ actions: ['create'] }} />
           </Router>
         </Provider>,
       )

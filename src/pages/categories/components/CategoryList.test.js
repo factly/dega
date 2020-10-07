@@ -82,7 +82,7 @@ describe('Categories List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <CategoriesList />
+            <CategoriesList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -94,7 +94,7 @@ describe('Categories List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <CategoriesList />
+            <CategoriesList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -106,7 +106,7 @@ describe('Categories List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <CategoriesList />
+            <CategoriesList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -129,7 +129,7 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList />
+              <CategoriesList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -147,7 +147,7 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList />
+              <CategoriesList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -171,7 +171,7 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList />
+              <CategoriesList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -192,7 +192,7 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList />
+              <CategoriesList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -208,7 +208,7 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList />
+              <CategoriesList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

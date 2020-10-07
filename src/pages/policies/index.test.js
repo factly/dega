@@ -6,7 +6,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import PolicyList from './index';
+import Policies from './index';
+import { shallow } from 'enzyme';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -39,15 +40,13 @@ describe('Policies List component', () => {
   });
   it('should render the component', () => {
     useSelector.mockImplementationOnce(() => ({}));
-    const tree = renderer
-      .create(
-        <Provider store={store}>
-          <Router>
-            <PolicyList />
-          </Router>
-        </Provider>,
-      )
-      .toJSON();
+    const tree = shallow(
+      <Provider store={store}>
+        <Router>
+          <Policies permission={{ actions: ['create'] }} />
+        </Router>
+      </Provider>,
+    );
     expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
@@ -70,15 +69,13 @@ describe('Policies List component', () => {
       total: 1,
       loading: false,
     }));
-    const tree = renderer
-      .create(
-        <Provider store={store}>
-          <Router>
-            <PolicyList />
-          </Router>
-        </Provider>,
-      )
-      .toJSON();
+    const tree = shallow(
+      <Provider store={store}>
+        <Router>
+          <Policies permission={{ actions: ['create'] }} />
+        </Router>
+      </Provider>,
+    );
     expect(tree).toMatchSnapshot();
   });
 });

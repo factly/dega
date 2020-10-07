@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import TagList from './index';
+import Tags from './index';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -43,7 +43,7 @@ describe('Tags List component', () => {
       .create(
         <Provider store={store}>
           <Router>
-            <TagList />
+            <Tags permission={{ actions: ['create'] }} />
           </Router>
         </Provider>,
       )
@@ -67,7 +67,7 @@ describe('Tags List component', () => {
       .create(
         <Provider store={store}>
           <Router>
-            <TagList />
+            <Tags permission={{ actions: ['create'] }} />
           </Router>
         </Provider>,
       )

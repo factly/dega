@@ -1,22 +1,18 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link, Route } from 'react-router-dom';
 import { Result, Button } from 'antd';
+import getUserPermission from '../../utils/getUserPermission';
 
 function ProtectedRoute({ component: Component, permission: permission, ...rest }) {
-  const { resource, action } = permission;
-  const userPermission = useSelector(({ spaces }) => {
-    const { selected, details } = spaces;
-    return details[selected] ? details[selected].permissions : [];
-  });
+  const actions = getUserPermission(permission);
 
-  if (
-    userPermission.findIndex(
-      (each) =>
-        each.resource === 'admin' || (each.resource === resource && each.actions.includes(action)),
-    ) > -1
-  )
-    return <Route {...rest} render={(props) => <Component {...rest} {...props} />} />;
+  if (actions.length > 0)
+    return (
+      <Route
+        {...rest}
+        render={(props) => <Component {...rest} {...props} permission={{ actions }} />}
+      />
+    );
 
   return (
     <Route

@@ -36,7 +36,14 @@ exports[`Media List component snapshot testing should match component when loadi
         }
       }
     >
-      <MediumList>
+      <MediumList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -2768,6 +2775,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -2775,6 +2783,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -3401,6 +3410,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                           >
                                                             <Button
                                                               block={false}
+                                                              disabled={false}
                                                               ghost={false}
                                                               htmlType="button"
                                                               key="trigger"
@@ -3413,6 +3423,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                               <Wave>
                                                                 <button
                                                                   className="ant-btn"
+                                                                  disabled={false}
                                                                   onClick={[Function]}
                                                                   onKeyDown={[Function]}
                                                                   onMouseDown={[Function]}
@@ -3884,7 +3895,14 @@ exports[`Media List component snapshot testing should match component with media
         }
       }
     >
-      <MediumList>
+      <MediumList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -6592,6 +6610,7 @@ exports[`Media List component snapshot testing should match component with media
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -6599,6 +6618,7 @@ exports[`Media List component snapshot testing should match component with media
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -7225,6 +7245,7 @@ exports[`Media List component snapshot testing should match component with media
                                                           >
                                                             <Button
                                                               block={false}
+                                                              disabled={false}
                                                               ghost={false}
                                                               htmlType="button"
                                                               key="trigger"
@@ -7237,6 +7258,7 @@ exports[`Media List component snapshot testing should match component with media
                                                               <Wave>
                                                                 <button
                                                                   className="ant-btn"
+                                                                  disabled={false}
                                                                   onClick={[Function]}
                                                                   onKeyDown={[Function]}
                                                                   onMouseDown={[Function]}
@@ -7708,7 +7730,14 @@ exports[`Media List component snapshot testing should render the component 1`] =
         }
       }
     >
-      <MediumList>
+      <MediumList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -10416,6 +10445,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -10423,6 +10453,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -11049,6 +11080,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                           >
                                                             <Button
                                                               block={false}
+                                                              disabled={false}
                                                               ghost={false}
                                                               htmlType="button"
                                                               key="trigger"
@@ -11061,6 +11093,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                               <Wave>
                                                                 <button
                                                                   className="ant-btn"
+                                                                  disabled={false}
                                                                   onClick={[Function]}
                                                                   onKeyDown={[Function]}
                                                                   onMouseDown={[Function]}

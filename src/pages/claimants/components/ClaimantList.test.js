@@ -80,7 +80,7 @@ describe('Claimants List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimantList />
+            <ClaimantList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -92,7 +92,7 @@ describe('Claimants List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimantList />
+            <ClaimantList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -104,7 +104,7 @@ describe('Claimants List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimantList />
+            <ClaimantList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -127,7 +127,7 @@ describe('Claimants List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList />
+              <ClaimantList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -145,7 +145,7 @@ describe('Claimants List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList />
+              <ClaimantList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -171,7 +171,7 @@ describe('Claimants List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList />
+              <ClaimantList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -192,7 +192,7 @@ describe('Claimants List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList />
+              <ClaimantList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -207,7 +207,7 @@ describe('Claimants List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList />
+              <ClaimantList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

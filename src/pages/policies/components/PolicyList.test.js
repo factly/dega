@@ -80,7 +80,7 @@ describe('Policies List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <PolicyList />
+            <PolicyList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -92,7 +92,7 @@ describe('Policies List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <PolicyList />
+            <PolicyList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -104,7 +104,7 @@ describe('Policies List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <PolicyList />
+            <PolicyList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -124,7 +124,7 @@ describe('Policies List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PolicyList />
+              <PolicyList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -143,7 +143,7 @@ describe('Policies List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PolicyList />
+              <PolicyList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -167,7 +167,7 @@ describe('Policies List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PolicyList />
+              <PolicyList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -188,7 +188,7 @@ describe('Policies List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PolicyList />
+              <PolicyList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

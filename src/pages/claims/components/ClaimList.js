@@ -7,7 +7,7 @@ import moment from 'moment';
 import Selector from '../../../components/Selector';
 import deepEqual from 'deep-equal';
 
-function ClaimList() {
+function ClaimList({ actions }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -85,14 +85,18 @@ function ClaimList() {
               }}
               to={`/claims/${record.id}/edit`}
             >
-              <Button>Edit</Button>
+              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
+                Edit
+              </Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
               onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button>Delete</Button>
+                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                  Delete
+                </Button>
               </Link>
             </Popconfirm>
           </span>

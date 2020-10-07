@@ -36,7 +36,14 @@ exports[`Posts List component snapshot component should match component when loa
         }
       }
     >
-      <PostList>
+      <PostList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -3344,6 +3351,7 @@ exports[`Posts List component snapshot component should match component when loa
                                   >
                                     <ForwardRef(InternalButton)
                                       block={false}
+                                      disabled={false}
                                       ghost={false}
                                       htmlType="button"
                                       icon={<ForwardRef(EditOutlined) />}
@@ -3364,6 +3372,7 @@ exports[`Posts List component snapshot component should match component when loa
                                   >
                                     <ForwardRef(InternalButton)
                                       block={false}
+                                      disabled={false}
                                       ghost={false}
                                       htmlType="button"
                                       icon={<ForwardRef(DeleteOutlined) />}
@@ -3467,6 +3476,7 @@ exports[`Posts List component snapshot component should match component when loa
                                           >
                                             <Button
                                               block={false}
+                                              disabled={false}
                                               ghost={false}
                                               htmlType="button"
                                               icon={<ForwardRef(EditOutlined) />}
@@ -3475,6 +3485,7 @@ exports[`Posts List component snapshot component should match component when loa
                                               <Wave>
                                                 <button
                                                   className="ant-btn"
+                                                  disabled={false}
                                                   onClick={[Function]}
                                                   type="button"
                                                 >
@@ -4162,6 +4173,7 @@ exports[`Posts List component snapshot component should match component when loa
                                             >
                                               <Button
                                                 block={false}
+                                                disabled={false}
                                                 ghost={false}
                                                 htmlType="button"
                                                 icon={<ForwardRef(DeleteOutlined) />}
@@ -4175,6 +4187,7 @@ exports[`Posts List component snapshot component should match component when loa
                                                 <Wave>
                                                   <button
                                                     className="ant-btn"
+                                                    disabled={false}
                                                     onClick={[Function]}
                                                     onKeyDown={[Function]}
                                                     onMouseDown={[Function]}
@@ -4707,7 +4720,14 @@ exports[`Posts List component snapshot component should match component with pos
         }
       }
     >
-      <PostList>
+      <PostList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -7954,6 +7974,7 @@ exports[`Posts List component snapshot component should match component with pos
                                   >
                                     <ForwardRef(InternalButton)
                                       block={false}
+                                      disabled={false}
                                       ghost={false}
                                       htmlType="button"
                                       icon={<ForwardRef(EditOutlined) />}
@@ -7974,6 +7995,7 @@ exports[`Posts List component snapshot component should match component with pos
                                   >
                                     <ForwardRef(InternalButton)
                                       block={false}
+                                      disabled={false}
                                       ghost={false}
                                       htmlType="button"
                                       icon={<ForwardRef(DeleteOutlined) />}
@@ -8077,6 +8099,7 @@ exports[`Posts List component snapshot component should match component with pos
                                           >
                                             <Button
                                               block={false}
+                                              disabled={false}
                                               ghost={false}
                                               htmlType="button"
                                               icon={<ForwardRef(EditOutlined) />}
@@ -8085,6 +8108,7 @@ exports[`Posts List component snapshot component should match component with pos
                                               <Wave>
                                                 <button
                                                   className="ant-btn"
+                                                  disabled={false}
                                                   onClick={[Function]}
                                                   type="button"
                                                 >
@@ -8772,6 +8796,7 @@ exports[`Posts List component snapshot component should match component with pos
                                             >
                                               <Button
                                                 block={false}
+                                                disabled={false}
                                                 ghost={false}
                                                 htmlType="button"
                                                 icon={<ForwardRef(DeleteOutlined) />}
@@ -8785,6 +8810,7 @@ exports[`Posts List component snapshot component should match component with pos
                                                 <Wave>
                                                   <button
                                                     className="ant-btn"
+                                                    disabled={false}
                                                     onClick={[Function]}
                                                     onKeyDown={[Function]}
                                                     onMouseDown={[Function]}
@@ -9317,7 +9343,14 @@ exports[`Posts List component snapshot component should render the component 1`]
         }
       }
     >
-      <PostList>
+      <PostList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -12564,6 +12597,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                   >
                                     <ForwardRef(InternalButton)
                                       block={false}
+                                      disabled={false}
                                       ghost={false}
                                       htmlType="button"
                                       icon={<ForwardRef(EditOutlined) />}
@@ -12584,6 +12618,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                   >
                                     <ForwardRef(InternalButton)
                                       block={false}
+                                      disabled={false}
                                       ghost={false}
                                       htmlType="button"
                                       icon={<ForwardRef(DeleteOutlined) />}
@@ -12687,6 +12722,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                           >
                                             <Button
                                               block={false}
+                                              disabled={false}
                                               ghost={false}
                                               htmlType="button"
                                               icon={<ForwardRef(EditOutlined) />}
@@ -12695,6 +12731,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                               <Wave>
                                                 <button
                                                   className="ant-btn"
+                                                  disabled={false}
                                                   onClick={[Function]}
                                                   type="button"
                                                 >
@@ -13382,6 +13419,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                             >
                                               <Button
                                                 block={false}
+                                                disabled={false}
                                                 ghost={false}
                                                 htmlType="button"
                                                 icon={<ForwardRef(DeleteOutlined) />}
@@ -13395,6 +13433,7 @@ exports[`Posts List component snapshot component should render the component 1`]
                                                 <Wave>
                                                   <button
                                                     className="ant-btn"
+                                                    disabled={false}
                                                     onClick={[Function]}
                                                     onKeyDown={[Function]}
                                                     onMouseDown={[Function]}

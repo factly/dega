@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import '../../matchMedia.mock';
-import RatingList from './index';
+import Ratings from './index';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -43,7 +43,7 @@ describe('Ratings List component', () => {
       .create(
         <Provider store={store}>
           <Router>
-            <RatingList />
+            <Ratings permission={{ actions: ['create'] }} />
           </Router>
         </Provider>,
       )
@@ -68,7 +68,7 @@ describe('Ratings List component', () => {
       .create(
         <Provider store={store}>
           <Router>
-            <RatingList />
+            <Ratings permission={{ actions: ['create'] }} />
           </Router>
         </Provider>,
       )

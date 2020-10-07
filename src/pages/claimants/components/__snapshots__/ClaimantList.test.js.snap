@@ -36,7 +36,14 @@ exports[`Claimants List component snapshot testing should match component when l
         }
       }
     >
-      <ClaimantList>
+      <ClaimantList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -2821,6 +2828,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -2828,6 +2836,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -3480,6 +3489,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -3487,6 +3497,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -3848,6 +3859,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -3855,6 +3867,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -4507,6 +4520,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -4514,6 +4528,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -4985,7 +5000,14 @@ exports[`Claimants List component snapshot testing should match component with c
         }
       }
     >
-      <ClaimantList>
+      <ClaimantList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -7746,6 +7768,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -7753,6 +7776,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -8405,6 +8429,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -8412,6 +8437,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -8773,6 +8799,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -8780,6 +8807,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -9432,6 +9460,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -9439,6 +9468,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -9910,7 +9940,14 @@ exports[`Claimants List component snapshot testing should render the component 1
         }
       }
     >
-      <ClaimantList>
+      <ClaimantList
+        actions={
+          Array [
+            "update",
+            "delete",
+          ]
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -12671,6 +12708,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -12678,6 +12716,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -13330,6 +13369,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -13337,6 +13377,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
@@ -13698,6 +13739,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                         >
                                                           <Button
                                                             block={false}
+                                                            disabled={false}
                                                             ghost={false}
                                                             htmlType="button"
                                                             loading={false}
@@ -13705,6 +13747,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                             <Wave>
                                                               <button
                                                                 className="ant-btn"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -14357,6 +14400,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                 >
                                                                   <Button
                                                                     block={false}
+                                                                    disabled={false}
                                                                     ghost={false}
                                                                     htmlType="button"
                                                                     loading={false}
@@ -14364,6 +14408,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                     <Wave>
                                                                       <button
                                                                         className="ant-btn"
+                                                                        disabled={false}
                                                                         onClick={[Function]}
                                                                         type="button"
                                                                       >
