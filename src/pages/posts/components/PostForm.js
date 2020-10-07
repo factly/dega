@@ -1,10 +1,9 @@
 import React from 'react';
-import { Row, Col, Form, Input, Button, Space, Statistic, Select } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Select } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import { SaveOutlined, ToTopOutlined } from '@ant-design/icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { addCategory } from '../../../actions/categories';
 import Modal from 'antd/lib/modal/Modal';

@@ -10,7 +10,7 @@ function Template() {
   const history = useHistory();
   const { Meta } = Card;
   const { Panel } = Collapse;
-  const [page, setPage] = React.useState(1);
+  const page = 1;
   const [show, setShow] = React.useState(false);
   const { posts, loading } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
