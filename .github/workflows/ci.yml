@@ -33,7 +33,7 @@ jobs:
         with:
           name: code-coverage
           path: coverage
-      - run: sed -i 's|SF:/home/runner/work/dega-admin-portal/dega-admin-portal/|SF:|g' coverage/lcov.info
+      - run: sed -i 's|SF:/home/runner/work/dega-studio/dega-studio/|SF:|g' coverage/lcov.info
       - name: Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         env:
