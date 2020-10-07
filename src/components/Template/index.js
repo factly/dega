@@ -10,7 +10,7 @@ function Template() {
   const history = useHistory();
   const { Meta } = Card;
   const { Panel } = Collapse;
-  const [page, setPage] = React.useState(1);
+  const page = 1;
   const [show, setShow] = React.useState(false);
   const { posts, loading } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
@@ -32,9 +32,10 @@ function Template() {
   });
 
   React.useEffect(() => {
-    fetchEntities();
+    fetchTemplates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
-  const fetchEntities = () => {
+  const fetchTemplates = () => {
     dispatch(getPosts({ page: page, status: 'template' }));
   };
 

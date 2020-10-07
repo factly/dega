@@ -29,6 +29,7 @@ function RatingList({ actions }) {
 
   React.useEffect(() => {
     fetchRatings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchRatings = () => {

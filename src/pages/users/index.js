@@ -11,6 +11,7 @@ function Users() {
 
   React.useEffect(() => {
     fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUsers = () => {
@@ -25,7 +26,7 @@ function Users() {
       render: (_, record) => {
         return (
           <Typography key={record.id}>
-            {record.policies[0].id != 'admin' ? (
+            {record.policies[0].id !== 'admin' ? (
               <Link to={`/users/${record.id}/permissions`}>
                 {record.first_name + ' ' + record.last_name}
               </Link>
@@ -48,7 +49,7 @@ function Users() {
       render: (_, record) => {
         return record.policies.map((policy, index) => (
           <Tag key={record.id + policy.id}>
-            {policy.id != 'admin' ? (
+            {policy.id !== 'admin' ? (
               <Link to={`/policies/${policy.id}/edit`}> {policy.name}</Link>
             ) : (
               policy.name

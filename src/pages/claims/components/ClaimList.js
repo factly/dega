@@ -39,6 +39,7 @@ function ClaimList({ actions }) {
 
   React.useEffect(() => {
     fetchClaims();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchClaims = () => {

@@ -21,6 +21,7 @@ function EditPost() {
 
   React.useEffect(() => {
     dispatch(getPost(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (loading) return <Skeleton />;

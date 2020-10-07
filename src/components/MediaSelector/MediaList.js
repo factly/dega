@@ -28,6 +28,7 @@ function MediaList({ onSelect, selected }) {
 
   React.useEffect(() => {
     fetchMedia();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, filters]);
 
   const fetchMedia = () => {

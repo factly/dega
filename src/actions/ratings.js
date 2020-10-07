@@ -84,9 +84,9 @@ export const updateRating = (data) => {
       .put(RATINGS_API + '/' + data.id, data)
       .then((response) => {
         const rating = response.data;
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (rating.medium) dispatch(addMediaList([rating.medium]));
 
-        dispatch(getRatingByID({ ...response.data, medium: response.data.medium?.id }));
+        dispatch(getRatingByID({ ...rating, medium: rating.medium?.id }));
         dispatch(stopRatingsLoading());
         dispatch(addSuccessNotification('Rating updated'));
       })

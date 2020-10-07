@@ -31,6 +31,7 @@ function CategoryList({ actions }) {
 
   React.useEffect(() => {
     fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchCategories = () => {

@@ -2,9 +2,11 @@ import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import { Result, Button } from 'antd';
 import getUserPermission from '../../utils/getUserPermission';
+import { useSelector } from 'react-redux';
 
-function ProtectedRoute({ component: Component, permission: permission, ...rest }) {
-  const actions = getUserPermission(permission);
+function ProtectedRoute({ component: Component, permission, ...rest }) {
+  const spaces = useSelector(({ spaces }) => spaces);
+  const actions = getUserPermission({ ...permission, spaces });
 
   if (actions.length > 0)
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space, Typography, Skeleton, Checkbox } from 'antd';
+import { Space, Typography, Checkbox } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -31,6 +31,7 @@ function PermissionList() {
 
   React.useEffect(() => {
     fetchPermissions();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchPermissions = () => {

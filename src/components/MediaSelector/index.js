@@ -17,6 +17,7 @@ function MediaSelector({ value = null, onChange }) {
 
   React.useEffect(() => {
     if (value) dispatch(getMedium(value));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

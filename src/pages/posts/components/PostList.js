@@ -40,6 +40,7 @@ function PostList({ actions }) {
 
   React.useEffect(() => {
     fetchPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchPosts = () => {

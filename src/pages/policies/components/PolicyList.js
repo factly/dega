@@ -29,6 +29,7 @@ function PolicyList({ actions }) {
 
   React.useEffect(() => {
     fetchPolicies();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchPolicies = () => {

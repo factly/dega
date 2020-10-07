@@ -1,10 +1,6 @@
-import { useSelector } from 'react-redux';
-
-function getUserPermission({ resource, action }) {
-  const userPermission = useSelector(({ spaces }) => {
-    const { selected, details } = spaces;
-    return details[selected] ? details[selected].permissions : [];
-  });
+function getUserPermission({ resource, action, spaces }) {
+  const { selected, details } = spaces;
+  const userPermission = details[selected] ? details[selected].permissions : [];
 
   const node = userPermission.findIndex(
     (each) =>
