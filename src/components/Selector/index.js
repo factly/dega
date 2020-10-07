@@ -58,6 +58,7 @@ function Selector({ mode, value, onChange, action, display = 'name', placeholder
 
   React.useEffect(() => {
     fetchEntities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
 
   const fetchEntities = () => {

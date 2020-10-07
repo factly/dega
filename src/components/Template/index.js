@@ -32,9 +32,10 @@ function Template() {
   });
 
   React.useEffect(() => {
-    fetchEntities();
+    fetchTemplates();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
-  const fetchEntities = () => {
+  const fetchTemplates = () => {
     dispatch(getPosts({ page: page, status: 'template' }));
   };
 

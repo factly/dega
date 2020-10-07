@@ -21,6 +21,7 @@ function EditClaim() {
 
   React.useEffect(() => {
     dispatch(getClaim(id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (loading) return <Skeleton />;

@@ -40,6 +40,7 @@ function GoogleFactCheck() {
 
   React.useEffect(() => {
     if (filters.query) fetchFactChecks(filters);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   return (
@@ -99,7 +100,7 @@ function GoogleFactCheck() {
                 <Typography>
                   <b>{each.publisher.name}</b> rating : <b>{each.textualRating}</b>
                 </Typography>
-                <a href={each.url?.raw} target={'blank'}>
+                <a href={each.url} target={'blank'}>
                   {each.title}
                 </a>
               </>

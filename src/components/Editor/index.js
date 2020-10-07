@@ -32,7 +32,7 @@ function Editor({ value, onChange }) {
               twitter: true,
               instagram: true,
               facebook: {
-                regex: /https?:\/\/www.facebook.com\/([^\/\?\&]*)\/(.*)/,
+                regex: /https?:\/\/www.facebook.com\/([^/?&]*)\/(.*)/,
                 embedUrl:
                   'https://www.facebook.com/plugins/post.php?href=https://www.facebook.com/<%= remote_id %>&width=500',
                 html:
@@ -58,6 +58,7 @@ function Editor({ value, onChange }) {
         }),
       data: value,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return <div ref={editor_block}></div>;
