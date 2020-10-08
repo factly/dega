@@ -7,6 +7,4 @@ kavach:
 meili:
     key: password
     url: http://meilisearch:7700
-google:
-    key: AIzaSyAY_mt5yHygOLcezc4QVWTwTeyJImloNCM    
 mode: development
