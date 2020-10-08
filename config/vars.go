@@ -3,72 +3,46 @@ package config
 import (
 	"flag"
 	"log"
+
+	"github.com/spf13/viper"
 )
-
-// DSN dsn
-var DSN string
-
-// KavachURL kavach server url
-var KavachURL string
-
-// KetoURL keto server url
-var KetoURL string
-
-// MeiliURL meili search server url
-var MeiliURL string
-
-// MeiliKey meili search server url
-var MeiliKey string
-
-//GoogleKey  google API Key string
-var GoogleKey string
 
 // SetupVars setups all the config variables to run application
 func SetupVars() {
-	var dsn string
-	var kavach string
-	var keto string
-	var meili string
-	var meiliKey string
-	var googleKey string
+	var configPath string
 
-	flag.StringVar(&dsn, "dsn", "", "Database connection string")
-	flag.StringVar(&kavach, "kavach", "", "Kavach connection string")
-	flag.StringVar(&keto, "keto", "", "Keto connection string")
-	flag.StringVar(&meili, "meili", "", "Meili connection string")
-	flag.StringVar(&meiliKey, "meiliKey", "", "Meili API Key string")
-	flag.StringVar(&googleKey, "googleKey", "", "Google API Key string")
-
+	flag.StringVar(&configPath, "config", "./config.yaml", "Config file path")
 	flag.Parse()
 
-	if dsn == "" {
-		log.Fatal("Please pass dsn flag")
+	viper.SetConfigFile(configPath)
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatal("config file not found...")
 	}
 
-	if kavach == "" {
-		log.Fatal("Please pass kavach flag")
+	if !viper.IsSet("postgres.dsn") {
+		log.Fatal("please provide postgres.dsn in config file")
 	}
 
-	if keto == "" {
-		log.Fatal("Please pass keto flag")
+	if !viper.IsSet("kavach.url") {
+		log.Fatal("please provide kavach.url in config file")
 	}
 
-	if meili == "" {
-		log.Fatal("Please pass meili flag")
+	if !viper.IsSet("keto.url") {
+		log.Fatal("please provide keto.url in config file")
 	}
 
-	if meiliKey == "" {
-		log.Fatal("Please pass meiliKey flag")
+	if !viper.IsSet("meili.url") {
+		log.Fatal("please provide meili.url in config file")
 	}
 
-	if googleKey == "" {
-		log.Fatal("Please pass googleKey flag")
+	if !viper.IsSet("meili.key") {
+		log.Fatal("please provide meili.key in config file")
 	}
 
-	DSN = dsn
-	KavachURL = kavach
-	KetoURL = keto
-	MeiliURL = meili
-	MeiliKey = meiliKey
-	GoogleKey = googleKey
+	if !viper.IsSet("google.key") {
+		log.Fatal("please provide google.key in config file")
+	}
+
 }

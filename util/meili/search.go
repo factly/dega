@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/factly/dega-server/config"
 	"github.com/meilisearch/meilisearch-go"
+	"github.com/spf13/viper"
 )
 
 // SearchWithoutQuery calls meili without q
@@ -25,8 +25,8 @@ func SearchWithoutQuery(filters string, kind string) (map[string]interface{}, er
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", config.MeiliURL+"/indexes/dega/search", buf)
-	req.Header.Add("X-Meili-API-Key", config.MeiliKey)
+	req, err := http.NewRequest("POST", viper.GetString("meili.url")+"/indexes/dega/search", buf)
+	req.Header.Add("X-Meili-API-Key", viper.GetString("meili.key"))
 	req.Header.Add("Content-Type", "application/json")
 
 	if err != nil {

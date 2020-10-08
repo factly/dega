@@ -7,11 +7,11 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/gavv/httpexpect"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -148,7 +148,7 @@ func TestCategoryList(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		test.DisableMeiliGock(testServer.URL)
 
-		gock.New(config.MeiliURL + "/indexes/dega/search").
+		gock.New(viper.GetString("meili.url") + "/indexes/dega/search").
 			HeaderPresent("X-Meili-API-Key").
 			Persist().
 			Reply(http.StatusOK).

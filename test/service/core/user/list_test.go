@@ -5,10 +5,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -51,7 +51,7 @@ func TestListUsers(t *testing.T) {
 	t.Run("get users when keto is unable to fetch policies", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
 
-		gock.New(config.KetoURL + "/engines/acp/ory/regex/roles/(.+)").
+		gock.New(viper.GetString("keto.url") + "/engines/acp/ory/regex/roles/(.+)").
 			Persist().
 			Reply(http.StatusOK).
 			JSON(test.Dummy_Role)

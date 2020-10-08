@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/loggerx"
+	"github.com/spf13/viper"
 )
 
 // Mapper map user with id
 // if any error occurs then Mapper just returns empty list
 func Mapper(oID int, uID int) map[string]model.Author {
 	userMap := make(map[string]model.Author)
-	url := fmt.Sprint(config.KavachURL, "/organisations/", oID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", oID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

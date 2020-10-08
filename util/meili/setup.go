@@ -3,8 +3,8 @@ package meili
 import (
 	"log"
 
-	"github.com/factly/dega-server/config"
 	"github.com/meilisearch/meilisearch-go"
+	"github.com/spf13/viper"
 )
 
 // Client client for meili search server
@@ -13,8 +13,8 @@ var Client *meilisearch.Client
 // SetupMeiliSearch setups the meili search server index
 func SetupMeiliSearch() {
 	Client = meilisearch.NewClient(meilisearch.Config{
-		Host:   config.MeiliURL,
-		APIKey: config.MeiliKey,
+		Host:   viper.GetString("meili.url"),
+		APIKey: viper.GetString("meili.key"),
 	})
 
 	_, err := Client.Indexes().Get("dega")

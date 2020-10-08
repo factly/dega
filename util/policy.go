@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/dega-server/config"
+	"github.com/spf13/viper"
 )
 
 // KetoAllowed is request object to check permissions of user
@@ -101,7 +101,7 @@ func IsAllowed(result KetoAllowed) (int, error) {
 		return 0, err
 	}
 
-	req, err := http.NewRequest("POST", config.KetoURL+"/engines/acp/ory/regex/allowed", buf)
+	req, err := http.NewRequest("POST", viper.GetString("keto.url")+"/engines/acp/ory/regex/allowed", buf)
 	if err != nil {
 		return 0, err
 	}

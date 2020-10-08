@@ -7,8 +7,8 @@ import (
 	"strconv"
 
 	"github.com/factly/x/loggerx"
+	"github.com/spf13/viper"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
@@ -55,7 +55,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.Author, 0)
 
-	url := fmt.Sprint(config.KavachURL, "/organisations/", oID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", oID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

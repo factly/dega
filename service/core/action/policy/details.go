@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -13,6 +12,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/spf13/viper"
 )
 
 // details - Get policy by ID
@@ -56,7 +56,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	ketoPolicyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":", policyID)
 
-	req, err := http.NewRequest("GET", config.KetoURL+"/engines/acp/ory/regex/policies/"+ketoPolicyID, nil)
+	req, err := http.NewRequest("GET", viper.GetString("keto.url")+"/engines/acp/ory/regex/policies/"+ketoPolicyID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

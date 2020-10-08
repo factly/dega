@@ -5,11 +5,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/gavv/httpexpect"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -93,7 +93,7 @@ func TestSpaceMy(t *testing.T) {
 		medium.SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
 
-		gock.New(config.KavachURL + "/organisations/my").
+		gock.New(viper.GetString("kavach.url") + "/organisations/my").
 			Persist().
 			Reply(http.StatusOK).
 			JSON(test.Dummy_Org_Member_List)
