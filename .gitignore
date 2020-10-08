@@ -138,3 +138,5 @@ fabric.properties
 main
 
 .DS_Store
+
+dega-server.yml
