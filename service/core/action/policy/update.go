@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meili"
@@ -13,6 +12,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"github.com/spf13/viper"
 )
 
 // update - Update policy
@@ -70,7 +70,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	policyID = "id" + commanPolicyString + policyID
 
-	req, err := http.NewRequest("DELETE", config.KetoURL+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	req, err := http.NewRequest("DELETE", viper.GetString("keto.url")+"/engines/acp/ory/regex/policies/"+policyID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

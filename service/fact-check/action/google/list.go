@@ -7,7 +7,8 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/factly/dega-server/config"
+	"github.com/spf13/viper"
+
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -60,7 +61,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	q := url.Values{}
-	q.Add("key", config.GoogleKey)
+	q.Add("key", viper.GetString("google.key"))
 	q.Add("query", query)
 	if language != "" {
 		q.Add("languageCode", language)

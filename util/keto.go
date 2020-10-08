@@ -3,12 +3,12 @@ package util
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/config"
+	"github.com/spf13/viper"
 )
 
 // KetoGetRequest does get request to keto with empty body
 func KetoGetRequest(path string) (*http.Response, error) {
-	req, err := http.NewRequest("GET", config.KetoURL+path, nil)
+	req, err := http.NewRequest("GET", viper.GetString("keto.url")+path, nil)
 	if err != nil {
 		return nil, err
 	}

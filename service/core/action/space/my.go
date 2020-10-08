@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/service/core/action/user"
+	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/policy"
@@ -54,7 +55,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Fetched all organisations of the user
-	req, err := http.NewRequest("GET", config.KavachURL+"/organisations/my", nil)
+	req, err := http.NewRequest("GET", viper.GetString("kavach.url")+"/organisations/my", nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

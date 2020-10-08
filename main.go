@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/spf13/viper"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	coreModel "github.com/factly/dega-server/service/core/model"
@@ -30,7 +32,7 @@ func main() {
 	config.SetupVars()
 
 	// db setup
-	config.SetupDB(config.DSN)
+	config.SetupDB(viper.GetString("postgres.dsn"))
 
 	factCheckModel.Migration()
 	coreModel.Migration()

@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -42,7 +42,7 @@ func TestDetails(t *testing.T) {
 
 	t.Run("when keto cannot fetch policies", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		gock.New(config.KetoURL).
+		gock.New(viper.GetString("keto.url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Persist().
 			Reply(http.StatusOK)

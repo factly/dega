@@ -17,7 +17,6 @@ require (
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/meilisearch/meilisearch-go v0.12.0
 	github.com/moul/http2curl v1.0.0 // indirect
-	github.com/smartystreets/goconvey v1.6.4 // indirect
 	github.com/spf13/viper v1.7.1
 	github.com/swaggo/http-swagger v0.0.0-20200308142732-58ac5e232fba
 	github.com/swaggo/swag v1.6.7
