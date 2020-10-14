@@ -25,7 +25,10 @@ function Editor({ value, onChange }) {
       tools: {
         header: Header,
         list: List,
-        paragraph: Paragraph,
+        paragraph: {
+          class: Paragraph,
+          inlineToolbar: true,
+        },
         quote: Quote,
         raw: RawTool,
         table: Table,
@@ -35,7 +38,7 @@ function Editor({ value, onChange }) {
         linkTool: {
           class: LinkTool,
           config: {
-            endpoint: window.REACT_APP_API_URL + 'link-tool', // Your backend endpoint for url data fetching
+            endpoint: window.REACT_APP_API_URL + '/link-tool', // Your backend endpoint for url data fetching
           },
         },
         marker: {
