@@ -33,8 +33,10 @@ var Data = map[string]interface{}{
 	"caption":     "sample",
 	"alt_text":    "sample",
 	"file_size":   100,
-	"url":         nilJsonb(),
-	"dimensions":  "testdims",
+	"url": postgres.Jsonb{
+		RawMessage: []byte(`{"raw": "http://testimage.com/test.jpg"}`),
+	},
+	"dimensions": "testdims",
 }
 
 var invalidData = map[string]interface{}{

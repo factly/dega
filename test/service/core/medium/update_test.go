@@ -12,6 +12,8 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -87,6 +89,13 @@ func TestMediumUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 
 	})
+
+	Data["url"] = test.NilJsonb()
+	viper.Reset()
+	viper.Set("kavach.url", "http://kavach:6620")
+	viper.Set("keto.url", "http://keto:6644")
+	viper.Set("meili.url", "http://meili:7700")
+	viper.Set("meili.key", "password")
 
 	t.Run("update medium", func(t *testing.T) {
 		updatedMedium["slug"] = "image"
@@ -181,6 +190,29 @@ func TestMediumUpdate(t *testing.T) {
 
 	})
 
+	viper.Set("imageproxy.url", "http://testing.com")
+
+	t.Run("invalid imageproxy url from config", func(t *testing.T) {
+		viper.Set("imageproxy.url", "invalid")
+		updatedMedium["slug"] = "image"
+		test.CheckSpaceMock(mock)
+
+		SelectWithSpace(mock)
+
+		mediumUpdateMock(mock, updatedMedium, nil)
+		SelectWithOutSpace(mock)
+
+		e.PUT(path).
+			WithPath("medium_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedMedium).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
+	viper.Reset()
+
 	t.Run("update medium when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		updatedMedium["slug"] = "image"
@@ -200,4 +232,8 @@ func TestMediumUpdate(t *testing.T) {
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
+
+	Data["url"] = postgres.Jsonb{
+		RawMessage: []byte(`{"raw": "http://testimage.com/test.jpg"}`),
+	}
 }

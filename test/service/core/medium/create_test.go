@@ -8,6 +8,8 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -48,6 +50,13 @@ func TestMediumCreate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 
 	})
+
+	Data["url"] = test.NilJsonb()
+	viper.Reset()
+	viper.Set("kavach.url", "http://kavach:6620")
+	viper.Set("keto.url", "http://keto:6644")
+	viper.Set("meili.url", "http://meili:7700")
+	viper.Set("meili.key", "password")
 
 	t.Run("create medium", func(t *testing.T) {
 
@@ -99,6 +108,24 @@ func TestMediumCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	viper.Set("imageproxy.url", "http://testing.com")
+
+	t.Run("invalid url in body", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		slugCheckMock(mock, Data)
+
+		mediumInsertMock(mock)
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
+	viper.Reset()
+
 	t.Run("create medium when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
@@ -114,4 +141,8 @@ func TestMediumCreate(t *testing.T) {
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
+
+	Data["url"] = postgres.Jsonb{
+		RawMessage: []byte(`{"raw": "http://testimage.com/test.jpg"}`),
+	}
 }
