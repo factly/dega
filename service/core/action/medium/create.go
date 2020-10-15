@@ -87,6 +87,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	addProxyURL(result)
+
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,

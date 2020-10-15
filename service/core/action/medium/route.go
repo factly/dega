@@ -1,9 +1,14 @@
 package medium
 
 import (
+	"encoding/json"
+	"net/url"
+
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/spf13/viper"
 )
 
 // medium model
@@ -37,4 +42,19 @@ func Router() chi.Router {
 
 	return r
 
+}
+
+func addProxyURL(medium *model.Medium) {
+	resurl := map[string]interface{}{}
+	if viper.IsSet("imageproxy.url") {
+		json.Unmarshal(medium.URL.RawMessage, &resurl)
+		rawURL := resurl["raw"].(string)
+		urlObj, _ := url.Parse(rawURL)
+		resurl["proxy"] = viper.GetString("imageproxy.url") + urlObj.Path
+
+		rawBArr, _ := json.Marshal(resurl)
+		medium.URL = postgres.Jsonb{
+			RawMessage: rawBArr,
+		}
+	}
 }
