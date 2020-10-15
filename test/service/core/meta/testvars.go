@@ -27,8 +27,6 @@ var page = `
   <head>
 </html>`
 
-var invalidpage = `adsuhds`
-
 var meta = map[string]interface{}{
 	"site_name":   "TestSite",
 	"description": "This is a test webpage",
