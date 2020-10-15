@@ -56,7 +56,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	addProxyURL(result)
+	if err = addProxyURL(result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
 }

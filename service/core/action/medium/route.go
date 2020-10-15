@@ -44,12 +44,18 @@ func Router() chi.Router {
 
 }
 
-func addProxyURL(medium *model.Medium) {
+func addProxyURL(medium *model.Medium) error {
 	resurl := map[string]interface{}{}
 	if viper.IsSet("imageproxy.url") {
-		json.Unmarshal(medium.URL.RawMessage, &resurl)
+		err := json.Unmarshal(medium.URL.RawMessage, &resurl)
+		if err != nil {
+			return err
+		}
 		rawURL := resurl["raw"].(string)
-		urlObj, _ := url.Parse(rawURL)
+		urlObj, err := url.Parse(rawURL)
+		if err != nil {
+			return err
+		}
 		resurl["proxy"] = viper.GetString("imageproxy.url") + urlObj.Path
 
 		rawBArr, _ := json.Marshal(resurl)
@@ -57,4 +63,5 @@ func addProxyURL(medium *model.Medium) {
 			RawMessage: rawBArr,
 		}
 	}
+	return nil
 }

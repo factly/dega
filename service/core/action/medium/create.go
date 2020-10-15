@@ -87,7 +87,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	addProxyURL(result)
+	if err = addProxyURL(result); err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{

@@ -95,7 +95,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for i := range result.Nodes {
-		addProxyURL(&result.Nodes[i])
+		if err = addProxyURL(&result.Nodes[i]); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
