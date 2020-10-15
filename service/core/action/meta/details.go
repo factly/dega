@@ -40,12 +40,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	defer response.Body.Close()
 
-	doc, err := goquery.NewDocumentFromReader(response.Body)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	doc, _ := goquery.NewDocumentFromReader(response.Body)
 
 	result := metadata{}
 	result.Success = 0
@@ -55,7 +50,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		property, _ := s.Attr("property")
 		content, _ := s.Attr("content")
 
-		if strings.Contains(name, "title") {
+		if strings.Contains(name, "title") || strings.Contains(property, "title") {
 			result.Meta.Title = content
 			result.Success = 1
 		} else if strings.Contains(name, "description") {
