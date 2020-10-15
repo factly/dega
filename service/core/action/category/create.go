@@ -61,6 +61,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if category.ParentID != 0 {
 		var parentCat model.Category
 		parentCat.ID = category.ParentID
+		parentCat.SpaceID = uint(sID)
 		err = config.DB.Model(&model.Category{}).First(&parentCat).Error
 
 		if err != nil {

@@ -2,6 +2,8 @@ package meili
 
 import (
 	"log"
+	"net/http"
+	"time"
 
 	"github.com/meilisearch/meilisearch-go"
 	"github.com/spf13/viper"
@@ -12,9 +14,11 @@ var Client *meilisearch.Client
 
 // SetupMeiliSearch setups the meili search server index
 func SetupMeiliSearch() {
-	Client = meilisearch.NewClient(meilisearch.Config{
+	Client = meilisearch.NewClientWithCustomHTTPClient(meilisearch.Config{
 		Host:   viper.GetString("meili.url"),
 		APIKey: viper.GetString("meili.key"),
+	}, http.Client{
+		Timeout: time.Second * 10,
 	})
 
 	_, err := Client.Indexes().Get("dega")
