@@ -838,6 +838,50 @@
                 }
             }
         },
+        "/core/meta": {
+            "get": {
+                "description": "Get meta info",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get meta info",
+                "operationId": "get-meta-info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "URL",
+                        "name": "url",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/meta.metadata"
+                        }
+                    }
+                }
+            }
+        },
         "/core/policies": {
             "get": {
                 "description": "Get all policies",
@@ -3054,6 +3098,36 @@
                 },
                 "url": {
                     "type": "string"
+                }
+            }
+        },
+        "meta.meta": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "image": {
+                    "type": "object",
+                    "additionalProperties": true
+                },
+                "site_name": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "meta.metadata": {
+            "type": "object",
+            "properties": {
+                "meta": {
+                    "type": "object",
+                    "$ref": "#/definitions/meta.meta"
+                },
+                "sucess": {
+                    "type": "integer"
                 }
             }
         },
