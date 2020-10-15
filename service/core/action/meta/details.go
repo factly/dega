@@ -61,7 +61,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		} else if strings.Contains(name, "description") {
 			result.Meta.Description = content
 			result.Success = 1
-		} else if strings.Contains(property, "image") {
+		} else if property == "og:image" {
 			result.Meta.Image = map[string]interface{}{
 				"url": content,
 			}
