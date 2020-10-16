@@ -9,6 +9,28 @@ import {
 } from '../constants/formats';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 
+export const addDefaultFormats = (query) => {
+  return (dispatch) => {
+    dispatch(loadingFormats());
+    return axios
+      .post(FORMATS_API + '/default')
+      .then((response) => {
+        dispatch(addFormats(response.data.nodes));
+        dispatch(
+          addFormatsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopFormatsLoading());
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(error.message));
+      });
+  };
+};
+
 export const getFormats = (query) => {
   return (dispatch) => {
     dispatch(loadingFormats());

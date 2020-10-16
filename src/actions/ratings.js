@@ -10,6 +10,34 @@ import {
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
 
+export const addDefaultRatings = (query) => {
+  return (dispatch) => {
+    dispatch(loadingRatings());
+    return axios
+      .post(RATINGS_API + '/default')
+      .then((response) => {
+        dispatch(
+          addRatingsList(
+            response.data.nodes.map((rating) => {
+              return { ...rating, medium: rating.medium?.id };
+            }),
+          ),
+        );
+        dispatch(
+          addRatingsRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopRatingsLoading());
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(error.message));
+      });
+  };
+};
+
 export const getRatings = (query) => {
   return (dispatch) => {
     dispatch(loadingRatings());

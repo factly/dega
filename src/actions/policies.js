@@ -9,6 +9,28 @@ import {
 } from '../constants/policies';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 
+export const addDefaultPolicies = (query) => {
+  return (dispatch) => {
+    dispatch(loadingPolicies());
+    return axios
+      .post(POLICIES_API + '/default')
+      .then((response) => {
+        dispatch(addPoliciesList(response.data.nodes));
+        dispatch(
+          addPoliciesRequest({
+            data: response.data.nodes.map((item) => item.id),
+            query: query,
+            total: response.data.total,
+          }),
+        );
+        dispatch(stopPoliciesLoading());
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(error.message));
+      });
+  };
+};
+
 export const getPolicies = (query) => {
   return (dispatch) => {
     dispatch(loadingPolicies());
