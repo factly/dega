@@ -8,7 +8,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
-	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -53,20 +52,4 @@ func TestMediumDetails(t *testing.T) {
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(Data)
 	})
-
-	t.Run("invalid url in db", func(t *testing.T) {
-		Data["url"] = test.NilJsonb()
-		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-
-		e.GET(path).
-			WithPath("medium_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		Data["url"] = postgres.Jsonb{
-			RawMessage: []byte(`{"raw": "http://testimage.com/test.jpg"}`),
-		}
-	})
-
 }

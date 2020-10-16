@@ -34,7 +34,7 @@ var Data = map[string]interface{}{
 	"alt_text":    "sample",
 	"file_size":   100,
 	"url": postgres.Jsonb{
-		RawMessage: []byte(`{"raw": "http://testimage.com/test.jpg"}`),
+		RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
 	},
 	"dimensions": "testdims",
 }
