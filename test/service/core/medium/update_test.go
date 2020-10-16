@@ -204,7 +204,4 @@ func TestMediumUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	Data["url"] = postgres.Jsonb{
-		RawMessage: []byte(`{"raw": "http://testimage.com/test.jpg"}`),
-	}
 }

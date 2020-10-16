@@ -8,7 +8,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
-	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -115,8 +114,4 @@ func TestMediumCreate(t *testing.T) {
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
-
-	Data["url"] = postgres.Jsonb{
-		RawMessage: []byte(`{"raw": "http://testimage.com/test.jpg"}`),
-	}
 }
