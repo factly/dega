@@ -1,7 +1,6 @@
 package medium
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"regexp"
@@ -11,13 +10,6 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
-
-func nilJsonb() postgres.Jsonb {
-	ba, _ := json.Marshal(nil)
-	return postgres.Jsonb{
-		RawMessage: ba,
-	}
-}
 
 var headers = map[string]string{
 	"X-Space": "1",
