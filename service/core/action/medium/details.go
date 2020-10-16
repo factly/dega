@@ -56,5 +56,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	addProxyURL(result)
+
 	renderx.JSON(w, http.StatusOK, result)
 }
