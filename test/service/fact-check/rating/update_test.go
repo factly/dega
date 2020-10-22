@@ -123,7 +123,7 @@ func TestRatingUpdate(t *testing.T) {
 
 	})
 
-	t.Run("update rating whith medium_id = 0", func(t *testing.T) {
+	t.Run("update rating with medium_id = 0", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		SelectWithSpace(mock)
