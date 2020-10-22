@@ -2604,6 +2604,12 @@ var doc = `{
                         "description": "page number",
                         "name": "page",
                         "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "all",
+                        "name": "all",
+                        "in": "query"
                     }
                 ],
                 "responses": {

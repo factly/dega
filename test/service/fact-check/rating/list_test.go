@@ -58,6 +58,7 @@ func TestRatingList(t *testing.T) {
 
 		e.GET(basePath).
 			WithHeaders(headers).
+			WithQuery("all", "true").
 			Expect().
 			Status(http.StatusOK).
 			JSON().
