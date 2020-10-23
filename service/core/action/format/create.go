@@ -14,6 +14,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"gorm.io/gorm"
 )
 
 // create - Create format
@@ -63,8 +64,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		formatSlug = slug.Make(format.Name)
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Format{})
+	tableName := stmt.Schema.Table
+
 	// Check if format with same name exist
-	if util.CheckName(uint(sID), format.Name, config.DB.NewScope(&model.Format{}).TableName()) {
+	if util.CheckName(uint(sID), format.Name, tableName) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
@@ -73,7 +79,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Format{
 		Name:        format.Name,
 		Description: format.Description,
-		Slug:        slug.Approve(formatSlug, sID, config.DB.NewScope(&model.Format{}).TableName()),
+		Slug:        slug.Approve(formatSlug, sID, tableName),
 		SpaceID:     uint(sID),
 	}
 

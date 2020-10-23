@@ -19,9 +19,9 @@ type Claim struct {
 	ClaimSources  string         `gorm:"column:claim_sources" json:"claim_sources"`
 	Description   postgres.Jsonb `gorm:"column:description" json:"description"`
 	ClaimantID    uint           `gorm:"column:claimant_id" json:"claimant_id"`
-	Claimant      Claimant       `gorm:"foreignkey:claimant_id;association_foreignkey:id" json:"claimant"`
+	Claimant      Claimant       `json:"claimant"`
 	RatingID      uint           `gorm:"column:rating_id" json:"rating_id"`
-	Rating        Rating         `gorm:"foreignkey:rating_id;association_foreignkey:id" json:"rating"`
+	Rating        Rating         `json:"rating"`
 	Review        string         `gorm:"column:review" json:"review"`
 	ReviewTagLine string         `gorm:"column:review_tag_line" json:"review_tag_line"`
 	ReviewSources string         `gorm:"column:review_sources" json:"review_sources"`
@@ -32,7 +32,7 @@ type Claim struct {
 type PostClaim struct {
 	config.Base
 	ClaimID uint  `gorm:"column:claim_id" json:"claim_id"`
-	Claim   Claim `gorm:"foreignkey:claim_id;association_foreignkey:id"`
+	Claim   Claim `json:"claim"`
 	PostID  uint  `gorm:"column:post_id" json:"post_id"`
 }
 

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/factly/x/loggerx"
+	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -77,8 +78,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		categorySlug = slug.Make(category.Name)
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Category{})
+	tableName := stmt.Schema.Table
+
 	// Check if category with same name exist
-	if util.CheckName(uint(sID), category.Name, config.DB.NewScope(&model.Category{}).TableName()) {
+	if util.CheckName(uint(sID), category.Name, tableName) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
@@ -87,7 +93,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Category{
 		Name:        category.Name,
 		Description: category.Description,
-		Slug:        slug.Approve(categorySlug, sID, config.DB.NewScope(&model.Category{}).TableName()),
+		Slug:        slug.Approve(categorySlug, sID, tableName),
 		ParentID:    category.ParentID,
 		MediumID:    category.MediumID,
 		SpaceID:     uint(sID),

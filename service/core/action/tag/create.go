@@ -14,6 +14,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"gorm.io/gorm"
 )
 
 // create - Create tag
@@ -57,6 +58,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Tag{})
+	tableName := stmt.Schema.Table
+
 	var tagSlug string
 	if tag.Slug != "" && slug.Check(tag.Slug) {
 		tagSlug = tag.Slug
@@ -65,7 +71,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if tag with same name exist
-	if util.CheckName(uint(sID), tag.Name, config.DB.NewScope(&model.Tag{}).TableName()) {
+	if util.CheckName(uint(sID), tag.Name, tableName) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
@@ -73,7 +79,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Tag{
 		Name:        tag.Name,
-		Slug:        slug.Approve(tagSlug, sID, config.DB.NewScope(&model.Tag{}).TableName()),
+		Slug:        slug.Approve(tagSlug, sID, tableName),
 		Description: tag.Description,
 		SpaceID:     uint(sID),
 		IsFeatured:  tag.IsFeatured,

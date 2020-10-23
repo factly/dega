@@ -14,6 +14,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"gorm.io/gorm"
 )
 
 // create - Create medium
@@ -63,9 +64,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumSlug = slug.Make(medium.Name)
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Medium{})
+	tableName := stmt.Schema.Table
+
 	result := &model.Medium{
 		Name:        medium.Name,
-		Slug:        slug.Approve(mediumSlug, sID, config.DB.NewScope(&model.Medium{}).TableName()),
+		Slug:        slug.Approve(mediumSlug, sID, tableName),
 		Title:       medium.Title,
 		Type:        medium.Type,
 		Description: medium.Description,

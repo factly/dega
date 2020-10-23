@@ -67,7 +67,7 @@ func publish(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var totAuthors int
+	var totAuthors int64
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Count(&totAuthors)

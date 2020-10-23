@@ -16,6 +16,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update rating by id
@@ -81,16 +82,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	var ratingSlug string
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Rating{})
+	tableName := stmt.Schema.Table
+
 	if result.Slug == rating.Slug {
 		ratingSlug = result.Slug
 	} else if rating.Slug != "" && slug.Check(rating.Slug) {
-		ratingSlug = slug.Approve(rating.Slug, sID, config.DB.NewScope(&model.Rating{}).TableName())
+		ratingSlug = slug.Approve(rating.Slug, sID, tableName)
 	} else {
-		ratingSlug = slug.Approve(slug.Make(rating.Name), sID, config.DB.NewScope(&model.Rating{}).TableName())
+		ratingSlug = slug.Approve(slug.Make(rating.Name), sID, tableName)
 	}
 
 	// Check if rating with same name exist
-	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, config.DB.NewScope(&model.Rating{}).TableName()) {
+	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, tableName) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return

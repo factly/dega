@@ -16,6 +16,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update category by id
@@ -89,16 +90,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	var categorySlug string
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Category{})
+	tableName := stmt.Schema.Table
+
 	if result.Slug == category.Slug {
 		categorySlug = result.Slug
 	} else if category.Slug != "" && slug.Check(category.Slug) {
-		categorySlug = slug.Approve(category.Slug, sID, config.DB.NewScope(&model.Category{}).TableName())
+		categorySlug = slug.Approve(category.Slug, sID, tableName)
 	} else {
-		categorySlug = slug.Approve(slug.Make(category.Name), sID, config.DB.NewScope(&model.Category{}).TableName())
+		categorySlug = slug.Approve(slug.Make(category.Name), sID, tableName)
 	}
 
 	// Check if category with same name exist
-	if category.Name != result.Name && util.CheckName(uint(sID), category.Name, config.DB.NewScope(&model.Category{}).TableName()) {
+	if category.Name != result.Name && util.CheckName(uint(sID), category.Name, tableName) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return

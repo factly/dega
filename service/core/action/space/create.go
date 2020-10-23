@@ -67,6 +67,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get table name
+	// stmt := &gorm.Statement{DB: config.DB}
+	// _ = stmt.Parse(&model.Space{})
+	// tableName := stmt.Schema.Table
+
 	var spaceSlug string
 	if space.Slug != "" && slug.Check(space.Slug) {
 		spaceSlug = space.Slug
@@ -77,7 +82,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := model.Space{
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
-		Slug:              slug.Approve(spaceSlug, 0, config.DB.NewScope(&model.Space{}).TableName()),
+		Slug:              spaceSlug, //slug.Approve(spaceSlug, 0, tableName),
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,

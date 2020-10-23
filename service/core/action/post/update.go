@@ -21,6 +21,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update post by id
@@ -128,18 +129,23 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	var postSlug string
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Post{})
+	tableName := stmt.Schema.Table
+
 	if result.Slug == post.Slug {
 		postSlug = result.Slug
 	} else if post.Slug != "" && slug.Check(post.Slug) {
-		postSlug = slug.Approve(post.Slug, sID, config.DB.NewScope(&model.Post{}).TableName())
+		postSlug = slug.Approve(post.Slug, sID, tableName)
 	} else {
-		postSlug = slug.Approve(slug.Make(post.Title), sID, config.DB.NewScope(&model.Post{}).TableName())
+		postSlug = slug.Approve(slug.Make(post.Title), sID, tableName)
 	}
 
 	tx := config.DB.Begin()
 	// Deleting old associations
 	if len(oldTags) > 0 {
-		err = tx.Model(&result.Post).Association("Tags").Delete(oldTags).Error
+		err = tx.Model(&result.Post).Association("Tags").Delete(oldTags)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -148,7 +154,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if len(oldCategories) > 0 {
-		err = tx.Model(&result.Post).Association("Categories").Delete(oldCategories).Error
+		err = tx.Model(&result.Post).Association("Categories").Delete(oldCategories)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)

@@ -16,7 +16,7 @@ type Claimant struct {
 	Description string        `gorm:"column:description" json:"description"`
 	TagLine     string        `gorm:"column:tag_line" json:"tag_line"`
 	MediumID    uint          `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
-	Medium      *model.Medium `gorm:"foreignkey:medium_id;association_foreignkey:id" json:"medium"`
+	Medium      *model.Medium `json:"medium"`
 	SpaceID     uint          `gorm:"column:space_id" json:"space_id"`
 }
 

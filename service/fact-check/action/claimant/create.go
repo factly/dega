@@ -14,6 +14,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"gorm.io/gorm"
 )
 
 // create - Create claimant
@@ -56,6 +57,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Claimant{})
+	tableName := stmt.Schema.Table
+
 	var claimantSlug string
 	if claimant.Slug != "" && slug.Check(claimant.Slug) {
 		claimantSlug = claimant.Slug
@@ -65,7 +71,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Claimant{
 		Name:        claimant.Name,
-		Slug:        slug.Approve(claimantSlug, sID, config.DB.NewScope(&model.Claimant{}).TableName()),
+		Slug:        slug.Approve(claimantSlug, sID, tableName),
 		Description: claimant.Description,
 		MediumID:    claimant.MediumID,
 		SpaceID:     uint(sID),

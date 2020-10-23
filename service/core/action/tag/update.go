@@ -16,6 +16,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update tag by id
@@ -81,16 +82,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	var tagSlug string
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Tag{})
+	tableName := stmt.Schema.Table
+
 	if result.Slug == tag.Slug {
 		tagSlug = result.Slug
 	} else if tag.Slug != "" && slug.Check(tag.Slug) {
-		tagSlug = slug.Approve(tag.Slug, sID, config.DB.NewScope(&model.Tag{}).TableName())
+		tagSlug = slug.Approve(tag.Slug, sID, tableName)
 	} else {
-		tagSlug = slug.Approve(slug.Make(tag.Name), sID, config.DB.NewScope(&model.Tag{}).TableName())
+		tagSlug = slug.Approve(slug.Make(tag.Name), sID, tableName)
 	}
 
 	// Check if tag with same name exist
-	if tag.Name != result.Name && util.CheckName(uint(sID), tag.Name, config.DB.NewScope(&model.Tag{}).TableName()) {
+	if tag.Name != result.Name && util.CheckName(uint(sID), tag.Name, tableName) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return

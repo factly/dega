@@ -19,6 +19,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"gorm.io/gorm"
 )
 
 // create - Create post
@@ -83,6 +84,11 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.InternalServerError()
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Post{})
+	tableName := stmt.Schema.Table
+
 	var postSlug string
 	if post.Slug != "" && slug.Check(post.Slug) {
 		postSlug = post.Slug
@@ -92,7 +98,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 
 	result.Post = model.Post{
 		Title:            post.Title,
-		Slug:             slug.Approve(postSlug, sID, config.DB.NewScope(&model.Post{}).TableName()),
+		Slug:             slug.Approve(postSlug, sID, tableName),
 		Status:           status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
