@@ -53,7 +53,7 @@ function MediumList({ actions }) {
       title: 'File size',
       dataIndex: 'file_size',
       key: 'file_size',
-      render: (_, record) => parseInt(record.file_size) / 1024 + ' KB',
+      render: (_, record) => Math.round((parseInt(record.file_size) / 1024) * 100) / 100 + ' KB',
     },
     {
       title: 'Caption',

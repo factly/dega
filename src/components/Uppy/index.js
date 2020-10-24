@@ -22,10 +22,10 @@ function UppyUploader({ onUpload }) {
       Object.keys(files).forEach((fileID) => {
         updatedFiles[fileID] = {
           ...files[fileID],
+          file_name: files[fileID].meta.name,
           meta: {
             ...files[fileID].meta,
             name:
-              'uppy/' +
               space_slug +
               '/' +
               new Date().getFullYear() +
@@ -49,12 +49,12 @@ function UppyUploader({ onUpload }) {
     const successful = result.successful[0];
     const upload = {};
 
-    upload['alt_text'] = successful.meta.alt_text;
+    upload['alt_text'] = successful.meta.alt_text ? successful.meta.alt_text : successful.file_name;
     upload['caption'] = successful.meta.caption;
     upload['description'] = successful.meta.caption;
     upload['dimensions'] = '100x100';
     upload['file_size'] = successful.size;
-    upload['name'] = successful.meta.name;
+    upload['name'] = successful.file_name;
     upload['slug'] = successful.response.body.key;
     upload['title'] = successful.meta.caption ? successful.meta.caption : '';
     upload['type'] = successful.meta.type;
