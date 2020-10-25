@@ -7,7 +7,29 @@ import { useSelector } from 'react-redux';
 function ProtectedRoute({ component: Component, permission, ...rest }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ ...permission, spaces });
+  const { loading, orgs, selected } = spaces;
 
+  if (!loading && orgs.length === 0)
+    return (
+      <Result
+        title="You do not have any organisation."
+        subTitle="Sorry, you are not authorized to access this page."
+        extra={
+          <a href={`${process.env.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
+            <Button type="primary">Back to Kavach</Button>
+          </a>
+        }
+      />
+    );
+
+  if (!loading && permission.isSpace && selected === 0 && orgs[0].permission.role === 'owner') {
+    return (
+      <Route
+        {...rest}
+        render={(props) => <Component {...rest} {...props} permission={{ actions }} />}
+      />
+    );
+  }
   if (actions.length > 0)
     return (
       <Route

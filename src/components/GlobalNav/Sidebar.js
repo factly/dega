@@ -15,16 +15,20 @@ function Sidebar() {
   } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
 
-  const permission = useSelector((state) => {
-    const { selected } = state.spaces;
+  const { permission, orgs, loading } = useSelector((state) => {
+    const { selected, orgs, loading } = state.spaces;
 
     if (selected > 0) {
-      return state.spaces.details[selected].permissions;
+      return {
+        permission: state.spaces.details[selected].permissions,
+        orgs: orgs,
+        loading: loading,
+      };
     }
-    return;
+    return { orgs: orgs, loading: loading, permission: [] };
   });
 
-  if (!permission) {
+  if (loading) {
     return null;
   }
 
@@ -65,7 +69,8 @@ function Sidebar() {
             <SubMenu key={index} title={menu.title} icon={<Icon />}>
               {menu.children.map((route, childIndex) => {
                 return resource.includes(route.title.toLowerCase()) ||
-                  resource.includes('admin') ? (
+                  resource.includes('admin') ||
+                  orgs[0].permission.role === 'owner' ? (
                   <Menu.Item key={`${index}.${childIndex}`}>
                     <Link to={route.path}>
                       <span>{route.title}</span>
