@@ -20,7 +20,7 @@ function Sidebar() {
 
     if (selected > 0) {
       return {
-        permission: state.spaces.details[selected].permissions,
+        permission: state.spaces.details[selected].permissions || [],
         orgs: orgs,
         loading: loading,
       };
@@ -32,7 +32,7 @@ function Sidebar() {
     return null;
   }
 
-  const resource = [
+  let resource = [
     'home',
     'dashboard',
     'analytics',
