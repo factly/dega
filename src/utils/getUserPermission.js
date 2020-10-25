@@ -1,6 +1,7 @@
 function getUserPermission({ resource, action, spaces }) {
   const { selected, details } = spaces;
-  const userPermission = details[selected] ? details[selected].permissions : [];
+  const userPermission =
+    details[selected] && details[selected].permissions ? details[selected].permissions : [];
 
   const node = userPermission.findIndex(
     (each) =>
