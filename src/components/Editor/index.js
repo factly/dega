@@ -8,6 +8,11 @@ import RawTool from '@editorjs/raw';
 import Table from '@editorjs/table';
 import UppyUploader from './UppyUploader';
 import Embed from '@editorjs/embed';
+import Marker from '@editorjs/marker';
+import CodeTool from '@editorjs/code';
+import Delimiter from '@editorjs/delimiter';
+import InlineCode from '@editorjs/inline-code';
+import LinkTool from '@editorjs/link';
 import { useSelector } from 'react-redux';
 
 function Editor({ value, onChange }) {
@@ -20,10 +25,25 @@ function Editor({ value, onChange }) {
       tools: {
         header: Header,
         list: List,
-        paragraph: Paragraph,
+        paragraph: {
+          class: Paragraph,
+          inlineToolbar: true,
+        },
         quote: Quote,
         raw: RawTool,
         table: Table,
+        code: CodeTool,
+        delimiter: Delimiter,
+        inlineCode: InlineCode,
+        linkTool: {
+          class: LinkTool,
+          config: {
+            endpoint: window.REACT_APP_API_URL + '/link-tool', // Your backend endpoint for url data fetching
+          },
+        },
+        marker: {
+          class: Marker,
+        },
         embed: {
           class: Embed,
           config: {
