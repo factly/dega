@@ -42,7 +42,7 @@ function Features() {
               }}
               disabled={ratings > 0}
             >
-              <PlusOutlined /> create ratings
+              <PlusOutlined /> CREATE RATINGS
             </Button>,
           ]}
           style={{ width: 300 }}
@@ -60,7 +60,7 @@ function Features() {
               }}
               disabled={formats > 0}
             >
-              <PlusOutlined /> create formats
+              <PlusOutlined /> CREATE FORMATS
             </Button>,
           ]}
           style={{ width: 300 }}
@@ -77,7 +77,7 @@ function Features() {
               }}
               disabled={policies > 0}
             >
-              <PlusOutlined /> create policies
+              <PlusOutlined /> CREATE POLICIES
             </Button>,
           ]}
           style={{ width: 300 }}
