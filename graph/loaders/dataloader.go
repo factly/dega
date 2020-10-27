@@ -12,6 +12,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/spf13/viper"
 )
 
 const loadersKey = "loaders"
@@ -312,7 +313,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				result := make([]*models.User, 0)
 
 				userMap := make(map[uint]models.User)
-				url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
+				url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", space.OrganisationID, "/users")
 
 				req, err := http.NewRequest("GET", url, nil)
 				if err != nil {

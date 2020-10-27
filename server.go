@@ -14,6 +14,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -37,7 +38,7 @@ func main() {
 	router.Use(middleware.Logger)
 
 	config.SetupVars()
-	config.SetupDB(config.DSN)
+	config.SetupDB(viper.GetString("postgres.dsn"))
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
 	router.Handle("/query", loaders.DataloaderMiddleware(srv))

@@ -136,3 +136,6 @@ server
 
 #logs
 *.log
+
+#Dega config
+dega-api.yml

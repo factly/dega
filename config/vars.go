@@ -3,30 +3,31 @@ package config
 import (
 	"flag"
 	"log"
+
+	"github.com/spf13/viper"
 )
-
-// DSN dsn
-var DSN string
-
-// KavachURL kavach
-var KavachURL string
 
 // SetupVars setups all the config variables to run application
 func SetupVars() {
-	var dsn string
-	var kavach string
-	flag.StringVar(&dsn, "dsn", "", "Database connection string")
-	flag.StringVar(&kavach, "kavach", "", "Kavach connection string")
+
+	var configPath string
+
+	flag.StringVar(&configPath, "config", "./config.yaml", "Config file path")
 	flag.Parse()
 
-	if dsn == "" {
-		log.Fatal("Please pass dsn flag")
+	viper.SetConfigFile(configPath)
+
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatal("config file not found...")
 	}
 
-	if kavach == "" {
-		log.Fatal("Please pass dsn flag")
+	if !viper.IsSet("postgres.dsn") {
+		log.Fatal("please provide postgres.dsn in config file")
 	}
 
-	DSN = dsn
-	KavachURL = kavach
+	if !viper.IsSet("kavach.url") {
+		log.Fatal("please provide kavach.url in config file")
+	}
+
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/spf13/viper"
 )
 
 func (r *userResolver) ID(ctx context.Context, obj *models.User) (string, error) {
@@ -47,7 +48,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 		return nil, nil
 	}
 
-	url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", space.OrganisationID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -97,7 +98,7 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	config.DB.First(space)
 
 	userMap := make(map[uint]models.User)
-	url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", space.OrganisationID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
