@@ -59,9 +59,12 @@ func TestMediumCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(createArr).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+			Status(http.StatusCreated).
+			JSON().
+			Array().
+			Element(0).Object().ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
 
 	})
@@ -76,9 +79,9 @@ func TestMediumCreate(t *testing.T) {
 		Data["slug"] = ""
 		res := e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(createArr).
 			Expect().
-			Status(http.StatusCreated).JSON().Object()
+			Status(http.StatusCreated).JSON().Array().Element(0).Object()
 		Data["slug"] = "image"
 		res.ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
@@ -92,7 +95,7 @@ func TestMediumCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(createArr).
 			Expect().
 			Status(http.StatusInternalServerError)
 
@@ -109,7 +112,7 @@ func TestMediumCreate(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(createArr).
 			Expect().
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)

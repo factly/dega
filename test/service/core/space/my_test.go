@@ -29,7 +29,7 @@ func TestSpaceMy(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("get my spaces", func(t *testing.T) {
-		SelectQuery(mock)
+		SelectQuery(mock, 1)
 
 		medium.SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
@@ -48,7 +48,7 @@ func TestSpaceMy(t *testing.T) {
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(Data)
+			ContainsMap(resData)
 
 		test.ExpectationsMet(t, mock)
 	})
@@ -62,7 +62,7 @@ func TestSpaceMy(t *testing.T) {
 
 	t.Run("when keto is down", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		SelectQuery(mock)
+		SelectQuery(mock, 1)
 
 		medium.SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
@@ -86,7 +86,7 @@ func TestSpaceMy(t *testing.T) {
 
 	t.Run("when member requests his spaces", func(t *testing.T) {
 		test.DisableKavachGock(testServer.URL)
-		SelectQuery(mock)
+		SelectQuery(mock, 1)
 
 		medium.SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)

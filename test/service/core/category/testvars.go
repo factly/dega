@@ -24,6 +24,12 @@ var Data map[string]interface{} = map[string]interface{}{
 	"medium_id":   1,
 	"is_featured": true,
 }
+var resData map[string]interface{} = map[string]interface{}{
+	"name":        "Test category",
+	"slug":        "test-category",
+	"description": "Test Description",
+	"is_featured": true,
+}
 
 var invalidData map[string]interface{} = map[string]interface{}{
 	"nae": "Tecateg",
@@ -52,7 +58,7 @@ var categorylist []map[string]interface{} = []map[string]interface{}{
 var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "description", "parent_id", "medium_id", "is_featured", "space_id"}
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "categories"`)
-var countQuery string = regexp.QuoteMeta(`SELECT count(*) FROM "categories"`)
+var countQuery string = regexp.QuoteMeta(`SELECT count(1) FROM "categories"`)
 var deleteQuery string = regexp.QuoteMeta(`UPDATE "categories" SET "deleted_at"=`)
 
 const path string = "/core/categories/{category_id}"
@@ -88,13 +94,10 @@ func insertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "categories"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["description"], Data["medium_id"], Data["is_featured"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["description"], Data["is_featured"], 1, Data["medium_id"]).
 		WillReturnRows(sqlmock.
-			NewRows([]string{"id"}).
-			AddRow(1))
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT "parent_id" FROM "categories"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"parent_id"}).AddRow(0))
+			NewRows([]string{"parent_id", "medium_id", "id"}).
+			AddRow(1, 1, 1))
 }
 
 func insertWithMediumError(mock sqlmock.Sqlmock) {
@@ -109,23 +112,23 @@ func insertWithMediumError(mock sqlmock.Sqlmock) {
 func updateMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
-	mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
-		WithArgs(Data["description"], Data["is_featured"], Data["medium_id"], Data["name"], Data["slug"], test.AnyTime{}, 1).
+	mock.ExpectExec(`UPDATE \"categories\"`).
+		WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["medium_id"], Data["is_featured"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	SelectWithOutSpace(mock)
+	selectWithSpace(mock)
 	medium.SelectWithOutSpace(mock)
 }
 
 func categoryPostAssociation(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts" INNER JOIN "post_categories"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts" JOIN "post_categories"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func deleteMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+)`).
-		WithArgs(nil, test.AnyTime{}, 1, 1).
+	mock.ExpectExec(`UPDATE \"categories\"`).
+		WithArgs(nil, 1, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectExec(deleteQuery).
 		WithArgs(test.AnyTime{}, 1).

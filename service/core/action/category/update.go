@@ -129,12 +129,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	mediumID := sql.NullInt64{Valid: true, Int64: int64(category.MediumID)}
 	if category.MediumID == 0 {
 		mediumID = result.MediumID
+		result.MediumID.Valid = false
 		mediumID.Valid = false
 	}
 
 	parentID := sql.NullInt64{Valid: true, Int64: int64(category.ParentID)}
 	if category.ParentID == 0 {
 		parentID = result.ParentID
+		result.ParentID.Valid = false
 		parentID.Valid = false
 	}
 

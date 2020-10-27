@@ -96,24 +96,28 @@ func update(w http.ResponseWriter, r *http.Request) {
 	logoID := sql.NullInt64{Valid: true, Int64: int64(space.LogoID)}
 	if space.LogoID == 0 {
 		logoID = result.LogoID
+		result.LogoID.Valid = false
 		logoID.Valid = false
 	}
 
 	logoMobileID := sql.NullInt64{Valid: true, Int64: int64(space.LogoMobileID)}
 	if space.LogoMobileID == 0 {
 		logoMobileID = result.LogoMobileID
+		result.LogoMobileID.Valid = false
 		logoMobileID.Valid = false
 	}
 
 	favIconID := sql.NullInt64{Valid: true, Int64: int64(space.FavIconID)}
 	if space.FavIconID == 0 {
 		favIconID = result.FavIconID
+		result.FavIconID.Valid = false
 		favIconID.Valid = false
 	}
 
 	mobileIconID := sql.NullInt64{Valid: true, Int64: int64(space.MobileIconID)}
 	if space.MobileIconID == 0 {
 		mobileIconID = result.MobileIconID
+		result.MobileIconID.Valid = false
 		mobileIconID.Valid = false
 	}
 
