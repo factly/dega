@@ -8,10 +8,11 @@ import { useSelector } from 'react-redux';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/url/dist/style.css';
+import { checker, maker } from '../../utils/sluger';
 
 function UppyUploader({ onUpload }) {
   const space_slug = useSelector((state) => state.spaces.details[state.spaces.selected].slug);
-
+  console.log(checker.test('bright'));
   const uppy = Uppy({
     id: 'uppy-media',
     meta: { type: 'avatar' },
@@ -19,10 +20,14 @@ function UppyUploader({ onUpload }) {
     autoProceed: false,
     onBeforeUpload: (files) => {
       const updatedFiles = {};
+
       Object.keys(files).forEach((fileID) => {
+        const name = checker.test(files[fileID].meta.name)
+          ? files[fileID].meta.name
+          : maker(files[fileID].meta.name);
         updatedFiles[fileID] = {
           ...files[fileID],
-          file_name: files[fileID].meta.name,
+          file_name: name,
           meta: {
             ...files[fileID].meta,
             name:
@@ -34,7 +39,7 @@ function UppyUploader({ onUpload }) {
               '/' +
               Date.now().toString() +
               '_' +
-              files[fileID].meta.name,
+              name,
           },
         };
       });
@@ -55,7 +60,7 @@ function UppyUploader({ onUpload }) {
     upload['dimensions'] = '100x100';
     upload['file_size'] = successful.size;
     upload['name'] = successful.file_name;
-    upload['slug'] = successful.response.body.key;
+    upload['slug'] = successful.file_name;
     upload['title'] = successful.meta.caption ? successful.meta.caption : '';
     upload['type'] = successful.meta.type;
     upload['url'] = {};

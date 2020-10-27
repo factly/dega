@@ -59,10 +59,10 @@ class UppyUploader {
           Object.keys(files).forEach((fileID) => {
             updatedFiles[fileID] = {
               ...files[fileID],
+              fileName: files[fileID].meta.name,
               meta: {
                 ...files[fileID].meta,
                 name:
-                  'uppy/' +
                   this.config.space_slug +
                   '/' +
                   new Date().getFullYear() +
@@ -99,7 +99,7 @@ class UppyUploader {
         upload['description'] = successful.meta.caption;
         upload['dimensions'] = '100x100';
         upload['file_size'] = successful.size;
-        upload['name'] = successful.meta.name;
+        upload['name'] = successful.fileName;
         upload['slug'] = successful.response.body.key;
         upload['title'] = successful.meta.caption ? successful.meta.caption : ' ';
         upload['type'] = successful.meta.type;
@@ -123,7 +123,7 @@ class UppyUploader {
     }
   }
 
-  save(blockContent) {
+  save() {
     return this.data;
   }
 }
