@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql"
 	"errors"
 
 	"github.com/factly/dega-server/config"
@@ -17,13 +18,13 @@ type Space struct {
 	TagLine           string         `gorm:"column:tag_line" json:"tag_line"`
 	Description       string         `gorm:"column:description" json:"description"`
 	SiteAddress       string         `gorm:"column:site_address" json:"site_address"`
-	LogoID            uint           `gorm:"column:logo_id;default:NULL" json:"logo_id"`
+	LogoID            sql.NullInt64  `gorm:"column:logo_id;default:NULL" json:"logo_id"`
 	Logo              *Medium        `json:"logo"`
-	LogoMobileID      uint           `gorm:"column:logo_mobile_id;default:NULL" json:"logo_mobile_id"`
+	LogoMobileID      sql.NullInt64  `gorm:"column:logo_mobile_id;default:NULL" json:"logo_mobile_id"`
 	LogoMobile        *Medium        `json:"logo_mobile"`
-	FavIconID         uint           `gorm:"column:fav_icon_id;default:NULL" json:"fav_icon_id"`
+	FavIconID         sql.NullInt64  `gorm:"column:fav_icon_id;default:NULL" json:"fav_icon_id"`
 	FavIcon           *Medium        `json:"fav_icon"`
-	MobileIconID      uint           `gorm:"column:mobile_icon_id;default:NULL" json:"mobile_icon_id"`
+	MobileIconID      sql.NullInt64  `gorm:"column:mobile_icon_id;default:NULL" json:"mobile_icon_id"`
 	MobileIcon        *Medium        `json:"mobile_icon"`
 	VerificationCodes postgres.Jsonb `gorm:"column:verification_codes" json:"verification_codes"`
 	SocialMediaURLs   postgres.Jsonb `gorm:"column:social_media_urls" json:"social_media_urls"`
@@ -33,10 +34,10 @@ type Space struct {
 
 // BeforeUpdate checks if all associated mediums are in same space
 func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
-	if space.LogoID > 0 {
+	if space.LogoID.Valid && space.LogoID.Int64 > 0 {
 
 		medium := Medium{}
-		medium.ID = space.LogoID
+		medium.ID = uint(space.LogoID.Int64)
 
 		err := tx.Model(&Medium{}).Where(Medium{
 			SpaceID: space.ID,
@@ -47,9 +48,9 @@ func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if space.LogoMobileID > 0 {
+	if space.LogoMobileID.Valid && space.LogoMobileID.Int64 > 0 {
 		medium := Medium{}
-		medium.ID = space.LogoMobileID
+		medium.ID = uint(space.LogoMobileID.Int64)
 
 		err := tx.Model(&Medium{}).Where(Medium{
 			SpaceID: space.ID,
@@ -60,9 +61,9 @@ func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if space.FavIconID > 0 {
+	if space.FavIconID.Valid && space.FavIconID.Int64 > 0 {
 		medium := Medium{}
-		medium.ID = space.FavIconID
+		medium.ID = uint(space.FavIconID.Int64)
 
 		err := tx.Model(&Medium{}).Where(Medium{
 			SpaceID: space.ID,
@@ -73,9 +74,9 @@ func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 		}
 	}
 
-	if space.MobileIconID > 0 {
+	if space.MobileIconID.Valid && space.MobileIconID.Int64 > 0 {
 		medium := Medium{}
-		medium.ID = space.MobileIconID
+		medium.ID = uint(space.MobileIconID.Int64)
 
 		err := tx.Model(&Medium{}).Where(Medium{
 			SpaceID: space.ID,

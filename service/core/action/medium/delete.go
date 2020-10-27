@@ -1,6 +1,7 @@
 package medium
 
 import (
+	"database/sql"
 	"errors"
 	"net/http"
 	"strconv"
@@ -62,7 +63,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// check if medium is associated with posts
 	var totAssociated int64
 	config.DB.Model(&model.Post{}).Where(&model.Post{
-		FeaturedMediumID: uint(id),
+		FeaturedMediumID: sql.NullInt64{Valid: true, Int64: int64(id)},
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -73,7 +74,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if medium is associated with categories
 	config.DB.Model(&model.Category{}).Where(&model.Category{
-		MediumID: uint(id),
+		MediumID: sql.NullInt64{Valid: true, Int64: int64(id)},
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -83,15 +84,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if medium is associated with spaces
-	var medID uint = uint(id)
 	config.DB.Model(&model.Space{}).Where(&model.Space{
-		LogoID: medID,
+		LogoID: sql.NullInt64{Valid: true, Int64: int64(id)},
 	}).Or(&model.Space{
-		LogoMobileID: medID,
+		LogoMobileID: sql.NullInt64{Valid: true, Int64: int64(id)},
 	}).Or(&model.Space{
-		FavIconID: medID,
+		FavIconID: sql.NullInt64{Valid: true, Int64: int64(id)},
 	}).Or(&model.Space{
-		MobileIconID: medID,
+		MobileIconID: sql.NullInt64{Valid: true, Int64: int64(id)},
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -102,7 +102,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if medium is associated with ratings
 	config.DB.Model(&factCheckModel.Rating{}).Where(&factCheckModel.Rating{
-		MediumID: uint(id),
+		MediumID: sql.NullInt64{Valid: true, Int64: int64(id)},
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -113,7 +113,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if medium is associated with claimants
 	config.DB.Model(&factCheckModel.Claimant{}).Where(&factCheckModel.Claimant{
-		MediumID: uint(id),
+		MediumID: sql.NullInt64{Valid: true, Int64: int64(id)},
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {

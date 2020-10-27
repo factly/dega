@@ -1,6 +1,7 @@
 package claimant
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -69,11 +70,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		claimantSlug = slug.Make(claimant.Name)
 	}
 
+	mediumID := sql.NullInt64{Valid: true, Int64: int64(claimant.MediumID)}
+	if claimant.MediumID == 0 {
+		mediumID.Valid = false
+	}
+
 	result := &model.Claimant{
 		Name:        claimant.Name,
 		Slug:        slug.Approve(claimantSlug, sID, tableName),
 		Description: claimant.Description,
-		MediumID:    claimant.MediumID,
+		MediumID:    mediumID,
 		SpaceID:     uint(sID),
 		TagLine:     claimant.TagLine,
 	}

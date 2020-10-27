@@ -16,7 +16,7 @@ type medium struct {
 	Name        string         `json:"name" validate:"required"`
 	Slug        string         `json:"slug"`
 	Type        string         `json:"type" validate:"required"`
-	Title       string         `json:"title" validate:"required"`
+	Title       string         `json:"title"`
 	Description string         `json:"description"`
 	Caption     string         `json:"caption"`
 	AltText     string         `json:"alt_text"`

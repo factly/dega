@@ -1,6 +1,7 @@
 package space
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -92,48 +93,28 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
+	logoID := sql.NullInt64{Valid: true, Int64: int64(space.LogoID)}
 	if space.LogoID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"logo_id": nil}).First(&result).Error
-		result.LogoID = 0
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		logoID = result.LogoID
+		logoID.Valid = false
 	}
 
+	logoMobileID := sql.NullInt64{Valid: true, Int64: int64(space.LogoMobileID)}
 	if space.LogoMobileID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"logo_mobile_id": nil}).First(&result).Error
-		result.LogoMobileID = 0
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		logoMobileID = result.LogoMobileID
+		logoMobileID.Valid = false
 	}
 
+	favIconID := sql.NullInt64{Valid: true, Int64: int64(space.FavIconID)}
 	if space.FavIconID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"fav_icon_id": nil}).First(&result).Error
-		result.FavIconID = 0
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		favIconID = result.FavIconID
+		favIconID.Valid = false
 	}
 
+	mobileIconID := sql.NullInt64{Valid: true, Int64: int64(space.MobileIconID)}
 	if space.MobileIconID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"mobile_icon_id": nil}).First(&result).Error
-		result.MobileIconID = 0
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		mobileIconID = result.MobileIconID
+		mobileIconID.Valid = false
 	}
 
 	err = tx.Model(&result).Updates(model.Space{
@@ -143,10 +124,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
-		LogoID:            space.LogoID,
-		FavIconID:         space.FavIconID,
-		MobileIconID:      space.MobileIconID,
-		LogoMobileID:      space.LogoMobileID,
+		LogoID:            logoID,
+		FavIconID:         favIconID,
+		MobileIconID:      mobileIconID,
+		LogoMobileID:      logoMobileID,
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
 		ContactInfo:       space.ContactInfo,

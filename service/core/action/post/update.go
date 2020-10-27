@@ -1,6 +1,7 @@
 package post
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -170,15 +171,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		newCategories = nil
 	}
 
+	featuredMediumID := sql.NullInt64{Valid: true, Int64: int64(post.FeaturedMediumID)}
 	if post.FeaturedMediumID == 0 {
-		err = tx.Model(result.Post).Updates(map[string]interface{}{"featured_medium_id": nil}).First(&result.Post).Error
-		result.FeaturedMediumID = 0
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		featuredMediumID = result.FeaturedMediumID
+		featuredMediumID.Valid = false
 	}
 
 	updatedPost := model.Post{
@@ -191,7 +187,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsHighlighted:    post.IsHighlighted,
 		IsSticky:         post.IsSticky,
 		FormatID:         post.FormatID,
-		FeaturedMediumID: post.FeaturedMediumID,
+		FeaturedMediumID: featuredMediumID,
 		Tags:             newTags,
 		Categories:       newCategories,
 	}

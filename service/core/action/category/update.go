@@ -1,6 +1,7 @@
 package category
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -88,6 +89,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Check if parent category exist or not
+	if category.ParentID != 0 {
+		var parentCat model.Category
+		parentCat.ID = category.ParentID
+		err = config.DB.Where(&model.Category{SpaceID: uint(sID)}).First(&parentCat).Error
+
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+			return
+		}
+	}
+
 	var categorySlug string
 
 	// Get table name
@@ -112,23 +126,24 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
+	mediumID := sql.NullInt64{Valid: true, Int64: int64(category.MediumID)}
 	if category.MediumID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
-		result.MediumID = 0
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		mediumID = result.MediumID
+		mediumID.Valid = false
+	}
+
+	parentID := sql.NullInt64{Valid: true, Int64: int64(category.ParentID)}
+	if category.ParentID == 0 {
+		parentID = result.ParentID
+		parentID.Valid = false
 	}
 
 	err = tx.Model(&result).Updates(model.Category{
 		Name:        category.Name,
 		Slug:        categorySlug,
 		Description: category.Description,
-		ParentID:    category.ParentID,
-		MediumID:    category.MediumID,
+		ParentID:    parentID,
+		MediumID:    mediumID,
 		IsFeatured:  category.IsFeatured,
 	}).Preload("Medium").First(&result).Error
 

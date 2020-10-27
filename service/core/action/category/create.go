@@ -1,6 +1,7 @@
 package category
 
 import (
+	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -62,7 +63,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if category.ParentID != 0 {
 		var parentCat model.Category
 		parentCat.ID = category.ParentID
-		err = config.DB.Model(&model.Category{}).First(&parentCat).Error
+		err = config.DB.Where(&model.Category{SpaceID: uint(sID)}).First(&parentCat).Error
 
 		if err != nil {
 			loggerx.Error(err)
@@ -90,12 +91,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mediumID := sql.NullInt64{Valid: true, Int64: int64(category.MediumID)}
+	if category.MediumID == 0 {
+		mediumID.Valid = false
+	}
+
+	parentID := sql.NullInt64{Valid: true, Int64: int64(category.ParentID)}
+	if category.ParentID == 0 {
+		parentID.Valid = false
+	}
+
 	result := &model.Category{
 		Name:        category.Name,
 		Description: category.Description,
 		Slug:        slug.Approve(categorySlug, sID, tableName),
-		ParentID:    category.ParentID,
-		MediumID:    category.MediumID,
+		ParentID:    parentID,
+		MediumID:    mediumID,
 		SpaceID:     uint(sID),
 		IsFeatured:  category.IsFeatured,
 	}

@@ -1,6 +1,7 @@
 package model
 
 import (
+	"database/sql"
 	"errors"
 
 	"github.com/factly/dega-server/config"
@@ -15,7 +16,7 @@ type Rating struct {
 	Slug         string        `gorm:"column:slug" json:"slug"`
 	Description  string        `gorm:"column:description" json:"description"`
 	NumericValue int           `gorm:"column:numeric_value" json:"numeric_value"`
-	MediumID     uint          `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
+	MediumID     sql.NullInt64 `gorm:"column:medium_id;default=NULL" json:"medium_id"`
 	Medium       *model.Medium `json:"medium"`
 	SpaceID      uint          `gorm:"column:space_id" json:"space_id"`
 }
@@ -23,9 +24,9 @@ type Rating struct {
 // BeforeSave - validation for medium
 func (rating *Rating) BeforeSave(tx *gorm.DB) (e error) {
 
-	if rating.MediumID > 0 {
+	if rating.MediumID.Valid && rating.MediumID.Int64 > 0 {
 		medium := model.Medium{}
-		medium.ID = rating.MediumID
+		medium.ID = uint(rating.MediumID.Int64)
 
 		err := tx.Model(&model.Medium{}).Where(model.Medium{
 			SpaceID: rating.SpaceID,
