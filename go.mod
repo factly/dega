@@ -11,6 +11,8 @@ require (
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/jinzhu/gorm v1.9.16
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
+
+	github.com/spf13/viper v1.7.1
 	github.com/vektah/gqlparser/v2 v2.0.1
 	golang.org/x/net v0.0.0-20200822124328-c89045814202 // indirect
 	golang.org/x/text v0.3.3 // indirect

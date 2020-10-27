@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
+	"github.com/spf13/viper"
 )
 
 func (r *queryResolver) Sitemap(ctx context.Context) (*models.Sitemaps, error) {
@@ -91,7 +92,7 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 		return nil, nil
 	}
 
-	url := fmt.Sprint(config.KavachURL, "/organisations/", space.OrganisationID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", space.OrganisationID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
