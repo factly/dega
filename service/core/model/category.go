@@ -4,8 +4,9 @@ import (
 	"database/sql"
 	"errors"
 
+	"gorm.io/gorm"
+
 	"github.com/factly/dega-server/config"
-	"github.com/jinzhu/gorm"
 )
 
 // Category model

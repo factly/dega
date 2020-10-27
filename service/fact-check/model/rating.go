@@ -4,9 +4,10 @@ import (
 	"database/sql"
 	"errors"
 
+	"gorm.io/gorm"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/jinzhu/gorm"
 )
 
 // Rating model

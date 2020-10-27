@@ -4,8 +4,9 @@ import (
 	"errors"
 	"time"
 
+	"gorm.io/gorm"
+
 	"github.com/factly/dega-server/config"
-	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 

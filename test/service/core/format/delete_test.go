@@ -50,8 +50,7 @@ func TestFormatDelete(t *testing.T) {
 
 	t.Run("check format associated with other entity", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-
+		SelectMock(mock, 1, 1)
 		formatPostExpect(mock, 1)
 
 		e.DELETE(path).
@@ -63,8 +62,7 @@ func TestFormatDelete(t *testing.T) {
 
 	t.Run("format record deleted", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-
+		SelectMock(mock, 1, 1)
 		formatPostExpect(mock, 0)
 
 		mock.ExpectBegin()
@@ -83,8 +81,7 @@ func TestFormatDelete(t *testing.T) {
 	t.Run("delete when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-
+		SelectMock(mock, 1, 1)
 		formatPostExpect(mock, 0)
 
 		mock.ExpectBegin()
