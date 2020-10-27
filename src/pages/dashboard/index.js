@@ -1,8 +1,14 @@
 import React from 'react';
-import { Typography } from 'antd';
+import { Space, Typography } from 'antd';
+import Features from './components/Features';
 
 function Dashboard() {
-  return <Typography.Title>Dashboard</Typography.Title>;
+  return (
+    <Space direction="vertical">
+      <Typography.Title>Dashboard</Typography.Title>
+      <Features />
+    </Space>
+  );
 }
 
 export default Dashboard;

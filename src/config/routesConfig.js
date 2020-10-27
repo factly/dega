@@ -90,6 +90,7 @@ const routes = {
     permission: {
       resource: 'spaces',
       action: 'create',
+      isSpace: true,
     },
   },
   editSpace: {
