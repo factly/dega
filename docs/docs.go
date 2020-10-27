@@ -702,7 +702,10 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/medium.medium"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/medium.medium"
+                            }
                         }
                     }
                 ],
@@ -3042,7 +3045,6 @@ var doc = `{
                 "dimensions",
                 "file_size",
                 "name",
-                "title",
                 "type"
             ],
             "properties": {
@@ -3133,13 +3135,13 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
                 },
                 "parent_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "posts": {
                     "type": "array",
@@ -3239,7 +3241,7 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -3403,7 +3405,7 @@ var doc = `{
                     "type": "string"
                 },
                 "featured_medium_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "format": {
                     "type": "object",
@@ -3477,7 +3479,7 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -3516,7 +3518,7 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
@@ -3526,21 +3528,21 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "logo_mobile": {
                     "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "mobile_icon": {
                     "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -3753,7 +3755,7 @@ var doc = `{
                     "type": "string"
                 },
                 "featured_medium_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "format": {
                     "type": "object",
@@ -4003,7 +4005,7 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
@@ -4013,21 +4015,21 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "logo_mobile": {
                     "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "mobile_icon": {
                     "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
-                    "type": "integer"
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
