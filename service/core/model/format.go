@@ -11,4 +11,5 @@ type Format struct {
 	Slug        string `gorm:"column:slug" json:"slug" validate:"required"`
 	Description string `gorm:"column:description" json:"description"`
 	SpaceID     uint   `gorm:"column:space_id" json:"space_id"`
+	Space       *Space `json:"space"`
 }

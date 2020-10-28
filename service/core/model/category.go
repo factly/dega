@@ -21,6 +21,7 @@ type Category struct {
 	IsFeatured  bool          `gorm:"column:is_featured" json:"is_featured"`
 	SpaceID     uint          `gorm:"column:space_id" json:"space_id"`
 	Posts       []*Post       `gorm:"many2many:post_categories;" json:"posts"`
+	Space       *Space        `json:"space"`
 }
 
 // BeforeSave - validation for medium

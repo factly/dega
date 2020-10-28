@@ -4,6 +4,8 @@ import (
 	"errors"
 	"time"
 
+	"github.com/factly/dega-server/service/core/model"
+
 	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
@@ -27,6 +29,7 @@ type Claim struct {
 	ReviewTagLine string         `gorm:"column:review_tag_line" json:"review_tag_line"`
 	ReviewSources string         `gorm:"column:review_sources" json:"review_sources"`
 	SpaceID       uint           `gorm:"column:space_id" json:"space_id"`
+	Space         *model.Space   `json:"space"`
 }
 
 // PostClaim model

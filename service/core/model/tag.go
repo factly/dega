@@ -12,5 +12,6 @@ type Tag struct {
 	Description string  `gorm:"column:description" json:"description"`
 	IsFeatured  bool    `gorm:"column:is_featured" json:"is_featured"`
 	SpaceID     uint    `gorm:"column:space_id" json:"space_id"`
+	Space       *Space  `json:"space"`
 	Posts       []*Post `gorm:"many2many:post_tags;" json:"posts"`
 }
