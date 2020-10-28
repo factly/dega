@@ -127,6 +127,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 
 	tx := config.DB.Begin()
+
 	err = tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
 
 	if err != nil {

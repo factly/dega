@@ -116,16 +116,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Fetching old and new tags related to post
-	oldTags := result.Post.Tags
-	newTags := make([]model.Tag, 0)
-	config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&newTags)
-
-	// Fetching old and new categories related to post
-	oldCategories := result.Post.Categories
-	newCategories := make([]model.Category, 0)
-	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&newCategories)
-
 	post.SpaceID = result.SpaceID
 
 	var postSlug string
@@ -144,31 +134,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
-	// Deleting old associations
-	if len(oldTags) > 0 {
-		err = tx.Model(&result.Post).Association("Tags").Delete(oldTags)
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-	if len(oldCategories) > 0 {
-		err = tx.Model(&result.Post).Association("Categories").Delete(oldCategories)
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+
+	newTags := make([]model.Tag, 0)
+	if len(post.TagIDs) > 0 {
+		config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&newTags)
+		tx.Model(&result.Post).Association("Tags").Replace(&newTags)
+	} else {
+		config.DB.Model(&result.Post).Association("Tags").Clear()
 	}
 
-	if len(newTags) == 0 {
-		newTags = nil
-	}
-	if len(newCategories) == 0 {
-		newCategories = nil
+	newCategories := make([]model.Category, 0)
+	if len(post.CategoryIDs) > 0 {
+		config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&newCategories)
+		tx.Model(&result.Post).Association("Categories").Replace(&newCategories)
+	} else {
+		config.DB.Model(&result.Post).Association("Categories").Clear()
 	}
 
 	featuredMediumID := sql.NullInt64{Valid: true, Int64: int64(post.FeaturedMediumID)}
@@ -188,8 +168,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsSticky:         post.IsSticky,
 		FormatID:         post.FormatID,
 		FeaturedMediumID: featuredMediumID,
-		Tags:             newTags,
-		Categories:       newCategories,
 	}
 
 	// Check if post status is changed back to draft from published
@@ -220,11 +198,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
-
-	// fetch existing post authors
-	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
-	}).Find(&postAuthors)
 
 	var toCreateIDs []uint
 	var toDeleteIDs []uint
@@ -288,6 +261,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
+
+	// fetch existing post authors
+	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+		PostID: uint(id),
+	}).Find(&postAuthors)
 
 	prevAuthorIDs := make([]uint, 0)
 	mapperPostAuthor := map[uint]model.PostAuthor{}

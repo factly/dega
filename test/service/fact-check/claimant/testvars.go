@@ -23,6 +23,13 @@ var Data = map[string]interface{}{
 	"medium_id":   uint(1),
 }
 
+var resData = map[string]interface{}{
+	"name":        "TOI",
+	"slug":        "toi",
+	"description": "article is validated",
+	"tag_line":    "sample tag line",
+}
+
 var invalidData = map[string]interface{}{
 	"name": "a",
 }
@@ -48,8 +55,8 @@ func claimantInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(`INSERT INTO "claimants"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["description"], Data["tag_line"], Data["medium_id"], 1).
 		WillReturnRows(sqlmock.
-			NewRows([]string{"id"}).
-			AddRow(1))
+			NewRows([]string{"id", "medium_id"}).
+			AddRow(1, 1))
 }
 
 func claimantInsertError(mock sqlmock.Sqlmock) {
@@ -64,10 +71,11 @@ func claimantUpdateMock(mock sqlmock.Sqlmock, claimant map[string]interface{}, e
 		medium.EmptyRowMock(mock)
 	} else {
 		medium.SelectWithSpace(mock)
-		mock.ExpectExec(`UPDATE \"claimants\" SET (.+)  WHERE (.+) \"claimants\".\"id\" = `).
-			WithArgs(claimant["description"], claimant["medium_id"], claimant["name"], claimant["slug"], claimant["tag_line"], test.AnyTime{}, 1).
+		mock.ExpectExec(`UPDATE \"claimants\"`).
+			WithArgs(test.AnyTime{}, claimant["name"], claimant["slug"], claimant["description"], claimant["tag_line"], claimant["medium_id"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectWithOutSpace(mock, claimant)
+		SelectWithSpace(mock)
+		medium.SelectWithOutSpace(mock)
 	}
 
 }
@@ -92,19 +100,19 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 //check claimant exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(100, 1).
+		WithArgs(1, 100).
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
 // check claimant associated with any claim before deleting
 func claimantClaimExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claims"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claims"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func claimantCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claimants"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claimants"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 

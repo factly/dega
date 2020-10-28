@@ -45,7 +45,7 @@ func TestPostDetails(t *testing.T) {
 	t.Run("get post by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		postSelectWithSpace(mock)
-		preloadMock(mock)
+		preloadMock(mock, 1)
 		postClaimSelectMock(mock)
 		postAuthorSelectMock(mock)
 

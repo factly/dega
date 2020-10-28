@@ -100,8 +100,8 @@ func claimListMock(mock sqlmock.Sqlmock) {
 			AddRow(1, time.Now(), time.Now(), nil, claimList[0]["title"], claimList[0]["slug"], claimList[0]["claim_date"], claimList[0]["checked_date"], claimList[0]["claim_sources"],
 				claimList[0]["description"], claimList[0]["claimant_id"], claimList[0]["rating_id"], claimList[0]["review"], claimList[0]["review_tag_line"], claimList[0]["review_sources"], 1))
 
-	rating.SelectWithOutSpace(mock, rating.Data)
 	claimant.SelectWithOutSpace(mock, claimant.Data)
+	rating.SelectWithOutSpace(mock, rating.Data)
 }
 
 func claimantFKError(mock sqlmock.Sqlmock) {
@@ -121,11 +121,12 @@ func claimUpdateMock(mock sqlmock.Sqlmock, claim map[string]interface{}, err err
 	mock.ExpectBegin()
 	claimant.SelectWithSpace(mock)
 	rating.SelectWithSpace(mock)
-	mock.ExpectExec(`UPDATE \"claims\" SET (.+)  WHERE (.+) \"claims\".\"id\" = `).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, claim["claim_sources"], claim["claimant_id"], claim["description"], claim["rating_id"], claim["review"], claim["review_sources"], claim["review_tag_line"], claim["slug"], claim["title"],
-			test.AnyTime{}, 1).
+	mock.ExpectExec(`UPDATE \"claims\"`).
+		WithArgs(test.AnyTime{}, claim["title"], claim["slug"], test.AnyTime{}, test.AnyTime{}, claim["claim_sources"], claim["description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_tag_line"], claim["review_sources"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	SelectWithOutSpace(mock, claim)
+	SelectWithSpace(mock)
+	claimant.SelectWithOutSpace(mock, claimant.Data)
+	rating.SelectWithOutSpace(mock, rating.Data)
 }
 
 func SelectWithOutSpace(mock sqlmock.Sqlmock, claim map[string]interface{}) {
@@ -136,9 +137,8 @@ func SelectWithOutSpace(mock sqlmock.Sqlmock, claim map[string]interface{}) {
 				claim["description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_tag_line"], claim["review_sources"], 1))
 
 	// Preload Claimant & Rating
-	rating.SelectWithOutSpace(mock, rating.Data)
 	claimant.SelectWithOutSpace(mock, claimant.Data)
-
+	rating.SelectWithOutSpace(mock, rating.Data)
 }
 
 func SelectWithSpace(mock sqlmock.Sqlmock) {
@@ -152,23 +152,25 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 //check claim exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(100, 1).
+		WithArgs(1, 100).
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
 // check claim associated with any post before deleting
 func claimPostExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "post_claims"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "post_claims"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func claimCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claims"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claims"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func validateAssociations(result *httpexpect.Object) {
+	delete(claimant.Data, "medium_id")
+	delete(rating.Data, "medium_id")
 	result.Value("claimant").
 		Object().
 		ContainsMap(claimant.Data)
@@ -176,4 +178,6 @@ func validateAssociations(result *httpexpect.Object) {
 	result.Value("rating").
 		Object().
 		ContainsMap(rating.Data)
+	claimant.Data["medium_id"] = 1
+	rating.Data["medium_id"] = 1
 }

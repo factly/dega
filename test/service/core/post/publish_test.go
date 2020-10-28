@@ -57,7 +57,7 @@ func TestPostPublish(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		postSelectWithSpace(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "post_authors"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "post_authors"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
 		mock.ExpectBegin()

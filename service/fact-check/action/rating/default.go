@@ -57,11 +57,13 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
-
 	for i := range ratings {
 		ratings[i].SpaceID = uint(sID)
-		tx.Model(&model.Rating{}).Create(&ratings[i])
+	}
 
+	tx.Model(&model.Rating{}).Create(&ratings)
+
+	for i := range ratings {
 		err = insertIntoMeili(ratings[i])
 		if err != nil {
 			tx.Rollback()

@@ -63,7 +63,7 @@ func TestClaimantCreate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
 
 	})
@@ -86,7 +86,7 @@ func TestClaimantCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusCreated).JSON().Object()
 		Data["slug"] = "toi"
-		res.ContainsMap(Data)
+		res.ContainsMap(resData)
 
 		test.ExpectationsMet(t, mock)
 	})
