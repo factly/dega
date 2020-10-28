@@ -33,8 +33,6 @@ var updatePost = map[string]interface{}{
 	"author_ids":         []uint{1},
 }
 
-var errorDB = errors.New("Something went wrong with db queries")
-
 func TestPostUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 

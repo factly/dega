@@ -3,7 +3,6 @@ package space
 import (
 	"database/sql/driver"
 	"encoding/json"
-	"fmt"
 	"regexp"
 	"time"
 
@@ -69,12 +68,6 @@ func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(Columns).
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["logo_mobile_id"], Data["fav_icon_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]))
-}
-
-func slugCheckMock(mock sqlmock.Sqlmock, space map[string]interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "spaces"`)).
-		WithArgs(fmt.Sprint(space["slug"], "%"), 0).
-		WillReturnRows(sqlmock.NewRows(Columns))
 }
 
 func insertMock(mock sqlmock.Sqlmock) {

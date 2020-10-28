@@ -138,17 +138,27 @@ func update(w http.ResponseWriter, r *http.Request) {
 	newTags := make([]model.Tag, 0)
 	if len(post.TagIDs) > 0 {
 		config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&newTags)
-		tx.Model(&result.Post).Association("Tags").Replace(&newTags)
+		if err = tx.Model(&result.Post).Association("Tags").Replace(&newTags); err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	} else {
-		config.DB.Model(&result.Post).Association("Tags").Clear()
+		_ = config.DB.Model(&result.Post).Association("Tags").Clear()
 	}
 
 	newCategories := make([]model.Category, 0)
 	if len(post.CategoryIDs) > 0 {
 		config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&newCategories)
-		tx.Model(&result.Post).Association("Categories").Replace(&newCategories)
+		if err = tx.Model(&result.Post).Association("Categories").Replace(&newCategories); err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	} else {
-		config.DB.Model(&result.Post).Association("Categories").Clear()
+		_ = config.DB.Model(&result.Post).Association("Categories").Clear()
 	}
 
 	featuredMediumID := sql.NullInt64{Valid: true, Int64: int64(post.FeaturedMediumID)}
