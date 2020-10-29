@@ -39,9 +39,12 @@ func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int, so
 
 	offset, pageLimit := util.Parse(page, limit)
 
+	var total int64
 	config.DB.Model(&models.Claimant{}).Where(&models.Claimant{
 		SpaceID: sID,
-	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	}).Count(&total).Order("id desc").Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+
+	result.Total = int(total)
 
 	return result, nil
 }

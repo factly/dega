@@ -27,9 +27,12 @@ func (r *queryResolver) Formats(ctx context.Context) (*models.FormatsPaging, err
 	result := &models.FormatsPaging{}
 	result.Nodes = make([]*models.Format, 0)
 
+	var total int64
 	config.DB.Model(&models.Format{}).Where(&models.Format{
 		SpaceID: sID,
-	}).Count(&result.Total).Order("id desc").Find(&result.Nodes)
+	}).Count(&total).Order("id desc").Find(&result.Nodes)
+
+	result.Total = int(total)
 
 	return result, nil
 }

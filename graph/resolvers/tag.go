@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"gorm.io/gorm"
+
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"github.com/jinzhu/gorm"
 )
 
 func (r *tagResolver) ID(ctx context.Context, obj *models.Tag) (string, error) {
@@ -74,9 +75,12 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, page *int, limit *i
 		tx = config.DB.Model(&models.Tag{})
 	}
 
+	var total int64
 	tx.Where(&models.Tag{
 		SpaceID: sID,
-	}).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+
+	result.Total = int(total)
 
 	return result, nil
 }

@@ -75,7 +75,10 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []int, claimants []i
 
 	filterStr = strings.Trim(filterStr, " AND ")
 
-	tx.Where(filterStr).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	var total int64
+	tx.Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+
+	result.Total = int(total)
 
 	return result, nil
 }
