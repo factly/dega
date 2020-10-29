@@ -69,7 +69,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 			hits, err = meili.SearchWithQuery(searchQuery, filters, "claim")
 		} else {
 			result, err = meili.SearchWithoutQuery(filters, "claim")
-			hits = result["hits"].([]interface{})
+			if _, found := result["hits"]; found {
+				hits = result["hits"].([]interface{})
+			}
 		}
 
 		if err != nil {
