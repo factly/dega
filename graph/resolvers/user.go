@@ -24,18 +24,23 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 		return nil, nil
 	}
 
-	post := &models.Post{}
-	post.SpaceID = sID
+	posts := make([]models.Post, 0)
 
-	err = config.DB.First(post).Error
+	err = config.DB.Model(&models.Post{}).Where(&models.Post{
+		SpaceID: uint(sID),
+	}).Find(&posts).Error
 	if err != nil {
 		return nil, nil
 	}
 
-	postAuthor := &models.PostAuthor{}
-	postAuthor.PostID = post.ID
+	postIDs := make([]uint, 0)
+	for _, post := range posts {
+		postIDs = append(postIDs, post.ID)
+	}
 
-	err = config.DB.First(postAuthor).Error
+	postAuthor := &models.PostAuthor{}
+
+	err = config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).First(postAuthor).Error
 	if err != nil {
 		return nil, nil
 	}
