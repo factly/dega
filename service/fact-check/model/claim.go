@@ -29,7 +29,7 @@ type Claim struct {
 	ReviewTagLine string         `gorm:"column:review_tag_line" json:"review_tag_line"`
 	ReviewSources string         `gorm:"column:review_sources" json:"review_sources"`
 	SpaceID       uint           `gorm:"column:space_id" json:"space_id"`
-	Space         *model.Space   `json:"space"`
+	Space         *model.Space   `json:"space,omitempty"`
 }
 
 // PostClaim model

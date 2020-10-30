@@ -19,5 +19,8 @@ type Medium struct {
 	URL         postgres.Jsonb `gorm:"column:url" json:"url"`
 	Dimensions  string         `gorm:"column:dimensions" json:"dimensions"`
 	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
-	Space       *Space         `json:"space"`
+}
+
+func (Medium) TableName() string {
+	return "media"
 }

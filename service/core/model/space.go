@@ -20,13 +20,13 @@ type Space struct {
 	Description       string         `gorm:"column:description" json:"description"`
 	SiteAddress       string         `gorm:"column:site_address" json:"site_address"`
 	LogoID            sql.NullInt64  `gorm:"column:logo_id;default:NULL" json:"logo_id"`
-	Logo              *Medium        `json:"logo"`
+	Logo              *Medium        `gorm:"foreignKey:logo_id" json:"logo"`
 	LogoMobileID      sql.NullInt64  `gorm:"column:logo_mobile_id;default:NULL" json:"logo_mobile_id"`
-	LogoMobile        *Medium        `json:"logo_mobile"`
+	LogoMobile        *Medium        `gorm:"foreignKey:logo_mobile_id" json:"logo_mobile"`
 	FavIconID         sql.NullInt64  `gorm:"column:fav_icon_id;default:NULL" json:"fav_icon_id"`
-	FavIcon           *Medium        `json:"fav_icon"`
+	FavIcon           *Medium        `gorm:"foreignKey:fav_icon_id" json:"fav_icon"`
 	MobileIconID      sql.NullInt64  `gorm:"column:mobile_icon_id;default:NULL" json:"mobile_icon_id"`
-	MobileIcon        *Medium        `json:"mobile_icon"`
+	MobileIcon        *Medium        `gorm:"foreignKey:mobile_icon_id" json:"mobile_icon"`
 	VerificationCodes postgres.Jsonb `gorm:"column:verification_codes" json:"verification_codes"`
 	SocialMediaURLs   postgres.Jsonb `gorm:"column:social_media_urls" json:"social_media_urls"`
 	ContactInfo       postgres.Jsonb `gorm:"column:contact_info" json:"contact_info"`

@@ -20,7 +20,7 @@ type Rating struct {
 	MediumID     sql.NullInt64 `gorm:"column:medium_id;default=NULL" json:"medium_id"`
 	Medium       *model.Medium `json:"medium"`
 	SpaceID      uint          `gorm:"column:space_id" json:"space_id"`
-	Space        *model.Space  `json:"space"`
+	Space        *model.Space  `json:"space,omitempty"`
 }
 
 // BeforeSave - validation for medium

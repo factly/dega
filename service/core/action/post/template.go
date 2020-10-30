@@ -76,7 +76,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	template.Base = config.Base{}
 
 	tx := config.DB.Begin()
-	err = tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&template).Error
+	err = tx.Model(&model.Post{}).Create(&template).Error
 
 	if err != nil {
 		tx.Rollback()

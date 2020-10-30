@@ -85,7 +85,7 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	result.Tags = make([]model.Tag, 0)
 	result.Categories = make([]model.Category, 0)
 
-	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(model.Post{
+	err = tx.Model(&result.Post).Updates(model.Post{
 		Status:        "published",
 		PublishedDate: time.Now(),
 	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error

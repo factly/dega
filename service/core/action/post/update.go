@@ -200,7 +200,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()

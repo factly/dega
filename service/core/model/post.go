@@ -31,7 +31,7 @@ type Post struct {
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
-	Space            *Space         `json:"space"`
+	Space            *Space         `json:"space,omitempty"`
 }
 
 // PostAuthor model
