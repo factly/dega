@@ -66,14 +66,14 @@ const basePath string = "/core/categories"
 
 func selectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(1, 1).
+		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.NewRows(Columns).
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["is_featured"], 1))
 }
 
 func SelectWithOutSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(1).
+		WithArgs(sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.NewRows(Columns).
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["is_featured"], 1))
 }
@@ -111,6 +111,13 @@ func insertWithMediumError(mock sqlmock.Sqlmock) {
 
 func updateMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
+	medium.SelectWithSpace(mock)
+	mock.ExpectExec(`UPDATE \"categories\"`).
+		WithArgs(nil, test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	selectWithSpace(mock)
+
 	medium.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"categories\"`).
 		WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["medium_id"], Data["is_featured"], 1).
