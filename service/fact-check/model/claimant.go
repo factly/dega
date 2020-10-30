@@ -1,7 +1,6 @@
 package model
 
 import (
-	"database/sql"
 	"errors"
 
 	"gorm.io/gorm"
@@ -17,7 +16,7 @@ type Claimant struct {
 	Slug        string        `gorm:"column:slug" json:"slug"`
 	Description string        `gorm:"column:description" json:"description"`
 	TagLine     string        `gorm:"column:tag_line" json:"tag_line"`
-	MediumID    sql.NullInt64 `gorm:"column:medium_id;default:NULL" json:"medium_id"`
+	MediumID    *uint         `gorm:"column:medium_id;default:NULL" json:"medium_id"`
 	Medium      *model.Medium `json:"medium"`
 	SpaceID     uint          `gorm:"column:space_id" json:"space_id"`
 	Space       *model.Space  `json:"space,omitempty"`
@@ -25,9 +24,9 @@ type Claimant struct {
 
 // BeforeSave - validation for medium
 func (claimant *Claimant) BeforeSave(tx *gorm.DB) (e error) {
-	if claimant.MediumID.Valid && claimant.MediumID.Int64 > 0 {
+	if claimant.MediumID != nil && *claimant.MediumID > 0 {
 		medium := model.Medium{}
-		medium.ID = uint(claimant.MediumID.Int64)
+		medium.ID = *claimant.MediumID
 
 		err := tx.Model(&model.Medium{}).Where(model.Medium{
 			SpaceID: claimant.SpaceID,

@@ -2,7 +2,6 @@ package post
 
 import (
 	"context"
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -97,9 +96,9 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		postSlug = slug.Make(post.Title)
 	}
 
-	featuredMediumID := sql.NullInt64{Valid: true, Int64: int64(post.FeaturedMediumID)}
+	featuredMediumID := &post.FeaturedMediumID
 	if post.FeaturedMediumID == 0 {
-		featuredMediumID.Valid = false
+		featuredMediumID = nil
 	}
 
 	result.Post = model.Post{

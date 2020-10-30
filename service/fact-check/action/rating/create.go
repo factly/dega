@@ -1,7 +1,6 @@
 package rating
 
 import (
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -77,9 +76,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	mediumID := sql.NullInt64{Valid: true, Int64: int64(rating.MediumID)}
+	mediumID := &rating.MediumID
 	if rating.MediumID == 0 {
-		mediumID.Valid = false
+		mediumID = nil
 	}
 
 	result := &model.Rating{

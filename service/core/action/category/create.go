@@ -1,7 +1,6 @@
 package category
 
 import (
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -91,14 +90,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	mediumID := sql.NullInt64{Valid: true, Int64: int64(category.MediumID)}
+	mediumID := &category.MediumID
 	if category.MediumID == 0 {
-		mediumID.Valid = false
+		mediumID = nil
 	}
 
-	parentID := sql.NullInt64{Valid: true, Int64: int64(category.ParentID)}
+	parentID := &category.ParentID
 	if category.ParentID == 0 {
-		parentID.Valid = false
+		parentID = nil
 	}
 
 	result := &model.Category{

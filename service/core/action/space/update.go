@@ -1,7 +1,6 @@
 package space
 
 import (
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -93,32 +92,56 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	logoID := sql.NullInt64{Valid: true, Int64: int64(space.LogoID)}
+	logoID := &space.LogoID
+	result.LogoID = &space.LogoID
 	if space.LogoID == 0 {
-		logoID = result.LogoID
-		result.LogoID.Valid = false
-		logoID.Valid = false
+		err = tx.Model(&result).Updates(map[string]interface{}{"logo_id": nil}).First(&result).Error
+		logoID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
-	logoMobileID := sql.NullInt64{Valid: true, Int64: int64(space.LogoMobileID)}
+	logoMobileID := &space.LogoMobileID
+	result.LogoMobileID = &space.LogoMobileID
 	if space.LogoMobileID == 0 {
-		logoMobileID = result.LogoMobileID
-		result.LogoMobileID.Valid = false
-		logoMobileID.Valid = false
+		err = tx.Model(&result).Updates(map[string]interface{}{"logo_mobile_id": nil}).First(&result).Error
+		logoMobileID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
-	favIconID := sql.NullInt64{Valid: true, Int64: int64(space.FavIconID)}
+	favIconID := &space.FavIconID
+	result.FavIconID = &space.FavIconID
 	if space.FavIconID == 0 {
-		favIconID = result.FavIconID
-		result.FavIconID.Valid = false
-		favIconID.Valid = false
+		err = tx.Model(&result).Updates(map[string]interface{}{"fav_icon_id": nil}).First(&result).Error
+		favIconID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
-	mobileIconID := sql.NullInt64{Valid: true, Int64: int64(space.MobileIconID)}
+	mobileIconID := &space.MobileIconID
+	result.MobileIconID = &space.MobileIconID
 	if space.MobileIconID == 0 {
-		mobileIconID = result.MobileIconID
-		result.MobileIconID.Valid = false
-		mobileIconID.Valid = false
+		err = tx.Model(&result).Updates(map[string]interface{}{"mobile_icon_id": nil}).First(&result).Error
+		mobileIconID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	err = tx.Model(&result).Updates(model.Space{

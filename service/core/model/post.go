@@ -1,7 +1,6 @@
 package model
 
 import (
-	"database/sql"
 	"errors"
 	"time"
 
@@ -23,7 +22,7 @@ type Post struct {
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	IsSticky         bool           `gorm:"column:is_sticky" json:"is_sticky"`
 	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`
-	FeaturedMediumID sql.NullInt64  `gorm:"column:featured_medium_id;default:NULL" json:"featured_medium_id"`
+	FeaturedMediumID *uint          `gorm:"column:featured_medium_id;default:NULL" json:"featured_medium_id"`
 	Medium           *Medium        `gorm:"foreignKey:featured_medium_id" json:"medium"`
 	FormatID         uint           `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
 	Format           *Format        `json:"format"`
@@ -43,9 +42,9 @@ type PostAuthor struct {
 
 // BeforeSave - validation for associations
 func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
-	if post.FeaturedMediumID.Valid && post.FeaturedMediumID.Int64 > 0 {
+	if post.FeaturedMediumID != nil && *post.FeaturedMediumID > 0 {
 		medium := Medium{}
-		medium.ID = uint(post.FeaturedMediumID.Int64)
+		medium.ID = *post.FeaturedMediumID
 
 		err := tx.Model(&Medium{}).Where(Medium{
 			SpaceID: post.SpaceID,

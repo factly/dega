@@ -1,7 +1,6 @@
 package model
 
 import (
-	"database/sql"
 	"errors"
 
 	"gorm.io/gorm"
@@ -17,7 +16,7 @@ type Rating struct {
 	Slug         string        `gorm:"column:slug" json:"slug"`
 	Description  string        `gorm:"column:description" json:"description"`
 	NumericValue int           `gorm:"column:numeric_value" json:"numeric_value"`
-	MediumID     sql.NullInt64 `gorm:"column:medium_id;default=NULL" json:"medium_id"`
+	MediumID     *uint         `gorm:"column:medium_id;default=NULL" json:"medium_id"`
 	Medium       *model.Medium `json:"medium"`
 	SpaceID      uint          `gorm:"column:space_id" json:"space_id"`
 	Space        *model.Space  `json:"space,omitempty"`
@@ -26,9 +25,9 @@ type Rating struct {
 // BeforeSave - validation for medium
 func (rating *Rating) BeforeSave(tx *gorm.DB) (e error) {
 
-	if rating.MediumID.Valid && rating.MediumID.Int64 > 0 {
+	if rating.MediumID != nil && *rating.MediumID > 0 {
 		medium := model.Medium{}
-		medium.ID = uint(rating.MediumID.Int64)
+		medium.ID = *rating.MediumID
 
 		err := tx.Model(&model.Medium{}).Where(model.Medium{
 			SpaceID: rating.SpaceID,

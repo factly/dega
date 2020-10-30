@@ -1,7 +1,6 @@
 package category
 
 import (
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -126,18 +125,29 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	mediumID := sql.NullInt64{Valid: true, Int64: int64(category.MediumID)}
+	mediumID := &category.MediumID
+	result.MediumID = &category.MediumID
 	if category.MediumID == 0 {
-		mediumID = result.MediumID
-		result.MediumID.Valid = false
-		mediumID.Valid = false
+		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
+		mediumID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
-	parentID := sql.NullInt64{Valid: true, Int64: int64(category.ParentID)}
+	parentID := &category.ParentID
 	if category.ParentID == 0 {
-		parentID = result.ParentID
-		result.ParentID.Valid = false
-		parentID.Valid = false
+		err = tx.Model(&result).Updates(map[string]interface{}{"parent_id": nil}).First(&result).Error
+		parentID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	err = tx.Model(&result).Updates(model.Category{

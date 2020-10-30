@@ -1,7 +1,6 @@
 package rating
 
 import (
-	"database/sql"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -105,10 +104,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	mediumID := sql.NullInt64{Valid: true, Int64: int64(rating.MediumID)}
+	mediumID := &rating.MediumID
+	result.MediumID = &rating.MediumID
 	if rating.MediumID == 0 {
-		mediumID = result.MediumID
-		mediumID.Valid = false
+		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
+		mediumID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	err = tx.Model(&result).Updates(model.Rating{

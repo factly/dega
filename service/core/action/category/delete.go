@@ -1,7 +1,6 @@
 package category
 
 import (
-	"database/sql"
 	"errors"
 	"net/http"
 	"strconv"
@@ -75,7 +74,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// Updates all children categories
 	err = tx.Model(&model.Category{}).Where(&model.Category{
 		SpaceID:  uint(sID),
-		ParentID: sql.NullInt64{Valid: true, Int64: int64(result.ID)},
+		ParentID: &result.ID,
 	}).UpdateColumn("parent_id", nil).Error
 
 	if err != nil {
