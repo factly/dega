@@ -71,7 +71,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Check if rating with same name exist
 	if util.CheckName(uint(sID), rating.Name, tableName) {
-		loggerx.Error(err)
+		loggerx.Error(errors.New(`rating with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}

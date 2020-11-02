@@ -98,7 +98,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Check if format with same name exist
 	if format.Name != result.Name && util.CheckName(uint(sID), format.Name, tableName) {
-		loggerx.Error(err)
+		loggerx.Error(errors.New(`format with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
