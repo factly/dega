@@ -8,7 +8,6 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
-	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 )
 
@@ -28,21 +27,20 @@ func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*m
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
-func (r *queryResolver) Claimants(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
-	sID, err := validator.GetSpace(ctx)
-	if err != nil {
-		return nil, err
-	}
-
+func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
 	result := &models.ClaimantsPaging{}
 	result.Nodes = make([]*models.Claimant, 0)
 
 	offset, pageLimit := util.Parse(page, limit)
 
+	tx := config.DB.Model(&models.Claimant{})
+
+	if len(spaces) > 0 {
+		tx.Where("space_id IN (?)", spaces)
+	}
+
 	var total int64
-	config.DB.Model(&models.Claimant{}).Where(&models.Claimant{
-		SpaceID: sID,
-	}).Count(&total).Order("id desc").Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Count(&total).Order("id desc").Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 

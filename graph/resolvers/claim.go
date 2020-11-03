@@ -9,7 +9,6 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
-	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 )
 
@@ -33,16 +32,11 @@ func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*model
 	return loaders.GetClaimantLoader(ctx).Load(fmt.Sprint(obj.ClaimantID))
 }
 
-func (r *queryResolver) Claims(ctx context.Context, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
+func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
-
-	sID, err := validator.GetSpace(ctx)
-	if err != nil {
-		return nil, err
-	}
 
 	if sortOrder != nil && *sortOrder == "asc" {
 		pageSortOrder = "asc"
@@ -59,9 +53,11 @@ func (r *queryResolver) Claims(ctx context.Context, ratings []int, claimants []i
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	tx := config.DB.Model(&models.Claim{}).Where(&models.Claim{
-		SpaceID: sID,
-	})
+	tx := config.DB.Model(&models.Claim{})
+
+	if len(spaces) > 0 {
+		tx.Where("space_id IN (?)", spaces)
+	}
 
 	filterStr := ""
 
