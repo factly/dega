@@ -12,7 +12,6 @@ import { checker, maker } from '../../utils/sluger';
 
 function UppyUploader({ onUpload }) {
   const space_slug = useSelector((state) => state.spaces.details[state.spaces.selected].slug);
-  console.log(checker.test('bright'));
   const uppy = Uppy({
     id: 'uppy-media',
     meta: { type: 'avatar' },
