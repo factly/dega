@@ -39,7 +39,7 @@ class UppyUploader {
   }
   render() {
     if (this.data.url) {
-      this.nodes.wrapper.children[1].src = this.data.url.raw;
+      this.nodes.wrapper.children[1].src = this.data.url.proxy;
     }
     return this.nodes.wrapper;
   }
@@ -107,11 +107,11 @@ class UppyUploader {
         upload['url']['raw'] = successful.uploadURL;
 
         axios
-          .post(MEDIA_API, upload)
+          .post(MEDIA_API, [upload])
           .then((res) => {
             this.data = res.data;
             this.nodes.wrapper.children[0].style.display = 'none';
-            this.nodes.wrapper.children[1].src = this.data.url.raw;
+            this.nodes.wrapper.children[1].src = this.data[0].url.proxy;
           })
           .catch((error) => {
             this.api.notifier.show({

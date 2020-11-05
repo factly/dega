@@ -41,7 +41,13 @@ function MediumList({ actions }) {
     {
       title: 'Display',
       key: 'display',
-      render: (_, record) => <Avatar shape="square" size={174} src={record.url?.proxy} />,
+      render: (_, record) => (
+        <Avatar
+          shape="square"
+          style={{ width: '100%', height: '100%' }}
+          src={record.url?.proxy ? `${record.url.proxy}?resize:fill:200:150` : ''}
+        />
+      ),
       width: '15%',
     },
     {

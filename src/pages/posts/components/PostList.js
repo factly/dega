@@ -138,7 +138,11 @@ function PostList({ actions }) {
             ]}
             extra={
               item.medium ? (
-                <img width={272} alt={item.medium.alt_text} src={item.medium.url?.proxy} />
+                <img
+                  style={{ width: '100%', height: '100%' }}
+                  alt={item.medium.alt_text}
+                  src={item.medium.url?.proxy ? `${item.medium.url.proxy}?resize:fill:250:250` : ''}
+                />
               ) : null
             }
           >
