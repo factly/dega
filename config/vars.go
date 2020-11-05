@@ -45,4 +45,8 @@ func SetupVars() {
 		log.Fatal("please provide google.key in config file")
 	}
 
+	if !viper.IsSet("kratos.public_url") {
+		log.Fatal("please provide kratos.public_url in config file")
+	}
+
 }
