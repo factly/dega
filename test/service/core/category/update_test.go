@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -88,7 +89,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(Data)
+			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
 	})
 
@@ -111,8 +112,55 @@ func TestCategoryUpdate(t *testing.T) {
 			Status(http.StatusOK).JSON().Object()
 		Data["slug"] = "test-category"
 
-		res.ContainsMap(Data)
+		res.ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("update category with parent set", func(t *testing.T) {
+		Data["parent_id"] = 2
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		selectWithSpace(mock)
+
+		mock.ExpectBegin()
+		medium.SelectWithSpace(mock)
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["is_featured"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		selectWithSpace(mock)
+		medium.SelectWithOutSpace(mock)
+		mock.ExpectCommit()
+
+		e.PUT(path).
+			WithPath("category_id", 1).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
+		test.ExpectationsMet(t, mock)
+		Data["parent_id"] = 0
+	})
+
+	t.Run("parent category not found in space", func(t *testing.T) {
+		Data["parent_id"] = 2
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		mock.ExpectQuery(selectQuery).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(Columns))
+
+		e.PUT(path).
+			WithPath("category_id", 1).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		Data["parent_id"] = 0
 	})
 
 	t.Run("update category with its own parent id", func(t *testing.T) {
@@ -138,14 +186,25 @@ func TestCategoryUpdate(t *testing.T) {
 
 		Data["medium_id"] = 0
 		mock.ExpectBegin()
-		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
+		mock.ExpectExec(`UPDATE \"categories\"`).
 			WithArgs(nil, test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectWithOutSpace(mock)
-		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
-			WithArgs(Data["description"], Data["is_featured"], Data["name"], Data["slug"], test.AnyTime{}, 1).
+		selectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(nil, test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectWithOutSpace(mock)
+		selectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["is_featured"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		selectWithSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+			WithArgs(0).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "type", "title", "description", "caption", "alt_text", "file_size", "url", "dimensions", "space_id"}))
+
 		mock.ExpectCommit()
 
 		res := e.PUT(path).
@@ -154,7 +213,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusOK).JSON().Object()
-		res.ContainsMap(Data)
+		res.ContainsMap(resData)
 		Data["medium_id"] = 1
 
 		test.ExpectationsMet(t, mock)
@@ -167,9 +226,16 @@ func TestCategoryUpdate(t *testing.T) {
 
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
-		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+) \"categories\".\"id\" = `).
-			WithArgs(Data["description"], Data["is_featured"], Data["medium_id"], Data["name"], Data["slug"], test.AnyTime{}, 1).
-			WillReturnError(errors.New("cannot update category"))
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(nil, test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		selectWithSpace(mock)
+
+		medium.SelectWithSpace(mock)
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["medium_id"], Data["is_featured"], 1).
+			WillReturnError(errors.New(`updating category fails`))
 		mock.ExpectRollback()
 
 		e.PUT(path).

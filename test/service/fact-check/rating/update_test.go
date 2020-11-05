@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -97,7 +96,7 @@ func TestRatingUpdate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(updatedRating).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(updatedRating)
+			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
 	})
 
@@ -117,42 +116,10 @@ func TestRatingUpdate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(updatedRating)
+			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
 		Data["slug"] = "true"
 		test.ExpectationsMet(t, mock)
 
-	})
-
-	t.Run("update rating with medium_id = 0", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		SelectWithSpace(mock)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(`UPDATE \"ratings\" SET (.+)  WHERE (.+) \"ratings\".\"id\" = `).
-			WithArgs(nil, test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-
-		mock.ExpectQuery(selectQuery).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, updatedRating["name"], updatedRating["slug"], updatedRating["medium_id"], updatedRating["description"], updatedRating["numeric_value"], 1))
-
-		mock.ExpectExec(`UPDATE \"ratings\" SET (.+)  WHERE (.+) \"ratings\".\"id\" = `).
-			WithArgs(updatedRating["description"], updatedRating["name"], updatedRating["numeric_value"], updatedRating["slug"], test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectWithOutSpace(mock, updatedRating)
-		mock.ExpectCommit()
-
-		updatedRating["medium_id"] = 0
-		e.PUT(path).
-			WithPath("rating_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedRating).
-			Expect().
-			Status(http.StatusOK)
-		updatedRating["medium_id"] = 1
-		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("update rating with different slug", func(t *testing.T) {
@@ -173,7 +140,7 @@ func TestRatingUpdate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(updatedRating).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(updatedRating)
+			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
 
 	})

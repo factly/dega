@@ -1,6 +1,7 @@
 package format
 
 import (
+	"database/sql/driver"
 	"fmt"
 	"regexp"
 	"strings"
@@ -63,7 +64,7 @@ func formatInsertMock(mock sqlmock.Sqlmock) {
 }
 
 func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "formats"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "formats"`)).
 		WithArgs(1, strings.ToLower(name.(string))).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
@@ -71,40 +72,33 @@ func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
 //check format exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(100, 1).
+		WithArgs(1, 100).
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
-func SelectWithSpace(mock sqlmock.Sqlmock) {
+func SelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(1, 1).
-		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"]))
-}
-
-func SelectWithOutSpace(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(selectQuery).
-		WithArgs(1).
+		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(columns).
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"]))
 }
 
 // check whether format is associated with any post before deleting
 func formatPostExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func formatUpdateMock(mock sqlmock.Sqlmock, format map[string]interface{}) {
 	mock.ExpectBegin()
-	mock.ExpectExec(`UPDATE \"formats\" SET (.+)  WHERE (.+) \"formats\".\"id\" = `).
-		WithArgs(format["name"], format["slug"], test.AnyTime{}, 1).
+	mock.ExpectExec(`UPDATE \"formats\"`).
+		WithArgs(test.AnyTime{}, format["name"], format["slug"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 }
 
 func formatCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "formats"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "formats"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
@@ -112,4 +106,11 @@ func EmptyRowMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns))
+}
+
+func selectAfterUpdate(mock sqlmock.Sqlmock, format map[string]interface{}) {
+	mock.ExpectQuery(selectQuery).
+		WithArgs(1, 1).
+		WillReturnRows(sqlmock.NewRows(columns).
+			AddRow(1, time.Now(), time.Now(), nil, format["name"], format["slug"]))
 }

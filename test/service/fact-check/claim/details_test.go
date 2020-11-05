@@ -47,8 +47,8 @@ func TestClaimDetails(t *testing.T) {
 	t.Run("get claim by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		SelectWithSpace(mock)
-		rating.SelectWithOutSpace(mock, rating.Data)
 		claimant.SelectWithOutSpace(mock, claimant.Data)
+		rating.SelectWithOutSpace(mock, rating.Data)
 
 		e.GET(path).
 			WithPath("claim_id", 1).

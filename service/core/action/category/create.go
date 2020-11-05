@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/factly/x/loggerx"
+	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -61,7 +62,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if category.ParentID != 0 {
 		var parentCat model.Category
 		parentCat.ID = category.ParentID
-		err = config.DB.Model(&model.Category{}).First(&parentCat).Error
+		err = config.DB.Where(&model.Category{SpaceID: uint(sID)}).First(&parentCat).Error
 
 		if err != nil {
 			loggerx.Error(err)
@@ -77,19 +78,34 @@ func create(w http.ResponseWriter, r *http.Request) {
 		categorySlug = slug.Make(category.Name)
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Category{})
+	tableName := stmt.Schema.Table
+
 	// Check if category with same name exist
-	if util.CheckName(uint(sID), category.Name, config.DB.NewScope(&model.Category{}).TableName()) {
-		loggerx.Error(err)
+	if util.CheckName(uint(sID), category.Name, tableName) {
+		loggerx.Error(errors.New(`category with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
+	}
+
+	mediumID := &category.MediumID
+	if category.MediumID == 0 {
+		mediumID = nil
+	}
+
+	parentID := &category.ParentID
+	if category.ParentID == 0 {
+		parentID = nil
 	}
 
 	result := &model.Category{
 		Name:        category.Name,
 		Description: category.Description,
-		Slug:        slug.Approve(categorySlug, sID, config.DB.NewScope(&model.Category{}).TableName()),
-		ParentID:    category.ParentID,
-		MediumID:    category.MediumID,
+		Slug:        slug.Approve(categorySlug, sID, tableName),
+		ParentID:    parentID,
+		MediumID:    mediumID,
 		SpaceID:     uint(sID),
 		IsFeatured:  category.IsFeatured,
 	}

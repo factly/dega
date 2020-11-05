@@ -3,7 +3,6 @@ package rating
 import (
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -37,17 +36,11 @@ func TestDefaultRatingCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 
-		for _, rat := range defaultData {
-			mock.ExpectQuery(`INSERT INTO "ratings"`).
-				WithArgs(test.AnyTime{}, test.AnyTime{}, nil, rat["name"], rat["slug"], rat["description"], rat["numeric_value"], 1).
-				WillReturnRows(sqlmock.
-					NewRows([]string{"id"}).
-					AddRow(1))
-
-			mock.ExpectQuery(regexp.QuoteMeta(`SELECT "medium_id" FROM "ratings"`)).
-				WithArgs(sqlmock.AnyArg()).
-				WillReturnRows(sqlmock.NewRows([]string{"medium_id"}).AddRow(nil))
-		}
+		mock.ExpectQuery(`INSERT INTO "ratings"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], defaultData[0]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], defaultData[1]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[2]["name"], defaultData[2]["slug"], defaultData[2]["description"], defaultData[2]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[3]["name"], defaultData[3]["slug"], defaultData[3]["description"], defaultData[3]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[4]["name"], defaultData[4]["slug"], defaultData[4]["description"], defaultData[4]["numeric_value"], nil, 1).
+			WillReturnRows(sqlmock.
+				NewRows([]string{"id"}).
+				AddRow(1))
 
 		mock.ExpectCommit()
 
@@ -90,14 +83,10 @@ func TestDefaultRatingCreate(t *testing.T) {
 		mock.ExpectBegin()
 
 		mock.ExpectQuery(`INSERT INTO "ratings"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], defaultData[0]["numeric_value"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], defaultData[0]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], defaultData[1]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[2]["name"], defaultData[2]["slug"], defaultData[2]["description"], defaultData[2]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[3]["name"], defaultData[3]["slug"], defaultData[3]["description"], defaultData[3]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[4]["name"], defaultData[4]["slug"], defaultData[4]["description"], defaultData[4]["numeric_value"], nil, 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT "medium_id" FROM "ratings"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows([]string{"medium_id"}).AddRow(nil))
 
 		mock.ExpectRollback()
 

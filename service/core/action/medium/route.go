@@ -16,7 +16,7 @@ type medium struct {
 	Name        string         `json:"name" validate:"required"`
 	Slug        string         `json:"slug"`
 	Type        string         `json:"type" validate:"required"`
-	Title       string         `json:"title" validate:"required"`
+	Title       string         `json:"title"`
 	Description string         `json:"description"`
 	Caption     string         `json:"caption"`
 	AltText     string         `json:"alt_text"`
@@ -48,13 +48,14 @@ func addProxyURL(medium *model.Medium) {
 	resurl := map[string]interface{}{}
 	if viper.IsSet("imageproxy.url") && medium.URL.RawMessage != nil {
 		_ = json.Unmarshal(medium.URL.RawMessage, &resurl)
-		rawURL := resurl["raw"].(string)
-		urlObj, _ := url.Parse(rawURL)
-		resurl["proxy"] = viper.GetString("imageproxy.url") + urlObj.Path
+		if rawURL, found := resurl["raw"]; found {
+			urlObj, _ := url.Parse(rawURL.(string))
+			resurl["proxy"] = viper.GetString("imageproxy.url") + urlObj.Path
 
-		rawBArr, _ := json.Marshal(resurl)
-		medium.URL = postgres.Jsonb{
-			RawMessage: rawBArr,
+			rawBArr, _ := json.Marshal(resurl)
+			medium.URL = postgres.Jsonb{
+				RawMessage: rawBArr,
+			}
 		}
 	}
 }

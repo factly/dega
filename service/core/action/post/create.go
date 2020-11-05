@@ -19,6 +19,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"gorm.io/gorm"
 )
 
 // create - Create post
@@ -83,6 +84,11 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.InternalServerError()
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Post{})
+	tableName := stmt.Schema.Table
+
 	var postSlug string
 	if post.Slug != "" && slug.Check(post.Slug) {
 		postSlug = post.Slug
@@ -90,9 +96,14 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		postSlug = slug.Make(post.Title)
 	}
 
+	featuredMediumID := &post.FeaturedMediumID
+	if post.FeaturedMediumID == 0 {
+		featuredMediumID = nil
+	}
+
 	result.Post = model.Post{
 		Title:            post.Title,
-		Slug:             slug.Approve(postSlug, sID, config.DB.NewScope(&model.Post{}).TableName()),
+		Slug:             slug.Approve(postSlug, sID, tableName),
 		Status:           status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
@@ -100,7 +111,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		IsFeatured:       post.IsFeatured,
 		IsHighlighted:    post.IsHighlighted,
 		IsSticky:         post.IsSticky,
-		FeaturedMediumID: post.FeaturedMediumID,
+		FeaturedMediumID: featuredMediumID,
 		FormatID:         post.FormatID,
 		SpaceID:          post.SpaceID,
 	}
@@ -115,7 +126,8 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 
 	tx := config.DB.Begin()
-	err = tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
+
+	err = tx.Model(&model.Post{}).Create(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()

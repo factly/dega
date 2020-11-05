@@ -24,6 +24,13 @@ var Data = map[string]interface{}{
 	"medium_id":     uint(1),
 }
 
+var resData = map[string]interface{}{
+	"name":          "True",
+	"slug":          "true",
+	"description":   "article is validated",
+	"numeric_value": 5,
+}
+
 var defaultData = []map[string]interface{}{
 	{
 		"name":          "True",
@@ -100,10 +107,11 @@ func ratingUpdateMock(mock sqlmock.Sqlmock, rating map[string]interface{}, err e
 		medium.EmptyRowMock(mock)
 	} else {
 		medium.SelectWithSpace(mock)
-		mock.ExpectExec(`UPDATE \"ratings\" SET (.+)  WHERE (.+) \"ratings\".\"id\" = `).
-			WithArgs(rating["description"], rating["medium_id"], rating["name"], rating["numeric_value"], rating["slug"], test.AnyTime{}, 1).
+		mock.ExpectExec(`UPDATE \"ratings\"`).
+			WithArgs(test.AnyTime{}, rating["name"], rating["slug"], rating["description"], rating["numeric_value"], rating["medium_id"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectWithOutSpace(mock, rating)
+		SelectWithSpace(mock)
+		medium.SelectWithOutSpace(mock)
 	}
 
 }
@@ -128,25 +136,25 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 //check rating exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(100, 1).
+		WithArgs(1, 100).
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
 func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "ratings"`)).
 		WithArgs(1, strings.ToLower(name.(string))).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 // check rating associated with any claim before deleting
 func ratingClaimExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claims"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claims"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func ratingCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "ratings"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 

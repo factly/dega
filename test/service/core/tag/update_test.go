@@ -50,7 +50,7 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("Unable to decode tag data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		SelectWithSpaceMock(mock)
+		SelectMock(mock, Data, 1, 1)
 
 		e.PUT(path).
 			WithPath("tag_id", 1).
@@ -63,7 +63,7 @@ func TestTagUpdate(t *testing.T) {
 	t.Run("Unprocessable tag", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		SelectWithSpaceMock(mock)
+		SelectMock(mock, Data, 1, 1)
 
 		e.PUT(path).
 			WithPath("tag_id", 1).
@@ -82,7 +82,7 @@ func TestTagUpdate(t *testing.T) {
 			"is_featured": true,
 		}
 
-		SelectWithSpaceMock(mock)
+		SelectMock(mock, Data, 1, 1)
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
@@ -103,7 +103,7 @@ func TestTagUpdate(t *testing.T) {
 			"slug":        "elections-1",
 			"is_featured": true,
 		}
-		SelectWithSpaceMock(mock)
+		SelectMock(mock, Data, 1, 1)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
 			WithArgs("elections%", 1).
@@ -130,7 +130,7 @@ func TestTagUpdate(t *testing.T) {
 			"slug":        "testing-slug",
 			"is_featured": true,
 		}
-		SelectWithSpaceMock(mock)
+		SelectMock(mock, Data, 1, 1)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
 			WithArgs(fmt.Sprint(updatedTag["slug"], "%"), 1).
@@ -156,7 +156,7 @@ func TestTagUpdate(t *testing.T) {
 			"is_featured": true,
 		}
 
-		SelectWithSpaceMock(mock)
+		SelectMock(mock, Data, 1, 1)
 
 		sameNameCount(mock, 1, updatedTag["name"])
 
@@ -177,7 +177,7 @@ func TestTagUpdate(t *testing.T) {
 			"is_featured": true,
 		}
 
-		SelectWithSpaceMock(mock)
+		SelectMock(mock, Data, 1, 1)
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectRollback()

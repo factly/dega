@@ -115,8 +115,8 @@ func TestCategoryDelete(t *testing.T) {
 		categoryPostAssociation(mock, 0)
 
 		mock.ExpectBegin()
-		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+)`).
-			WithArgs(nil, test.AnyTime{}, 1, 1).
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(nil, 1, 1).
 			WillReturnError(errors.New("cannot update categories"))
 		mock.ExpectRollback()
 
@@ -136,8 +136,8 @@ func TestCategoryDelete(t *testing.T) {
 		categoryPostAssociation(mock, 0)
 
 		mock.ExpectBegin()
-		mock.ExpectExec(`UPDATE \"categories\" SET (.+)  WHERE (.+)`).
-			WithArgs(nil, test.AnyTime{}, 1, 1).
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(nil, 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(deleteQuery).

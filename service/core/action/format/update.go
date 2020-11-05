@@ -16,6 +16,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update format by id
@@ -82,17 +83,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	var formatSlug string
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Format{})
+	tableName := stmt.Schema.Table
+
 	if result.Slug == format.Slug {
 		formatSlug = result.Slug
 	} else if format.Slug != "" && slug.Check(format.Slug) {
-		formatSlug = slug.Approve(format.Slug, sID, config.DB.NewScope(&model.Format{}).TableName())
+		formatSlug = slug.Approve(format.Slug, sID, tableName)
 	} else {
-		formatSlug = slug.Approve(slug.Make(format.Name), sID, config.DB.NewScope(&model.Format{}).TableName())
+		formatSlug = slug.Approve(slug.Make(format.Name), sID, tableName)
 	}
 
 	// Check if format with same name exist
-	if format.Name != result.Name && util.CheckName(uint(sID), format.Name, config.DB.NewScope(&model.Format{}).TableName()) {
-		loggerx.Error(err)
+	if format.Name != result.Name && util.CheckName(uint(sID), format.Name, tableName) {
+		loggerx.Error(errors.New(`format with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}

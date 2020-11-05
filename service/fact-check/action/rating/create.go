@@ -14,6 +14,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"gorm.io/gorm"
 )
 
 // create - Create rating
@@ -56,6 +57,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Rating{})
+	tableName := stmt.Schema.Table
+
 	var ratingSlug string
 	if rating.Slug != "" && slug.Check(rating.Slug) {
 		ratingSlug = rating.Slug
@@ -64,17 +70,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if rating with same name exist
-	if util.CheckName(uint(sID), rating.Name, config.DB.NewScope(&model.Rating{}).TableName()) {
-		loggerx.Error(err)
+	if util.CheckName(uint(sID), rating.Name, tableName) {
+		loggerx.Error(errors.New(`rating with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
+	mediumID := &rating.MediumID
+	if rating.MediumID == 0 {
+		mediumID = nil
+	}
+
 	result := &model.Rating{
 		Name:         rating.Name,
-		Slug:         slug.Approve(ratingSlug, sID, config.DB.NewScope(&model.Rating{}).TableName()),
+		Slug:         slug.Approve(ratingSlug, sID, tableName),
 		Description:  rating.Description,
-		MediumID:     rating.MediumID,
+		MediumID:     mediumID,
 		SpaceID:      uint(sID),
 		NumericValue: rating.NumericValue,
 	}

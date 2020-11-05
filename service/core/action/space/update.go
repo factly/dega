@@ -92,9 +92,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
+	logoID := &space.LogoID
+	result.LogoID = &space.LogoID
 	if space.LogoID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"logo_id": nil}).First(&result).Error
-		result.LogoID = 0
+		err = tx.Model(&result).Updates(map[string]interface{}{"logo_id": nil}).First(&result).Error
+		logoID = nil
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -103,9 +105,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	logoMobileID := &space.LogoMobileID
+	result.LogoMobileID = &space.LogoMobileID
 	if space.LogoMobileID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"logo_mobile_id": nil}).First(&result).Error
-		result.LogoMobileID = 0
+		err = tx.Model(&result).Updates(map[string]interface{}{"logo_mobile_id": nil}).First(&result).Error
+		logoMobileID = nil
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -114,9 +118,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	favIconID := &space.FavIconID
+	result.FavIconID = &space.FavIconID
 	if space.FavIconID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"fav_icon_id": nil}).First(&result).Error
-		result.FavIconID = 0
+		err = tx.Model(&result).Updates(map[string]interface{}{"fav_icon_id": nil}).First(&result).Error
+		favIconID = nil
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -125,9 +131,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	mobileIconID := &space.MobileIconID
+	result.MobileIconID = &space.MobileIconID
 	if space.MobileIconID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"mobile_icon_id": nil}).First(&result).Error
-		result.MobileIconID = 0
+		err = tx.Model(&result).Updates(map[string]interface{}{"mobile_icon_id": nil}).First(&result).Error
+		mobileIconID = nil
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -143,10 +151,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
-		LogoID:            space.LogoID,
-		FavIconID:         space.FavIconID,
-		MobileIconID:      space.MobileIconID,
-		LogoMobileID:      space.LogoMobileID,
+		LogoID:            logoID,
+		FavIconID:         favIconID,
+		MobileIconID:      mobileIconID,
+		LogoMobileID:      logoMobileID,
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
 		ContactInfo:       space.ContactInfo,

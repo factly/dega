@@ -59,7 +59,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if claim is associated with posts
-	var totAssociated int
+	var totAssociated int64
 	config.DB.Model(&model.PostClaim{}).Where(&model.PostClaim{
 		ClaimID: uint(id),
 	}).Count(&totAssociated)

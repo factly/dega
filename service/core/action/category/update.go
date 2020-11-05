@@ -16,6 +16,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update category by id
@@ -87,28 +88,60 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Check if parent category exist or not
+	if category.ParentID != 0 {
+		var parentCat model.Category
+		parentCat.ID = category.ParentID
+		err = config.DB.Where(&model.Category{SpaceID: uint(sID)}).First(&parentCat).Error
+
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+			return
+		}
+	}
+
 	var categorySlug string
+
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Category{})
+	tableName := stmt.Schema.Table
 
 	if result.Slug == category.Slug {
 		categorySlug = result.Slug
 	} else if category.Slug != "" && slug.Check(category.Slug) {
-		categorySlug = slug.Approve(category.Slug, sID, config.DB.NewScope(&model.Category{}).TableName())
+		categorySlug = slug.Approve(category.Slug, sID, tableName)
 	} else {
-		categorySlug = slug.Approve(slug.Make(category.Name), sID, config.DB.NewScope(&model.Category{}).TableName())
+		categorySlug = slug.Approve(slug.Make(category.Name), sID, tableName)
 	}
 
 	// Check if category with same name exist
-	if category.Name != result.Name && util.CheckName(uint(sID), category.Name, config.DB.NewScope(&model.Category{}).TableName()) {
-		loggerx.Error(err)
+	if category.Name != result.Name && util.CheckName(uint(sID), category.Name, tableName) {
+		loggerx.Error(errors.New(`category with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
 	tx := config.DB.Begin()
 
+	mediumID := &category.MediumID
+	result.MediumID = &category.MediumID
 	if category.MediumID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
-		result.MediumID = 0
+		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
+		mediumID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
+	parentID := &category.ParentID
+	if category.ParentID == 0 {
+		err = tx.Model(&result).Updates(map[string]interface{}{"parent_id": nil}).First(&result).Error
+		parentID = nil
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -121,8 +154,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Name:        category.Name,
 		Slug:        categorySlug,
 		Description: category.Description,
-		ParentID:    category.ParentID,
-		MediumID:    category.MediumID,
+		ParentID:    parentID,
+		MediumID:    mediumID,
 		IsFeatured:  category.IsFeatured,
 	}).Preload("Medium").First(&result).Error
 

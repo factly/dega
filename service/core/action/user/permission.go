@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/factly/dega-server/util/arrays"
+
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 
@@ -100,6 +102,7 @@ func userpermissions(w http.ResponseWriter, r *http.Request) {
 
 // GetPermissions gets user's permissions
 func GetPermissions(oID, sID, uID int, policyList []model.KetoPolicy) []model.Permission {
+	permissionsMap := make(map[string][]string)
 	spacePrefix := fmt.Sprint("id:org:", oID, ":app:dega:space:", sID, ":")
 	permissions := make([]model.Permission, 0)
 
@@ -115,9 +118,22 @@ func GetPermissions(oID, sID, uID int, policyList []model.KetoPolicy) []model.Pe
 
 			if isPresent {
 				polPermission := policy.GetPermissions(pol, uint(uID))
-				permissions = append(permissions, polPermission...)
+				for _, per := range polPermission {
+					if _, found := permissionsMap[per.Resource]; !found {
+						permissionsMap[per.Resource] = make([]string, 0)
+					}
+					permissionsMap[per.Resource] = arrays.Union(permissionsMap[per.Resource], per.Actions)
+				}
 			}
 		}
+	}
+
+	for res, act := range permissionsMap {
+		perm := model.Permission{
+			Resource: res,
+			Actions:  act,
+		}
+		permissions = append(permissions, perm)
 	}
 	return permissions
 }

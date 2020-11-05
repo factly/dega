@@ -5,7 +5,6 @@ import (
 	"net/http/httptest"
 	"regexp"
 	"testing"
-	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -56,14 +55,17 @@ func TestPostDelete(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		postSelectWithSpace(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags" INNER JOIN "post_tags"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(tag.Columns, []string{"tag_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", true, 1, 1, 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(category.Columns, []string{"category_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, true, 1, 1, 1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
+				AddRow(1, 1))
+		category.SelectWithOutSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
+				AddRow(1, 1))
+		tag.SelectMock(mock, tag.Data, 1)
 
 		deleteMock(mock)
 		mock.ExpectCommit()
@@ -79,14 +81,17 @@ func TestPostDelete(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 		postSelectWithSpace(mock)
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags" INNER JOIN "post_tags"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(tag.Columns, []string{"tag_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", true, 1, 1, 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(category.Columns, []string{"category_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, true, 1, 1, 1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
+				AddRow(1, 1))
+		category.SelectWithOutSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
+				AddRow(1, 1))
+		tag.SelectMock(mock, tag.Data, 1)
 
 		deleteMock(mock)
 		mock.ExpectRollback()

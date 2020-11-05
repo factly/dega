@@ -27,8 +27,6 @@ func TestSpaceCreate(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("create a space", func(t *testing.T) {
-		slugCheckMock(mock, Data)
-
 		insertMock(mock)
 		mock.ExpectCommit()
 
@@ -42,8 +40,6 @@ func TestSpaceCreate(t *testing.T) {
 	})
 
 	t.Run("creating space fails", func(t *testing.T) {
-		slugCheckMock(mock, Data)
-
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "spaces"`).
 			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
@@ -93,8 +89,6 @@ func TestSpaceCreate(t *testing.T) {
 
 	t.Run("create a space when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
-		slugCheckMock(mock, Data)
-
 		insertMock(mock)
 		mock.ExpectRollback()
 

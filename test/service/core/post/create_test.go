@@ -60,7 +60,7 @@ func TestPostCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock, Data)
@@ -86,7 +86,7 @@ func TestPostCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock, Data)
@@ -113,7 +113,7 @@ func TestPostCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock, Data)
@@ -140,7 +140,7 @@ func TestPostCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 		mock.ExpectBegin()
 		medium.EmptyRowMock(mock)
@@ -160,7 +160,7 @@ func TestPostCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
@@ -182,7 +182,7 @@ func TestPostCreate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock, Data)

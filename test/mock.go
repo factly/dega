@@ -14,7 +14,9 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/config"
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 // AnyTime To match time for test sqlmock queries
@@ -43,16 +45,23 @@ func SetupMockDB() sqlmock.Sqlmock {
 
 	db, mock, err := sqlmock.New()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
-	config.DB, err = gorm.Open("postgres", db)
+
+	dialector := postgres.New(postgres.Config{
+		DSN:                  "sqlmock_db_0",
+		DriverName:           "postgres",
+		Conn:                 db,
+		PreferSimpleProtocol: true,
+	})
+
+	config.DB, err = gorm.Open(dialector, &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
-
-	config.DB.LogMode(true)
-
 	return mock
 }
 

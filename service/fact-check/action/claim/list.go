@@ -17,7 +17,7 @@ import (
 
 // list response
 type paging struct {
-	Total int           `json:"total"`
+	Total int64         `json:"total"`
 	Nodes []model.Claim `json:"nodes"`
 }
 
@@ -69,7 +69,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 			hits, err = meili.SearchWithQuery(searchQuery, filters, "claim")
 		} else {
 			result, err = meili.SearchWithoutQuery(filters, "claim")
-			hits = result["hits"].([]interface{})
+			if _, found := result["hits"]; found {
+				hits = result["hits"].([]interface{})
+			}
 		}
 
 		if err != nil {

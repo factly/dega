@@ -16,6 +16,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update claim by id
@@ -82,12 +83,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	var claimSlug string
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Claim{})
+	tableName := stmt.Schema.Table
+
 	if result.Slug == claim.Slug {
 		claimSlug = result.Slug
 	} else if claim.Slug != "" && slug.Check(claim.Slug) {
-		claimSlug = slug.Approve(claim.Slug, sID, config.DB.NewScope(&model.Claim{}).TableName())
+		claimSlug = slug.Approve(claim.Slug, sID, tableName)
 	} else {
-		claimSlug = slug.Approve(slug.Make(claim.Title), sID, config.DB.NewScope(&model.Claim{}).TableName())
+		claimSlug = slug.Approve(slug.Make(claim.Title), sID, tableName)
 	}
 
 	tx := config.DB.Begin()

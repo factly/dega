@@ -14,13 +14,6 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func selectAfterUpdate(mock sqlmock.Sqlmock, format map[string]interface{}) {
-	mock.ExpectQuery(selectQuery).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, format["name"], format["slug"]))
-}
-
 func TestFormatUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
 
@@ -57,7 +50,7 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("Unable to decode format data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
+		SelectMock(mock, 1, 1)
 
 		e.PUT(path).
 			WithPath("format_id", 1).
@@ -70,8 +63,7 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("Unprocessable format", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-
+		SelectMock(mock, 1, 1)
 		e.PUT(path).
 			WithPath("format_id", 1).
 			WithHeaders(headers).
@@ -88,8 +80,7 @@ func TestFormatUpdate(t *testing.T) {
 			"slug": "fact-check",
 		}
 
-		SelectWithSpace(mock)
-
+		SelectMock(mock, 1, 1)
 		formatUpdateMock(mock, updatedFormat)
 
 		selectAfterUpdate(mock, updatedFormat)
@@ -110,8 +101,7 @@ func TestFormatUpdate(t *testing.T) {
 			"name": "Fact Check",
 			"slug": "fact-check",
 		}
-		SelectWithSpace(mock)
-
+		SelectMock(mock, 1, 1)
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
 			WithArgs("fact-check%", 1).
 			WillReturnRows(sqlmock.NewRows(columns).
@@ -140,8 +130,7 @@ func TestFormatUpdate(t *testing.T) {
 			"name": "Fact Check",
 			"slug": "testing-slug",
 		}
-		SelectWithSpace(mock)
-
+		SelectMock(mock, 1, 1)
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
 			WithArgs(fmt.Sprint(updatedFormat["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
@@ -167,7 +156,7 @@ func TestFormatUpdate(t *testing.T) {
 			"slug": "fact-check",
 		}
 
-		SelectWithSpace(mock)
+		SelectMock(mock, 1, 1)
 		sameNameCount(mock, 1, updatedFormat["name"])
 
 		e.PUT(path).
@@ -186,8 +175,7 @@ func TestFormatUpdate(t *testing.T) {
 			"slug": "article",
 		}
 
-		SelectWithSpace(mock)
-
+		SelectMock(mock, 1, 1)
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
 			WithArgs(fmt.Sprint(updatedFormat["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))

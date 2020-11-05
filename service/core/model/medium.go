@@ -20,3 +20,7 @@ type Medium struct {
 	Dimensions  string         `gorm:"column:dimensions" json:"dimensions"`
 	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
 }
+
+func (Medium) TableName() string {
+	return "media"
+}

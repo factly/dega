@@ -59,10 +59,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uintID := uint(id)
+
 	// check if medium is associated with posts
-	var totAssociated int
+	var totAssociated int64
 	config.DB.Model(&model.Post{}).Where(&model.Post{
-		FeaturedMediumID: uint(id),
+		FeaturedMediumID: &uintID,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -73,7 +75,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if medium is associated with categories
 	config.DB.Model(&model.Category{}).Where(&model.Category{
-		MediumID: uint(id),
+		MediumID: &uintID,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -83,15 +85,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if medium is associated with spaces
-	var medID uint = uint(id)
 	config.DB.Model(&model.Space{}).Where(&model.Space{
-		LogoID: medID,
+		LogoID: &uintID,
 	}).Or(&model.Space{
-		LogoMobileID: medID,
+		LogoMobileID: &uintID,
 	}).Or(&model.Space{
-		FavIconID: medID,
+		FavIconID: &uintID,
 	}).Or(&model.Space{
-		MobileIconID: medID,
+		MobileIconID: &uintID,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -102,7 +103,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if medium is associated with ratings
 	config.DB.Model(&factCheckModel.Rating{}).Where(&factCheckModel.Rating{
-		MediumID: uint(id),
+		MediumID: &uintID,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {
@@ -113,7 +114,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if medium is associated with claimants
 	config.DB.Model(&factCheckModel.Claimant{}).Where(&factCheckModel.Claimant{
-		MediumID: uint(id),
+		MediumID: &uintID,
 	}).Count(&totAssociated)
 
 	if totAssociated != 0 {

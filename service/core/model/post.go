@@ -4,8 +4,9 @@ import (
 	"errors"
 	"time"
 
+	"gorm.io/gorm"
+
 	"github.com/factly/dega-server/config"
-	"github.com/jinzhu/gorm"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -21,14 +22,15 @@ type Post struct {
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	IsSticky         bool           `gorm:"column:is_sticky" json:"is_sticky"`
 	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`
-	FeaturedMediumID uint           `gorm:"column:featured_medium_id" json:"featured_medium_id" sql:"DEFAULT:NULL"`
-	Medium           *Medium        `gorm:"foreignkey:featured_medium_id;association_foreignkey:id" json:"medium"`
+	FeaturedMediumID *uint          `gorm:"column:featured_medium_id;default:NULL" json:"featured_medium_id"`
+	Medium           *Medium        `gorm:"foreignKey:featured_medium_id" json:"medium"`
 	FormatID         uint           `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
-	Format           *Format        `gorm:"foreignkey:format_id;association_foreignkey:id" json:"format"`
+	Format           *Format        `json:"format"`
 	PublishedDate    time.Time      `gorm:"column:published_date" json:"published_date"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
+	Space            *Space         `json:"space,omitempty"`
 }
 
 // PostAuthor model
@@ -40,9 +42,9 @@ type PostAuthor struct {
 
 // BeforeSave - validation for associations
 func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
-	if post.FeaturedMediumID > 0 {
+	if post.FeaturedMediumID != nil && *post.FeaturedMediumID > 0 {
 		medium := Medium{}
-		medium.ID = post.FeaturedMediumID
+		medium.ID = *post.FeaturedMediumID
 
 		err := tx.Model(&Medium{}).Where(Medium{
 			SpaceID: post.SpaceID,

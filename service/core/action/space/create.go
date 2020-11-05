@@ -77,7 +77,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := model.Space{
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
-		Slug:              slug.Approve(spaceSlug, 0, config.DB.NewScope(&model.Space{}).TableName()),
+		Slug:              spaceSlug,
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
