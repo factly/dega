@@ -67,6 +67,35 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Fetch organisation permissions
+	permission := model.OrganisationPermission{}
+	err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+		OrganisationID: uint(space.OrganisationID),
+	}).First(&permission).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Message{
+			Code:    http.StatusUnprocessableEntity,
+			Message: "cannot create more spaces",
+		}))
+		return
+	}
+
+	// Fetch total number of spaces in organisation
+	var totSpaces int64
+	config.DB.Model(&model.Space{}).Where(&model.Space{
+		OrganisationID: space.OrganisationID,
+	}).Count(&totSpaces)
+
+	if totSpaces >= permission.Spaces {
+		errorx.Render(w, errorx.Parser(errorx.Message{
+			Code:    http.StatusUnprocessableEntity,
+			Message: "cannot create more spaces",
+		}))
+		return
+	}
+
 	var spaceSlug string
 	if space.Slug != "" && slug.Check(space.Slug) {
 		spaceSlug = space.Slug

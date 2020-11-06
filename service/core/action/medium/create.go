@@ -39,6 +39,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	oID, err := util.GetOrganisation(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	var mediumList []medium
 
 	err = json.NewDecoder(r.Body).Decode(&mediumList)
@@ -46,6 +53,35 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
+
+	// Fetch organisation permissions
+	permission := model.OrganisationPermission{}
+	err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+		OrganisationID: uint(oID),
+	}).First(&permission).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Message{
+			Code:    http.StatusUnprocessableEntity,
+			Message: "cannot create more media",
+		}))
+		return
+	}
+
+	// Fetch total number of medium in space
+	var totMedia int64
+	config.DB.Model(&model.Medium{}).Where(&model.Medium{
+		SpaceID: uint(sID),
+	}).Count(&totMedia)
+
+	if totMedia+int64(len(mediumList)) >= permission.Media {
+		errorx.Render(w, errorx.Parser(errorx.Message{
+			Code:    http.StatusUnprocessableEntity,
+			Message: "cannot create more media",
+		}))
 		return
 	}
 

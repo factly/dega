@@ -1,4 +1,4 @@
-package organisation_permission
+package organisationPermission
 
 import (
 	"net/http"
@@ -12,18 +12,18 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// delete - Delete Organisation permission by id
-// @Summary Delete a Organisation permission
-// @Description Delete Organisation permission by ID
+// details - Get tag by id
+// @Summary Show a tag by id
+// @Description Get tag by ID
 // @Tags Organisation_Permissions
-// @ID delete-org-permission-by-id
+// @ID get-org-permission-by-id
+// @Produce  json
 // @Param X-User header string true "User ID"
 // @Param permission_id path string true "Permission ID"
 // @Param X-Space header string true "Space ID"
-// @Success 200
-// @Failure 400 {array} string
-// @Router  /core/organisations/permissions/{permission_id} [delete]
-func delete(w http.ResponseWriter, r *http.Request) {
+// @Success 200 {object} model.OrganisationPermission
+// @Router /core/organisations/permissions/{permission_id} [get]
+func details(w http.ResponseWriter, r *http.Request) {
 	permissionID := chi.URLParam(r, "permission_id")
 	id, err := strconv.Atoi(permissionID)
 
@@ -36,15 +36,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	result := model.OrganisationPermission{}
 	result.ID = uint(id)
 
-	// check record exists or not
 	err = config.DB.First(&result).Error
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	config.DB.Delete(&result)
-
-	renderx.JSON(w, http.StatusOK, nil)
+	renderx.JSON(w, http.StatusOK, result)
 }

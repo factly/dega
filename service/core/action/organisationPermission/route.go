@@ -1,4 +1,4 @@
-package organisation_permission
+package organisationPermission
 
 import (
 	"github.com/factly/dega-server/util"
