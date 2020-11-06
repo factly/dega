@@ -39,7 +39,7 @@ class UppyUploader {
   }
   render() {
     if (this.data.url) {
-      this.nodes.wrapper.children[1].src = this.data.url.raw;
+      this.nodes.wrapper.children[1].src = this.data.url.proxy;
     }
     return this.nodes.wrapper;
   }
@@ -59,10 +59,10 @@ class UppyUploader {
           Object.keys(files).forEach((fileID) => {
             updatedFiles[fileID] = {
               ...files[fileID],
+              fileName: files[fileID].meta.name,
               meta: {
                 ...files[fileID].meta,
                 name:
-                  'uppy/' +
                   this.config.space_slug +
                   '/' +
                   new Date().getFullYear() +
@@ -99,7 +99,7 @@ class UppyUploader {
         upload['description'] = successful.meta.caption;
         upload['dimensions'] = '100x100';
         upload['file_size'] = successful.size;
-        upload['name'] = successful.meta.name;
+        upload['name'] = successful.fileName;
         upload['slug'] = successful.response.body.key;
         upload['title'] = successful.meta.caption ? successful.meta.caption : ' ';
         upload['type'] = successful.meta.type;
@@ -107,11 +107,11 @@ class UppyUploader {
         upload['url']['raw'] = successful.uploadURL;
 
         axios
-          .post(MEDIA_API, upload)
+          .post(MEDIA_API, [upload])
           .then((res) => {
             this.data = res.data;
             this.nodes.wrapper.children[0].style.display = 'none';
-            this.nodes.wrapper.children[1].src = this.data.url.raw;
+            this.nodes.wrapper.children[1].src = this.data[0].url.proxy;
           })
           .catch((error) => {
             this.api.notifier.show({
@@ -123,7 +123,7 @@ class UppyUploader {
     }
   }
 
-  save(blockContent) {
+  save() {
     return this.data;
   }
 }

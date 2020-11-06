@@ -65,7 +65,7 @@ function MediaList({ onSelect, selected }) {
                   onClick={() => onSelect(null)}
                   shape="square"
                   size={174}
-                  src={item.url?.raw}
+                  src={item.url?.proxy}
                 />
               </Badge>
             ) : (
@@ -73,7 +73,7 @@ function MediaList({ onSelect, selected }) {
                 onClick={() => onSelect(item)}
                 shape="square"
                 size={174}
-                src={item.url?.raw}
+                src={item.url?.proxy}
               />
             )}
           </List.Item>

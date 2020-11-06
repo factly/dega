@@ -22,3 +22,8 @@ code {
 .ant-modal-content {
   width: 800px;
 }
+
+.menu-logo {
+  height: 36px;
+  width: 36px;
+}

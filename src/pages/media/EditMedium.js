@@ -1,6 +1,6 @@
 import React from 'react';
-import { useParams } from 'react-router-dom';
-import { Row, Col, Skeleton, Form, Input, Button } from 'antd';
+import { Link, useParams } from 'react-router-dom';
+import { Row, Col, Skeleton, Form, Input, Button, Space } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium } from '../../actions/media';
 
@@ -45,7 +45,7 @@ function EditMedium() {
   return (
     <Row>
       <Col span={'12'}>
-        <img src={media.url?.raw} alt={'space'} style={{ width: '100%' }} />
+        <img src={media.url?.proxy} alt={'space'} style={{ width: '100%' }} />
       </Col>
       <Col span={'12'}>
         <Form
@@ -70,9 +70,14 @@ function EditMedium() {
             <Input />
           </Form.Item>
           <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
+            <Space>
+              <Link to="/media">
+                <Button>Back</Button>
+              </Link>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Space>
           </Form.Item>
         </Form>
       </Col>

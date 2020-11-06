@@ -57,7 +57,7 @@ function MediaSelector({ value = null, onChange }) {
         </Space>
       </Modal>
       <Space direction="vertical">
-        {medium ? <img src={medium.url?.raw} alt={medium.alt_text} width="100%" /> : null}
+        {medium ? <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" /> : null}
         <Button onClick={() => setShow(true)}>Select</Button>
       </Space>
     </>

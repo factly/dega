@@ -60,7 +60,18 @@ function Sidebar() {
       }}
     >
       <div className="menu-header" style={{ backgroundColor: '#1890ff' }}>
-        <img alt="logo" src={'https://degacms.com/img/dega.svg'} style={{ width: '40%' }} />
+        <img
+          alt="logo"
+          hidden={!collapsed}
+          className="menu-logo"
+          src={require('../../assets/dega.png')}
+        />
+        <img
+          alt="logo"
+          hidden={collapsed}
+          src={'https://degacms.com/img/dega.svg'}
+          style={{ width: '40%' }}
+        />
       </div>
       <Menu theme={navTheme} mode="inline" className="slider-menu">
         {sidebarMenu.map((menu, index) => {

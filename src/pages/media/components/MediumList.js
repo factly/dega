@@ -41,7 +41,13 @@ function MediumList({ actions }) {
     {
       title: 'Display',
       key: 'display',
-      render: (_, record) => <Avatar shape="square" size={174} src={record.url?.raw} />,
+      render: (_, record) => (
+        <Avatar
+          shape="square"
+          style={{ width: '100%', height: '100%' }}
+          src={record.url?.proxy ? `${record.url.proxy}?resize:fill:200:150` : ''}
+        />
+      ),
       width: '15%',
     },
     {
@@ -53,7 +59,7 @@ function MediumList({ actions }) {
       title: 'File size',
       dataIndex: 'file_size',
       key: 'file_size',
-      render: (_, record) => parseInt(record.file_size) / 1024 + ' KB',
+      render: (_, record) => Math.round((parseInt(record.file_size) / 1024) * 100) / 100 + ' KB',
     },
     {
       title: 'Caption',
