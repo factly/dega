@@ -123,7 +123,7 @@ func CreateSuperOrganisation() error {
 				"extra": map[string]interface{}{
 					"identity": map[string]interface{}{
 						"traits": map[string]interface{}{
-							"email": viper.GetString("user.email"),
+							"email": viper.GetString("user_email"),
 						},
 					},
 				},
