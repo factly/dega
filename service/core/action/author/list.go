@@ -55,7 +55,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.Author, 0)
 
-	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", oID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", oID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

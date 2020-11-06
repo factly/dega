@@ -55,7 +55,7 @@ func Composer(oID int, sID int, inputPolicy policyReq) model.KetoPolicy {
 		loggerx.Error(err)
 	}
 
-	req, err := http.NewRequest("PUT", viper.GetString("keto.url")+"/engines/acp/ory/regex/policies", buf)
+	req, err := http.NewRequest("PUT", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies", buf)
 	if err != nil {
 		loggerx.Error(err)
 	}

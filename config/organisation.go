@@ -29,14 +29,14 @@ type passwordMethod struct {
 // CheckSuperOrganisation checks if super organisation is present in kavach or not
 func CheckSuperOrganisation() bool {
 	// check if the config file has organisation.id param
-	if viper.IsSet("organisation.id") {
-		orgID := viper.GetInt("organisation.id")
+	if viper.IsSet("organisation_id") {
+		orgID := viper.GetInt("organisation_id")
 		if orgID == 0 {
 			return false
 		}
 
 		// check if organisation is present in kavach
-		req, err := http.NewRequest("GET", viper.GetString("kavach.url")+"/organisations/"+fmt.Sprint(orgID), nil)
+		req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprint(orgID), nil)
 		req.Header.Set("Content-Type", "application/json")
 
 		client := &http.Client{}
@@ -54,14 +54,14 @@ func CheckSuperOrganisation() bool {
 
 // UserConfigPresent checks if user config params is present in config file
 func UserConfigPresent() bool {
-	return viper.IsSet("user.email") && viper.IsSet("user.password") && viper.GetString("user.email") != "" && viper.GetString("user.password") != "" && viper.IsSet("organisation.title")
+	return viper.IsSet("user_email") && viper.IsSet("user_password") && viper.GetString("user_email") != "" && viper.GetString("user_password") != "" && viper.IsSet("organisation_title")
 }
 
 // CreateSuperOrganisation creates a super user and organisation in kavach
 func CreateSuperOrganisation() error {
 	if !CheckSuperOrganisation() && UserConfigPresent() {
 		// create a user in kratos through api
-		req, _ := http.NewRequest("GET", viper.GetString("kratos.public_url")+"/self-service/registration/api", nil)
+		req, _ := http.NewRequest("GET", viper.GetString("kratos_public_url")+"/self-service/registration/api", nil)
 		req.Header.Set("Content-Type", "application/json")
 
 		client := &http.Client{}
@@ -85,8 +85,8 @@ func CreateSuperOrganisation() error {
 		}
 
 		userCredsBody := map[string]interface{}{
-			"traits.email": viper.GetString("user.email"),
-			"password":     viper.GetString("user.password"),
+			"traits.email": viper.GetString("user_email"),
+			"password":     viper.GetString("user_password"),
 		}
 
 		buf := new(bytes.Buffer)
@@ -99,7 +99,7 @@ func CreateSuperOrganisation() error {
 
 		actionpath := actionURL[actionpathIdx+18:]
 
-		req, _ = http.NewRequest("POST", viper.GetString("kratos.public_url")+actionpath, buf)
+		req, _ = http.NewRequest("POST", viper.GetString("kratos_public_url")+actionpath, buf)
 		req.Header.Set("Content-Type", "application/json")
 
 		resp, err = client.Do(req)
@@ -136,7 +136,7 @@ func CreateSuperOrganisation() error {
 			return err
 		}
 
-		req, _ = http.NewRequest("POST", viper.GetString("kavach.url")+"/users/checker", buf)
+		req, _ = http.NewRequest("POST", viper.GetString("kavach_url")+"/users/checker", buf)
 		req.Header.Set("Content-Type", "application/json")
 
 		resp, err = client.Do(req)
@@ -157,7 +157,7 @@ func CreateSuperOrganisation() error {
 		userID := userIDArr[0].(string)
 
 		org := organisation{
-			Title: viper.GetString("organisation.title"),
+			Title: viper.GetString("organisation_title"),
 		}
 
 		err = json.NewEncoder(buf).Encode(&org)
@@ -165,7 +165,7 @@ func CreateSuperOrganisation() error {
 			return err
 		}
 
-		req, _ = http.NewRequest("POST", viper.GetString("kavach.url")+"/organisations", buf)
+		req, _ = http.NewRequest("POST", viper.GetString("kavach_url")+"/organisations", buf)
 		req.Header.Set("Content-Type", "application/json")
 		req.Header.Set("X-User", userID)
 

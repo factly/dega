@@ -25,8 +25,8 @@ func SearchWithoutQuery(filters string, kind string) (map[string]interface{}, er
 		return nil, err
 	}
 
-	req, err := http.NewRequest("POST", viper.GetString("meili.url")+"/indexes/dega/search", buf)
-	req.Header.Add("X-Meili-API-Key", viper.GetString("meili.key"))
+	req, err := http.NewRequest("POST", viper.GetString("meili_url")+"/indexes/dega/search", buf)
+	req.Header.Add("X-Meili-API-Key", viper.GetString("meili_key"))
 	req.Header.Add("Content-Type", "application/json")
 
 	if err != nil {

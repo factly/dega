@@ -93,7 +93,7 @@ func TestSpaceMy(t *testing.T) {
 		medium.SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock)
 
-		gock.New(viper.GetString("kavach.url") + "/organisations/my").
+		gock.New(viper.GetString("kavach_url") + "/organisations/my").
 			Persist().
 			Reply(http.StatusOK).
 			JSON(test.Dummy_Org_Member_List)

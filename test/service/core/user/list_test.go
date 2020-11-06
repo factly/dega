@@ -51,7 +51,7 @@ func TestListUsers(t *testing.T) {
 	t.Run("get users when keto is unable to fetch policies", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
 
-		gock.New(viper.GetString("keto.url") + "/engines/acp/ory/regex/roles/(.+)").
+		gock.New(viper.GetString("keto_url") + "/engines/acp/ory/regex/roles/(.+)").
 			Persist().
 			Reply(http.StatusOK).
 			JSON(test.Dummy_Role)

@@ -156,11 +156,11 @@ func TestPostUpdate(t *testing.T) {
 
 	t.Run("user does not have publish permission when changing post status back to draft", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusOK)
 
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusForbidden)
 
@@ -184,7 +184,7 @@ func TestPostUpdate(t *testing.T) {
 
 	t.Run("keto down when changing post status back to draft", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusOK)
 

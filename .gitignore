@@ -139,4 +139,4 @@ main
 
 .DS_Store
 
-dega-server.yml
+config.*
