@@ -20,7 +20,7 @@ import (
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Success 200 {object} metadata
-// @Router /core/meta [get]
+// @Router /meta [get]
 func details(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Query().Get("url")
 	if url == "" {

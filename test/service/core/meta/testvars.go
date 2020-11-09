@@ -7,7 +7,7 @@ var headers = map[string]string{
 	"X-Space": "1",
 }
 
-var path = "/core/meta"
+var path = "/meta"
 
 var siteUrl = "http://localhost"
 
