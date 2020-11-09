@@ -138,7 +138,7 @@ func TestTagList(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		test.DisableMeiliGock(testServer.URL)
 
-		gock.New(viper.GetString("meili.url") + "/indexes/dega/search").
+		gock.New(viper.GetString("meili_url") + "/indexes/dega/search").
 			HeaderPresent("X-Meili-API-Key").
 			Persist().
 			Reply(http.StatusOK).

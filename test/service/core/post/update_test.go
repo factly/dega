@@ -11,6 +11,8 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/format"
+	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
@@ -116,6 +118,12 @@ func TestPostUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		preUpdateDraftMock(mock, updatePost, false)
+
+		mock.ExpectExec(`UPDATE \"posts\"`).
+			WithArgs(Data["is_featured"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		medium.SelectWithSpace(mock)
+		format.SelectMock(mock, 1, 1)
 		mock.ExpectExec(`UPDATE \"posts\"`).
 			WithArgs(test.AnyTime{}, Data["title"], Data["subtitle"], Data["slug"], Data["excerpt"],
 				Data["description"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], 1).
@@ -156,11 +164,11 @@ func TestPostUpdate(t *testing.T) {
 
 	t.Run("user does not have publish permission when changing post status back to draft", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusOK)
 
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusForbidden)
 
@@ -184,7 +192,7 @@ func TestPostUpdate(t *testing.T) {
 
 	t.Run("keto down when changing post status back to draft", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusOK)
 

@@ -179,7 +179,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      post.Description,
-		IsFeatured:       post.IsFeatured,
 		IsHighlighted:    post.IsHighlighted,
 		IsSticky:         post.IsSticky,
 		FormatID:         post.FormatID,
@@ -206,6 +205,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	tx.Model(&result.Post).Select("IsFeatured").Omit("Tags").Omit("Categories").Updates(model.Post{IsFeatured: post.IsFeatured})
 	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {

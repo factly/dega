@@ -70,7 +70,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	policyID = "id" + commanPolicyString + policyID
 
-	req, err := http.NewRequest("DELETE", viper.GetString("keto.url")+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	req, err := http.NewRequest("DELETE", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies/"+policyID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

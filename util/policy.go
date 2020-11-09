@@ -101,7 +101,7 @@ func IsAllowed(result KetoAllowed) (int, error) {
 		return 0, err
 	}
 
-	req, err := http.NewRequest("POST", viper.GetString("keto.url")+"/engines/acp/ory/regex/allowed", buf)
+	req, err := http.NewRequest("POST", viper.GetString("keto_url")+"/engines/acp/ory/regex/allowed", buf)
 	if err != nil {
 		return 0, err
 	}

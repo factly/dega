@@ -14,7 +14,7 @@ import (
 // if any error occurs then Mapper just returns empty list
 func Mapper(oID int, uID int) map[string]model.Author {
 	userMap := make(map[string]model.Author)
-	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", oID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", oID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

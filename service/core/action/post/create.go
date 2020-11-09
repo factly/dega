@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/spf13/viper"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
@@ -82,6 +84,40 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.InternalServerError()
+	}
+
+	oID, err := util.GetOrganisation(ctx)
+	if err != nil {
+		loggerx.Error(err)
+		return nil, errorx.InternalServerError()
+	}
+
+	if viper.IsSet("organisation_id") {
+		// Fetch organisation permissions
+		permission := model.OrganisationPermission{}
+		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+			OrganisationID: uint(oID),
+		}).First(&permission).Error
+
+		if err != nil {
+			return nil, errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more posts",
+			}
+		}
+
+		// Fetch total number of posts in space
+		var totPosts int64
+		config.DB.Model(&model.Post{}).Where(&model.Post{
+			SpaceID: uint(sID),
+		}).Where("status != 'template'").Count(&totPosts)
+
+		if totPosts >= permission.Posts && permission.Posts > 0 {
+			return nil, errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more posts",
+			}
+		}
 	}
 
 	// Get table name

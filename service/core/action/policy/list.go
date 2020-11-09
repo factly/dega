@@ -33,7 +33,7 @@ type paging struct {
 // @Success 200 {object} paging
 // @Router /core/policies [get]
 func list(w http.ResponseWriter, r *http.Request) {
-	req, err := http.NewRequest("GET", viper.GetString("keto.url")+"/engines/acp/ory/regex/policies", nil)
+	req, err := http.NewRequest("GET", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies", nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

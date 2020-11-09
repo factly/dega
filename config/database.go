@@ -19,7 +19,7 @@ func SetupDB() {
 	fmt.Println("connecting to database ...")
 
 	var err error
-	DB, err = gorm.Open(postgres.Open(viper.GetString("postgres.dsn")), &gorm.Config{
+	DB, err = gorm.Open(postgres.Open(viper.GetString("dsn")), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),
 	})
 

@@ -12,5 +12,6 @@ func Migration() {
 		&Format{},
 		&Post{},
 		&PostAuthor{},
+		&OrganisationPermission{},
 	)
 }

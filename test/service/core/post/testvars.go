@@ -384,6 +384,11 @@ func preUpdatePublishedMock(mock sqlmock.Sqlmock, post map[string]interface{}, s
 
 func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	mock.ExpectExec(`UPDATE \"posts\"`).
+		WithArgs(post["is_featured"], 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	medium.SelectWithSpace(mock)
+	format.SelectMock(mock, 1, 1)
+	mock.ExpectExec(`UPDATE \"posts\"`).
 		WithArgs(test.AnyTime{}, post["title"], post["subtitle"], post["slug"], post["excerpt"],
 			post["description"], post["is_sticky"], post["is_highlighted"], post["featured_medium_id"], post["format_id"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
@@ -391,6 +396,11 @@ func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugChec
 }
 
 func updatePublishedQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
+	mock.ExpectExec(`UPDATE \"posts\"`).
+		WithArgs(post["is_featured"], 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	medium.SelectWithSpace(mock)
+	format.SelectMock(mock, 1, 1)
 	mock.ExpectExec(`UPDATE \"posts\"`).
 		WithArgs(test.AnyTime{}, post["title"], post["subtitle"], post["slug"], post["status"], post["excerpt"],
 			post["description"], post["is_sticky"], post["is_highlighted"], post["featured_medium_id"], post["format_id"], 1).

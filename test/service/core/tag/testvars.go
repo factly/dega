@@ -80,7 +80,10 @@ func tagPostExpect(mock sqlmock.Sqlmock, count int) {
 func tagUpdateMock(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 	mock.ExpectBegin()
 	mock.ExpectExec(`UPDATE \"tags\"`).
-		WithArgs(test.AnyTime{}, tag["name"], tag["slug"], tag["is_featured"], 1).
+		WithArgs(tag["is_featured"], 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	mock.ExpectExec(`UPDATE \"tags\"`).
+		WithArgs(test.AnyTime{}, tag["name"], tag["slug"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	SelectMock(mock, tag, 1, 1)
 }

@@ -6,6 +6,8 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
+
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
@@ -59,6 +61,7 @@ var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "spaces"`)
 var deleteQuery string = regexp.QuoteMeta(`UPDATE "spaces" SET "deleted_at"=`)
+var countQuery string = regexp.QuoteMeta(`SELECT count(1) FROM "spaces"`)
 
 const path string = "/core/spaces/{space_id}"
 const basePath string = "/core/spaces"
@@ -71,6 +74,12 @@ func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 }
 
 func insertMock(mock sqlmock.Sqlmock) {
+	organisationPermission.SelectQuery(mock, 1)
+
+	mock.ExpectQuery(countQuery).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
+
 	mock.ExpectBegin()
 	mock.ExpectQuery(`INSERT INTO "spaces"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).

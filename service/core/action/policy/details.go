@@ -56,7 +56,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	ketoPolicyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":", policyID)
 
-	req, err := http.NewRequest("GET", viper.GetString("keto.url")+"/engines/acp/ory/regex/policies/"+ketoPolicyID, nil)
+	req, err := http.NewRequest("GET", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies/"+ketoPolicyID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

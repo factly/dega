@@ -8,7 +8,7 @@ import (
 
 // KetoGetRequest does get request to keto with empty body
 func KetoGetRequest(path string) (*http.Response, error) {
-	req, err := http.NewRequest("GET", viper.GetString("keto.url")+path, nil)
+	req, err := http.NewRequest("GET", viper.GetString("keto_url")+path, nil)
 	if err != nil {
 		return nil, err
 	}

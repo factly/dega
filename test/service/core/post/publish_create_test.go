@@ -11,8 +11,10 @@ import (
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -30,6 +32,8 @@ func TestPublishedPostCreate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	viper.Set("organisation_id", 1)
 
 	t.Run("Unprocessable post", func(t *testing.T) {
 
@@ -61,6 +65,8 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -87,6 +93,8 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -114,6 +122,8 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -141,6 +151,8 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -161,6 +173,8 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -183,6 +197,8 @@ func TestPublishedPostCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
