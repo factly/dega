@@ -147,6 +147,26 @@ definitions:
     - name
     - type
     type: object
+  meta.meta:
+    properties:
+      description:
+        type: string
+      image:
+        additionalProperties: true
+        type: object
+      site_name:
+        type: string
+      title:
+        type: string
+    type: object
+  meta.metadata:
+    properties:
+      meta:
+        $ref: '#/definitions/meta.meta'
+        type: object
+      sucess:
+        type: integer
+    type: object
   model.Author:
     properties:
       birth_date:
@@ -1434,6 +1454,36 @@ paths:
       summary: Update a medium by id
       tags:
       - Medium
+  /core/meta:
+    get:
+      description: Get meta info
+      operationId: get-meta-info
+      parameters:
+      - description: URL
+        in: query
+        name: url
+        required: true
+        type: string
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/meta.metadata'
+      summary: Get meta info
+      tags:
+      - Meta
   /core/policies:
     get:
       description: Get all policies
