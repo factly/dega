@@ -24,4 +24,6 @@ require (
 	golang.org/x/tools v0.0.0-20200903005429-2364a5e8fdcf // indirect
 	gopkg.in/h2non/gock.v1 v1.0.15
 	gopkg.in/yaml.v2 v2.3.0 // indirect
+	gorm.io/driver/postgres v1.0.5
+	gorm.io/gorm v1.20.5
 )

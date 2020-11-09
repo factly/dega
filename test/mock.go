@@ -14,7 +14,9 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/config"
-	"github.com/jinzhu/gorm"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 // AnyTime To match time for test sqlmock queries
@@ -29,29 +31,37 @@ func (a AnyTime) Match(v driver.Value) bool {
 // SetupMockDB setups the mock sql db
 func SetupMockDB() sqlmock.Sqlmock {
 
-	viper.Set("kavach.url", "http://kavach:6620")
-	viper.Set("keto.url", "http://keto:6644")
-	viper.Set("meili.url", "http://meili:7700")
-	viper.Set("meili.key", "password")
+	viper.Set("kavach_url", "http://kavach:6620")
+	viper.Set("keto_url", "http://keto:6644")
+	viper.Set("meili_url", "http://meili:7700")
+	viper.Set("meili_key", "password")
+	viper.Set("imageproxy_url", "http://imageproxy")
 	google.GoogleURL = "http://googlefactchecktest.com"
 
 	meili.Client = meilisearch.NewClient(meilisearch.Config{
-		Host:   viper.GetString("meili.url"),
-		APIKey: viper.GetString("meili.key"),
+		Host:   viper.GetString("meili_url"),
+		APIKey: viper.GetString("meili_key"),
 	})
 
 	db, mock, err := sqlmock.New()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
-	config.DB, err = gorm.Open("postgres", db)
+
+	dialector := postgres.New(postgres.Config{
+		DSN:                  "sqlmock_db_0",
+		DriverName:           "postgres",
+		Conn:                 db,
+		PreferSimpleProtocol: true,
+	})
+
+	config.DB, err = gorm.Open(dialector, &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
-
-	config.DB.LogMode(true)
-
 	return mock
 }
 

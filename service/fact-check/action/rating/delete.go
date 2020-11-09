@@ -59,7 +59,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if rating is associated with claims
-	var totAssociated int
+	var totAssociated int64
 	config.DB.Model(&model.Claim{}).Where(&model.Claim{
 		RatingID: uint(id),
 	}).Count(&totAssociated)

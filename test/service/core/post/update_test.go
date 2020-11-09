@@ -11,6 +11,8 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/format"
+	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
@@ -32,8 +34,6 @@ var updatePost = map[string]interface{}{
 	"claim_ids":          []uint{1},
 	"author_ids":         []uint{1},
 }
-
-var errorDB = errors.New("Something went wrong with db queries")
 
 func TestPostUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
@@ -118,10 +118,15 @@ func TestPostUpdate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		preUpdateDraftMock(mock, updatePost, false)
-		mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
-			WithArgs(updatePost["description"], updatePost["excerpt"], updatePost["featured_medium_id"], updatePost["format_id"],
-				updatePost["is_highlighted"], updatePost["is_sticky"], updatePost["slug"], updatePost["subtitle"], updatePost["title"],
-				test.AnyTime{}, 1).
+
+		mock.ExpectExec(`UPDATE \"posts\"`).
+			WithArgs(Data["is_featured"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		medium.SelectWithSpace(mock)
+		format.SelectMock(mock, 1, 1)
+		mock.ExpectExec(`UPDATE \"posts\"`).
+			WithArgs(test.AnyTime{}, Data["title"], Data["subtitle"], Data["slug"], Data["excerpt"],
+				Data["description"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], 1).
 			WillReturnError(errors.New("cannot update post"))
 
 		mock.ExpectRollback()
@@ -159,11 +164,11 @@ func TestPostUpdate(t *testing.T) {
 
 	t.Run("user does not have publish permission when changing post status back to draft", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusOK)
 
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusForbidden)
 
@@ -187,7 +192,7 @@ func TestPostUpdate(t *testing.T) {
 
 	t.Run("keto down when changing post status back to draft", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusOK)
 
@@ -217,6 +222,11 @@ func TestPostUpdate(t *testing.T) {
 
 		preUpdateDraftMock(mock, updatePost, false)
 		updateQueryMock(mock, updatePost, false)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
+				AddRow(1, time.Now(), time.Now(), nil, 2, 1))
+
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
 			WillReturnError(errors.New("cannot delete post_claims"))
@@ -238,6 +248,11 @@ func TestPostUpdate(t *testing.T) {
 
 		preUpdateDraftMock(mock, updatePost, false)
 		updateQueryMock(mock, updatePost, false)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
+				AddRow(1, time.Now(), time.Now(), nil, 2, 1))
+
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
@@ -265,6 +280,11 @@ func TestPostUpdate(t *testing.T) {
 		updateQueryMock(mock, updatePost, false)
 		updatePostClaimsMock(mock)
 
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
+				AddRow(1, time.Now(), time.Now(), nil, 2, 1))
+
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
 			WillReturnError(errors.New("cannot delete post_authors"))
@@ -287,6 +307,11 @@ func TestPostUpdate(t *testing.T) {
 		preUpdateDraftMock(mock, updatePost, false)
 		updateQueryMock(mock, updatePost, false)
 		updatePostClaimsMock(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
+				AddRow(1, time.Now(), time.Now(), nil, 2, 1))
 
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
@@ -364,126 +389,4 @@ func TestPostUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 
 	})
-
-	t.Run("error while deleting old post tags", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		updatePost["slug"] = "post"
-		updatePost["tag_ids"] = []uint{}
-		updatePost["category_ids"] = []uint{}
-
-		postSelectWithSpace(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"tag_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"category_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
-
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
-			WithArgs(1, 1).
-			WillReturnError(errorDB)
-		mock.ExpectRollback()
-		e.PUT(path).
-			WithPath("post_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatePost).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-
-	})
-
-	t.Run("error while deleting old post categories", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		updatePost["slug"] = "post"
-		updatePost["tag_ids"] = []uint{}
-		updatePost["category_ids"] = []uint{}
-
-		postSelectWithSpace(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"tag_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"category_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
-
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
-			WithArgs(1, 1).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
-			WithArgs(1, 1).
-			WillReturnError(errorDB)
-		mock.ExpectRollback()
-		e.PUT(path).
-			WithPath("post_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatePost).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-
-	})
-
-	t.Run("error while deleting old post categories", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		updatePost["featured_medium_id"] = 0
-
-		postSelectWithSpace(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"tag_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}, []string{"category_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", 1, 1))
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}))
-
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
-			WithArgs(1, 1).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
-			WithArgs(1, 1).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-		mock.ExpectExec(`UPDATE \"posts\" SET (.+)  WHERE (.+) \"posts\".\"id\" = `).
-			WithArgs(nil, test.AnyTime{}, 1).
-			WillReturnError(errorDB)
-		mock.ExpectRollback()
-		e.PUT(path).
-			WithPath("post_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatePost).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-
-	})
-
 }

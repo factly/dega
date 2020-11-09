@@ -52,5 +52,4 @@ func TestMediumDetails(t *testing.T) {
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(Data)
 	})
-
 }

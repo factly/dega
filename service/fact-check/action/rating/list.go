@@ -14,7 +14,7 @@ import (
 
 // list response
 type paging struct {
-	Total int            `json:"total"`
+	Total int64          `json:"total"`
 	Nodes []model.Rating `json:"nodes"`
 }
 
@@ -28,6 +28,7 @@ type paging struct {
 // @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
+// @Param all query string false "all"
 // @Success 200 {object} paging
 // @Router /fact-check/ratings [get]
 func list(w http.ResponseWriter, r *http.Request) {
@@ -42,11 +43,18 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.Rating, 0)
 
+	all := r.URL.Query().Get("all")
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	err = config.DB.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
+	stmt := config.DB.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
 		SpaceID: uint(sID),
-	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
+	}).Count(&result.Total).Order("id desc")
+
+	if all == "true" {
+		err = stmt.Find(&result.Nodes).Error
+	} else {
+		err = stmt.Offset(offset).Limit(limit).Find(&result.Nodes).Error
+	}
 
 	if err != nil {
 		loggerx.Error(err)

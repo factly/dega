@@ -25,7 +25,7 @@ func CheckSpace(h http.Handler) http.Handler {
 			}
 
 			uid, err := strconv.Atoi(space)
-			if err != nil {
+			if err != nil || uid == 0 {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}

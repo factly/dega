@@ -15,8 +15,8 @@ var Client *meilisearch.Client
 // SetupMeiliSearch setups the meili search server index
 func SetupMeiliSearch() {
 	Client = meilisearch.NewClientWithCustomHTTPClient(meilisearch.Config{
-		Host:   viper.GetString("meili.url"),
-		APIKey: viper.GetString("meili.key"),
+		Host:   viper.GetString("meili_url"),
+		APIKey: viper.GetString("meili_key"),
 	}, http.Client{
 		Timeout: time.Second * 10,
 	})

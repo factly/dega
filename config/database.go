@@ -4,26 +4,28 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/spf13/viper"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 // DB - gorm DB
 var DB *gorm.DB
 
 // SetupDB is database setuo
-func SetupDB(dsn interface{}) {
+func SetupDB() {
 
 	fmt.Println("connecting to database ...")
+
 	var err error
-	DB, err = gorm.Open("postgres", dsn)
+	DB, err = gorm.Open(postgres.Open(viper.GetString("dsn")), &gorm.Config{
+		Logger: logger.Default.LogMode(logger.Info),
+	})
 
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// Query log
-	DB.LogMode(true)
 
 	fmt.Println("connected to database ...")
 }

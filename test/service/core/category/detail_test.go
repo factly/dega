@@ -66,7 +66,7 @@ func TestCategoryDetails(t *testing.T) {
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(Data)
+			ContainsMap(resData)
 
 		test.ExpectationsMet(t, mock)
 	})

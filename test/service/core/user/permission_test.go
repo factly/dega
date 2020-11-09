@@ -30,11 +30,11 @@ func TestListUsersPermission(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		gock.New(viper.GetString("keto.url") + "/engines/acp/ory/regex/roles/(.+)").
+		gock.New(viper.GetString("keto_url") + "/engines/acp/ory/regex/roles/(.+)").
 			Persist().
 			Reply(http.StatusNotFound)
 
-		gock.New(viper.GetString("keto.url") + "/engines/acp/ory/regex/policies").
+		gock.New(viper.GetString("keto_url") + "/engines/acp/ory/regex/policies").
 			Persist().
 			Reply(http.StatusOK).
 			JSON(test.Dummy_KetoPolicy)
@@ -78,12 +78,12 @@ func TestListUsersPermission(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Persist().
 			Reply(http.StatusOK)
 
-		gock.New(viper.GetString("keto.url") + "/engines/acp/ory/regex/policies").
+		gock.New(viper.GetString("keto_url") + "/engines/acp/ory/regex/policies").
 			Persist().
 			Reply(http.StatusNotFound)
 

@@ -36,7 +36,7 @@ func TestDelete(t *testing.T) {
 
 	t.Run("when keto cannot delete policies", func(t *testing.T) {
 		test.DisableKetoGock(testServer.URL)
-		gock.New(viper.GetString("keto.url")).
+		gock.New(viper.GetString("keto_url")).
 			Post("/engines/acp/ory/regex/allowed").
 			Persist().
 			Reply(http.StatusOK)

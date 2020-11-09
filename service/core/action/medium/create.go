@@ -14,6 +14,8 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"github.com/spf13/viper"
+	"gorm.io/gorm"
 )
 
 // create - Create medium
@@ -25,8 +27,8 @@ import (
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param Medium body medium true "Medium Object"
-// @Success 201 {object} model.Medium
+// @Param Medium body []medium true "Medium Object"
+// @Success 201 {object} []model.Medium
 // @Failure 400 {array} string
 // @Router /core/media [post]
 func create(w http.ResponseWriter, r *http.Request) {
@@ -38,9 +40,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	medium := &medium{}
+	oID, err := util.GetOrganisation(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
-	err = json.NewDecoder(r.Body).Decode(&medium)
+	var mediumList []medium
+
+	err = json.NewDecoder(r.Body).Decode(&mediumList)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -48,33 +57,75 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validationError := validationx.Check(medium)
+	if viper.IsSet("organisation_id") {
+		// Fetch organisation permissions
+		permission := model.OrganisationPermission{}
+		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+			OrganisationID: uint(oID),
+		}).First(&permission).Error
 
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
-		return
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more media",
+			}))
+			return
+		}
+
+		// Fetch total number of medium in space
+		var totMedia int64
+		config.DB.Model(&model.Medium{}).Where(&model.Medium{
+			SpaceID: uint(sID),
+		}).Count(&totMedia)
+
+		if totMedia+int64(len(mediumList)) >= permission.Media && permission.Media > 0 {
+			errorx.Render(w, errorx.Parser(errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more media",
+			}))
+			return
+		}
 	}
 
-	var mediumSlug string
-	if medium.Slug != "" && slug.Check(medium.Slug) {
-		mediumSlug = medium.Slug
-	} else {
-		mediumSlug = slug.Make(medium.Name)
-	}
+	result := make([]model.Medium, 0)
 
-	result := &model.Medium{
-		Name:        medium.Name,
-		Slug:        slug.Approve(mediumSlug, sID, config.DB.NewScope(&model.Medium{}).TableName()),
-		Title:       medium.Title,
-		Type:        medium.Type,
-		Description: medium.Description,
-		Caption:     medium.Caption,
-		AltText:     medium.AltText,
-		FileSize:    medium.FileSize,
-		URL:         medium.URL,
-		Dimensions:  medium.Dimensions,
-		SpaceID:     uint(sID),
+	for _, medium := range mediumList {
+		validationError := validationx.Check(medium)
+
+		if validationError != nil {
+			loggerx.Error(errors.New("validation error"))
+			errorx.Render(w, validationError)
+			return
+		}
+
+		var mediumSlug string
+		if medium.Slug != "" && slug.Check(medium.Slug) {
+			mediumSlug = medium.Slug
+		} else {
+			mediumSlug = slug.Make(medium.Name)
+		}
+
+		// Get table name
+		stmt := &gorm.Statement{DB: config.DB}
+		_ = stmt.Parse(&model.Medium{})
+		tableName := stmt.Schema.Table
+
+		med := model.Medium{
+			Name:        medium.Name,
+			Slug:        slug.Approve(mediumSlug, sID, tableName),
+			Title:       medium.Title,
+			Type:        medium.Type,
+			Description: medium.Description,
+			Caption:     medium.Caption,
+			AltText:     medium.AltText,
+			FileSize:    medium.FileSize,
+			URL:         medium.URL,
+			Dimensions:  medium.Dimensions,
+			SpaceID:     uint(sID),
+		}
+
+		result = append(result, med)
 	}
 
 	tx := config.DB.Begin()
@@ -87,24 +138,28 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Insert into meili index
-	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "medium",
-		"name":        result.Name,
-		"slug":        result.Slug,
-		"title":       result.Title,
-		"type":        result.Type,
-		"description": result.Description,
-		"space_id":    result.SpaceID,
-	}
+	for i := range result {
+		addProxyURL(&result[i])
 
-	err = meili.AddDocument(meiliObj)
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+		// Insert into meili index
+		meiliObj := map[string]interface{}{
+			"id":          result[i].ID,
+			"kind":        "medium",
+			"name":        result[i].Name,
+			"slug":        result[i].Slug,
+			"title":       result[i].Title,
+			"type":        result[i].Type,
+			"description": result[i].Description,
+			"space_id":    result[i].SpaceID,
+		}
+
+		err = meili.AddDocument(meiliObj)
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	tx.Commit()

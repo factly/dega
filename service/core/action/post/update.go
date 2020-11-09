@@ -21,6 +21,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update post by id
@@ -114,59 +115,56 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Fetching old and new tags related to post
-	oldTags := result.Post.Tags
-	newTags := make([]model.Tag, 0)
-	config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&newTags)
-
-	// Fetching old and new categories related to post
-	oldCategories := result.Post.Categories
-	newCategories := make([]model.Category, 0)
-	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&newCategories)
-
 	post.SpaceID = result.SpaceID
 
 	var postSlug string
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Post{})
+	tableName := stmt.Schema.Table
+
 	if result.Slug == post.Slug {
 		postSlug = result.Slug
 	} else if post.Slug != "" && slug.Check(post.Slug) {
-		postSlug = slug.Approve(post.Slug, sID, config.DB.NewScope(&model.Post{}).TableName())
+		postSlug = slug.Approve(post.Slug, sID, tableName)
 	} else {
-		postSlug = slug.Approve(slug.Make(post.Title), sID, config.DB.NewScope(&model.Post{}).TableName())
+		postSlug = slug.Approve(slug.Make(post.Title), sID, tableName)
 	}
 
 	tx := config.DB.Begin()
-	// Deleting old associations
-	if len(oldTags) > 0 {
-		err = tx.Model(&result.Post).Association("Tags").Delete(oldTags).Error
-		if err != nil {
+
+	newTags := make([]model.Tag, 0)
+	if len(post.TagIDs) > 0 {
+		config.DB.Model(&model.Tag{}).Where(post.TagIDs).Find(&newTags)
+		if err = tx.Model(&result.Post).Association("Tags").Replace(&newTags); err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
+	} else {
+		_ = config.DB.Model(&result.Post).Association("Tags").Clear()
 	}
-	if len(oldCategories) > 0 {
-		err = tx.Model(&result.Post).Association("Categories").Delete(oldCategories).Error
-		if err != nil {
+
+	newCategories := make([]model.Category, 0)
+	if len(post.CategoryIDs) > 0 {
+		config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&newCategories)
+		if err = tx.Model(&result.Post).Association("Categories").Replace(&newCategories); err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
+	} else {
+		_ = config.DB.Model(&result.Post).Association("Categories").Clear()
 	}
 
-	if len(newTags) == 0 {
-		newTags = nil
-	}
-	if len(newCategories) == 0 {
-		newCategories = nil
-	}
-
+	featuredMediumID := &post.FeaturedMediumID
+	result.Post.FeaturedMediumID = &post.FeaturedMediumID
 	if post.FeaturedMediumID == 0 {
-		err = tx.Model(result.Post).Updates(map[string]interface{}{"featured_medium_id": nil}).First(&result.Post).Error
-		result.FeaturedMediumID = 0
+		err = tx.Model(&result.Post).Updates(map[string]interface{}{"featured_medium_id": nil}).First(&result.Post).Error
+		featuredMediumID = nil
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -181,13 +179,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      post.Description,
-		IsFeatured:       post.IsFeatured,
 		IsHighlighted:    post.IsHighlighted,
 		IsSticky:         post.IsSticky,
 		FormatID:         post.FormatID,
-		FeaturedMediumID: post.FeaturedMediumID,
-		Tags:             newTags,
-		Categories:       newCategories,
+		FeaturedMediumID: featuredMediumID,
 	}
 
 	// Check if post status is changed back to draft from published
@@ -210,7 +205,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	err = tx.Model(&result.Post).Set("gorm:association_autoupdate", false).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
+	tx.Model(&result.Post).Select("IsFeatured").Omit("Tags").Omit("Categories").Updates(model.Post{IsFeatured: post.IsFeatured})
+	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -218,11 +214,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
-
-	// fetch existing post authors
-	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
-	}).Find(&postAuthors)
 
 	var toCreateIDs []uint
 	var toDeleteIDs []uint
@@ -286,6 +277,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
+
+	// fetch existing post authors
+	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+		PostID: uint(id),
+	}).Find(&postAuthors)
 
 	prevAuthorIDs := make([]uint, 0)
 	mapperPostAuthor := map[uint]model.PostAuthor{}

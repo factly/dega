@@ -145,7 +145,6 @@ definitions:
     - dimensions
     - file_size
     - name
-    - title
     - type
     type: object
   meta.meta:
@@ -205,11 +204,11 @@ definitions:
         $ref: '#/definitions/model.Medium'
         type: object
       medium_id:
-        type: integer
+        type: string
       name:
         type: string
       parent_id:
-        type: integer
+        type: string
       posts:
         items:
           $ref: '#/definitions/model.Post'
@@ -276,7 +275,7 @@ definitions:
         $ref: '#/definitions/model.Medium'
         type: object
       medium_id:
-        type: integer
+        type: string
       name:
         type: string
       slug:
@@ -384,7 +383,7 @@ definitions:
       excerpt:
         type: string
       featured_medium_id:
-        type: integer
+        type: string
       format:
         $ref: '#/definitions/model.Format'
         type: object
@@ -434,7 +433,7 @@ definitions:
         $ref: '#/definitions/model.Medium'
         type: object
       medium_id:
-        type: integer
+        type: string
       name:
         type: string
       numeric_value:
@@ -460,24 +459,24 @@ definitions:
         $ref: '#/definitions/model.Medium'
         type: object
       fav_icon_id:
-        type: integer
+        type: string
       id:
         type: integer
       logo:
         $ref: '#/definitions/model.Medium'
         type: object
       logo_id:
-        type: integer
+        type: string
       logo_mobile:
         $ref: '#/definitions/model.Medium'
         type: object
       logo_mobile_id:
-        type: integer
+        type: string
       mobile_icon:
         $ref: '#/definitions/model.Medium'
         type: object
       mobile_icon_id:
-        type: integer
+        type: string
       name:
         type: string
       organisation_id:
@@ -618,7 +617,7 @@ definitions:
       excerpt:
         type: string
       featured_medium_id:
-        type: integer
+        type: string
       format:
         $ref: '#/definitions/model.Format'
         type: object
@@ -784,24 +783,24 @@ definitions:
         $ref: '#/definitions/model.Medium'
         type: object
       fav_icon_id:
-        type: integer
+        type: string
       id:
         type: integer
       logo:
         $ref: '#/definitions/model.Medium'
         type: object
       logo_id:
-        type: integer
+        type: string
       logo_mobile:
         $ref: '#/definitions/model.Medium'
         type: object
       logo_mobile_id:
-        type: integer
+        type: string
       mobile_icon:
         $ref: '#/definitions/model.Medium'
         type: object
       mobile_icon_id:
-        type: integer
+        type: string
       name:
         type: string
       organisation_id:
@@ -1348,7 +1347,9 @@ paths:
         name: Medium
         required: true
         schema:
-          $ref: '#/definitions/medium.medium'
+          items:
+            $ref: '#/definitions/medium.medium'
+          type: array
       produces:
       - application/json
       responses:
@@ -2670,6 +2671,10 @@ paths:
       - description: page number
         in: query
         name: page
+        type: string
+      - description: all
+        in: query
+        name: all
         type: string
       produces:
       - application/json

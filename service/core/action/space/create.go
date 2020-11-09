@@ -5,6 +5,8 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/spf13/viper"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
@@ -67,6 +69,39 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if viper.IsSet("organisation_id") {
+		// Fetch organisation permissions
+		permission := model.OrganisationPermission{}
+		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+			OrganisationID: uint(space.OrganisationID),
+		}).First(&permission).Error
+
+		if err != nil && space.OrganisationID != viper.GetInt("organisation_id") {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more spaces",
+			}))
+			return
+		}
+
+		if err == nil {
+			// Fetch total number of spaces in organisation
+			var totSpaces int64
+			config.DB.Model(&model.Space{}).Where(&model.Space{
+				OrganisationID: space.OrganisationID,
+			}).Count(&totSpaces)
+
+			if totSpaces >= permission.Spaces && permission.Spaces > 0 {
+				errorx.Render(w, errorx.Parser(errorx.Message{
+					Code:    http.StatusUnprocessableEntity,
+					Message: "cannot create more spaces",
+				}))
+				return
+			}
+		}
+	}
+
 	var spaceSlug string
 	if space.Slug != "" && slug.Check(space.Slug) {
 		spaceSlug = space.Slug
@@ -77,7 +112,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := model.Space{
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
-		Slug:              slug.Approve(spaceSlug, 0, config.DB.NewScope(&model.Space{}).TableName()),
+		Slug:              spaceSlug,
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,

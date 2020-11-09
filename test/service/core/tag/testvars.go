@@ -1,6 +1,7 @@
 package tag
 
 import (
+	"database/sql/driver"
 	"fmt"
 	"regexp"
 	"strings"
@@ -52,46 +53,42 @@ func tagInsertMock(mock sqlmock.Sqlmock) {
 //check tag exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(100, 1).
+		WithArgs(1, 100).
 		WillReturnRows(sqlmock.NewRows(Columns))
 }
 
 func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "tags"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
 		WithArgs(1, strings.ToLower(name.(string))).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
-func SelectWithSpaceMock(mock sqlmock.Sqlmock) {
+func SelectMock(mock sqlmock.Sqlmock, tag map[string]interface{}, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(1, 1).
+		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["is_featured"], 1))
-}
-
-func SelectWithOutSpace(mock sqlmock.Sqlmock, tag map[string]interface{}) {
-	mock.ExpectQuery(selectQuery).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, tag["name"], tag["slug"], Data["is_featured"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, tag["name"], tag["slug"], tag["is_featured"], 1))
 }
 
 // check tag associated with any post before deleting
 func tagPostExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts" INNER JOIN "post_tags"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts" JOIN "post_tags"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func tagUpdateMock(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 	mock.ExpectBegin()
-	mock.ExpectExec(`UPDATE \"tags\" SET (.+)  WHERE (.+) \"tags\".\"id\" = `).
-		WithArgs(tag["is_featured"], tag["name"], tag["slug"], test.AnyTime{}, 1).
+	mock.ExpectExec(`UPDATE \"tags\"`).
+		WithArgs(tag["is_featured"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	SelectWithOutSpace(mock, tag)
+	mock.ExpectExec(`UPDATE \"tags\"`).
+		WithArgs(test.AnyTime{}, tag["name"], tag["slug"], 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	SelectMock(mock, tag, 1, 1)
 }
 
 func tagCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "tags"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

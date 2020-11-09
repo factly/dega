@@ -52,7 +52,7 @@ func TestRatingDetails(t *testing.T) {
 			WithPath("rating_id", 1).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(Data)
+			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
 	})
 
 }

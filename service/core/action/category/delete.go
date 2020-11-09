@@ -72,10 +72,10 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	// Updates all children categories
-	err = tx.Model(model.Category{}).Where(&model.Category{
+	err = tx.Model(&model.Category{}).Where(&model.Category{
 		SpaceID:  uint(sID),
-		ParentID: result.ID,
-	}).Updates(map[string]interface{}{"parent_id": nil}).Error
+		ParentID: &result.ID,
+	}).UpdateColumn("parent_id", nil).Error
 
 	if err != nil {
 		tx.Rollback()

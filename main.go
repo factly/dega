@@ -4,8 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/spf13/viper"
-
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
 	coreModel "github.com/factly/dega-server/service/core/model"
@@ -31,8 +29,13 @@ import (
 func main() {
 	config.SetupVars()
 
+	err := config.CreateSuperOrganisation()
+	if err != nil {
+		log.Println(err)
+	}
+
 	// db setup
-	config.SetupDB(viper.GetString("postgres.dsn"))
+	config.SetupDB()
 
 	factCheckModel.Migration()
 	coreModel.Migration()
@@ -41,7 +44,7 @@ func main() {
 
 	r := service.RegisterRoutes()
 
-	if err := http.ListenAndServe(":8000", r); err != nil {
+	if err = http.ListenAndServe(":8000", r); err != nil {
 		log.Fatal(err)
 	}
 }

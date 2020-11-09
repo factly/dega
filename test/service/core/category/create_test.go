@@ -65,7 +65,7 @@ func TestCategoryCreate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
 
 	})
@@ -74,7 +74,7 @@ func TestCategoryCreate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(selectQuery).
-			WithArgs(1).
+			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(Columns))
 
 		Data["parent_id"] = 1
@@ -106,7 +106,7 @@ func TestCategoryCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusCreated).JSON().Object()
 		Data["slug"] = "test-category"
-		res.ContainsMap(Data)
+		res.ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
 	})
 

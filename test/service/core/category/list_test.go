@@ -60,6 +60,8 @@ func TestCategoryList(t *testing.T) {
 
 		medium.SelectWithOutSpace(mock)
 
+		delete(categorylist[0], "parent_id")
+		delete(categorylist[0], "medium_id")
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
@@ -89,6 +91,8 @@ func TestCategoryList(t *testing.T) {
 
 		medium.SelectWithOutSpace(mock)
 
+		delete(categorylist[1], "parent_id")
+		delete(categorylist[1], "medium_id")
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{
 				"limit": "1",
@@ -118,8 +122,8 @@ func TestCategoryList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["parent_id"], categorylist[0]["medium_id"], categorylist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], 0, 1, categorylist[0]["is_featured"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], 0, 1, categorylist[1]["is_featured"], 1))
 
 		medium.SelectWithOutSpace(mock)
 
@@ -148,7 +152,7 @@ func TestCategoryList(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		test.DisableMeiliGock(testServer.URL)
 
-		gock.New(viper.GetString("meili.url") + "/indexes/dega/search").
+		gock.New(viper.GetString("meili_url") + "/indexes/dega/search").
 			HeaderPresent("X-Meili-API-Key").
 			Persist().
 			Reply(http.StatusOK).

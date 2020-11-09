@@ -1,7 +1,6 @@
 package medium
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"regexp"
@@ -11,13 +10,6 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
-
-func nilJsonb() postgres.Jsonb {
-	ba, _ := json.Marshal(nil)
-	return postgres.Jsonb{
-		RawMessage: ba,
-	}
-}
 
 var headers = map[string]string{
 	"X-Space": "1",
@@ -33,12 +25,20 @@ var Data = map[string]interface{}{
 	"caption":     "sample",
 	"alt_text":    "sample",
 	"file_size":   100,
-	"url":         nilJsonb(),
-	"dimensions":  "testdims",
+	"url": postgres.Jsonb{
+		RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
+	},
+	"dimensions": "testdims",
 }
 
-var invalidData = map[string]interface{}{
-	"name": "a",
+var createArr = []map[string]interface{}{
+	Data,
+}
+
+var invalidData = []map[string]interface{}{
+	{
+		"name": "a",
+	},
 }
 
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "type", "title", "description", "caption", "alt_text", "file_size", "url", "dimensions", "space_id"}
@@ -59,7 +59,7 @@ func slugCheckMock(mock sqlmock.Sqlmock, medium map[string]interface{}) {
 //check medium exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(100, 1).
+		WithArgs(1, 100).
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
@@ -83,12 +83,12 @@ func mediumInsertMock(mock sqlmock.Sqlmock) {
 func mediumUpdateMock(mock sqlmock.Sqlmock, medium map[string]interface{}, err error) {
 	mock.ExpectBegin()
 	if err != nil {
-		mock.ExpectExec(`UPDATE \"media\" SET (.+)  WHERE (.+) \"media\".\"id\" = `).
-			WithArgs(medium["alt_text"], medium["caption"], medium["description"], medium["dimensions"], medium["file_size"], medium["name"], medium["slug"], medium["title"], medium["type"], test.AnyTime{}, medium["url"], 1).
+		mock.ExpectExec(`UPDATE \"media\"`).
+			WithArgs(test.AnyTime{}, medium["name"], medium["slug"], medium["type"], medium["title"], medium["description"], medium["caption"], medium["alt_text"], medium["file_size"], medium["url"], medium["dimensions"], 1).
 			WillReturnError(errors.New("update failed"))
 	} else {
-		mock.ExpectExec(`UPDATE \"media\" SET (.+)  WHERE (.+) \"media\".\"id\" = `).
-			WithArgs(medium["alt_text"], medium["caption"], medium["description"], medium["dimensions"], medium["file_size"], medium["name"], medium["slug"], medium["title"], medium["type"], test.AnyTime{}, medium["url"], 1).
+		mock.ExpectExec(`UPDATE \"media\"`).
+			WithArgs(test.AnyTime{}, medium["name"], medium["slug"], medium["type"], medium["title"], medium["description"], medium["caption"], medium["alt_text"], medium["file_size"], medium["url"], medium["dimensions"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 	}
 
@@ -129,41 +129,41 @@ func EmptyRowMock(mock sqlmock.Sqlmock) {
 }
 
 func countQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "media"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "media"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 // check medium associated with any post before deleting
 func mediumPostExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 // check medium associated with any rating before deleting
 func mediumRatingExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "ratings"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 // check medium associated with any claimant before deleting
 func mediumClaimantExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claimants"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claimants"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 // check medium associated with any category before deleting
 func mediumCategoryExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "categories"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "categories"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 // check medium associated with any space before deleting
 func mediumSpaceExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "spaces"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "spaces"`)).
 		WithArgs(1, 1, 1, 1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

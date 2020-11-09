@@ -47,7 +47,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	policyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":"+policyId)
 
-	req, err := http.NewRequest("DELETE", viper.GetString("keto.url")+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	req, err := http.NewRequest("DELETE", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies/"+policyID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

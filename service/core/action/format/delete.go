@@ -59,7 +59,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if format is associated with posts
-	var totAssociated int
+	var totAssociated int64
 	config.DB.Model(&model.Post{}).Where(&model.Post{
 		FormatID: uint(id),
 	}).Count(&totAssociated)

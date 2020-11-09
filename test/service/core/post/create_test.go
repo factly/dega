@@ -4,7 +4,11 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
+
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -13,6 +17,7 @@ import (
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -30,6 +35,8 @@ func TestPostCreate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	viper.Set("organisation_id", 1)
 
 	t.Run("Unprocessable post", func(t *testing.T) {
 
@@ -58,9 +65,12 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
+
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock, Data)
@@ -77,6 +87,35 @@ func TestPostCreate(t *testing.T) {
 			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
 
 		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("create post when permission not found", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts"}))
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("create more than permitted posts", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 100)
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
 
 	})
 
@@ -84,9 +123,11 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock, Data)
@@ -111,9 +152,11 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock, Data)
@@ -138,9 +181,11 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 		mock.ExpectBegin()
 		medium.EmptyRowMock(mock)
@@ -158,9 +203,11 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
@@ -180,9 +227,11 @@ func TestPostCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 1)
 		slugCheckMock(mock, Data)
 
-		tag.SelectWithOutSpace(mock, tag.Data)
+		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
 		postInsertMock(mock, Data)

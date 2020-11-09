@@ -3,8 +3,9 @@ package model
 import (
 	"errors"
 
+	"gorm.io/gorm"
+
 	"github.com/factly/dega-server/config"
-	"github.com/jinzhu/gorm"
 )
 
 // Category model
@@ -13,19 +14,20 @@ type Category struct {
 	Name        string  `gorm:"column:name" json:"name"`
 	Slug        string  `gorm:"column:slug" json:"slug"`
 	Description string  `gorm:"column:description" json:"description"`
-	ParentID    uint    `gorm:"column:parent_id" json:"parent_id" sql:"DEFAULT:NULL"`
-	MediumID    uint    `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
-	Medium      *Medium `gorm:"foreignkey:medium_id;association_foreignkey:id" json:"medium"`
+	ParentID    *uint   `gorm:"column:parent_id;default:NULL" json:"parent_id"`
+	MediumID    *uint   `gorm:"column:medium_id;default:NULL" json:"medium_id"`
+	Medium      *Medium `json:"medium"`
 	IsFeatured  bool    `gorm:"column:is_featured" json:"is_featured"`
 	SpaceID     uint    `gorm:"column:space_id" json:"space_id"`
 	Posts       []*Post `gorm:"many2many:post_categories;" json:"posts"`
+	Space       *Space  `json:"space,omitempty"`
 }
 
 // BeforeSave - validation for medium
 func (category *Category) BeforeSave(tx *gorm.DB) (e error) {
-	if category.MediumID > 0 {
+	if category.MediumID != nil && *category.MediumID > 0 {
 		medium := Medium{}
-		medium.ID = category.MediumID
+		medium.ID = *category.MediumID
 
 		err := tx.Model(&Medium{}).Where(Medium{
 			SpaceID: category.SpaceID,

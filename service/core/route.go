@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/format"
 	"github.com/factly/dega-server/service/core/action/medium"
 	"github.com/factly/dega-server/service/core/action/meta"
+	"github.com/factly/dega-server/service/core/action/organisationPermission"
 	"github.com/factly/dega-server/service/core/action/policy"
 	"github.com/factly/dega-server/service/core/action/post"
 	"github.com/factly/dega-server/service/core/action/search"
@@ -33,6 +34,7 @@ func Router() http.Handler {
 	r.Mount("/search", search.Router())
 	r.Mount("/users", user.Router())
 	r.Mount("/meta", meta.Router())
+	r.Mount("/organisations/permissions", organisationPermission.Router())
 
 	return r
 }

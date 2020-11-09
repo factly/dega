@@ -35,13 +35,11 @@ func TestDefaultFormatCreate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectBegin()
-		for _, fmt := range defaultData {
-			mock.ExpectQuery(`INSERT INTO "formats"`).
-				WithArgs(test.AnyTime{}, test.AnyTime{}, nil, fmt["name"], fmt["slug"], fmt["description"], 1).
-				WillReturnRows(sqlmock.
-					NewRows([]string{"id"}).
-					AddRow(1))
-		}
+		mock.ExpectQuery(`INSERT INTO "formats"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], 1).
+			WillReturnRows(sqlmock.
+				NewRows([]string{"id"}).
+				AddRow(1))
 		mock.ExpectCommit()
 
 		e.POST(defaultsPath).
@@ -82,7 +80,7 @@ func TestDefaultFormatCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "formats"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

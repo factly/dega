@@ -61,7 +61,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	q := url.Values{}
-	q.Add("key", viper.GetString("google.key"))
+	q.Add("key", viper.GetString("google_key"))
 	q.Add("query", query)
 	if language != "" {
 		q.Add("languageCode", language)

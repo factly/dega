@@ -6,7 +6,6 @@ import (
 	"net/http/httptest"
 	"regexp"
 	"testing"
-	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -41,14 +40,17 @@ func TestPostTemplateCreate(t *testing.T) {
 		postSelectWithSpace(mock)
 
 		// preload tags & categories
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
 			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(tag.Columns, []string{"tag_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", true, 1, 1, 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
+				AddRow(1, 1))
+		category.SelectWithOutSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
 			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(category.Columns, []string{"category_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, true, 1, 1, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
+				AddRow(1, 1))
+		tag.SelectMock(mock, tag.Data, 1)
 
 		postInsertMock(mock, Data)
 
@@ -107,22 +109,24 @@ func TestPostTemplateCreate(t *testing.T) {
 		postSelectWithSpace(mock)
 
 		// preload tags & categories
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
 			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(tag.Columns, []string{"tag_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", true, 1, 1, 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
+				AddRow(1, 1))
+		category.SelectWithOutSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
 			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(category.Columns, []string{"category_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, true, 1, 1, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
+				AddRow(1, 1))
+		tag.SelectMock(mock, tag.Data, 1)
 
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
-		format.SelectWithSpace(mock)
+		format.SelectMock(mock, 1, 1)
 
 		mock.ExpectQuery(`INSERT INTO "posts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["excerpt"],
-				Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], test.AnyTime{}, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["excerpt"], Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], test.AnyTime{}, 1, Data["featured_medium_id"]).
 			WillReturnError(errors.New("cannot create post"))
 		mock.ExpectRollback()
 
@@ -142,14 +146,17 @@ func TestPostTemplateCreate(t *testing.T) {
 		postSelectWithSpace(mock)
 
 		// preload tags & categories
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM  "tags" INNER JOIN "post_tags"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
 			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(tag.Columns, []string{"tag_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "title1", "slug1", true, 1, 1, 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories" INNER JOIN "post_categories"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
+				AddRow(1, 1))
+		category.SelectWithOutSpace(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
 			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows(append(category.Columns, []string{"category_id", "post_id"}...)).
-				AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "description", 0, 1, true, 1, 1, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
+				AddRow(1, 1))
+		tag.SelectMock(mock, tag.Data, 1)
 
 		postInsertMock(mock, Data)
 

@@ -16,6 +16,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // update - Update rating by id
@@ -81,26 +82,33 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	var ratingSlug string
 
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Rating{})
+	tableName := stmt.Schema.Table
+
 	if result.Slug == rating.Slug {
 		ratingSlug = result.Slug
 	} else if rating.Slug != "" && slug.Check(rating.Slug) {
-		ratingSlug = slug.Approve(rating.Slug, sID, config.DB.NewScope(&model.Rating{}).TableName())
+		ratingSlug = slug.Approve(rating.Slug, sID, tableName)
 	} else {
-		ratingSlug = slug.Approve(slug.Make(rating.Name), sID, config.DB.NewScope(&model.Rating{}).TableName())
+		ratingSlug = slug.Approve(slug.Make(rating.Name), sID, tableName)
 	}
 
 	// Check if rating with same name exist
-	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, config.DB.NewScope(&model.Rating{}).TableName()) {
-		loggerx.Error(err)
+	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, tableName) {
+		loggerx.Error(errors.New(`rating with same name exist`))
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
 
 	tx := config.DB.Begin()
 
+	mediumID := &rating.MediumID
+	result.MediumID = &rating.MediumID
 	if rating.MediumID == 0 {
-		err = tx.Model(result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
-		result.MediumID = 0
+		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
+		mediumID = nil
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -112,7 +120,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = tx.Model(&result).Updates(model.Rating{
 		Name:         rating.Name,
 		Slug:         ratingSlug,
-		MediumID:     rating.MediumID,
+		MediumID:     mediumID,
 		Description:  rating.Description,
 		NumericValue: rating.NumericValue,
 	}).Preload("Medium").First(&result).Error

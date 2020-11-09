@@ -18,18 +18,18 @@ func MockServer() {
 
 func KavachGock() {
 	// Mock server to return a user from kavach
-	gock.New(viper.GetString("kavach.url") + "/organisations/[0-9]+/users").
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/users").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_AuthorList)
 
-	gock.New(viper.GetString("kavach.url") + "/organisations/my").
+	gock.New(viper.GetString("kavach_url") + "/organisations/my").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_OrgList)
 
 	// Creates a mock server for kavach URL with an appropriate dummy response.
-	gock.New(viper.GetString("kavach.url") + "/organisations").
+	gock.New(viper.GetString("kavach_url") + "/organisations").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_Org)
@@ -39,7 +39,7 @@ func KavachGock() {
 func KetoGock() {
 	// <----- ALL THE KETO POLICIES (FOR POLICY TEST)------>
 	// GET-details for single id,
-	gock.New(viper.GetString("keto.url")).
+	gock.New(viper.GetString("keto_url")).
 		Get("/engines/acp/ory/regex/policies/(.+)").
 		SetMatcher(gock.NewMatcher()).
 		AddMatcher(func(req *http.Request, ereq *gock.Request) (bool, error) { return req.Method == "GET", nil }).
@@ -48,7 +48,7 @@ func KetoGock() {
 		JSON(Dummy_SingleMock)
 
 	// DELETE AND UPDATE POLICY - get specific policy, delete and put
-	gock.New(viper.GetString("keto.url")).
+	gock.New(viper.GetString("keto_url")).
 		Put("/engines/acp/ory/regex/policies/(.+)").
 		SetMatcher(gock.NewMatcher()).
 		AddMatcher(func(req *http.Request, ereq *gock.Request) (bool, error) {
@@ -62,7 +62,7 @@ func KetoGock() {
 		Reply(http.StatusOK).
 		JSON(Dummy_KetoPolicy)
 
-	gock.New(viper.GetString("keto.url")).
+	gock.New(viper.GetString("keto_url")).
 		Delete("/engines/acp/ory/regex/policies/(.+)").
 		SetMatcher(gock.NewMatcher()).
 		AddMatcher(func(req *http.Request, ereq *gock.Request) (bool, error) {
@@ -77,45 +77,45 @@ func KetoGock() {
 		JSON(Dummy_KetoPolicy)
 
 	// GET and POST POLICY - returns a list of policies and post policy
-	gock.New(viper.GetString("keto.url") + "/engines/acp/ory/regex/policies").
+	gock.New(viper.GetString("keto_url") + "/engines/acp/ory/regex/policies").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_KetoPolicy)
 
-	gock.New(viper.GetString("keto.url") + "/engines/acp/ory/regex/roles/(.+)").
+	gock.New(viper.GetString("keto_url") + "/engines/acp/ory/regex/roles/(.+)").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_Role)
 
 	// Creates a mock server for keto for provisioning Policy.Authorizer module.
-	gock.New(viper.GetString("keto.url")).
+	gock.New(viper.GetString("keto_url")).
 		Post("/engines/acp/ory/regex/allowed").
 		Persist().
 		Reply(http.StatusOK)
 }
 
 func MeiliGock() {
-	gock.New(viper.GetString("meili.url") + "/indexes/dega/search").
+	gock.New(viper.GetString("meili_url") + "/indexes/dega/search").
 		HeaderPresent("X-Meili-API-Key").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(MeiliHits)
 
-	gock.New(viper.GetString("meili.url")).
+	gock.New(viper.GetString("meili_url")).
 		Post("/indexes/dega/documents").
 		HeaderPresent("X-Meili-API-Key").
 		Persist().
 		Reply(http.StatusAccepted).
 		JSON(ReturnUpdate)
 
-	gock.New(viper.GetString("meili.url")).
+	gock.New(viper.GetString("meili_url")).
 		Put("/indexes/dega/documents").
 		HeaderPresent("X-Meili-API-Key").
 		Persist().
 		Reply(http.StatusAccepted).
 		JSON(ReturnUpdate)
 
-	gock.New(viper.GetString("meili.url")).
+	gock.New(viper.GetString("meili_url")).
 		Delete("/indexes/dega/documents/(.+)").
 		HeaderPresent("X-Meili-API-Key").
 		Persist().

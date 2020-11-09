@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/spf13/viper"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
@@ -19,6 +21,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"gorm.io/gorm"
 )
 
 // create - Create post
@@ -83,6 +86,45 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.InternalServerError()
 	}
 
+	oID, err := util.GetOrganisation(ctx)
+	if err != nil {
+		loggerx.Error(err)
+		return nil, errorx.InternalServerError()
+	}
+
+	if viper.IsSet("organisation_id") {
+		// Fetch organisation permissions
+		permission := model.OrganisationPermission{}
+		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+			OrganisationID: uint(oID),
+		}).First(&permission).Error
+
+		if err != nil {
+			return nil, errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more posts",
+			}
+		}
+
+		// Fetch total number of posts in space
+		var totPosts int64
+		config.DB.Model(&model.Post{}).Where(&model.Post{
+			SpaceID: uint(sID),
+		}).Where("status != 'template'").Count(&totPosts)
+
+		if totPosts >= permission.Posts && permission.Posts > 0 {
+			return nil, errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more posts",
+			}
+		}
+	}
+
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Post{})
+	tableName := stmt.Schema.Table
+
 	var postSlug string
 	if post.Slug != "" && slug.Check(post.Slug) {
 		postSlug = post.Slug
@@ -90,9 +132,14 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		postSlug = slug.Make(post.Title)
 	}
 
+	featuredMediumID := &post.FeaturedMediumID
+	if post.FeaturedMediumID == 0 {
+		featuredMediumID = nil
+	}
+
 	result.Post = model.Post{
 		Title:            post.Title,
-		Slug:             slug.Approve(postSlug, sID, config.DB.NewScope(&model.Post{}).TableName()),
+		Slug:             slug.Approve(postSlug, sID, tableName),
 		Status:           status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
@@ -100,7 +147,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		IsFeatured:       post.IsFeatured,
 		IsHighlighted:    post.IsHighlighted,
 		IsSticky:         post.IsSticky,
-		FeaturedMediumID: post.FeaturedMediumID,
+		FeaturedMediumID: featuredMediumID,
 		FormatID:         post.FormatID,
 		SpaceID:          post.SpaceID,
 	}
@@ -115,7 +162,8 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 
 	tx := config.DB.Begin()
-	err = tx.Model(&model.Post{}).Set("gorm:association_autoupdate", false).Create(&result.Post).Error
+
+	err = tx.Model(&model.Post{}).Create(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()

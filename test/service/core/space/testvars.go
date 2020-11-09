@@ -1,10 +1,12 @@
 package space
 
 import (
+	"database/sql/driver"
 	"encoding/json"
-	"fmt"
 	"regexp"
 	"time"
+
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
@@ -36,6 +38,19 @@ var Data map[string]interface{} = map[string]interface{}{
 	"organisation_id":    1,
 }
 
+var resData map[string]interface{} = map[string]interface{}{
+	"name":               "Test Space",
+	"slug":               "test-space",
+	"site_title":         "Test site title",
+	"tag_line":           "Test tagline",
+	"description":        "Test Description",
+	"site_address":       "testaddress.com",
+	"verification_codes": nilJsonb(),
+	"social_media_urls":  nilJsonb(),
+	"contact_info":       nilJsonb(),
+	"organisation_id":    1,
+}
+
 var invalidData map[string]interface{} = map[string]interface{}{
 	"nam":             "Te",
 	"slug":            "test-space",
@@ -46,36 +61,31 @@ var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "spaces"`)
 var deleteQuery string = regexp.QuoteMeta(`UPDATE "spaces" SET "deleted_at"=`)
+var countQuery string = regexp.QuoteMeta(`SELECT count(1) FROM "spaces"`)
 
 const path string = "/core/spaces/{space_id}"
 const basePath string = "/core/spaces"
 
-func SelectQuery(mock sqlmock.Sqlmock) {
+func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(1).
+		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(Columns).
 			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["logo_mobile_id"], Data["fav_icon_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]))
 }
 
-func slugCheckMock(mock sqlmock.Sqlmock, space map[string]interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "spaces"`)).
-		WithArgs(fmt.Sprint(space["slug"], "%"), 0).
-		WillReturnRows(sqlmock.NewRows(Columns))
-}
-
 func insertMock(mock sqlmock.Sqlmock) {
+	organisationPermission.SelectQuery(mock, 1)
+
+	mock.ExpectQuery(countQuery).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
+
 	mock.ExpectBegin()
 	mock.ExpectQuery(`INSERT INTO "spaces"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
 		WillReturnRows(sqlmock.
-			NewRows([]string{"id"}).
-			AddRow(1))
-
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT "logo_id", "logo_mobile_id", "fav_icon_id", "mobile_icon_id" FROM "spaces"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"logo_id", "logo_mobile_id", "fav_icon_id", "mobile_icon_id"}).
-			AddRow(0, 0, 0, 0))
-
+			NewRows([]string{"fav_icon_id", "mobile_icon_id", "logo_id", "logo_mobile_id", "id"}).
+			AddRow(0, 0, 0, 0, 1))
 }
 
 func mediumNotFound(mock sqlmock.Sqlmock) {
@@ -95,37 +105,44 @@ func updateMock(mock sqlmock.Sqlmock) {
 	medium.SelectWithSpace(mock)
 	medium.SelectWithSpace(mock)
 	medium.SelectWithSpace(mock)
-	mock.ExpectExec(`UPDATE \"spaces\" SET (.+)  WHERE (.+) \"spaces\".\"id\" = `).
-		WithArgs(Data["contact_info"], Data["description"], Data["fav_icon_id"], Data["logo_id"], Data["logo_mobile_id"], Data["mobile_icon_id"], Data["name"], Data["site_address"], Data["site_title"], Data["slug"], Data["social_media_urls"], Data["tag_line"], test.AnyTime{}, Data["verification_codes"], 1).
+	mock.ExpectExec(`UPDATE \"spaces\"`).
+		WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["logo_mobile_id"], Data["fav_icon_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	SelectQuery(mock)
+	SelectQuery(mock, 1, 1)
 	medium.SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)
 }
 
-func oneMediaIDZeroMock(mock sqlmock.Sqlmock) {
+func oneMediaIDZeroMock(mock sqlmock.Sqlmock, updateargs ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(Columns).
 			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 	mock.ExpectBegin()
-	mock.ExpectExec(`UPDATE \"spaces\" SET (.+)  WHERE (.+) \"spaces\".\"id\" = `).
+	medium.SelectWithSpace(mock)
+	medium.SelectWithSpace(mock)
+	medium.SelectWithSpace(mock)
+
+	mock.ExpectExec(`UPDATE \"spaces\"`).
 		WithArgs(nil, test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 
-	SelectQuery(mock)
+	mock.ExpectQuery(selectQuery).
+		WithArgs(1, 1).
+		WillReturnRows(sqlmock.NewRows(Columns).
+			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "site_title", "tag_line", "description", "site_address", nil, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 	medium.SelectWithSpace(mock)
 	medium.SelectWithSpace(mock)
 	medium.SelectWithSpace(mock)
 
-	mock.ExpectExec(`UPDATE \"spaces\" SET (.+)  WHERE (.+) \"spaces\".\"id\" = `).
-		WithArgs(Data["contact_info"], Data["description"], 1, 1, 1, Data["name"], Data["site_address"], Data["site_title"], Data["slug"], Data["social_media_urls"], Data["tag_line"], test.AnyTime{}, Data["verification_codes"], 1).
+	mock.ExpectExec(`UPDATE \"spaces\"`).
+		WithArgs(updateargs...).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-	SelectQuery(mock)
+	SelectQuery(mock, 1, 1)
 	medium.SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)

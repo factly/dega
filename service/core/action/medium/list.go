@@ -16,7 +16,7 @@ import (
 
 // list response
 type paging struct {
-	Total int            `json:"total"`
+	Total int64          `json:"total"`
 	Nodes []model.Medium `json:"nodes"`
 }
 
@@ -92,6 +92,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
+	}
+
+	for i := range result.Nodes {
+		addProxyURL(&result.Nodes[i])
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

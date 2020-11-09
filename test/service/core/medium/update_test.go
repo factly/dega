@@ -12,6 +12,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -23,8 +24,10 @@ var updatedMedium = map[string]interface{}{
 	"caption":     "sample",
 	"alt_text":    "sample",
 	"file_size":   100,
-	"url":         nilJsonb(),
-	"dimensions":  "testdims",
+	"url": postgres.Jsonb{
+		RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
+	},
+	"dimensions": "testdims",
 }
 
 func TestMediumUpdate(t *testing.T) {
@@ -95,7 +98,7 @@ func TestMediumUpdate(t *testing.T) {
 		SelectWithSpace(mock)
 
 		mediumUpdateMock(mock, updatedMedium, nil)
-		SelectWithOutSpace(mock)
+		SelectWithSpace(mock)
 		mock.ExpectCommit()
 
 		e.PUT(path).
@@ -115,7 +118,7 @@ func TestMediumUpdate(t *testing.T) {
 		slugCheckMock(mock, Data)
 
 		mediumUpdateMock(mock, updatedMedium, nil)
-		SelectWithOutSpace(mock)
+		SelectWithSpace(mock)
 		mock.ExpectCommit()
 
 		Data["slug"] = ""
@@ -143,7 +146,7 @@ func TestMediumUpdate(t *testing.T) {
 		t.Log(updatedMedium)
 		mediumUpdateMock(mock, updatedMedium, nil)
 		mock.ExpectQuery(selectQuery).
-			WithArgs(1).
+			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(columns).
 				AddRow(1, time.Now(), time.Now(), nil, updatedMedium["name"], updatedMedium["slug"], updatedMedium["type"], updatedMedium["title"], updatedMedium["description"], updatedMedium["caption"], updatedMedium["alt_text"], updatedMedium["file_size"], updatedMedium["url"], updatedMedium["dimensions"], 1))
 		mock.ExpectCommit()
@@ -189,7 +192,7 @@ func TestMediumUpdate(t *testing.T) {
 		SelectWithSpace(mock)
 
 		mediumUpdateMock(mock, updatedMedium, nil)
-		SelectWithOutSpace(mock)
+		SelectWithSpace(mock)
 		mock.ExpectRollback()
 
 		e.PUT(path).
@@ -200,4 +203,5 @@ func TestMediumUpdate(t *testing.T) {
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 	})
+
 }
