@@ -79,7 +79,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			SpaceID: uint(sID),
 		}).Count(&totMedia)
 
-		if totMedia+int64(len(mediumList)) >= permission.Media {
+		if totMedia+int64(len(mediumList)) >= permission.Media && permission.Media > 0 {
 			errorx.Render(w, errorx.Parser(errorx.Message{
 				Code:    http.StatusUnprocessableEntity,
 				Message: "cannot create more media",

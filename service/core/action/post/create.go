@@ -112,7 +112,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 			SpaceID: uint(sID),
 		}).Where("status != 'template'").Count(&totPosts)
 
-		if totPosts >= permission.Posts {
+		if totPosts >= permission.Posts && permission.Posts > 0 {
 			return nil, errorx.Message{
 				Code:    http.StatusUnprocessableEntity,
 				Message: "cannot create more posts",

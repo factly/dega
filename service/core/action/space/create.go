@@ -92,7 +92,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 				OrganisationID: space.OrganisationID,
 			}).Count(&totSpaces)
 
-			if totSpaces >= permission.Spaces {
+			if totSpaces >= permission.Spaces && permission.Spaces > 0 {
 				errorx.Render(w, errorx.Parser(errorx.Message{
 					Code:    http.StatusUnprocessableEntity,
 					Message: "cannot create more spaces",
