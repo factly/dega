@@ -58,7 +58,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	var totPerms int64
 	config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
 		OrganisationID: permission.OrganisationID,
-	}).First(&model.OrganisationPermission{}).Count(&totPerms)
+	}).Count(&totPerms)
 
 	if totPerms > 0 {
 		loggerx.Error(err)

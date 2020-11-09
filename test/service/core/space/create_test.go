@@ -4,11 +4,15 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
 
+	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 	"github.com/gavv/httpexpect"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -26,6 +30,8 @@ func TestSpaceCreate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
+	viper.Set("organisation_id", 1)
+
 	t.Run("create a space", func(t *testing.T) {
 		insertMock(mock)
 		mock.ExpectCommit()
@@ -40,6 +46,12 @@ func TestSpaceCreate(t *testing.T) {
 	})
 
 	t.Run("creating space fails", func(t *testing.T) {
+		organisationPermission.SelectQuery(mock, 1)
+
+		mock.ExpectQuery(countQuery).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
+
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "spaces"`).
 			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
@@ -51,6 +63,40 @@ func TestSpaceCreate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("create space when no permission found", func(t *testing.T) {
+		viper.Set("organisation_id", 2)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts"}))
+
+		e.POST(basePath).
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("create more than allowed spaces", func(t *testing.T) {
+		viper.Set("organisation_id", 2)
+
+		organisationPermission.SelectQuery(mock, 1)
+
+		mock.ExpectQuery(countQuery).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(10))
+
+		e.POST(basePath).
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
 
 		test.ExpectationsMet(t, mock)
 	})

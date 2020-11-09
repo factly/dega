@@ -8,6 +8,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/spf13/viper"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
@@ -90,29 +92,31 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.InternalServerError()
 	}
 
-	// Fetch organisation permissions
-	permission := model.OrganisationPermission{}
-	err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-		OrganisationID: uint(oID),
-	}).First(&permission).Error
+	if viper.IsSet("organisation_id") {
+		// Fetch organisation permissions
+		permission := model.OrganisationPermission{}
+		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+			OrganisationID: uint(oID),
+		}).First(&permission).Error
 
-	if err != nil {
-		return nil, errorx.Message{
-			Code:    http.StatusUnprocessableEntity,
-			Message: "cannot create more posts",
+		if err != nil {
+			return nil, errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more posts",
+			}
 		}
-	}
 
-	// Fetch total number of posts in space
-	var totPosts int64
-	config.DB.Model(&model.Post{}).Where(&model.Post{
-		SpaceID: uint(sID),
-	}).Where("status != 'template'").Count(&totPosts)
+		// Fetch total number of posts in space
+		var totPosts int64
+		config.DB.Model(&model.Post{}).Where(&model.Post{
+			SpaceID: uint(sID),
+		}).Where("status != 'template'").Count(&totPosts)
 
-	if totPosts >= permission.Posts {
-		return nil, errorx.Message{
-			Code:    http.StatusUnprocessableEntity,
-			Message: "cannot create more posts",
+		if totPosts >= permission.Posts {
+			return nil, errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more posts",
+			}
 		}
 	}
 

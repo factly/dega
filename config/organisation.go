@@ -36,7 +36,7 @@ func CheckSuperOrganisation() bool {
 		}
 
 		// check if organisation is present in kavach
-		req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprint(orgID), nil)
+		req, _ := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprint(orgID), nil)
 		req.Header.Set("Content-Type", "application/json")
 
 		client := &http.Client{}
@@ -72,7 +72,7 @@ func CreateSuperOrganisation() error {
 
 		var body flowInitResponse
 
-		json.NewDecoder(resp.Body).Decode(&body)
+		_ = json.NewDecoder(resp.Body).Decode(&body)
 
 		var actionURL string
 		passwordMap := body.Methods.Password
@@ -111,7 +111,7 @@ func CreateSuperOrganisation() error {
 		var kavachUserCheckers map[string]interface{}
 
 		if resp.StatusCode == http.StatusOK {
-			json.NewDecoder(resp.Body).Decode(&sessionBody)
+			_ = json.NewDecoder(resp.Body).Decode(&sessionBody)
 
 			sessionMap := sessionBody["session"].(map[string]interface{})
 
@@ -150,7 +150,10 @@ func CreateSuperOrganisation() error {
 
 		// create organisation in kavach with the created user as owner
 		var respBody map[string]interface{}
-		json.NewDecoder(resp.Body).Decode(&respBody)
+		err = json.NewDecoder(resp.Body).Decode(&respBody)
+		if err != nil {
+			return err
+		}
 
 		headerMap := respBody["header"].(map[string]interface{})
 		userIDArr := headerMap["X-User"].([]interface{})
@@ -181,11 +184,17 @@ func CreateSuperOrganisation() error {
 
 		var respOrganisation organisation
 
-		json.NewDecoder(resp.Body).Decode(&respOrganisation)
+		err = json.NewDecoder(resp.Body).Decode(&respOrganisation)
+		if err != nil {
+			return err
+		}
 
 		// write config file organisation object with the created organisation object (set ID)
 		viper.Set("organisation.id", respOrganisation.ID)
-		viper.WriteConfig()
+		err = viper.WriteConfig()
+		if err != nil {
+			return err
+		}
 	} else {
 		return errors.New("did not create super user and organisation")
 	}

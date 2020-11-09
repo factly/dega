@@ -14,6 +14,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -56,33 +57,35 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Fetch organisation permissions
-	permission := model.OrganisationPermission{}
-	err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-		OrganisationID: uint(oID),
-	}).First(&permission).Error
+	if viper.IsSet("organisation_id") {
+		// Fetch organisation permissions
+		permission := model.OrganisationPermission{}
+		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+			OrganisationID: uint(oID),
+		}).First(&permission).Error
 
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Message{
-			Code:    http.StatusUnprocessableEntity,
-			Message: "cannot create more media",
-		}))
-		return
-	}
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more media",
+			}))
+			return
+		}
 
-	// Fetch total number of medium in space
-	var totMedia int64
-	config.DB.Model(&model.Medium{}).Where(&model.Medium{
-		SpaceID: uint(sID),
-	}).Count(&totMedia)
+		// Fetch total number of medium in space
+		var totMedia int64
+		config.DB.Model(&model.Medium{}).Where(&model.Medium{
+			SpaceID: uint(sID),
+		}).Count(&totMedia)
 
-	if totMedia+int64(len(mediumList)) >= permission.Media {
-		errorx.Render(w, errorx.Parser(errorx.Message{
-			Code:    http.StatusUnprocessableEntity,
-			Message: "cannot create more media",
-		}))
-		return
+		if totMedia+int64(len(mediumList)) >= permission.Media {
+			errorx.Render(w, errorx.Parser(errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "cannot create more media",
+			}))
+			return
+		}
 	}
 
 	result := make([]model.Medium, 0)
