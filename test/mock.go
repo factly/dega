@@ -31,11 +31,11 @@ func (a AnyTime) Match(v driver.Value) bool {
 // SetupMockDB setups the mock sql db
 func SetupMockDB() sqlmock.Sqlmock {
 
-	viper.Set("kavach.url", "http://kavach:6620")
-	viper.Set("keto.url", "http://keto:6644")
-	viper.Set("meili.url", "http://meili:7700")
-	viper.Set("meili.key", "password")
-	viper.Set("imageproxy.url", "http://imageproxy")
+	viper.Set("kavach_url", "http://kavach:6620")
+	viper.Set("keto_url", "http://keto:6644")
+	viper.Set("meili_url", "http://meili:7700")
+	viper.Set("meili_key", "password")
+	viper.Set("imageproxy_url", "http://imageproxy")
 	google.GoogleURL = "http://googlefactchecktest.com"
 
 	meili.Client = meilisearch.NewClient(meilisearch.Config{

@@ -103,11 +103,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
+	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})
 	tx.Model(&result).Updates(model.Tag{
 		Name:        tag.Name,
 		Slug:        tagSlug,
 		Description: tag.Description,
-		IsFeatured:  tag.IsFeatured,
 	}).First(&result)
 
 	// Update into meili index

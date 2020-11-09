@@ -127,7 +127,11 @@ func TestCategoryUpdate(t *testing.T) {
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["is_featured"], 1).
+			WithArgs(Data["is_featured"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		medium.SelectWithSpace(mock)
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
 		medium.SelectWithOutSpace(mock)
@@ -197,7 +201,11 @@ func TestCategoryUpdate(t *testing.T) {
 		selectWithSpace(mock)
 
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["is_featured"], 1).
+			WithArgs(Data["is_featured"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
 
@@ -234,7 +242,12 @@ func TestCategoryUpdate(t *testing.T) {
 
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["medium_id"], Data["is_featured"], 1).
+			WithArgs(Data["is_featured"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		medium.SelectWithSpace(mock)
+		mock.ExpectExec(`UPDATE \"categories\"`).
+			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["medium_id"], 1).
 			WillReturnError(errors.New(`updating category fails`))
 		mock.ExpectRollback()
 

@@ -150,13 +150,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	tx.Model(&result).Select("IsFeatured").Updates(model.Category{IsFeatured: category.IsFeatured})
 	err = tx.Model(&result).Updates(model.Category{
 		Name:        category.Name,
 		Slug:        categorySlug,
 		Description: category.Description,
 		ParentID:    parentID,
 		MediumID:    mediumID,
-		IsFeatured:  category.IsFeatured,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
