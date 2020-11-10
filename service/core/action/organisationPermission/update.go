@@ -76,6 +76,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		permission.Posts = viper.GetInt64("default_posts")
 	}
 
+	config.DB.Model(&result).Select("FactCheck").Updates(&model.OrganisationPermission{FactCheck: permission.FactCheck})
 	err = config.DB.Model(&result).Updates(&model.OrganisationPermission{
 		Spaces: permission.Spaces,
 		Media:  permission.Media,
