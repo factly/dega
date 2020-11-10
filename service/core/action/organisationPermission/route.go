@@ -17,7 +17,7 @@ type organisationPermission struct {
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/", list)
+	r.With(util.CheckSuperOrganisation).Get("/", list)
 	r.With(util.CheckSuperOrganisation).Post("/", create)
 
 	r.Route("/{permission_id}", func(r chi.Router) {

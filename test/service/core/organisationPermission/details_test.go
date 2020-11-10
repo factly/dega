@@ -3,6 +3,7 @@ package organisationPermission
 import (
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -64,6 +65,19 @@ func TestOrganisationPermissionDetails(t *testing.T) {
 			JSON().
 			Object().
 			ContainsMap(Data)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("getting permission of other organisation by id", func(t *testing.T) {
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "spaces"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"organisation_id", "slug", "space_id"}).AddRow(2, "test-space", "1"))
+
+		e.GET(path).
+			WithPath("permission_id", "1").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnauthorized)
 		test.ExpectationsMet(t, mock)
 	})
 }

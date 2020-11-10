@@ -13,7 +13,7 @@ require (
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.1.1
 	github.com/go-openapi/spec v0.19.9 // indirect
-	github.com/go-openapi/swag v0.19.9 // indirect
+	github.com/go-openapi/swag v0.19.11 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/meilisearch/meilisearch-go v0.12.0
@@ -23,7 +23,6 @@ require (
 	github.com/swaggo/swag v1.6.7
 	golang.org/x/tools v0.0.0-20200903005429-2364a5e8fdcf // indirect
 	gopkg.in/h2non/gock.v1 v1.0.15
-	gopkg.in/yaml.v2 v2.3.0 // indirect
 	gorm.io/driver/postgres v1.0.5
 	gorm.io/gorm v1.20.5
 )
