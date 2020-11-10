@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -29,6 +30,7 @@ func TestClaimCreate(t *testing.T) {
 	t.Run("Unprocessable claim", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		e.POST(basePath).
 			WithJSON(invalidData).
@@ -41,6 +43,7 @@ func TestClaimCreate(t *testing.T) {
 	t.Run("Unable to decode claim", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -52,6 +55,7 @@ func TestClaimCreate(t *testing.T) {
 	t.Run("create claim", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		slugCheckMock(mock, Data)
 
@@ -73,6 +77,7 @@ func TestClaimCreate(t *testing.T) {
 	t.Run("create claim with slug is empty", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		slugCheckMock(mock, Data)
 
@@ -95,6 +100,7 @@ func TestClaimCreate(t *testing.T) {
 	t.Run("claimant does not belong same space", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		slugCheckMock(mock, Data)
 
@@ -111,6 +117,7 @@ func TestClaimCreate(t *testing.T) {
 	t.Run("rating does not belong same space", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		slugCheckMock(mock, Data)
 
@@ -128,6 +135,7 @@ func TestClaimCreate(t *testing.T) {
 	t.Run("create claim when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		slugCheckMock(mock, Data)
 

@@ -8,6 +8,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -28,6 +29,7 @@ func TestClaimantDelete(t *testing.T) {
 
 	t.Run("invalid claimant id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		e.DELETE(path).
 			WithPath("claimant_id", "invalid_id").
@@ -39,6 +41,7 @@ func TestClaimantDelete(t *testing.T) {
 
 	t.Run("claimant record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		recordNotFoundMock(mock)
 
 		e.DELETE(path).
@@ -50,6 +53,7 @@ func TestClaimantDelete(t *testing.T) {
 
 	t.Run("check claimant associated with other entity", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		SelectWithSpace(mock)
 
 		claimantClaimExpect(mock, 1)
@@ -63,6 +67,7 @@ func TestClaimantDelete(t *testing.T) {
 
 	t.Run("claimant record deleted", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		SelectWithSpace(mock)
 
 		claimantClaimExpect(mock, 0)
@@ -83,6 +88,7 @@ func TestClaimantDelete(t *testing.T) {
 	t.Run("delete when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		SelectWithSpace(mock)
 
 		claimantClaimExpect(mock, 0)

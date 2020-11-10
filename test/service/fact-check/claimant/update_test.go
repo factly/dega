@@ -10,6 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -37,6 +38,7 @@ func TestClaimantUpdate(t *testing.T) {
 
 	t.Run("invalid claimant id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		e.PUT(path).
 			WithPath("claimant_id", "invalid_id").
 			WithHeaders(headers).
@@ -46,6 +48,7 @@ func TestClaimantUpdate(t *testing.T) {
 
 	t.Run("claimant record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		recordNotFoundMock(mock)
 
 		e.PUT(path).
@@ -58,6 +61,7 @@ func TestClaimantUpdate(t *testing.T) {
 	t.Run("Unable to decode claimant data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		e.PUT(path).
 			WithPath("claimant_id", 1).
@@ -71,6 +75,7 @@ func TestClaimantUpdate(t *testing.T) {
 	t.Run("Unprocessable claimant", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		e.PUT(path).
 			WithPath("claimant_id", 1).
@@ -85,6 +90,7 @@ func TestClaimantUpdate(t *testing.T) {
 	t.Run("update claimant", func(t *testing.T) {
 		updatedClaimant["slug"] = "toi"
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 
@@ -102,6 +108,7 @@ func TestClaimantUpdate(t *testing.T) {
 
 	t.Run("update claimant by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		updatedClaimant["slug"] = "toi"
 		SelectWithSpace(mock)
 
@@ -123,6 +130,7 @@ func TestClaimantUpdate(t *testing.T) {
 
 	t.Run("update claimant with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		updatedClaimant["slug"] = "toi-test"
 
 		SelectWithSpace(mock)
@@ -146,6 +154,7 @@ func TestClaimantUpdate(t *testing.T) {
 
 	t.Run("medium not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		updatedClaimant["slug"] = "toi-test"
 
 		SelectWithSpace(mock)
@@ -171,6 +180,7 @@ func TestClaimantUpdate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		updatedClaimant["slug"] = "toi"
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 

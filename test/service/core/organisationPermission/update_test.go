@@ -80,10 +80,13 @@ func TestOrganisationPermissionUpdate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectExec(`UPDATE \"organisation_permissions\"`).
+			WithArgs(Data["fact-check"], 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+		mock.ExpectExec(`UPDATE \"organisation_permissions\"`).
 			WithArgs(test.AnyTime{}, Data["spaces"], Data["media"], Data["posts"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectCommit()
 		SelectQuery(mock, 1, 1)
+		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("permission_id", "1").
