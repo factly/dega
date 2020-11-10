@@ -1,13 +1,13 @@
 package meta
 
 import (
+	"encoding/json"
 	"net/http"
-	"strings"
 
-	"github.com/PuerkitoBio/goquery"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
+	"github.com/spf13/viper"
 )
 
 // details - Get meta info
@@ -31,7 +31,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := http.Get(url)
+	response, err := http.Get(viper.GetString("iframely_url") + "/oembed?url=" + url)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -40,32 +40,28 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	defer response.Body.Close()
 
-	doc, _ := goquery.NewDocumentFromReader(response.Body)
-
 	result := metadata{}
 	result.Success = 0
 
-	doc.Find("meta").Each(func(i int, s *goquery.Selection) {
-		name, _ := s.Attr("name")
-		property, _ := s.Attr("property")
-		content, _ := s.Attr("content")
+	if response.StatusCode != http.StatusOK {
+		renderx.JSON(w, http.StatusOK, result)
+	}
 
-		if strings.Contains(name, "title") || strings.Contains(property, "title") {
-			result.Meta.Title = content
-			result.Success = 1
-		} else if strings.Contains(name, "description") {
-			result.Meta.Description = content
-			result.Success = 1
-		} else if property == "og:image" {
-			result.Meta.Image = map[string]interface{}{
-				"url": content,
-			}
-			result.Success = 1
-		} else if strings.Contains(property, "site_name") {
-			result.Meta.SiteName = content
-			result.Success = 1
-		}
-	})
+	var iframelyres iFramelyRes
+	err = json.NewDecoder(response.Body).Decode(&iframelyres)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	result.Meta.Title = iframelyres.Title
+	result.Meta.SiteName = iframelyres.ProviderName
+	result.Meta.Image = map[string]interface{}{
+		"url": iframelyres.ThumbnailURL,
+	}
+	result.Meta.Description = iframelyres.Description
+	result.Success = 1
 
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -4,7 +4,6 @@ go 1.13
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
-	github.com/PuerkitoBio/goquery v1.6.0
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/factly/x v0.0.5
 	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
