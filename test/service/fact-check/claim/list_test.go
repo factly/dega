@@ -9,6 +9,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 	"github.com/factly/dega-server/test/service/fact-check/claimant"
 	"github.com/factly/dega-server/test/service/fact-check/rating"
 	"github.com/gavv/httpexpect/v2"
@@ -31,6 +32,7 @@ func TestClaimList(t *testing.T) {
 
 	t.Run("get empty list of claims", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		claimCountQuery(mock, 0)
 
 		mock.ExpectQuery(selectQuery).
@@ -49,6 +51,7 @@ func TestClaimList(t *testing.T) {
 
 	t.Run("get non-empty list of claims", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		claimCountQuery(mock, len(claimList))
 
 		mock.ExpectQuery(selectQuery).
@@ -78,6 +81,7 @@ func TestClaimList(t *testing.T) {
 
 	t.Run("get claims with pagination", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		claimCountQuery(mock, len(claimList))
 
 		mock.ExpectQuery(paginationQuery).
@@ -158,6 +162,7 @@ func TestClaimList(t *testing.T) {
 
 	t.Run("when query does not match any claim", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		test.DisableMeiliGock(testServer.URL)
 
 		gock.New(viper.GetString("meili_url") + "/indexes/dega/search").
@@ -185,6 +190,7 @@ func TestClaimList(t *testing.T) {
 
 	t.Run("when meili is down", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		test.DisableMeiliGock(testServer.URL)
 
 		e.GET(basePath).

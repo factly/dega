@@ -18,6 +18,7 @@ var Data = map[string]interface{}{
 	"spaces":          5,
 	"media":           10,
 	"posts":           10,
+	"fact-check":      true,
 }
 
 var invalidData = map[string]interface{}{
@@ -36,16 +37,18 @@ var permissionList = []map[string]interface{}{
 		"spaces":          5,
 		"media":           10,
 		"posts":           10,
+		"fact-check":      true,
 	},
 	{
 		"organisation_id": 2,
 		"spaces":          3,
 		"media":           20,
 		"posts":           20,
+		"fact-check":      true,
 	},
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts", "fact_check"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)
 var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "organisation_permissions"`)
@@ -53,10 +56,11 @@ var deleteQuery = regexp.QuoteMeta(`UPDATE "organisation_permissions" SET "delet
 
 var basePath = "/core/organisations/permissions"
 var path = "/core/organisations/permissions/{permission_id}"
+var mypath = "/core/organisations/permissions/my"
 
 func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"]))
+			AddRow(1, time.Now(), time.Now(), nil, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact-check"]))
 }

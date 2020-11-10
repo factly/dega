@@ -39,6 +39,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	oID, err := util.GetOrganisation(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	format := &format{}
 
 	err = json.NewDecoder(r.Body).Decode(&format)
@@ -68,6 +75,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 	stmt := &gorm.Statement{DB: config.DB}
 	_ = stmt.Parse(&model.Format{})
 	tableName := stmt.Schema.Table
+
+	if formatSlug == "fact-check" {
+		permission := model.OrganisationPermission{}
+		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+			OrganisationID: uint(oID),
+		}).First(&permission).Error
+
+		if err != nil || !permission.FactCheck {
+			loggerx.Error(errors.New(`does not have permission to create fact-check`))
+			errorx.Render(w, errorx.Parser(errorx.Message{
+				Code:    http.StatusUnprocessableEntity,
+				Message: "does not have permission to create fact-check",
+			}))
+			return
+		}
+	}
 
 	// Check if format with same name exist
 	if util.CheckName(uint(sID), format.Name, tableName) {

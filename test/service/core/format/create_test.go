@@ -4,7 +4,11 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
+
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -54,6 +58,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -66,13 +71,12 @@ func TestFormatCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
-
 	})
 
 	t.Run("create format with slug is empty", func(t *testing.T) {
-
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -95,6 +99,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -112,9 +117,25 @@ func TestFormatCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("create fact-check when not permitted", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts", "fact_check"}))
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("format with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 1, Data["name"])
 
 		e.POST(basePath).
@@ -129,6 +150,7 @@ func TestFormatCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
+		organisationPermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 

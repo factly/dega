@@ -7,6 +7,7 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
 	"github.com/factly/dega-server/test/service/fact-check/claimant"
 	"github.com/factly/dega-server/test/service/fact-check/rating"
 	"github.com/gavv/httpexpect/v2"
@@ -26,6 +27,7 @@ func TestClaimDetails(t *testing.T) {
 
 	t.Run("invalid claim id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		e.GET(path).
 			WithPath("claim_id", "invalid_id").
 			WithHeaders(headers).
@@ -35,6 +37,7 @@ func TestClaimDetails(t *testing.T) {
 
 	t.Run("claim record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		recordNotFoundMock(mock)
 
 		e.GET(path).
@@ -46,6 +49,7 @@ func TestClaimDetails(t *testing.T) {
 
 	t.Run("get claim by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
 		SelectWithSpace(mock)
 		claimant.SelectWithOutSpace(mock, claimant.Data)
 		rating.SelectWithOutSpace(mock, rating.Data)

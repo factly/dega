@@ -27,37 +27,25 @@ func TestOrganisationPermissionDetails(t *testing.T) {
 
 	viper.Set("organisation_id", 1)
 
-	t.Run("invalid permission id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		e.GET(path).
-			WithPath("permission_id", "invalid_id").
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusNotFound)
-		test.ExpectationsMet(t, mock)
-	})
-
 	t.Run("permission record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns))
 
-		e.GET(path).
-			WithPath("permission_id", "1").
+		e.GET(mypath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("get permission by id", func(t *testing.T) {
+	t.Run("get my permission", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		SelectQuery(mock, 1)
 
-		e.GET(path).
-			WithPath("permission_id", "1").
+		e.GET(mypath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).

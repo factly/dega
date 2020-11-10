@@ -5,6 +5,8 @@ import (
 	"regexp"
 	"time"
 
+	"github.com/factly/dega-server/test/service/core/organisationPermission"
+
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/fact-check/claimant"
@@ -93,6 +95,7 @@ func claimInsertMock(mock sqlmock.Sqlmock) {
 
 func claimListMock(mock sqlmock.Sqlmock) {
 	test.CheckSpaceMock(mock)
+	organisationPermission.SelectQuery(mock, 1)
 	claimCountQuery(mock, len(claimList))
 
 	mock.ExpectQuery(selectQuery).
