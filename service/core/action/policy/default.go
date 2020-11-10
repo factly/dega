@@ -26,7 +26,7 @@ var DataFile = "./data/policies.json"
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Success 201 {object} []model.Policy
+// @Success 201 {object} paging
 // @Failure 400 {array} string
 // @Router /core/policies/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
@@ -72,11 +72,12 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 
 	authors := author.Mapper(oID, uID)
 
-	result := make([]model.Policy, 0)
+	result := paging{}
+	result.Nodes = make([]model.Policy, 0)
 
 	for _, policy := range policies {
 		res := Mapper(Composer(oID, sID, policy), authors)
-		result = append(result, res)
+		result.Nodes = append(result.Nodes, res)
 
 		if err = insertIntoMeili(res); err != nil {
 			loggerx.Error(err)
@@ -84,6 +85,8 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	result.Total = len(result.Nodes)
 
 	renderx.JSON(w, http.StatusCreated, result)
 }

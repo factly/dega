@@ -26,7 +26,7 @@ var DataFile = "./data/formats.json"
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Success 201 {object} model.Format
+// @Success 201 {object} paging
 // @Failure 400 {array} string
 // @Router /core/formats/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +71,11 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	result := paging{}
+	result.Nodes = formats
+	result.Total = int64(len(formats))
+
 	tx.Commit()
 
-	renderx.JSON(w, http.StatusCreated, formats)
+	renderx.JSON(w, http.StatusCreated, result)
 }

@@ -88,7 +88,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	result := make([]model.Medium, 0)
+	result := paging{}
+	result.Nodes = make([]model.Medium, 0)
 
 	for _, medium := range mediumList {
 		validationError := validationx.Check(medium)
@@ -125,11 +126,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 			SpaceID:     uint(sID),
 		}
 
-		result = append(result, med)
+		result.Nodes = append(result.Nodes, med)
 	}
 
 	tx := config.DB.Begin()
-	err = tx.Model(&model.Medium{}).Create(&result).Error
+	err = tx.Model(&model.Medium{}).Create(&result.Nodes).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -138,19 +139,19 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for i := range result {
-		addProxyURL(&result[i])
+	for i := range result.Nodes {
+		addProxyURL(&result.Nodes[i])
 
 		// Insert into meili index
 		meiliObj := map[string]interface{}{
-			"id":          result[i].ID,
+			"id":          result.Nodes[i].ID,
 			"kind":        "medium",
-			"name":        result[i].Name,
-			"slug":        result[i].Slug,
-			"title":       result[i].Title,
-			"type":        result[i].Type,
-			"description": result[i].Description,
-			"space_id":    result[i].SpaceID,
+			"name":        result.Nodes[i].Name,
+			"slug":        result.Nodes[i].Slug,
+			"title":       result.Nodes[i].Title,
+			"type":        result.Nodes[i].Type,
+			"description": result.Nodes[i].Description,
+			"space_id":    result.Nodes[i].SpaceID,
 		}
 
 		err = meili.AddDocument(meiliObj)
@@ -161,6 +162,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+
+	result.Total = int64(len(result.Nodes))
 
 	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
