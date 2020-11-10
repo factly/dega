@@ -56,6 +56,7 @@ var deleteQuery = regexp.QuoteMeta(`UPDATE "organisation_permissions" SET "delet
 
 var basePath = "/core/organisations/permissions"
 var path = "/core/organisations/permissions/{permission_id}"
+var mypath = "/core/organisations/permissions/my"
 
 func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).

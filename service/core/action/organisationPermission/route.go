@@ -19,9 +19,9 @@ func Router() chi.Router {
 
 	r.With(util.CheckSuperOrganisation).Get("/", list)
 	r.With(util.CheckSuperOrganisation).Post("/", create)
+	r.Get("/my", details)
 
 	r.Route("/{permission_id}", func(r chi.Router) {
-		r.Get("/", details)
 		r.With(util.CheckSuperOrganisation).Put("/", update)
 		r.With(util.CheckSuperOrganisation).Delete("/", delete)
 	})
