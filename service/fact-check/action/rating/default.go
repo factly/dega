@@ -26,7 +26,7 @@ var DataFile = "./data/ratings.json"
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Success 201 {object} []model.Rating
+// @Success 201 {object} paging
 // @Failure 400 {array} string
 // @Router /fact-check/ratings/default [post]
 func createDefaults(w http.ResponseWriter, r *http.Request) {
@@ -73,7 +73,11 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	result := paging{}
+	result.Nodes = ratings
+	result.Total = int64(len(ratings))
+
 	tx.Commit()
 
-	renderx.JSON(w, http.StatusCreated, ratings)
+	renderx.JSON(w, http.StatusCreated, result)
 }

@@ -32,6 +32,10 @@ func TestOrganisationPermissionList(t *testing.T) {
 	t.Run("get empty list of permissions", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
+		mock.ExpectQuery(countQuery).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).
+				AddRow(0))
+
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns))
 
@@ -40,6 +44,8 @@ func TestOrganisationPermissionList(t *testing.T) {
 			Expect().
 			Status(http.StatusOK).
 			JSON().
+			Object().
+			Value("nodes").
 			Array().
 			Empty()
 		test.ExpectationsMet(t, mock)
@@ -47,6 +53,10 @@ func TestOrganisationPermissionList(t *testing.T) {
 
 	t.Run("get list of permissions", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
+
+		mock.ExpectQuery(countQuery).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).
+				AddRow(len(permissionList)))
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
@@ -58,10 +68,38 @@ func TestOrganisationPermissionList(t *testing.T) {
 			Expect().
 			Status(http.StatusOK).
 			JSON().
+			Object().
+			Value("nodes").
 			Array().
 			Element(0).
 			Object().
 			ContainsMap(permissionList[0])
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("get list of permissions with pagination", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		mock.ExpectQuery(countQuery).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).
+				AddRow(len(permissionList)))
+
+		mock.ExpectQuery(selectQuery).
+			WillReturnRows(sqlmock.NewRows(columns).
+				AddRow(2, time.Now(), time.Now(), nil, permissionList[1]["organisation_id"], permissionList[1]["spaces"], permissionList[1]["media"], permissionList[1]["posts"]))
+
+		e.GET(basePath).
+			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{"page": 2, "limit": 1}).
+			Expect().
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			Value("nodes").
+			Array().
+			Element(0).
+			Object().
+			ContainsMap(permissionList[1])
 		test.ExpectationsMet(t, mock)
 	})
 }
