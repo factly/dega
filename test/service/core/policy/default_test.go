@@ -33,7 +33,11 @@ func TestCreateDefaultPolicy(t *testing.T) {
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusCreated).JSON().Array()
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			Value("nodes").
+			Array()
 		test.ExpectationsMet(t, mock)
 	})
 

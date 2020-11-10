@@ -74,6 +74,8 @@ func TestMediumCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusCreated).
 			JSON().
+			Object().
+			Value("nodes").
 			Array().
 			Element(0).Object().ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
@@ -128,7 +130,10 @@ func TestMediumCreate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(createArr).
 			Expect().
-			Status(http.StatusCreated).JSON().Array().Element(0).Object()
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			Value("nodes").Array().Element(0).Object()
 		Data["slug"] = "image"
 		res.ContainsMap(Data)
 		test.ExpectationsMet(t, mock)
