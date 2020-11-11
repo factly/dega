@@ -258,3 +258,49 @@ var GoogleResponse = map[string]interface{}{
 	},
 	"nextPageToken": "CBQ",
 }
+
+var IFramelyResponse = map[string]interface{}{
+	"meta": map[string]interface{}{
+		"description": "GitHub is where over 50 million developers shape the future of software, together. Contribute to the open source community, manage your Git repositories, review code like a pro, track bugs and feat...",
+		"title":       "GitHub: Where the world builds software",
+		"theme-color": "#1e2327",
+		"canonical":   "https://github.com/",
+		"site":        "GitHub",
+	},
+	"links": map[string]interface{}{
+		"thumbnail": []interface{}{
+			map[string]interface{}{
+				"href": "https://github.githubassets.com/images/modules/open_graph/github-mark.png",
+				"type": "image/png",
+				"rel": []interface{}{
+					"twitter",
+					"thumbnail",
+					"ssl",
+					"og",
+				},
+				"media": map[string]interface{}{
+					"width":  1200,
+					"height": 620,
+				},
+			},
+		},
+		"icon": []interface{}{
+			map[string]interface{}{
+				"href": "https://github.githubassets.com/favicons/favicon.svg",
+				"type": "image/svg+xml",
+			},
+		},
+	},
+}
+
+var OembedResponse = map[string]interface{}{
+	"type":             "link",
+	"version":          "1.0",
+	"title":            "GitHub: Where the world builds software",
+	"url":              "https://github.com/",
+	"provider_name":    "GitHub",
+	"description":      "GitHub is where over 50 million developers shape the future of software, together. Contribute to the open source community, manage your Git repositories, review code like a pro, track bugs and feat...",
+	"thumbnail_url":    "https://github.githubassets.com/images/modules/open_graph/github-mark.png",
+	"thumbnail_width":  1200,
+	"thumbnail_height": 620,
+}

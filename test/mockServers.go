@@ -132,6 +132,23 @@ func GoogleFactCheckGock() {
 
 }
 
+func IFramelyGock() {
+	viper.Set("iframely_url", "http://iframely:8061")
+	gock.New(viper.GetString("iframely_url")).
+		Get("/oembed").
+		ParamPresent("url").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(OembedResponse)
+
+	gock.New(viper.GetString("iframely_url")).
+		Get("/iframely").
+		ParamPresent("url").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(IFramelyResponse)
+}
+
 func DisableMeiliGock(serverURL string) {
 	gock.Off()
 
