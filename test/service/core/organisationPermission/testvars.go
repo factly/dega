@@ -48,7 +48,7 @@ var permissionList = []map[string]interface{}{
 	},
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts", "fact_check"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "media", "posts", "fact_check"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)
 var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "organisation_permissions"`)
