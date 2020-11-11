@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Select } from 'antd';
+import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
 
-function Selector({ mode, value, onChange, action, display = 'name', placeholder }) {
+function Selector({ mode, createEntity, value, onChange, action, display = 'name', placeholder }) {
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
 
@@ -85,6 +85,33 @@ function Selector({ mode, value, onChange, action, display = 'name', placeholder
           }
         }
       }}
+      notFoundContent={
+        query.q?.trim() && createEntity ? (
+          <Button
+            block
+            type="dashed"
+            style={{
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+            onClick={() =>
+              dispatch(
+                selectorType['add' + createEntity]({
+                  name: query.q.trim(),
+                }),
+              )
+            }
+          >
+            Create a {createEntity} '{query.q}'
+          </Button>
+        ) : createEntity ? (
+          <Empty
+            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            description={`No ${entity} available. Type something to create new ${createEntity}`}
+          />
+        ) : null
+      }
     >
       {details.map((item) => (
         <Select.Option value={item.id} key={entity + item.id}>

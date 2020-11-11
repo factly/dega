@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, Form, Input, Space } from 'antd';
+import { Button, Form, Input, Space, Switch } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import Selector from '../../../components/Selector';
 import MediaSelector from '../../../components/MediaSelector';
-
-const { TextArea } = Input;
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const layout = {
   labelCol: {
@@ -78,11 +78,15 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
+
       <Form.Item name="description" label="Description">
-        <TextArea />
+        <ReactQuill theme="snow" style={{ width: 500 }} />
       </Form.Item>
       <Form.Item label="Upload Media" name="medium_id">
         <MediaSelector />
+      </Form.Item>
+      <Form.Item label="Featured" name="is_featured" valuePropName="checked">
+        <Switch />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

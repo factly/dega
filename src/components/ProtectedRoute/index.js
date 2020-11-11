@@ -9,16 +9,25 @@ function ProtectedRoute({ component: Component, permission, ...rest }) {
   const actions = getUserPermission({ ...permission, spaces });
   const { loading, orgs, selected } = spaces;
 
+  if (loading) {
+    return <Route {...rest} render={() => null} />;
+  }
+
   if (!loading && orgs.length === 0)
     return (
-      <Result
-        title="You do not have any organisation."
-        subTitle="Sorry, you are not authorized to access this page."
-        extra={
-          <a href={`${process.env.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
-            <Button type="primary">Back to Kavach</Button>
-          </a>
-        }
+      <Route
+        {...rest}
+        render={() => (
+          <Result
+            title="You do not have any organisation."
+            subTitle="Sorry, you are not authorized to access this page."
+            extra={
+              <a href={`${process.env.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
+                <Button type="primary">Back to Kavach</Button>
+              </a>
+            }
+          />
+        )}
       />
     );
 

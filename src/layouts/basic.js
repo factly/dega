@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Card, Skeleton, notification } from 'antd';
+import { Layout, Card, notification } from 'antd';
 import { withRouter, useHistory } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
@@ -41,15 +41,9 @@ function BasicLayout(props) {
       <Layout>
         <Header />
         <Content className="layout-content">
-          {selected > 0 ||
-          location.pathname === '/spaces' ||
-          location.pathname === '/spaces/create' ? (
-            <Card key={selected.toString()} className="wrap-children-content">
-              {children}
-            </Card>
-          ) : (
-            <Skeleton />
-          )}
+          <Card key={selected.toString()} className="wrap-children-content">
+            {children}
+          </Card>
         </Content>
         <Footer>Footer</Footer>
       </Layout>

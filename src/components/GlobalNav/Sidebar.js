@@ -81,7 +81,7 @@ function Sidebar() {
               {menu.children.map((route, childIndex) => {
                 return resource.includes(route.title.toLowerCase()) ||
                   resource.includes('admin') ||
-                  orgs[0].permission.role === 'owner' ? (
+                  orgs[0]?.permission.role === 'owner' ? (
                   <Menu.Item key={`${index}.${childIndex}`}>
                     <Link to={route.path}>
                       <span>{route.title}</span>

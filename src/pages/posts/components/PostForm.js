@@ -5,19 +5,15 @@ import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useSelector, useDispatch } from 'react-redux';
-import { addCategory } from '../../../actions/categories';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { addClaim } from '../../../actions/claims';
-import { addTag } from '../../../actions/tags';
 
 function PostForm({ onCreate, data = {} }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { Option } = Select;
 
-  const [category, setCategory] = React.useState('');
-  const [tag, setTag] = React.useState('');
   const [visible, setVisible] = React.useState(false);
 
   const formats = useSelector((state) => state.formats.details);
@@ -166,54 +162,13 @@ function PostForm({ onCreate, data = {} }) {
                 <Input />
               </Form.Item>
               <Form.Item name="categories" label="Categories">
-                <Selector mode="multiple" action="Categories" key={!category} />
+                <Selector mode="multiple" action="Categories" createEntity="Category" />
               </Form.Item>
-              <Form.Item>
-                <Row gutter={8}>
-                  <Col span={18}>
-                    <Input
-                      placeholder="category name"
-                      value={category}
-                      onChange={(e) => setCategory(e.target.value)}
-                    />
-                  </Col>
-                  <Col span={6}>
-                    <Button
-                      onClick={() => {
-                        if (category)
-                          dispatch(addCategory({ name: category })).then(() => setCategory(''));
-                      }}
-                      block
-                    >
-                      Add
-                    </Button>
-                  </Col>
-                </Row>
+
+              <Form.Item name="tags" label="Tags">
+                <Selector mode="multiple" action="Tags" createEntity="Tag" />
               </Form.Item>
-              <Form.Item name="tags" label="Tags" key={!tag}>
-                <Selector mode="multiple" action="Tags" />
-              </Form.Item>
-              <Form.Item>
-                <Row gutter={8}>
-                  <Col span={18}>
-                    <Input
-                      placeholder="tag name"
-                      value={tag}
-                      onChange={(e) => setTag(e.target.value)}
-                    />
-                  </Col>
-                  <Col span={6}>
-                    <Button
-                      onClick={() => {
-                        if (tag) dispatch(addTag({ name: tag })).then(() => setTag(''));
-                      }}
-                      block
-                    >
-                      Add
-                    </Button>
-                  </Col>
-                </Row>
-              </Form.Item>
+
               <Form.Item
                 name="format"
                 label="Formats"
@@ -224,7 +179,7 @@ function PostForm({ onCreate, data = {} }) {
                   },
                 ]}
               >
-                <Selector action="Formats" />
+                <Selector action="Formats" createEntity="Format" />
               </Form.Item>
               <Form.Item name="authors" label="Authors">
                 <Selector mode="multiple" display={'email'} action="Authors" />
