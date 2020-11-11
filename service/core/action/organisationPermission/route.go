@@ -10,7 +10,7 @@ type organisationPermission struct {
 	Spaces         int64 `json:"spaces"`
 	Media          int64 `json:"media"`
 	Posts          int64 `json:"posts"`
-	FactCheck      bool  `json:"fact-check"`
+	FactCheck      bool  `json:"fact_check"`
 }
 
 // Router - Group of medium router

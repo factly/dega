@@ -60,8 +60,8 @@ func TestOrganisationPermissionList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, permissionList[0]["organisation_id"], permissionList[0]["spaces"], permissionList[0]["media"], permissionList[0]["posts"], permissionList[0]["fact-check"]).
-				AddRow(2, time.Now(), time.Now(), nil, permissionList[1]["organisation_id"], permissionList[1]["spaces"], permissionList[1]["media"], permissionList[1]["posts"], permissionList[1]["fact-check"]))
+				AddRow(1, time.Now(), time.Now(), nil, permissionList[0]["organisation_id"], permissionList[0]["spaces"], permissionList[0]["media"], permissionList[0]["posts"], permissionList[0]["fact_check"]).
+				AddRow(2, time.Now(), time.Now(), nil, permissionList[1]["organisation_id"], permissionList[1]["spaces"], permissionList[1]["media"], permissionList[1]["posts"], permissionList[1]["fact_check"]))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -86,7 +86,7 @@ func TestOrganisationPermissionList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, permissionList[1]["organisation_id"], permissionList[1]["spaces"], permissionList[1]["media"], permissionList[1]["posts"], permissionList[1]["fact-check"]))
+				AddRow(2, time.Now(), time.Now(), nil, permissionList[1]["organisation_id"], permissionList[1]["spaces"], permissionList[1]["media"], permissionList[1]["posts"], permissionList[1]["fact_check"]))
 
 		e.GET(basePath).
 			WithHeaders(headers).
