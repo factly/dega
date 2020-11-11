@@ -31,37 +31,63 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response, err := http.Get(viper.GetString("iframely_url") + "/oembed?url=" + url)
+	metaType := r.URL.Query().Get("type")
+
+	var path string
+	if metaType == "oembed" || metaType == "link" {
+		path = "/oembed?url=" + url
+	} else if metaType == "iframely" {
+		path = "/iframely?url=" + url
+	} else {
+		errorx.Render(w, errorx.Parser(errorx.Message{
+			Code:    http.StatusBadRequest,
+			Message: "please pass valid type query parameter",
+		}))
+		return
+	}
+
+	res, err := http.Get(viper.GetString("iframely_url") + path)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	defer response.Body.Close()
+	defer res.Body.Close()
 
-	result := metadata{}
-	result.Success = 0
+	if res.StatusCode != http.StatusOK {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
-	if response.StatusCode != http.StatusOK {
+	if metaType == "iframely" || metaType == "oembed" {
+		var result map[string]interface{}
+		err = json.NewDecoder(res.Body).Decode(&result)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+		renderx.JSON(w, http.StatusOK, result)
+	} else if metaType == "link" {
+		result := metadata{}
+		result.Success = 0
+
+		var iframelyres iFramelyRes
+		err = json.NewDecoder(res.Body).Decode(&iframelyres)
+		if err != nil {
+			renderx.JSON(w, http.StatusOK, result)
+			return
+		}
+
+		result.Meta.Title = iframelyres.Title
+		result.Meta.SiteName = iframelyres.ProviderName
+		result.Meta.Image = map[string]interface{}{
+			"url": iframelyres.ThumbnailURL,
+		}
+		result.Meta.Description = iframelyres.Description
+		result.Success = 1
 		renderx.JSON(w, http.StatusOK, result)
 	}
-
-	var iframelyres iFramelyRes
-	err = json.NewDecoder(response.Body).Decode(&iframelyres)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	result.Meta.Title = iframelyres.Title
-	result.Meta.SiteName = iframelyres.ProviderName
-	result.Meta.Image = map[string]interface{}{
-		"url": iframelyres.ThumbnailURL,
-	}
-	result.Meta.Description = iframelyres.Description
-	result.Success = 1
-
-	renderx.JSON(w, http.StatusOK, result)
 }
