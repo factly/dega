@@ -69,7 +69,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if viper.IsSet("organisation_id") {
+	if config.UserConfigPresent() {
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{

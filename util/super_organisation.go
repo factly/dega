@@ -1,28 +1,43 @@
 package util
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/spf13/viper"
 )
 
 // CheckSuperOrganisation checks weather organisation of user is super org or not
 func CheckSuperOrganisation(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !viper.IsSet("organisation_id") {
-			w.WriteHeader(http.StatusUnauthorized)
-			return
-		}
 		oID, err := GetOrganisation(r.Context())
-
 		if err != nil {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
 
-		if oID != viper.GetInt("organisation_id") {
+		resp, err := KetoGetRequest("/engines/acp/ory/regex/policies/app:dega:superorg")
+		if err != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		if resp.StatusCode != http.StatusOK {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		var policy model.KetoPolicy
+		json.NewDecoder(resp.Body).Decode(&policy)
+
+		if len(policy.Subjects) == 0 {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
+		if fmt.Sprint(oID) != policy.Subjects[0] {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}

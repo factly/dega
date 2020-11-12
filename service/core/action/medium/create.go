@@ -14,7 +14,6 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
-	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -57,7 +56,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if viper.IsSet("organisation_id") {
+	if config.UserConfigPresent() {
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{

@@ -76,7 +76,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	_ = stmt.Parse(&model.Format{})
 	tableName := stmt.Schema.Table
 
-	if formatSlug == "fact-check" {
+	if formatSlug == "fact-check" && config.UserConfigPresent() {
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
 			OrganisationID: uint(oID),

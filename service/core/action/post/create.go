@@ -8,8 +8,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/spf13/viper"
-
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
@@ -92,7 +90,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.InternalServerError()
 	}
 
-	if viper.IsSet("organisation_id") {
+	if config.UserConfigPresent() {
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
