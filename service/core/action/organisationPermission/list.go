@@ -30,11 +30,12 @@ type paging struct {
 // @Produce  json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param limit query string false "limit per page"
-// @Param page query string false "page number"
+// @Param q query string false "Query"
 // @Success 200 {array} paging
 // @Router /core/organisations/permissions [get]
 func list(w http.ResponseWriter, r *http.Request) {
+	searchQuery := r.URL.Query().Get("q")
+
 	result := paging{}
 	result.Nodes = make([]orgWithPermissions, 0)
 
@@ -47,7 +48,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		permissionMap[permission.OrganisationID] = permission
 	}
 
-	allOrgMap, err := util.GetAllOrganisationsMap()
+	allOrgMap, err := util.GetAllOrganisationsMap(searchQuery)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

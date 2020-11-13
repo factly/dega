@@ -3,6 +3,7 @@ package util
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/service/core/model"
@@ -15,8 +16,14 @@ type paging struct {
 }
 
 // GetAllOrganisationsMap return slice of all organisations
-func GetAllOrganisationsMap() (map[uint]model.Organisation, error) {
-	req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations", nil)
+func GetAllOrganisationsMap(q string) (map[uint]model.Organisation, error) {
+
+	path := "/organisations"
+	if q != "" {
+		path = fmt.Sprint(path, "?q=", q)
+	}
+
+	req, err := http.NewRequest("GET", viper.GetString("kavach_url")+path, nil)
 	if err != nil {
 		return nil, err
 	}
