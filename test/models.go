@@ -10,6 +10,7 @@ var Dummy_Org = map[string]interface{}{
 	"updated_at": time.Now(),
 	"deleted_at": nil,
 	"title":      "test org",
+	"slug":       "test-org",
 	"permission": map[string]interface{}{
 		"id":              1,
 		"created_at":      time.Now(),
@@ -21,6 +22,13 @@ var Dummy_Org = map[string]interface{}{
 		"organisation":    nil,
 		"role":            "owner",
 	},
+}
+
+var PaiganatedOrg = map[string]interface{}{
+	"nodes": []interface{}{
+		Dummy_Org,
+	},
+	"total": 1,
 }
 
 var Dummy_Org_Member_List = []map[string]interface{}{
