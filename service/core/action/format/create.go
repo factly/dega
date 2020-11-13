@@ -14,6 +14,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -76,7 +77,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	_ = stmt.Parse(&model.Format{})
 	tableName := stmt.Schema.Table
 
-	if formatSlug == "fact-check" && config.UserConfigPresent() {
+	if formatSlug == "fact-check" && viper.GetBool("super_organisation") {
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
 			OrganisationID: uint(oID),

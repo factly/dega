@@ -85,7 +85,7 @@ func UserConfigPresent() bool {
 
 // CreateSuperOrganisation creates a super user and organisation in kavach
 func CreateSuperOrganisation() error {
-	if !CheckSuperOrganisation() && UserConfigPresent() {
+	if viper.GetBool("super_organisation") && !CheckSuperOrganisation() && UserConfigPresent() {
 		// create a user in kratos through api
 		resp, err := createKratosUser()
 		if err != nil {

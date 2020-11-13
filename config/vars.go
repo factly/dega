@@ -46,4 +46,8 @@ func SetupVars() {
 		log.Fatal("please provide kratos_public_url config param")
 	}
 
+	if !viper.IsSet("super_organisation") {
+		log.Fatal("please provide super_organisation (bool) config param")
+	}
+
 }

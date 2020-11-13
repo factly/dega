@@ -69,14 +69,21 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if config.UserConfigPresent() {
+	if viper.GetBool("super_organisation") {
+		superOrgID, err := util.GetSuperOrganisationID()
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
 			OrganisationID: uint(space.OrganisationID),
 		}).First(&permission).Error
 
-		if err != nil && space.OrganisationID != viper.GetInt("organisation_id") {
+		if err != nil && space.OrganisationID != superOrgID {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.Message{
 				Code:    http.StatusUnprocessableEntity,
