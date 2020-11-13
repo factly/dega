@@ -152,7 +152,7 @@ var Dummy_SingleMock = map[string]interface{}{
 	"id":          "id:org:1:app:dega:space:1:test-policy-0",
 	"description": "",
 	"subjects": []string{
-		"",
+		"1",
 	},
 	"resources": []string{
 		"resources:org:12:app:dega:space:18:policies",

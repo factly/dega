@@ -8,7 +8,6 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test/service/core/organisationPermission"
-	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -53,8 +52,6 @@ func TestMediumCreate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 
 	})
-
-	viper.Set("organisation_id", 1)
 
 	t.Run("create medium", func(t *testing.T) {
 

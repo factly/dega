@@ -9,7 +9,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect"
-	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -27,7 +26,6 @@ func TestOrganisationPermissionCreate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-	viper.Set("organisation_id", 1)
 
 	t.Run("Unprocessable permission", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -58,7 +56,7 @@ func TestOrganisationPermissionCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "organisation_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact-check"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact_check"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

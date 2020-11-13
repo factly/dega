@@ -12,7 +12,6 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/organisationPermission"
 	"github.com/gavv/httpexpect"
-	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -29,8 +28,6 @@ func TestSpaceCreate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	viper.Set("organisation_id", 1)
 
 	t.Run("create a space", func(t *testing.T) {
 		insertMock(mock)
@@ -68,10 +65,10 @@ func TestSpaceCreate(t *testing.T) {
 	})
 
 	t.Run("create space when no permission found", func(t *testing.T) {
-		viper.Set("organisation_id", 2)
+		Data["organisation_id"] = 2
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)).
-			WithArgs(1).
+			WithArgs(2).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts"}))
 
 		e.POST(basePath).
@@ -79,12 +76,11 @@ func TestSpaceCreate(t *testing.T) {
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
+		Data["organisation_id"] = 1
 		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("create more than allowed spaces", func(t *testing.T) {
-		viper.Set("organisation_id", 2)
 
 		organisationPermission.SelectQuery(mock, 1)
 

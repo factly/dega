@@ -9,7 +9,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect"
-	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -24,8 +23,6 @@ func TestOrganisationPermissionDetails(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	viper.Set("organisation_id", 1)
 
 	t.Run("permission record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)

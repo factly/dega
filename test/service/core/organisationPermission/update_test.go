@@ -9,7 +9,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect"
-	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -26,8 +25,6 @@ func TestOrganisationPermissionUpdate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	viper.Set("organisation_id", 1)
 
 	t.Run("invalid permission id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -80,7 +77,7 @@ func TestOrganisationPermissionUpdate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectExec(`UPDATE \"organisation_permissions\"`).
-			WithArgs(Data["fact-check"], 1).
+			WithArgs(Data["fact_check"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		mock.ExpectExec(`UPDATE \"organisation_permissions\"`).
 			WithArgs(test.AnyTime{}, Data["spaces"], Data["media"], Data["posts"], 1).
