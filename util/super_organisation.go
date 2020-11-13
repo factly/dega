@@ -49,7 +49,10 @@ func GetSuperOrganisationID() (int, error) {
 
 	if resp.StatusCode == http.StatusOK {
 		var policy model.KetoPolicy
-		json.NewDecoder(resp.Body).Decode(&policy)
+		err = json.NewDecoder(resp.Body).Decode(&policy)
+		if err != nil {
+			return 0, err
+		}
 
 		if len(policy.Subjects) != 0 {
 			orgID, _ := strconv.Atoi(policy.Subjects[0])

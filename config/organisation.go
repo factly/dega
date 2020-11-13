@@ -53,7 +53,10 @@ func CheckSuperOrganisation() bool {
 		return false
 	}
 	var policy ketoPolicy
-	json.NewDecoder(resp.Body).Decode(&policy)
+	err = json.NewDecoder(resp.Body).Decode(&policy)
+	if err != nil {
+		return false
+	}
 
 	if len(policy.Subjects) == 0 {
 		return false

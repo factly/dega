@@ -53,9 +53,8 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	if resp.StatusCode == http.StatusOK {
 		var policy model.KetoPolicy
-		json.NewDecoder(resp.Body).Decode(&policy)
-
-		if len(policy.Subjects) > 0 && policy.Subjects[0] == fmt.Sprint(oID) {
+		err = json.NewDecoder(resp.Body).Decode(&policy)
+		if err == nil && len(policy.Subjects) > 0 && policy.Subjects[0] == fmt.Sprint(oID) {
 			result.IsAdmin = true
 		}
 	}
