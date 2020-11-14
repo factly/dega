@@ -57,10 +57,19 @@ import EditClaim from '../pages/claims/EditClaim';
 import Policies from '../pages/policies';
 import CreatePolicy from '../pages/policies/CreatePolicy';
 import EditPolicy from '../pages/policies/EditPolicy';
+
+//Fact Checks
 import GoogleFactCheck from '../pages/fact-checks/GoogleFactCheck';
 import Factly from '../pages/fact-checks/Factly';
+
+// Users & Permissions
 import Users from '../pages/users';
 import PermissionList from '../pages/users/PermissionList';
+
+// Organisation Permissions
+import OrganisationPermissions from '../pages/organisation-permissions';
+import CreateOrganisationPermission from '../pages/organisation-permissions/CreateOrganisationPermission';
+import EditOrganisationPermission from '../pages/organisation-permissions/EditOrganisationPermission';
 
 const routes = {
   dashboard: {
@@ -101,6 +110,24 @@ const routes = {
       resource: 'spaces',
       action: 'edit',
     },
+  },
+  organisations: {
+    path: '/organisations/permissions',
+    Component: OrganisationPermissions,
+    title: 'Organisations',
+    isAdmin: true,
+  },
+  createOrganisationPermission: {
+    path: '/organisations/permissions/create',
+    Component: CreateOrganisationPermission,
+    title: 'Create Organisation Permission',
+    isAdmin: true,
+  },
+  editOrganisationPermission: {
+    path: '/organisations/:oid/permissions/:pid/edit',
+    Component: EditOrganisationPermission,
+    title: 'Edit Organisation Permission',
+    isAdmin: true,
   },
   categories: {
     path: '/categories',
@@ -388,7 +415,7 @@ export const sidebarMenu = [
   {
     title: 'ADMINSTRATION',
     Icon: IdcardOutlined,
-    children: [routes.spaces, routes.policies, routes.users],
+    children: [routes.organisations, routes.spaces, routes.policies, routes.users],
   },
 ];
 
