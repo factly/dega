@@ -6,6 +6,7 @@ import Header from '../components/GlobalNav/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
 import './basic.css';
+import { getSuperOrganisation } from '../actions/admin';
 
 function BasicLayout(props) {
   const { location } = props;
@@ -17,7 +18,9 @@ function BasicLayout(props) {
   const { type, message, description } = useSelector((state) => state.notifications);
 
   React.useEffect(() => {
-    dispatch(getSpaces());
+    dispatch(getSpaces()).then((org) => {
+      dispatch(getSuperOrganisation(org[0].id));
+    });
   }, [dispatch]);
 
   React.useEffect(() => {

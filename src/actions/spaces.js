@@ -20,6 +20,7 @@ export const getSpaces = () => {
       .get(API_GET_SPACES)
       .then((response) => {
         dispatch(getSpacesSuccess(response.data));
+        return response.data;
       })
       .catch((error) => {
         dispatch(addErrorNotification(error.message));
