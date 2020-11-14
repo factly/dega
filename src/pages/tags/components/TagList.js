@@ -1,9 +1,10 @@
 import React from 'react';
-import { Popconfirm, Button, Typography, Table, Space, Form, Select, Input } from 'antd';
+import { Popconfirm, Button, Table, Space, Form, Select, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 function TagList({ actions }) {
   const dispatch = useDispatch();
@@ -47,7 +48,12 @@ function TagList({ actions }) {
       width: '50%',
       render: (_, record) => {
         return (
-          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+          <HTMLEllipsis
+            unsafeHTML={record?.description}
+            maxLine="2"
+            ellipsis="..."
+            basedOn="letters"
+          />
         );
       },
     },

@@ -1,10 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import BasicLayout from './layouts/basic';
 //Routes
 import routes from './config/routesConfig';
 import ProtectedRoute from './components/ProtectedRoute';
+import { Result, Button } from 'antd';
 import AdminRoute from './components/AdminRoute';
 
 function App() {
@@ -28,6 +29,20 @@ function App() {
                 <Route key={route.path} exact path={route.path} component={route.Component} />
               ),
             )}
+            <Route
+              render={() => (
+                <Result
+                  status="403"
+                  title="404"
+                  subTitle="Sorry, page not found"
+                  extra={
+                    <Link to="/">
+                      <Button type="primary">Back Home</Button>
+                    </Link>
+                  }
+                />
+              )}
+            />
           </Switch>
         </BasicLayout>
       </Router>

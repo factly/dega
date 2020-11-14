@@ -28,6 +28,10 @@ function Sidebar() {
     return { orgs: orgs, loading: loading, permission: [] };
   });
 
+  const superOrg = useSelector(({ admin }) => {
+    return admin.organisation;
+  });
+
   if (loading) {
     return null;
   }
@@ -43,9 +47,28 @@ function Sidebar() {
     'users',
   ];
 
+  let protectedResouces = [
+    'categories',
+    'tags',
+    'media',
+    'formats',
+    'claims',
+    'claimants',
+    'ratings',
+    'spaces',
+  ];
+
   permission.forEach((each) => {
-    resource.push(each.resource);
+    if (each.resource === 'admin') {
+      resource = resource.concat(protectedResouces);
+    } else {
+      resource.push(each.resource);
+    }
   });
+
+  if (superOrg.is_admin) resource.push('organisations');
+
+  if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResouces);
 
   return (
     <Sider
@@ -79,9 +102,7 @@ function Sidebar() {
           return (
             <SubMenu key={index} title={menu.title} icon={<Icon />}>
               {menu.children.map((route, childIndex) => {
-                return resource.includes(route.title.toLowerCase()) ||
-                  resource.includes('admin') ||
-                  orgs[0].permission.role === 'owner' ? (
+                return resource.includes(route.title.toLowerCase()) ? (
                   <Menu.Item key={`${index}.${childIndex}`}>
                     <Link to={route.path}>
                       <span>{route.title}</span>

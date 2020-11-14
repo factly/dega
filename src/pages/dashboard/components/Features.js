@@ -18,6 +18,7 @@ function Features() {
       dispatch(getPolicies());
     };
     fetchEntities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { ratings, formats, policies } = useSelector(({ ratings, formats, policies }) => {
