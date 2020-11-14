@@ -7,13 +7,12 @@ import Quote from '@editorjs/quote';
 import RawTool from '@editorjs/raw';
 import Table from '@editorjs/table';
 import UppyUploader from './UppyUploader';
-import Embed from '@editorjs/embed';
 import Marker from '@editorjs/marker';
 import CodeTool from '@editorjs/code';
 import Delimiter from '@editorjs/delimiter';
 import InlineCode from '@editorjs/inline-code';
-import LinkTool from '@editorjs/link';
 import { useSelector } from 'react-redux';
+import Embed from './Embed';
 
 function Editor({ value, onChange }) {
   const editor_block = React.useRef(null);
@@ -35,34 +34,11 @@ function Editor({ value, onChange }) {
         code: CodeTool,
         delimiter: Delimiter,
         inlineCode: InlineCode,
-        linkTool: {
-          class: LinkTool,
-          config: {
-            endpoint: window.REACT_APP_API_URL + '/link-tool', // Your backend endpoint for url data fetching
-          },
-        },
         marker: {
           class: Marker,
         },
         embed: {
           class: Embed,
-          config: {
-            services: {
-              youtube: true,
-              twitter: true,
-              instagram: true,
-              facebook: {
-                regex: /https?:\/\/www.facebook.com\/([^/?&]*)\/(.*)/,
-                embedUrl:
-                  'https://www.facebook.com/plugins/post.php?href=https://www.facebook.com/<%= remote_id %>&width=500',
-                html:
-                  "<iframe scrolling='no' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%; min-height: 500px; max-height: 1000px;'></iframe>",
-                height: 300,
-                width: 600,
-                id: (groups) => groups.join('/'),
-              },
-            },
-          },
         },
         uppy: {
           class: UppyUploader,
