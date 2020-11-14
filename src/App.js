@@ -6,6 +6,7 @@ import BasicLayout from './layouts/basic';
 import routes from './config/routesConfig';
 import ProtectedRoute from './components/ProtectedRoute';
 import { Result, Button } from 'antd';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
                   path={route.path}
                   component={route.Component}
                 />
+              ) : route.isAdmin ? (
+                <AdminRoute key={route.path} exact path={route.path} component={route.Component} />
               ) : (
                 <Route key={route.path} exact path={route.path} component={route.Component} />
               ),
