@@ -17,7 +17,6 @@ import (
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/gavv/httpexpect/v2"
-	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -35,8 +34,6 @@ func TestPostCreate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	viper.Set("organisation_id", 1)
 
 	t.Run("Unprocessable post", func(t *testing.T) {
 

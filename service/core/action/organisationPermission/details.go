@@ -1,6 +1,8 @@
 package organisationPermission
 
 import (
+	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/util"
@@ -12,6 +14,11 @@ import (
 	"github.com/factly/x/renderx"
 )
 
+type orgPermissionRes struct {
+	model.OrganisationPermission
+	IsAdmin bool `json:"is_admin,omitempty"`
+}
+
 // details - Get tag by id
 // @Summary Show a tag by id
 // @Description Get tag by ID
@@ -21,7 +28,7 @@ import (
 // @Param X-User header string true "User ID"
 // @Param permission_id path string true "Permission ID"
 // @Param X-Space header string true "Space ID"
-// @Success 200 {object} model.OrganisationPermission
+// @Success 200 {object} orgPermissionRes
 // @Router /core/organisations/permissions/my [get]
 func details(w http.ResponseWriter, r *http.Request) {
 	oID, err := util.GetOrganisation(r.Context())
@@ -31,15 +38,25 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := model.OrganisationPermission{}
+	result := orgPermissionRes{}
 	err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
 		OrganisationID: uint(oID),
-	}).First(&result).Error
+	}).First(&result.OrganisationPermission).Error
 
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
+	}
+
+	resp, _ := util.KetoGetRequest("/engines/acp/ory/regex/policies/app:dega:superorg")
+
+	if resp.StatusCode == http.StatusOK {
+		var policy model.KetoPolicy
+		err = json.NewDecoder(resp.Body).Decode(&policy)
+		if err == nil && len(policy.Subjects) > 0 && policy.Subjects[0] == fmt.Sprint(oID) {
+			result.IsAdmin = true
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

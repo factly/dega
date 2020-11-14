@@ -57,7 +57,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if viper.IsSet("organisation_id") {
+	if viper.GetBool("super_organisation") {
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
@@ -79,7 +79,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			SpaceID: uint(sID),
 		}).Count(&totMedia)
 
-		if totMedia+int64(len(mediumList)) >= permission.Media && permission.Media > 0 {
+		if totMedia+int64(len(mediumList)) > permission.Media && permission.Media > 0 {
 			errorx.Render(w, errorx.Parser(errorx.Message{
 				Code:    http.StatusUnprocessableEntity,
 				Message: "cannot create more media",

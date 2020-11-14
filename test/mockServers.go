@@ -32,7 +32,7 @@ func KavachGock() {
 	gock.New(viper.GetString("kavach_url") + "/organisations").
 		Persist().
 		Reply(http.StatusOK).
-		JSON(Dummy_Org)
+		JSON(PaiganatedOrg)
 
 }
 
