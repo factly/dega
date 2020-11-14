@@ -24,7 +24,7 @@ function BasicLayout(props) {
   }, [dispatch]);
 
   React.useEffect(() => {
-    if (type && message && description) {
+    if (type && message && description && selected !== 0) {
       notification[type]({
         message: message,
         description: description,
@@ -48,7 +48,7 @@ function BasicLayout(props) {
             {children}
           </Card>
         </Content>
-        <Footer>Footer</Footer>
+        <Footer style={{ textAlign: 'center' }}> ©2014-2020 Factly Media & Research</Footer>
       </Layout>
     </Layout>
   );
