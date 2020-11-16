@@ -14,7 +14,7 @@ import (
 // CheckSuperOrganisation checks weather organisation of user is super org or not
 func CheckSuperOrganisation(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if !viper.GetBool("super_organisation") {
+		if !viper.GetBool("create_super_organisation") {
 			w.WriteHeader(http.StatusNotFound)
 			return
 		}
@@ -65,7 +65,7 @@ func GetSuperOrganisationID() (int, error) {
 // FactCheckPermission checks weather organisation has fact-check permission
 func FactCheckPermission(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		if viper.GetBool("super_organisation") {
+		if viper.GetBool("create_super_organisation") {
 			oID, err := GetOrganisation(r.Context())
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)

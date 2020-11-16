@@ -29,16 +29,16 @@ import (
 func main() {
 	config.SetupVars()
 
-	err := config.CreateSuperOrganisation()
-	if err != nil {
-		log.Println(err)
-	}
-
 	// db setup
 	config.SetupDB()
 
 	factCheckModel.Migration()
 	coreModel.Migration()
+
+	err := config.CreateSuperOrganisation()
+	if err != nil {
+		log.Println(err)
+	}
 
 	meili.SetupMeiliSearch()
 

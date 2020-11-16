@@ -77,7 +77,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	_ = stmt.Parse(&model.Format{})
 	tableName := stmt.Schema.Table
 
-	if formatSlug == "fact-check" && viper.GetBool("super_organisation") {
+	if formatSlug == "fact-check" && viper.GetBool("create_super_organisation") {
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
 			OrganisationID: uint(oID),

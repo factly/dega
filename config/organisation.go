@@ -35,6 +35,16 @@ type ketoPolicy struct {
 	Description string   `json:"description"`
 }
 
+// OrganisationPermission model
+type OrganisationPermission struct {
+	Base
+	OrganisationID uint  `gorm:"column:organisation_id" json:"organisation_id"`
+	Spaces         int64 `gorm:"column:spaces" json:"spaces"`
+	Media          int64 `gorm:"column:media" json:"media"`
+	Posts          int64 `gorm:"column:posts" json:"posts"`
+	FactCheck      bool  `gorm:"fact_check" json:"fact_check"`
+}
+
 var ketoPolicyPath string = "/engines/acp/ory/regex/policies"
 
 // CheckSuperOrganisation checks if super organisation is present in kavach or not
@@ -83,12 +93,12 @@ func CheckSuperOrganisation() bool {
 
 // UserConfigPresent checks if user config params is present in config file
 func UserConfigPresent() bool {
-	return viper.IsSet("user_email") && viper.IsSet("user_password") && viper.GetString("user_email") != "" && viper.GetString("user_password") != "" && viper.IsSet("organisation_title")
+	return viper.IsSet("default_user_email") && viper.IsSet("default_user_password") && viper.GetString("default_user_email") != "" && viper.GetString("default_user_password") != "" && viper.IsSet("organisation_title")
 }
 
 // CreateSuperOrganisation creates a super user and organisation in kavach
 func CreateSuperOrganisation() error {
-	if viper.GetBool("super_organisation") && !CheckSuperOrganisation() && UserConfigPresent() {
+	if viper.GetBool("create_super_organisation") && !CheckSuperOrganisation() && UserConfigPresent() {
 		// create a user in kratos through api
 		resp, err := createKratosUser()
 		if err != nil {
@@ -111,7 +121,7 @@ func CreateSuperOrganisation() error {
 				"extra": map[string]interface{}{
 					"identity": map[string]interface{}{
 						"traits": map[string]interface{}{
-							"email": viper.GetString("user_email"),
+							"email": viper.GetString("default_user_email"),
 						},
 					},
 				},
@@ -143,6 +153,12 @@ func CreateSuperOrganisation() error {
 		var respOrganisation organisation
 
 		err = json.NewDecoder(resp.Body).Decode(&respOrganisation)
+		if err != nil {
+			return err
+		}
+
+		// create permissions for super organisation
+		err = createSuperOrganisationPermissions(respOrganisation.ID)
 		if err != nil {
 			return err
 		}
@@ -183,8 +199,8 @@ func createKratosUser() (*http.Response, error) {
 	}
 
 	userCredsBody := map[string]interface{}{
-		"traits.email": viper.GetString("user_email"),
-		"password":     viper.GetString("user_password"),
+		"traits.email": viper.GetString("default_user_email"),
+		"password":     viper.GetString("default_user_password"),
 	}
 
 	buf := new(bytes.Buffer)
@@ -255,6 +271,16 @@ func createKavachOrganisation(userID string) (*http.Response, error) {
 		return nil, errors.New("could not create organisation in kavach")
 	}
 	return resp, nil
+}
+
+func createSuperOrganisationPermissions(oID uint) error {
+	return DB.Model(&OrganisationPermission{}).Create(&OrganisationPermission{
+		OrganisationID: oID,
+		Posts:          -1,
+		Media:          -1,
+		Spaces:         -1,
+		FactCheck:      true,
+	}).Error
 }
 
 func createKetoPolicy(organisationID uint) (*http.Response, error) {
