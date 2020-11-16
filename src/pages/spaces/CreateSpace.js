@@ -1,7 +1,7 @@
 import React from 'react';
 import SpaceCreateForm from './components/SpaceCreateForm';
 import { useDispatch } from 'react-redux';
-import { addSpace } from '../../actions/spaces';
+import { addSpace, getSpaces } from '../../actions/spaces';
 import { useHistory } from 'react-router-dom';
 
 function CreateSpace() {
@@ -9,7 +9,10 @@ function CreateSpace() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addSpace(values)).then(() => history.push('/spaces'));
+    dispatch(addSpace(values)).then(() => {
+      dispatch(getSpaces());
+      history.push('/spaces');
+    });
   };
   return <SpaceCreateForm onCreate={onCreate} />;
 }
