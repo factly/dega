@@ -2,8 +2,6 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form, Input, Select } from 'antd';
 import { maker, checker } from './../../../utils/sluger';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
 
 const { Option } = Select;
 
@@ -103,7 +101,7 @@ const SpaceCreateForm = ({ onCreate }) => {
       </Form.Item>
 
       <Form.Item name="description" label="Description">
-        <ReactQuill theme="snow" style={{ width: 500 }} />
+        <Input.TextArea />
       </Form.Item>
       <Form.Item name="site_address" label="Website">
         <Input />

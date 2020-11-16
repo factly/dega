@@ -31,7 +31,26 @@ function ProtectedRoute({ component: Component, permission, ...rest }) {
       />
     );
 
-  if (!loading && permission.isSpace && selected === 0 && orgs[0].permission.role === 'owner') {
+  if (
+    !loading &&
+    permission.isSpace &&
+    selected === 0 &&
+    orgs.filter((each) => each.permission.role === 'owner').length > 0
+  ) {
+    return (
+      <Route
+        {...rest}
+        render={(props) => <Component {...rest} {...props} permission={{ actions }} />}
+      />
+    );
+  }
+
+  if (
+    !loading &&
+    permission.isSpace &&
+    selected > 0 &&
+    orgs.filter((each) => each.permission.role === 'owner').length > 0
+  ) {
     return (
       <Route
         {...rest}

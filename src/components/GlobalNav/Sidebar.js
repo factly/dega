@@ -45,6 +45,7 @@ function Sidebar() {
     'posts',
     'policies',
     'users',
+    'spaces',
   ];
 
   let protectedResouces = [
@@ -55,7 +56,6 @@ function Sidebar() {
     'claims',
     'claimants',
     'ratings',
-    'spaces',
   ];
 
   permission.forEach((each) => {

@@ -54,21 +54,33 @@ function PermissionList() {
       title: 'Spaces',
       dataIndex: ['permission', 'spaces'],
       render: (_, record) => {
-        return <p>{record.permission.spaces ? record.permission.spaces : 0}</p>;
+        return record.permission.media > 0 ? (
+          <p>{record.permission.spaces ? record.permission.spaces : 0}</p>
+        ) : (
+          <p>Unlimited</p>
+        );
       },
     },
     {
       title: 'Media',
       dataIndex: ['permission', 'media'],
       render: (_, record) => {
-        return <p>{record.permission.media ? record.permission.media : 0}</p>;
+        return record.permission.media > 0 ? (
+          <p>{record.permission.media ? record.permission.media : 0}</p>
+        ) : (
+          <p>Unlimited</p>
+        );
       },
     },
     {
       title: 'Posts',
       dataIndex: ['permission', 'posts'],
       render: (_, record) => {
-        return <p>{record.permission.posts ? record.permission.posts : 0}</p>;
+        return record.permission.posts > 0 ? (
+          <p>{record.permission.posts ? record.permission.posts : 0}</p>
+        ) : (
+          <p>Unlimited</p>
+        );
       },
     },
     {

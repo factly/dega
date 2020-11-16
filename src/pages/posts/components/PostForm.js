@@ -98,10 +98,11 @@ function PostForm({ onCreate, data = {} }) {
                   { max: 150, message: 'Title must be maximum 150 characters.' },
                 ]}
               >
-                <Input
+                <Input.TextArea
                   bordered={false}
                   placeholder="Add title for the post"
                   onChange={(e) => onTitleChange(e.target.value)}
+                  style={{ fontSize: 'large', fontWeight: 'bold' }}
                 />
               </Form.Item>
               <Form.Item
@@ -111,7 +112,12 @@ function PostForm({ onCreate, data = {} }) {
                   { max: 300, message: 'Title must be maximum 300 characters.' },
                 ]}
               >
-                <Input.TextArea bordered={false} rows={4} placeholder="excerpt" />
+                <Input.TextArea
+                  bordered={false}
+                  rows={4}
+                  placeholder="Excerpt"
+                  style={{ fontSize: 'medium' }}
+                />
               </Form.Item>
               <Form.Item name="claims" label="Claims" hidden={claimHide} key={!visible}>
                 <Selector mode="multiple" display={'title'} action="Claims" />
