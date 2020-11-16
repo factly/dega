@@ -69,7 +69,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if viper.GetBool("super_organisation") {
+	if viper.GetBool("create_super_organisation") {
 		superOrgID, err := util.GetSuperOrganisationID()
 		if err != nil {
 			loggerx.Error(err)

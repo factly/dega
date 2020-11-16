@@ -11,6 +11,7 @@ func SetupVars() {
 
 	viper.AddConfigPath(".")
 	viper.SetConfigName("config")
+	viper.SetEnvPrefix("dega")
 	viper.AutomaticEnv()
 
 	err := viper.ReadInConfig()
@@ -18,8 +19,28 @@ func SetupVars() {
 		log.Println("config file not found...")
 	}
 
-	if !viper.IsSet("dsn") {
-		log.Fatal("please provide postgres_dsn config param")
+	if !viper.IsSet("database_host") {
+		log.Fatal("please provide database_host config param")
+	}
+
+	if !viper.IsSet("database_user") {
+		log.Fatal("please provide database_user config param")
+	}
+
+	if !viper.IsSet("database_name") {
+		log.Fatal("please provide database_name config param")
+	}
+
+	if !viper.IsSet("database_password") {
+		log.Fatal("please provide database_password config param")
+	}
+
+	if !viper.IsSet("database_port") {
+		log.Fatal("please provide database_port config param")
+	}
+
+	if !viper.IsSet("database_ssl_mode") {
+		log.Fatal("please provide database_ssl_mode config param")
 	}
 
 	if !viper.IsSet("kavach_url") {
@@ -46,8 +67,8 @@ func SetupVars() {
 		log.Fatal("please provide kratos_public_url config param")
 	}
 
-	if !viper.IsSet("super_organisation") {
-		log.Fatal("please provide super_organisation (bool) config param")
+	if !viper.IsSet("create_super_organisation") {
+		log.Fatal("please provide create_super_organisation (bool) config param")
 	}
 
 }

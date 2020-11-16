@@ -36,7 +36,7 @@ func SetupMockDB() sqlmock.Sqlmock {
 	viper.Set("meili_url", "http://meili:7700")
 	viper.Set("meili_key", "password")
 	viper.Set("imageproxy_url", "http://imageproxy")
-	viper.Set("super_organisation", true)
+	viper.Set("create_super_organisation", true)
 	google.GoogleURL = "http://googlefactchecktest.com"
 
 	meili.Client = meilisearch.NewClient(meilisearch.Config{

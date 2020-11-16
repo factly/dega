@@ -91,7 +91,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.InternalServerError()
 	}
 
-	if viper.GetBool("super_organisation") {
+	if viper.GetBool("create_super_organisation") {
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
