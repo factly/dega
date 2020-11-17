@@ -140,7 +140,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	parentID := &category.ParentID
 	if category.ParentID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"parent_id": nil}).First(&result).Error
+		err = tx.Model(&result).Updates(map[string]interface{}{"parent_id": nil}).Error
 		parentID = nil
 		if err != nil {
 			tx.Rollback()

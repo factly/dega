@@ -130,11 +130,6 @@ func oneMediaIDZeroMock(mock sqlmock.Sqlmock, updateargs ...driver.Value) {
 		WithArgs(nil, test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 
-	mock.ExpectQuery(selectQuery).
-		WithArgs(1, 1).
-		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, "name", "slug", "site_title", "tag_line", "description", "site_address", nil, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
-
 	medium.SelectWithSpace(mock)
 	medium.SelectWithSpace(mock)
 	medium.SelectWithSpace(mock)
