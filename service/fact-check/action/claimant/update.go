@@ -101,7 +101,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	mediumID := &claimant.MediumID
 	result.MediumID = &claimant.MediumID
 	if claimant.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).First(&result).Error
+		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
 		mediumID = nil
 		if err != nil {
 			tx.Rollback()

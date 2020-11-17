@@ -107,7 +107,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Preload("Tags").Preload("Categories").First(&result.Post).Error
+	}).First(&result.Post).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -163,7 +163,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	featuredMediumID := &post.FeaturedMediumID
 	result.Post.FeaturedMediumID = &post.FeaturedMediumID
 	if post.FeaturedMediumID == 0 {
-		err = tx.Model(&result.Post).Updates(map[string]interface{}{"featured_medium_id": nil}).First(&result.Post).Error
+		err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(map[string]interface{}{"featured_medium_id": nil}).Error
 		featuredMediumID = nil
 		if err != nil {
 			tx.Rollback()
@@ -205,7 +205,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx.Model(&result.Post).Select("IsFeatured").Omit("Tags").Omit("Categories").Updates(model.Post{IsFeatured: post.IsFeatured})
+	tx.Model(&result.Post).Select("IsFeatured").Omit("Tags", "Categories").Updates(model.Post{IsFeatured: post.IsFeatured})
 	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
