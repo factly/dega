@@ -22,7 +22,7 @@ function ProtectedRoute({ component: Component, permission, ...rest }) {
             title="You do not have any organisation."
             subTitle="Sorry, you are not authorized to access this page."
             extra={
-              <a href={`${process.env.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
+              <a href={`${window.REACT_APP_KAVACH_PUBLIC_URL}/settings`}>
                 <Button type="primary">Back to Kavach</Button>
               </a>
             }
