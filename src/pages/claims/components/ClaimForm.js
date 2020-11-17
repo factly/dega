@@ -16,7 +16,7 @@ const layout = {
   },
 };
 
-const ClaimForm = ({ onCreate, data = {} }) => {
+const ClaimForm = ({ onCreate, data = {}, width }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -125,7 +125,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           >
             <Selector action="Ratings" />
           </Form.Item>
-          <Form.Item name="description" label="Description">
+          <Form.Item name="description" label="Description" wrapperCol={24}>
             <Editor />
           </Form.Item>
         </div>

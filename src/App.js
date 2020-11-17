@@ -11,7 +11,7 @@ import AdminRoute from './components/AdminRoute';
 function App() {
   return (
     <div className="App">
-      <Router basename={window.PUBLIC_URL}>
+      <Router basename={process.env.PUBLIC_URL}>
         <BasicLayout>
           <Switch>
             {Object.values(routes).map((route) =>

@@ -60,7 +60,7 @@ function PostForm({ onCreate, data = {} }) {
   return (
     <>
       <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <ClaimCreateForm onCreate={onClaimCreate} />
+        <ClaimCreateForm onCreate={onClaimCreate} width={560} />
       </Modal>
       <Form
         form={form}
@@ -185,7 +185,7 @@ function PostForm({ onCreate, data = {} }) {
                   },
                 ]}
               >
-                <Selector action="Formats" createEntity="Format" />
+                <Selector action="Formats" />
               </Form.Item>
               <Form.Item name="authors" label="Authors">
                 <Selector mode="multiple" display={'email'} action="Authors" />
