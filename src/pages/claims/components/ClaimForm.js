@@ -125,10 +125,8 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
           >
             <Selector action="Ratings" />
           </Form.Item>
-          <Form.Item name="description" label="Description">
-            <div style={{ width: width ? width : 700 }}>
-              <Editor />
-            </div>
+          <Form.Item name="description" label="Description" wrapperCol={24}>
+            <Editor />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>
