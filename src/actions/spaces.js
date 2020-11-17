@@ -23,7 +23,11 @@ export const getSpaces = () => {
         return response.data;
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -46,9 +50,14 @@ export const addSpace = (data) => {
       .then((response) => {
         dispatch(addSpaceSuccess(response.data));
         dispatch(addSuccessNotification('Space added'));
+        console.log(response);
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -63,7 +72,11 @@ export const deleteSpace = (id) => {
         dispatch(addSuccessNotification('Space deleted'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -78,7 +91,11 @@ export const updateSpace = (data) => {
         dispatch(addSuccessNotification('Space updated'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };

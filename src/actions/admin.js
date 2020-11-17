@@ -15,7 +15,11 @@ export const getSuperOrganisation = () => {
         return response.data;
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };

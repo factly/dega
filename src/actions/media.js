@@ -28,7 +28,11 @@ export const getMedia = (query) => {
         dispatch(stopMediaLoading());
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -43,7 +47,11 @@ export const getMedium = (id) => {
         dispatch(stopMediaLoading());
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -58,7 +66,11 @@ export const addMedium = (data) => {
         dispatch(addSuccessNotification('Medium added'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -74,7 +86,11 @@ export const updateMedium = (data) => {
         dispatch(addSuccessNotification('Medium updated'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -89,7 +105,11 @@ export const deleteMedium = (id) => {
         dispatch(addSuccessNotification('Medium deleted'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };

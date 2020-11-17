@@ -16,7 +16,7 @@ const layout = {
   },
 };
 
-const ClaimForm = ({ onCreate, data = {} }) => {
+const ClaimForm = ({ onCreate, data = {}, width }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -126,7 +126,9 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             <Selector action="Ratings" />
           </Form.Item>
           <Form.Item name="description" label="Description">
-            <Editor />
+            <div style={{ width: width ? width : 700 }}>
+              <Editor />
+            </div>
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>

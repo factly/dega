@@ -133,7 +133,11 @@ export const getPosts = (query) => {
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -167,7 +171,11 @@ export const getPost = (id) => {
         dispatch(stopPostsLoading());
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -191,7 +199,11 @@ export const addPost = (data) => {
         return post;
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -225,7 +237,11 @@ export const publish = (data) => {
         dispatch(addSuccessNotification('Post published'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -259,7 +275,11 @@ export const addTemplate = (data) => {
         dispatch(addSuccessNotification('Template created'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -293,7 +313,11 @@ export const publishPost = (data) => {
         dispatch(addSuccessNotification('Post published'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -327,7 +351,11 @@ export const updatePost = (data) => {
         dispatch(addSuccessNotification('Post updated'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -342,7 +370,11 @@ export const deletePost = (id) => {
         dispatch(addSuccessNotification('Post deleted'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };

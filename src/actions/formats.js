@@ -26,7 +26,11 @@ export const addDefaultFormats = (query) => {
         dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -50,7 +54,11 @@ export const getFormats = (query) => {
         dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -65,7 +73,11 @@ export const getFormat = (id) => {
         dispatch(stopFormatsLoading());
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -80,7 +92,11 @@ export const addFormat = (data) => {
         dispatch(addSuccessNotification('Format added'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -96,7 +112,11 @@ export const updateFormat = (data) => {
         dispatch(addSuccessNotification('Format updated'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
@@ -111,7 +131,11 @@ export const deleteFormat = (id) => {
         dispatch(addSuccessNotification('Format deleted'));
       })
       .catch((error) => {
-        dispatch(addErrorNotification(error.message));
+        if (error.response && error.response.data && error.response.data.errors.length > 0) {
+          dispatch(addErrorNotification(error.response.data.errors[0].message));
+        } else {
+          dispatch(addErrorNotification(error.message));
+        }
       });
   };
 };
