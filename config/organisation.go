@@ -93,7 +93,7 @@ func CheckSuperOrganisation() bool {
 
 // UserConfigPresent checks if user config params is present in config file
 func UserConfigPresent() bool {
-	return viper.IsSet("default_user_email") && viper.IsSet("default_user_password") && viper.GetString("default_user_email") != "" && viper.GetString("default_user_password") != "" && viper.IsSet("organisation_title")
+	return viper.IsSet("default_user_email") && viper.IsSet("default_user_password") && viper.GetString("default_user_email") != "" && viper.GetString("default_user_password") != "" && viper.IsSet("super_organisation_title")
 }
 
 // CreateSuperOrganisation creates a super user and organisation in kavach
@@ -247,7 +247,7 @@ func createKavachUser(kavachUserCheckers map[string]interface{}) (*http.Response
 
 func createKavachOrganisation(userID string) (*http.Response, error) {
 	org := organisation{
-		Title: viper.GetString("organisation_title"),
+		Title: viper.GetString("super_organisation_title"),
 	}
 
 	buf := new(bytes.Buffer)

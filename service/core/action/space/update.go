@@ -95,7 +95,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	logoID := &space.LogoID
 	result.LogoID = &space.LogoID
 	if space.LogoID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"logo_id": nil}).First(&result).Error
+		err = tx.Model(&result).Updates(map[string]interface{}{"logo_id": nil}).Error
 		logoID = nil
 		if err != nil {
 			tx.Rollback()
@@ -108,7 +108,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	logoMobileID := &space.LogoMobileID
 	result.LogoMobileID = &space.LogoMobileID
 	if space.LogoMobileID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"logo_mobile_id": nil}).First(&result).Error
+		err = tx.Model(&result).Updates(map[string]interface{}{"logo_mobile_id": nil}).Error
 		logoMobileID = nil
 		if err != nil {
 			tx.Rollback()
@@ -121,7 +121,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	favIconID := &space.FavIconID
 	result.FavIconID = &space.FavIconID
 	if space.FavIconID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"fav_icon_id": nil}).First(&result).Error
+		err = tx.Model(&result).Updates(map[string]interface{}{"fav_icon_id": nil}).Error
 		favIconID = nil
 		if err != nil {
 			tx.Rollback()
@@ -134,7 +134,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	mobileIconID := &space.MobileIconID
 	result.MobileIconID = &space.MobileIconID
 	if space.MobileIconID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"mobile_icon_id": nil}).First(&result).Error
+		err = tx.Model(&result).Updates(map[string]interface{}{"mobile_icon_id": nil}).Error
 		mobileIconID = nil
 		if err != nil {
 			tx.Rollback()

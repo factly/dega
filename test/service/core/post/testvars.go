@@ -307,18 +307,6 @@ func postAuthorInsertMock(mock sqlmock.Sqlmock) {
 }
 
 func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
-			AddRow(1, 1))
-	category.SelectWithOutSpace(mock)
-
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
-			AddRow(1, 1))
-	tag.SelectMock(mock, tag.Data, 1)
-
 	// slug check is required
 	if slugCheckRequired {
 		slugCheckMock(mock, post)
