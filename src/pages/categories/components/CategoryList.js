@@ -77,7 +77,7 @@ function CategoryList({ actions }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Delete?"
               onConfirm={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
             >
               <Link to="" className="ant-dropdown-link">
