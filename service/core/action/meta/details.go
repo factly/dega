@@ -17,8 +17,7 @@ import (
 // @ID get-meta-info
 // @Produce  json
 // @Param url query string true "URL"
-// @Param X-User header string true "User ID"
-// @Param X-Space header string true "Space ID"
+// @Param type query string true "Type"
 // @Success 200 {object} metadata
 // @Router /meta [get]
 func details(w http.ResponseWriter, r *http.Request) {

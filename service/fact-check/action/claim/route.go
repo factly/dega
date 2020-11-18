@@ -14,7 +14,7 @@ type claim struct {
 	ClaimDate     time.Time      `json:"claim_date" `
 	CheckedDate   time.Time      `json:"checked_date"`
 	ClaimSources  string         `json:"claim_sources"`
-	Description   postgres.Jsonb `json:"description"`
+	Description   postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	ClaimantID    uint           `json:"claimant_id" validate:"required"`
 	RatingID      uint           `json:"rating_id" validate:"required"`
 	Review        string         `json:"review"`

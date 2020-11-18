@@ -17,9 +17,9 @@ type space struct {
 	LogoMobileID      uint           `json:"logo_mobile_id"`
 	FavIconID         uint           `json:"fav_icon_id"`
 	MobileIconID      uint           `json:"mobile_icon_id"`
-	VerificationCodes postgres.Jsonb `json:"verification_codes"`
-	SocialMediaURLs   postgres.Jsonb `json:"social_media_urls"`
-	ContactInfo       postgres.Jsonb `json:"contact_info"`
+	VerificationCodes postgres.Jsonb `json:"verification_codes" swaggertype:"primitive,string"`
+	SocialMediaURLs   postgres.Jsonb `json:"social_media_urls" swaggertype:"primitive,string"`
+	ContactInfo       postgres.Jsonb `json:"contact_info" swaggertype:"primitive,string"`
 	OrganisationID    int            `json:"organisation_id" validate:"required"`
 }
 

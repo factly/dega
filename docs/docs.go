@@ -465,7 +465,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/model.Format"
+                            "$ref": "#/definitions/format.paging"
                         }
                     },
                     "400": {
@@ -713,7 +713,10 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/model.Medium"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/model.Medium"
+                            }
                         }
                     },
                     "400": {
@@ -856,30 +859,129 @@ var doc = `{
                 }
             }
         },
-        "/core/meta": {
+        "/core/organisations/permissions": {
             "get": {
-                "description": "Get meta info",
+                "description": "Get all organisation permissions",
                 "produces": [
                     "application/json"
                 ],
                 "tags": [
-                    "Meta"
+                    "Organisation_Permissions"
                 ],
-                "summary": "Get meta info",
-                "operationId": "get-meta-info",
+                "summary": "Show all organisation permissions",
+                "operationId": "get-all-org-permissions",
                 "parameters": [
-                    {
-                        "type": "string",
-                        "description": "URL",
-                        "name": "url",
-                        "in": "query",
-                        "required": true
-                    },
                     {
                         "type": "string",
                         "description": "User ID",
                         "name": "X-User",
                         "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/organisationPermission.paging"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create organisation permission",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Organisation_Permissions"
+                ],
+                "summary": "Create organisation permission",
+                "operationId": "add-org-permission",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Permission Object",
+                        "name": "Permission",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/organisationPermission.organisationPermission"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.OrganisationPermission"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/organisations/permissions/my": {
+            "get": {
+                "description": "Get my organisation permissions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Organisation_Permissions"
+                ],
+                "summary": "Show a my organisation permissions",
+                "operationId": "get-org-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
                         "required": true
                     },
                     {
@@ -894,7 +996,102 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/meta.metadata"
+                            "$ref": "#/definitions/organisationPermission.orgPermissionRes"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/organisations/permissions/{permission_id}": {
+            "put": {
+                "description": "Update Organisation permission by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Organisation_Permissions"
+                ],
+                "summary": "Update a Organisation permission by id",
+                "operationId": "update-org-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Permission Body",
+                        "name": "Permission",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/organisationPermission.organisationPermission"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.OrganisationPermission"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Organisation permission by ID",
+                "tags": [
+                    "Organisation_Permissions"
+                ],
+                "summary": "Delete a Organisation permission",
+                "operationId": "delete-org-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
                         }
                     }
                 }
@@ -1012,10 +1209,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Policy"
-                            }
+                            "$ref": "#/definitions/policy.paging"
                         }
                     },
                     "400": {
@@ -2753,10 +2947,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/model.Rating"
-                            }
+                            "$ref": "#/definitions/rating.paging"
                         }
                     },
                     "400": {
@@ -2896,6 +3087,43 @@ var doc = `{
                 ],
                 "responses": {
                     "200": {}
+                }
+            }
+        },
+        "/meta": {
+            "get": {
+                "description": "Get meta info",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Meta"
+                ],
+                "summary": "Get meta info",
+                "operationId": "get-meta-info",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "URL",
+                        "name": "url",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Type",
+                        "name": "type",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/meta.metadata"
+                        }
+                    }
                 }
             }
         }
@@ -3146,10 +3374,9 @@ var doc = `{
             "type": "object",
             "properties": {
                 "meta": {
-                    "type": "object",
                     "$ref": "#/definitions/meta.meta"
                 },
-                "sucess": {
+                "success": {
                     "type": "integer"
                 }
             }
@@ -3205,17 +3432,16 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
                 },
                 "parent_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "posts": {
                     "type": "array",
@@ -3225,6 +3451,9 @@ var doc = `{
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
@@ -3247,7 +3476,6 @@ var doc = `{
                     "type": "string"
                 },
                 "claimant": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Claimant"
                 },
                 "claimant_id": {
@@ -3266,7 +3494,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "rating": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Rating"
                 },
                 "rating_id": {
@@ -3283,6 +3510,9 @@ var doc = `{
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
@@ -3311,17 +3541,19 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
@@ -3358,6 +3590,9 @@ var doc = `{
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
@@ -3413,6 +3648,38 @@ var doc = `{
                     "type": "string"
                 },
                 "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "model.OrganisationPermission": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "fact_check": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "media": {
+                    "type": "integer"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "posts": {
+                    "type": "integer"
+                },
+                "spaces": {
+                    "type": "integer"
+                },
+                "updated_at": {
                     "type": "string"
                 }
             }
@@ -3479,10 +3746,9 @@ var doc = `{
                     "type": "string"
                 },
                 "featured_medium_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "format": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
@@ -3501,7 +3767,6 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
@@ -3509,6 +3774,9 @@ var doc = `{
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
@@ -3549,11 +3817,10 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
@@ -3563,6 +3830,9 @@ var doc = `{
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
@@ -3588,35 +3858,31 @@ var doc = `{
                     "type": "string"
                 },
                 "fav_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "id": {
                     "type": "integer"
                 },
                 "logo": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "logo_mobile": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "mobile_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
@@ -3681,11 +3947,121 @@ var doc = `{
                 "slug": {
                     "type": "string"
                 },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
+                },
                 "space_id": {
                     "type": "integer"
                 },
                 "updated_at": {
                     "type": "string"
+                }
+            }
+        },
+        "organisationPermission.orgPermissionRes": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "fact_check": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_admin": {
+                    "type": "boolean"
+                },
+                "media": {
+                    "type": "integer"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "posts": {
+                    "type": "integer"
+                },
+                "spaces": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "organisationPermission.orgWithPermissions": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "featured_medium_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "medium": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "permission": {
+                    "$ref": "#/definitions/model.OrganisationPermission"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                }
+            }
+        },
+        "organisationPermission.organisationPermission": {
+            "type": "object",
+            "required": [
+                "organisation_id"
+            ],
+            "properties": {
+                "fact_check": {
+                    "type": "boolean"
+                },
+                "media": {
+                    "type": "integer"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "posts": {
+                    "type": "integer"
+                },
+                "spaces": {
+                    "type": "integer"
+                }
+            }
+        },
+        "organisationPermission.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/organisationPermission.orgWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -3829,10 +4205,9 @@ var doc = `{
                     "type": "string"
                 },
                 "featured_medium_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "format": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
@@ -3851,7 +4226,6 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
@@ -3859,6 +4233,9 @@ var doc = `{
                 },
                 "slug": {
                     "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
@@ -3968,7 +4345,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "permission": {
-                    "type": "object",
                     "$ref": "#/definitions/space.organisationUser"
                 },
                 "slug": {
@@ -4075,35 +4451,31 @@ var doc = `{
                     "type": "string"
                 },
                 "fav_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "id": {
                     "type": "integer"
                 },
                 "logo": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "logo_mobile": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "mobile_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
-                    "type": "string"
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"

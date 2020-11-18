@@ -163,8 +163,7 @@ definitions:
     properties:
       meta:
         $ref: '#/definitions/meta.meta'
-        type: object
-      sucess:
+      success:
         type: integer
     type: object
   model.Author:
@@ -202,19 +201,20 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       medium_id:
-        type: string
+        type: integer
       name:
         type: string
       parent_id:
-        type: string
+        type: integer
       posts:
         items:
           $ref: '#/definitions/model.Post'
         type: array
       slug:
         type: string
+      space:
+        $ref: '#/definitions/model.Space'
       space_id:
         type: integer
       updated_at:
@@ -230,7 +230,6 @@ definitions:
         type: string
       claimant:
         $ref: '#/definitions/model.Claimant'
-        type: object
       claimant_id:
         type: integer
       created_at:
@@ -243,7 +242,6 @@ definitions:
         type: integer
       rating:
         $ref: '#/definitions/model.Rating'
-        type: object
       rating_id:
         type: integer
       review:
@@ -254,6 +252,8 @@ definitions:
         type: string
       slug:
         type: string
+      space:
+        $ref: '#/definitions/model.Space'
       space_id:
         type: integer
       title:
@@ -273,13 +273,14 @@ definitions:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       medium_id:
-        type: string
+        type: integer
       name:
         type: string
       slug:
         type: string
+      space:
+        $ref: '#/definitions/model.Space'
       space_id:
         type: integer
       tag_line:
@@ -301,6 +302,8 @@ definitions:
         type: string
       slug:
         type: string
+      space:
+        $ref: '#/definitions/model.Space'
       space_id:
         type: integer
       updated_at:
@@ -340,6 +343,27 @@ definitions:
       updated_at:
         type: string
       url:
+        type: string
+    type: object
+  model.OrganisationPermission:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      fact_check:
+        type: boolean
+      id:
+        type: integer
+      media:
+        type: integer
+      organisation_id:
+        type: integer
+      posts:
+        type: integer
+      spaces:
+        type: integer
+      updated_at:
         type: string
     type: object
   model.Permission:
@@ -383,10 +407,9 @@ definitions:
       excerpt:
         type: string
       featured_medium_id:
-        type: string
+        type: integer
       format:
         $ref: '#/definitions/model.Format'
-        type: object
       format_id:
         type: integer
       id:
@@ -399,11 +422,12 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       published_date:
         type: string
       slug:
         type: string
+      space:
+        $ref: '#/definitions/model.Space'
       space_id:
         type: integer
       status:
@@ -431,15 +455,16 @@ definitions:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       medium_id:
-        type: string
+        type: integer
       name:
         type: string
       numeric_value:
         type: integer
       slug:
         type: string
+      space:
+        $ref: '#/definitions/model.Space'
       space_id:
         type: integer
       updated_at:
@@ -457,26 +482,22 @@ definitions:
         type: string
       fav_icon:
         $ref: '#/definitions/model.Medium'
-        type: object
       fav_icon_id:
-        type: string
+        type: integer
       id:
         type: integer
       logo:
         $ref: '#/definitions/model.Medium'
-        type: object
       logo_id:
-        type: string
+        type: integer
       logo_mobile:
         $ref: '#/definitions/model.Medium'
-        type: object
       logo_mobile_id:
-        type: string
+        type: integer
       mobile_icon:
         $ref: '#/definitions/model.Medium'
-        type: object
       mobile_icon_id:
-        type: string
+        type: integer
       name:
         type: string
       organisation_id:
@@ -516,6 +537,8 @@ definitions:
         type: array
       slug:
         type: string
+      space:
+        $ref: '#/definitions/model.Space'
       space_id:
         type: integer
       updated_at:
@@ -523,6 +546,76 @@ definitions:
     required:
     - name
     - slug
+    type: object
+  organisationPermission.orgPermissionRes:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      fact_check:
+        type: boolean
+      id:
+        type: integer
+      is_admin:
+        type: boolean
+      media:
+        type: integer
+      organisation_id:
+        type: integer
+      posts:
+        type: integer
+      spaces:
+        type: integer
+      updated_at:
+        type: string
+    type: object
+  organisationPermission.orgWithPermissions:
+    properties:
+      created_at:
+        type: string
+      deleted_at:
+        type: string
+      description:
+        type: string
+      featured_medium_id:
+        type: integer
+      id:
+        type: integer
+      medium:
+        $ref: '#/definitions/model.Medium'
+      permission:
+        $ref: '#/definitions/model.OrganisationPermission'
+      slug:
+        type: string
+      title:
+        type: string
+      updated_at:
+        type: string
+    type: object
+  organisationPermission.organisationPermission:
+    properties:
+      fact_check:
+        type: boolean
+      media:
+        type: integer
+      organisation_id:
+        type: integer
+      posts:
+        type: integer
+      spaces:
+        type: integer
+    required:
+    - organisation_id
+    type: object
+  organisationPermission.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/organisationPermission.orgWithPermissions'
+        type: array
+      total:
+        type: integer
     type: object
   policy.paging:
     properties:
@@ -617,10 +710,9 @@ definitions:
       excerpt:
         type: string
       featured_medium_id:
-        type: string
+        type: integer
       format:
         $ref: '#/definitions/model.Format'
-        type: object
       format_id:
         type: integer
       id:
@@ -633,11 +725,12 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       published_date:
         type: string
       slug:
         type: string
+      space:
+        $ref: '#/definitions/model.Space'
       space_id:
         type: integer
       status:
@@ -710,7 +803,6 @@ definitions:
         type: integer
       permission:
         $ref: '#/definitions/space.organisationUser'
-        type: object
       slug:
         type: string
       spaces:
@@ -781,26 +873,22 @@ definitions:
         type: string
       fav_icon:
         $ref: '#/definitions/model.Medium'
-        type: object
       fav_icon_id:
-        type: string
+        type: integer
       id:
         type: integer
       logo:
         $ref: '#/definitions/model.Medium'
-        type: object
       logo_id:
-        type: string
+        type: integer
       logo_mobile:
         $ref: '#/definitions/model.Medium'
-        type: object
       logo_mobile_id:
-        type: string
+        type: integer
       mobile_icon:
         $ref: '#/definitions/model.Medium'
-        type: object
       mobile_icon_id:
-        type: string
+        type: integer
       name:
         type: string
       organisation_id:
@@ -1275,7 +1363,7 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/model.Format'
+            $ref: '#/definitions/format.paging'
         "400":
           description: Bad Request
           schema:
@@ -1356,7 +1444,9 @@ paths:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/model.Medium'
+            items:
+              $ref: '#/definitions/model.Medium'
+            type: array
         "400":
           description: Bad Request
           schema:
@@ -1454,19 +1544,151 @@ paths:
       summary: Update a medium by id
       tags:
       - Medium
-  /core/meta:
+  /core/organisations/permissions:
     get:
-      description: Get meta info
-      operationId: get-meta-info
+      description: Get all organisation permissions
+      operationId: get-all-org-permissions
       parameters:
-      - description: URL
-        in: query
-        name: url
-        required: true
-        type: string
       - description: User ID
         in: header
         name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/organisationPermission.paging'
+            type: array
+      summary: Show all organisation permissions
+      tags:
+      - Organisation_Permissions
+    post:
+      description: Create organisation permission
+      operationId: add-org-permission
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Permission Object
+        in: body
+        name: Permission
+        required: true
+        schema:
+          $ref: '#/definitions/organisationPermission.organisationPermission'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.OrganisationPermission'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create organisation permission
+      tags:
+      - Organisation_Permissions
+  /core/organisations/permissions/{permission_id}:
+    delete:
+      description: Delete Organisation permission by ID
+      operationId: delete-org-permission-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Permission ID
+        in: path
+        name: permission_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a Organisation permission
+      tags:
+      - Organisation_Permissions
+    put:
+      description: Update Organisation permission by ID
+      operationId: update-org-permission-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Permission ID
+        in: path
+        name: permission_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Permission Body
+        in: body
+        name: Permission
+        schema:
+          $ref: '#/definitions/organisationPermission.organisationPermission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OrganisationPermission'
+      summary: Update a Organisation permission by id
+      tags:
+      - Organisation_Permissions
+  /core/organisations/permissions/my:
+    get:
+      description: Get my organisation permissions
+      operationId: get-org-permission-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Permission ID
+        in: path
+        name: permission_id
         required: true
         type: string
       - description: Space ID
@@ -1480,10 +1702,10 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/meta.metadata'
-      summary: Get meta info
+            $ref: '#/definitions/organisationPermission.orgPermissionRes'
+      summary: Show a my organisation permissions
       tags:
-      - Meta
+      - Organisation_Permissions
   /core/policies:
     get:
       description: Get all policies
@@ -1654,9 +1876,7 @@ paths:
         "201":
           description: Created
           schema:
-            items:
-              $ref: '#/definitions/model.Policy'
-            type: array
+            $ref: '#/definitions/policy.paging'
         "400":
           description: Bad Request
           schema:
@@ -2831,9 +3051,7 @@ paths:
         "201":
           description: Created
           schema:
-            items:
-              $ref: '#/definitions/model.Rating'
-            type: array
+            $ref: '#/definitions/rating.paging'
         "400":
           description: Bad Request
           schema:
@@ -2843,4 +3061,29 @@ paths:
       summary: Create Default Ratings
       tags:
       - Rating
+  /meta:
+    get:
+      description: Get meta info
+      operationId: get-meta-info
+      parameters:
+      - description: URL
+        in: query
+        name: url
+        required: true
+        type: string
+      - description: Type
+        in: query
+        name: type
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/meta.metadata'
+      summary: Get meta info
+      tags:
+      - Meta
 swagger: "2.0"

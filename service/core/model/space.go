@@ -26,9 +26,9 @@ type Space struct {
 	FavIcon           *Medium        `gorm:"foreignKey:fav_icon_id" json:"fav_icon"`
 	MobileIconID      *uint          `gorm:"column:mobile_icon_id;default:NULL" json:"mobile_icon_id"`
 	MobileIcon        *Medium        `gorm:"foreignKey:mobile_icon_id" json:"mobile_icon"`
-	VerificationCodes postgres.Jsonb `gorm:"column:verification_codes" json:"verification_codes"`
-	SocialMediaURLs   postgres.Jsonb `gorm:"column:social_media_urls" json:"social_media_urls"`
-	ContactInfo       postgres.Jsonb `gorm:"column:contact_info" json:"contact_info"`
+	VerificationCodes postgres.Jsonb `gorm:"column:verification_codes" json:"verification_codes" swaggertype:"primitive,string"`
+	SocialMediaURLs   postgres.Jsonb `gorm:"column:social_media_urls" json:"social_media_urls" swaggertype:"primitive,string"`
+	ContactInfo       postgres.Jsonb `gorm:"column:contact_info" json:"contact_info" swaggertype:"primitive,string"`
 	OrganisationID    int            `gorm:"column:organisation_id" json:"organisation_id"`
 }
 

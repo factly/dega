@@ -18,7 +18,7 @@ type Post struct {
 	Slug             string         `gorm:"column:slug" json:"slug"`
 	Status           string         `gorm:"column:status" json:"status"`
 	Excerpt          string         `gorm:"column:excerpt" json:"excerpt"`
-	Description      postgres.Jsonb `gorm:"column:description" json:"description" sql:"jsonb"`
+	Description      postgres.Jsonb `gorm:"column:description" json:"description" sql:"jsonb" swaggertype:"primitive,string"`
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	IsSticky         bool           `gorm:"column:is_sticky" json:"is_sticky"`
 	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`

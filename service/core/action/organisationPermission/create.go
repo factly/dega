@@ -25,7 +25,7 @@ import (
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Param Permission body organisationPermission true "Permission Object"
-// @Success 201 {object} model.OrganisationPermisssion
+// @Success 201 {object} model.OrganisationPermission
 // @Failure 400 {array} string
 // @Router /core/organisations/permissions [post]
 func create(w http.ResponseWriter, r *http.Request) {
