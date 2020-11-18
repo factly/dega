@@ -19,9 +19,9 @@ type orgPermissionRes struct {
 	IsAdmin bool `json:"is_admin,omitempty"`
 }
 
-// details - Get tag by id
-// @Summary Show a tag by id
-// @Description Get tag by ID
+// details - Get my organisation permissions
+// @Summary Show a my organisation permissions
+// @Description Get my organisation permissions
 // @Tags Organisation_Permissions
 // @ID get-org-permission-by-id
 // @Produce  json

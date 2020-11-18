@@ -21,7 +21,7 @@ type medium struct {
 	Caption     string         `json:"caption"`
 	AltText     string         `json:"alt_text"`
 	FileSize    int64          `json:"file_size" validate:"required"`
-	URL         postgres.Jsonb `json:"url"`
+	URL         postgres.Jsonb `json:"url" swaggertype:"primitive,string"`
 	Dimensions  string         `json:"dimensions" validate:"required"`
 }
 
