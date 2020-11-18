@@ -58,6 +58,7 @@ func TestRatingCreate(t *testing.T) {
 		organisationPermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
+		ratingCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		ratingInsertMock(mock)
@@ -79,6 +80,7 @@ func TestRatingCreate(t *testing.T) {
 		organisationPermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
+		ratingCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		ratingInsertMock(mock)
@@ -104,6 +106,7 @@ func TestRatingCreate(t *testing.T) {
 		organisationPermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
+		ratingCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		ratingInsertError(mock)
@@ -131,12 +134,28 @@ func TestRatingCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("rating with same numeric value exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
+
+		sameNameCount(mock, 0, Data["name"])
+		ratingCountQuery(mock, 1)
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("create rating when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 		organisationPermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
+		ratingCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		ratingInsertMock(mock)

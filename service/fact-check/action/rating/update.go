@@ -102,6 +102,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if rating.NumericValue != result.NumericValue {
+		// Check if rating with same numeric value exist
+		var sameValueRatings int64
+		config.DB.Model(&model.Rating{}).Where(&model.Rating{
+			SpaceID:      uint(sID),
+			NumericValue: rating.NumericValue,
+		}).Count(&sameValueRatings)
+
+		if sameValueRatings > 0 {
+			loggerx.Error(errors.New(`rating with same numeric value exist`))
+			errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+			return
+		}
+	}
+
 	tx := config.DB.Begin()
 
 	mediumID := &rating.MediumID
