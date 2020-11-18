@@ -197,6 +197,26 @@ func TestRatingUpdate(t *testing.T) {
 		updatedRating["name"] = "True"
 	})
 
+	t.Run("rating with same numeric value exist", func(t *testing.T) {
+		updatedRating["slug"] = "true"
+		updatedRating["numeric_value"] = 3
+		test.CheckSpaceMock(mock)
+		organisationPermission.SelectQuery(mock, 1)
+
+		SelectWithSpace(mock)
+
+		ratingCountQuery(mock, 1)
+
+		e.PUT(path).
+			WithPath("rating_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedRating).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		updatedRating["numeric_value"] = 5
+	})
+
 	t.Run("update rating when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		updatedRating["slug"] = "true"
