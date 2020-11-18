@@ -3071,14 +3071,9 @@ paths:
         name: url
         required: true
         type: string
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
+      - description: Type
+        in: query
+        name: type
         required: true
         type: string
       produces:

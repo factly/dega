@@ -3111,16 +3111,9 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
+                        "description": "Type",
+                        "name": "type",
+                        "in": "query",
                         "required": true
                     }
                 ],
