@@ -212,7 +212,6 @@ func createKratosUser() (*http.Response, error) {
 	if viper.IsSet("oathkeeper_host") {
 		req.URL.Host = viper.GetString("oathkeeper_host")
 	}
-	fmt.Println(req.URL)
 	req.Header.Set("Content-Type", "application/json")
 
 	resp, err = client.Do(req)
