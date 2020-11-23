@@ -60,38 +60,35 @@ func list(w http.ResponseWriter, r *http.Request) {
 		filters = fmt.Sprint(filters, " AND space_id=", sID)
 	}
 
+	result := paging{}
+	result.Nodes = make([]model.Claim, 0)
+
 	if filters != "" || searchQuery != "" {
 		// Search claims with filter
 		var hits []interface{}
-		var result map[string]interface{}
+		var res map[string]interface{}
 
 		if searchQuery != "" {
 			hits, err = meili.SearchWithQuery(searchQuery, filters, "claim")
 		} else {
-			result, err = meili.SearchWithoutQuery(filters, "claim")
-			if _, found := result["hits"]; found {
-				hits = result["hits"].([]interface{})
+			res, err = meili.SearchWithoutQuery(filters, "claim")
+			if _, found := res["hits"]; found {
+				hits = res["hits"].([]interface{})
 			}
 		}
 
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			renderx.JSON(w, http.StatusOK, result)
 			return
 		}
 
 		filteredClaimIDs = meili.GetIDArray(hits)
 		if len(filteredClaimIDs) == 0 {
-			renderx.JSON(w, http.StatusOK, paging{
-				Nodes: make([]model.Claim, 0),
-				Total: 0,
-			})
+			renderx.JSON(w, http.StatusOK, result)
 			return
 		}
 	}
-
-	result := paging{}
-	result.Nodes = make([]model.Claim, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 

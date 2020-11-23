@@ -65,37 +65,34 @@ func list(w http.ResponseWriter, r *http.Request) {
 		filters = fmt.Sprint(filters, " AND space_id=", sID)
 	}
 
+	result := paging{}
+	result.Nodes = make([]postData, 0)
+
 	if filters != "" || searchQuery != "" {
 		// Search posts with filter
 		var hits []interface{}
-		var result map[string]interface{}
+		var res map[string]interface{}
 
 		if searchQuery != "" {
 			hits, err = meili.SearchWithQuery(searchQuery, filters, "post")
 		} else {
-			result, err = meili.SearchWithoutQuery(filters, "post")
-			if _, found := result["hits"]; found {
-				hits = result["hits"].([]interface{})
+			res, err = meili.SearchWithoutQuery(filters, "post")
+			if _, found := res["hits"]; found {
+				hits = res["hits"].([]interface{})
 			}
 		}
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			renderx.JSON(w, http.StatusOK, result)
 			return
 		}
 
 		filteredPostIDs = meili.GetIDArray(hits)
 		if len(filteredPostIDs) == 0 {
-			renderx.JSON(w, http.StatusOK, paging{
-				Nodes: make([]postData, 0),
-				Total: 0,
-			})
+			renderx.JSON(w, http.StatusOK, result)
 			return
 		}
 	}
-
-	result := paging{}
-	result.Nodes = make([]postData, 0)
 
 	posts := make([]model.Post, 0)
 

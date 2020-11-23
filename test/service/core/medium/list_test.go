@@ -163,7 +163,10 @@ func TestMediumList(t *testing.T) {
 			WithHeaders(headers).
 			WithQuery("q", "test").
 			Expect().
-			Status(http.StatusInternalServerError)
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{"total": 0})
 
 		test.ExpectationsMet(t, mock)
 	})
