@@ -201,7 +201,11 @@ func TestClaimList(t *testing.T) {
 				"q":         "test",
 			}).
 			Expect().
-			Status(http.StatusInternalServerError)
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			Value("total").
+			Equal(0)
 
 		test.ExpectationsMet(t, mock)
 	})

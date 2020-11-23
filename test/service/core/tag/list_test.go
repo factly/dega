@@ -171,8 +171,11 @@ func TestTagList(t *testing.T) {
 				"sort": "asc",
 			}).
 			Expect().
-			Status(http.StatusInternalServerError)
-
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			Value("total").
+			Equal(0)
 		test.ExpectationsMet(t, mock)
 	})
 }

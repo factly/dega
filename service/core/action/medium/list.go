@@ -47,6 +47,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	sort := r.URL.Query().Get("sort")
 	var filteredMediumIDs []uint
 
+	result := paging{}
+	result.Nodes = make([]model.Medium, 0)
+
 	if searchQuery != "" {
 		filters := fmt.Sprint("space_id=", sID)
 
@@ -55,22 +58,16 @@ func list(w http.ResponseWriter, r *http.Request) {
 		hits, err = meili.SearchWithQuery(searchQuery, filters, "medium")
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			renderx.JSON(w, http.StatusOK, result)
 			return
 		}
 
 		filteredMediumIDs = meili.GetIDArray(hits)
 		if len(filteredMediumIDs) == 0 {
-			renderx.JSON(w, http.StatusOK, paging{
-				Nodes: make([]model.Medium, 0),
-				Total: 0,
-			})
+			renderx.JSON(w, http.StatusOK, result)
 			return
 		}
 	}
-
-	result := paging{}
-	result.Nodes = make([]model.Medium, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 

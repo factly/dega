@@ -49,6 +49,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	filteredCategoryIDs := make([]uint, 0)
 
+	result := paging{}
+	result.Nodes = make([]model.Category, 0)
+
 	if searchQuery != "" {
 
 		filters := fmt.Sprint("space_id=", sID)
@@ -58,16 +61,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			renderx.JSON(w, http.StatusOK, result)
 			return
 		}
 
 		filteredCategoryIDs = meili.GetIDArray(hits)
 		if len(filteredCategoryIDs) == 0 {
-			renderx.JSON(w, http.StatusOK, paging{
-				Nodes: make([]model.Category, 0),
-				Total: 0,
-			})
+			renderx.JSON(w, http.StatusOK, result)
 			return
 		}
 	}
@@ -75,9 +75,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 	if sort != "asc" {
 		sort = "desc"
 	}
-
-	result := paging{}
-	result.Nodes = make([]model.Category, 0)
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
