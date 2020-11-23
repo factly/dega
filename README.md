@@ -17,6 +17,7 @@ DATABASE_NAME=dega
 DATABASE_PORT=5432 
 DATABASE_SSL_MODE=disable
 MODE=development
+OATHKEEPER_HOST=oathkeeper:4455
 
 KAVACH_URL=http://kavach-server:8000
 IMAGEPROXY_URL=http://127.0.0.1:7001
