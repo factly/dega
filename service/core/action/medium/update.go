@@ -124,8 +124,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	addProxyURL(result)
-
 	// Update into meili index
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,

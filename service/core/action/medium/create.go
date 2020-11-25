@@ -148,7 +148,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for i := range result.Nodes {
-		addProxyURL(&result.Nodes[i])
 
 		// Insert into meili index
 		meiliObj := map[string]interface{}{
