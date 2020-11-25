@@ -33,8 +33,9 @@ func Router() http.Handler {
 	r.Mount("/authors", author.Router())
 	r.Mount("/search", search.Router())
 	r.Mount("/users", user.Router())
-	r.Mount("/organisations/permissions", organisationPermission.Router())
-	r.Mount("/spaces/permissions", spacePermission.Router())
-
+	r.Route("/permissions", func(r chi.Router) {
+		r.Mount("/organisations", organisationPermission.Router())
+		r.Mount("/spaces", spacePermission.Router())
+	})
 	return r
 }

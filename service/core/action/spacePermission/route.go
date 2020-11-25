@@ -12,6 +12,7 @@ func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Get("/", list)
+	r.Get("/my", my)
 	r.Post("/", create)
 	r.Route("/{permission_id}", func(r chi.Router) {
 		r.Get("/", details)

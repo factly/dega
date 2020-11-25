@@ -27,7 +27,7 @@ import (
 // @Param Permission body organisationPermission true "Permission Object"
 // @Success 201 {object} model.OrganisationPermission
 // @Failure 400 {array} string
-// @Router /core/organisations/permissions [post]
+// @Router /core/permissions/organisations [post]
 func create(w http.ResponseWriter, r *http.Request) {
 	permission := organisationPermission{}
 

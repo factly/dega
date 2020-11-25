@@ -1579,7 +1579,7 @@ paths:
       summary: Update a medium by id
       tags:
       - Medium
-  /core/organisations/permissions:
+  /core/permissions/organisations:
     get:
       description: Get all organisation permissions
       operationId: get-all-org-permissions
@@ -1646,7 +1646,7 @@ paths:
       summary: Create organisation permission
       tags:
       - Organisation_Permissions
-  /core/organisations/permissions/{permission_id}:
+  /core/permissions/organisations/{permission_id}:
     delete:
       description: Delete Organisation permission by ID
       operationId: delete-org-permission-by-id
@@ -1711,10 +1711,132 @@ paths:
       summary: Update a Organisation permission by id
       tags:
       - Organisation_Permissions
-  /core/organisations/permissions/my:
+  /core/permissions/organisations/my:
     get:
       description: Get my organisation permissions
       operationId: get-org-permission-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/organisationPermission.orgPermissionRes'
+      summary: Show a my organisation permissions
+      tags:
+      - Organisation_Permissions
+  /core/permissions/spaces:
+    get:
+      description: Get all Space permissions
+      operationId: get-all-space-permissions
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/spacePermission.paging'
+            type: array
+      summary: Show all Space permissions
+      tags:
+      - Space_Permissions
+    post:
+      description: Create Space permission
+      operationId: add-space-permission
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Permission Object
+        in: body
+        name: Permission
+        required: true
+        schema:
+          $ref: '#/definitions/spacePermission.spacePermission'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SpacePermission'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create Space permission
+      tags:
+      - Space_Permissions
+  /core/permissions/spaces/{permission_id}:
+    delete:
+      description: Delete Space permission by ID
+      operationId: delete-space-permission-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Permission ID
+        in: path
+        name: permission_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a Space permission
+      tags:
+      - Space_Permissions
+    get:
+      description: Get Space permissions
+      operationId: get-space-permission-by-id
       parameters:
       - description: User ID
         in: header
@@ -1737,10 +1859,69 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/organisationPermission.orgPermissionRes'
-      summary: Show a my organisation permissions
+            $ref: '#/definitions/model.SpacePermission'
+      summary: Show a Space permissions
       tags:
-      - Organisation_Permissions
+      - Space_Permissions
+    put:
+      description: Update Space permission by ID
+      operationId: update-space-permission-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Permission ID
+        in: path
+        name: permission_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Permission Body
+        in: body
+        name: Permission
+        schema:
+          $ref: '#/definitions/spacePermission.spacePermission'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.SpacePermission'
+      summary: Update a Space permission by id
+      tags:
+      - Space_Permissions
+  /core/permissions/spaces/my:
+    get:
+      description: Get my Space permissions
+      operationId: get-my-space-permissions
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.SpacePermission'
+      summary: Show a my Space permissions
+      tags:
+      - Space_Permissions
   /core/policies:
     get:
       description: Get all policies
@@ -2324,167 +2505,6 @@ paths:
       summary: Update space
       tags:
       - Space
-  /core/spaces/permissions:
-    get:
-      description: Get all Space permissions
-      operationId: get-all-space-permissions
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Query
-        in: query
-        name: q
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            items:
-              $ref: '#/definitions/spacePermission.paging'
-            type: array
-      summary: Show all Space permissions
-      tags:
-      - Space_Permissions
-    post:
-      description: Create Space permission
-      operationId: add-space-permission
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Permission Object
-        in: body
-        name: Permission
-        required: true
-        schema:
-          $ref: '#/definitions/spacePermission.spacePermission'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.SpacePermission'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create Space permission
-      tags:
-      - Space_Permissions
-  /core/spaces/permissions/{permission_id}:
-    delete:
-      description: Delete Space permission by ID
-      operationId: delete-space-permission-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Permission ID
-        in: path
-        name: permission_id
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      responses:
-        "200": {}
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Delete a Space permission
-      tags:
-      - Space_Permissions
-    get:
-      description: Get my Space permissions
-      operationId: get-space-permission-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Permission ID
-        in: path
-        name: permission_id
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.SpacePermission'
-      summary: Show a my Space permissions
-      tags:
-      - Space_Permissions
-    put:
-      description: Update Space permission by ID
-      operationId: update-space-permission-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Permission ID
-        in: path
-        name: permission_id
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Permission Body
-        in: body
-        name: Permission
-        schema:
-          $ref: '#/definitions/spacePermission.spacePermission'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/model.SpacePermission'
-      summary: Update a Space permission by id
-      tags:
-      - Space_Permissions
   /core/tags:
     get:
       description: Get all tags

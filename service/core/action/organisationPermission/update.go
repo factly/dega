@@ -28,7 +28,7 @@ import (
 // @Param X-Space header string true "Space ID"
 // @Param Permission body organisationPermission false "Permission Body"
 // @Success 200 {object} model.OrganisationPermission
-// @Router /core/organisations/permissions/{permission_id} [put]
+// @Router /core/permissions/organisations/{permission_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 	permissionID := chi.URLParam(r, "permission_id")
 	id, err := strconv.Atoi(permissionID)

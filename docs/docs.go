@@ -859,7 +859,7 @@ var doc = `{
                 }
             }
         },
-        "/core/organisations/permissions": {
+        "/core/permissions/organisations": {
             "get": {
                 "description": "Get all organisation permissions",
                 "produces": [
@@ -958,7 +958,7 @@ var doc = `{
                 }
             }
         },
-        "/core/organisations/permissions/my": {
+        "/core/permissions/organisations/my": {
             "get": {
                 "description": "Get my organisation permissions",
                 "produces": [
@@ -979,13 +979,6 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "Permission ID",
-                        "name": "permission_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
                         "description": "Space ID",
                         "name": "X-Space",
                         "in": "header",
@@ -1002,7 +995,7 @@ var doc = `{
                 }
             }
         },
-        "/core/organisations/permissions/{permission_id}": {
+        "/core/permissions/organisations/{permission_id}": {
             "put": {
                 "description": "Update Organisation permission by ID",
                 "produces": [
@@ -1060,6 +1053,279 @@ var doc = `{
                 ],
                 "summary": "Delete a Organisation permission",
                 "operationId": "delete-org-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/permissions/spaces": {
+            "get": {
+                "description": "Get all Space permissions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Show all Space permissions",
+                "operationId": "get-all-space-permissions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/spacePermission.paging"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Space permission",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Create Space permission",
+                "operationId": "add-space-permission",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Permission Object",
+                        "name": "Permission",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/spacePermission.spacePermission"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermission"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/permissions/spaces/my": {
+            "get": {
+                "description": "Get my Space permissions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Show a my Space permissions",
+                "operationId": "get-my-space-permissions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermission"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/permissions/spaces/{permission_id}": {
+            "get": {
+                "description": "Get Space permissions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Show a Space permissions",
+                "operationId": "get-space-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermission"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Space permission by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Update a Space permission by id",
+                "operationId": "update-space-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Permission Body",
+                        "name": "Permission",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/spacePermission.spacePermission"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermission"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Space permission by ID",
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Delete a Space permission",
+                "operationId": "delete-space-permission-by-id",
                 "parameters": [
                     {
                         "type": "string",
@@ -1874,242 +2140,6 @@ var doc = `{
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/model.Space"
-                        }
-                    }
-                }
-            }
-        },
-        "/core/spaces/permissions": {
-            "get": {
-                "description": "Get all Space permissions",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Space_Permissions"
-                ],
-                "summary": "Show all Space permissions",
-                "operationId": "get-all-space-permissions",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Query",
-                        "name": "q",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/spacePermission.paging"
-                            }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create Space permission",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Space_Permissions"
-                ],
-                "summary": "Create Space permission",
-                "operationId": "add-space-permission",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Permission Object",
-                        "name": "Permission",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/spacePermission.spacePermission"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.SpacePermission"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
-        "/core/spaces/permissions/{permission_id}": {
-            "get": {
-                "description": "Get my Space permissions",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Space_Permissions"
-                ],
-                "summary": "Show a my Space permissions",
-                "operationId": "get-space-permission-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Permission ID",
-                        "name": "permission_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.SpacePermission"
-                        }
-                    }
-                }
-            },
-            "put": {
-                "description": "Update Space permission by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Space_Permissions"
-                ],
-                "summary": "Update a Space permission by id",
-                "operationId": "update-space-permission-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Permission ID",
-                        "name": "permission_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Permission Body",
-                        "name": "Permission",
-                        "in": "body",
-                        "schema": {
-                            "$ref": "#/definitions/spacePermission.spacePermission"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/model.SpacePermission"
-                        }
-                    }
-                }
-            },
-            "delete": {
-                "description": "Delete Space permission by ID",
-                "tags": [
-                    "Space_Permissions"
-                ],
-                "summary": "Delete a Space permission",
-                "operationId": "delete-space-permission-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Permission ID",
-                        "name": "permission_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {},
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
                         }
                     }
                 }

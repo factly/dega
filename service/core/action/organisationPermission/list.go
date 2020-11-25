@@ -32,7 +32,7 @@ type paging struct {
 // @Param X-Space header string true "Space ID"
 // @Param q query string false "Query"
 // @Success 200 {array} paging
-// @Router /core/organisations/permissions [get]
+// @Router /core/permissions/organisations [get]
 func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 

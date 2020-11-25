@@ -2,40 +2,39 @@ package spacePermission
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
-	"github.com/go-chi/chi"
 )
 
-// details - Get Space permissions
-// @Summary Show a Space permissions
-// @Description Get Space permissions
+// my - Get my Space permissions
+// @Summary Show a my Space permissions
+// @Description Get my Space permissions
 // @Tags Space_Permissions
-// @ID get-space-permission-by-id
+// @ID get-my-space-permissions
 // @Produce  json
 // @Param X-User header string true "User ID"
-// @Param permission_id path string true "Permission ID"
 // @Param X-Space header string true "Space ID"
 // @Success 200 {object} model.SpacePermission
-// @Router /core/permissions/spaces/{permission_id} [get]
-func details(w http.ResponseWriter, r *http.Request) {
-	permissionID := chi.URLParam(r, "permission_id")
-	id, err := strconv.Atoi(permissionID)
+// @Router /core/permissions/spaces/my [get]
+func my(w http.ResponseWriter, r *http.Request) {
+	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
 	result := model.SpacePermission{}
-	result.ID = uint(id)
 
-	err = config.DB.First(&result).Error
+	err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
+		SpaceID: uint(sID),
+	}).Preload("Space").First(&result).Error
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))

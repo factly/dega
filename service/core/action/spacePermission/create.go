@@ -25,7 +25,7 @@ import (
 // @Param Permission body spacePermission true "Permission Object"
 // @Success 201 {object} model.SpacePermission
 // @Failure 400 {array} string
-// @Router /core/spaces/permissions [post]
+// @Router /core/permissions/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
 	permission := spacePermission{}
 

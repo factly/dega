@@ -22,7 +22,7 @@ import (
 // @Param X-Space header string true "Space ID"
 // @Success 200
 // @Failure 400 {array} string
-// @Router  /core/organisations/permissions/{permission_id} [delete]
+// @Router  /core/permissions/organisations/{permission_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 	permissionID := chi.URLParam(r, "permission_id")
 	id, err := strconv.Atoi(permissionID)

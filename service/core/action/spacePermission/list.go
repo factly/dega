@@ -23,7 +23,7 @@ type paging struct {
 // @Param X-Space header string true "Space ID"
 // @Param q query string false "Query"
 // @Success 200 {array} paging
-// @Router /core/spaces/permissions [get]
+// @Router /core/permissions/spaces [get]
 func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.SpacePermission, 0)
