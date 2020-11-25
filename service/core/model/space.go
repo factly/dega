@@ -32,6 +32,14 @@ type Space struct {
 	OrganisationID    int            `gorm:"column:organisation_id" json:"organisation_id"`
 }
 
+// SpacePermission model
+type SpacePermission struct {
+	config.Base
+	FactCheck bool   `gorm:"column:fact_check" json:"fact_check"`
+	SpaceID   uint   `gorm:"column:space_id" json:"space_id"`
+	Space     *Space `gorm:"foreignKey:space_id" json:"space,omitempty"`
+}
+
 // BeforeUpdate checks if all associated mediums are in same space
 func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 	if space.LogoID != nil && *space.LogoID > 0 {
