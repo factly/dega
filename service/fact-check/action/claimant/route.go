@@ -1,6 +1,7 @@
 package claimant
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
@@ -13,6 +14,8 @@ type claimant struct {
 	TagLine     string `json:"tag_line"`
 	MediumID    uint   `json:"medium_id"`
 }
+
+var userContext config.ContextKey = "claimant_user"
 
 // Router - Group of claimant router
 func Router() chi.Router {

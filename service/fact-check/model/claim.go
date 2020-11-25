@@ -70,3 +70,15 @@ func (claim *Claim) BeforeSave(tx *gorm.DB) (e error) {
 
 	return nil
 }
+
+var claimUser config.ContextKey = "claim_user"
+
+// BeforeCreate hook
+func (claim *Claim) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(claimUser).(int)
+
+	claim.CreatedBy = uint(userID)
+	claim.UpdatedBy = uint(userID)
+	return nil
+}

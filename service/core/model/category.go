@@ -40,3 +40,15 @@ func (category *Category) BeforeSave(tx *gorm.DB) (e error) {
 
 	return nil
 }
+
+var categoryUser config.ContextKey = "category_user"
+
+// BeforeCreate hook
+func (category *Category) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(categoryUser).(int)
+
+	category.CreatedBy = uint(userID)
+	category.UpdatedBy = uint(userID)
+	return nil
+}

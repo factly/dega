@@ -174,6 +174,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	updatedPost := model.Post{
+		Base:             config.Base{UpdatedBy: uint(uID)},
 		Title:            post.Title,
 		Slug:             postSlug,
 		Subtitle:         post.Subtitle,

@@ -1,6 +1,7 @@
 package rating
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
@@ -13,6 +14,8 @@ type rating struct {
 	NumericValue int    `json:"numeric_value" validate:"required"`
 	MediumID     uint   `json:"medium_id"`
 }
+
+var userContext config.ContextKey = "rating_user"
 
 // Router - Group of rating router
 func Router() chi.Router {

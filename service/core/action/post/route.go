@@ -1,6 +1,7 @@
 package post
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
@@ -33,6 +34,8 @@ type postData struct {
 	Authors []model.Author         `json:"authors"`
 	Claims  []factCheckModel.Claim `json:"claims"`
 }
+
+var userContext config.ContextKey = "post_user"
 
 // Router - Group of post router
 func Router() chi.Router {

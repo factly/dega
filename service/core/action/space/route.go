@@ -1,6 +1,7 @@
 package space
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -22,6 +23,8 @@ type space struct {
 	ContactInfo       postgres.Jsonb `json:"contact_info" swaggertype:"primitive,string"`
 	OrganisationID    int            `json:"organisation_id" validate:"required"`
 }
+
+var userContext config.ContextKey = "space_user"
 
 // Router - Group of currency router
 func Router() chi.Router {

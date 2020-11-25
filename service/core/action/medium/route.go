@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"net/url"
 
+	"github.com/factly/dega-server/config"
+
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
@@ -24,6 +26,8 @@ type medium struct {
 	URL         postgres.Jsonb `json:"url" swaggertype:"primitive,string"`
 	Dimensions  string         `json:"dimensions" validate:"required"`
 }
+
+var userContext config.ContextKey = "medium_user"
 
 // Router - Group of medium router
 func Router() chi.Router {

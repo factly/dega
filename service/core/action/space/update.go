@@ -1,6 +1,7 @@
 package space
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -90,7 +91,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
 	logoID := &space.LogoID
 	result.LogoID = &space.LogoID
@@ -145,6 +146,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tx.Model(&result).Updates(model.Space{
+		Base:              config.Base{UpdatedBy: uint(uID)},
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
 		Slug:              space.Slug,

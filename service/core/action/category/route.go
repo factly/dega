@@ -1,6 +1,7 @@
 package category
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
@@ -14,6 +15,8 @@ type category struct {
 	MediumID    uint   `json:"medium_id"`
 	IsFeatured  bool   `json:"is_featured"`
 }
+
+var userContext config.ContextKey = "category_user"
 
 // Router - Group of category router
 func Router() chi.Router {

@@ -43,12 +43,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	sID, err := util.GetSpace(r.Context())
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
+
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	result := &model.Tag{}
 	result.ID = uint(id)
 
@@ -103,12 +110,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
+
 	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})
-	tx.Model(&result).Updates(model.Tag{
+	err = tx.Model(&result).Updates(model.Tag{
+		Base:        config.Base{UpdatedBy: uint(uID)},
 		Name:        tag.Name,
 		Slug:        tagSlug,
 		Description: tag.Description,
-	}).First(&result)
+	}).First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{

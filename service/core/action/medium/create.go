@@ -1,6 +1,7 @@
 package medium
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -41,6 +42,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	oID, err := util.GetOrganisation(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -129,7 +137,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		result.Nodes = append(result.Nodes, med)
 	}
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Model(&model.Medium{}).Create(&result.Nodes).Error
 
 	if err != nil {

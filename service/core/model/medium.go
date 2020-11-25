@@ -3,6 +3,7 @@ package model
 import (
 	"github.com/factly/dega-server/config"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gorm.io/gorm"
 )
 
 // Medium model
@@ -23,4 +24,16 @@ type Medium struct {
 
 func (Medium) TableName() string {
 	return "media"
+}
+
+var mediumUser config.ContextKey = "medium_user"
+
+// BeforeCreate hook
+func (media *Medium) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(mediumUser).(int)
+
+	media.CreatedBy = uint(userID)
+	media.UpdatedBy = uint(userID)
+	return nil
 }

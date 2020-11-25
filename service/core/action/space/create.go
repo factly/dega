@@ -1,6 +1,7 @@
 package space
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -129,7 +130,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		ContactInfo:       space.ContactInfo,
 	}
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Create(&result).Error
 
 	if err != nil {
