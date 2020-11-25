@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meili"
+	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -145,11 +146,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	var spaceSlug string
+	if result.Slug == space.Slug {
+		spaceSlug = result.Slug
+	} else if space.Slug != "" && slug.Check(space.Slug) {
+		spaceSlug = approveSpaceSlug(space.Slug)
+	} else {
+		spaceSlug = approveSpaceSlug(slug.Make(space.Name))
+	}
+
 	err = tx.Model(&result).Updates(model.Space{
 		Base:              config.Base{UpdatedBy: uint(uID)},
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
-		Slug:              space.Slug,
+		Slug:              spaceSlug,
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
