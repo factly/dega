@@ -35,6 +35,7 @@ func CheckSpace(h http.Handler) http.Handler {
 			h.ServeHTTP(w, r.WithContext(ctx))
 			return
 		}
+		h.ServeHTTP(w, r)
 	})
 }
 

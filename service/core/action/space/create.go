@@ -69,8 +69,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var superOrgID int
 	if viper.GetBool("create_super_organisation") {
-		superOrgID, err := util.GetSuperOrganisationID()
+		superOrgID, err = util.GetSuperOrganisationID()
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -137,6 +138,20 @@ func create(w http.ResponseWriter, r *http.Request) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
+	}
+
+	// Create SpacePermission for super organisation
+	if superOrgID == space.OrganisationID {
+		spacePermission := model.SpacePermission{
+			SpaceID:   result.ID,
+			FactCheck: true,
+		}
+		if err = tx.Create(&spacePermission).Error; err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	// Insert into meili index

@@ -71,7 +71,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Spaces:         permission.Spaces,
 		Media:          permission.Media,
 		Posts:          permission.Posts,
-		FactCheck:      permission.FactCheck,
 	}
 
 	config.DB.Model(&model.OrganisationPermission{}).Create(&result)

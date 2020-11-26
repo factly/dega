@@ -78,7 +78,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	tx.Model(&result).Select("FactCheck").Updates(&model.OrganisationPermission{FactCheck: permission.FactCheck})
 	err = tx.Model(&result).Updates(&model.OrganisationPermission{
 		Spaces: permission.Spaces,
 		Media:  permission.Media,

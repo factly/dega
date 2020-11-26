@@ -35,7 +35,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	result := model.SpacePermission{}
 	result.ID = uint(id)
 
-	err = config.DB.First(&result).Error
+	err = config.DB.Preload("Space").First(&result).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))

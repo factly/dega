@@ -19,5 +19,4 @@ type OrganisationPermission struct {
 	Spaces         int64 `gorm:"column:spaces" json:"spaces"`
 	Media          int64 `gorm:"column:media" json:"media"`
 	Posts          int64 `gorm:"column:posts" json:"posts"`
-	FactCheck      bool  `gorm:"fact_check" json:"fact_check"`
 }
