@@ -46,9 +46,14 @@ var categoryUser config.ContextKey = "category_user"
 // BeforeCreate hook
 func (category *Category) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(categoryUser).(int)
+	userID := ctx.Value(categoryUser)
 
-	category.CreatedBy = uint(userID)
-	category.UpdatedBy = uint(userID)
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	category.CreatedByID = uint(uID)
+	category.UpdatedByID = uint(uID)
 	return nil
 }

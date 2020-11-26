@@ -140,7 +140,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tx.Model(&result).Updates(model.Rating{
-		Base:         config.Base{UpdatedBy: uint(uID)},
+		Base:         config.Base{UpdatedByID: uint(uID)},
 		Name:         rating.Name,
 		Slug:         ratingSlug,
 		MediumID:     mediumID,

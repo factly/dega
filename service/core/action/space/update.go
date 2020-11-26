@@ -156,7 +156,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tx.Model(&result).Updates(model.Space{
-		Base:              config.Base{UpdatedBy: uint(uID)},
+		Base:              config.Base{UpdatedByID: uint(uID)},
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
 		Slug:              spaceSlug,

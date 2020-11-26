@@ -22,9 +22,14 @@ var tagUser config.ContextKey = "tag_user"
 // BeforeCreate hook
 func (tag *Tag) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(tagUser).(int)
+	userID := ctx.Value(tagUser)
 
-	tag.CreatedBy = uint(userID)
-	tag.UpdatedBy = uint(userID)
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	tag.CreatedByID = uint(uID)
+	tag.UpdatedByID = uint(uID)
 	return nil
 }

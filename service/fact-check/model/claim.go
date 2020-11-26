@@ -76,9 +76,14 @@ var claimUser config.ContextKey = "claim_user"
 // BeforeCreate hook
 func (claim *Claim) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(claimUser).(int)
+	userID := ctx.Value(claimUser)
 
-	claim.CreatedBy = uint(userID)
-	claim.UpdatedBy = uint(userID)
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	claim.CreatedByID = uint(uID)
+	claim.UpdatedByID = uint(uID)
 	return nil
 }

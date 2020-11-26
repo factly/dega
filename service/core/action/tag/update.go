@@ -113,7 +113,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})
 	err = tx.Model(&result).Updates(model.Tag{
-		Base:        config.Base{UpdatedBy: uint(uID)},
+		Base:        config.Base{UpdatedByID: uint(uID)},
 		Name:        tag.Name,
 		Slug:        tagSlug,
 		Description: tag.Description,

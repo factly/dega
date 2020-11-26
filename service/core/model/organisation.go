@@ -30,9 +30,14 @@ var organisationPermissionUser config.ContextKey = "org_perm_user"
 // BeforeCreate hook
 func (op *OrganisationPermission) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(organisationPermissionUser).(int)
+	userID := ctx.Value(organisationPermissionUser)
 
-	op.CreatedBy = uint(userID)
-	op.UpdatedBy = uint(userID)
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	op.CreatedByID = uint(uID)
+	op.UpdatedByID = uint(uID)
 	return nil
 }

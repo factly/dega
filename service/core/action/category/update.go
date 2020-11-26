@@ -159,7 +159,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Category{IsFeatured: category.IsFeatured})
 	err = tx.Model(&result).Updates(model.Category{
-		Base:        config.Base{UpdatedBy: uint(uID)},
+		Base:        config.Base{UpdatedByID: uint(uID)},
 		Name:        category.Name,
 		Slug:        categorySlug,
 		Description: category.Description,

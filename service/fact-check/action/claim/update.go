@@ -105,7 +105,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	err = tx.Model(&result).Updates(model.Claim{
-		Base:          config.Base{UpdatedBy: uint(uID)},
+		Base:          config.Base{UpdatedByID: uint(uID)},
 		Title:         claim.Title,
 		Slug:          claimSlug,
 		ClaimDate:     claim.ClaimDate,

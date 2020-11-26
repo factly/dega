@@ -88,9 +88,14 @@ func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
 // BeforeCreate hook
 func (post *Post) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(postUser).(int)
+	userID := ctx.Value(postUser)
 
-	post.CreatedBy = uint(userID)
-	post.UpdatedBy = uint(userID)
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	post.CreatedByID = uint(uID)
+	post.UpdatedByID = uint(uID)
 	return nil
 }

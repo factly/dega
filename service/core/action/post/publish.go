@@ -86,7 +86,7 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	result.Categories = make([]model.Category, 0)
 
 	err = tx.Model(&result.Post).Updates(model.Post{
-		Base:          config.Base{UpdatedBy: uint(uID)},
+		Base:          config.Base{UpdatedByID: uint(uID)},
 		Status:        "published",
 		PublishedDate: time.Now(),
 	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error

@@ -89,7 +89,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Model(&result).Select("FactCheck").Updates(&model.OrganisationPermission{FactCheck: permission.FactCheck})
 
 	err = tx.Model(&model.OrganisationPermission{}).Model(&result).Updates(&model.OrganisationPermission{
-		Base:   config.Base{UpdatedBy: uint(uID)},
+		Base:   config.Base{UpdatedByID: uint(uID)},
 		Spaces: permission.Spaces,
 		Media:  permission.Media,
 		Posts:  permission.Posts,

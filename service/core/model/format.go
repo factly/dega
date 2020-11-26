@@ -20,9 +20,14 @@ var formatUser config.ContextKey = "format_user"
 // BeforeCreate hook
 func (format *Format) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(formatUser).(int)
+	userID := ctx.Value(formatUser)
 
-	format.CreatedBy = uint(userID)
-	format.UpdatedBy = uint(userID)
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	format.CreatedByID = uint(uID)
+	format.UpdatedByID = uint(uID)
 	return nil
 }

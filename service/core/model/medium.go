@@ -35,10 +35,15 @@ var mediumUser config.ContextKey = "medium_user"
 // BeforeCreate hook
 func (media *Medium) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(mediumUser).(int)
+	userID := ctx.Value(mediumUser)
 
-	media.CreatedBy = uint(userID)
-	media.UpdatedBy = uint(userID)
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	media.CreatedByID = uint(uID)
+	media.UpdatedByID = uint(uID)
 	return nil
 }
 

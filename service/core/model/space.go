@@ -94,9 +94,14 @@ func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 // BeforeCreate hook
 func (space *Space) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(spaceUser).(int)
+	userID := ctx.Value(spaceUser)
 
-	space.CreatedBy = uint(userID)
-	space.UpdatedBy = uint(userID)
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	space.CreatedByID = uint(uID)
+	space.UpdatedByID = uint(uID)
 	return nil
 }

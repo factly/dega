@@ -104,7 +104,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	err = tx.Model(&result).Updates(model.Medium{
-		Base:        config.Base{UpdatedBy: uint(uID)},
+		Base:        config.Base{UpdatedByID: uint(uID)},
 		Name:        medium.Name,
 		Slug:        mediumSlug,
 		Title:       medium.Title,
