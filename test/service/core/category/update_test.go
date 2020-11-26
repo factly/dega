@@ -131,7 +131,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
 		medium.SelectWithOutSpace(mock)
@@ -203,7 +203,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
 
@@ -243,7 +243,7 @@ func TestCategoryUpdate(t *testing.T) {
 
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["medium_id"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["medium_id"], 1).
 			WillReturnError(errors.New(`updating category fails`))
 		mock.ExpectRollback()
 

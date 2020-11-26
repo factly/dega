@@ -99,3 +99,18 @@ func (post *Post) BeforeCreate(tx *gorm.DB) error {
 	post.UpdatedByID = uint(uID)
 	return nil
 }
+
+// BeforeCreate hook
+func (pa *PostAuthor) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(postUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	pa.CreatedByID = uint(uID)
+	pa.UpdatedByID = uint(uID)
+	return nil
+}

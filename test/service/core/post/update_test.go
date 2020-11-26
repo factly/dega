@@ -125,7 +125,7 @@ func TestPostUpdate(t *testing.T) {
 		medium.SelectWithSpace(mock)
 		format.SelectMock(mock, 1, 1)
 		mock.ExpectExec(`UPDATE \"posts\"`).
-			WithArgs(test.AnyTime{}, Data["title"], Data["subtitle"], Data["slug"], Data["excerpt"],
+			WithArgs(test.AnyTime{}, 1, Data["title"], Data["subtitle"], Data["slug"], Data["excerpt"],
 				Data["description"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], 1).
 			WillReturnError(errors.New("cannot update post"))
 
@@ -250,15 +250,15 @@ func TestPostUpdate(t *testing.T) {
 		updateQueryMock(mock, updatePost, false)
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, 2, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "created_by_id", "updated_by_id", "deleted_at", "claim_id", "post_id"}).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, 2, 1))
 
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectQuery(`INSERT INTO "post_claims"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
 			WillReturnError(errors.New("cannot create post_claims"))
 
 		mock.ExpectRollback()
@@ -310,15 +310,15 @@ func TestPostUpdate(t *testing.T) {
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, 2, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "author_id", "post_id"}).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, 2, 1))
 
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectQuery(`INSERT INTO "post_authors"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
 			WillReturnError(errors.New("cannot create post_authors"))
 
 		mock.ExpectRollback()

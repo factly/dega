@@ -49,9 +49,10 @@ func TestSpaceCreate(t *testing.T) {
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
 
+		slugCheckMock(mock)
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "spaces"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
 			WillReturnError(errors.New("cannot create space"))
 		mock.ExpectRollback()
 

@@ -58,8 +58,8 @@ func TestClaimantList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, claimantlist[0]["name"], claimantlist[0]["slug"], claimantlist[0]["medium_id"], claimantlist[0]["description"], claimantlist[0]["numeric_value"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["numeric_value"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantlist[0]["name"], claimantlist[0]["slug"], claimantlist[0]["medium_id"], claimantlist[0]["description"], claimantlist[0]["numeric_value"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["numeric_value"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -84,7 +84,7 @@ func TestClaimantList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["numeric_value"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["numeric_value"], 1))
 
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{
@@ -114,8 +114,8 @@ func TestClaimantList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, claimantlist[0]["name"], claimantlist[0]["slug"], claimantlist[0]["medium_id"], claimantlist[0]["description"], claimantlist[0]["numeric_value"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["numeric_value"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantlist[0]["name"], claimantlist[0]["slug"], claimantlist[0]["medium_id"], claimantlist[0]["description"], claimantlist[0]["numeric_value"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["numeric_value"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).

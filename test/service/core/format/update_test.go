@@ -105,7 +105,7 @@ func TestFormatUpdate(t *testing.T) {
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
 			WithArgs("fact-check%", 1).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, updatedFormat["name"], "factcheck"))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedFormat["name"], "factcheck"))
 
 		formatUpdateMock(mock, updatedFormat)
 

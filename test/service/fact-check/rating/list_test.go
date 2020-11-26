@@ -57,8 +57,8 @@ func TestRatingList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, ratinglist[0]["name"], ratinglist[0]["slug"], ratinglist[0]["medium_id"], ratinglist[0]["description"], ratinglist[0]["numeric_value"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, ratinglist[1]["name"], ratinglist[1]["slug"], ratinglist[1]["medium_id"], ratinglist[1]["description"], ratinglist[1]["numeric_value"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratinglist[0]["name"], ratinglist[0]["slug"], ratinglist[0]["medium_id"], ratinglist[0]["description"], ratinglist[0]["numeric_value"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, ratinglist[1]["name"], ratinglist[1]["slug"], ratinglist[1]["medium_id"], ratinglist[1]["description"], ratinglist[1]["numeric_value"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -84,7 +84,7 @@ func TestRatingList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, ratinglist[1]["name"], ratinglist[1]["slug"], ratinglist[1]["medium_id"], ratinglist[1]["description"], ratinglist[1]["numeric_value"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, ratinglist[1]["name"], ratinglist[1]["slug"], ratinglist[1]["medium_id"], ratinglist[1]["description"], ratinglist[1]["numeric_value"], 1))
 
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{

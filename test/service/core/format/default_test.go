@@ -36,7 +36,7 @@ func TestDefaultFormatCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "formats"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))
@@ -83,7 +83,7 @@ func TestDefaultFormatCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "formats"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1, test.AnyTime{}, test.AnyTime{}, nil, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

@@ -51,7 +51,7 @@ func TestOrganisationPermissionList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact_check"]))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact_check"]))
 
 		e.GET(basePath).
 			WithHeaders(headers).

@@ -1,6 +1,7 @@
 package post
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -72,7 +73,7 @@ func publish(w http.ResponseWriter, r *http.Request) {
 		PostID: uint(id),
 	}).Count(&totAuthors)
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
 	if totAuthors == 0 {
 		author := model.PostAuthor{

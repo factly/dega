@@ -1,6 +1,7 @@
 package post
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -132,7 +133,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slug.Approve(slug.Make(post.Title), sID, tableName)
 	}
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
 	newTags := make([]model.Tag, 0)
 	if len(post.TagIDs) > 0 {

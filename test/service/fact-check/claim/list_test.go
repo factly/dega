@@ -56,9 +56,9 @@ func TestClaimList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, claimList[0]["title"], claimList[0]["slug"], claimList[0]["claim_date"], claimList[0]["checked_date"], claimList[0]["claim_sources"],
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimList[0]["title"], claimList[0]["slug"], claimList[0]["claim_date"], claimList[0]["checked_date"], claimList[0]["claim_sources"],
 					claimList[0]["description"], claimList[0]["claimant_id"], claimList[0]["rating_id"], claimList[0]["review"], claimList[0]["review_tag_line"], claimList[0]["review_sources"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, claimList[1]["title"], claimList[1]["slug"], claimList[1]["claim_date"], claimList[1]["checked_date"], claimList[1]["claim_sources"],
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, claimList[1]["title"], claimList[1]["slug"], claimList[1]["claim_date"], claimList[1]["checked_date"], claimList[1]["claim_sources"],
 					claimList[1]["description"], claimList[1]["claimant_id"], claimList[1]["rating_id"], claimList[1]["review"], claimList[1]["review_tag_line"], claimList[1]["review_sources"], 1))
 		claimant.SelectWithOutSpace(mock, claimant.Data)
 		rating.SelectWithOutSpace(mock, rating.Data)
@@ -86,7 +86,7 @@ func TestClaimList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, claimList[1]["title"], claimList[1]["slug"], claimList[1]["claim_date"], claimList[1]["checked_date"], claimList[1]["claim_sources"],
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, claimList[1]["title"], claimList[1]["slug"], claimList[1]["claim_date"], claimList[1]["checked_date"], claimList[1]["claim_sources"],
 					claimList[1]["description"], claimList[1]["claimant_id"], claimList[1]["rating_id"], claimList[1]["review"], claimList[1]["review_tag_line"], claimList[1]["review_sources"], 1))
 
 		claimant.SelectWithOutSpace(mock, claimant.Data)
