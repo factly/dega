@@ -34,7 +34,7 @@ var invalidData = map[string]interface{}{
 	"name": "a",
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "medium_id", "description", "tag_line", "space_id"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "medium_id", "description", "tag_line", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "claimants"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "claimants" SET "deleted_at"=`)
@@ -53,7 +53,7 @@ func claimantInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "claimants"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["description"], Data["tag_line"], Data["medium_id"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["tag_line"], Data["medium_id"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id", "medium_id"}).
 			AddRow(1, 1))
@@ -72,7 +72,7 @@ func claimantUpdateMock(mock sqlmock.Sqlmock, claimant map[string]interface{}, e
 	} else {
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"claimants\"`).
-			WithArgs(test.AnyTime{}, claimant["name"], claimant["slug"], claimant["description"], claimant["tag_line"], claimant["medium_id"], 1).
+			WithArgs(test.AnyTime{}, 1, claimant["name"], claimant["slug"], claimant["description"], claimant["tag_line"], claimant["medium_id"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		SelectWithSpace(mock)
 		medium.SelectWithOutSpace(mock)
@@ -84,7 +84,7 @@ func SelectWithOutSpace(mock sqlmock.Sqlmock, claimant map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, claimant["name"], claimant["slug"], claimant["medium_id"], claimant["description"], claimant["tag_line"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimant["name"], claimant["slug"], claimant["medium_id"], claimant["description"], claimant["tag_line"], 1))
 
 	// Preload medium
 	medium.SelectWithOutSpace(mock)
@@ -94,7 +94,7 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["medium_id"], Data["description"], Data["tag_line"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["medium_id"], Data["description"], Data["tag_line"], 1))
 }
 
 //check claimant exits or not

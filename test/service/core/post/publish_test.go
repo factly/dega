@@ -62,7 +62,7 @@ func TestPostPublish(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "post_authors"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

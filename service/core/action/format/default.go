@@ -1,6 +1,7 @@
 package format
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -37,6 +38,13 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	jsonFile, err := os.Open(DataFile)
 	if err != nil {
 		loggerx.Error(err)
@@ -56,7 +64,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	for i := range formats {
 		formats[i].SpaceID = uint(sID)
 	}

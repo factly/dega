@@ -8,6 +8,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -30,6 +31,13 @@ import (
 // @Success 200 {object} model.OrganisationPermission
 // @Router /core/permissions/organisations/{permission_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	permissionID := chi.URLParam(r, "permission_id")
 	id, err := strconv.Atoi(permissionID)
 
@@ -78,7 +86,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	err = tx.Model(&result).Updates(&model.OrganisationPermission{
+	err = tx.Model(&model.OrganisationPermission{}).Model(&result).Updates(&model.OrganisationPermission{
+		Base:   config.Base{UpdatedByID: uint(uID)},
 		Spaces: permission.Spaces,
 		Media:  permission.Media,
 		Posts:  permission.Posts,

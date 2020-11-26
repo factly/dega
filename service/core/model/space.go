@@ -40,6 +40,8 @@ type SpacePermission struct {
 	Space     *Space `gorm:"foreignKey:space_id" json:"space,omitempty"`
 }
 
+var spaceUser config.ContextKey = "space_user"
+
 // BeforeUpdate checks if all associated mediums are in same space
 func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 	if space.LogoID != nil && *space.LogoID > 0 {
@@ -94,5 +96,20 @@ func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
 			return errors.New("mobile icon do not belong to same space")
 		}
 	}
+	return nil
+}
+
+// BeforeCreate hook
+func (space *Space) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(spaceUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	space.CreatedByID = uint(uID)
+	space.UpdatedByID = uint(uID)
 	return nil
 }

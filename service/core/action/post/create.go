@@ -91,6 +91,12 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.InternalServerError()
 	}
 
+	uID, err := util.GetUser(ctx)
+	if err != nil {
+		loggerx.Error(err)
+		return nil, errorx.InternalServerError()
+	}
+
 	if viper.GetBool("create_super_organisation") {
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
@@ -164,7 +170,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		config.DB.Model(&model.Category{}).Where(post.CategoryIDs).Find(&result.Post.Categories)
 	}
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
 
 	err = tx.Model(&model.Post{}).Create(&result.Post).Error
 

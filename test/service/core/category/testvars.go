@@ -55,7 +55,7 @@ var categorylist []map[string]interface{} = []map[string]interface{}{
 	},
 }
 
-var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "description", "parent_id", "medium_id", "is_featured", "space_id"}
+var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "parent_id", "medium_id", "is_featured", "space_id"}
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "categories"`)
 var countQuery string = regexp.QuoteMeta(`SELECT count(1) FROM "categories"`)
@@ -68,14 +68,14 @@ func selectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["is_featured"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["is_featured"], 1))
 }
 
 func SelectWithOutSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["is_featured"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["is_featured"], 1))
 }
 
 func slugCheckMock(mock sqlmock.Sqlmock, category map[string]interface{}) {
@@ -94,7 +94,7 @@ func insertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "categories"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], Data["description"], Data["is_featured"], 1, Data["medium_id"]).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["is_featured"], 1, Data["medium_id"]).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"parent_id", "medium_id", "id"}).
 			AddRow(1, 1, 1))
@@ -123,7 +123,7 @@ func updateMock(mock sqlmock.Sqlmock) {
 
 	medium.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"categories\"`).
-		WithArgs(test.AnyTime{}, Data["name"], Data["slug"], Data["description"], Data["medium_id"], 1).
+		WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["medium_id"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	selectWithSpace(mock)
 	medium.SelectWithOutSpace(mock)

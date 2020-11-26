@@ -41,6 +41,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	mediumID := chi.URLParam(r, "medium_id")
 	id, err := strconv.Atoi(mediumID)
 
@@ -97,6 +104,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	err = tx.Model(&result).Updates(model.Medium{
+		Base:        config.Base{UpdatedByID: uint(uID)},
 		Name:        medium.Name,
 		Slug:        mediumSlug,
 		Title:       medium.Title,
@@ -115,8 +123,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
-
-	addProxyURL(result)
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{

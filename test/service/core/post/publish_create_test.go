@@ -100,7 +100,7 @@ func TestPublishedPostCreate(t *testing.T) {
 		postInsertMock(mock, Data)
 		postSelectWithOutSpace(mock, Data)
 		mock.ExpectQuery(`INSERT INTO "post_claims"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
 			WillReturnError(errors.New("cannot create post_claims"))
 
 		mock.ExpectRollback()

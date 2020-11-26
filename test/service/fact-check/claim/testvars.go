@@ -66,7 +66,7 @@ var invalidData = map[string]interface{}{
 	"title": "a",
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "title", "slug", "claim_date", "checked_date", "claim_sources",
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "slug", "claim_date", "checked_date", "claim_sources",
 	"description", "claimant_id", "rating_id", "review", "review_tag_line", "review_sources", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "claims"`)
@@ -87,7 +87,7 @@ func claimInsertMock(mock sqlmock.Sqlmock) {
 	claimant.SelectWithSpace(mock)
 	rating.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "claims"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["title"], Data["slug"], test.AnyTime{}, test.AnyTime{}, Data["claim_sources"], Data["description"], Data["claimant_id"], Data["rating_id"], Data["review"], Data["review_tag_line"], Data["review_sources"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], test.AnyTime{}, test.AnyTime{}, Data["claim_sources"], Data["description"], Data["claimant_id"], Data["rating_id"], Data["review"], Data["review_tag_line"], Data["review_sources"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -100,7 +100,7 @@ func claimListMock(mock sqlmock.Sqlmock) {
 
 	mock.ExpectQuery(selectQuery).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, claimList[0]["title"], claimList[0]["slug"], claimList[0]["claim_date"], claimList[0]["checked_date"], claimList[0]["claim_sources"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimList[0]["title"], claimList[0]["slug"], claimList[0]["claim_date"], claimList[0]["checked_date"], claimList[0]["claim_sources"],
 				claimList[0]["description"], claimList[0]["claimant_id"], claimList[0]["rating_id"], claimList[0]["review"], claimList[0]["review_tag_line"], claimList[0]["review_sources"], 1))
 
 	claimant.SelectWithOutSpace(mock, claimant.Data)
@@ -125,7 +125,7 @@ func claimUpdateMock(mock sqlmock.Sqlmock, claim map[string]interface{}, err err
 	claimant.SelectWithSpace(mock)
 	rating.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"claims\"`).
-		WithArgs(test.AnyTime{}, claim["title"], claim["slug"], test.AnyTime{}, test.AnyTime{}, claim["claim_sources"], claim["description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_tag_line"], claim["review_sources"], 1).
+		WithArgs(test.AnyTime{}, 1, claim["title"], claim["slug"], test.AnyTime{}, test.AnyTime{}, claim["claim_sources"], claim["description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_tag_line"], claim["review_sources"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	SelectWithSpace(mock)
 	claimant.SelectWithOutSpace(mock, claimant.Data)
@@ -136,7 +136,7 @@ func SelectWithOutSpace(mock sqlmock.Sqlmock, claim map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, claim["title"], claim["slug"], claim["claim_date"], claim["checked_date"], claim["claim_sources"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claim["title"], claim["slug"], claim["claim_date"], claim["checked_date"], claim["claim_sources"],
 				claim["description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_tag_line"], claim["review_sources"], 1))
 
 	// Preload Claimant & Rating
@@ -148,7 +148,7 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["title"], Data["slug"], Data["claim_date"], Data["checked_date"], Data["claim_sources"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["slug"], Data["claim_date"], Data["checked_date"], Data["claim_sources"],
 				Data["description"], Data["claimant_id"], Data["rating_id"], Data["review"], Data["review_tag_line"], Data["review_sources"], 1))
 }
 

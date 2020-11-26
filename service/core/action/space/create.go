@@ -1,9 +1,11 @@
 package space
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 
 	"github.com/spf13/viper"
 
@@ -120,7 +122,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := model.Space{
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
-		Slug:              spaceSlug,
+		Slug:              approveSpaceSlug(spaceSlug),
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
@@ -130,7 +132,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		ContactInfo:       space.ContactInfo,
 	}
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Create(&result).Error
 
 	if err != nil {
@@ -177,4 +179,33 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 	renderx.JSON(w, http.StatusCreated, result)
+}
+
+func approveSpaceSlug(slug string) string {
+	spaceList := make([]model.Space, 0)
+	config.DB.Model(&model.Space{}).Where("slug LIKE ? AND deleted_at IS NULL", slug+"%").Find(&spaceList)
+
+	count := 0
+	for {
+		flag := true
+		for _, each := range spaceList {
+			temp := slug
+			if count != 0 {
+				temp = temp + "-" + strconv.Itoa(count)
+			}
+			if each.Slug == temp {
+				flag = false
+				break
+			}
+		}
+		if flag {
+			break
+		}
+		count++
+	}
+	temp := slug
+	if count != 0 {
+		temp = temp + "-" + strconv.Itoa(count)
+	}
+	return temp
 }

@@ -1,6 +1,7 @@
 package organisationPermission
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
@@ -11,6 +12,8 @@ type organisationPermission struct {
 	Media          int64 `json:"media"`
 	Posts          int64 `json:"posts"`
 }
+
+var userContext config.ContextKey = "org_perm_user"
 
 // Router - Group of medium router
 func Router() chi.Router {
