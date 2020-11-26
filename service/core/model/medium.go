@@ -1,8 +1,13 @@
 package model
 
 import (
+	"encoding/json"
+	"net/url"
+
 	"github.com/factly/dega-server/config"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/spf13/viper"
+	"gorm.io/gorm"
 )
 
 // Medium model
@@ -23,4 +28,39 @@ type Medium struct {
 
 func (Medium) TableName() string {
 	return "media"
+}
+
+var mediumUser config.ContextKey = "medium_user"
+
+// BeforeCreate hook
+func (media *Medium) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(mediumUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	media.CreatedByID = uint(uID)
+	media.UpdatedByID = uint(uID)
+	return nil
+}
+
+// AfterFind hook
+func (media *Medium) AfterFind(tx *gorm.DB) (err error) {
+	resurl := map[string]interface{}{}
+	if viper.IsSet("imageproxy_url") && media.URL.RawMessage != nil {
+		_ = json.Unmarshal(media.URL.RawMessage, &resurl)
+		if rawURL, found := resurl["raw"]; found {
+			urlObj, _ := url.Parse(rawURL.(string))
+			resurl["proxy"] = viper.GetString("imageproxy_url") + urlObj.Path
+
+			rawBArr, _ := json.Marshal(resurl)
+			media.URL = postgres.Jsonb{
+				RawMessage: rawBArr,
+			}
+		}
+	}
+	return nil
 }

@@ -56,7 +56,7 @@ func TestOrganisationPermissionCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "organisation_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact_check"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact_check"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

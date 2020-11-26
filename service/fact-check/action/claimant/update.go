@@ -41,6 +41,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	claimantID := chi.URLParam(r, "claimant_id")
 	id, err := strconv.Atoi(claimantID)
 
@@ -112,6 +119,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tx.Model(&result).Updates(model.Claimant{
+		Base:        config.Base{UpdatedByID: uint(uID)},
 		Name:        claimant.Name,
 		Slug:        claimantSlug,
 		MediumID:    mediumID,

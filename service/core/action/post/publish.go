@@ -1,6 +1,7 @@
 package post
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -72,7 +73,7 @@ func publish(w http.ResponseWriter, r *http.Request) {
 		PostID: uint(id),
 	}).Count(&totAuthors)
 
-	tx := config.DB.Begin()
+	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
 	if totAuthors == 0 {
 		author := model.PostAuthor{
@@ -86,6 +87,7 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	result.Categories = make([]model.Category, 0)
 
 	err = tx.Model(&result.Post).Updates(model.Post{
+		Base:          config.Base{UpdatedByID: uint(uID)},
 		Status:        "published",
 		PublishedDate: time.Now(),
 	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error

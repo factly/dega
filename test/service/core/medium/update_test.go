@@ -148,7 +148,7 @@ func TestMediumUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, updatedMedium["name"], updatedMedium["slug"], updatedMedium["type"], updatedMedium["title"], updatedMedium["description"], updatedMedium["caption"], updatedMedium["alt_text"], updatedMedium["file_size"], updatedMedium["url"], updatedMedium["dimensions"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedMedium["name"], updatedMedium["slug"], updatedMedium["type"], updatedMedium["title"], updatedMedium["description"], updatedMedium["caption"], updatedMedium["alt_text"], updatedMedium["file_size"], updatedMedium["url"], updatedMedium["dimensions"], 1))
 		mock.ExpectCommit()
 
 		e.PUT(path).

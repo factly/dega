@@ -1,6 +1,7 @@
 package format
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
@@ -11,6 +12,8 @@ type format struct {
 	Slug        string `json:"slug"`
 	Description string `json:"description"`
 }
+
+var userContext config.ContextKey = "format_user"
 
 // Router - Group of tag router
 func Router() chi.Router {

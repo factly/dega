@@ -41,6 +41,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	formatID := chi.URLParam(r, "format_id")
 	id, err := strconv.Atoi(formatID)
 
@@ -105,6 +112,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	tx.Model(&result).Updates(model.Format{
+		Base:        config.Base{UpdatedByID: uint(uID)},
 		Name:        format.Name,
 		Slug:        formatSlug,
 		Description: format.Description,

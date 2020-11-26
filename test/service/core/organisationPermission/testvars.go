@@ -31,7 +31,7 @@ var undecodableData = map[string]interface{}{
 	"spes":            5,
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "media", "posts", "fact_check"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "organisation_id", "spaces", "media", "posts", "fact_check"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)
 var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "organisation_permissions"`)
@@ -45,5 +45,5 @@ func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact_check"]))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"], Data["fact_check"]))
 }

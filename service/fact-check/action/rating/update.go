@@ -41,6 +41,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	ratingID := chi.URLParam(r, "rating_id")
 	id, err := strconv.Atoi(ratingID)
 
@@ -133,6 +140,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tx.Model(&result).Updates(model.Rating{
+		Base:         config.Base{UpdatedByID: uint(uID)},
 		Name:         rating.Name,
 		Slug:         ratingSlug,
 		MediumID:     mediumID,

@@ -38,7 +38,7 @@ var defaultData = []map[string]interface{}{
 	},
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "name", "slug"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "formats"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "formats" SET "deleted_at"=`)
@@ -57,7 +57,7 @@ func slugCheckMock(mock sqlmock.Sqlmock) {
 func formatInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	mock.ExpectQuery(`INSERT INTO "formats"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, Data["name"], Data["slug"], "", 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], "", 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -80,7 +80,7 @@ func SelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, Data["name"], Data["slug"]))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"]))
 }
 
 // check whether format is associated with any post before deleting
@@ -93,7 +93,7 @@ func formatPostExpect(mock sqlmock.Sqlmock, count int) {
 func formatUpdateMock(mock sqlmock.Sqlmock, format map[string]interface{}) {
 	mock.ExpectBegin()
 	mock.ExpectExec(`UPDATE \"formats\"`).
-		WithArgs(test.AnyTime{}, format["name"], format["slug"], 1).
+		WithArgs(test.AnyTime{}, 1, format["name"], format["slug"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 }
 
@@ -112,5 +112,5 @@ func selectAfterUpdate(mock sqlmock.Sqlmock, format map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, format["name"], format["slug"]))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, format["name"], format["slug"]))
 }

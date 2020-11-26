@@ -91,9 +91,5 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	for i := range result.Nodes {
-		addProxyURL(&result.Nodes[i])
-	}
-
 	renderx.JSON(w, http.StatusOK, result)
 }

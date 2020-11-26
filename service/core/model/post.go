@@ -40,6 +40,8 @@ type PostAuthor struct {
 	PostID   uint `gorm:"column:post_id" json:"post_id"`
 }
 
+var postUser config.ContextKey = "post_user"
+
 // BeforeSave - validation for associations
 func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
 	if post.FeaturedMediumID != nil && *post.FeaturedMediumID > 0 {
@@ -80,5 +82,35 @@ func (post *Post) BeforeSave(tx *gorm.DB) (e error) {
 		}
 	}
 
+	return nil
+}
+
+// BeforeCreate hook
+func (post *Post) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(postUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	post.CreatedByID = uint(uID)
+	post.UpdatedByID = uint(uID)
+	return nil
+}
+
+// BeforeCreate hook
+func (pa *PostAuthor) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(postUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	pa.CreatedByID = uint(uID)
+	pa.UpdatedByID = uint(uID)
 	return nil
 }

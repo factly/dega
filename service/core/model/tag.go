@@ -2,6 +2,7 @@ package model
 
 import (
 	"github.com/factly/dega-server/config"
+	"gorm.io/gorm"
 )
 
 // Tag model
@@ -14,4 +15,21 @@ type Tag struct {
 	SpaceID     uint    `gorm:"column:space_id" json:"space_id"`
 	Space       *Space  `json:"space,omitempty"`
 	Posts       []*Post `gorm:"many2many:post_tags;" json:"posts"`
+}
+
+var tagUser config.ContextKey = "tag_user"
+
+// BeforeCreate hook
+func (tag *Tag) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(tagUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	tag.CreatedByID = uint(uID)
+	tag.UpdatedByID = uint(uID)
+	return nil
 }

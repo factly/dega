@@ -70,3 +70,37 @@ func (claim *Claim) BeforeSave(tx *gorm.DB) (e error) {
 
 	return nil
 }
+
+var claimUser config.ContextKey = "claim_user"
+
+// BeforeCreate hook
+func (claim *Claim) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(claimUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	claim.CreatedByID = uint(uID)
+	claim.UpdatedByID = uint(uID)
+	return nil
+}
+
+var postUser config.ContextKey = "post_user"
+
+// BeforeCreate hook
+func (pc *PostClaim) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(postUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	pc.CreatedByID = uint(uID)
+	pc.UpdatedByID = uint(uID)
+	return nil
+}

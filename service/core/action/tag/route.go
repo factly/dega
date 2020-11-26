@@ -1,6 +1,7 @@
 package tag
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
@@ -12,6 +13,8 @@ type tag struct {
 	IsFeatured  bool   `json:"is_featured"`
 	Description string `json:"description"`
 }
+
+var userContext config.ContextKey = "tag_user"
 
 // Router - Group of tag router
 func Router() chi.Router {
