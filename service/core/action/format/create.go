@@ -41,13 +41,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)

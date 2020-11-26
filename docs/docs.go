@@ -3656,6 +3656,9 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
                 },
@@ -3676,6 +3679,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3684,6 +3690,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3726,6 +3735,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3749,6 +3761,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3788,6 +3803,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3796,6 +3814,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3829,6 +3850,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3841,6 +3865,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3865,6 +3892,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3879,6 +3909,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3913,6 +3946,9 @@ var doc = `{
                 "updated_at": {
                     "type": "string"
                 },
+                "updated_by_id": {
+                    "type": "integer"
+                },
                 "url": {
                     "type": "string"
                 }
@@ -3924,11 +3960,11 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
-                },
-                "fact_check": {
-                    "type": "boolean"
                 },
                 "id": {
                     "type": "integer"
@@ -3947,6 +3983,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4001,6 +4040,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4064,6 +4106,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4072,6 +4117,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4105,6 +4153,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4116,6 +4167,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4174,6 +4228,9 @@ var doc = `{
                 "updated_at": {
                     "type": "string"
                 },
+                "updated_by_id": {
+                    "type": "integer"
+                },
                 "verification_codes": {
                     "type": "string"
                 }
@@ -4184,6 +4241,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4202,6 +4262,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4214,6 +4277,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4247,6 +4313,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4256,11 +4325,11 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
-                },
-                "fact_check": {
-                    "type": "boolean"
                 },
                 "id": {
                     "type": "integer"
@@ -4282,6 +4351,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4290,6 +4362,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4317,6 +4392,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4326,9 +4404,6 @@ var doc = `{
                 "organisation_id"
             ],
             "properties": {
-                "fact_check": {
-                    "type": "boolean"
-                },
                 "media": {
                     "type": "integer"
                 },
@@ -4487,6 +4562,9 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
                 },
@@ -4549,6 +4627,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4630,6 +4711,9 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
                 },
@@ -4653,6 +4737,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4661,6 +4748,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4673,6 +4763,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4735,6 +4828,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4799,6 +4895,9 @@ var doc = `{
                 "updated_at": {
                     "type": "string"
                 },
+                "updated_by_id": {
+                    "type": "integer"
+                },
                 "verification_codes": {
                     "type": "string"
                 }
@@ -4810,7 +4909,7 @@ var doc = `{
                 "nodes": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/model.SpacePermission"
+                        "$ref": "#/definitions/spacePermission.spaceWithPermissions"
                     }
                 },
                 "total": {
@@ -4829,6 +4928,86 @@ var doc = `{
                 },
                 "space_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "spacePermission.spaceWithPermissions": {
+            "type": "object",
+            "properties": {
+                "contact_info": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fav_icon": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "fav_icon_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "logo": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_id": {
+                    "type": "integer"
+                },
+                "logo_mobile": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_mobile_id": {
+                    "type": "integer"
+                },
+                "mobile_icon": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "mobile_icon_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "permission": {
+                    "$ref": "#/definitions/model.SpacePermission"
+                },
+                "site_address": {
+                    "type": "string"
+                },
+                "site_title": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "social_media_urls": {
+                    "type": "string"
+                },
+                "tag_line": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                },
+                "verification_codes": {
+                    "type": "string"
                 }
             }
         },
@@ -4889,6 +5068,9 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
                 },
@@ -4915,6 +5097,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         }

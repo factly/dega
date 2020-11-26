@@ -172,6 +172,8 @@ definitions:
         type: string
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       email:
@@ -186,11 +188,15 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   model.Category:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -219,6 +225,8 @@ definitions:
         type: integer
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   model.Claim:
     properties:
@@ -234,6 +242,8 @@ definitions:
         type: integer
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -260,11 +270,15 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   model.Claimant:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -287,11 +301,15 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   model.Format:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -308,6 +326,8 @@ definitions:
         type: integer
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     required:
     - name
     - slug
@@ -320,6 +340,8 @@ definitions:
         type: string
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -342,6 +364,8 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
       url:
         type: string
     type: object
@@ -349,10 +373,10 @@ definitions:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
-      fact_check:
-        type: boolean
       id:
         type: integer
       media:
@@ -365,6 +389,8 @@ definitions:
         type: integer
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   model.Permission:
     properties:
@@ -400,6 +426,8 @@ definitions:
         type: array
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -442,11 +470,15 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   model.Rating:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -469,6 +501,8 @@ definitions:
         type: integer
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   model.Space:
     properties:
@@ -476,6 +510,8 @@ definitions:
         type: string
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -514,6 +550,8 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
       verification_codes:
         type: string
     type: object
@@ -521,6 +559,8 @@ definitions:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       fact_check:
@@ -533,11 +573,15 @@ definitions:
         type: integer
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   model.Tag:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -560,6 +604,8 @@ definitions:
         type: integer
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     required:
     - name
     - slug
@@ -568,10 +614,10 @@ definitions:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
-      fact_check:
-        type: boolean
       id:
         type: integer
       is_admin:
@@ -586,11 +632,15 @@ definitions:
         type: integer
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   organisationPermission.orgWithPermissions:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -609,11 +659,11 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   organisationPermission.organisationPermission:
     properties:
-      fact_check:
-        type: boolean
       media:
         type: integer
       organisation_id:
@@ -720,6 +770,8 @@ definitions:
         type: array
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -762,6 +814,8 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   post.templateData:
     properties:
@@ -814,6 +868,8 @@ definitions:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       id:
@@ -830,11 +886,15 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   space.organisationUser:
     properties:
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       id:
@@ -843,6 +903,8 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
   space.space:
     properties:
@@ -884,6 +946,8 @@ definitions:
         type: string
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       description:
@@ -926,6 +990,8 @@ definitions:
         type: string
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
       verification_codes:
         type: string
     type: object
@@ -933,7 +999,7 @@ definitions:
     properties:
       nodes:
         items:
-          $ref: '#/definitions/model.SpacePermission'
+          $ref: '#/definitions/spacePermission.spaceWithPermissions'
         type: array
       total:
         type: integer
@@ -946,6 +1012,59 @@ definitions:
         type: integer
     required:
     - space_id
+    type: object
+  spacePermission.spaceWithPermissions:
+    properties:
+      contact_info:
+        type: string
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      fav_icon:
+        $ref: '#/definitions/model.Medium'
+      fav_icon_id:
+        type: integer
+      id:
+        type: integer
+      logo:
+        $ref: '#/definitions/model.Medium'
+      logo_id:
+        type: integer
+      logo_mobile:
+        $ref: '#/definitions/model.Medium'
+      logo_mobile_id:
+        type: integer
+      mobile_icon:
+        $ref: '#/definitions/model.Medium'
+      mobile_icon_id:
+        type: integer
+      name:
+        type: string
+      organisation_id:
+        type: integer
+      permission:
+        $ref: '#/definitions/model.SpacePermission'
+      site_address:
+        type: string
+      site_title:
+        type: string
+      slug:
+        type: string
+      social_media_urls:
+        type: string
+      tag_line:
+        type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+      verification_codes:
+        type: string
     type: object
   tag.tag:
     properties:
@@ -984,6 +1103,8 @@ definitions:
         type: string
       created_at:
         type: string
+      created_by_id:
+        type: integer
       deleted_at:
         type: string
       email:
@@ -1002,6 +1123,8 @@ definitions:
         type: array
       updated_at:
         type: string
+      updated_by_id:
+        type: integer
     type: object
 host: localhost:7789
 info:

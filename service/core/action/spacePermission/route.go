@@ -1,6 +1,7 @@
 package spacePermission
 
 import (
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
@@ -9,6 +10,8 @@ type spacePermission struct {
 	SpaceID   uint `json:"space_id" validate:"required"`
 	FactCheck bool `json:"fact_check"`
 }
+
+var userContext config.ContextKey = "space_perm_user"
 
 // Router - Group of currency router
 func Router() chi.Router {

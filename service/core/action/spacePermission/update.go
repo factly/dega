@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/factly/dega-server/util"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/errorx"
@@ -29,6 +31,13 @@ import (
 // @Success 200 {object} model.SpacePermission
 // @Router /core/permissions/spaces/{permission_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	permissionID := chi.URLParam(r, "permission_id")
 	id, err := strconv.Atoi(permissionID)
 
@@ -65,7 +74,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = config.DB.Model(&result).Select("FactCheck", "UpdatedAt").Updates(&model.SpacePermission{
+	err = config.DB.Model(&result).Select("FactCheck", "UpdatedAt", "UpdatedByID").Updates(&model.SpacePermission{
+		Base:      config.Base{UpdatedByID: uint(uID)},
 		FactCheck: permission.FactCheck,
 	}).First(&result).Error
 
