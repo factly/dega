@@ -31,7 +31,7 @@ func TestTagDetails(t *testing.T) {
 			WithPath("tag_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("tag record not found", func(t *testing.T) {

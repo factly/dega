@@ -33,7 +33,7 @@ func TestFormatDelete(t *testing.T) {
 			WithPath("format_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 
 	})
 

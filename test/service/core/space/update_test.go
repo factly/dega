@@ -51,7 +51,7 @@ func TestSpaceUpdate(t *testing.T) {
 			WithHeader("X-User", "1").
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("unprocessable space body", func(t *testing.T) {

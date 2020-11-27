@@ -93,7 +93,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	if sameValueRatings > 0 {
 		loggerx.Error(errors.New(`rating with same numeric value exist`))
-		errorx.Render(w, errorx.Parser(errorx.GetMessage(`rating with same numeric value exist`, http.StatusUnauthorized)))
+		errorx.Render(w, errorx.Parser(errorx.GetMessage(`rating with same numeric value exist`, http.StatusUnprocessableEntity)))
 		return
 	}
 

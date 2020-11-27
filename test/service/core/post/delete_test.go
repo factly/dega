@@ -36,7 +36,7 @@ func TestPostDelete(t *testing.T) {
 			WithPath("post_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 
 	})
 

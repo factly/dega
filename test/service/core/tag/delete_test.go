@@ -33,7 +33,7 @@ func TestTagDelete(t *testing.T) {
 			WithPath("tag_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 
 	})
 

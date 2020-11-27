@@ -35,7 +35,7 @@ func TestSpacePermissionUpdate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 		test.ExpectationsMet(t, mock)
 	})
 

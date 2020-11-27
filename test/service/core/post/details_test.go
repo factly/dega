@@ -28,7 +28,7 @@ func TestPostDetails(t *testing.T) {
 			WithPath("post_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("post record not found", func(t *testing.T) {

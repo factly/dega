@@ -36,7 +36,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WithJSON(Data).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 		test.ExpectationsMet(t, mock)
 	})
 

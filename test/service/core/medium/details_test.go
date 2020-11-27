@@ -28,7 +28,7 @@ func TestMediumDetails(t *testing.T) {
 			WithPath("medium_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("medium record not found", func(t *testing.T) {

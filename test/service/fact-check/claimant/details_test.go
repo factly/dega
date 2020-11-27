@@ -31,7 +31,7 @@ func TestClaimantDetails(t *testing.T) {
 			WithPath("claimant_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("claimant record not found", func(t *testing.T) {

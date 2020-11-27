@@ -35,7 +35,7 @@ func TestRatingDelete(t *testing.T) {
 			WithPath("rating_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 
 	})
 

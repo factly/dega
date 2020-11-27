@@ -43,7 +43,7 @@ func TestRatingUpdate(t *testing.T) {
 			WithPath("rating_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("rating record not found", func(t *testing.T) {
