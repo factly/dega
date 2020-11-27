@@ -40,7 +40,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -82,19 +82,19 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	sID, err := util.GetSpace(ctx)
 	if err != nil {
 		loggerx.Error(err)
-		return nil, errorx.InternalServerError()
+		return nil, errorx.Unauthorized()
 	}
 
 	oID, err := util.GetOrganisation(ctx)
 	if err != nil {
 		loggerx.Error(err)
-		return nil, errorx.InternalServerError()
+		return nil, errorx.Unauthorized()
 	}
 
 	uID, err := util.GetUser(ctx)
 	if err != nil {
 		loggerx.Error(err)
-		return nil, errorx.InternalServerError()
+		return nil, errorx.Unauthorized()
 	}
 
 	if viper.GetBool("create_super_organisation") {
@@ -105,10 +105,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		}).First(&permission).Error
 
 		if err != nil {
-			return nil, errorx.Message{
-				Code:    http.StatusUnprocessableEntity,
-				Message: "cannot create more posts",
-			}
+			return nil, errorx.GetMessage("cannot create more posts", http.StatusUnprocessableEntity)
 		}
 
 		// Fetch total number of posts in space
@@ -118,10 +115,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		}).Where("status != 'template'").Count(&totPosts)
 
 		if totPosts >= permission.Posts && permission.Posts > 0 {
-			return nil, errorx.Message{
-				Code:    http.StatusUnprocessableEntity,
-				Message: "cannot create more posts",
-			}
+			return nil, errorx.GetMessage("cannot create more posts", http.StatusUnprocessableEntity)
 		}
 	}
 

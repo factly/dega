@@ -40,7 +40,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -66,7 +66,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("category is associated with post"))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.CannotDelete("category", "post")))
 		return
 	}
 
@@ -80,7 +80,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 
@@ -88,7 +88,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
 

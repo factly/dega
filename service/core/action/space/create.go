@@ -35,7 +35,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -64,10 +64,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	err = util.CheckSpaceKetoPermission("create", uint(space.OrganisationID), uint(uID))
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Message{
-			Code:    http.StatusUnauthorized,
-			Message: err.Error(),
-		}))
+		errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusUnauthorized)))
 		return
 	}
 
@@ -88,10 +85,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil && space.OrganisationID != superOrgID {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.Message{
-				Code:    http.StatusUnprocessableEntity,
-				Message: "cannot create more spaces",
-			}))
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnauthorized)))
 			return
 		}
 
@@ -103,10 +97,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			}).Count(&totSpaces)
 
 			if totSpaces >= permission.Spaces && permission.Spaces > 0 {
-				errorx.Render(w, errorx.Parser(errorx.Message{
-					Code:    http.StatusUnprocessableEntity,
-					Message: "cannot create more spaces",
-				}))
+				errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnauthorized)))
 				return
 			}
 		}

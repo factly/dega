@@ -23,10 +23,7 @@ import (
 func details(w http.ResponseWriter, r *http.Request) {
 	url := r.URL.Query().Get("url")
 	if url == "" {
-		errorx.Render(w, errorx.Parser(errorx.Message{
-			Code:    http.StatusBadRequest,
-			Message: "please pass url query parameter",
-		}))
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("please pass url query parameter", http.StatusBadRequest)))
 		return
 	}
 
@@ -38,10 +35,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	} else if metaType == "iframely" {
 		path = "/iframely?url=" + url
 	} else {
-		errorx.Render(w, errorx.Parser(errorx.Message{
-			Code:    http.StatusBadRequest,
-			Message: "please pass valid type query parameter",
-		}))
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("please pass valid type query parameter", http.StatusBadRequest)))
 		return
 	}
 

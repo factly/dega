@@ -87,7 +87,7 @@ func CheckSpaceKetoPermission(action string, oID, uID uint) error {
 	}
 
 	if resStatus != 200 {
-		return errors.New("not allowed")
+		return errors.New("Permission not granted")
 	}
 	return nil
 }

@@ -36,14 +36,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -80,7 +80,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// Check if rating with same name exist
 	if util.CheckName(uint(sID), rating.Name, tableName) {
 		loggerx.Error(errors.New(`rating with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
 	}
 
@@ -93,7 +93,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	if sameValueRatings > 0 {
 		loggerx.Error(errors.New(`rating with same numeric value exist`))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.GetMessage(`rating with same numeric value exist`, http.StatusUnauthorized)))
 		return
 	}
 
