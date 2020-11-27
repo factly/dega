@@ -7,7 +7,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service/fact-check/action/rating"
-	"github.com/factly/dega-server/test/service/core/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/spacePermission"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -34,7 +34,7 @@ func TestDefaultRatingCreate(t *testing.T) {
 
 	t.Run("create default ratings", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		mock.ExpectBegin()
 
@@ -60,7 +60,7 @@ func TestDefaultRatingCreate(t *testing.T) {
 	t.Run("when cannot open data file", func(t *testing.T) {
 		rating.DataFile = "nofile.json"
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		e.POST(defaultsPath).
 			WithHeaders(headers).
@@ -74,7 +74,7 @@ func TestDefaultRatingCreate(t *testing.T) {
 	t.Run("when cannot parse data file", func(t *testing.T) {
 		rating.DataFile = "invalidData.json"
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		e.POST(defaultsPath).
 			WithHeaders(headers).
@@ -87,7 +87,7 @@ func TestDefaultRatingCreate(t *testing.T) {
 	t.Run("when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		mock.ExpectBegin()
 

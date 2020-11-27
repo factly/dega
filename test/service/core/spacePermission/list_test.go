@@ -1,19 +1,20 @@
-package organisationPermission
+package spacePermission
 
 import (
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
-	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/space"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestOrganisationPermissionList(t *testing.T) {
+func TestSpacePermissionList(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	test.MockServer()
@@ -29,8 +30,11 @@ func TestOrganisationPermissionList(t *testing.T) {
 	t.Run("get empty list of permissions", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "spaces"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "spaces"`)).
+			WillReturnRows(sqlmock.NewRows(space.Columns))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -38,10 +42,9 @@ func TestOrganisationPermissionList(t *testing.T) {
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			Value("nodes").
-			Array().
-			Length().
-			Equal(1)
+			Value("total").
+			Number().
+			Equal(0)
 
 		test.ExpectationsMet(t, mock)
 	})
@@ -49,9 +52,12 @@ func TestOrganisationPermissionList(t *testing.T) {
 	t.Run("get list of permissions", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"]))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "spaces"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
+
+		space.SelectQuery(mock)
+
+		SelectQuery(mock)
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -66,7 +72,7 @@ func TestOrganisationPermissionList(t *testing.T) {
 			Value("permission").
 			Object().
 			ContainsMap(Data)
+
 		test.ExpectationsMet(t, mock)
 	})
-
 }

@@ -65,6 +65,36 @@ func TestSpaceCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("creating space permission fails", func(t *testing.T) {
+		organisationPermission.SelectQuery(mock, 1)
+
+		mock.ExpectQuery(countQuery).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
+
+		slugCheckMock(mock)
+		mock.ExpectBegin()
+		mock.ExpectQuery(`INSERT INTO "spaces"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
+			WillReturnRows(sqlmock.
+				NewRows([]string{"fav_icon_id", "mobile_icon_id", "logo_id", "logo_mobile_id", "id"}).
+				AddRow(1, 1, 1, 1, 1))
+
+		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1).
+			WillReturnError(errors.New("cannot create space permission"))
+
+		mock.ExpectRollback()
+
+		e.POST(basePath).
+			WithHeader("X-User", "1").
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusInternalServerError)
+
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("create space when no permission found", func(t *testing.T) {
 		Data["organisation_id"] = 2
 

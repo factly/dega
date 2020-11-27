@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/factly/dega-server/test/service/core/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/spacePermission"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -33,7 +33,7 @@ func TestRatingList(t *testing.T) {
 
 	t.Run("get empty list of ratings", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		ratingCountQuery(mock, 0)
 
 		mock.ExpectQuery(selectQuery).
@@ -52,7 +52,7 @@ func TestRatingList(t *testing.T) {
 
 	t.Run("get non-empty list of ratings", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		ratingCountQuery(mock, len(ratinglist))
 
 		mock.ExpectQuery(selectQuery).
@@ -79,7 +79,7 @@ func TestRatingList(t *testing.T) {
 
 	t.Run("get ratings with pagination", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		ratingCountQuery(mock, len(ratinglist))
 
 		mock.ExpectQuery(paginationQuery).

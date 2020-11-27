@@ -1,6 +1,7 @@
-package organisationPermission
+package spacePermission
 
 import (
+	"errors"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -12,7 +13,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestOrganisationPermissionCreate(t *testing.T) {
+func TestSpacePermissionCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
@@ -46,17 +47,29 @@ func TestOrganisationPermissionCreate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
-	t.Run("create permission", func(t *testing.T) {
+	t.Run("space's permission already exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(countQuery).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).
-				AddRow(0))
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
+
+		e.POST(basePath).
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("create space permission", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		mock.ExpectQuery(countQuery).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
 		mock.ExpectBegin()
-		mock.ExpectQuery(`INSERT INTO "organisation_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"]).
+		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))
@@ -73,20 +86,23 @@ func TestOrganisationPermissionCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("permission of the organisation already exist", func(t *testing.T) {
+	t.Run("creating space permission fails", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(countQuery).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).
-				AddRow(1))
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
+
+		mock.ExpectBegin()
+		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"]).
+			WillReturnError(errors.New("cannot create space permission"))
+		mock.ExpectRollback()
 
 		e.POST(basePath).
 			WithJSON(Data).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusUnprocessableEntity)
+			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
-
 	})
 }

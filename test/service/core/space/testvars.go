@@ -92,7 +92,9 @@ func insertMock(mock sqlmock.Sqlmock) {
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"fav_icon_id", "mobile_icon_id", "logo_id", "logo_mobile_id", "id"}).
-			AddRow(0, 0, 0, 0, 1))
+			AddRow(1, 1, 1, 1, 1))
+
+	spacePermissionCreateQuery(mock)
 }
 
 func mediumNotFound(mock sqlmock.Sqlmock) {
@@ -152,4 +154,12 @@ func oneMediaIDZeroMock(mock sqlmock.Sqlmock, updateargs ...driver.Value) {
 	medium.SelectWithOutSpace(mock)
 	medium.SelectWithOutSpace(mock)
 	mock.ExpectCommit()
+}
+
+func spacePermissionCreateQuery(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(`INSERT INTO "space_permissions"`).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1).
+		WillReturnRows(sqlmock.
+			NewRows([]string{"id"}).
+			AddRow(1))
 }

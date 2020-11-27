@@ -144,11 +144,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Create SpacePermission for super organisation
 	if superOrgID == space.OrganisationID {
+		var spacePermContext config.ContextKey = "space_perm_user"
 		spacePermission := model.SpacePermission{
 			SpaceID:   result.ID,
 			FactCheck: true,
 		}
-		if err = tx.Create(&spacePermission).Error; err != nil {
+		if err = tx.WithContext(context.WithValue(r.Context(), spacePermContext, uID)).Create(&spacePermission).Error; err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
