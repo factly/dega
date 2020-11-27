@@ -66,15 +66,15 @@ func GetSuperOrganisationID() (int, error) {
 func FactCheckPermission(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if viper.GetBool("create_super_organisation") {
-			oID, err := GetOrganisation(r.Context())
+			sID, err := GetSpace(r.Context())
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			permission := model.OrganisationPermission{}
-			err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-				OrganisationID: uint(oID),
+			permission := model.SpacePermission{}
+			err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
+				SpaceID: uint(sID),
 			}).First(&permission).Error
 
 			if err != nil {

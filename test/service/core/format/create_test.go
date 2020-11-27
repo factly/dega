@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/spacePermission"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -58,7 +58,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -76,7 +76,7 @@ func TestFormatCreate(t *testing.T) {
 	t.Run("create format with slug is empty", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -99,7 +99,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -120,9 +120,9 @@ func TestFormatCreate(t *testing.T) {
 	t.Run("create fact-check when not permitted", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "space_permissions"`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts", "fact_check"}))
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "space_id", "fact_check"}))
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -135,7 +135,7 @@ func TestFormatCreate(t *testing.T) {
 	t.Run("format with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 1, Data["name"])
 
 		e.POST(basePath).
@@ -150,7 +150,7 @@ func TestFormatCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 

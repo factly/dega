@@ -26,10 +26,9 @@ type orgPermissionRes struct {
 // @ID get-org-permission-by-id
 // @Produce  json
 // @Param X-User header string true "User ID"
-// @Param permission_id path string true "Permission ID"
 // @Param X-Space header string true "Space ID"
 // @Success 200 {object} orgPermissionRes
-// @Router /core/organisations/permissions/my [get]
+// @Router /core/permissions/organisations/my [get]
 func details(w http.ResponseWriter, r *http.Request) {
 	oID, err := util.GetOrganisation(r.Context())
 	if err != nil {

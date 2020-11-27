@@ -1,12 +1,10 @@
-package organisationPermission
+package spacePermission
 
 import (
 	"context"
 	"encoding/json"
 	"errors"
 	"net/http"
-
-	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -17,19 +15,19 @@ import (
 	"github.com/factly/x/validationx"
 )
 
-// create - Create organisation permission
-// @Summary Create organisation permission
-// @Description Create organisation permission
-// @Tags Organisation_Permissions
-// @ID add-org-permission
+// create - Create Space permission
+// @Summary Create Space permission
+// @Description Create Space permission
+// @Tags Space_Permissions
+// @ID add-space-permission
 // @Consume json
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
-// @Param Permission body organisationPermission true "Permission Object"
-// @Success 201 {object} model.OrganisationPermission
+// @Param Permission body spacePermission true "Permission Object"
+// @Success 201 {object} model.SpacePermission
 // @Failure 400 {array} string
-// @Router /core/permissions/organisations [post]
+// @Router /core/permissions/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
@@ -38,7 +36,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	permission := organisationPermission{}
+	permission := spacePermission{}
 
 	err = json.NewDecoder(r.Body).Decode(&permission)
 	if err != nil {
@@ -54,19 +52,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if permission.Spaces == 0 {
-		permission.Spaces = viper.GetInt64("default_number_of_spaces")
-	}
-	if permission.Media == 0 {
-		permission.Media = viper.GetInt64("default_number_of_media")
-	}
-	if permission.Posts == 0 {
-		permission.Posts = viper.GetInt64("default_number_of_posts")
-	}
-
 	var totPerms int64
-	config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-		OrganisationID: permission.OrganisationID,
+	config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
+		SpaceID: permission.SpaceID,
 	}).Count(&totPerms)
 
 	if totPerms > 0 {
@@ -75,14 +63,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := model.OrganisationPermission{
-		OrganisationID: permission.OrganisationID,
-		Spaces:         permission.Spaces,
-		Media:          permission.Media,
-		Posts:          permission.Posts,
+	result := model.SpacePermission{
+		SpaceID:   permission.SpaceID,
+		FactCheck: permission.FactCheck,
 	}
 
-	config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Model(&model.OrganisationPermission{}).Create(&result)
+	err = config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Create(&result).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusCreated, result)
 }

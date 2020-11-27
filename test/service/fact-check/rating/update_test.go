@@ -10,7 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/spacePermission"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -38,7 +38,7 @@ func TestRatingUpdate(t *testing.T) {
 
 	t.Run("invalid rating id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		e.PUT(path).
 			WithPath("rating_id", "invalid_id").
 			WithHeaders(headers).
@@ -48,7 +48,7 @@ func TestRatingUpdate(t *testing.T) {
 
 	t.Run("rating record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		recordNotFoundMock(mock)
 
 		e.PUT(path).
@@ -61,7 +61,7 @@ func TestRatingUpdate(t *testing.T) {
 	t.Run("Unable to decode rating data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		e.PUT(path).
 			WithPath("rating_id", 1).
@@ -75,7 +75,7 @@ func TestRatingUpdate(t *testing.T) {
 	t.Run("Unprocessable rating", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		e.PUT(path).
 			WithPath("rating_id", 1).
@@ -90,7 +90,7 @@ func TestRatingUpdate(t *testing.T) {
 	t.Run("update rating", func(t *testing.T) {
 		updatedRating["slug"] = "true"
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 
@@ -108,7 +108,7 @@ func TestRatingUpdate(t *testing.T) {
 
 	t.Run("update rating by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		updatedRating["slug"] = "true"
 		SelectWithSpace(mock)
 
@@ -131,7 +131,7 @@ func TestRatingUpdate(t *testing.T) {
 
 	t.Run("update rating with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		updatedRating["slug"] = "true-test"
 
 		SelectWithSpace(mock)
@@ -155,7 +155,7 @@ func TestRatingUpdate(t *testing.T) {
 
 	t.Run("medium not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		updatedRating["slug"] = "true-test"
 
 		SelectWithSpace(mock)
@@ -181,7 +181,7 @@ func TestRatingUpdate(t *testing.T) {
 		updatedRating["slug"] = "true"
 		updatedRating["name"] = "New Rating"
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 
@@ -201,7 +201,7 @@ func TestRatingUpdate(t *testing.T) {
 		updatedRating["slug"] = "true"
 		updatedRating["numeric_value"] = 3
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 
@@ -221,7 +221,7 @@ func TestRatingUpdate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		updatedRating["slug"] = "true"
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 

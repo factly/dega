@@ -7,7 +7,7 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/spacePermission"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -30,7 +30,7 @@ func TestRatingCreate(t *testing.T) {
 	t.Run("Unprocessable rating", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		e.POST(basePath).
 			WithJSON(invalidData).
@@ -43,7 +43,7 @@ func TestRatingCreate(t *testing.T) {
 	t.Run("Unable to decode rating", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -55,7 +55,7 @@ func TestRatingCreate(t *testing.T) {
 	t.Run("create rating", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
 		ratingCountQuery(mock, 0)
@@ -77,7 +77,7 @@ func TestRatingCreate(t *testing.T) {
 	t.Run("create rating with slug is empty", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
 		ratingCountQuery(mock, 0)
@@ -103,7 +103,7 @@ func TestRatingCreate(t *testing.T) {
 	t.Run("medium does not belong same space", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
 		ratingCountQuery(mock, 0)
@@ -122,7 +122,7 @@ func TestRatingCreate(t *testing.T) {
 
 	t.Run("rating with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 1, Data["name"])
 
@@ -136,7 +136,7 @@ func TestRatingCreate(t *testing.T) {
 
 	t.Run("rating with same numeric value exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
 		ratingCountQuery(mock, 1)
@@ -152,7 +152,7 @@ func TestRatingCreate(t *testing.T) {
 	t.Run("create rating when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 
 		sameNameCount(mock, 0, Data["name"])
 		ratingCountQuery(mock, 0)

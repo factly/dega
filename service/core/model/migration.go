@@ -13,5 +13,6 @@ func Migration() {
 		&Post{},
 		&PostAuthor{},
 		&OrganisationPermission{},
+		&SpacePermission{},
 	)
 }

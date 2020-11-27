@@ -1,4 +1,4 @@
-package organisationPermission
+package spacePermission
 
 import (
 	"net/http"
@@ -12,17 +12,17 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// delete - Delete Organisation permission by id
-// @Summary Delete a Organisation permission
-// @Description Delete Organisation permission by ID
-// @Tags Organisation_Permissions
-// @ID delete-org-permission-by-id
+// delete - Delete Space permission by id
+// @Summary Delete a Space permission
+// @Description Delete Space permission by ID
+// @Tags Space_Permissions
+// @ID delete-space-permission-by-id
 // @Param X-User header string true "User ID"
 // @Param permission_id path string true "Permission ID"
 // @Param X-Space header string true "Space ID"
 // @Success 200
 // @Failure 400 {array} string
-// @Router  /core/permissions/organisations/{permission_id} [delete]
+// @Router  /core/permissions/spaces/{permission_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 	permissionID := chi.URLParam(r, "permission_id")
 	id, err := strconv.Atoi(permissionID)
@@ -33,10 +33,10 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := model.OrganisationPermission{}
+	result := model.SpacePermission{}
 	result.ID = uint(id)
 
-	// check record exists or not
+	// check if record exists
 	err = config.DB.First(&result).Error
 	if err != nil {
 		loggerx.Error(err)

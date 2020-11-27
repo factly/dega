@@ -859,7 +859,7 @@ var doc = `{
                 }
             }
         },
-        "/core/organisations/permissions": {
+        "/core/permissions/organisations": {
             "get": {
                 "description": "Get all organisation permissions",
                 "produces": [
@@ -958,7 +958,7 @@ var doc = `{
                 }
             }
         },
-        "/core/organisations/permissions/my": {
+        "/core/permissions/organisations/my": {
             "get": {
                 "description": "Get my organisation permissions",
                 "produces": [
@@ -979,13 +979,6 @@ var doc = `{
                     },
                     {
                         "type": "string",
-                        "description": "Permission ID",
-                        "name": "permission_id",
-                        "in": "path",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
                         "description": "Space ID",
                         "name": "X-Space",
                         "in": "header",
@@ -1002,7 +995,7 @@ var doc = `{
                 }
             }
         },
-        "/core/organisations/permissions/{permission_id}": {
+        "/core/permissions/organisations/{permission_id}": {
             "put": {
                 "description": "Update Organisation permission by ID",
                 "produces": [
@@ -1060,6 +1053,279 @@ var doc = `{
                 ],
                 "summary": "Delete a Organisation permission",
                 "operationId": "delete-org-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/permissions/spaces": {
+            "get": {
+                "description": "Get all Space permissions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Show all Space permissions",
+                "operationId": "get-all-space-permissions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/spacePermission.paging"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Space permission",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Create Space permission",
+                "operationId": "add-space-permission",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Permission Object",
+                        "name": "Permission",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/spacePermission.spacePermission"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermission"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/permissions/spaces/my": {
+            "get": {
+                "description": "Get my Space permissions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Show a my Space permissions",
+                "operationId": "get-my-space-permissions",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermission"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/permissions/spaces/{permission_id}": {
+            "get": {
+                "description": "Get Space permissions",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Show a Space permissions",
+                "operationId": "get-space-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermission"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update Space permission by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Update a Space permission by id",
+                "operationId": "update-space-permission-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Permission ID",
+                        "name": "permission_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Permission Body",
+                        "name": "Permission",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/spacePermission.spacePermission"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermission"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Space permission by ID",
+                "tags": [
+                    "Space_Permissions"
+                ],
+                "summary": "Delete a Space permission",
+                "operationId": "delete-space-permission-by-id",
                 "parameters": [
                     {
                         "type": "string",
@@ -3390,6 +3656,9 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
                 },
@@ -3410,6 +3679,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3418,6 +3690,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3460,6 +3735,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3483,6 +3761,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3522,6 +3803,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3530,6 +3814,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3563,6 +3850,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3575,6 +3865,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3599,6 +3892,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3613,6 +3909,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3647,6 +3946,9 @@ var doc = `{
                 "updated_at": {
                     "type": "string"
                 },
+                "updated_by_id": {
+                    "type": "integer"
+                },
                 "url": {
                     "type": "string"
                 }
@@ -3658,11 +3960,11 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
-                },
-                "fact_check": {
-                    "type": "boolean"
                 },
                 "id": {
                     "type": "integer"
@@ -3681,6 +3983,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3735,6 +4040,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3798,6 +4106,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3806,6 +4117,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3839,6 +4153,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3850,6 +4167,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3908,8 +4228,43 @@ var doc = `{
                 "updated_at": {
                     "type": "string"
                 },
+                "updated_by_id": {
+                    "type": "integer"
+                },
                 "verification_codes": {
                     "type": "string"
+                }
+            }
+        },
+        "model.SpacePermission": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "fact_check": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3922,6 +4277,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -3955,6 +4313,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3964,11 +4325,11 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
-                },
-                "fact_check": {
-                    "type": "boolean"
                 },
                 "id": {
                     "type": "integer"
@@ -3990,6 +4351,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -3998,6 +4362,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4025,6 +4392,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4034,9 +4404,6 @@ var doc = `{
                 "organisation_id"
             ],
             "properties": {
-                "fact_check": {
-                    "type": "boolean"
-                },
                 "media": {
                     "type": "integer"
                 },
@@ -4195,6 +4562,9 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
                 },
@@ -4257,6 +4627,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4338,6 +4711,9 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
                 },
@@ -4361,6 +4737,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4369,6 +4748,9 @@ var doc = `{
             "properties": {
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4381,6 +4763,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },
@@ -4443,6 +4828,9 @@ var doc = `{
                 },
                 "created_at": {
                     "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
                 },
                 "deleted_at": {
                     "type": "string"
@@ -4507,6 +4895,117 @@ var doc = `{
                 "updated_at": {
                     "type": "string"
                 },
+                "updated_by_id": {
+                    "type": "integer"
+                },
+                "verification_codes": {
+                    "type": "string"
+                }
+            }
+        },
+        "spacePermission.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/spacePermission.spaceWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "spacePermission.spacePermission": {
+            "type": "object",
+            "required": [
+                "space_id"
+            ],
+            "properties": {
+                "fact_check": {
+                    "type": "boolean"
+                },
+                "space_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "spacePermission.spaceWithPermissions": {
+            "type": "object",
+            "properties": {
+                "contact_info": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fav_icon": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "fav_icon_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "logo": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_id": {
+                    "type": "integer"
+                },
+                "logo_mobile": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_mobile_id": {
+                    "type": "integer"
+                },
+                "mobile_icon": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "mobile_icon_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "permission": {
+                    "$ref": "#/definitions/model.SpacePermission"
+                },
+                "site_address": {
+                    "type": "string"
+                },
+                "site_title": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "social_media_urls": {
+                    "type": "string"
+                },
+                "tag_line": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                },
                 "verification_codes": {
                     "type": "string"
                 }
@@ -4569,6 +5068,9 @@ var doc = `{
                 "created_at": {
                     "type": "string"
                 },
+                "created_by_id": {
+                    "type": "integer"
+                },
                 "deleted_at": {
                     "type": "string"
                 },
@@ -4595,6 +5097,9 @@ var doc = `{
                 },
                 "updated_at": {
                     "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         }

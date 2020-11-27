@@ -32,7 +32,16 @@ type Space struct {
 	OrganisationID    int            `gorm:"column:organisation_id" json:"organisation_id"`
 }
 
+// SpacePermission model
+type SpacePermission struct {
+	config.Base
+	FactCheck bool   `gorm:"column:fact_check" json:"fact_check"`
+	SpaceID   uint   `gorm:"column:space_id" json:"space_id"`
+	Space     *Space `gorm:"foreignKey:space_id" json:"space,omitempty"`
+}
+
 var spaceUser config.ContextKey = "space_user"
+var spacePermissionUser config.ContextKey = "space_perm_user"
 
 // BeforeUpdate checks if all associated mediums are in same space
 func (space *Space) BeforeUpdate(tx *gorm.DB) (e error) {
@@ -103,5 +112,20 @@ func (space *Space) BeforeCreate(tx *gorm.DB) error {
 
 	space.CreatedByID = uint(uID)
 	space.UpdatedByID = uint(uID)
+	return nil
+}
+
+// BeforeCreate hook
+func (sp *SpacePermission) BeforeCreate(tx *gorm.DB) error {
+	ctx := tx.Statement.Context
+	userID := ctx.Value(spacePermissionUser)
+
+	if userID == nil {
+		return nil
+	}
+	uID := userID.(int)
+
+	sp.CreatedByID = uint(uID)
+	sp.UpdatedByID = uint(uID)
 	return nil
 }

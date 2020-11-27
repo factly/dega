@@ -1,4 +1,4 @@
-package organisationPermission
+package spacePermission
 
 import (
 	"github.com/factly/dega-server/config"
@@ -6,28 +6,25 @@ import (
 	"github.com/go-chi/chi"
 )
 
-type organisationPermission struct {
-	OrganisationID uint  `json:"organisation_id" validate:"required"`
-	Spaces         int64 `json:"spaces"`
-	Media          int64 `json:"media"`
-	Posts          int64 `json:"posts"`
+type spacePermission struct {
+	SpaceID   uint `json:"space_id" validate:"required"`
+	FactCheck bool `json:"fact_check"`
 }
 
-var userContext config.ContextKey = "org_perm_user"
+var userContext config.ContextKey = "space_perm_user"
 
-// Router - Group of medium router
+// Router - Group of currency router
 func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.With(util.CheckSuperOrganisation).Get("/", list)
+	r.Get("/my", my)
 	r.With(util.CheckSuperOrganisation).Post("/", create)
-	r.Get("/my", details)
-
 	r.Route("/{permission_id}", func(r chi.Router) {
+		r.With(util.CheckSuperOrganisation).Get("/", details)
 		r.With(util.CheckSuperOrganisation).Put("/", update)
 		r.With(util.CheckSuperOrganisation).Delete("/", delete)
 	})
 
 	return r
-
 }
