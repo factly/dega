@@ -48,7 +48,7 @@ const PermissionForm = ({ onCreate, data = {} }) => {
           },
         ]}
       >
-        <InputNumber min={1} />
+        <InputNumber min={-1} />
       </Form.Item>
       <Form.Item
         name="posts"
@@ -60,7 +60,7 @@ const PermissionForm = ({ onCreate, data = {} }) => {
           },
         ]}
       >
-        <InputNumber min={1} />
+        <InputNumber min={-1} />
       </Form.Item>
       <Form.Item
         name="media"
@@ -72,7 +72,7 @@ const PermissionForm = ({ onCreate, data = {} }) => {
           },
         ]}
       >
-        <InputNumber min={1} />
+        <InputNumber min={-1} />
       </Form.Item>
       <Form.Item label="Fact Check" name="fact_check" valuePropName="checked">
         <Switch />

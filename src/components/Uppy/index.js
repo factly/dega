@@ -2,12 +2,14 @@ import React from 'react';
 import Uppy from '@uppy/core';
 import AwsS3 from '@uppy/aws-s3';
 import GoogleDrive from '@uppy/google-drive';
+import ImageEditor from '@uppy/image-editor';
 import Url from '@uppy/url';
 import { Dashboard } from '@uppy/react';
 import { useSelector } from 'react-redux';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/url/dist/style.css';
+import '@uppy/image-editor/dist/style.css';
 import { checker, maker } from '../../utils/sluger';
 
 function UppyUploader({ onUpload }) {
@@ -49,7 +51,18 @@ function UppyUploader({ onUpload }) {
   })
     .use(AwsS3, { companionUrl: window.REACT_APP_COMPANION_URL })
     .use(Url, { companionUrl: window.REACT_APP_COMPANION_URL })
-    .use(GoogleDrive, { companionUrl: window.REACT_APP_COMPANION_URL });
+    .use(GoogleDrive, { companionUrl: window.REACT_APP_COMPANION_URL })
+    .use(ImageEditor, {
+      id: 'ImageEditor',
+
+      cropperOptions: {
+        viewMode: 1,
+        background: true,
+        autoCropArea: 1,
+        responsive: true,
+      },
+      companionUrl: window.REACT_APP_COMPANION_URL,
+    });
 
   uppy.on('complete', (result) => {
     const uploadList = result.successful.map((successful) => {
@@ -76,7 +89,7 @@ function UppyUploader({ onUpload }) {
   return (
     <Dashboard
       uppy={uppy}
-      plugins={['GoogleDrive', 'Url']}
+      plugins={['GoogleDrive', 'Url', 'ImageEditor']}
       metaFields={[
         { id: 'name', name: 'Name', placeholder: 'file name' },
         { id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' },

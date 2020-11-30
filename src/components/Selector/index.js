@@ -84,6 +84,7 @@ function Selector({ mode, createEntity, value, onChange, action, display = 'name
 
   return (
     <Select
+      allowClear={mode === 'mutliple' ? false : true}
       bordered
       listHeight={128}
       loading={loading}
