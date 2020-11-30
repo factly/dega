@@ -34,7 +34,7 @@ func RegisterRoutes() http.Handler {
 		r.Mount("/meta", meta.Router())
 	}
 
-	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation).Group(func(r chi.Router) {
+	r.With(util.GormRequestID, util.CheckUser, util.CheckSpace, util.GenerateOrganisation).Group(func(r chi.Router) {
 		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
 		r.Mount("/core", core.Router())
 	})
