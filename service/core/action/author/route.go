@@ -1,7 +1,6 @@
 package author
 
 import (
-	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 )
 
@@ -9,7 +8,7 @@ import (
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.With(util.CheckKetoPolicy("authors", "get")).Get("/", list)
+	r.Get("/", list)
 	return r
 
 }
