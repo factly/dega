@@ -1,9 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Card, Spin, Collapse, Button, List } from 'antd';
+import { Card, Spin, Collapse, Button, List, Popconfirm } from 'antd';
 import deepEqual from 'deep-equal';
-import { addPost, getPosts } from '../../actions/posts';
-import { useHistory } from 'react-router-dom';
+import { addPost, deletePost, getPosts } from '../../actions/posts';
+import { Link, useHistory } from 'react-router-dom';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 
 function Template() {
   const dispatch = useDispatch();
@@ -64,19 +65,36 @@ function Template() {
           renderItem={(item) => (
             <List.Item>
               <Card
-                bordered={false}
                 cover={
                   <img
+                    style={{ cursor: 'pointer' }}
                     alt="example"
                     src="https://www.wesa.fm/sites/wesa/files/styles/medium/public/201610/Fact-CheckGraphics-Template-08.png"
                     height="230"
+                    onClick={() => {
+                      dispatch(addPost({ ...item, status: null })).then((res) =>
+                        history.push(`/posts/${res.id}/edit`),
+                      );
+                    }}
                   />
                 }
-                onClick={() => {
-                  dispatch(addPost({ ...item, status: null })).then((res) =>
-                    history.push(`/posts/${res.id}/edit`),
-                  );
-                }}
+                actions={[
+                  <Link to={`/posts/${item.id}/edit`}>
+                    <EditOutlined key="edit" />
+                  </Link>,
+                  <Popconfirm
+                    title="Sure to cancel?"
+                    onConfirm={() =>
+                      dispatch(deletePost(item.id))
+                        .then(() => {
+                          fetchTemplates();
+                        })
+                        .then(() => dispatch(getPosts({ page: 1, limit: 5 })))
+                    }
+                  >
+                    <DeleteOutlined key="delete" />
+                  </Popconfirm>,
+                ]}
               >
                 <Meta description={item.title} />
               </Card>
