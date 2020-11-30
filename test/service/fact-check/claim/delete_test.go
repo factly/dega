@@ -35,7 +35,7 @@ func TestClaimDelete(t *testing.T) {
 			WithPath("claim_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 
 	})
 

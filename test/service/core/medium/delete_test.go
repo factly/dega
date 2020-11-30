@@ -32,7 +32,7 @@ func TestMediumDelete(t *testing.T) {
 			WithPath("medium_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 
 	})
 

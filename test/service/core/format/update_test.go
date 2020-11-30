@@ -34,7 +34,7 @@ func TestFormatUpdate(t *testing.T) {
 			WithPath("format_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("format record not found", func(t *testing.T) {

@@ -48,7 +48,7 @@ func TestSpacePermissionDetails(t *testing.T) {
 			WithPath("permission_id", "invalid").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 		test.ExpectationsMet(t, mock)
 
 	})

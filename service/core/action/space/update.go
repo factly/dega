@@ -35,7 +35,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -73,10 +73,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = util.CheckSpaceKetoPermission("update", uint(space.OrganisationID), uint(uID))
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Message{
-			Code:    http.StatusUnauthorized,
-			Message: err.Error(),
-		}))
+		errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusUnauthorized)))
 		return
 	}
 

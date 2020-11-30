@@ -45,14 +45,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -105,7 +105,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// Check if tag with same name exist
 	if tag.Name != result.Name && util.CheckName(uint(sID), tag.Name, tableName) {
 		loggerx.Error(errors.New(`tag with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
 	}
 

@@ -61,7 +61,7 @@ func TestSpaceDelete(t *testing.T) {
 			WithPath("space_id", "invalid").
 			WithHeader("X-User", "1").
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("when keto is down", func(t *testing.T) {

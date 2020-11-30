@@ -37,21 +37,21 @@ func create(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
 	oID, err := util.GetOrganisation(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -74,10 +74,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.Message{
-				Code:    http.StatusUnprocessableEntity,
-				Message: "cannot create more media",
-			}))
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity)))
 			return
 		}
 
@@ -88,10 +85,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}).Count(&totMedia)
 
 		if totMedia+int64(len(mediumList)) > permission.Media && permission.Media > 0 {
-			errorx.Render(w, errorx.Parser(errorx.Message{
-				Code:    http.StatusUnprocessableEntity,
-				Message: "cannot create more media",
-			}))
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity)))
 			return
 		}
 	}

@@ -112,7 +112,7 @@ func TestListUsersPermission(t *testing.T) {
 			WithHeaders(headers).
 			WithPath("user_id", "abc").
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 
 	})
 }

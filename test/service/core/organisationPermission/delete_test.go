@@ -33,7 +33,7 @@ func TestOrganisationPermissionDelete(t *testing.T) {
 			WithPath("permission_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("permission record not found", func(t *testing.T) {

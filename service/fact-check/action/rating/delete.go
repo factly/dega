@@ -30,7 +30,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -66,7 +66,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("rating is associated with claim"))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.CannotDelete("rating", "claim")))
 		return
 	}
 

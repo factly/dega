@@ -33,7 +33,7 @@ func TestOrganisationPermissionUpdate(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("permission record not found", func(t *testing.T) {

@@ -37,14 +37,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -74,7 +74,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
 			return
 		}
 	}
@@ -94,7 +94,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	// Check if category with same name exist
 	if util.CheckName(uint(sID), category.Name, tableName) {
 		loggerx.Error(errors.New(`category with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
 	}
 

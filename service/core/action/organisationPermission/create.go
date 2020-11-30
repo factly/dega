@@ -34,7 +34,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -71,7 +71,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	if totPerms > 0 {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("organisation's permission already exist", http.StatusUnprocessableEntity)))
 		return
 	}
 

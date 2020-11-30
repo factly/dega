@@ -34,7 +34,7 @@ func TestPostPublish(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(publishData).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 
 		test.ExpectationsMet(t, mock)
 	})

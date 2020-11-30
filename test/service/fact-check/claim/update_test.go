@@ -51,7 +51,7 @@ func TestClaimUpdate(t *testing.T) {
 			WithPath("claim_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 	})
 
 	t.Run("claim record not found", func(t *testing.T) {

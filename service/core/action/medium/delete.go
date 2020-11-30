@@ -31,7 +31,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	sID, err := util.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -69,7 +69,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("medium is associated with post"))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "post")))
 		return
 	}
 
@@ -80,7 +80,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("medium is associated with category"))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "category")))
 		return
 	}
 
@@ -97,7 +97,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("medium is associated with space"))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "space")))
 		return
 	}
 
@@ -108,7 +108,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("medium is associated with rating"))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "rating")))
 		return
 	}
 
@@ -119,7 +119,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("medium is associated with claimant"))
-		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "claimant")))
 		return
 	}
 

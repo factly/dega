@@ -33,7 +33,7 @@ func TestSpacePermissionDelete(t *testing.T) {
 			WithPath("permission_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusNotFound)
+			Status(http.StatusBadRequest)
 		test.ExpectationsMet(t, mock)
 	})
 
