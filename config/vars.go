@@ -63,12 +63,13 @@ func SetupVars() {
 		log.Fatal("please provide google_key config param")
 	}
 
-	if !viper.IsSet("kratos_public_url") {
-		log.Fatal("please provide kratos_public_url config param")
-	}
-
 	if !viper.IsSet("create_super_organisation") {
 		log.Fatal("please provide create_super_organisation (bool) config param")
 	}
 
+	if viper.GetBool("create_super_organisation") {
+		if !viper.IsSet("kratos_public_url") {
+			log.Fatal("please provide kratos_public_url config param")
+		}
+	}
 }
