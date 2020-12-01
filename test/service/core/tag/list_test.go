@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -29,8 +30,12 @@ func TestTagList(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	taglist := []map[string]interface{}{
-		{"name": "Test Tag 1", "slug": "test-tag-1"},
-		{"name": "Test Tag 2", "slug": "test-tag-2"},
+		{"name": "Test Tag 1", "slug": "test-tag-1", "description": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"description1"}`),
+		}},
+		{"name": "Test Tag 2", "slug": "test-tag-2", "description": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"description2"}`),
+		}},
 	}
 
 	t.Run("get empty list of tags", func(t *testing.T) {
@@ -57,8 +62,8 @@ func TestTagList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, taglist[0]["name"], taglist[0]["slug"], taglist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, taglist[0]["name"], taglist[0]["slug"], taglist[0]["description"], taglist[0]["is_featured"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["is_featured"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -82,7 +87,7 @@ func TestTagList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["is_featured"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["is_featured"], 1))
 
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{
@@ -111,8 +116,8 @@ func TestTagList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, taglist[0]["name"], taglist[0]["slug"], taglist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, taglist[0]["name"], taglist[0]["slug"], taglist[0]["description"], taglist[0]["is_featured"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["is_featured"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).

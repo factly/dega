@@ -12,14 +12,17 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/spacePermission"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 var updatedClaimant = map[string]interface{}{
-	"name":        "TOI",
-	"description": "article is validated",
-	"tag_line":    "sample tag line",
-	"medium_id":   uint(1),
+	"name": "TOI",
+	"description": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"description"}`),
+	},
+	"tag_line":  "sample tag line",
+	"medium_id": uint(1),
 }
 
 func TestClaimantUpdate(t *testing.T) {

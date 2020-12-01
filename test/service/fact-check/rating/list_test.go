@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/test/service/core/spacePermission"
+	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -27,8 +28,12 @@ func TestRatingList(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	ratinglist := []map[string]interface{}{
-		{"name": "Test Rating 1", "slug": "test-rating-1"},
-		{"name": "Test Rating 2", "slug": "test-rating-2"},
+		{"name": "Test Rating 1", "slug": "test-rating-1", "description": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"description1"}`),
+		}},
+		{"name": "Test Rating 2", "slug": "test-rating-2", "description": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"description2"}`),
+		}},
 	}
 
 	t.Run("get empty list of ratings", func(t *testing.T) {

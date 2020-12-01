@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/test/service/core/spacePermission"
+	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
@@ -20,45 +21,69 @@ var headers = map[string]string{
 }
 
 var Data = map[string]interface{}{
-	"title":           "Claim",
-	"slug":            "claim",
-	"claim_date":      time.Now(),
-	"checked_date":    time.Now(),
-	"claim_sources":   "GOI",
-	"description":     test.NilJsonb(),
-	"claimant_id":     uint(1),
-	"rating_id":       uint(1),
-	"review":          "Succesfully reviewed",
-	"review_tag_line": "tag line",
-	"review_sources":  "TOI",
+	"title":        "Claim",
+	"slug":         "claim",
+	"claim_date":   time.Now(),
+	"checked_date": time.Now(),
+	"claim_sources": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"claim sources"}`),
+	},
+	"description": test.NilJsonb(),
+	"claimant_id": uint(1),
+	"rating_id":   uint(1),
+	"review": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"review"}`),
+	},
+	"review_tag_line": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"review tag line"}`),
+	},
+	"review_sources": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"review sources"}`),
+	},
 }
 
 var claimList = []map[string]interface{}{
 	{
-		"title":           "Claim 1",
-		"slug":            "claim-test",
-		"claim_date":      time.Time{},
-		"checked_date":    time.Time{},
-		"claim_sources":   "GOI",
-		"description":     test.NilJsonb(),
-		"claimant_id":     uint(1),
-		"rating_id":       uint(1),
-		"review":          "Succesfully reviewed",
-		"review_tag_line": "tag line",
-		"review_sources":  "TOI",
+		"title":        "Claim 1",
+		"slug":         "claim-test",
+		"claim_date":   time.Time{},
+		"checked_date": time.Time{},
+		"claim_sources": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"claim sources 1"}`),
+		},
+		"description": test.NilJsonb(),
+		"claimant_id": uint(1),
+		"rating_id":   uint(1),
+		"review": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"review 1"}`),
+		},
+		"review_tag_line": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"review tag line 1"}`),
+		},
+		"review_sources": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"review sources1"}`),
+		},
 	},
 	{
-		"title":           "Claim 2",
-		"slug":            "claim-test",
-		"claim_date":      time.Time{},
-		"checked_date":    time.Time{},
-		"claim_sources":   "GOI",
-		"description":     test.NilJsonb(),
-		"claimant_id":     uint(1),
-		"rating_id":       uint(1),
-		"review":          "Succesfully reviewed",
-		"review_tag_line": "tag line",
-		"review_sources":  "TOI",
+		"title":        "Claim 2",
+		"slug":         "claim-test",
+		"claim_date":   time.Time{},
+		"checked_date": time.Time{},
+		"claim_sources": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"claim sources 2"}`),
+		},
+		"description": test.NilJsonb(),
+		"claimant_id": uint(1),
+		"rating_id":   uint(1),
+		"review": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"review 2"}`),
+		},
+		"review_tag_line": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"review tag line 2"}`),
+		},
+		"review_sources": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"review sources 2"}`),
+		},
 	},
 }
 

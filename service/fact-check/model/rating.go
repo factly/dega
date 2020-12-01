@@ -7,19 +7,20 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Rating model
 type Rating struct {
 	config.Base
-	Name         string        `gorm:"column:name" json:"name"`
-	Slug         string        `gorm:"column:slug" json:"slug"`
-	Description  string        `gorm:"column:description" json:"description"`
-	NumericValue int           `gorm:"column:numeric_value" json:"numeric_value"`
-	MediumID     *uint         `gorm:"column:medium_id;default=NULL" json:"medium_id"`
-	Medium       *model.Medium `json:"medium"`
-	SpaceID      uint          `gorm:"column:space_id" json:"space_id"`
-	Space        *model.Space  `json:"space,omitempty"`
+	Name         string         `gorm:"column:name" json:"name"`
+	Slug         string         `gorm:"column:slug" json:"slug"`
+	Description  postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
+	NumericValue int            `gorm:"column:numeric_value" json:"numeric_value"`
+	MediumID     *uint          `gorm:"column:medium_id;default=NULL" json:"medium_id"`
+	Medium       *model.Medium  `json:"medium"`
+	SpaceID      uint           `gorm:"column:space_id" json:"space_id"`
+	Space        *model.Space   `json:"space,omitempty"`
 }
 
 // BeforeSave - validation for medium

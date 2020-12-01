@@ -15,13 +15,13 @@ type claim struct {
 	Slug          string         `json:"slug"`
 	ClaimDate     time.Time      `json:"claim_date" `
 	CheckedDate   time.Time      `json:"checked_date"`
-	ClaimSources  string         `json:"claim_sources"`
+	ClaimSources  postgres.Jsonb `json:"claim_sources" swaggertype:"primitive,string"`
 	Description   postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	ClaimantID    uint           `json:"claimant_id" validate:"required"`
 	RatingID      uint           `json:"rating_id" validate:"required"`
-	Review        string         `json:"review"`
-	ReviewTagLine string         `json:"review_tag_line"`
-	ReviewSources string         `json:"review_sources"`
+	Review        postgres.Jsonb `json:"review" swaggertype:"primitive,string"`
+	ReviewTagLine postgres.Jsonb `json:"review_tag_line" swaggertype:"primitive,string"`
+	ReviewSources postgres.Jsonb `json:"review_sources" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "claim_user"

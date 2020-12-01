@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -80,6 +81,9 @@ func TestTagUpdate(t *testing.T) {
 			"name":        "Elections",
 			"slug":        "elections",
 			"is_featured": true,
+			"description": postgres.Jsonb{
+				RawMessage: []byte(`{"type":"description"}`),
+			},
 		}
 
 		SelectMock(mock, Data, 1, 1)
@@ -102,13 +106,16 @@ func TestTagUpdate(t *testing.T) {
 			"name":        "Elections",
 			"slug":        "elections-1",
 			"is_featured": true,
+			"description": postgres.Jsonb{
+				RawMessage: []byte(`{"type":"description"}`),
+			},
 		}
 		SelectMock(mock, Data, 1, 1)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
 			WithArgs("elections%", 1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedTag["name"], "elections", false, 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedTag["name"], "elections", "", false, 1))
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
@@ -129,6 +136,9 @@ func TestTagUpdate(t *testing.T) {
 			"name":        "Elections",
 			"slug":        "testing-slug",
 			"is_featured": true,
+			"description": postgres.Jsonb{
+				RawMessage: []byte(`{"type":"description"}`),
+			},
 		}
 		SelectMock(mock, Data, 1, 1)
 
@@ -175,6 +185,9 @@ func TestTagUpdate(t *testing.T) {
 			"name":        "Elections",
 			"slug":        "elections",
 			"is_featured": true,
+			"description": postgres.Jsonb{
+				RawMessage: []byte(`{"type":"description"}`),
+			},
 		}
 
 		SelectMock(mock, Data, 1, 1)

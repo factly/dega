@@ -80,7 +80,7 @@ func TestTagCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "tags"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], "", Data["is_featured"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["is_featured"], 1).
 			WillReturnError(errors.New("cannot create tag"))
 		mock.ExpectRollback()
 
