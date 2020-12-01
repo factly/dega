@@ -18,7 +18,6 @@ import (
 // @ID get-meta-info
 // @Produce  json
 // @Param url query string true "URL"
-// @Param omit_script query string true "Omit Script"
 // @Param type query string true "Type"
 // @Success 200 {object} metadata
 // @Router /meta [get]
@@ -30,16 +29,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	metaType := r.URL.Query().Get("type")
-	omitScript := r.URL.Query().Get("omit_script")
-	if omitScript != "0" {
-		omitScript = "1"
-	}
 
 	var path string
 	if metaType == "oembed" || metaType == "link" {
-		path = fmt.Sprintf("/oembed?url=%s&omit_script=%s", url, omitScript)
+		path = fmt.Sprintf("/oembed?url=%s&omit_script=1", url)
 	} else if metaType == "iframely" {
-		path = fmt.Sprintf("/iframely?url=%s&omit_script=%s", url, omitScript)
+		path = fmt.Sprintf("/iframely?url=%s&omit_script=1", url)
 	} else {
 		errorx.Render(w, errorx.Parser(errorx.GetMessage("please pass valid type query parameter", http.StatusBadRequest)))
 		return
