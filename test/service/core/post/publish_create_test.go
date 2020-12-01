@@ -11,7 +11,7 @@ import (
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/test/service/core/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/permissions/organisationPermission"
 	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"

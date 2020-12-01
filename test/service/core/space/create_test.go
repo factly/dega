@@ -10,7 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/permissions/organisationPermission"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )

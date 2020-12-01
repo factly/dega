@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/factly/dega-server/test/service/core/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
 	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/DATA-DOG/go-sqlmock"

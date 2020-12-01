@@ -46,3 +46,10 @@ func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 		WillReturnRows(sqlmock.NewRows(columns).
 			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"]))
 }
+
+func spaceSelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "spaces"`)).
+		WithArgs(args...).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "site_title", "tag_line", "description", "site_address", "logo_id", "logo_mobile_id", "fav_icon_id", "mobile_icon_id", "verification_codes", "social_media_urls", "contact_info", "organisation_id"}).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nil, nil, nil, 1))
+}

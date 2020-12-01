@@ -16,7 +16,8 @@ import (
 
 type orgPermissionRes struct {
 	model.OrganisationPermission
-	IsAdmin bool `json:"is_admin,omitempty"`
+	SpacePermissions []model.SpacePermission `json:"space_permissions"`
+	IsAdmin          bool                    `json:"is_admin,omitempty"`
 }
 
 // details - Get my organisation permissions
@@ -56,6 +57,25 @@ func details(w http.ResponseWriter, r *http.Request) {
 		if err == nil && len(policy.Subjects) > 0 && policy.Subjects[0] == fmt.Sprint(oID) {
 			result.IsAdmin = true
 		}
+	}
+
+	// Get all spaces of organisation
+	spaceList := make([]model.Space, 0)
+	config.DB.Model(&model.Space{}).Where(&model.Space{
+		OrganisationID: oID,
+	}).Find(&spaceList)
+
+	spaceIDs := make([]uint, 0)
+	for _, space := range spaceList {
+		spaceIDs = append(spaceIDs, space.ID)
+	}
+
+	// Fetch all the spaces's permissions
+	err = config.DB.Model(&model.SpacePermission{}).Where("space_id IN (?)", spaceIDs).Find(&result.SpacePermissions).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

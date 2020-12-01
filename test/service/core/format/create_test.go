@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
