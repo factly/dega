@@ -3377,6 +3377,13 @@ var doc = `{
                     },
                     {
                         "type": "string",
+                        "description": "Omit Script",
+                        "name": "omit_script",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
                         "description": "Type",
                         "name": "type",
                         "in": "query",

@@ -3410,6 +3410,11 @@ paths:
         name: url
         required: true
         type: string
+      - description: Omit Script
+        in: query
+        name: omit_script
+        required: true
+        type: string
       - description: Type
         in: query
         name: type
