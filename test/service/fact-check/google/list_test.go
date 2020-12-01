@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/factly/dega-server/service/fact-check/action/google"
-	"github.com/factly/dega-server/test/service/core/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"

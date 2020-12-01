@@ -5,6 +5,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -41,6 +43,9 @@ func TestOrganisationPermissionDetails(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		SelectQuery(mock, 1)
+
+		spaceSelectQuery(mock)
+		spacePermission.SelectQuery(mock, 1)
 
 		e.GET(mypath).
 			WithHeaders(headers).
