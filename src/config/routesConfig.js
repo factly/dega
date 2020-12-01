@@ -108,7 +108,7 @@ const routes = {
     title: 'Edit Space',
     permission: {
       resource: 'spaces',
-      action: 'edit',
+      action: 'update',
     },
   },
   organisations: {
@@ -153,7 +153,7 @@ const routes = {
     title: 'Edit Category',
     permission: {
       resource: 'categories',
-      action: 'edit',
+      action: 'update',
     },
   },
   policies: {
@@ -176,7 +176,7 @@ const routes = {
     title: 'Edit Policies',
     permission: {
       resource: 'policies',
-      action: 'edit',
+      action: 'update',
     },
   },
   formats: {
@@ -203,7 +203,7 @@ const routes = {
     title: 'Edit Format',
     permission: {
       resource: 'formats',
-      action: 'edit',
+      action: 'update',
     },
   },
   tags: {
@@ -230,7 +230,7 @@ const routes = {
     title: 'Edit Tag',
     permission: {
       resource: 'tags',
-      action: 'edit',
+      action: 'update',
     },
   },
   media: {
@@ -257,7 +257,7 @@ const routes = {
     title: 'Edit Media',
     permission: {
       resource: 'media',
-      action: 'edit',
+      action: 'update',
     },
   },
   posts: {
@@ -280,7 +280,7 @@ const routes = {
     title: 'Edit Post',
     permission: {
       resource: 'posts',
-      action: 'edit',
+      action: 'update',
     },
   },
   ratings: {
@@ -307,7 +307,7 @@ const routes = {
     title: 'Edit Rating',
     permission: {
       resource: 'ratings',
-      action: 'edit',
+      action: 'update',
     },
   },
   claimants: {
@@ -334,7 +334,7 @@ const routes = {
     title: 'Edit Claimant',
     permission: {
       resource: 'claimants',
-      action: 'edit',
+      action: 'update',
     },
   },
   claims: {
@@ -360,7 +360,7 @@ const routes = {
     Component: EditClaim,
     title: 'Edit Claim',
     permission: {
-      action: 'edit',
+      action: 'update',
       resource: 'claims',
     },
   },
