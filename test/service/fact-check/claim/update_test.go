@@ -14,20 +14,29 @@ import (
 	"github.com/factly/dega-server/test/service/fact-check/claimant"
 	"github.com/factly/dega-server/test/service/fact-check/rating"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 var updatedClaim = map[string]interface{}{
-	"title":           "Claim",
-	"claim_date":      time.Now(),
-	"checked_date":    time.Now(),
-	"claim_sources":   "GOI",
-	"description":     test.NilJsonb(),
-	"claimant_id":     uint(1),
-	"rating_id":       uint(1),
-	"review":          "Succesfully reviewed",
-	"review_tag_line": "tag line",
-	"review_sources":  "TOI",
+	"title":        "Claim",
+	"claim_date":   time.Now(),
+	"checked_date": time.Now(),
+	"claim_sources": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"claim sources"}`),
+	},
+	"description": test.NilJsonb(),
+	"claimant_id": uint(1),
+	"rating_id":   uint(1),
+	"review": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"review"}`),
+	},
+	"review_tag_line": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"review tag line"}`),
+	},
+	"review_sources": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"review sources"}`),
+	},
 }
 
 func TestClaimUpdate(t *testing.T) {

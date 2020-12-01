@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/spacePermission"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -28,8 +29,12 @@ func TestClaimantList(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	claimantlist := []map[string]interface{}{
-		{"name": "Test Claimant 1", "slug": "test-claimant-1"},
-		{"name": "Test Claimant 2", "slug": "test-claimant-2"},
+		{"name": "Test Claimant 1", "slug": "test-claimant-1", "description": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"description1"}`),
+		}},
+		{"name": "Test Claimant 2", "slug": "test-claimant-2", "description": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"description2"}`),
+		}},
 	}
 
 	t.Run("get empty list of claimants", func(t *testing.T) {

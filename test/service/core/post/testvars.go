@@ -129,7 +129,7 @@ func postInsertMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 			AddRow(1, 1))
 
 	mock.ExpectQuery(`INSERT INTO "tags"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, tag.Data["name"], tag.Data["slug"], "", tag.Data["is_featured"], 1, 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, tag.Data["name"], tag.Data["slug"], tag.Data["description"], tag.Data["is_featured"], 1, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -319,7 +319,7 @@ func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckR
 	format.SelectMock(mock, 1, 1)
 
 	mock.ExpectQuery(`INSERT INTO "tags"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, tag.Data["name"], tag.Data["slug"], "", tag.Data["is_featured"], 1, 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, tag.Data["name"], tag.Data["slug"], tag.Data["description"], tag.Data["is_featured"], 1, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -397,7 +397,7 @@ func updatePublishedQueryMock(mock sqlmock.Sqlmock, post map[string]interface{},
 
 func postUpdateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	mock.ExpectQuery(`INSERT INTO "tags"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, tag.Data["name"], tag.Data["slug"], "", tag.Data["is_featured"], 1, 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, tag.Data["name"], tag.Data["slug"], tag.Data["description"], tag.Data["is_featured"], 1, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))

@@ -4,15 +4,16 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // rating model
 type rating struct {
-	Name         string `json:"name" validate:"required,min=3,max=50"`
-	Slug         string `json:"slug"`
-	Description  string `json:"description"`
-	NumericValue int    `json:"numeric_value" validate:"required"`
-	MediumID     uint   `json:"medium_id"`
+	Name         string         `json:"name" validate:"required,min=3,max=50"`
+	Slug         string         `json:"slug"`
+	Description  postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
+	NumericValue int            `json:"numeric_value" validate:"required"`
+	MediumID     uint           `json:"medium_id"`
 }
 
 var userContext config.ContextKey = "rating_user"

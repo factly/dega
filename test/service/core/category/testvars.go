@@ -9,6 +9,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var headers = map[string]string{
@@ -17,17 +18,21 @@ var headers = map[string]string{
 }
 
 var Data map[string]interface{} = map[string]interface{}{
-	"name":        "Test category",
-	"slug":        "test-category",
-	"description": "Test Description",
+	"name": "Test category",
+	"slug": "test-category",
+	"description": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"description"}`),
+	},
 	"parent_id":   0,
 	"medium_id":   1,
 	"is_featured": true,
 }
 var resData map[string]interface{} = map[string]interface{}{
-	"name":        "Test category",
-	"slug":        "test-category",
-	"description": "Test Description",
+	"name": "Test category",
+	"slug": "test-category",
+	"description": map[string]interface{}{
+		"type": "description",
+	},
 	"is_featured": true,
 }
 
@@ -38,17 +43,21 @@ var invalidData map[string]interface{} = map[string]interface{}{
 
 var categorylist []map[string]interface{} = []map[string]interface{}{
 	{
-		"name":        "Test category 1",
-		"slug":        "test-category-1",
-		"description": "Test Description 1",
+		"name": "Test category 1",
+		"slug": "test-category-1",
+		"description": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"description1"}`),
+		},
 		"parent_id":   0,
 		"medium_id":   1,
 		"is_featured": true,
 	},
 	{
-		"name":        "Test category 2",
-		"slug":        "test-category-2",
-		"description": "Test Description 2",
+		"name": "Test category 2",
+		"slug": "test-category-2",
+		"description": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"description2"}`),
+		},
 		"parent_id":   0,
 		"medium_id":   1,
 		"is_featured": true,

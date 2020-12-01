@@ -12,12 +12,15 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/spacePermission"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 var updatedRating = map[string]interface{}{
-	"name":          "True",
-	"description":   "article is validated",
+	"name": "True",
+	"description": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"description"}`),
+	},
 	"numeric_value": 5,
 	"medium_id":     uint(1),
 }

@@ -8,6 +8,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var headers = map[string]string{
@@ -16,18 +17,22 @@ var headers = map[string]string{
 }
 
 var Data = map[string]interface{}{
-	"name":        "TOI",
-	"slug":        "toi",
-	"description": "article is validated",
-	"tag_line":    "sample tag line",
-	"medium_id":   uint(1),
+	"name": "TOI",
+	"slug": "toi",
+	"description": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"description"}`),
+	},
+	"tag_line":  "sample tag line",
+	"medium_id": uint(1),
 }
 
 var resData = map[string]interface{}{
-	"name":        "TOI",
-	"slug":        "toi",
-	"description": "article is validated",
-	"tag_line":    "sample tag line",
+	"name": "TOI",
+	"slug": "toi",
+	"description": map[string]interface{}{
+		"type": "description",
+	},
+	"tag_line": "sample tag line",
 }
 
 var invalidData = map[string]interface{}{

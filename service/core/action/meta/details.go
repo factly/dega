@@ -2,6 +2,7 @@ package meta
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/factly/x/errorx"
@@ -31,9 +32,9 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	var path string
 	if metaType == "oembed" || metaType == "link" {
-		path = "/oembed?url=" + url
+		path = fmt.Sprintf("/oembed?url=%s&omit_script=1", url)
 	} else if metaType == "iframely" {
-		path = "/iframely?url=" + url
+		path = fmt.Sprintf("/iframely?url=%s&omit_script=1", url)
 	} else {
 		errorx.Render(w, errorx.Parser(errorx.GetMessage("please pass valid type query parameter", http.StatusBadRequest)))
 		return

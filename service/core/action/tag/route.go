@@ -4,14 +4,15 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // tag model
 type tag struct {
-	Name        string `json:"name" validate:"required,min=3,max=50"`
-	Slug        string `json:"slug"`
-	IsFeatured  bool   `json:"is_featured"`
-	Description string `json:"description"`
+	Name        string         `json:"name" validate:"required,min=3,max=50"`
+	Slug        string         `json:"slug"`
+	IsFeatured  bool           `json:"is_featured"`
+	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "tag_user"

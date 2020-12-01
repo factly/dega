@@ -6,21 +6,22 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Category model
 type Category struct {
 	config.Base
-	Name        string  `gorm:"column:name" json:"name"`
-	Slug        string  `gorm:"column:slug" json:"slug"`
-	Description string  `gorm:"column:description" json:"description"`
-	ParentID    *uint   `gorm:"column:parent_id;default:NULL" json:"parent_id"`
-	MediumID    *uint   `gorm:"column:medium_id;default:NULL" json:"medium_id"`
-	Medium      *Medium `json:"medium"`
-	IsFeatured  bool    `gorm:"column:is_featured" json:"is_featured"`
-	SpaceID     uint    `gorm:"column:space_id" json:"space_id"`
-	Posts       []*Post `gorm:"many2many:post_categories;" json:"posts"`
-	Space       *Space  `json:"space,omitempty"`
+	Name        string         `gorm:"column:name" json:"name"`
+	Slug        string         `gorm:"column:slug" json:"slug"`
+	Description postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
+	ParentID    *uint          `gorm:"column:parent_id;default:NULL" json:"parent_id"`
+	MediumID    *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
+	Medium      *Medium        `json:"medium"`
+	IsFeatured  bool           `gorm:"column:is_featured" json:"is_featured"`
+	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
+	Posts       []*Post        `gorm:"many2many:post_categories;" json:"posts"`
+	Space       *Space         `json:"space,omitempty"`
 }
 
 // BeforeSave - validation for medium
