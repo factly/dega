@@ -4346,6 +4346,12 @@ var doc = `{
                 "posts": {
                     "type": "integer"
                 },
+                "space_permissions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SpacePermission"
+                    }
+                },
                 "spaces": {
                     "type": "integer"
                 },

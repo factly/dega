@@ -628,6 +628,10 @@ definitions:
         type: integer
       posts:
         type: integer
+      space_permissions:
+        items:
+          $ref: '#/definitions/model.SpacePermission'
+        type: array
       spaces:
         type: integer
       updated_at:
