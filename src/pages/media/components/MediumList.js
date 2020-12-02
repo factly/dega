@@ -45,7 +45,7 @@ function MediumList({ actions }) {
         <Avatar
           shape="square"
           style={{ width: '100%', height: '100%' }}
-          src={record.url?.proxy ? `${record.url.proxy}?resize:fill:200:150` : ''}
+          src={record.url?.proxy ? `${record.url.proxy}?resize:fill:200:150/gravity:sm` : ''}
         />
       ),
       width: '15%',
