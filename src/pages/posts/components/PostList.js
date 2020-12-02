@@ -141,7 +141,7 @@ function PostList({ actions }) {
                 <img
                   style={{ width: '100%', height: '100%' }}
                   alt={item.medium.alt_text}
-                  src={item.medium.url?.proxy ? `${item.medium.url.proxy}?resize:fill:150:150` : ''}
+                  src={item.medium.url?.proxy ? `${item.medium.url.proxy}?resize:fill:150:150/gravity:sm` : ''}
                 />
               ) : null
             }
