@@ -84,6 +84,9 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
           >
             <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
           </Form.Item>
+          <Form.Item name="review" label="Fact">
+            <TextArea />
+          </Form.Item>
           <Form.Item
             name="slug"
             label="Slug"
@@ -137,9 +140,6 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
             <DatePicker />
           </Form.Item>
           <Form.Item name="claim_sources" label="Claim Sources">
-            <TextArea />
-          </Form.Item>
-          <Form.Item name="review" label="Fact">
             <TextArea />
           </Form.Item>
           <Form.Item name="review_tag_line" label="Review Tagline">
