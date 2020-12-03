@@ -41,13 +41,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
 	uID, err := util.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -66,10 +59,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if viper.GetBool("create_super_organisation") {
-		// Fetch organisation permissions
-		permission := model.OrganisationPermission{}
-		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-			OrganisationID: uint(oID),
+		// Fetch space permissions
+		permission := model.SpacePermission{}
+		err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
+			SpaceID: uint(sID),
 		}).First(&permission).Error
 
 		if err != nil {

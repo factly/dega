@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/util"
+	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -74,9 +75,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = config.DB.Model(&result).Select("FactCheck", "UpdatedAt", "UpdatedByID").Updates(&model.SpacePermission{
-		Base:      config.Base{UpdatedByID: uint(uID)},
-		FactCheck: permission.FactCheck,
+	if permission.Media == 0 {
+		permission.Media = viper.GetInt64("default_number_of_media")
+	}
+	if permission.Posts == 0 {
+		permission.Posts = viper.GetInt64("default_number_of_posts")
+	}
+
+	tx := config.DB.Begin()
+
+	tx.Model(&result).Select("FactCheck").Updates(model.SpacePermission{FactCheck: permission.FactCheck})
+
+	err = tx.Model(&result).Updates(&model.SpacePermission{
+		Base:  config.Base{UpdatedByID: uint(uID)},
+		Posts: permission.Posts,
+		Media: permission.Media,
 	}).First(&result).Error
 
 	if err != nil {

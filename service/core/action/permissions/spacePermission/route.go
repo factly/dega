@@ -7,8 +7,10 @@ import (
 )
 
 type spacePermission struct {
-	SpaceID   uint `json:"space_id" validate:"required"`
-	FactCheck bool `json:"fact_check"`
+	SpaceID   uint  `json:"space_id" validate:"required"`
+	FactCheck bool  `json:"fact_check"`
+	Media     int64 `json:"media"`
+	Posts     int64 `json:"posts"`
 }
 
 var userContext config.ContextKey = "space_perm_user"

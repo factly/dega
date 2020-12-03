@@ -379,11 +379,7 @@ definitions:
         type: string
       id:
         type: integer
-      media:
-        type: integer
       organisation_id:
-        type: integer
-      posts:
         type: integer
       spaces:
         type: integer
@@ -567,6 +563,10 @@ definitions:
         type: boolean
       id:
         type: integer
+      media:
+        type: integer
+      posts:
+        type: integer
       space:
         $ref: '#/definitions/model.Space'
       space_id:
@@ -622,11 +622,7 @@ definitions:
         type: integer
       is_admin:
         type: boolean
-      media:
-        type: integer
       organisation_id:
-        type: integer
-      posts:
         type: integer
       space_permissions:
         items:
@@ -668,11 +664,7 @@ definitions:
     type: object
   organisationPermission.organisationPermission:
     properties:
-      media:
-        type: integer
       organisation_id:
-        type: integer
-      posts:
         type: integer
       spaces:
         type: integer
@@ -1012,6 +1004,10 @@ definitions:
     properties:
       fact_check:
         type: boolean
+      media:
+        type: integer
+      posts:
+        type: integer
       space_id:
         type: integer
     required:

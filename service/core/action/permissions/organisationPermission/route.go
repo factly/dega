@@ -9,8 +9,6 @@ import (
 type organisationPermission struct {
 	OrganisationID uint  `json:"organisation_id" validate:"required"`
 	Spaces         int64 `json:"spaces"`
-	Media          int64 `json:"media"`
-	Posts          int64 `json:"posts"`
 }
 
 var userContext config.ContextKey = "org_perm_user"

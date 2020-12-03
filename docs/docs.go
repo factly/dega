@@ -3969,13 +3969,7 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
-                "media": {
-                    "type": "integer"
-                },
                 "organisation_id": {
-                    "type": "integer"
-                },
-                "posts": {
                     "type": "integer"
                 },
                 "spaces": {
@@ -4254,6 +4248,12 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "media": {
+                    "type": "integer"
+                },
+                "posts": {
+                    "type": "integer"
+                },
                 "space": {
                     "$ref": "#/definitions/model.Space"
                 },
@@ -4337,13 +4337,7 @@ var doc = `{
                 "is_admin": {
                     "type": "boolean"
                 },
-                "media": {
-                    "type": "integer"
-                },
                 "organisation_id": {
-                    "type": "integer"
-                },
-                "posts": {
                     "type": "integer"
                 },
                 "space_permissions": {
@@ -4410,13 +4404,7 @@ var doc = `{
                 "organisation_id"
             ],
             "properties": {
-                "media": {
-                    "type": "integer"
-                },
                 "organisation_id": {
-                    "type": "integer"
-                },
-                "posts": {
                     "type": "integer"
                 },
                 "spaces": {
@@ -4931,6 +4919,12 @@ var doc = `{
             "properties": {
                 "fact_check": {
                     "type": "boolean"
+                },
+                "media": {
+                    "type": "integer"
+                },
+                "posts": {
+                    "type": "integer"
                 },
                 "space_id": {
                     "type": "integer"

@@ -13,6 +13,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
+	"github.com/spf13/viper"
 )
 
 // create - Create Space permission
@@ -63,9 +64,18 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if permission.Media == 0 {
+		permission.Media = viper.GetInt64("default_number_of_media")
+	}
+	if permission.Posts == 0 {
+		permission.Posts = viper.GetInt64("default_number_of_posts")
+	}
+
 	result := model.SpacePermission{
 		SpaceID:   permission.SpaceID,
 		FactCheck: permission.FactCheck,
+		Media:     permission.Media,
+		Posts:     permission.Posts,
 	}
 
 	err = config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Create(&result).Error

@@ -3954,13 +3954,7 @@
                 "id": {
                     "type": "integer"
                 },
-                "media": {
-                    "type": "integer"
-                },
                 "organisation_id": {
-                    "type": "integer"
-                },
-                "posts": {
                     "type": "integer"
                 },
                 "spaces": {
@@ -4239,6 +4233,12 @@
                 "id": {
                     "type": "integer"
                 },
+                "media": {
+                    "type": "integer"
+                },
+                "posts": {
+                    "type": "integer"
+                },
                 "space": {
                     "$ref": "#/definitions/model.Space"
                 },
@@ -4322,13 +4322,7 @@
                 "is_admin": {
                     "type": "boolean"
                 },
-                "media": {
-                    "type": "integer"
-                },
                 "organisation_id": {
-                    "type": "integer"
-                },
-                "posts": {
                     "type": "integer"
                 },
                 "space_permissions": {
@@ -4395,13 +4389,7 @@
                 "organisation_id"
             ],
             "properties": {
-                "media": {
-                    "type": "integer"
-                },
                 "organisation_id": {
-                    "type": "integer"
-                },
-                "posts": {
                     "type": "integer"
                 },
                 "spaces": {
@@ -4916,6 +4904,12 @@
             "properties": {
                 "fact_check": {
                     "type": "boolean"
+                },
+                "media": {
+                    "type": "integer"
+                },
+                "posts": {
+                    "type": "integer"
                 },
                 "space_id": {
                     "type": "integer"
