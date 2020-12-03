@@ -2138,7 +2138,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/organisationPermissions": {
+        "/core/requests/organisation-permissions": {
             "get": {
                 "description": "Get all organisation permissions requests",
                 "produces": [
@@ -2184,7 +2184,47 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/organisationPermissions/{request_id}": {
+        "/core/requests/organisation-permissions/my": {
+            "get": {
+                "description": "Get all my organisation permissions requests",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Organisation_Permissions_Request"
+                ],
+                "summary": "Show all my organisation permissions requests",
+                "operationId": "get-all-my-org-permissions-requests",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisationPermission.paging"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/requests/organisation-permissions/{request_id}": {
             "get": {
                 "description": "Get organisation permissions requests detail",
                 "produces": [
@@ -2226,9 +2266,52 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "description": "Delete Organisation permission request by ID",
+                "tags": [
+                    "Organisation_Permissions_Request"
+                ],
+                "summary": "Delete a Organisation permission request",
+                "operationId": "delete-org-permission-request-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Request ID",
+                        "name": "request_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
             }
         },
-        "/core/requests/organisationPermissions/{request_id}/approve": {
+        "/core/requests/organisation-permissions/{request_id}/approve": {
             "post": {
                 "description": "approve organisation permission",
                 "produces": [
@@ -2281,7 +2364,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/organisationPermissions/{request_id}/reject": {
+        "/core/requests/organisation-permissions/{request_id}/reject": {
             "post": {
                 "description": "reject organisation permission",
                 "produces": [
@@ -2329,7 +2412,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/spacePermissions": {
+        "/core/requests/space-permissions": {
             "get": {
                 "description": "Get all space permissions requests",
                 "produces": [
@@ -2375,7 +2458,47 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/spacePermissions/{request_id}": {
+        "/core/requests/space-permissions/my": {
+            "get": {
+                "description": "Get all my space permissions requests",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions_Request"
+                ],
+                "summary": "Show all my space permissions requests",
+                "operationId": "get-all-my-space-permissions-requests",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_spacePermission.paging"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/requests/space-permissions/{request_id}": {
             "get": {
                 "description": "Get space permissions requests detail",
                 "produces": [
@@ -2417,9 +2540,52 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "delete": {
+                "description": "Delete Space permission request by ID",
+                "tags": [
+                    "Space_Permissions_Request"
+                ],
+                "summary": "Delete a Space permission request",
+                "operationId": "delete-space-permission-request-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Request ID",
+                        "name": "request_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {},
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
             }
         },
-        "/core/requests/spacePermissions/{request_id}/approve": {
+        "/core/requests/space-permissions/{request_id}/approve": {
             "post": {
                 "description": "approve space permission",
                 "produces": [
@@ -2472,7 +2638,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/spacePermissions/{request_id}/reject": {
+        "/core/requests/space-permissions/{request_id}/reject": {
             "post": {
                 "description": "reject space permission",
                 "produces": [

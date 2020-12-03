@@ -26,7 +26,7 @@ import (
 // @Param request_id path string true "Request ID"
 // @Success 200
 // @Failure 400 {array} string
-// @Router /core/requests/spacePermissions/{request_id}/reject [post]
+// @Router /core/requests/space-permissions/{request_id}/reject [post]
 func reject(w http.ResponseWriter, r *http.Request) {
 
 	uID, err := util.GetUser(r.Context())

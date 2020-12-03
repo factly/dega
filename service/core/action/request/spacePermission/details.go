@@ -22,7 +22,7 @@ import (
 // @Param X-Space header string true "Space ID"
 // @Param request_id path string true "Request ID"
 // @Success 200 {object} model.SpacePermissionRequest
-// @Router /core/requests/spacePermissions/{request_id} [get]
+// @Router /core/requests/space-permissions/{request_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
 	requestID := chi.URLParam(r, "request_id")
 	id, err := strconv.Atoi(requestID)

@@ -2671,7 +2671,7 @@ paths:
       summary: create template
       tags:
       - Post
-  /core/requests/organisationPermissions:
+  /core/requests/organisation-permissions:
     get:
       description: Get all organisation permissions requests
       operationId: get-all-org-permissions-requests
@@ -2702,7 +2702,37 @@ paths:
       summary: Show all organisation permissions requests
       tags:
       - Organisation_Permissions_Request
-  /core/requests/organisationPermissions/{request_id}:
+  /core/requests/organisation-permissions/{request_id}:
+    delete:
+      description: Delete Organisation permission request by ID
+      operationId: delete-org-permission-request-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a Organisation permission request
+      tags:
+      - Organisation_Permissions_Request
     get:
       description: Get organisation permissions requests detail
       operationId: get-org-permission-request-by-id
@@ -2732,7 +2762,7 @@ paths:
       summary: Show a organisation permissions requests detail
       tags:
       - Organisation_Permissions_Request
-  /core/requests/organisationPermissions/{request_id}/approve:
+  /core/requests/organisation-permissions/{request_id}/approve:
     post:
       description: approve organisation permission
       operationId: approve-org-permission
@@ -2768,7 +2798,7 @@ paths:
       summary: approve organisation permission
       tags:
       - Organisation_Permissions_Request
-  /core/requests/organisationPermissions/{request_id}/reject:
+  /core/requests/organisation-permissions/{request_id}/reject:
     post:
       description: reject organisation permission
       operationId: reject-org-permission
@@ -2801,7 +2831,34 @@ paths:
       summary: reject organisation permission
       tags:
       - Organisation_Permissions_Request
-  /core/requests/spacePermissions:
+  /core/requests/organisation-permissions/my:
+    get:
+      description: Get all my organisation permissions requests
+      operationId: get-all-my-org-permissions-requests
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_organisationPermission.paging'
+            type: array
+      summary: Show all my organisation permissions requests
+      tags:
+      - Organisation_Permissions_Request
+  /core/requests/space-permissions:
     get:
       description: Get all space permissions requests
       operationId: get-all-space-permissions-requests
@@ -2832,7 +2889,37 @@ paths:
       summary: Show all space permissions requests
       tags:
       - Space_Permissions_Request
-  /core/requests/spacePermissions/{request_id}:
+  /core/requests/space-permissions/{request_id}:
+    delete:
+      description: Delete Space permission request by ID
+      operationId: delete-space-permission-request-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a Space permission request
+      tags:
+      - Space_Permissions_Request
     get:
       description: Get space permissions requests detail
       operationId: get-space-permission-request-by-id
@@ -2862,7 +2949,7 @@ paths:
       summary: Show a space permissions requests detail
       tags:
       - Space_Permissions_Request
-  /core/requests/spacePermissions/{request_id}/approve:
+  /core/requests/space-permissions/{request_id}/approve:
     post:
       description: approve space permission
       operationId: approve-space-permission
@@ -2898,7 +2985,7 @@ paths:
       summary: approve space permission
       tags:
       - Space_Permissions_Request
-  /core/requests/spacePermissions/{request_id}/reject:
+  /core/requests/space-permissions/{request_id}/reject:
     post:
       description: reject space permission
       operationId: reject-space-permission
@@ -2929,6 +3016,33 @@ paths:
               type: string
             type: array
       summary: reject space permission
+      tags:
+      - Space_Permissions_Request
+  /core/requests/space-permissions/my:
+    get:
+      description: Get all my space permissions requests
+      operationId: get-all-my-space-permissions-requests
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_spacePermission.paging'
+            type: array
+      summary: Show all my space permissions requests
       tags:
       - Space_Permissions_Request
   /core/search:

@@ -24,7 +24,7 @@ type paging struct {
 // @Param X-Space header string true "Space ID"
 // @Param status query string false "Status"
 // @Success 200 {array} paging
-// @Router /core/requests/spacePermissions [get]
+// @Router /core/requests/space-permissions [get]
 func list(w http.ResponseWriter, r *http.Request) {
 	status := r.URL.Query().Get("status")
 	if status == "" {

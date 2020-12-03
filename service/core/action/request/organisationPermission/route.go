@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/util"
 
 	"github.com/go-chi/chi"
 )
@@ -14,9 +15,11 @@ var permissionContext config.ContextKey = "org_perm_user"
 func Router() http.Handler {
 	r := chi.NewRouter()
 
-	r.Get("/", list)
-	r.Route("/{request_id}", func(r chi.Router) {
+	r.With(util.CheckSuperOrganisation).Get("/", list)
+	r.Get("/my", my)
+	r.With(util.CheckSuperOrganisation).Route("/{request_id}", func(r chi.Router) {
 		r.Get("/", details)
+		r.Delete("/", delete)
 		r.Post("/approve", approve)
 		r.Post("/reject", reject)
 	})

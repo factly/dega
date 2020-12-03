@@ -27,7 +27,7 @@ import (
 // @Param request_id path string true "Request ID"
 // @Success 201 {object} model.OrganisationPermission
 // @Failure 400 {array} string
-// @Router /core/requests/organisationPermissions/{request_id}/approve [post]
+// @Router /core/requests/organisation-permissions/{request_id}/approve [post]
 func approve(w http.ResponseWriter, r *http.Request) {
 
 	uID, err := util.GetUser(r.Context())

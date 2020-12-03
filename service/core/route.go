@@ -3,8 +3,6 @@ package core
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/util"
-
 	"github.com/factly/dega-server/service/core/action/permissions"
 	"github.com/factly/dega-server/service/core/action/request"
 
@@ -37,7 +35,7 @@ func Router() http.Handler {
 	r.Mount("/search", search.Router())
 	r.Mount("/users", user.Router())
 	r.Mount("/permissions", permissions.Router())
-	r.With(util.CheckSuperOrganisation).Mount("/requests", request.Router())
+	r.Mount("/requests", request.Router())
 
 	return r
 }

@@ -1,4 +1,4 @@
-package organisationPermission
+package spacePermission
 
 import (
 	"net/http"
@@ -12,18 +12,19 @@ import (
 	"github.com/go-chi/chi"
 )
 
-// details - Get organisation permissions requests detail
-// @Summary Show a organisation permissions requests detail
-// @Description Get organisation permissions requests detail
-// @Tags Organisation_Permissions_Request
-// @ID get-org-permission-request-by-id
-// @Produce  json
+// delete - Delete Space permission request by id
+// @Summary Delete a Space permission request
+// @Description Delete Space permission request by ID
+// @Tags Space_Permissions_Request
+// @ID delete-space-permission-request-by-id
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Param request_id path string true "Request ID"
-// @Success 200 {object} model.OrganisationPermissionRequest
-// @Router /core/requests/organisation-permissions/{request_id} [get]
-func details(w http.ResponseWriter, r *http.Request) {
+// @Success 200
+// @Failure 400 {array} string
+// @Router /core/requests/space-permissions/{request_id} [delete]
+func delete(w http.ResponseWriter, r *http.Request) {
+
 	requestID := chi.URLParam(r, "request_id")
 	id, err := strconv.Atoi(requestID)
 	if err != nil {
@@ -32,15 +33,18 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := model.OrganisationPermissionRequest{}
-	result.ID = uint(id)
+	request := model.SpacePermissionRequest{}
+	request.ID = uint(id)
 
-	err = config.DB.First(&result).Error
+	// Check if the request exist or not
+	err = config.DB.First(&request).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	renderx.JSON(w, http.StatusOK, result)
+	config.DB.Delete(&request)
+
+	renderx.JSON(w, http.StatusOK, nil)
 }

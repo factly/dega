@@ -26,7 +26,7 @@ import (
 // @Param request_id path string true "Request ID"
 // @Success 201 {object} model.SpacePermission
 // @Failure 400 {array} string
-// @Router /core/requests/spacePermissions/{request_id}/approve [post]
+// @Router /core/requests/space-permissions/{request_id}/approve [post]
 func approve(w http.ResponseWriter, r *http.Request) {
 
 	uID, err := util.GetUser(r.Context())

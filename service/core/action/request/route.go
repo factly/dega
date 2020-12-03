@@ -13,8 +13,8 @@ import (
 func Router() http.Handler {
 	r := chi.NewRouter()
 
-	r.Mount("/spacePermissions", spacePermission.Router())
-	r.Mount("/organisationPermissions", organisationPermission.Router())
+	r.Mount("/space-permissions", spacePermission.Router())
+	r.Mount("/organisation-permissions", organisationPermission.Router())
 
 	return r
 }
