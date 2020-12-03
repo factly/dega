@@ -50,7 +50,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item
         name="name"
-        label="Category Name"
+        label="Category"
         rules={[
           {
             required: true,
@@ -82,7 +82,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       <Form.Item name="description" label="Description">
         <ReactQuill theme="snow" style={{ width: 500 }} />
       </Form.Item>
-      <Form.Item label="Upload Media" name="medium_id">
+      <Form.Item label="Featured Image" name="medium_id">
         <MediaSelector />
       </Form.Item>
       <Form.Item label="Featured" name="is_featured" valuePropName="checked">

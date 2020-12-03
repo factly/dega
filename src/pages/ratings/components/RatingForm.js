@@ -46,7 +46,7 @@ const RatingForm = ({ onCreate, data = {} }) => {
     >
       <Form.Item
         name="name"
-        label="Rating Name"
+        label="Rating"
         rules={[
           {
             required: true,
@@ -89,7 +89,7 @@ const RatingForm = ({ onCreate, data = {} }) => {
       >
         <InputNumber min={1} max={5} />
       </Form.Item>
-      <Form.Item name="medium_id" label="Upload Media">
+      <Form.Item name="medium_id" label="Featured Image">
         <MediaSelector />
       </Form.Item>
       <Form.Item {...tailLayout}>

@@ -148,7 +148,7 @@ function PostForm({ onCreate, data = {} }) {
                   ) : null}
                 </Select>
               </Form.Item>
-              <Form.Item name="featured_medium_id" label="Image">
+              <Form.Item name="featured_medium_id" label="Featured Image">
                 <MediaSelector />
               </Form.Item>
               <Form.Item

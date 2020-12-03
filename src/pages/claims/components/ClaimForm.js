@@ -72,7 +72,7 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
         <div style={current === 0 ? { display: 'block' } : { display: 'none' }}>
           <Form.Item
             name="title"
-            label="Title"
+            label="Claim"
             rules={[
               {
                 required: true,
@@ -83,6 +83,9 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
             ]}
           >
             <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
+          </Form.Item>
+          <Form.Item name="review" label="Fact">
+            <TextArea />
           </Form.Item>
           <Form.Item
             name="slug"
@@ -137,9 +140,6 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
             <DatePicker />
           </Form.Item>
           <Form.Item name="claim_sources" label="Claim Sources">
-            <TextArea />
-          </Form.Item>
-          <Form.Item name="review" label="Review">
             <TextArea />
           </Form.Item>
           <Form.Item name="review_tag_line" label="Review Tagline">
