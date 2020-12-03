@@ -46,7 +46,7 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
     >
       <Form.Item
         name="name"
-        label="Claimant Name"
+        label="Claimant"
         rules={[
           {
             required: true,
@@ -80,7 +80,7 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
       <Form.Item name="tag_line" label="Tag Line">
         <TextArea />
       </Form.Item>
-      <Form.Item label="Upload Media" name="medium_id">
+      <Form.Item label="Featured Image" name="medium_id">
         <MediaSelector />
       </Form.Item>
       <Form.Item {...tailLayout}>

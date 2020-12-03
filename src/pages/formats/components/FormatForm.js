@@ -45,7 +45,7 @@ const FormatForm = ({ onCreate, data = {} }) => {
     >
       <Form.Item
         name="name"
-        label="Format Name"
+        label="Format"
         rules={[
           {
             required: true,

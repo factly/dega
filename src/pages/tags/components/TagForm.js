@@ -45,7 +45,7 @@ const TagForm = ({ onCreate, data = {} }) => {
     >
       <Form.Item
         name="name"
-        label="Tag Name"
+        label="Tag"
         rules={[
           {
             required: true,

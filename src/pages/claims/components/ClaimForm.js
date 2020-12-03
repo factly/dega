@@ -72,7 +72,7 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
         <div style={current === 0 ? { display: 'block' } : { display: 'none' }}>
           <Form.Item
             name="title"
-            label="Title"
+            label="Claim"
             rules={[
               {
                 required: true,
@@ -139,7 +139,7 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
           <Form.Item name="claim_sources" label="Claim Sources">
             <TextArea />
           </Form.Item>
-          <Form.Item name="review" label="Review">
+          <Form.Item name="review" label="Fact">
             <TextArea />
           </Form.Item>
           <Form.Item name="review_tag_line" label="Review Tagline">
