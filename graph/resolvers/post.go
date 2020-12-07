@@ -211,16 +211,11 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 	return result, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context, formats []int, categories []int, tags []int, users []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
-
-	sID, err := validator.GetSpace(ctx)
-	if err != nil {
-		return nil, err
-	}
 
 	if sortOrder != nil && *sortOrder == "asc" {
 		pageSortOrder = "asc"
@@ -237,28 +232,34 @@ func (r *queryResolver) Posts(ctx context.Context, formats []int, categories []i
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	tx := config.DB.Model(&models.Post{}).Where(&models.Post{
-		SpaceID: sID,
-	}).Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id").Group("posts.id")
+	tx := config.DB.Model(&models.Post{})
+
+	if len(spaces) > 0 {
+		tx.Where("space_id IN (?)", spaces)
+	}
+
+	tx.Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id").Group("posts.id")
 
 	filterStr := ""
 
 	if len(categories) > 0 {
-		filterStr = filterStr + fmt.Sprint("post_categories.category_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(categories), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories), " ", ",", -1), "[]"), ") AND ")
 	}
 	if len(users) > 0 {
-		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(users), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(users), " ", ",", -1), "[]"), ") AND ")
 	}
 	if len(tags) > 0 {
-		filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(tags), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tags), " ", ",", -1), "[]"), ") AND ")
 	}
 	if len(formats) > 0 {
-		filterStr = filterStr + fmt.Sprint("posts.format_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(formats), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("posts.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formats), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	filterStr = strings.Trim(filterStr, " AND ")
 
-	tx.Where(filterStr).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Where(filterStr).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+
+	result.Total = len(result.Nodes)
 
 	return result, nil
 }

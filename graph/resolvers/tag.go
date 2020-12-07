@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"gorm.io/gorm"
+
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"github.com/jinzhu/gorm"
 )
 
 func (r *tagResolver) ID(ctx context.Context, obj *models.Tag) (string, error) {
@@ -40,16 +41,11 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 	return result, nil
 }
 
-func (r *queryResolver) Tags(ctx context.Context, ids []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error) {
+func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
-
-	sID, err := validator.GetSpace(ctx)
-	if err != nil {
-		return nil, err
-	}
 
 	if sortOrder != nil && *sortOrder == "asc" {
 		pageSortOrder = "asc"
@@ -74,9 +70,14 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, page *int, limit *i
 		tx = config.DB.Model(&models.Tag{})
 	}
 
-	tx.Where(&models.Tag{
-		SpaceID: sID,
-	}).Count(&result.Total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	if len(spaces) > 0 {
+		tx.Where("space_id IN (?)", spaces)
+	}
+
+	var total int64
+	tx.Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+
+	result.Total = int(total)
 
 	return result, nil
 }
