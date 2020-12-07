@@ -92,7 +92,7 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 		return nil, nil
 	}
 
-	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", space.OrganisationID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

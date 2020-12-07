@@ -1,7 +1,6 @@
 package config
 
 import (
-	"flag"
 	"log"
 
 	"github.com/spf13/viper"
@@ -10,24 +9,42 @@ import (
 // SetupVars setups all the config variables to run application
 func SetupVars() {
 
-	var configPath string
-
-	flag.StringVar(&configPath, "config", "./config.yaml", "Config file path")
-	flag.Parse()
-
-	viper.SetConfigFile(configPath)
+	viper.AddConfigPath(".")
+	viper.SetConfigName("config")
+	viper.SetEnvPrefix("dega_api")
+	viper.AutomaticEnv()
 
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatal("config file not found...")
 	}
 
-	if !viper.IsSet("postgres.dsn") {
-		log.Fatal("please provide postgres.dsn in config file")
+	if !viper.IsSet("database_host") {
+		log.Fatal("please provide database_host config param")
 	}
 
-	if !viper.IsSet("kavach.url") {
-		log.Fatal("please provide kavach.url in config file")
+	if !viper.IsSet("database_user") {
+		log.Fatal("please provide database_user config param")
+	}
+
+	if !viper.IsSet("database_name") {
+		log.Fatal("please provide database_name config param")
+	}
+
+	if !viper.IsSet("database_password") {
+		log.Fatal("please provide database_password config param")
+	}
+
+	if !viper.IsSet("database_port") {
+		log.Fatal("please provide database_port config param")
+	}
+
+	if !viper.IsSet("database_ssl_mode") {
+		log.Fatal("please provide database_ssl_mode config param")
+	}
+
+	if !viper.IsSet("kavach_url") {
+		log.Fatal("please provide kavach_url config param")
 	}
 
 }

@@ -138,4 +138,4 @@ server
 *.log
 
 #Dega config
-dega-api.yml
+config.*

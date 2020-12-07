@@ -39,7 +39,6 @@ func main() {
 	router.Use(loggerx.Init())
 	router.Use(validator.CheckSpace())
 	router.Use(middleware.RealIP)
-	router.Use(middleware.Logger)
 	router.Use(util.GormRequestID)
 
 	config.SetupVars()
