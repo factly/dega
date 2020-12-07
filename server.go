@@ -4,6 +4,9 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/factly/dega-api/util"
+	"github.com/factly/x/loggerx"
+
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/factly/dega-api/config"
@@ -32,9 +35,12 @@ func main() {
 
 	router.Use(cors.Handler)
 
+	router.Use(middleware.RequestID)
+	router.Use(loggerx.Init())
 	router.Use(validator.CheckSpace())
 	router.Use(middleware.RealIP)
 	router.Use(middleware.Logger)
+	router.Use(util.GormRequestID)
 
 	config.SetupVars()
 	config.SetupDB()
