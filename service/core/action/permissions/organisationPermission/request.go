@@ -40,13 +40,6 @@ func request(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	oID, err := util.GetOrganisation(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
 	request := organisationPermissionRequest{}
 
 	err = json.NewDecoder(r.Body).Decode(&request)
@@ -71,9 +64,9 @@ func request(w http.ResponseWriter, r *http.Request) {
 		Request: model.Request{
 			Title:       request.Title,
 			Description: request.Description,
-			Status:      "requested",
+			Status:      "pending",
 		},
-		OrganisationID: uint(oID),
+		OrganisationID: request.OrganisationID,
 		Spaces:         request.Spaces,
 	}
 

@@ -37,13 +37,6 @@ func request(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := util.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
 	request := spacePermissionRequest{}
 
 	err = json.NewDecoder(r.Body).Decode(&request)
@@ -71,9 +64,9 @@ func request(w http.ResponseWriter, r *http.Request) {
 		Request: model.Request{
 			Title:       request.Title,
 			Description: request.Description,
-			Status:      "requested",
+			Status:      "pending",
 		},
-		SpaceID:   uint(sID),
+		SpaceID:   uint(request.SpaceID),
 		Posts:     request.Posts,
 		Media:     request.Media,
 		FactCheck: request.FactCheck,

@@ -138,6 +138,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		var spacePermContext config.ContextKey = "space_perm_user"
 		spacePermission := model.SpacePermission{
 			SpaceID:   result.ID,
+			Media:     -1,
+			Posts:     -1,
 			FactCheck: true,
 		}
 		if err = tx.WithContext(context.WithValue(r.Context(), spacePermContext, uID)).Create(&spacePermission).Error; err != nil {

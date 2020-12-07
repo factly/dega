@@ -29,7 +29,7 @@ type paging struct {
 func list(w http.ResponseWriter, r *http.Request) {
 	status := r.URL.Query().Get("status")
 	if status == "" {
-		status = "requested"
+		status = "pending"
 	}
 
 	offset, limit := paginationx.Parse(r.URL.Query())

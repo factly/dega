@@ -49,7 +49,7 @@ func reject(w http.ResponseWriter, r *http.Request) {
 
 	// Check if the request exist or not
 	err = config.DB.Where(&model.OrganisationPermissionRequest{
-		Request: model.Request{Status: "requested"},
+		Request: model.Request{Status: "pending"},
 	}).First(&request).Error
 	if err != nil {
 		loggerx.Error(err)

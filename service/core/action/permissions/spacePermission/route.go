@@ -20,6 +20,7 @@ type spacePermissionRequest struct {
 	FactCheck   bool           `json:"fact_check"`
 	Media       int64          `json:"media"`
 	Posts       int64          `json:"posts"`
+	SpaceID     int64          `json:"space_id" validate:"required"`
 }
 
 var userContext config.ContextKey = "space_perm_user"
@@ -38,6 +39,14 @@ func Router() chi.Router {
 		r.With(util.CheckSuperOrganisation).Put("/", update)
 		r.With(util.CheckSuperOrganisation).Delete("/", delete)
 	})
+
+	return r
+}
+
+// SpaceRequestRouter - Create endpoint for space permission request
+func SpaceRequestRouter() chi.Router {
+	r := chi.NewRouter()
+	r.Post("/", request)
 
 	return r
 }
