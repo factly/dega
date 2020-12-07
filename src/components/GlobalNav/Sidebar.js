@@ -40,7 +40,7 @@ function Sidebar() {
     'home',
     'dashboard',
     'analytics',
-    'googlefactcheck',
+    'google',
     'factly',
     'posts',
     'policies',

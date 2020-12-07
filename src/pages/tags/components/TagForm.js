@@ -1,9 +1,7 @@
 import React from 'react';
 import { Button, Form, Input, Space, Switch } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-
+import Editor from '../../../components/Editor';
 const layout = {
   labelCol: {
     span: 10,
@@ -73,11 +71,11 @@ const TagForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item name="description" label="Description">
-        <ReactQuill theme="snow" style={{ width: 500 }} />
-      </Form.Item>
       <Form.Item label="Featured" name="is_featured" valuePropName="checked">
         <Switch />
+      </Form.Item>
+      <Form.Item name="description" label="Description">
+        <Editor style={{ width: '600px' }} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

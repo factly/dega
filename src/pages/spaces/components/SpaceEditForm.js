@@ -3,8 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button, Form, Input, Steps, Select } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
 import { checker } from '../../../utils/sluger';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import Editor from '../../../components/Editor';
 
 const { Option } = Select;
 
@@ -102,11 +101,11 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           <Form.Item name="tag_line" label="Tag line">
             <Input />
           </Form.Item>
-          <Form.Item name="description" label="Description">
-            <ReactQuill theme="snow" style={{ width: 500 }} />
-          </Form.Item>
           <Form.Item name="site_address" label="Website">
             <Input />
+          </Form.Item>
+          <Form.Item name="description" label="Description">
+            <Editor style={{ width: '600px' }} />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>

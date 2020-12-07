@@ -58,7 +58,7 @@ function ClaimList({ actions }) {
   };
 
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title', width: '20%' },
+    { title: 'Claim', dataIndex: 'title', key: 'title', width: '20%' },
     { title: 'Claimant', dataIndex: 'claimant', key: 'claimant', width: '20%' },
     { title: 'Rating', dataIndex: 'rating', key: 'rating', width: '20%' },
     {

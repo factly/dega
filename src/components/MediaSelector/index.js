@@ -40,7 +40,7 @@ function MediaSelector({ value = null, onChange }) {
               onChange(selected.id);
             }}
           >
-            {selected ? selected.name : null} Select
+            Select
           </Button>,
         ]}
       >

@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTags, deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
-import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 function TagList({ actions }) {
   const dispatch = useDispatch();
@@ -41,22 +40,6 @@ function TagList({ actions }) {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name', width: '15%' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug', width: '15%' },
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-      width: '50%',
-      render: (_, record) => {
-        return (
-          <HTMLEllipsis
-            unsafeHTML={record?.description}
-            maxLine="2"
-            ellipsis="..."
-            basedOn="letters"
-          />
-        );
-      },
-    },
     {
       title: 'Action',
       dataIndex: 'operation',
