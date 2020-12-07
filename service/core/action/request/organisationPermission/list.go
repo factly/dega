@@ -37,7 +37,13 @@ func list(w http.ResponseWriter, r *http.Request) {
 	result := paging{}
 	result.Nodes = make([]model.OrganisationPermissionRequest, 0)
 
-	config.DB.Model(&model.OrganisationPermissionRequest{}).Where("status = ?", status).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes)
+	tx := config.DB.Model(&model.OrganisationPermissionRequest{})
+
+	if status != "all" {
+		tx.Where("status = ?", status)
+	}
+
+	tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes)
 
 	renderx.JSON(w, http.StatusOK, result)
 }
