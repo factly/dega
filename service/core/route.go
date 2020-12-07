@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/service/core/action/permissions"
+	"github.com/factly/dega-server/service/core/action/request"
 
 	"github.com/go-chi/chi"
 
@@ -34,5 +35,7 @@ func Router() http.Handler {
 	r.Mount("/search", search.Router())
 	r.Mount("/users", user.Router())
 	r.Mount("/permissions", permissions.Router())
+	r.Mount("/requests", request.Router())
+
 	return r
 }

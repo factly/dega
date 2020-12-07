@@ -85,12 +85,6 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.Unauthorized()
 	}
 
-	oID, err := util.GetOrganisation(ctx)
-	if err != nil {
-		loggerx.Error(err)
-		return nil, errorx.Unauthorized()
-	}
-
 	uID, err := util.GetUser(ctx)
 	if err != nil {
 		loggerx.Error(err)
@@ -98,10 +92,10 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	}
 
 	if viper.GetBool("create_super_organisation") {
-		// Fetch organisation permissions
-		permission := model.OrganisationPermission{}
-		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-			OrganisationID: uint(oID),
+		// Fetch space permissions
+		permission := model.SpacePermission{}
+		err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
+			SpaceID: uint(sID),
 		}).First(&permission).Error
 
 		if err != nil {

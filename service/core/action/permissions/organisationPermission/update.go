@@ -77,20 +77,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if permission.Spaces == 0 {
 		permission.Spaces = viper.GetInt64("default_number_of_spaces")
 	}
-	if permission.Media == 0 {
-		permission.Media = viper.GetInt64("default_number_of_media")
-	}
-	if permission.Posts == 0 {
-		permission.Posts = viper.GetInt64("default_number_of_posts")
-	}
 
 	tx := config.DB.Begin()
 
 	err = tx.Model(&model.OrganisationPermission{}).Model(&result).Updates(&model.OrganisationPermission{
 		Base:   config.Base{UpdatedByID: uint(uID)},
 		Spaces: permission.Spaces,
-		Media:  permission.Media,
-		Posts:  permission.Posts,
 	}).First(&result).Error
 
 	if err != nil {

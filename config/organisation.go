@@ -39,8 +39,6 @@ type OrganisationPermission struct {
 	Base
 	OrganisationID uint  `gorm:"column:organisation_id" json:"organisation_id"`
 	Spaces         int64 `gorm:"column:spaces" json:"spaces"`
-	Media          int64 `gorm:"column:media" json:"media"`
-	Posts          int64 `gorm:"column:posts" json:"posts"`
 }
 
 var ketoPolicyPath string = "/engines/acp/ory/regex/policies"
@@ -273,8 +271,6 @@ func createKavachOrganisation(userID string) (*http.Response, error) {
 func createSuperOrganisationPermissions(oID uint) error {
 	return DB.Model(&OrganisationPermission{}).Create(&OrganisationPermission{
 		OrganisationID: oID,
-		Posts:          -1,
-		Media:          -1,
 		Spaces:         -1,
 	}).Error
 }

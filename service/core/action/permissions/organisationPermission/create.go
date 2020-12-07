@@ -57,12 +57,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if permission.Spaces == 0 {
 		permission.Spaces = viper.GetInt64("default_number_of_spaces")
 	}
-	if permission.Media == 0 {
-		permission.Media = viper.GetInt64("default_number_of_media")
-	}
-	if permission.Posts == 0 {
-		permission.Posts = viper.GetInt64("default_number_of_posts")
-	}
 
 	var totPerms int64
 	config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
@@ -78,8 +72,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := model.OrganisationPermission{
 		OrganisationID: permission.OrganisationID,
 		Spaces:         permission.Spaces,
-		Media:          permission.Media,
-		Posts:          permission.Posts,
 	}
 
 	config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Model(&model.OrganisationPermission{}).Create(&result)

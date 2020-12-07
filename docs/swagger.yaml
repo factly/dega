@@ -108,6 +108,42 @@ definitions:
       total:
         type: integer
     type: object
+  github.com_factly_dega-server_service_core_action_permissions_organisationPermission.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/organisationPermission.orgWithPermissions'
+        type: array
+      total:
+        type: integer
+    type: object
+  github.com_factly_dega-server_service_core_action_permissions_spacePermission.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/spacePermission.spaceWithPermissions'
+        type: array
+      total:
+        type: integer
+    type: object
+  github.com_factly_dega-server_service_core_action_request_organisationPermission.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.OrganisationPermissionRequest'
+        type: array
+      total:
+        type: integer
+    type: object
+  github.com_factly_dega-server_service_core_action_request_spacePermission.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.SpacePermissionRequest'
+        type: array
+      total:
+        type: integer
+    type: object
   google.paging:
     properties:
       nextPage:
@@ -379,14 +415,35 @@ definitions:
         type: string
       id:
         type: integer
-      media:
-        type: integer
       organisation_id:
-        type: integer
-      posts:
         type: integer
       spaces:
         type: integer
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+    type: object
+  model.OrganisationPermissionRequest:
+    properties:
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      organisation_id:
+        type: integer
+      spaces:
+        type: integer
+      status:
+        type: string
+      title:
+        type: string
       updated_at:
         type: string
       updated_by_id:
@@ -567,10 +624,45 @@ definitions:
         type: boolean
       id:
         type: integer
+      media:
+        type: integer
+      posts:
+        type: integer
       space:
         $ref: '#/definitions/model.Space'
       space_id:
         type: integer
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+    type: object
+  model.SpacePermissionRequest:
+    properties:
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      fact_check:
+        type: boolean
+      id:
+        type: integer
+      media:
+        type: integer
+      posts:
+        type: integer
+      space:
+        $ref: '#/definitions/model.Space'
+      space_id:
+        type: integer
+      status:
+        type: string
+      title:
+        type: string
       updated_at:
         type: string
       updated_by_id:
@@ -622,11 +714,7 @@ definitions:
         type: integer
       is_admin:
         type: boolean
-      media:
-        type: integer
       organisation_id:
-        type: integer
-      posts:
         type: integer
       space_permissions:
         items:
@@ -668,25 +756,23 @@ definitions:
     type: object
   organisationPermission.organisationPermission:
     properties:
-      media:
-        type: integer
       organisation_id:
-        type: integer
-      posts:
         type: integer
       spaces:
         type: integer
     required:
     - organisation_id
     type: object
-  organisationPermission.paging:
+  organisationPermission.organisationPermissionRequest:
     properties:
-      nodes:
-        items:
-          $ref: '#/definitions/organisationPermission.orgWithPermissions'
-        type: array
-      total:
+      description:
+        type: string
+      spaces:
         type: integer
+      title:
+        type: string
+    required:
+    - title
     type: object
   policy.paging:
     properties:
@@ -999,23 +1085,33 @@ definitions:
       verification_codes:
         type: string
     type: object
-  spacePermission.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/spacePermission.spaceWithPermissions'
-        type: array
-      total:
-        type: integer
-    type: object
   spacePermission.spacePermission:
     properties:
       fact_check:
         type: boolean
+      media:
+        type: integer
+      posts:
+        type: integer
       space_id:
         type: integer
     required:
     - space_id
+    type: object
+  spacePermission.spacePermissionRequest:
+    properties:
+      description:
+        type: string
+      fact_check:
+        type: boolean
+      media:
+        type: integer
+      posts:
+        type: integer
+      title:
+        type: string
+    required:
+    - title
     type: object
   spacePermission.spaceWithPermissions:
     properties:
@@ -1732,7 +1828,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/organisationPermission.paging'
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_permissions_organisationPermission.paging'
             type: array
       summary: Show all organisation permissions
       tags:
@@ -1863,6 +1959,43 @@ paths:
       summary: Show a my organisation permissions
       tags:
       - Organisation_Permissions
+  /core/permissions/organisations/request:
+    post:
+      description: Create organisation permission request
+      operationId: add-org-permission-request
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request Object
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/organisationPermission.organisationPermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.OrganisationPermissionRequest'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create organisation permission request
+      tags:
+      - Organisation_Permissions
   /core/permissions/spaces:
     get:
       description: Get all Space permissions
@@ -1889,7 +2022,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/spacePermission.paging'
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_permissions_spacePermission.paging'
             type: array
       summary: Show all Space permissions
       tags:
@@ -2047,6 +2180,43 @@ paths:
           schema:
             $ref: '#/definitions/model.SpacePermission'
       summary: Show a my Space permissions
+      tags:
+      - Space_Permissions
+  /core/permissions/spaces/request:
+    post:
+      description: Create space permission request
+      operationId: add-space-permission-request
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request Object
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/spacePermission.spacePermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SpacePermissionRequest'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create space permission request
       tags:
       - Space_Permissions
   /core/policies:
@@ -2501,6 +2671,380 @@ paths:
       summary: create template
       tags:
       - Post
+  /core/requests/organisation-permissions:
+    get:
+      description: Get all organisation permissions requests
+      operationId: get-all-org-permissions-requests
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Status
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_organisationPermission.paging'
+            type: array
+      summary: Show all organisation permissions requests
+      tags:
+      - Organisation_Permissions_Request
+  /core/requests/organisation-permissions/{request_id}:
+    delete:
+      description: Delete Organisation permission request by ID
+      operationId: delete-org-permission-request-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a Organisation permission request
+      tags:
+      - Organisation_Permissions_Request
+    get:
+      description: Get organisation permissions requests detail
+      operationId: get-org-permission-request-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.OrganisationPermissionRequest'
+      summary: Show a organisation permissions requests detail
+      tags:
+      - Organisation_Permissions_Request
+  /core/requests/organisation-permissions/{request_id}/approve:
+    post:
+      description: approve organisation permission
+      operationId: approve-org-permission
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.OrganisationPermission'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: approve organisation permission
+      tags:
+      - Organisation_Permissions_Request
+  /core/requests/organisation-permissions/{request_id}/reject:
+    post:
+      description: reject organisation permission
+      operationId: reject-org-permission
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: reject organisation permission
+      tags:
+      - Organisation_Permissions_Request
+  /core/requests/organisation-permissions/my:
+    get:
+      description: Get all my organisation permissions requests
+      operationId: get-all-my-org-permissions-requests
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_organisationPermission.paging'
+            type: array
+      summary: Show all my organisation permissions requests
+      tags:
+      - Organisation_Permissions_Request
+  /core/requests/space-permissions:
+    get:
+      description: Get all space permissions requests
+      operationId: get-all-space-permissions-requests
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Status
+        in: query
+        name: status
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_spacePermission.paging'
+            type: array
+      summary: Show all space permissions requests
+      tags:
+      - Space_Permissions_Request
+  /core/requests/space-permissions/{request_id}:
+    delete:
+      description: Delete Space permission request by ID
+      operationId: delete-space-permission-request-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a Space permission request
+      tags:
+      - Space_Permissions_Request
+    get:
+      description: Get space permissions requests detail
+      operationId: get-space-permission-request-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.SpacePermissionRequest'
+      summary: Show a space permissions requests detail
+      tags:
+      - Space_Permissions_Request
+  /core/requests/space-permissions/{request_id}/approve:
+    post:
+      description: approve space permission
+      operationId: approve-space-permission
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SpacePermission'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: approve space permission
+      tags:
+      - Space_Permissions_Request
+  /core/requests/space-permissions/{request_id}/reject:
+    post:
+      description: reject space permission
+      operationId: reject-space-permission
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request ID
+        in: path
+        name: request_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: reject space permission
+      tags:
+      - Space_Permissions_Request
+  /core/requests/space-permissions/my:
+    get:
+      description: Get all my space permissions requests
+      operationId: get-all-my-space-permissions-requests
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_spacePermission.paging'
+            type: array
+      summary: Show all my space permissions requests
+      tags:
+      - Space_Permissions_Request
   /core/search:
     post:
       description: Global search for all entities

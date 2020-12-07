@@ -133,19 +133,32 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Create SpacePermission for super organisation
-	if superOrgID == space.OrganisationID {
-		var spacePermContext config.ContextKey = "space_perm_user"
-		spacePermission := model.SpacePermission{
-			SpaceID:   result.ID,
-			FactCheck: true,
+	if viper.GetBool("create_super_organisation") {
+		// Create SpacePermission for super organisation
+		var spacePermission model.SpacePermission
+		if superOrgID == space.OrganisationID {
+			spacePermission = model.SpacePermission{
+				SpaceID:   result.ID,
+				Media:     -1,
+				Posts:     -1,
+				FactCheck: true,
+			}
+		} else {
+			spacePermission = model.SpacePermission{
+				SpaceID:   result.ID,
+				Media:     viper.GetInt64("default_number_of_media"),
+				Posts:     viper.GetInt64("default_number_of_posts"),
+				FactCheck: false,
+			}
 		}
+		var spacePermContext config.ContextKey = "space_perm_user"
 		if err = tx.WithContext(context.WithValue(r.Context(), spacePermContext, uID)).Create(&spacePermission).Error; err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
+
 	}
 
 	// Insert into meili index
