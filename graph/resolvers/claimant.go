@@ -19,6 +19,10 @@ func (r *claimantResolver) SpaceID(ctx context.Context, obj *models.Claimant) (i
 	return int(obj.SpaceID), nil
 }
 
+func (r *claimantResolver) Description(ctx context.Context, obj *models.Claimant) (interface{}, error) {
+	return obj.Description, nil
+}
+
 func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error) {
 	if obj.MediumID == 0 {
 		return nil, nil

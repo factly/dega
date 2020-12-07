@@ -313,7 +313,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				result := make([]*models.User, 0)
 
 				userMap := make(map[uint]models.User)
-				url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", space.OrganisationID, "/users")
+				url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
 
 				req, err := http.NewRequest("GET", url, nil)
 				if err != nil {

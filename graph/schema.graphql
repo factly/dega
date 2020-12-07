@@ -23,7 +23,7 @@ type Category {
   updated_at: Time
   name: String!
   slug: String!
-  description: String
+  description: Any
   parent_id: Int
   medium: Medium
   space_id: Int!
@@ -107,7 +107,7 @@ type Rating {
   updated_at: Time
   name: String!
   slug: String!
-  description: String
+  description: Any
   numeric_value: Int!
   medium: Medium
   space_id: Int!
@@ -119,7 +119,7 @@ type Claimant {
   updated_at: Time
   name: String!
   slug: String!
-  description: String
+  description: Any
   tag_line: String
   medium: Medium
   space_id: Int!
@@ -133,11 +133,11 @@ type Claim {
   slug: String!
   claim_date: Time
   checked_date: Time
-  claim_sources: String
+  claim_sources: Any
   description: Any
-  review: String
-  review_tag_line: String
-  review_sources: String
+  review: Any
+  review_tag_line: Any
+  review_sources: Any
   rating: Rating!
   claimant: Claimant!
   space_id: Int!

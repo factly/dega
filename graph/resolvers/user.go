@@ -53,7 +53,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 		return nil, nil
 	}
 
-	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", space.OrganisationID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -103,7 +103,7 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	config.DB.First(space)
 
 	userMap := make(map[uint]models.User)
-	url := fmt.Sprint(viper.GetString("kavach.url"), "/organisations/", space.OrganisationID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

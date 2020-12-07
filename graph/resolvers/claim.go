@@ -24,6 +24,22 @@ func (r *claimResolver) Description(ctx context.Context, obj *models.Claim) (int
 	return obj.Description, nil
 }
 
+func (r *claimResolver) ClaimSources(ctx context.Context, obj *models.Claim) (interface{}, error) {
+	return obj.ClaimSources, nil
+}
+
+func (r *claimResolver) Review(ctx context.Context, obj *models.Claim) (interface{}, error) {
+	return obj.Review, nil
+}
+
+func (r *claimResolver) ReviewTagLine(ctx context.Context, obj *models.Claim) (interface{}, error) {
+	return obj.ReviewTagLine, nil
+}
+
+func (r *claimResolver) ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error) {
+	return obj.ReviewSources, nil
+}
+
 func (r *claimResolver) Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error) {
 	return loaders.GetRatingLoader(ctx).Load(fmt.Sprint(obj.RatingID))
 }
