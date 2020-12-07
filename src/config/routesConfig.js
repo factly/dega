@@ -79,12 +79,10 @@ import EditSpacePermission from '../pages/permissions/spaces/EditSpacePermission
 // Organisation Requests
 import OrganisationRequests from '../pages/requests/organisations';
 import CreateOrganisationRequest from '../pages/requests/organisations/CreateOrganisationRequest';
-import EditOrganisationRequest from '../pages/requests/organisations/EditOrganisationRequest';
 
 // Space Requests
 import SpaceRequests from '../pages/requests/spaces';
 import CreateSpaceRequest from '../pages/requests/spaces/CreateSpaceRequest';
-import EditSpaceRequest from '../pages/requests/spaces/EditSpaceRequest';
 
 const routes = {
   dashboard: {
@@ -174,12 +172,6 @@ const routes = {
     title: 'Create Organisation Request',
     isOwner: true,
   },
-  editOrganisationRequest: {
-    path: '/organisations/:oid/requests/:rid/edit',
-    Component: EditOrganisationRequest,
-    title: 'Edit Organisation Request',
-    isOwner: true,
-  },
   spaceRequests: {
     path: '/requests/spaces',
     Component: SpaceRequests,
@@ -190,12 +182,6 @@ const routes = {
     path: '/requests/spaces/create',
     Component: CreateSpaceRequest,
     title: 'Create Space Request',
-    isOwner: true,
-  },
-  editSpaceRequest: {
-    path: '/spaces/:sid/requests/:rid/edit',
-    Component: EditSpaceRequest,
-    title: 'Edit Space Request',
     isOwner: true,
   },
   categories: {
