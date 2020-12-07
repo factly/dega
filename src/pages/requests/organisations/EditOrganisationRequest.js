@@ -1,12 +1,12 @@
 import React from 'react';
-import OrganisationPermissionEditForm from './components/PermissionForm';
+import OrganisationRequestEditForm from './components/RequestForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
-import { updateOrganisationPermission, getOrganisations } from '../../actions/organisations';
+import { updateOrganisationRequest, getOrganisations } from '../../../actions/organisationRequests';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
-function EditOrganisationPermission() {
+function EditOrganisationRequest() {
   const history = useHistory();
   const { oid, pid } = useParams();
 
@@ -26,12 +26,12 @@ function EditOrganisationPermission() {
   if (loading && !organisation) return <Skeleton />;
 
   const onUpdate = (values) => {
-    dispatch(updateOrganisationPermission({ ...organisation.permission, ...values })).then(() =>
-      history.push('/organisations/permissions'),
+    dispatch(updateOrganisationRequest({ ...organisation.request, ...values })).then(() =>
+      history.push('/requests/organisations'),
     );
   };
 
-  return <OrganisationPermissionEditForm data={organisation.permission} onCreate={onUpdate} />;
+  return <OrganisationRequestEditForm data={organisation.request} onCreate={onUpdate} />;
 }
 
-export default EditOrganisationPermission;
+export default EditOrganisationRequest;

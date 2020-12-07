@@ -6,9 +6,9 @@ import { Link } from 'react-router-dom';
 function OrganisationPermissions() {
   return (
     <Space direction="vertical">
-      <Link key="1" to="/organisations/permissions/create">
+      {/* <Link key="1" to="/permissions/organisations/create">
         <Button>Create New</Button>
-      </Link>
+      </Link> */}
       <OrganisationPermissionList />
     </Space>
   );

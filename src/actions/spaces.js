@@ -50,7 +50,6 @@ export const addSpace = (data) => {
       .then((response) => {
         dispatch(addSpaceSuccess(response.data));
         dispatch(addSuccessNotification('Space added'));
-        console.log(response);
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {

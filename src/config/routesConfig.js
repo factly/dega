@@ -67,9 +67,24 @@ import Users from '../pages/users';
 import PermissionList from '../pages/users/PermissionList';
 
 // Organisation Permissions
-import OrganisationPermissions from '../pages/organisation-permissions';
-import CreateOrganisationPermission from '../pages/organisation-permissions/CreateOrganisationPermission';
-import EditOrganisationPermission from '../pages/organisation-permissions/EditOrganisationPermission';
+import OrganisationPermissions from '../pages/permissions/organisations';
+import CreateOrganisationPermission from '../pages/permissions/organisations/CreateOrganisationPermission';
+import EditOrganisationPermission from '../pages/permissions/organisations/EditOrganisationPermission';
+
+// Space Permissions
+import SpacePermissions from '../pages/permissions/spaces';
+import CreateSpacePermission from '../pages/permissions/spaces/CreateSpacePermission';
+import EditSpacePermission from '../pages/permissions/spaces/EditSpacePermission';
+
+// Organisation Requests
+import OrganisationRequests from '../pages/requests/organisations';
+import CreateOrganisationRequest from '../pages/requests/organisations/CreateOrganisationRequest';
+import EditOrganisationRequest from '../pages/requests/organisations/EditOrganisationRequest';
+
+// Space Requests
+import SpaceRequests from '../pages/requests/spaces';
+import CreateSpaceRequest from '../pages/requests/spaces/CreateSpaceRequest';
+import EditSpaceRequest from '../pages/requests/spaces/EditSpaceRequest';
 
 const routes = {
   dashboard: {
@@ -111,14 +126,14 @@ const routes = {
       action: 'update',
     },
   },
-  organisations: {
-    path: '/organisations/permissions',
+  organisationPermissions: {
+    path: '/permissions/organisations',
     Component: OrganisationPermissions,
     title: 'Organisations',
     isAdmin: true,
   },
   createOrganisationPermission: {
-    path: '/organisations/permissions/create',
+    path: '/permissions/organisations/create',
     Component: CreateOrganisationPermission,
     title: 'Create Organisation Permission',
     isAdmin: true,
@@ -128,6 +143,60 @@ const routes = {
     Component: EditOrganisationPermission,
     title: 'Edit Organisation Permission',
     isAdmin: true,
+  },
+  spacePermissions: {
+    path: '/permissions/spaces',
+    Component: SpacePermissions,
+    title: 'Spaces',
+    isAdmin: true,
+  },
+  createSpacePermission: {
+    path: '/permissions/spaces/create',
+    Component: CreateSpacePermission,
+    title: 'Create Space Permission',
+    isAdmin: true,
+  },
+  editSpacePermission: {
+    path: '/spaces/:sid/permissions/:pid/edit',
+    Component: EditSpacePermission,
+    title: 'Edit Space Permission',
+    isAdmin: true,
+  },
+  organisationRequests: {
+    path: '/requests/organisations',
+    Component: OrganisationRequests,
+    title: 'Organisations',
+    isOwner: true,
+  },
+  createOrganisationRequest: {
+    path: '/requests/organisations/create',
+    Component: CreateOrganisationRequest,
+    title: 'Create Organisation Request',
+    isOwner: true,
+  },
+  editOrganisationRequest: {
+    path: '/organisations/:oid/requests/:rid/edit',
+    Component: EditOrganisationRequest,
+    title: 'Edit Organisation Request',
+    isOwner: true,
+  },
+  spaceRequests: {
+    path: '/requests/spaces',
+    Component: SpaceRequests,
+    title: 'Spaces',
+    isOwner: true,
+  },
+  createSpaceRequest: {
+    path: '/requests/spaces/create',
+    Component: CreateSpaceRequest,
+    title: 'Create Space Request',
+    isOwner: true,
+  },
+  editSpaceRequest: {
+    path: '/spaces/:sid/requests/:rid/edit',
+    Component: EditSpaceRequest,
+    title: 'Edit Space Request',
+    isOwner: true,
   },
   categories: {
     path: '/categories',
@@ -415,7 +484,20 @@ export const sidebarMenu = [
   {
     title: 'ADMINSTRATION',
     Icon: IdcardOutlined,
-    children: [routes.organisations, routes.spaces, routes.policies, routes.users],
+    children: [routes.spaces, routes.policies, routes.users],
+    submenu: [
+      {
+        isAdmin: true,
+        title: 'Permissions',
+        Icon: IdcardOutlined,
+        children: [routes.organisationPermissions, routes.spacePermissions],
+      },
+      {
+        title: 'Requests',
+        Icon: IdcardOutlined,
+        children: [routes.organisationRequests, routes.spaceRequests],
+      },
+    ],
   },
 ];
 

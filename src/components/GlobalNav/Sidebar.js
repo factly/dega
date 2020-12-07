@@ -56,6 +56,7 @@ function Sidebar() {
     'claims',
     'claimants',
     'ratings',
+    'organisations',
   ];
 
   permission.forEach((each) => {
@@ -66,9 +67,18 @@ function Sidebar() {
     }
   });
 
-  if (superOrg.is_admin) resource.push('organisations');
-
   if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResouces);
+
+  const getMenuItems = (children, index, title) =>
+    children.map((route, childIndex) => {
+      return resource.includes(route.title.toLowerCase()) ? (
+        <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
+          <Link to={route.path}>
+            <span>{route.title}</span>
+          </Link>
+        </Menu.Item>
+      ) : null;
+    });
 
   return (
     <Sider
@@ -103,15 +113,19 @@ function Sidebar() {
           const { Icon } = menu;
           return (
             <SubMenu key={index} title={menu.title} icon={<Icon />}>
-              {menu.children.map((route, childIndex) => {
-                return resource.includes(route.title.toLowerCase()) ? (
-                  <Menu.Item key={`${index}.${childIndex}`}>
-                    <Link to={route.path}>
-                      <span>{route.title}</span>
-                    </Link>
-                  </Menu.Item>
-                ) : null;
-              })}
+              {menu.submenu && menu.submenu.length > 0 ? (
+                <>
+                  {menu.submenu[0].isAdmin === superOrg.is_admin ? (
+                    <SubMenu key={menu.submenu[0].title + index} title={menu.submenu[0].title}>
+                      {getMenuItems(menu.submenu[0].children, index, menu.submenu[0].title)}
+                    </SubMenu>
+                  ) : null}
+                  <SubMenu key={menu.submenu[1].title + index} title={menu.submenu[1].title}>
+                    {getMenuItems(menu.submenu[1].children, index, menu.submenu[1].title)}
+                  </SubMenu>
+                </>
+              ) : null}
+              {getMenuItems(menu.children, index, menu.title)}
             </SubMenu>
           );
         })}
