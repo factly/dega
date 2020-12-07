@@ -15,7 +15,6 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
-	"github.com/spf13/viper"
 )
 
 // request - Create organisation permission request
@@ -56,8 +55,17 @@ func request(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if request.Spaces == 0 {
-		request.Spaces = viper.GetInt64("default_number_of_spaces")
+	isAdmin, err := util.CheckOwnerFromKavach(uID, int(request.OrganisationID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusInternalServerError)))
+		return
+	}
+
+	if !isAdmin {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
 	}
 
 	result := model.OrganisationPermissionRequest{

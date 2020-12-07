@@ -13,7 +13,6 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
-	"github.com/spf13/viper"
 )
 
 // request - Create space permission request
@@ -53,11 +52,27 @@ func request(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if request.Media == 0 {
-		request.Media = viper.GetInt64("default_number_of_media")
+	space := model.Space{}
+	space.ID = uint(request.SpaceID)
+	// Fetch space for which request is made
+	err = config.DB.First(&space).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("space not found", http.StatusNotFound)))
+		return
 	}
-	if request.Posts == 0 {
-		request.Posts = viper.GetInt64("default_number_of_posts")
+
+	isAdmin, err := util.CheckOwnerFromKavach(uID, int(space.OrganisationID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusInternalServerError)))
+		return
+	}
+
+	if !isAdmin {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
 	}
 
 	result := model.SpacePermissionRequest{
