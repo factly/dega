@@ -4,8 +4,12 @@ import { Result, Button } from 'antd';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
 
-function ProtectedRoute({ component: Component, permission, ...rest }) {
-  const spaces = useSelector(({ spaces }) => spaces);
+function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) {
+  console.log('Protected route');
+  const spaces = useSelector((state) => {
+    console.log(state);
+    return state.spaces;
+  });
   const actions = getUserPermission({ ...permission, spaces });
   const { loading, orgs, selected } = spaces;
 
@@ -44,6 +48,18 @@ function ProtectedRoute({ component: Component, permission, ...rest }) {
       />
     );
   }
+  if (
+    !loading &&
+    isOwner &&
+    selected === 0 &&
+    orgs.filter((each) => each.permission.role === 'owner').length > 0
+  )
+    return (
+      <Route
+        {...rest}
+        render={(props) => <Component {...rest} {...props} permission={{ actions }} />}
+      />
+    );
 
   if (
     !loading &&

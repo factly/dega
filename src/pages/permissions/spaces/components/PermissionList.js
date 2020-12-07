@@ -2,8 +2,9 @@ import React from 'react';
 import { Popconfirm, Button, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getOrganisations, deleteOrganisationPermission } from '../../../actions/organisations';
+import { getSpaces, deleteSpacePermission } from '../../../../actions/spacePermissions';
 import { Link } from 'react-router-dom';
+
 function PermissionList() {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
@@ -11,55 +12,50 @@ function PermissionList() {
     limit: 5,
   });
 
-  const { organisation_permissions, total, loading } = useSelector((state) => {
-    const req = state.organisations.req;
+  const { space_permissions, total, loading } = useSelector((state) => {
+    const req = state.spacePermissions.req;
 
     if (req.length > 0 && req[0].total > 0) {
-      const details = Object.keys(state.organisations.details)
+      const details = Object.keys(state.spacePermissions.details)
         .map((key, index) => {
-          return state.organisations.details[key].permission
-            ? state.organisations.details[key]
+          return state.spacePermissions.details[key].permission
+            ? state.spacePermissions.details[key]
             : undefined;
         })
         .filter((each) => each);
       return {
-        organisation_permissions: details.slice(
+        space_permissions: details.slice(
           filters.page - 1,
           filters.limit + (filters.page - 1) * filters.limit,
         ),
         total: details.total,
-        loading: state.organisations.loading,
+        loading: state.spacePermissions.loading,
       };
     }
 
     return {
-      organisation_permissions: [],
+      space_permissions: [],
       total: 0,
-      loading: state.organisations.loading,
+      loading: state.spacePermissions.loading,
     };
   });
 
   React.useEffect(() => {
-    fetchOrganisationPermissions();
+    fetchSpacePermissions();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
-  const fetchOrganisationPermissions = () => {
-    dispatch(getOrganisations(filters));
+  const fetchSpacePermissions = () => {
+    dispatch(getSpaces(filters));
   };
 
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title' },
+    { title: 'Space', dataIndex: 'name', key: 'name' },
     {
-      title: 'Spaces',
-      dataIndex: ['permission', 'spaces'],
-      render: (_, record) => {
-        return record.permission.media > 0 ? (
-          <p>{record.permission.spaces ? record.permission.spaces : 0}</p>
-        ) : (
-          <p>Unlimited</p>
-        );
-      },
+      title: 'Organisation ID',
+      dataIndex: 'organisation_id',
+      key: 'organisation_id',
+      width: '10%',
     },
     {
       title: 'Media',
@@ -93,6 +89,7 @@ function PermissionList() {
     {
       title: 'Action',
       dataIndex: 'operation',
+      width: '20%',
       render: (_, record) => {
         return (
           <span>
@@ -101,15 +98,15 @@ function PermissionList() {
               style={{
                 marginRight: 8,
               }}
-              to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
+              to={`/permissions/${record.id}/spaces/${record.permission.id}/edit`}
             >
               <Button>Edit</Button>
             </Link>
             <Popconfirm
               title="Sure to cancel?"
               onConfirm={() =>
-                dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
-                  fetchOrganisationPermissions(),
+                dispatch(deleteSpacePermission(record.permission.id)).then(() =>
+                  fetchSpacePermissions(),
                 )
               }
             >
@@ -127,7 +124,7 @@ function PermissionList() {
     <Table
       bordered
       columns={columns}
-      dataSource={organisation_permissions}
+      dataSource={space_permissions}
       loading={loading}
       rowKey={'id'}
       pagination={{

@@ -15,6 +15,9 @@ import notifications from './notificationsReducer';
 import policies from './policiesReducer';
 import permissions from './permissionsReducer';
 import organisations from './organisationsReducer';
+import organisationRequests from './organisationRequestsReducer';
+import spacePermissions from './spacePermissionsReducer';
+import spaceRequests from './spaceRequestsReducer';
 import admin from './adminReducer';
 import users from './usersReducer';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
@@ -24,6 +27,9 @@ const appReducer = combineReducers({
   settings,
   spaces,
   organisations,
+  organisationRequests,
+  spacePermissions,
+  spaceRequests,
   categories,
   tags,
   formats,

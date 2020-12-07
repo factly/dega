@@ -2,7 +2,7 @@ import React from 'react';
 import OrganisationPermissionEditForm from './components/PermissionForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
-import { updateOrganisationPermission, getOrganisations } from '../../actions/organisations';
+import { updateOrganisationPermission, getOrganisations } from '../../../actions/organisations';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
@@ -27,7 +27,7 @@ function EditOrganisationPermission() {
 
   const onUpdate = (values) => {
     dispatch(updateOrganisationPermission({ ...organisation.permission, ...values })).then(() =>
-      history.push('/organisations/permissions'),
+      history.push('/permissions/organisations'),
     );
   };
 

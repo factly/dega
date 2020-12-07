@@ -26,7 +26,13 @@ function App() {
               ) : route.isAdmin ? (
                 <AdminRoute key={route.path} exact path={route.path} component={route.Component} />
               ) : (
-                <Route key={route.path} exact path={route.path} component={route.Component} />
+                <Route
+                  key={route.path}
+                  exact
+                  path={route.path}
+                  component={route.Component}
+                  isOwner={route.isOwner}
+                />
               ),
             )}
             <Route

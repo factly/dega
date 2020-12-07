@@ -1,6 +1,8 @@
 import React from 'react';
-import { Button, Form, InputNumber, Space, Switch } from 'antd';
-import Selector from '../../../components/Selector';
+import { Button, Form, InputNumber, Space, Switch, Input, Select } from 'antd';
+
+import { spaceSelector } from '../../../../selectors/spaces';
+import { useSelector } from 'react-redux';
 
 const layout = {
   labelCol: {
@@ -17,38 +19,46 @@ const tailLayout = {
   },
 };
 
-const PermissionForm = ({ onCreate, data = {} }) => {
+const RequestForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
     form.resetFields();
   };
 
+  const { spaces, loading } = useSelector(spaceSelector);
+
   return (
     <Form
       {...layout}
       form={form}
-      initialValues={{ ...data }}
+      initialValues={data}
       name="create-category"
       onFinish={(values) => {
         onCreate(values);
         onReset();
       }}
     >
-      <Form.Item name="organisation_id" label="Organisation">
-        <Selector action="Organisations" display="title" placeholder="Select organisation" />
+      <Form.Item name="title" label="Title">
+        <Input />
       </Form.Item>
-      <Form.Item
-        name="spaces"
-        label="Spaces"
-        rules={[
-          {
-            required: true,
-            message: 'Please enter the numeric value!',
-          },
-        ]}
-      >
-        <InputNumber min={-1} />
+      <Form.Item name="space_id" label="Space">
+        <Select
+          allowClear
+          bordered
+          listHeight={128}
+          loading={loading}
+          defaultValue={[]}
+          filterOption={(input, option) =>
+            option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
+        >
+          {spaces.map((item) => (
+            <Select.Option value={item.id} key={item.id}>
+              {item.name}
+            </Select.Option>
+          ))}
+        </Select>
       </Form.Item>
       <Form.Item
         name="posts"
@@ -77,6 +87,9 @@ const PermissionForm = ({ onCreate, data = {} }) => {
       <Form.Item label="Fact Check" name="fact_check" valuePropName="checked">
         <Switch />
       </Form.Item>
+      <Form.Item name="description" label="Description">
+        <Input.TextArea />
+      </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
           <Button type="primary" htmlType="submit">
@@ -91,4 +104,4 @@ const PermissionForm = ({ onCreate, data = {} }) => {
   );
 };
 
-export default PermissionForm;
+export default RequestForm;
