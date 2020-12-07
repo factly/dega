@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form, Input, Select } from 'antd';
 import { maker, checker } from './../../../utils/sluger';
+import Editor from '../../../components/Editor';
 
 const { Option } = Select;
 
@@ -99,12 +100,11 @@ const SpaceCreateForm = ({ onCreate }) => {
       <Form.Item name="tag_line" label="Tag line">
         <Input />
       </Form.Item>
-
-      <Form.Item name="description" label="Description">
-        <Input.TextArea />
-      </Form.Item>
       <Form.Item name="site_address" label="Website">
         <Input />
+      </Form.Item>
+      <Form.Item name="description" label="Description">
+        <Editor />
       </Form.Item>
 
       <Form.Item {...tailLayout}>
