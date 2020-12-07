@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button, Typography, Table } from 'antd';
+import { Popconfirm, Button, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getRatings, deleteRating } from '../../../actions/ratings';
@@ -39,17 +39,6 @@ function RatingList({ actions }) {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-      width: '50%',
-      render: (_, record) => {
-        return (
-          <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
-        );
-      },
-    },
     { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
     {
       title: 'Action',

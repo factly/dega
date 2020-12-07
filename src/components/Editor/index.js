@@ -14,7 +14,7 @@ import InlineCode from '@editorjs/inline-code';
 import { useSelector } from 'react-redux';
 import Embed from './Embed';
 
-function Editor({ value, onChange }) {
+function Editor({ value, onChange, style }) {
   const editor_block = React.useRef(null);
   const space_slug = useSelector((state) => state.spaces.details[state.spaces.selected].slug);
 
@@ -47,7 +47,6 @@ function Editor({ value, onChange }) {
           },
         },
       },
-      placeholder: 'Let`s write an awesome story!',
       onChange: (value) =>
         value.saver.save().then((value) => {
           onChange(value);
@@ -57,7 +56,7 @@ function Editor({ value, onChange }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <div ref={editor_block}></div>;
+  return <div style={style ? style : null} ref={editor_block}></div>;
 }
 
 export default Editor;

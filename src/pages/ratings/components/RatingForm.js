@@ -2,8 +2,7 @@ import React from 'react';
 import { Button, Form, Input, Space, InputNumber } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-
-const { TextArea } = Input;
+import Editor from '../../../components/Editor';
 
 const layout = {
   labelCol: {
@@ -74,9 +73,6 @@ const RatingForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item name="description" label="Description">
-        <TextArea />
-      </Form.Item>
       <Form.Item
         name="numeric_value"
         label="Numeric value"
@@ -91,6 +87,9 @@ const RatingForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item name="medium_id" label="Featured Image">
         <MediaSelector />
+      </Form.Item>
+      <Form.Item name="description" label="Description">
+        <Editor style={{ width: '600px' }} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

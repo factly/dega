@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCategories, deleteCategory } from '../../../actions/categories';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
-import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 
 function CategoryList({ actions }) {
   const dispatch = useDispatch();
@@ -42,22 +41,6 @@ function CategoryList({ actions }) {
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-      width: '50%',
-      render: (_, record) => {
-        return (
-          <HTMLEllipsis
-            unsafeHTML={record?.description}
-            maxLine="2"
-            ellipsis="..."
-            basedOn="letters"
-          />
-        );
-      },
-    },
     { title: 'Parent Category', dataIndex: 'parent_id', key: 'parent_id' },
     {
       title: 'Action',

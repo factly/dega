@@ -2,15 +2,16 @@ import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
+import Editor from '../../../components/Editor';
 
 const { TextArea } = Input;
 
 const layout = {
   labelCol: {
-    span: 10,
+    span: 8,
   },
   wrapperCol: {
-    span: 14,
+    span: 16,
   },
 };
 const tailLayout = {
@@ -74,14 +75,15 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item name="description" label="Description">
-        <TextArea />
-      </Form.Item>
+
       <Form.Item name="tag_line" label="Tag Line">
         <TextArea />
       </Form.Item>
       <Form.Item label="Featured Image" name="medium_id">
         <MediaSelector />
+      </Form.Item>
+      <Form.Item name="description" label="Description">
+        <Editor style={{ width: '600px' }} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

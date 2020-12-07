@@ -3,15 +3,14 @@ import { Button, Form, Input, Space, Switch } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import Selector from '../../../components/Selector';
 import MediaSelector from '../../../components/MediaSelector';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import Editor from '../../../components/Editor';
 
 const layout = {
   labelCol: {
-    span: 10,
+    span: 8,
   },
   wrapperCol: {
-    span: 14,
+    span: 16,
   },
 };
 const tailLayout = {
@@ -78,15 +77,14 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
-
-      <Form.Item name="description" label="Description">
-        <ReactQuill theme="snow" style={{ width: 500 }} />
-      </Form.Item>
       <Form.Item label="Featured Image" name="medium_id">
         <MediaSelector />
       </Form.Item>
       <Form.Item label="Featured" name="is_featured" valuePropName="checked">
         <Switch />
+      </Form.Item>
+      <Form.Item name="description" label="Description">
+        <Editor style={{ width: '600px' }} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

@@ -53,7 +53,7 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
     <div>
       <Steps current={current} onChange={(value) => setCurrent(value)}>
         <Steps.Step title="Basic" />
-        <Steps.Step title="Media" />
+        <Steps.Step title="Sources" />
       </Steps>
       <Form
         {...layout}
@@ -83,9 +83,6 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
             ]}
           >
             <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
-          </Form.Item>
-          <Form.Item name="review" label="Fact">
-            <TextArea />
           </Form.Item>
           <Form.Item
             name="slug"
@@ -128,6 +125,11 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
           >
             <Selector action="Ratings" />
           </Form.Item>
+
+          <Form.Item name="review" label="Fact" wrapperCol={24}>
+            <Editor />
+          </Form.Item>
+
           <Form.Item name="description" label="Description" wrapperCol={24}>
             <Editor />
           </Form.Item>
@@ -139,11 +141,11 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
           <Form.Item name="checked_date" label="Checked Date">
             <DatePicker />
           </Form.Item>
-          <Form.Item name="claim_sources" label="Claim Sources">
-            <TextArea />
+          <Form.Item name="claim_sources" label="Claim Sources" wrapperCol={24}>
+            <Editor />
           </Form.Item>
-          <Form.Item name="review_tag_line" label="Review Tagline">
-            <TextArea />
+          <Form.Item name="review_tag_line" label="Review Tagline" wrapperCol={24}>
+            <Editor />
           </Form.Item>
           <Form.Item name="review_sources" label="Review Sources">
             <TextArea />
