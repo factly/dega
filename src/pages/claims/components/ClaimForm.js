@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Form, Input, Steps, DatePicker } from 'antd';
+import { Button, Form, Input, Steps, DatePicker, Space } from 'antd';
 import Selector from '../../../components/Selector';
 import Editor from '../../../components/Editor';
 import { maker, checker } from '../../../utils/sluger';
 import moment from 'moment';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
 const { TextArea } = Input;
 
@@ -16,7 +17,7 @@ const layout = {
   },
 };
 
-const ClaimForm = ({ onCreate, data = {}, width }) => {
+const ClaimForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
   const onReset = () => {
@@ -147,9 +148,40 @@ const ClaimForm = ({ onCreate, data = {}, width }) => {
           <Form.Item name="review_tag_line" label="Review Tagline" wrapperCol={24}>
             <Editor />
           </Form.Item>
-          <Form.Item name="review_sources" label="Review Sources">
-            <TextArea />
-          </Form.Item>
+          <Form.List name="review_sources" label="Review sources">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map((field) => (
+                  <Space key={field.key} style={{ marginBottom: 8 }} align="baseline">
+                    <Form.Item
+                      {...field}
+                      name={[field.name, 'url']}
+                      fieldKey={[field.fieldKey, 'url']}
+                      rules={[{ required: true, message: 'Url required' }]}
+                      wrapperCol={24}
+                    >
+                      <Input placeholder="Enter url" />
+                    </Form.Item>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, 'description']}
+                      fieldKey={[field.fieldKey, 'description']}
+                      rules={[{ required: true, message: 'Description required' }]}
+                      wrapperCol={24}
+                    >
+                      <Input placeholder="Enter description" />
+                    </Form.Item>
+                    <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                    Add Review sources
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
           <Form.Item>
             <Button type="primary" htmlType="submit">
               Submit
