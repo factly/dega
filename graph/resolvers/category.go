@@ -35,6 +35,10 @@ func (r *categoryResolver) Medium(ctx context.Context, obj *models.Category) (*m
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
+func (r *categoryResolver) Description(ctx context.Context, obj *models.Category) (interface{}, error) {
+	return obj.Description, nil
+}
+
 func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

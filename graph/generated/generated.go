@@ -277,6 +277,7 @@ type ComplexityRoot struct {
 type CategoryResolver interface {
 	ID(ctx context.Context, obj *models.Category) (string, error)
 
+	Description(ctx context.Context, obj *models.Category) (interface{}, error)
 	ParentID(ctx context.Context, obj *models.Category) (*int, error)
 	Medium(ctx context.Context, obj *models.Category) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Category) (int, error)
@@ -284,14 +285,19 @@ type CategoryResolver interface {
 type ClaimResolver interface {
 	ID(ctx context.Context, obj *models.Claim) (string, error)
 
+	ClaimSources(ctx context.Context, obj *models.Claim) (interface{}, error)
 	Description(ctx context.Context, obj *models.Claim) (interface{}, error)
-
+	Review(ctx context.Context, obj *models.Claim) (interface{}, error)
+	ReviewTagLine(ctx context.Context, obj *models.Claim) (interface{}, error)
+	ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error)
 	Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error)
 	Claimant(ctx context.Context, obj *models.Claim) (*models.Claimant, error)
 	SpaceID(ctx context.Context, obj *models.Claim) (int, error)
 }
 type ClaimantResolver interface {
 	ID(ctx context.Context, obj *models.Claimant) (string, error)
+
+	Description(ctx context.Context, obj *models.Claimant) (interface{}, error)
 
 	Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Claimant) (int, error)
@@ -340,6 +346,8 @@ type QueryResolver interface {
 }
 type RatingResolver interface {
 	ID(ctx context.Context, obj *models.Rating) (string, error)
+
+	Description(ctx context.Context, obj *models.Rating) (interface{}, error)
 
 	Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Rating) (int, error)
@@ -1616,7 +1624,7 @@ type Category {
   updated_at: Time
   name: String!
   slug: String!
-  description: String
+  description: Any
   parent_id: Int
   medium: Medium
   space_id: Int!
@@ -1700,7 +1708,7 @@ type Rating {
   updated_at: Time
   name: String!
   slug: String!
-  description: String
+  description: Any
   numeric_value: Int!
   medium: Medium
   space_id: Int!
@@ -1712,7 +1720,7 @@ type Claimant {
   updated_at: Time
   name: String!
   slug: String!
-  description: String
+  description: Any
   tag_line: String
   medium: Medium
   space_id: Int!
@@ -1726,11 +1734,11 @@ type Claim {
   slug: String!
   claim_date: Time
   checked_date: Time
-  claim_sources: String
+  claim_sources: Any
   description: Any
-  review: String
-  review_tag_line: String
-  review_sources: String
+  review: Any
+  review_tag_line: Any
+  review_sources: Any
   rating: Rating!
   claimant: Claimant!
   space_id: Int!
@@ -2619,14 +2627,14 @@ func (ec *executionContext) _Category_description(ctx context.Context, field gra
 		Object:     "Category",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Description, nil
+		return ec.resolvers.Category().Description(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2635,9 +2643,9 @@ func (ec *executionContext) _Category_description(ctx context.Context, field gra
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Category_parent_id(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
@@ -2983,14 +2991,14 @@ func (ec *executionContext) _Claim_claim_sources(ctx context.Context, field grap
 		Object:     "Claim",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ClaimSources, nil
+		return ec.resolvers.Claim().ClaimSources(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2999,9 +3007,9 @@ func (ec *executionContext) _Claim_claim_sources(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_description(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -3047,14 +3055,14 @@ func (ec *executionContext) _Claim_review(ctx context.Context, field graphql.Col
 		Object:     "Claim",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Review, nil
+		return ec.resolvers.Claim().Review(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3063,9 +3071,9 @@ func (ec *executionContext) _Claim_review(ctx context.Context, field graphql.Col
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_review_tag_line(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -3079,14 +3087,14 @@ func (ec *executionContext) _Claim_review_tag_line(ctx context.Context, field gr
 		Object:     "Claim",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ReviewTagLine, nil
+		return ec.resolvers.Claim().ReviewTagLine(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3095,9 +3103,9 @@ func (ec *executionContext) _Claim_review_tag_line(ctx context.Context, field gr
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_review_sources(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -3111,14 +3119,14 @@ func (ec *executionContext) _Claim_review_sources(ctx context.Context, field gra
 		Object:     "Claim",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ReviewSources, nil
+		return ec.resolvers.Claim().ReviewSources(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3127,9 +3135,9 @@ func (ec *executionContext) _Claim_review_sources(ctx context.Context, field gra
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_rating(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -3417,14 +3425,14 @@ func (ec *executionContext) _Claimant_description(ctx context.Context, field gra
 		Object:     "Claimant",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Description, nil
+		return ec.resolvers.Claimant().Description(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3433,9 +3441,9 @@ func (ec *executionContext) _Claimant_description(ctx context.Context, field gra
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claimant_tag_line(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
@@ -6013,14 +6021,14 @@ func (ec *executionContext) _Rating_description(ctx context.Context, field graph
 		Object:     "Rating",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Description, nil
+		return ec.resolvers.Rating().Description(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6029,9 +6037,9 @@ func (ec *executionContext) _Rating_description(ctx context.Context, field graph
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(interface{})
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Rating_numeric_value(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
@@ -8893,7 +8901,16 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "description":
-			out.Values[i] = ec._Category_description(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_description(ctx, field, obj)
+				return res
+			})
 		case "parent_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -8985,7 +9002,16 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 		case "checked_date":
 			out.Values[i] = ec._Claim_checked_date(ctx, field, obj)
 		case "claim_sources":
-			out.Values[i] = ec._Claim_claim_sources(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_claim_sources(ctx, field, obj)
+				return res
+			})
 		case "description":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -8998,11 +9024,38 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				return res
 			})
 		case "review":
-			out.Values[i] = ec._Claim_review(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_review(ctx, field, obj)
+				return res
+			})
 		case "review_tag_line":
-			out.Values[i] = ec._Claim_review_tag_line(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_review_tag_line(ctx, field, obj)
+				return res
+			})
 		case "review_sources":
-			out.Values[i] = ec._Claim_review_sources(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_review_sources(ctx, field, obj)
+				return res
+			})
 		case "rating":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -9096,7 +9149,16 @@ func (ec *executionContext) _Claimant(ctx context.Context, sel ast.SelectionSet,
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "description":
-			out.Values[i] = ec._Claimant_description(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claimant_description(ctx, field, obj)
+				return res
+			})
 		case "tag_line":
 			out.Values[i] = ec._Claimant_tag_line(ctx, field, obj)
 		case "medium":
@@ -9841,7 +9903,16 @@ func (ec *executionContext) _Rating(ctx context.Context, sel ast.SelectionSet, o
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "description":
-			out.Values[i] = ec._Rating_description(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Rating_description(ctx, field, obj)
+				return res
+			})
 		case "numeric_value":
 			out.Values[i] = ec._Rating_numeric_value(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
