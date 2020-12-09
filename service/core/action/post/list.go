@@ -1,9 +1,11 @@
 package post
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -15,6 +17,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"gorm.io/gorm"
 )
 
 // list response
@@ -101,8 +104,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	if sort != "asc" {
 		sort = "desc"
 	}
+	ctx, _ := context.WithTimeout(context.Background(), 500*time.Millisecond)
 
-	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
+	tx := config.DB.Session(&gorm.Session{Context: ctx}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
@@ -125,7 +129,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	// fetch all claims related to posts
 	postClaims := []factCheckModel.PostClaim{}
-	config.DB.Model(&factCheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
+	config.DB.Session(&gorm.Session{Context: ctx}).Model(&factCheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
 	postClaimMap := make(map[uint][]factCheckModel.Claim)
 	for _, pc := range postClaims {
@@ -145,7 +149,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	// fetch all authors related to posts
 	postAuthors := []model.PostAuthor{}
-	config.DB.Model(&model.PostAuthor{}).Where("post_id in (?)", postIDs).Find(&postAuthors)
+	config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.PostAuthor{}).Where("post_id in (?)", postIDs).Find(&postAuthors)
 
 	postAuthorMap := make(map[uint][]uint)
 	for _, po := range postAuthors {

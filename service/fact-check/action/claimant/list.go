@@ -1,8 +1,10 @@
 package claimant
 
 import (
+	"context"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
@@ -12,6 +14,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"gorm.io/gorm"
 )
 
 // list response
@@ -77,7 +80,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	tx := config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
+	ctx, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+
+	tx := config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 

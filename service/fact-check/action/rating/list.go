@@ -1,7 +1,9 @@
 package rating
 
 import (
+	"context"
 	"net/http"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
@@ -10,6 +12,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"gorm.io/gorm"
 )
 
 // list response
@@ -46,7 +49,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	all := r.URL.Query().Get("all")
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	stmt := config.DB.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
+	ctx, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+
+	stmt := config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
 		SpaceID: uint(sID),
 	}).Count(&result.Total).Order("id desc")
 

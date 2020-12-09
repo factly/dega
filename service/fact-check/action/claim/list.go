@@ -1,9 +1,11 @@
 package claim
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
@@ -13,6 +15,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"gorm.io/gorm"
 )
 
 // list response
@@ -95,8 +98,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	if sort != "asc" {
 		sort = "desc"
 	}
+	ctx, _ := context.WithTimeout(context.Background(), 500*time.Millisecond)
 
-	tx := config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
+	tx := config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 

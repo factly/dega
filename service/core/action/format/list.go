@@ -1,7 +1,9 @@
 package format
 
 import (
+	"context"
 	"net/http"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -10,6 +12,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"gorm.io/gorm"
 )
 
 // list response
@@ -44,7 +47,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	err = config.DB.Model(&model.Format{}).Where(&model.Format{
+	ctx, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+
+	err = config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Format{}).Where(&model.Format{
 		SpaceID: uint(sID),
 	}).Count(&result.Total).Order("id desc").Offset(offset).Limit(limit).Find(&result.Nodes).Error
 
