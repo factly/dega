@@ -16,7 +16,9 @@ import Embed from './Embed';
 
 function Editor({ value, onChange, style }) {
   const editor_block = React.useRef(null);
-  const space_slug = useSelector((state) => state.spaces.details[state.spaces.selected].slug);
+  const space_slug = useSelector((state) => {
+    return state.spaces.details[state.spaces.selected]?.slug;
+  });
 
   React.useEffect(() => {
     new EditorJS({

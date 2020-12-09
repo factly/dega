@@ -33,10 +33,10 @@ function BasicLayout(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description]);
 
-  React.useEffect(() => {
-    if (orgs.length > 0 && selected === 0) history.push('/spaces/create');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orgs, location.pathname]);
+  // React.useEffect(() => {
+  //   if (orgs.length > 0 && selected === 0) history.push('/spaces/create');
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [orgs, location.pathname]);
 
   return (
     <Layout hasSider={true}>

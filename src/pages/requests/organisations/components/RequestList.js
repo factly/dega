@@ -10,7 +10,6 @@ import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
 function RequestList() {
-  //const [isAdmin, setIsAdmin] = useState(false);
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,

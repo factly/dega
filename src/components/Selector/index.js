@@ -118,7 +118,7 @@ function Selector({ mode, createEntity, value, onChange, action, display = 'name
                 selectorType['add' + createEntity]({
                   name: query.q.trim(),
                 }),
-              )
+              ).then(() => setQuery({ page: 1 }))
             }
           >
             Create a {createEntity} '{query.q}'
