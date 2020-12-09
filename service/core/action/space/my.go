@@ -1,13 +1,16 @@
 package space
 
 import (
+	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/service/core/action/user"
 	"github.com/spf13/viper"
+	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/policy"
@@ -94,7 +97,9 @@ func my(w http.ResponseWriter, r *http.Request) {
 	// Fetched all the spaces related to all the organisations
 	var allSpaces = make([]model.Space, 0)
 
-	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
+	ctx, _ := context.WithTimeout(context.Background(), 500*time.Millisecond)
+
+	config.DB.Session(&gorm.Session{Context: ctx}).Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
 
 	// fetch all the keto policies
 	policyList, err := policy.GetAllPolicies()
