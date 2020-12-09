@@ -4,12 +4,14 @@ import (
 	"context"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/util"
+	"gorm.io/gorm"
 )
 
 func (r *claimResolver) ID(ctx context.Context, obj *models.Claim) (string, error) {
@@ -69,7 +71,9 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	tx := config.DB.Model(&models.Claim{})
+	ctxTimeout, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+
+	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Claim{})
 
 	if len(spaces) > 0 {
 		tx.Where("space_id IN (?)", spaces)

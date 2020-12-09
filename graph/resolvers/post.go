@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -12,6 +13,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"gorm.io/gorm"
 )
 
 type postResolver struct{ *Resolver }
@@ -116,14 +118,16 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 
 	postClaims := []models.PostClaim{}
 
-	config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
+	ctxTimeout, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostClaim{}).Where(&models.PostClaim{
 		PostID: obj.ID,
 	}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Claimant").Find(&postClaims)
 
 	space := &models.Space{}
 	space.ID = obj.SpaceID
 
-	config.DB.Preload("Logo").First(&space)
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Preload("Logo").First(&space)
 
 	for _, each := range postClaims {
 		claimSchema := models.FactCheckSchema{}
@@ -151,7 +155,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 
 	postAuthors := []models.PostAuthor{}
 
-	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostAuthor{}).Where(&models.PostAuthor{
 		PostID: obj.ID,
 	}).Find(&postAuthors)
 
@@ -232,7 +236,9 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	tx := config.DB.Model(&models.Post{})
+	ctxTimeout, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+
+	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{})
 
 	if len(spaces) > 0 {
 		tx.Where("space_id IN (?)", spaces)
@@ -256,10 +262,10 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 	}
 
 	filterStr = strings.Trim(filterStr, " AND ")
+	var total int64
+	tx.Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
-	tx.Where(filterStr).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
-
-	result.Total = len(result.Nodes)
+	result.Total = int(total)
 
 	return result, nil
 }
