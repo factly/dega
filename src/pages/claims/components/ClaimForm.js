@@ -111,7 +111,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
               },
             ]}
           >
-            <Selector action="Claimants" createEntity="Claimant" />
+            <Selector action="Claimants" />
           </Form.Item>
 
           <Form.Item

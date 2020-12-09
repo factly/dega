@@ -5,9 +5,7 @@ import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
 
 function ProtectedRoute({ component: Component, permission, isOwner, ...rest }) {
-  console.log('Protected route');
   const spaces = useSelector((state) => {
-    console.log(state);
     return state.spaces;
   });
   const actions = getUserPermission({ ...permission, spaces });
