@@ -27,7 +27,6 @@ export const getSpaces = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopSpacePermissionsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -35,7 +34,8 @@ export const getSpaces = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopSpacePermissionsLoading()));
   };
 };
 
@@ -65,7 +65,6 @@ export const updateSpacePermission = (data) => {
       .put(SPACE_PERMISSIONS_API + '/' + data.id, data)
       .then((response) => {
         dispatch(getSpacePermissionByID(response.data));
-        dispatch(stopSpacePermissionsLoading());
         dispatch(addSuccessNotification('Space Permission updated'));
       })
       .catch((error) => {
@@ -74,7 +73,8 @@ export const updateSpacePermission = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopSpacePermissionsLoading()));
   };
 };
 

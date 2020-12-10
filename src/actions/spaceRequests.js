@@ -27,7 +27,6 @@ export const getSpaces = (query, isAdmin) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopSpaceRequestsLoading());
       })
       .catch((error) => {
         if (
@@ -40,7 +39,8 @@ export const getSpaces = (query, isAdmin) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopSpaceRequestsLoading()));
   };
 };
 

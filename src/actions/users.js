@@ -13,7 +13,6 @@ export const getUsers = () => {
             data: response.data.nodes,
           }),
         );
-        dispatch(stopLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -21,7 +20,8 @@ export const getUsers = () => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopLoading()));
   };
 };
 

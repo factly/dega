@@ -23,7 +23,6 @@ export const addDefaultFormats = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopFormatsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -31,7 +30,8 @@ export const addDefaultFormats = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopFormatsLoading()));
   };
 };
 
@@ -51,7 +51,6 @@ export const getFormats = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopFormatsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -59,7 +58,8 @@ export const getFormats = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopFormatsLoading()));
   };
 };
 
@@ -70,7 +70,6 @@ export const getFormat = (id) => {
       .get(FORMATS_API + '/' + id)
       .then((response) => {
         dispatch(getFormatByID(response.data));
-        dispatch(stopFormatsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -78,7 +77,8 @@ export const getFormat = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopFormatsLoading()));
   };
 };
 
@@ -108,7 +108,6 @@ export const updateFormat = (data) => {
       .put(FORMATS_API + '/' + data.id, data)
       .then((response) => {
         dispatch(getFormatByID(response.data));
-        dispatch(stopFormatsLoading());
         dispatch(addSuccessNotification('Format updated'));
       })
       .catch((error) => {
@@ -117,7 +116,8 @@ export const updateFormat = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopFormatsLoading()));
   };
 };
 

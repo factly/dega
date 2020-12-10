@@ -39,7 +39,6 @@ export const getCategories = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -47,7 +46,8 @@ export const getCategories = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopCategoriesLoading()));
   };
 };
 
@@ -60,7 +60,6 @@ export const getCategory = (id) => {
         if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
         dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
-        dispatch(stopCategoriesLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -68,7 +67,8 @@ export const getCategory = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopCategoriesLoading()));
   };
 };
 
@@ -100,7 +100,6 @@ export const updateCategory = (data) => {
         if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
         dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
-        dispatch(stopCategoriesLoading());
         dispatch(addSuccessNotification('Category updated'));
       })
       .catch((error) => {
@@ -109,7 +108,8 @@ export const updateCategory = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopCategoriesLoading()));
   };
 };
 

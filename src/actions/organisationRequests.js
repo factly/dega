@@ -31,7 +31,6 @@ export const getOrganisations = (query, isAdmin) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopOrganisationRequestsLoading());
       })
       .catch((error) => {
         if (
@@ -44,7 +43,8 @@ export const getOrganisations = (query, isAdmin) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopOrganisationRequestsLoading()));
   };
 };
 

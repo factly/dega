@@ -11,7 +11,7 @@ export const getSuperOrganisation = () => {
       .get(ORGANISATION_PERMISSIONS_API + '/my')
       .then((response) => {
         dispatch(getOrganisationPermissionByID(response.data));
-        dispatch(stopOrganisationPermissionsLoading());
+
         return response.data;
       })
       .catch((error) => {
@@ -25,7 +25,8 @@ export const getSuperOrganisation = () => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopOrganisationPermissionsLoading()));
   };
 };
 

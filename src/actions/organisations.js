@@ -29,7 +29,6 @@ export const getOrganisations = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopOrganisationPermissionsLoading());
       })
       .catch((error) => {
         if (
@@ -42,7 +41,8 @@ export const getOrganisations = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopOrganisationPermissionsLoading()));
   };
 };
 
@@ -72,7 +72,6 @@ export const updateOrganisationPermission = (data) => {
       .put(ORGANISATION_PERMISSIONS_API + '/' + data.id, data)
       .then((response) => {
         dispatch(getOrganisationPermissionByID(response.data));
-        dispatch(stopOrganisationPermissionsLoading());
         dispatch(addSuccessNotification('Organisation Permission updated'));
       })
       .catch((error) => {
@@ -81,7 +80,8 @@ export const updateOrganisationPermission = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopOrganisationPermissionsLoading()));
   };
 };
 

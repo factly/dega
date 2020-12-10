@@ -25,7 +25,6 @@ export const getTags = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopTagsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -33,7 +32,8 @@ export const getTags = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopTagsLoading()));
   };
 };
 
@@ -44,7 +44,6 @@ export const getTag = (id) => {
       .get(TAGS_API + '/' + id)
       .then((response) => {
         dispatch(getTagByID(response.data));
-        dispatch(stopTagsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -52,7 +51,8 @@ export const getTag = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopTagsLoading()));
   };
 };
 
@@ -82,7 +82,6 @@ export const updateTag = (data) => {
       .put(TAGS_API + '/' + data.id, data)
       .then((response) => {
         dispatch(getTagByID(response.data));
-        dispatch(stopTagsLoading());
         dispatch(addSuccessNotification('Tag updated'));
       })
       .catch((error) => {
@@ -91,7 +90,8 @@ export const updateTag = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopTagsLoading()));
   };
 };
 

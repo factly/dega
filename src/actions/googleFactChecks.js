@@ -21,7 +21,6 @@ export const getGoogleFactChecks = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -29,7 +28,8 @@ export const getGoogleFactChecks = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopLoading()));
   };
 };
 

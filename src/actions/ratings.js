@@ -30,7 +30,6 @@ export const addDefaultRatings = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopRatingsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -38,7 +37,8 @@ export const addDefaultRatings = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopRatingsLoading()));
   };
 };
 
@@ -69,7 +69,6 @@ export const getRatings = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopRatingsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -77,7 +76,8 @@ export const getRatings = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopRatingsLoading()));
   };
 };
 
@@ -90,7 +90,6 @@ export const getRating = (id) => {
         if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
         dispatch(getRatingByID({ ...response.data, medium: response.data.medium?.id }));
-        dispatch(stopRatingsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -98,7 +97,8 @@ export const getRating = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopRatingsLoading()));
   };
 };
 
@@ -131,7 +131,6 @@ export const updateRating = (data) => {
         if (rating.medium) dispatch(addMediaList([rating.medium]));
 
         dispatch(getRatingByID({ ...rating, medium: rating.medium?.id }));
-        dispatch(stopRatingsLoading());
         dispatch(addSuccessNotification('Rating updated'));
       })
       .catch((error) => {
@@ -140,7 +139,8 @@ export const updateRating = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopRatingsLoading()));
   };
 };
 

@@ -23,7 +23,6 @@ export const getAuthors = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopAuthorsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -31,7 +30,8 @@ export const getAuthors = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopAuthorsLoading()));
   };
 };
 

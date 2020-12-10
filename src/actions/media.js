@@ -25,7 +25,6 @@ export const getMedia = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopMediaLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -33,7 +32,8 @@ export const getMedia = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopMediaLoading()));
   };
 };
 
@@ -44,7 +44,6 @@ export const getMedium = (id) => {
       .get(MEDIA_API + '/' + id)
       .then((response) => {
         dispatch(getMediumByID(response.data));
-        dispatch(stopMediaLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -52,7 +51,8 @@ export const getMedium = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopMediaLoading()));
   };
 };
 
@@ -82,7 +82,6 @@ export const updateMedium = (data) => {
       .put(MEDIA_API + '/' + data.id, data)
       .then((response) => {
         dispatch(getMediumByID(response.data));
-        dispatch(stopMediaLoading());
         dispatch(addSuccessNotification('Medium updated'));
       })
       .catch((error) => {
@@ -91,7 +90,8 @@ export const updateMedium = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopMediaLoading()));
   };
 };
 
