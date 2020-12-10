@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -12,6 +13,7 @@ import (
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 	"github.com/spf13/viper"
+	"gorm.io/gorm"
 )
 
 func (r *userResolver) ID(ctx context.Context, obj *models.User) (string, error) {
@@ -26,7 +28,9 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 
 	posts := make([]models.Post, 0)
 
-	err = config.DB.Model(&models.Post{}).Where(&models.Post{
+	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+
+	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{}).Where(&models.Post{
 		SpaceID: uint(sID),
 	}).Find(&posts).Error
 	if err != nil {
@@ -40,7 +44,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 
 	postAuthor := &models.PostAuthor{}
 
-	err = config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).First(postAuthor).Error
+	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).First(postAuthor).Error
 	if err != nil {
 		return nil, nil
 	}
@@ -48,7 +52,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 	space := &models.Space{}
 	space.ID = sID
 
-	err = config.DB.First(space).Error
+	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(space).Error
 	if err != nil {
 		return nil, nil
 	}
@@ -100,7 +104,9 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	space := &models.Space{}
 	space.ID = sID
 
-	config.DB.First(space)
+	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(space)
 
 	userMap := make(map[uint]models.User)
 	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")

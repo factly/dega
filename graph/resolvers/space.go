@@ -3,12 +3,14 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
+	"gorm.io/gorm"
 )
 
 func (r *spaceResolver) ID(ctx context.Context, obj *models.Space) (string, error) {
@@ -67,7 +69,9 @@ func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 
 	result := &models.Space{}
 
-	config.DB.Where(&models.Space{
+	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Where(&models.Space{
 		ID: sID,
 	}).First(&result)
 
