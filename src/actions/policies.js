@@ -23,7 +23,6 @@ export const addDefaultPolicies = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -31,7 +30,8 @@ export const addDefaultPolicies = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPoliciesLoading()));
   };
 };
 
@@ -51,7 +51,6 @@ export const getPolicies = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -59,7 +58,8 @@ export const getPolicies = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPoliciesLoading()));
   };
 };
 
@@ -70,7 +70,6 @@ export const getPolicy = (id) => {
       .get(POLICIES_API + '/' + id)
       .then((response) => {
         dispatch(getPolicyByID(response.data));
-        dispatch(stopPoliciesLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -78,7 +77,8 @@ export const getPolicy = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPoliciesLoading()));
   };
 };
 
@@ -108,7 +108,6 @@ export const updatePolicy = (data) => {
       .put(POLICIES_API + '/' + data.id, data)
       .then((response) => {
         dispatch(getPolicyByID(response.data));
-        dispatch(stopPoliciesLoading());
         dispatch(addSuccessNotification('Policy updated'));
       })
       .catch((error) => {
@@ -117,7 +116,8 @@ export const updatePolicy = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPoliciesLoading()));
   };
 };
 

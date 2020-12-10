@@ -39,7 +39,6 @@ export const getClaimants = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -47,7 +46,8 @@ export const getClaimants = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopClaimantsLoading()));
   };
 };
 
@@ -60,7 +60,6 @@ export const getClaimant = (id) => {
         if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
         dispatch(getClaimantByID({ ...response.data, medium: response.data.medium?.id }));
-        dispatch(stopClaimantsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -68,7 +67,8 @@ export const getClaimant = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopClaimantsLoading()));
   };
 };
 
@@ -100,7 +100,6 @@ export const updateClaimant = (data) => {
         if (response.data.medium) dispatch(addMediaList([response.data.medium]));
 
         dispatch(getClaimantByID({ ...response.data, medium: response.data.medium?.id }));
-        dispatch(stopClaimantsLoading());
         dispatch(addSuccessNotification('Claimant updated'));
       })
       .catch((error) => {
@@ -109,7 +108,8 @@ export const updateClaimant = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopClaimantsLoading()));
   };
 };
 

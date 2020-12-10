@@ -62,7 +62,6 @@ export const getClaims = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopClaimsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -70,7 +69,8 @@ export const getClaims = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopClaimsLoading()));
   };
 };
 
@@ -85,7 +85,6 @@ export const getClaim = (id) => {
         dispatch(addRatings([claim.rating]));
 
         dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
-        dispatch(stopClaimsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -93,7 +92,8 @@ export const getClaim = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopClaimsLoading()));
   };
 };
 
@@ -131,7 +131,6 @@ export const updateClaim = (data) => {
         dispatch(addRatings([claim.rating]));
 
         dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
-        dispatch(stopClaimsLoading());
         dispatch(addSuccessNotification('Claim updated'));
       })
       .catch((error) => {
@@ -140,7 +139,8 @@ export const updateClaim = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopClaimsLoading()));
   };
 };
 

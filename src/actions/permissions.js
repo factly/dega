@@ -15,7 +15,6 @@ export const getPermissions = (id) => {
       .then((response) => {
         dispatch(addPermission({ data: response.data, user_id: parseInt(id) }));
         dispatch(addRequest([parseInt(id)]));
-        dispatch(stopLoading());
 
         return { data: response.data, user_id: parseInt(id) };
       })
@@ -25,7 +24,8 @@ export const getPermissions = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopLoading()));
   };
 };
 

@@ -130,7 +130,6 @@ export const getPosts = (query) => {
             total: response.data.total,
           }),
         );
-        dispatch(stopPostsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -138,7 +137,8 @@ export const getPosts = (query) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPostsLoading()));
   };
 };
 
@@ -168,7 +168,6 @@ export const getPost = (id) => {
             medium: post.medium?.id,
           }),
         );
-        dispatch(stopPostsLoading());
       })
       .catch((error) => {
         if (error.response && error.response.data && error.response.data.errors.length > 0) {
@@ -176,7 +175,8 @@ export const getPost = (id) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPostsLoading()));
   };
 };
 
@@ -233,7 +233,6 @@ export const publish = (data) => {
             medium: post.medium?.id,
           }),
         );
-        dispatch(stopPostsLoading());
         dispatch(addSuccessNotification('Post published'));
       })
       .catch((error) => {
@@ -242,7 +241,8 @@ export const publish = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPostsLoading()));
   };
 };
 
@@ -271,7 +271,6 @@ export const addTemplate = (data) => {
             medium: post.medium?.id,
           }),
         );
-        dispatch(stopPostsLoading());
         dispatch(addSuccessNotification('Template created'));
       })
       .catch((error) => {
@@ -280,7 +279,8 @@ export const addTemplate = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPostsLoading()));
   };
 };
 
@@ -309,7 +309,6 @@ export const publishPost = (data) => {
             medium: post.medium?.id,
           }),
         );
-        dispatch(stopPostsLoading());
         dispatch(addSuccessNotification('Post published'));
       })
       .catch((error) => {
@@ -318,7 +317,8 @@ export const publishPost = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPostsLoading()));
   };
 };
 
@@ -347,7 +347,6 @@ export const updatePost = (data) => {
             medium: post.medium?.id,
           }),
         );
-        dispatch(stopPostsLoading());
         dispatch(addSuccessNotification('Post updated'));
       })
       .catch((error) => {
@@ -356,7 +355,8 @@ export const updatePost = (data) => {
         } else {
           dispatch(addErrorNotification(error.message));
         }
-      });
+      })
+      .finally(() => dispatch(stopPostsLoading()));
   };
 };
 
