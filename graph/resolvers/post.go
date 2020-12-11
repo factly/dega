@@ -46,7 +46,9 @@ func (r *postResolver) Medium(ctx context.Context, obj *models.Post) (*models.Me
 
 func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*models.Category, error) {
 	postCategories := []models.PostCategory{}
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	// fetch all categories
 	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostCategory{}).Where(&models.PostCategory{
@@ -65,7 +67,9 @@ func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*mod
 
 func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Tag, error) {
 	postTags := []models.PostTag{}
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostTag{}).Where(&models.PostTag{
 		PostID: obj.ID,
@@ -83,7 +87,9 @@ func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Ta
 
 func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.Claim, error) {
 	postClaims := []models.PostClaim{}
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostClaim{}).Where(&models.PostClaim{
 		PostID: obj.ID,
@@ -101,7 +107,9 @@ func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.
 
 func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.User, error) {
 	postUsers := []models.PostAuthor{}
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostAuthor{}).Where(&models.PostAuthor{
 		PostID: obj.ID,
@@ -122,7 +130,9 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 
 	postClaims := []models.PostClaim{}
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostClaim{}).Where(&models.PostClaim{
 		PostID: obj.ID,
@@ -206,7 +216,9 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 	}
 
 	result := &models.Post{}
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{}).Where(&models.Post{
 		ID:      uint(id),
@@ -241,7 +253,9 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{})
 

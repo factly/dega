@@ -69,7 +69,9 @@ func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 
 	result := &models.Space{}
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Where(&models.Space{
 		ID: sID,

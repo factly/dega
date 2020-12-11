@@ -32,7 +32,9 @@ func (r *queryResolver) Media(ctx context.Context) ([]*models.Medium, error) {
 
 	result := []*models.Medium{}
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Medium{}).Where(&models.Medium{
 		SpaceID: sID,

@@ -23,7 +23,9 @@ func (r *queryResolver) Formats(ctx context.Context, spaces []int) (*models.Form
 	result := &models.FormatsPaging{}
 	result.Nodes = make([]*models.Format, 0)
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Format{})
 	if len(spaces) > 0 {

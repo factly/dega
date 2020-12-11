@@ -30,7 +30,9 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 
 	result := &models.Tag{}
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Tag{}).Where(&models.Tag{
 		ID:      uint(id),
@@ -67,7 +69,9 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 
 	var tx *gorm.DB
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	if len(ids) > 0 {
 		tx = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Tag{}).Where(ids)

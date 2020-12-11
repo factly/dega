@@ -48,7 +48,9 @@ func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category,
 
 	result := &models.Category{}
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Category{}).Where(&models.Category{
 		ID:      uint(id),
@@ -85,7 +87,9 @@ func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int,
 
 	var tx *gorm.DB
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	if len(ids) > 0 {
 		tx = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Category{}).Where(ids)

@@ -28,7 +28,9 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 
 	posts := make([]models.Post, 0)
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{}).Where(&models.Post{
 		SpaceID: uint(sID),
@@ -104,7 +106,9 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	space := &models.Space{}
 	space.ID = sID
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(space)
 
