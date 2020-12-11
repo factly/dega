@@ -42,7 +42,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ratingloader := RatingLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Rating, []error) {
 				keys := util.Converter(ids)
 
@@ -82,7 +82,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		claimantloader := ClaimantLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Claimant, []error) {
 				keys := util.Converter(ids)
 
@@ -120,7 +120,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		mediumloader := MediumLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Medium, []error) {
 				keys := util.Converter(ids)
 
@@ -159,7 +159,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		formatloader := FormatLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Format, []error) {
 				keys := util.Converter(ids)
 
@@ -199,7 +199,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		claimloader := ClaimLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Claim, []error) {
 				keys := util.Converter(ids)
 
@@ -239,7 +239,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		categoryloader := CategoryLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Category, []error) {
 				keys := util.Converter(ids)
 
@@ -278,7 +278,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		tagloader := TagLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Tag, []error) {
 				keys := util.Converter(ids)
 
@@ -317,7 +317,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		userloader := UserLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.User, []error) {
 				rctx := r.Context()
 
