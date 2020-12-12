@@ -1,9 +1,11 @@
 package post
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -14,6 +16,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // details - Get post by id
@@ -53,7 +56,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 	postClaims := []factCheckModel.PostClaim{}
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	err = config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
 		SpaceID: uint(sID),
 	}).First(&result.Post).Error
 
@@ -64,7 +71,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if result.Format.Slug == "fact-check" {
-		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
+		config.DB.Session(&gorm.Session{Context: ctx}).Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
@@ -75,7 +82,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// fetch all authors
-	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+	config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Find(&postAuthors)
 

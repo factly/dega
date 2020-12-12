@@ -97,7 +97,9 @@ func my(w http.ResponseWriter, r *http.Request) {
 	// Fetched all the spaces related to all the organisations
 	var allSpaces = make([]model.Space, 0)
 
-	ctx, _ := context.WithTimeout(context.Background(), 500*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctx}).Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
 

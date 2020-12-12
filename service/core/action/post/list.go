@@ -104,7 +104,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	if sort != "asc" {
 		sort = "desc"
 	}
-	ctx, _ := context.WithTimeout(context.Background(), 500*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	tx := config.DB.Session(&gorm.Session{Context: ctx}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),

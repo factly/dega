@@ -55,8 +55,8 @@ func TestPublishedPostCreate(t *testing.T) {
 
 	})
 
-	Data["status"] = "published"
-	postData["status"] = "published"
+	Data["status"] = "publish"
+	postData["status"] = "publish"
 
 	t.Run("create post", func(t *testing.T) {
 

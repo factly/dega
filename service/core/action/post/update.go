@@ -188,7 +188,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if post status is changed back to draft from published
-	if result.Post.Status == "published" && post.Status == "draft" {
+	if result.Post.Status == "publish" && post.Status == "draft" {
 		status, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			tx.Rollback()

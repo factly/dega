@@ -88,7 +88,7 @@ func publish(w http.ResponseWriter, r *http.Request) {
 
 	err = tx.Model(&result.Post).Updates(model.Post{
 		Base:          config.Base{UpdatedByID: uint(uID)},
-		Status:        "published",
+		Status:        "publish",
 		PublishedDate: time.Now(),
 	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
