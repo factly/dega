@@ -145,7 +145,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		SpaceID:          post.SpaceID,
 	}
 
-	if status == "published" {
+	if status == "publish" {
 		result.Post.PublishedDate = time.Now()
 	} else {
 		result.Post.PublishedDate = time.Time{}

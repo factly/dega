@@ -78,7 +78,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 
-	ctx, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	tx := config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Medium{}).Where(&model.Medium{
 		SpaceID: uint(sID),

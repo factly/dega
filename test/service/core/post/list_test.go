@@ -152,7 +152,7 @@ func TestPostList(t *testing.T) {
 				"q":        "test",
 				"author":   "1",
 				"format":   "2",
-				"status":   "published",
+				"status":   "publish",
 			}).
 			Expect().
 			Status(http.StatusOK).

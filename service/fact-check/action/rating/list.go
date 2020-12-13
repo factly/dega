@@ -49,7 +49,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	all := r.URL.Query().Get("all")
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	ctx, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	stmt := config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
 		SpaceID: uint(sID),

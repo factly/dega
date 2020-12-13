@@ -47,7 +47,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	ctx, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	err = config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Format{}).Where(&model.Format{
 		SpaceID: uint(sID),

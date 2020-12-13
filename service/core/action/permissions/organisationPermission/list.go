@@ -44,7 +44,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	permissionList := make([]model.OrganisationPermission, 0)
 
-	ctx, _ := context.WithTimeout(context.Background(), 200*time.Millisecond)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.OrganisationPermission{}).Find(&permissionList)
 

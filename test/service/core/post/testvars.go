@@ -256,7 +256,7 @@ func postSelectPublishedWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], "published", Data["excerpt"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], "publish", Data["excerpt"],
 				Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1))
 }
 
@@ -508,7 +508,7 @@ func publishMock(mock sqlmock.Sqlmock) {
 	format.SelectMock(mock, 1, 1)
 
 	mock.ExpectExec(`UPDATE \"posts\"`).
-		WithArgs(test.AnyTime{}, 1, "published", test.AnyTime{}, 1).
+		WithArgs(test.AnyTime{}, 1, "publish", test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 
 	mock.ExpectQuery(selectQuery).
