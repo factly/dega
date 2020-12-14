@@ -27,8 +27,11 @@ func (r *sitemapsResolver) Categories(ctx context.Context, obj *models.Sitemaps)
 	}
 
 	categories := []models.Category{}
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 
-	config.DB.Model(&models.Category{}).Where("space_id in (?)", sID).Find(&categories)
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Category{}).Where("space_id in (?)", sID).Find(&categories)
 	nodes := []*models.Sitemap{}
 
 	for _, category := range categories {
@@ -49,7 +52,11 @@ func (r *sitemapsResolver) Tags(ctx context.Context, obj *models.Sitemaps) ([]*m
 	}
 	tags := []models.Tag{}
 
-	config.DB.Model(&models.Tag{}).Where("space_id in (?)", sID).Find(&tags)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Tag{}).Where("space_id in (?)", sID).Find(&tags)
 	nodes := []*models.Sitemap{}
 
 	for _, tag := range tags {

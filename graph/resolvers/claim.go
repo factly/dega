@@ -71,7 +71,9 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	ctxTimeout, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
 
 	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Claim{})
 
