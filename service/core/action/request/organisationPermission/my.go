@@ -23,7 +23,7 @@ import (
 // @Success 200 {array} paging
 // @Router /core/requests/organisation-permissions/my [get]
 func my(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
+	oID, err := util.GetOrganisation(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -36,7 +36,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 	result.Nodes = make([]model.OrganisationPermissionRequest, 0)
 
 	config.DB.Model(&model.OrganisationPermissionRequest{}).Where(&model.OrganisationPermissionRequest{
-		OrganisationID: uint(sID),
+		OrganisationID: uint(oID),
 	}).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes)
 
 	renderx.JSON(w, http.StatusOK, result)
