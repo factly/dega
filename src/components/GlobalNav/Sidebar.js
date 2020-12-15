@@ -8,29 +8,12 @@ import { sidebarMenu } from '../../config/routesConfig';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar() {
+function Sidebar({ superOrg, permission, orgs, loading }) {
   const {
     sider: { collapsed },
     navTheme,
   } = useSelector((state) => state.settings);
   const dispatch = useDispatch();
-
-  const { permission, orgs, loading } = useSelector((state) => {
-    const { selected, orgs, loading } = state.spaces;
-
-    if (selected > 0) {
-      return {
-        permission: state.spaces.details[selected].permissions || [],
-        orgs: orgs,
-        loading: loading,
-      };
-    }
-    return { orgs: orgs, loading: loading, permission: [] };
-  });
-
-  const superOrg = useSelector(({ admin }) => {
-    return admin.organisation;
-  });
 
   if (loading) {
     return null;
