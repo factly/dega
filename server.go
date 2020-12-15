@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-api/util"
 	"github.com/factly/x/loggerx"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -43,6 +44,13 @@ func main() {
 
 	config.SetupVars()
 	config.SetupDB()
+
+	go func() {
+		promRouter := chi.NewRouter()
+		promRouter.Mount("/metrics", promhttp.Handler())
+		log.Fatal(http.ListenAndServe(":8001", promRouter))
+	}()
+
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
 	router.Handle("/query", loaders.DataloaderMiddleware(srv))

@@ -12,6 +12,7 @@ require (
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/jinzhu/gorm v1.9.16
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
+	github.com/prometheus/client_golang v0.9.3
 	github.com/spf13/viper v1.7.1
 	github.com/vektah/gqlparser v1.3.1 // indirect
 	github.com/vektah/gqlparser/v2 v2.1.0

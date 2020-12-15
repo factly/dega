@@ -13,7 +13,6 @@ func SetupVars() {
 	viper.SetConfigName("config")
 	viper.SetEnvPrefix("dega_api")
 	viper.AutomaticEnv()
-
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Println("config file not found...")
