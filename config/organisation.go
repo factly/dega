@@ -6,6 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"regexp"
+	"strings"
 
 	"github.com/spf13/viper"
 )
@@ -13,6 +15,7 @@ import (
 type organisation struct {
 	Base
 	Title string `json:"title"`
+	Slug  string `json:"slug"`
 }
 
 type flowInitResponse struct {
@@ -241,8 +244,12 @@ func createKavachUser(kavachUserCheckers map[string]interface{}) (*http.Response
 }
 
 func createKavachOrganisation(userID string) (*http.Response, error) {
+
+	var re = regexp.MustCompile("[^a-z0-9]+")
+
 	org := organisation{
 		Title: viper.GetString("super_organisation_title"),
+		Slug:  strings.Trim(re.ReplaceAllString(strings.ToLower(viper.GetString("super_organisation_title")), "-"), "-"),
 	}
 
 	buf := new(bytes.Buffer)
