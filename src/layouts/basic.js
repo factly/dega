@@ -14,14 +14,32 @@ function BasicLayout(props) {
   const { Footer, Content } = Layout;
   const { children } = props;
   const dispatch = useDispatch();
-  const { selected, orgs } = useSelector((state) => state.spaces);
+
+  const { permission, orgs, loading, selected } = useSelector((state) => {
+    const { selected, orgs, loading } = state.spaces;
+
+    if (selected > 0) {
+      return {
+        permission: state.spaces.details[selected].permissions || [],
+        orgs: orgs,
+        loading: loading,
+        selected: selected,
+      };
+    }
+    return { orgs: orgs, loading: loading, permission: [], selected: selected };
+  });
+
   const { type, message, description } = useSelector((state) => state.notifications);
+
+  const superOrg = useSelector(({ admin }) => {
+    return admin.organisation;
+  });
 
   React.useEffect(() => {
     dispatch(getSpaces()).then((org) => {
       if (org && org.length > 0) dispatch(getSuperOrganisation(org[0].id));
     });
-  }, [dispatch]);
+  }, [dispatch, selected]);
 
   React.useEffect(() => {
     if (type && message && description && selected !== 0) {
@@ -40,7 +58,7 @@ function BasicLayout(props) {
 
   return (
     <Layout hasSider={true}>
-      <Sidebar />
+      <Sidebar permission={permission} orgs={orgs} loading={loading} superOrg={superOrg} />
       <Layout>
         <Header />
         <Content className="layout-content">
