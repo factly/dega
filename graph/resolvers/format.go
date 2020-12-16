@@ -23,7 +23,7 @@ func (r *queryResolver) Formats(ctx context.Context, spaces []int) (*models.Form
 	result := &models.FormatsPaging{}
 	result.Nodes = make([]*models.Format, 0)
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 

@@ -28,7 +28,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 
 	posts := make([]models.Post, 0)
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -106,7 +106,7 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	space := &models.Space{}
 	space.ID = sID
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 

@@ -69,7 +69,7 @@ func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 
 	result := &models.Space{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 

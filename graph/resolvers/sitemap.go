@@ -27,7 +27,7 @@ func (r *sitemapsResolver) Categories(ctx context.Context, obj *models.Sitemaps)
 	}
 
 	categories := []models.Category{}
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -52,7 +52,7 @@ func (r *sitemapsResolver) Tags(ctx context.Context, obj *models.Sitemaps) ([]*m
 	}
 	tags := []models.Tag{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -80,7 +80,7 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 	post := &models.Post{}
 	post.SpaceID = sID
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -150,7 +150,7 @@ func (r *sitemapsResolver) Formats(ctx context.Context, obj *models.Sitemaps) ([
 	}
 	formats := []models.Format{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -175,7 +175,7 @@ func (r *sitemapsResolver) Posts(ctx context.Context, obj *models.Sitemaps) ([]*
 	}
 	posts := []models.Post{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -200,7 +200,7 @@ func (r *sitemapsResolver) Claims(ctx context.Context, obj *models.Sitemaps) ([]
 	}
 	claims := []models.Claim{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -225,7 +225,7 @@ func (r *sitemapsResolver) Claimants(ctx context.Context, obj *models.Sitemaps) 
 	}
 	claimants := []models.Claimant{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -250,7 +250,7 @@ func (r *sitemapsResolver) Ratings(ctx context.Context, obj *models.Sitemaps) ([
 	}
 	ratings := []models.Rating{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 

@@ -30,7 +30,7 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 
 	result := &models.Tag{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
@@ -69,7 +69,7 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 
 	var tx *gorm.DB
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 	defer cancel()
 
