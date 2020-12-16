@@ -48,7 +48,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				ratings := make([]*models.Rating, 0)
 
-				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 				defer cancel()
 
@@ -87,7 +87,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				keys := util.Converter(ids)
 
 				claimants := make([]*models.Claimant, 0)
-				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 				defer cancel()
 				err := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Claimant{}).Where(keys).Find(&claimants).Error
@@ -125,7 +125,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				keys := util.Converter(ids)
 
 				media := make([]*models.Medium, 0)
-				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 				defer cancel()
 
@@ -165,7 +165,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				formats := make([]*models.Format, 0)
 
-				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 				defer cancel()
 
@@ -205,7 +205,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 				claims := make([]*models.Claim, 0)
 
-				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 				defer cancel()
 
@@ -244,7 +244,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				keys := util.Converter(ids)
 
 				categories := make([]*models.Category, 0)
-				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 				defer cancel()
 
@@ -283,7 +283,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				keys := util.Converter(ids)
 
 				tags := make([]*models.Tag, 0)
-				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 				defer cancel()
 
@@ -330,7 +330,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				space := &models.Space{}
 				space.ID = sID
 
-				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
 				defer cancel()
 
