@@ -109,9 +109,9 @@ class UppyUploader {
         axios
           .post(MEDIA_API, [upload])
           .then((res) => {
-            this.data = res.data;
+            this.data = res.data.nodes[0];
             this.nodes.wrapper.children[0].style.display = 'none';
-            this.nodes.wrapper.children[1].src = this.data[0].url.proxy;
+            this.nodes.wrapper.children[1].src = this.data.url.proxy;
           })
           .catch((error) => {
             this.api.notifier.show({
