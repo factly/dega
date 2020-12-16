@@ -5,12 +5,14 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/spf13/viper"
+	"gorm.io/gorm"
 )
 
 func (r *queryResolver) Sitemap(ctx context.Context) (*models.Sitemaps, error) {
@@ -25,8 +27,11 @@ func (r *sitemapsResolver) Categories(ctx context.Context, obj *models.Sitemaps)
 	}
 
 	categories := []models.Category{}
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 
-	config.DB.Model(&models.Category{}).Where("space_id in (?)", sID).Find(&categories)
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Category{}).Where("space_id in (?)", sID).Find(&categories)
 	nodes := []*models.Sitemap{}
 
 	for _, category := range categories {
@@ -47,7 +52,11 @@ func (r *sitemapsResolver) Tags(ctx context.Context, obj *models.Sitemaps) ([]*m
 	}
 	tags := []models.Tag{}
 
-	config.DB.Model(&models.Tag{}).Where("space_id in (?)", sID).Find(&tags)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Tag{}).Where("space_id in (?)", sID).Find(&tags)
 	nodes := []*models.Sitemap{}
 
 	for _, tag := range tags {
@@ -71,7 +80,11 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 	post := &models.Post{}
 	post.SpaceID = sID
 
-	err = config.DB.First(post).Error
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(post).Error
 	if err != nil {
 		return nil, nil
 	}
@@ -79,7 +92,7 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 	postAuthor := &models.PostAuthor{}
 	postAuthor.PostID = post.ID
 
-	err = config.DB.First(postAuthor).Error
+	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(postAuthor).Error
 	if err != nil {
 		return nil, nil
 	}
@@ -87,7 +100,7 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 	space := &models.Space{}
 	space.ID = sID
 
-	err = config.DB.First(space).Error
+	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(space).Error
 	if err != nil {
 		return nil, nil
 	}
@@ -137,7 +150,11 @@ func (r *sitemapsResolver) Formats(ctx context.Context, obj *models.Sitemaps) ([
 	}
 	formats := []models.Format{}
 
-	config.DB.Model(&models.Format{}).Where("space_id in (?)", sID).Find(&formats)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Format{}).Where("space_id in (?)", sID).Find(&formats)
 	nodes := []*models.Sitemap{}
 
 	for _, format := range formats {
@@ -158,7 +175,11 @@ func (r *sitemapsResolver) Posts(ctx context.Context, obj *models.Sitemaps) ([]*
 	}
 	posts := []models.Post{}
 
-	config.DB.Model(&models.Post{}).Where("space_id in (?)", sID).Find(&posts)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{}).Where("space_id in (?)", sID).Find(&posts)
 	nodes := []*models.Sitemap{}
 
 	for _, post := range posts {
@@ -179,7 +200,11 @@ func (r *sitemapsResolver) Claims(ctx context.Context, obj *models.Sitemaps) ([]
 	}
 	claims := []models.Claim{}
 
-	config.DB.Model(&models.Claim{}).Where("space_id in (?)", sID).Find(&claims)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Claim{}).Where("space_id in (?)", sID).Find(&claims)
 	nodes := []*models.Sitemap{}
 
 	for _, claim := range claims {
@@ -200,7 +225,11 @@ func (r *sitemapsResolver) Claimants(ctx context.Context, obj *models.Sitemaps) 
 	}
 	claimants := []models.Claimant{}
 
-	config.DB.Model(&models.Claimant{}).Where("space_id in (?)", sID).Find(&claimants)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Claimant{}).Where("space_id in (?)", sID).Find(&claimants)
 	nodes := []*models.Sitemap{}
 
 	for _, claimant := range claimants {
@@ -221,7 +250,11 @@ func (r *sitemapsResolver) Ratings(ctx context.Context, obj *models.Sitemaps) ([
 	}
 	ratings := []models.Rating{}
 
-	config.DB.Model(&models.Rating{}).Where("space_id in (?)", sID).Find(&ratings)
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Rating{}).Where("space_id in (?)", sID).Find(&ratings)
 	nodes := []*models.Sitemap{}
 
 	for _, rating := range ratings {

@@ -13,6 +13,7 @@ import (
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 	"github.com/spf13/viper"
+	"gorm.io/gorm"
 )
 
 const loadersKey = "loaders"
@@ -41,13 +42,17 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ratingloader := RatingLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Rating, []error) {
 				keys := util.Converter(ids)
 
 				ratings := make([]*models.Rating, 0)
 
-				err := config.DB.Model(&models.Rating{}).Where(keys).Find(&ratings).Error
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+				defer cancel()
+
+				err := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Rating{}).Where(keys).Find(&ratings).Error
 
 				if err != nil {
 					logger.Error(err)
@@ -77,13 +82,15 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		claimantloader := ClaimantLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Claimant, []error) {
 				keys := util.Converter(ids)
 
 				claimants := make([]*models.Claimant, 0)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 
-				err := config.DB.Model(&models.Claimant{}).Where(keys).Find(&claimants).Error
+				defer cancel()
+				err := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Claimant{}).Where(keys).Find(&claimants).Error
 
 				if err != nil {
 					logger.Error(err)
@@ -113,13 +120,16 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		mediumloader := MediumLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Medium, []error) {
 				keys := util.Converter(ids)
 
 				media := make([]*models.Medium, 0)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 
-				err := config.DB.Model(&models.Medium{}).Where(keys).Find(&media).Error
+				defer cancel()
+
+				err := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Medium{}).Where(keys).Find(&media).Error
 
 				if err != nil {
 					logger.Error(err)
@@ -149,13 +159,17 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		formatloader := FormatLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Format, []error) {
 				keys := util.Converter(ids)
 
 				formats := make([]*models.Format, 0)
 
-				err := config.DB.Model(&models.Format{}).Where(keys).Find(&formats).Error
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+				defer cancel()
+
+				err := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Format{}).Where(keys).Find(&formats).Error
 
 				if err != nil {
 					logger.Error(err)
@@ -185,13 +199,17 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		claimloader := ClaimLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Claim, []error) {
 				keys := util.Converter(ids)
 
 				claims := make([]*models.Claim, 0)
 
-				err := config.DB.Model(&models.Claim{}).Where(keys).Find(&claims).Error
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+				defer cancel()
+
+				err := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Claim{}).Where(keys).Find(&claims).Error
 
 				if err != nil {
 					logger.Error(err)
@@ -221,13 +239,16 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		categoryloader := CategoryLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Category, []error) {
 				keys := util.Converter(ids)
 
 				categories := make([]*models.Category, 0)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 
-				err := config.DB.Model(&models.Category{}).Where(keys).Find(&categories).Error
+				defer cancel()
+
+				err := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Category{}).Where(keys).Find(&categories).Error
 
 				if err != nil {
 					logger.Error(err)
@@ -257,13 +278,16 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		tagloader := TagLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.Tag, []error) {
 				keys := util.Converter(ids)
 
 				tags := make([]*models.Tag, 0)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
 
-				err := config.DB.Model(&models.Tag{}).Where(keys).Find(&tags).Error
+				defer cancel()
+
+				err := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Tag{}).Where(keys).Find(&tags).Error
 
 				if err != nil {
 					logger.Error(err)
@@ -293,7 +317,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 
 		userloader := UserLoader{
 			maxBatch: 100,
-			wait:     1 * time.Millisecond,
+			wait:     1 * time.Second,
 			fetch: func(ids []string) ([]*models.User, []error) {
 				rctx := r.Context()
 
@@ -306,7 +330,11 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				space := &models.Space{}
 				space.ID = sID
 
-				config.DB.First(space)
+				ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+				defer cancel()
+
+				config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(space)
 
 				keys := util.Converter(ids)
 

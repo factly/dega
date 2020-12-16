@@ -4,7 +4,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/factly/dega-api/util"
 	"github.com/factly/x/loggerx"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
@@ -40,7 +39,7 @@ func main() {
 	router.Use(loggerx.Init())
 	router.Use(validator.CheckSpace())
 	router.Use(middleware.RealIP)
-	router.Use(util.GormRequestID)
+	// router.Use(util.GormRequestID)
 
 	config.SetupVars()
 	config.SetupDB()

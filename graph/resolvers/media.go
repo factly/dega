@@ -3,11 +3,13 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
+	"gorm.io/gorm"
 )
 
 func (r *mediumResolver) ID(ctx context.Context, obj *models.Medium) (string, error) {
@@ -30,7 +32,11 @@ func (r *queryResolver) Media(ctx context.Context) ([]*models.Medium, error) {
 
 	result := []*models.Medium{}
 
-	config.DB.Model(&models.Medium{}).Where(&models.Medium{
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Medium{}).Where(&models.Medium{
 		SpaceID: sID,
 	}).Find(&result)
 

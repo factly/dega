@@ -3,10 +3,12 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
+	"gorm.io/gorm"
 )
 
 func (r *formatResolver) ID(ctx context.Context, obj *models.Format) (string, error) {
@@ -21,7 +23,11 @@ func (r *queryResolver) Formats(ctx context.Context, spaces []int) (*models.Form
 	result := &models.FormatsPaging{}
 	result.Nodes = make([]*models.Format, 0)
 
-	tx := config.DB.Model(&models.Format{})
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Format{})
 	if len(spaces) > 0 {
 		tx.Where("space_id IN (?)", spaces)
 	}

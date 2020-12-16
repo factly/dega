@@ -3,12 +3,14 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/util"
+	"gorm.io/gorm"
 )
 
 func (r *claimantResolver) ID(ctx context.Context, obj *models.Claimant) (string, error) {
@@ -37,7 +39,11 @@ func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, 
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	tx := config.DB.Model(&models.Claimant{})
+	ctxTimeout, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+
+	defer cancel()
+
+	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Claimant{})
 
 	if len(spaces) > 0 {
 		tx.Where("space_id IN (?)", spaces)
