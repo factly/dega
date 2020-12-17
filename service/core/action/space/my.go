@@ -28,10 +28,20 @@ type organisationUser struct {
 
 type orgWithSpace struct {
 	config.Base
-	Title      string                 `gorm:"column:title" json:"title"`
-	Slug       string                 `gorm:"column:slug;unique_index" json:"slug"`
-	Permission organisationUser       `json:"permission"`
-	Spaces     []spaceWithPermissions `json:"spaces"`
+	Title        string                 `gorm:"column:title" json:"title"`
+	Slug         string                 `gorm:"column:slug;unique_index" json:"slug"`
+	Permission   organisationUser       `json:"permission"`
+	Applications []application          `json:"applications"`
+	Spaces       []spaceWithPermissions `json:"spaces"`
+}
+
+type application struct {
+	config.Base
+	Name        string        `gorm:"column:name" json:"name"`
+	Description string        `gorm:"column:description" json:"description"`
+	URL         string        `gorm:"column:url" json:"url"`
+	MediumID    *uint         `gorm:"column:medium_id;default:NULL" json:"medium_id"`
+	Medium      *model.Medium `gorm:"foreignKey:medium_id" json:"medium"`
 }
 
 type spaceWithPermissions struct {
