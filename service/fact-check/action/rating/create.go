@@ -105,7 +105,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Rating{
 		Name:         rating.Name,
 		Slug:         slug.Approve(ratingSlug, sID, tableName),
-		Colour:       rating.Colour,
 		Description:  rating.Description,
 		MediumID:     mediumID,
 		SpaceID:      uint(sID),
