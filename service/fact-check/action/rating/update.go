@@ -143,6 +143,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Base:         config.Base{UpdatedByID: uint(uID)},
 		Name:         rating.Name,
 		Slug:         ratingSlug,
+		Colour:       rating.Colour,
 		MediumID:     mediumID,
 		Description:  rating.Description,
 		NumericValue: rating.NumericValue,
