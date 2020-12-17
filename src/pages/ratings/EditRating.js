@@ -1,10 +1,11 @@
 import React from 'react';
 import RatingEditForm from './components/RatingForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Result } from 'antd';
+import { Skeleton } from 'antd';
 import { updateRating, getRating } from '../../actions/ratings';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditRating() {
   const history = useHistory();
@@ -23,15 +24,11 @@ function EditRating() {
     dispatch(getRating(id));
   }, [dispatch, id]);
 
-  if (loading && !rating) {
-    return ( 
-      <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
-    );
-  }
+  if (loading) return <Skeleton />
+  
+  if (!loading && !rating) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateRating({ ...rating, ...values })).then(() => history.push('/ratings'));

@@ -1,10 +1,11 @@
 import React from 'react';
 import SpacePermissionEditForm from './components/PermissionForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Result } from 'antd';
+import { Skeleton } from 'antd';
 import { updateSpacePermission, getSpaces } from '../../../actions/spacePermissions';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../../components/ErrorsAndImage/RecordNotFound';
 
 function EditSpacePermission() {
   const history = useHistory();
@@ -23,15 +24,11 @@ function EditSpacePermission() {
     dispatch(getSpaces());
   }, [dispatch, oid, pid]);
 
-  if (loading && !space) {
-    return ( 
-      <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
-    );
-  };
+  if (loading) return <Skeleton />
+  
+  if (!loading && !space) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateSpacePermission({ ...space.permission, ...values })).then(() =>

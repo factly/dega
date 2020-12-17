@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Row, Col, Result, Form, Input, Button, Space } from 'antd';
+import { Row, Col, Skeleton, Form, Input, Button, Space } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium } from '../../actions/media';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 const layout = {
   labelCol: {
@@ -41,15 +42,11 @@ function EditMedium() {
     dispatch(updateMedium(data));
   };
 
-  if (loading && !media) {
-    return ( 
-      <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
-    );
-  };
+  if (loading) return <Skeleton />
+  
+  if (!loading && !media) {
+    return <RecordNotFound />
+  }; 
 
   return (
     <Row>

@@ -1,10 +1,11 @@
 import React from 'react';
 import ClaimantEditForm from './components/ClaimantForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Result } from 'antd';
+import { Skeleton } from 'antd';
 import { updateClaimant, getClaimant } from '../../actions/claimants';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditClaimant() {
   const history = useHistory();
@@ -23,14 +24,10 @@ function EditClaimant() {
     dispatch(getClaimant(id));
   }, [dispatch, id]);
 
-  if (loading && !claimant) {
-    return ( 
-      <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
-    );
+  if (loading) return <Skeleton />
+  
+  if (!loading && !claimant) {
+    return <RecordNotFound />
   }; 
 
   const onUpdate = (values) => {

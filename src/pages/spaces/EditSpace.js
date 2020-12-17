@@ -1,9 +1,10 @@
 import React from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Result } from 'antd';
+import { Skeleton } from 'antd';
 import { updateSpace } from '../../actions/spaces';
 import SpaceEditForm from './components/SpaceEditForm';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditSpace() {
   const history = useHistory();
@@ -21,15 +22,12 @@ function EditSpace() {
     dispatch(updateSpace({ ...space, ...values })).then(() => history.push('/spaces'));
   };
 
-  if (loading && !space) {
-    return ( 
-      <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
-    );
-  };
+  if (loading) return <Skeleton />
+  
+  if (!loading && !space) {
+    return <RecordNotFound />
+  }; 
+
 
   return <SpaceEditForm onCreate={onCreate} data={space} />;
 }

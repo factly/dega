@@ -1,10 +1,11 @@
 import React from 'react';
 import TagEditForm from './components/TagForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Result } from 'antd';
+import { Skeleton } from 'antd';
 import { updateTag, getTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditTag() {
   const history = useHistory();
@@ -22,15 +23,11 @@ function EditTag() {
     dispatch(getTag(id));
   }, [dispatch, id]);
 
-  if (loading && !tag) {
-    return ( 
-      <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
-    );
-  }
+  if (loading) return <Skeleton />
+  
+  if (!loading && !tag) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateTag({ ...tag, ...values }));

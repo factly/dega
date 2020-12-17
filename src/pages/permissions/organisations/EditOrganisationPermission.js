@@ -1,10 +1,11 @@
 import React from 'react';
 import OrganisationPermissionEditForm from './components/PermissionForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Result } from 'antd';
+import { Skeleton } from 'antd';
 import { updateOrganisationPermission, getOrganisations } from '../../../actions/organisations';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../../components/ErrorsAndImage/RecordNotFound';
 
 function EditOrganisationPermission() {
   const history = useHistory();
@@ -23,15 +24,12 @@ function EditOrganisationPermission() {
     dispatch(getOrganisations());
   }, [dispatch, oid, pid]);
 
-  if (loading && !organisation) {
-    return ( 
-      <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
-    );
-  }
+  if (loading) return <Skeleton />
+  
+  if (!loading && !organisation) {
+    return <RecordNotFound />
+  }; 
+
 
   const onUpdate = (values) => {
     dispatch(updateOrganisationPermission({ ...organisation.permission, ...values })).then(() =>

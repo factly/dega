@@ -1,10 +1,11 @@
 import React from 'react';
 import CategoryEditForm from './components/CategoryForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Result } from 'antd';
+import { Skeleton } from 'antd';
 import { updateCategory, getCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditCategory() {
   const history = useHistory();
@@ -23,14 +24,10 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading && !category) {
-    return ( 
-      <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
-    );
+  if (loading) return <Skeleton />
+  
+  if (!loading && !category) {
+    return <RecordNotFound />
   }; 
 
   const onUpdate = (values) => {
