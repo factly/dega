@@ -105,6 +105,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Rating{
 		Name:         rating.Name,
 		Slug:         slug.Approve(ratingSlug, sID, tableName),
+		Colour:       rating.Colour,
 		Description:  rating.Description,
 		MediumID:     mediumID,
 		SpaceID:      uint(sID),
@@ -140,6 +141,7 @@ func insertIntoMeili(rating model.Rating) error {
 		"id":            rating.ID,
 		"kind":          "rating",
 		"name":          rating.Name,
+		"colour":        rating.Colour,
 		"slug":          rating.Slug,
 		"description":   rating.Description,
 		"numeric_value": rating.NumericValue,

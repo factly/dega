@@ -11,6 +11,7 @@ import (
 type rating struct {
 	Name         string         `json:"name" validate:"required,min=3,max=50"`
 	Slug         string         `json:"slug"`
+	Colour       postgres.Jsonb `json:"colour" validate:"required"`
 	Description  postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	NumericValue int            `json:"numeric_value" validate:"required"`
 	MediumID     uint           `json:"medium_id"`
