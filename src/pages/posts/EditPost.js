@@ -1,7 +1,7 @@
 import React from 'react';
 import PostEditForm from './components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Skeleton } from 'antd';
+import { Result } from 'antd';
 import { updatePost, getPost, publishPost, addTemplate } from '../../actions/posts';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -24,7 +24,15 @@ function EditPost() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  if (loading) return <Skeleton />;
+  if (loading && !post) {
+    return ( 
+      <Result 
+        status="404"
+        title="404"
+        subTitle="Sorry, could not find what you are looking for."
+      />
+    );
+  };
 
   const onUpdate = (values) => {
     if (values.status === 'draft')

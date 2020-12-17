@@ -1,7 +1,7 @@
 import React from 'react';
 import TagEditForm from './components/TagForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Skeleton } from 'antd';
+import { Result } from 'antd';
 import { updateTag, getTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -22,7 +22,15 @@ function EditTag() {
     dispatch(getTag(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  if (loading && !tag) {
+    return ( 
+      <Result 
+        status="404"
+        title="404"
+        subTitle="Sorry, could not find what you are looking for."
+      />
+    );
+  }
 
   const onUpdate = (values) => {
     dispatch(updateTag({ ...tag, ...values }));

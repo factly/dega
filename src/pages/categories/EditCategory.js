@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryEditForm from './components/CategoryForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { Skeleton } from 'antd';
+import { Result } from 'antd';
 import { updateCategory, getCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
@@ -23,7 +23,15 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading && !category) return <Skeleton />;
+  if (loading && !category) {
+    return ( 
+      <Result 
+        status="404"
+        title="404"
+        subTitle="Sorry, could not find what you are looking for."
+      />
+    );
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));
