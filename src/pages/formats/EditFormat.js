@@ -5,6 +5,7 @@ import { updateFormat, getFormat } from '../../actions/formats';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditFormat() {
   const history = useHistory();
@@ -22,7 +23,12 @@ function EditFormat() {
     dispatch(getFormat(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!format) {
+    return <RecordNotFound />
+  }; 
+
 
   const onUpdate = (values) => {
     dispatch(updateFormat({ ...format, ...values }));

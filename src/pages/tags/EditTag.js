@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { updateTag, getTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditTag() {
   const history = useHistory();
@@ -22,7 +23,11 @@ function EditTag() {
     dispatch(getTag(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!tag) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateTag({ ...tag, ...values }));

@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { updateClaim, getClaim } from '../../actions/claims';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditClaim() {
   const history = useHistory();
@@ -24,7 +25,11 @@ function EditClaim() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  if (loading) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!claim) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateClaim({ ...claim, ...values })).then(() => history.push('/claims'));

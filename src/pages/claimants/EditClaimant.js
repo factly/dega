@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { updateClaimant, getClaimant } from '../../actions/claimants';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditClaimant() {
   const history = useHistory();
@@ -23,7 +24,11 @@ function EditClaimant() {
     dispatch(getClaimant(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!claimant) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateClaimant({ ...claimant, ...values })).then(() => history.push('/claimants'));

@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Skeleton, Form, Input, Button, Space } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium } from '../../actions/media';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 const layout = {
   labelCol: {
@@ -41,7 +42,12 @@ function EditMedium() {
     dispatch(updateMedium(data));
   };
 
-  if (loading) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!media) {
+    return <RecordNotFound />
+  }; 
+
   return (
     <Row>
       <Col span={'12'}>

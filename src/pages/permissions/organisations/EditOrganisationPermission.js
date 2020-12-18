@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { updateOrganisationPermission, getOrganisations } from '../../../actions/organisations';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../../components/ErrorsAndImage/RecordNotFound';
 
 function EditOrganisationPermission() {
   const history = useHistory();
@@ -23,7 +24,12 @@ function EditOrganisationPermission() {
     dispatch(getOrganisations());
   }, [dispatch, oid, pid]);
 
-  if (loading && !organisation) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!organisation) {
+    return <RecordNotFound />
+  }; 
+
 
   const onUpdate = (values) => {
     dispatch(updateOrganisationPermission({ ...organisation.permission, ...values })).then(() =>

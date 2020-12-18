@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { updateCategory, getCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditCategory() {
   const history = useHistory();
@@ -23,7 +24,11 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading && !category) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!category) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));

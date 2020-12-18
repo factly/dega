@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { updateSpacePermission, getSpaces } from '../../../actions/spacePermissions';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../../components/ErrorsAndImage/RecordNotFound';
 
 function EditSpacePermission() {
   const history = useHistory();
@@ -23,7 +24,11 @@ function EditSpacePermission() {
     dispatch(getSpaces());
   }, [dispatch, oid, pid]);
 
-  if (loading && !space) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!space) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateSpacePermission({ ...space.permission, ...values })).then(() =>

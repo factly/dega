@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { getPolicy, updatePolicy } from '../../actions/policies';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditPolicy() {
   const history = useHistory();
@@ -38,7 +39,11 @@ function EditPolicy() {
     dispatch(getPolicy(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!policy) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updatePolicy({ ...policy, ...values })).then(() => history.push('/policies'));

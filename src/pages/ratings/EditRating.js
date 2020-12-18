@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { updateRating, getRating } from '../../actions/ratings';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditRating() {
   const history = useHistory();
@@ -23,7 +24,11 @@ function EditRating() {
     dispatch(getRating(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!rating) {
+    return <RecordNotFound />
+  }; 
 
   const onUpdate = (values) => {
     dispatch(updateRating({ ...rating, ...values })).then(() => history.push('/ratings'));

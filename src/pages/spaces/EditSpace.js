@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateSpace } from '../../actions/spaces';
 import SpaceEditForm from './components/SpaceEditForm';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function EditSpace() {
   const history = useHistory();
@@ -21,7 +22,12 @@ function EditSpace() {
     dispatch(updateSpace({ ...space, ...values })).then(() => history.push('/spaces'));
   };
 
-  if (loading) return <Skeleton />;
+  if (loading) return <Skeleton />
+  
+  if (!space) {
+    return <RecordNotFound />
+  }; 
+
 
   return <SpaceEditForm onCreate={onCreate} data={space} />;
 }

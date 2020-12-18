@@ -5,6 +5,7 @@ import deepEqual from 'deep-equal';
 import { addPost, deletePost, getPosts } from '../../actions/posts';
 import { Link, useHistory } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import PlaceholderImage from '../ErrorsAndImage/PlaceholderImage';
 
 function Template() {
   const dispatch = useDispatch();
@@ -13,7 +14,7 @@ function Template() {
   const { Panel } = Collapse;
   const page = 1;
   const [show, setShow] = React.useState(false);
-  const { posts, loading } = useSelector((state) => {
+  const { posts, loading, media } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       let query = {
         page,
@@ -28,8 +29,9 @@ function Template() {
         posts: node.data.map((element) => state.posts.details[element]),
         total: node.total,
         loading: state.posts.loading,
+        media: state.media.details,
       };
-    return { posts: [], loading: state.posts.loading };
+    return { posts: [], loading: state.posts.loading, media: [] };
   });
 
   React.useEffect(() => {
@@ -65,18 +67,20 @@ function Template() {
           renderItem={(item) => (
             <List.Item>
               <Card
-                cover={
+                cover={ 
+                  item.medium ?
                   <img
                     style={{ cursor: 'pointer' }}
-                    alt="example"
-                    src="https://www.wesa.fm/sites/wesa/files/styles/medium/public/201610/Fact-CheckGraphics-Template-08.png"
+                    alt="example" 
+                    src={media[item.medium].url.proxy}
                     height="230"
                     onClick={() => {
                       dispatch(addPost({ ...item, status: null })).then((res) =>
                         history.push(`/posts/${res.id}/edit`),
                       );
                     }}
-                  />
+                  /> 
+                  : <PlaceholderImage />
                 }
                 actions={[
                   <Link to={`/posts/${item.id}/edit`}>
