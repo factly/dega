@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Input, Space, InputNumber } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
+import { ChromePicker } from "react-color";
 
 const layout = {
   labelCol: {
@@ -21,6 +22,11 @@ const tailLayout = {
 
 const RatingForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [color, setColor] = useState(null);
+
+  const colorPicker = (e) => {
+    setColor(e);
+  };
 
   const onReset = () => {
     form.resetFields();
@@ -87,6 +93,13 @@ const RatingForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item name="medium_id" label="Featured Image">
         <MediaSelector />
+      </Form.Item>
+      <Form.Item name="colour" label="Colour">
+        <ChromePicker
+          color={color !== null && color.hex}
+          onChange={(e) => colorPicker(e)}
+          disableAlpha     
+        />
       </Form.Item>
       <Form.Item name="description" label="Description">
         <Editor style={{ width: '600px' }} />

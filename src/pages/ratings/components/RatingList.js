@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
+import { Popconfirm, Button, Table, Tag } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getRatings, deleteRating } from '../../../actions/ratings';
@@ -40,6 +40,15 @@ function RatingList({ actions }) {
     { title: 'Name', dataIndex: 'name', key: 'name' },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
     { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
+    {
+      title: 'Colour',
+      dataIndex: 'color',
+      render: (_, record) => {
+        return (
+          <Tag color={record.colour.hex}>{record.name}</Tag>
+        )
+      }
+    },
     {
       title: 'Action',
       dataIndex: 'operation',
