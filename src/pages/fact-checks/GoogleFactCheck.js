@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getGoogleFactChecks } from '../../actions/googleFactChecks';
 import { Form, Input, Select, Button, List, Typography, Space } from 'antd';
 import deepEqual from 'deep-equal';
+import { languageCode }  from '../fact-checks/LanguageCode';
 
 function GoogleFactCheck() {
   const dispatch = useDispatch();
   const { Option } = Select;
   const [form] = Form.useForm();
+  const langCode = languageCode();
   const [filters, setQuery] = React.useState({
     page: 1,
     query: 'factcheck',
@@ -67,10 +69,11 @@ function GoogleFactCheck() {
         >
           <Input placeholder="search fact checks" />
         </Form.Item>
-        <Form.Item name="language" label="language" style={{ width: '15%' }}>
+        <Form.Item name="language" label="language" style={{ width: '25%' }}>
           <Select defaultValue={'all'}>
-            <Option value="all">All</Option>
-            <Option value="en">English</Option>
+            {langCode.map((e, key) => {
+              return <Option key={key} value={e.code}>{e.language}</Option>
+            })}
           </Select>
         </Form.Item>
         <Form.Item>
