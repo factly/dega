@@ -25,7 +25,7 @@ function EditTag() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !tag) {
+  if (!tag) {
     return <RecordNotFound />
   }; 
 

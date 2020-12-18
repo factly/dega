@@ -26,7 +26,7 @@ function EditClaimant() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !claimant) {
+  if (!claimant) {
     return <RecordNotFound />
   }; 
 

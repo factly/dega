@@ -26,7 +26,7 @@ function EditSpacePermission() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !space) {
+  if (!space) {
     return <RecordNotFound />
   }; 
 

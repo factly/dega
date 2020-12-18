@@ -41,7 +41,7 @@ function EditPolicy() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !policy) {
+  if (!policy) {
     return <RecordNotFound />
   }; 
 

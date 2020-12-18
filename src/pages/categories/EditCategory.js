@@ -26,7 +26,7 @@ function EditCategory() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !category) {
+  if (!category) {
     return <RecordNotFound />
   }; 
 

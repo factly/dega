@@ -24,7 +24,7 @@ function EditSpace() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !space) {
+  if (!space) {
     return <RecordNotFound />
   }; 
 

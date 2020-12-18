@@ -26,7 +26,7 @@ function EditRating() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !rating) {
+  if (!rating) {
     return <RecordNotFound />
   }; 
 

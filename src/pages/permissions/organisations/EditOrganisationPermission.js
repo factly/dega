@@ -26,7 +26,7 @@ function EditOrganisationPermission() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !organisation) {
+  if (!organisation) {
     return <RecordNotFound />
   }; 
 

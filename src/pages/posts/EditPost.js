@@ -27,7 +27,7 @@ function EditPost() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !post) {
+  if (!post) {
     return <RecordNotFound />
   }; 
 

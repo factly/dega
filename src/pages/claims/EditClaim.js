@@ -27,7 +27,7 @@ function EditClaim() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !claim) {
+  if (!claim) {
     return <RecordNotFound />
   }; 
 

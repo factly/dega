@@ -44,7 +44,7 @@ function EditMedium() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !media) {
+  if (!media) {
     return <RecordNotFound />
   }; 
 

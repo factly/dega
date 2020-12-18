@@ -25,7 +25,7 @@ function EditFormat() {
 
   if (loading) return <Skeleton />
   
-  if (!loading && !format) {
+  if (!format) {
     return <RecordNotFound />
   }; 
 
