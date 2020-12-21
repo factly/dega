@@ -3,7 +3,6 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"gorm.io/gorm"
 
@@ -48,11 +47,7 @@ func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category,
 
 	result := &models.Category{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
-	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Category{}).Where(&models.Category{
+	err = config.DB.Model(&models.Category{}).Where(&models.Category{
 		ID:      uint(id),
 		SpaceID: sID,
 	}).First(&result).Error
@@ -87,14 +82,10 @@ func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int,
 
 	var tx *gorm.DB
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
 	if len(ids) > 0 {
-		tx = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Category{}).Where(ids)
+		tx = config.DB.Model(&models.Category{}).Where(ids)
 	} else {
-		tx = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Category{})
+		tx = config.DB.Model(&models.Category{})
 	}
 
 	if len(spaces) > 0 {

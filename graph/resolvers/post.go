@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
-	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -13,7 +12,6 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"gorm.io/gorm"
 )
 
 type postResolver struct{ *Resolver }
@@ -46,12 +44,9 @@ func (r *postResolver) Medium(ctx context.Context, obj *models.Post) (*models.Me
 
 func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*models.Category, error) {
 	postCategories := []models.PostCategory{}
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
 
 	// fetch all categories
-	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostCategory{}).Where(&models.PostCategory{
+	config.DB.Model(&models.PostCategory{}).Where(&models.PostCategory{
 		PostID: obj.ID,
 	}).Find(&postCategories)
 
@@ -67,11 +62,8 @@ func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*mod
 
 func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Tag, error) {
 	postTags := []models.PostTag{}
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
-	defer cancel()
-
-	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostTag{}).Where(&models.PostTag{
+	config.DB.Model(&models.PostTag{}).Where(&models.PostTag{
 		PostID: obj.ID,
 	}).Find(&postTags)
 
@@ -87,11 +79,8 @@ func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Ta
 
 func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.Claim, error) {
 	postClaims := []models.PostClaim{}
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
-	defer cancel()
-
-	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostClaim{}).Where(&models.PostClaim{
+	config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
 		PostID: obj.ID,
 	}).Find(&postClaims)
 
@@ -107,11 +96,8 @@ func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.
 
 func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.User, error) {
 	postUsers := []models.PostAuthor{}
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
-	defer cancel()
-
-	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostAuthor{}).Where(&models.PostAuthor{
+	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
 		PostID: obj.ID,
 	}).Find(&postUsers)
 
@@ -130,18 +116,14 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 
 	postClaims := []models.PostClaim{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
-	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostClaim{}).Where(&models.PostClaim{
+	config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
 		PostID: obj.ID,
 	}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Claimant").Find(&postClaims)
 
 	space := &models.Space{}
 	space.ID = obj.SpaceID
 
-	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Preload("Logo").First(&space)
+	config.DB.Preload("Logo").First(&space)
 
 	for _, each := range postClaims {
 		claimSchema := models.FactCheckSchema{}
@@ -169,7 +151,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 
 	postAuthors := []models.PostAuthor{}
 
-	config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostAuthor{}).Where(&models.PostAuthor{
+	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
 		PostID: obj.ID,
 	}).Find(&postAuthors)
 
@@ -216,11 +198,8 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 	}
 
 	result := &models.Post{}
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 
-	defer cancel()
-
-	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{}).Where(&models.Post{
+	err = config.DB.Model(&models.Post{}).Where(&models.Post{
 		ID:      uint(id),
 		SpaceID: sID,
 	}).First(&result).Error
@@ -253,11 +232,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
-	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{})
+	tx := config.DB.Model(&models.Post{})
 
 	if len(spaces) > 0 {
 		tx.Where("space_id IN (?)", spaces)

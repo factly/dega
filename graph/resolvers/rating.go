@@ -3,14 +3,12 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/util"
-	"gorm.io/gorm"
 )
 
 func (r *ratingResolver) ID(ctx context.Context, obj *models.Rating) (string, error) {
@@ -54,11 +52,7 @@ func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, li
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
-	tx := config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Rating{})
+	tx := config.DB.Model(&models.Rating{})
 
 	if len(spaces) > 0 {
 		tx.Where("space_id IN (?)", spaces)
