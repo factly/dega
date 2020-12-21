@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import MediaUploader from './UploadMedium';
 import MediaList from './MediaList';
 import { getMedium } from '../../actions/media';
+import ImagePlaceholder from '../ErrorsAndImage/PlaceholderImage';
 
 function MediaSelector({ value = null, onChange }) {
   const [show, setShow] = React.useState(false);
@@ -57,7 +58,7 @@ function MediaSelector({ value = null, onChange }) {
         </Space>
       </Modal>
       <Space direction="vertical">
-        {medium ? <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" /> : null}
+        {medium ? <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" /> : <ImagePlaceholder />}
         <Button onClick={() => setShow(true)}>Select</Button>
       </Space>
     </>
