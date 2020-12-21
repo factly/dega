@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Selector from '../../../components/Selector';
 import deepEqual from 'deep-equal';
 import Template from '../../../components/Template';
+import ImagePlaceholder from '../../../components/ErrorsAndImage/PlaceholderImage';
 
 function PostList({ actions }) {
   const dispatch = useDispatch();
@@ -143,7 +144,7 @@ function PostList({ actions }) {
                   alt={item.medium.alt_text}
                   src={item.medium.url?.proxy ? `${item.medium.url.proxy}?resize:fill:150:150/gravity:sm` : ''}
                 />
-              ) : null
+              ) : <ImagePlaceholder height={150} width={150} />
             }
           >
             <List.Item.Meta
