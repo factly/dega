@@ -3,7 +3,6 @@ package resolvers
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"gorm.io/gorm"
 
@@ -30,11 +29,7 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 
 	result := &models.Tag{}
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
-	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Tag{}).Where(&models.Tag{
+	err = config.DB.Model(&models.Tag{}).Where(&models.Tag{
 		ID:      uint(id),
 		SpaceID: sID,
 	}).First(&result).Error
@@ -69,14 +64,10 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 
 	var tx *gorm.DB
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
 	if len(ids) > 0 {
-		tx = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Tag{}).Where(ids)
+		tx = config.DB.Model(&models.Tag{}).Where(ids)
 	} else {
-		tx = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Tag{})
+		tx = config.DB.Model(&models.Tag{})
 	}
 
 	if len(spaces) > 0 {

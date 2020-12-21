@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -13,7 +12,6 @@ import (
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 	"github.com/spf13/viper"
-	"gorm.io/gorm"
 )
 
 func (r *userResolver) ID(ctx context.Context, obj *models.User) (string, error) {
@@ -28,11 +26,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 
 	posts := make([]models.Post, 0)
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
-	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.Post{}).Where(&models.Post{
+	err = config.DB.Model(&models.Post{}).Where(&models.Post{
 		SpaceID: uint(sID),
 	}).Find(&posts).Error
 	if err != nil {
@@ -46,7 +40,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 
 	postAuthor := &models.PostAuthor{}
 
-	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).First(postAuthor).Error
+	err = config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).First(postAuthor).Error
 	if err != nil {
 		return nil, nil
 	}
@@ -54,7 +48,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 	space := &models.Space{}
 	space.ID = sID
 
-	err = config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(space).Error
+	err = config.DB.First(space).Error
 	if err != nil {
 		return nil, nil
 	}
@@ -106,11 +100,7 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	space := &models.Space{}
 	space.ID = sID
 
-	ctxTimeout, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-
-	defer cancel()
-
-	config.DB.Session(&gorm.Session{Context: ctxTimeout}).First(space)
+	config.DB.First(space)
 
 	userMap := make(map[uint]models.User)
 	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
