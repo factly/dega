@@ -24,11 +24,11 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />
-  
+  if (loading) return <Skeleton />;
+
   if (!category) {
-    return <RecordNotFound />
-  }; 
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));
