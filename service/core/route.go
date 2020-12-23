@@ -3,6 +3,7 @@ package core
 import (
 	"net/http"
 
+	"github.com/factly/dega-server/service/core/action/menu"
 	"github.com/factly/dega-server/service/core/action/permissions"
 	"github.com/factly/dega-server/service/core/action/request"
 
@@ -25,6 +26,7 @@ func Router() http.Handler {
 	r := chi.NewRouter()
 
 	r.Mount("/media", medium.Router())
+	r.Mount("/menu", menu.Router())
 	r.Mount("/categories", category.Router())
 	r.Mount("/formats", format.Router())
 	r.Mount("/tags", tag.Router())

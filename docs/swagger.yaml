@@ -149,6 +149,26 @@ definitions:
     - name
     - type
     type: object
+  menu.menu:
+    properties:
+      menu:
+        type: string
+      name:
+        type: string
+      slug:
+        type: string
+    required:
+    - name
+    type: object
+  menu.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Menu'
+        type: array
+      total:
+        type: integer
+    type: object
   meta.meta:
     properties:
       description:
@@ -381,6 +401,35 @@ definitions:
         type: integer
       url:
         type: string
+    type: object
+  model.Menu:
+    properties:
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      menu:
+        type: string
+      name:
+        type: string
+      slug:
+        type: string
+      space:
+        $ref: '#/definitions/model.Space'
+        type: object
+      space_id:
+        type: integer
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+    required:
+    - name
+    - slug
     type: object
   model.OrganisationPermission:
     properties:
@@ -1865,6 +1914,169 @@ paths:
       summary: Update a medium by id
       tags:
       - Medium
+  /core/menus:
+    get:
+      description: Get all menus
+      operationId: get-all-menus
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/menu.paging'
+      summary: Show all menus
+      tags:
+      - Menu
+    post:
+      description: Create menu
+      operationId: add-menu
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Menu Object
+        in: body
+        name: Menu
+        required: true
+        schema:
+          $ref: '#/definitions/menu.menu'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Menu'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create menu
+      tags:
+      - Menu
+  /core/menus/{menu_id}:
+    delete:
+      description: Delete menu by ID
+      operationId: delete-menu-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      responses:
+        "200": {}
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a menu
+      tags:
+      - Menu
+    get:
+      description: Get menu by ID
+      operationId: get-menu-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Menu'
+      summary: Show a menu by id
+      tags:
+      - Menu
+    put:
+      description: Update menu by ID
+      operationId: update-menu-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Menu ID
+        in: path
+        name: menu_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Menu
+        in: body
+        name: Menu
+        schema:
+          $ref: '#/definitions/menu.menu'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Menu'
+      summary: Update a menu by id
+      tags:
+      - Menu
   /core/permissions/organisations:
     get:
       description: Get all organisation permissions
