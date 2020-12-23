@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMedia } from '../../actions/media';
 import deepEqual from 'deep-equal';
 
-function MediaList({ onSelect, selected }) {
+function MediaList({ onSelect, selected, onUnselect }) {
   const dispatch = useDispatch();
 
   const [filters, setFilters] = React.useState({
@@ -62,7 +62,12 @@ function MediaList({ onSelect, selected }) {
             {selected && item.id === selected.id ? (
               <Badge dot>
                 <Avatar
-                  onClick={() => onSelect(null)}
+                  onClick={() => 
+                    {
+                      onSelect(null);
+                      onUnselect();
+                    }  
+                  }
                   shape="square"
                   size={174}
                   src={item.url?.proxy}
