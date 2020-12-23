@@ -15,6 +15,7 @@ type category struct {
 	ParentID    uint           `json:"parent_id"`
 	MediumID    uint           `json:"medium_id"`
 	IsFeatured  bool           `json:"is_featured"`
+	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "category_user"

@@ -22,6 +22,7 @@ type Category struct {
 	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
 	Posts       []*Post        `gorm:"many2many:post_categories;" json:"posts"`
 	Space       *Space         `json:"space,omitempty"`
+	MetaFields  postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 // BeforeSave - validation for medium

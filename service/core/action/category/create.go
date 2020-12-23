@@ -116,6 +116,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		MediumID:    mediumID,
 		SpaceID:     uint(sID),
 		IsFeatured:  category.IsFeatured,
+		MetaFields:  category.MetaFields,
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Model(&model.Category{}).Create(&result).Error
@@ -137,6 +138,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"slug":        result.Slug,
 		"description": result.Description,
 		"space_id":    result.SpaceID,
+		"meta_fields": result.MetaFields,
 	}
 
 	err = meili.AddDocument(meiliObj)
