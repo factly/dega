@@ -2,17 +2,18 @@ package model
 
 import (
 	"github.com/factly/dega-server/config"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
 // Menu model
 type Menu struct {
 	config.Base
-	Name        string `gorm:"column:name" json:"name" validate:"required"`
-	Slug        string `gorm:"column:slug" json:"slug" validate:"required"`
-	Description string `gorm:"column:description" json:"description"`
-	SpaceID     uint   `gorm:"column:space_id" json:"space_id"`
-	Space       *Space `json:"space,omitempty"`
+	Name    string         `gorm:"column:name" json:"name" validate:"required"`
+	Slug    string         `gorm:"column:slug" json:"slug" validate:"required"`
+	Menu    postgres.Jsonb `gorm:"column:menu" json:"menu" swaggertype:"primitive,string"`
+	SpaceID uint           `gorm:"column:space_id" json:"space_id"`
+	Space   *Space         `json:"space,omitempty"`
 }
 
 var menuUser config.ContextKey = "menu_user"
