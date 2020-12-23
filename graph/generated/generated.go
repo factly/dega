@@ -64,6 +64,7 @@ type ComplexityRoot struct {
 		Description func(childComplexity int) int
 		ID          func(childComplexity int) int
 		Medium      func(childComplexity int) int
+		MetaFields  func(childComplexity int) int
 		Name        func(childComplexity int) int
 		ParentID    func(childComplexity int) int
 		Slug        func(childComplexity int) int
@@ -278,6 +279,7 @@ type CategoryResolver interface {
 	ID(ctx context.Context, obj *models.Category) (string, error)
 
 	Description(ctx context.Context, obj *models.Category) (interface{}, error)
+	MetaFields(ctx context.Context, obj *models.Category) (interface{}, error)
 	ParentID(ctx context.Context, obj *models.Category) (*int, error)
 	Medium(ctx context.Context, obj *models.Category) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Category) (int, error)
@@ -438,6 +440,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Category.Medium(childComplexity), true
+
+	case "Category.meta_fields":
+		if e.complexity.Category.MetaFields == nil {
+			break
+		}
+
+		return e.complexity.Category.MetaFields(childComplexity), true
 
 	case "Category.name":
 		if e.complexity.Category.Name == nil {
@@ -1625,6 +1634,7 @@ type Category {
   name: String!
   slug: String!
   description: Any
+  meta_fields: Any
   parent_id: Int
   medium: Medium
   space_id: Int!
@@ -2635,6 +2645,38 @@ func (ec *executionContext) _Category_description(ctx context.Context, field gra
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Category().Description(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Category_meta_fields(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Category().MetaFields(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8909,6 +8951,17 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 					}
 				}()
 				res = ec._Category_description(ctx, field, obj)
+				return res
+			})
+		case "meta_fields":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_meta_fields(ctx, field, obj)
 				return res
 			})
 		case "parent_id":

@@ -39,6 +39,10 @@ func (r *categoryResolver) Description(ctx context.Context, obj *models.Category
 	return obj.Description, nil
 }
 
+func (r *categoryResolver) MetaFields(ctx context.Context, obj *models.Category) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
