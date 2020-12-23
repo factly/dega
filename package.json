@@ -29,6 +29,7 @@
     "axios": "^0.19.2",
     "deep-equal": "^2.0.3",
     "jest-sonar-reporter": "^2.0.0",
+    "jsoneditor": "^9.1.5",
     "moment": "^2.26.0",
     "react": "^16.13.1",
     "react-color": "^2.19.3",
