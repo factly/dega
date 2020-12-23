@@ -1,14 +1,11 @@
 package organisationPermission
 
 import (
-	"context"
 	"net/http"
-	"time"
 
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -44,11 +41,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	permissionList := make([]model.OrganisationPermission, 0)
 
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
-
-	defer cancel()
-
-	config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.OrganisationPermission{}).Find(&permissionList)
+	config.DB.Model(&model.OrganisationPermission{}).Find(&permissionList)
 
 	permissionMap := make(map[uint]model.OrganisationPermission)
 	for _, permission := range permissionList {

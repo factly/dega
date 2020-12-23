@@ -1,10 +1,8 @@
 package medium
 
 import (
-	"context"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -14,7 +12,6 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
-	"gorm.io/gorm"
 )
 
 // list response
@@ -78,11 +75,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 
-	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
-
-	defer cancel()
-
-	tx := config.DB.Session(&gorm.Session{Context: ctx}).Model(&model.Medium{}).Where(&model.Medium{
+	tx := config.DB.Model(&model.Medium{}).Where(&model.Medium{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
