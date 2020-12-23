@@ -24,6 +24,7 @@ type Category {
   name: String!
   slug: String!
   description: Any
+  meta_fields: Any
   parent_id: Int
   medium: Medium
   space_id: Int!

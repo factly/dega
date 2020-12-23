@@ -17,6 +17,7 @@ type Category struct {
 	ParentID    uint           `gorm:"column:parent_id" json:"parent_id" sql:"DEFAULT:NULL"`
 	MediumID    uint           `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
 	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
+	MetaFields  postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 // CategoriesPaging model
