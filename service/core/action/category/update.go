@@ -165,6 +165,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Description: category.Description,
 		ParentID:    parentID,
 		MediumID:    mediumID,
+		MetaFields:  category.MetaFields,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
@@ -182,6 +183,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"slug":        result.Slug,
 		"description": result.Description,
 		"space_id":    result.SpaceID,
+		"meta_fields": result.MetaFields,
 	}
 
 	err = meili.UpdateDocument(meiliObj)

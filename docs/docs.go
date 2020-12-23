@@ -898,7 +898,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_organisationPermission.paging"
+                                "$ref": "#/definitions/organisationPermission.paging"
                             }
                         }
                     }
@@ -1184,7 +1184,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_spacePermission.paging"
+                                "$ref": "#/definitions/spacePermission.paging"
                             }
                         }
                     }
@@ -2177,7 +2177,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisationPermission.paging"
+                                "$ref": "#/definitions/organisationPermission.paging"
                             }
                         }
                     }
@@ -2217,7 +2217,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisationPermission.paging"
+                                "$ref": "#/definitions/organisationPermission.paging"
                             }
                         }
                     }
@@ -2451,7 +2451,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_spacePermission.paging"
+                                "$ref": "#/definitions/spacePermission.paging"
                             }
                         }
                     }
@@ -2491,7 +2491,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_spacePermission.paging"
+                                "$ref": "#/definitions/spacePermission.paging"
                             }
                         }
                     }
@@ -4082,6 +4082,9 @@ var doc = `{
                 "medium_id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -4218,62 +4221,6 @@ var doc = `{
                 }
             }
         },
-        "github.com_factly_dega-server_service_core_action_permissions_organisationPermission.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/organisationPermission.orgWithPermissions"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "github.com_factly_dega-server_service_core_action_permissions_spacePermission.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/spacePermission.spaceWithPermissions"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "github.com_factly_dega-server_service_core_action_request_organisationPermission.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.OrganisationPermissionRequest"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "github.com_factly_dega-server_service_core_action_request_spacePermission.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.SpacePermissionRequest"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
         "google.paging": {
             "type": "object",
             "properties": {
@@ -4354,6 +4301,7 @@ var doc = `{
             "type": "object",
             "properties": {
                 "meta": {
+                    "type": "object",
                     "$ref": "#/definitions/meta.meta"
                 },
                 "success": {
@@ -4421,10 +4369,14 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -4442,6 +4394,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4468,6 +4421,7 @@ var doc = `{
                     "type": "string"
                 },
                 "claimant": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Claimant"
                 },
                 "claimant_id": {
@@ -4489,6 +4443,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "rating": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Rating"
                 },
                 "rating_id": {
@@ -4507,6 +4462,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4542,6 +4498,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -4554,6 +4511,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4599,6 +4557,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4803,6 +4762,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "format": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
@@ -4821,6 +4781,7 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
@@ -4830,6 +4791,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4861,6 +4823,9 @@ var doc = `{
         "model.Rating": {
             "type": "object",
             "properties": {
+                "colour": {
+                    "type": "string"
+                },
                 "created_at": {
                     "type": "string"
                 },
@@ -4877,6 +4842,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -4892,6 +4858,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4924,6 +4891,7 @@ var doc = `{
                     "type": "string"
                 },
                 "fav_icon": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
@@ -4933,18 +4901,21 @@ var doc = `{
                     "type": "integer"
                 },
                 "logo": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
                 },
                 "mobile_icon": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
@@ -5007,6 +4978,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5048,6 +5020,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5105,6 +5078,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5178,9 +5152,11 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "permission": {
+                    "type": "object",
                     "$ref": "#/definitions/model.OrganisationPermission"
                 },
                 "slug": {
@@ -5214,17 +5190,35 @@ var doc = `{
         "organisationPermission.organisationPermissionRequest": {
             "type": "object",
             "required": [
+                "organisation_id",
                 "title"
             ],
             "properties": {
                 "description": {
                     "type": "string"
                 },
+                "organisation_id": {
+                    "type": "integer"
+                },
                 "spaces": {
                     "type": "integer"
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "organisationPermission.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/organisationPermission.orgWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -5374,6 +5368,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "format": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
@@ -5392,6 +5387,7 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
@@ -5401,6 +5397,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5457,10 +5454,14 @@ var doc = `{
         "rating.rating": {
             "type": "object",
             "required": [
+                "colour",
                 "name",
                 "numeric_value"
             ],
             "properties": {
+                "colour": {
+                    "type": "string"
+                },
                 "description": {
                     "type": "string"
                 },
@@ -5501,9 +5502,54 @@ var doc = `{
                 }
             }
         },
+        "space.application": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "medium": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
         "space.orgWithSpace": {
             "type": "object",
             "properties": {
+                "applications": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/space.application"
+                    }
+                },
                 "created_at": {
                     "type": "string"
                 },
@@ -5517,6 +5563,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "permission": {
+                    "type": "object",
                     "$ref": "#/definitions/space.organisationUser"
                 },
                 "slug": {
@@ -5635,6 +5682,7 @@ var doc = `{
                     "type": "string"
                 },
                 "fav_icon": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
@@ -5644,18 +5692,21 @@ var doc = `{
                     "type": "integer"
                 },
                 "logo": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
                 },
                 "mobile_icon": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
@@ -5699,6 +5750,20 @@ var doc = `{
                 }
             }
         },
+        "spacePermission.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/spacePermission.spaceWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "spacePermission.spacePermission": {
             "type": "object",
             "required": [
@@ -5722,6 +5787,7 @@ var doc = `{
         "spacePermission.spacePermissionRequest": {
             "type": "object",
             "required": [
+                "space_id",
                 "title"
             ],
             "properties": {
@@ -5735,6 +5801,9 @@ var doc = `{
                     "type": "integer"
                 },
                 "posts": {
+                    "type": "integer"
+                },
+                "space_id": {
                     "type": "integer"
                 },
                 "title": {
@@ -5761,6 +5830,7 @@ var doc = `{
                     "type": "string"
                 },
                 "fav_icon": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
@@ -5770,18 +5840,21 @@ var doc = `{
                     "type": "integer"
                 },
                 "logo": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
                 },
                 "mobile_icon": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
@@ -5794,6 +5867,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "permission": {
+                    "type": "object",
                     "$ref": "#/definitions/model.SpacePermission"
                 },
                 "site_address": {
