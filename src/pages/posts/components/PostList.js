@@ -75,7 +75,7 @@ function PostList({ actions }) {
           <Input placeholder="search posts" />
         </Form.Item>
         <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
-          <Select placeholder="Latest" defaultValue="desc" style={{ maxWidth: '160px' }}>
+          <Select defaultValue="desc" style={{ maxWidth: '160px' }}>
             <Option value="desc">Latest</Option>
             <Option value="asc">Old</Option>
           </Select>
