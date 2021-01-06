@@ -91,7 +91,7 @@ function ClaimList({ actions }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Delete?"
               onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
             >
               <Link to="" className="ant-dropdown-link">

@@ -75,19 +75,34 @@ function PostList({ actions }) {
           <Input placeholder="search posts" />
         </Form.Item>
         <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
-          <Select>
+          <Select placeholder="Latest" defaultValue="desc" style={{ maxWidth: '160px' }}>
             <Option value="desc">Latest</Option>
             <Option value="asc">Old</Option>
           </Select>
         </Form.Item>
         <Form.Item name="tags" label="Tags" style={{ width: '15%' }}>
-          <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
+          <Selector
+            mode="multiple"
+            action="Tags"
+            placeholder="Filter Tags"
+            style={{ maxWidth: '160px' }}
+          />
         </Form.Item>
         <Form.Item name="categories" label="Categories" style={{ width: '15%' }}>
-          <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
+          <Selector
+            mode="multiple"
+            action="Categories"
+            placeholder="Filter Categories"
+            style={{ maxWidth: '160px' }}
+          />
         </Form.Item>
         <Form.Item name="formats" label="Formats" style={{ width: '15%' }}>
-          <Selector mode="multiple" action="Formats" placeholder="Filter Formats" />
+          <Selector
+            mode="multiple"
+            action="Formats"
+            placeholder="Filter Formats"
+            style={{ maxWidth: '160px' }}
+          />
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
@@ -125,7 +140,7 @@ function PostList({ actions }) {
                 </Button>
               </Link>,
               <Popconfirm
-                title="Sure to cancel?"
+                title="Sure to Delete?"
                 onConfirm={() => dispatch(deletePost(item.id)).then(() => fetchPosts())}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               >
@@ -142,9 +157,15 @@ function PostList({ actions }) {
                 <img
                   style={{ width: '100%', height: '100%' }}
                   alt={item.medium.alt_text}
-                  src={item.medium.url?.proxy ? `${item.medium.url.proxy}?resize:fill:150:150/gravity:sm` : ''}
+                  src={
+                    item.medium.url?.proxy
+                      ? `${item.medium.url.proxy}?resize:fill:150:150/gravity:sm`
+                      : ''
+                  }
                 />
-              ) : <ImagePlaceholder height={150} width={150} />
+              ) : (
+                <ImagePlaceholder height={150} width={150} />
+              )
             }
           >
             <List.Item.Meta
