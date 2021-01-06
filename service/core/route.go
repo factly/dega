@@ -26,7 +26,7 @@ func Router() http.Handler {
 	r := chi.NewRouter()
 
 	r.Mount("/media", medium.Router())
-	r.Mount("/menu", menu.Router())
+	r.Mount("/menus", menu.Router())
 	r.Mount("/categories", category.Router())
 	r.Mount("/formats", format.Router())
 	r.Mount("/tags", tag.Router())
