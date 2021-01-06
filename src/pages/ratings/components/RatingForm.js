@@ -3,7 +3,7 @@ import { Button, Form, Input, Space, InputNumber } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
-import { ChromePicker } from "react-color";
+import { ChromePicker } from 'react-color';
 
 const layout = {
   labelCol: {
@@ -22,7 +22,7 @@ const tailLayout = {
 
 const RatingForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const [color, setColor] = useState(null);
+  const [color, setColor] = useState(data.colour ? data.colour : null);
 
   const colorPicker = (e) => {
     setColor(e);
@@ -98,7 +98,7 @@ const RatingForm = ({ onCreate, data = {} }) => {
         <ChromePicker
           color={color !== null && color.hex}
           onChange={(e) => colorPicker(e)}
-          disableAlpha     
+          disableAlpha
         />
       </Form.Item>
       <Form.Item name="description" label="Description">
