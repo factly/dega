@@ -16,5 +16,6 @@ func Migration() {
 		&SpacePermission{},
 		&OrganisationPermissionRequest{},
 		&SpacePermissionRequest{},
+		&Menu{},
 	)
 }

@@ -101,7 +101,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Model(&model.Menu{}).Preload("Medium").First(&result)
+	tx.Model(&model.Menu{}).First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
