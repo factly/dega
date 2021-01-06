@@ -3,7 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
 
-function Selector({ mode, createEntity, value, onChange, action, display = 'name', placeholder }) {
+function Selector({
+  mode,
+  createEntity,
+  value,
+  onChange,
+  action,
+  display = 'name',
+  placeholder,
+  style,
+}) {
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
 
@@ -90,6 +99,7 @@ function Selector({ mode, createEntity, value, onChange, action, display = 'name
       loading={loading}
       mode={mode}
       defaultValue={value}
+      style={style}
       placeholder={placeholder}
       onChange={(values) => onChange(values)}
       onSearch={(value) => onSearch(value)}

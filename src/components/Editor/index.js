@@ -24,13 +24,22 @@ function Editor({ value, onChange, style }) {
     new EditorJS({
       holder: editor_block.current,
       tools: {
-        header: Header,
-        list: List,
+        header: {
+          class: Header,
+          inlineToolbar: true,
+        },
+        list: {
+          class: List,
+          inlineToolbar: true,
+        },
         paragraph: {
           class: Paragraph,
           inlineToolbar: true,
         },
-        quote: Quote,
+        quote: {
+          class: Quote,
+          inlineToolbar: true,
+        },
         raw: RawTool,
         table: Table,
         code: CodeTool,
