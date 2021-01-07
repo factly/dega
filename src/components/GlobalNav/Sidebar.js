@@ -40,6 +40,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     'claimants',
     'ratings',
     'organisations',
+    'menu',
   ];
 
   permission.forEach((each) => {

@@ -6,7 +6,6 @@ function MenuField({ field }) {
   const [panelHeader, setPanelHeader] = React.useState('Menu');
   const handleInputChange = (e) => {
     var header = e.target.value;
-    console.log('header',header);
     setPanelHeader(header);
   }
   return (

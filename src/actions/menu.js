@@ -61,13 +61,11 @@ export const addMenu = (data) => {
     dispatch(loadingMenus());
     return axios
       .post(MENUS_API, data)
-      .then((response) => {
-        console.log('response in actions', response);
+      .then(() => {
         dispatch(resetMenus());
         dispatch(addSuccessNotification('Menu added'));
       })
       .catch((error) => {
-        console.log(error);
         if (error.response && error.response.data &&  error.response.data.errors && error.response.data.errors.length > 0 ) {
           dispatch(addErrorNotification(error.response.data.errors[0].message));
         } else {

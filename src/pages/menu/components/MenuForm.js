@@ -10,7 +10,7 @@ function MenuForm ({ onCreate, data = {} }) {
     form.resetFields();
   }
   return (
-    <div style={{width: '50%'}}>
+    <div >
       <Form form={form} initialValues={{ ...data }} onFinish={(values) => { 
         onCreate(values);
         onReset();
@@ -35,14 +35,14 @@ function MenuForm ({ onCreate, data = {} }) {
                     style={{ display: "flex"}}
                     align="start"
                   >
-                     <Form.Item  >
-                       <Space direction="horizontal">
+                    <Form.Item  >
+                      <Space direction="horizontal" key={index}>
                         <MenuField field={field} />
                           <MinusCircleOutlined onClick={() => {
                             remove(field.name);
-                          }} />
-                       </Space>
-                       <div style={{marginLeft:"25px"}} ><Submenu fieldKey={field.name}/></div>
+                          }} /> 
+                      </Space>
+                      <div style={{marginLeft:"25px"}} ><Submenu fieldKey={field.name}/></div>
                     </Form.Item>       
                   </Space>  
                 ))}

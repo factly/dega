@@ -26,7 +26,6 @@ function Submenu({ fieldKey}) {
                   <MenuField field={submenu} />
                   <MinusCircleOutlined  onClick={() => {
                     remove(submenu.name);
-                    console.log(submenu);
                   }} />
                   </Space>
                   <div style={{marginLeft:"25px"}} ><Submenu fieldKey={submenu.name}/></div>
