@@ -60,6 +60,10 @@ models:
     model: github.com/factly/dega-api/graph/models.FormatsPaging
   Medium:
     model: github.com/factly/dega-api/graph/models.Medium
+  Menu:
+    model: github.com/factly/dega-api/graph/models.Menu
+  MenusPaging:
+    model: github.com/factly/dega-api/graph/models.MenusPaging
   Category:
     model: github.com/factly/dega-api/graph/models.Category
   CategoriesPaging:
