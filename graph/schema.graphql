@@ -144,6 +144,16 @@ type Claim {
   space_id: Int!
 }
 
+type Menu {
+  id: ID!
+  created_at: Time
+  updated_at: Time
+  name: String!
+  slug: String!
+  menu: Any
+  space_id: Int!
+}
+
 
 type CategoriesPaging {
   nodes: [Category!]!
@@ -186,6 +196,11 @@ type FormatsPaging {
   total: Int!
 }
 
+type MenusPaging {
+  nodes: [Menu!]!
+  total: Int!
+}
+
 type Sitemap {
   slug: String!
   id: ID!
@@ -205,6 +220,7 @@ type Sitemaps {
 
 type Query {
   space: Space
+  menu: MenusPaging
   categories(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
   category(id: Int!): Category
   tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
