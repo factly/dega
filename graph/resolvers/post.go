@@ -123,6 +123,17 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 	space := &models.Space{}
 	space.ID = obj.SpaceID
 
+	ratings := make([]models.Rating, 0)
+
+	config.DB.Model(&models.Rating{}).Where(&models.Rating{SpaceID: space.ID}).Order("numeric_value asc").Find(&ratings)
+
+	bestRating := 5
+	worstRating := 1
+	if len(ratings) > 2 {
+		bestRating = ratings[len(ratings)-1].NumericValue
+		worstRating = ratings[0].NumericValue
+	}
+
 	config.DB.Preload("Logo").First(&space)
 
 	for _, each := range postClaims {
@@ -138,8 +149,8 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.ReviewRating.Type = "Rating"
 		claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
 		claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
-		claimSchema.ReviewRating.BestRating = 5
-		claimSchema.ReviewRating.WorstRating = 1
+		claimSchema.ReviewRating.BestRating = bestRating
+		claimSchema.ReviewRating.WorstRating = worstRating
 		claimSchema.ItemReviewed.Type = "Claim"
 		claimSchema.ItemReviewed.DatePublished = each.Claim.CheckedDate
 		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
@@ -164,8 +175,11 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 	authors, _ := loaders.GetUserLoader(ctx).LoadAll(allAuthorID)
 
 	jsonLogo := map[string]string{}
-	rawLogo, _ := space.Logo.URL.RawMessage.MarshalJSON()
-	json.Unmarshal(rawLogo, &jsonLogo)
+
+	if space.Logo != nil {
+		rawLogo, _ := space.Logo.URL.RawMessage.MarshalJSON()
+		json.Unmarshal(rawLogo, &jsonLogo)
+	}
 
 	articleSchema := models.ArticleSchema{}
 	articleSchema.Context = "https://schema.org"
