@@ -18,6 +18,7 @@ function Selector({
 
   const [query, setQuery] = React.useState({
     page: 1,
+    limit: 5,
   });
   const dispatch = useDispatch();
 
@@ -47,7 +48,7 @@ function Selector({
     let total = 0;
 
     for (var i = 1; i <= query.page; i++) {
-      let j = state[entity].req.findIndex((item) => deepEqual(item.query, query));
+      let j = state[entity].req.findIndex((item) => deepEqual(item.query, { ...query, page: i }));
       if (j > -1) {
         total = state[entity].req[j].total;
         ids = ids.concat(state[entity].req[j].data);
