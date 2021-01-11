@@ -4,26 +4,28 @@ import (
 	"time"
 
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gorm.io/gorm"
 )
 
 // Post model
 type Post struct {
-	ID               uint           `gorm:"primary_key" json:"id"`
-	CreatedAt        time.Time      `json:"created_at"`
-	UpdatedAt        time.Time      `json:"updated_at"`
-	Title            string         `gorm:"column:title" json:"title"`
-	Subtitle         string         `gorm:"column:subtitle" json:"subtitle"`
-	Slug             string         `gorm:"column:slug" json:"slug"`
-	Status           string         `gorm:"column:status" json:"status"`
-	Excerpt          string         `gorm:"column:excerpt" json:"excerpt"`
-	Description      postgres.Jsonb `gorm:"column:description" json:"description" sql:"jsonb"`
-	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
-	IsSticky         bool           `gorm:"column:is_sticky" json:"is_sticky"`
-	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`
-	FeaturedMediumID uint           `gorm:"column:featured_medium_id" json:"featured_medium_id" sql:"DEFAULT:NULL"`
-	FormatID         uint           `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
-	PublishedDate    time.Time      `gorm:"column:published_date" json:"published_date"`
-	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
+	ID               uint            `gorm:"primary_key" json:"id"`
+	CreatedAt        time.Time       `json:"created_at"`
+	UpdatedAt        time.Time       `json:"updated_at"`
+	DeletedAt        *gorm.DeletedAt `sql:"index" json:"deleted_at"`
+	Title            string          `gorm:"column:title" json:"title"`
+	Subtitle         string          `gorm:"column:subtitle" json:"subtitle"`
+	Slug             string          `gorm:"column:slug" json:"slug"`
+	Status           string          `gorm:"column:status" json:"status"`
+	Excerpt          string          `gorm:"column:excerpt" json:"excerpt"`
+	Description      postgres.Jsonb  `gorm:"column:description" json:"description" sql:"jsonb"`
+	IsFeatured       bool            `gorm:"column:is_featured" json:"is_featured"`
+	IsSticky         bool            `gorm:"column:is_sticky" json:"is_sticky"`
+	IsHighlighted    bool            `gorm:"column:is_highlighted" json:"is_highlighted"`
+	FeaturedMediumID uint            `gorm:"column:featured_medium_id" json:"featured_medium_id" sql:"DEFAULT:NULL"`
+	FormatID         uint            `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
+	PublishedDate    time.Time       `gorm:"column:published_date" json:"published_date"`
+	SpaceID          uint            `gorm:"column:space_id" json:"space_id"`
 }
 
 // PostsPaging model
