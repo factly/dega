@@ -15,18 +15,23 @@ function BasicLayout(props) {
   const { children } = props;
   const dispatch = useDispatch();
 
-  const { permission, orgs, loading, selected } = useSelector((state) => {
+  const { permission, orgs, loading, selected, applications } = useSelector((state) => {
     const { selected, orgs, loading } = state.spaces;
 
     if (selected > 0) {
+      const space = state.spaces.details[selected];
+
+      const applications = orgs.find((org) => org.id === space.id)?.applications || [];
+
       return {
-        permission: state.spaces.details[selected].permissions || [],
+        applications: applications,
+        permission: space.permissions || [],
         orgs: orgs,
         loading: loading,
         selected: selected,
       };
     }
-    return { orgs: orgs, loading: loading, permission: [], selected: selected };
+    return { orgs: orgs, loading: loading, permission: [], selected: selected, applications: [] };
   });
 
   const { type, message, description } = useSelector((state) => state.notifications);
@@ -60,7 +65,7 @@ function BasicLayout(props) {
     <Layout hasSider={true}>
       <Sidebar permission={permission} orgs={orgs} loading={loading} superOrg={superOrg} />
       <Layout>
-        <Header />
+        <Header applications={applications} />
         <Content className="layout-content">
           <Card key={selected.toString()} className="wrap-children-content">
             {children}
