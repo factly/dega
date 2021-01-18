@@ -1,9 +1,12 @@
 package models
 
 import (
+	"encoding/json"
+	"net/url"
 	"time"
 
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
 
@@ -24,4 +27,22 @@ type Medium struct {
 	URL         postgres.Jsonb  `gorm:"column:url" json:"url"`
 	Dimensions  string          `gorm:"column:dimensions" json:"dimensions"`
 	SpaceID     uint            `gorm:"column:space_id" json:"space_id"`
+}
+
+// AfterFind hook
+func (media *Medium) AfterFind(tx *gorm.DB) (err error) {
+	resurl := map[string]interface{}{}
+	if viper.IsSet("imageproxy_url") && media.URL.RawMessage != nil {
+		_ = json.Unmarshal(media.URL.RawMessage, &resurl)
+		if rawURL, found := resurl["raw"]; found {
+			urlObj, _ := url.Parse(rawURL.(string))
+			resurl["proxy"] = viper.GetString("imageproxy_url") + urlObj.Path
+
+			rawBArr, _ := json.Marshal(resurl)
+			media.URL = postgres.Jsonb{
+				RawMessage: rawBArr,
+			}
+		}
+	}
+	return nil
 }
