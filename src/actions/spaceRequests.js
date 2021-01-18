@@ -9,6 +9,7 @@ import {
   SPACE_REQUESTS_CREATE_API,
 } from '../constants/spaceRequests';
 import { addErrorNotification, addSuccessNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getSpaces = (query, isAdmin) => {
   const url = isAdmin ? SPACE_REQUESTS_API : SPACE_REQUESTS_API + '/my';
@@ -29,16 +30,7 @@ export const getSpaces = (query, isAdmin) => {
         );
       })
       .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors &&
-          error.response.data.errors.length > 0
-        ) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopSpaceRequestsLoading()));
   };
@@ -54,16 +46,7 @@ export const addSpaceRequest = (data) => {
         dispatch(addSuccessNotification('Space Request added'));
       })
       .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors &&
-          error.response.data.errors.length > 0
-        ) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -78,16 +61,7 @@ export const approveSpaceRequest = (request_id, action) => {
         dispatch(addSuccessNotification('Space Request ' + action + 'ed'));
       })
       .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors &&
-          error.response.data.errors.length > 0
-        ) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };

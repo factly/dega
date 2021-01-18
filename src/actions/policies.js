@@ -8,6 +8,7 @@ import {
   POLICIES_API,
 } from '../constants/policies';
 import { addErrorNotification, addSuccessNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const addDefaultPolicies = (query) => {
   return (dispatch) => {
@@ -25,11 +26,7 @@ export const addDefaultPolicies = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopPoliciesLoading()));
   };
@@ -53,11 +50,7 @@ export const getPolicies = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopPoliciesLoading()));
   };
@@ -72,11 +65,7 @@ export const getPolicy = (id) => {
         dispatch(getPolicyByID(response.data));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopPoliciesLoading()));
   };
@@ -92,11 +81,7 @@ export const addPolicy = (data) => {
         dispatch(addSuccessNotification('Policy added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -111,11 +96,7 @@ export const updatePolicy = (data) => {
         dispatch(addSuccessNotification('Policy updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopPoliciesLoading()));
   };
@@ -131,11 +112,7 @@ export const deletePolicy = (id) => {
         dispatch(addSuccessNotification('Policy deleted'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };

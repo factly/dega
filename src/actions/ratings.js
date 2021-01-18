@@ -9,6 +9,7 @@ import {
 } from '../constants/ratings';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
+import getError from '../utils/getError';
 
 export const addDefaultRatings = (query) => {
   return (dispatch) => {
@@ -32,11 +33,7 @@ export const addDefaultRatings = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopRatingsLoading()));
   };
@@ -71,11 +68,7 @@ export const getRatings = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopRatingsLoading()));
   };
@@ -92,11 +85,7 @@ export const getRating = (id) => {
         dispatch(getRatingByID({ ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopRatingsLoading()));
   };
@@ -112,11 +101,7 @@ export const addRating = (data) => {
         dispatch(addSuccessNotification('Rating added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -134,11 +119,7 @@ export const updateRating = (data) => {
         dispatch(addSuccessNotification('Rating updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopRatingsLoading()));
   };
@@ -153,11 +134,7 @@ export const deleteRating = (id) => {
         dispatch(resetRatings());
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };

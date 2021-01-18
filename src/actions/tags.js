@@ -8,6 +8,7 @@ import {
   TAGS_API,
 } from '../constants/tags';
 import { addErrorNotification, addSuccessNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getTags = (query) => {
   return (dispatch) => {
@@ -27,11 +28,7 @@ export const getTags = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopTagsLoading()));
   };
@@ -46,11 +43,7 @@ export const getTag = (id) => {
         dispatch(getTagByID(response.data));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopTagsLoading()));
   };
@@ -66,11 +59,7 @@ export const addTag = (data) => {
         dispatch(addSuccessNotification('Tag added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -85,11 +74,7 @@ export const updateTag = (data) => {
         dispatch(addSuccessNotification('Tag updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopTagsLoading()));
   };
@@ -105,11 +90,7 @@ export const deleteTag = (id) => {
         dispatch(addSuccessNotification('Tag deleted'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };

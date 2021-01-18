@@ -9,6 +9,7 @@ import {
 } from '../constants/claimants';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
+import getError from '../utils/getError';
 
 export const getClaimants = (query) => {
   return (dispatch) => {
@@ -41,11 +42,7 @@ export const getClaimants = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopClaimantsLoading()));
   };
@@ -62,11 +59,7 @@ export const getClaimant = (id) => {
         dispatch(getClaimantByID({ ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopClaimantsLoading()));
   };
@@ -82,11 +75,7 @@ export const addClaimant = (data) => {
         dispatch(addSuccessNotification('Claimant added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -103,11 +92,7 @@ export const updateClaimant = (data) => {
         dispatch(addSuccessNotification('Claimant updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopClaimantsLoading()));
   };
@@ -123,11 +108,7 @@ export const deleteClaimant = (id) => {
         dispatch(addSuccessNotification('Claimant deleted'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
