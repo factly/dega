@@ -1,14 +1,34 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import { toggleSider } from '../../actions/settings';
-import { sidebarMenu } from '../../config/routesConfig';
+import routes, { sidebarMenu } from '../../config/routesConfig';
+import _ from 'lodash';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Sidebar({ superOrg, permission, orgs, loading }) {
+  let key;
+  const location = useLocation();
+  const [enteredRoute, setRoute] = React.useState(null);
+  const [selectedmenu, setSelectedMenu] = React.useState('CORE.Posts.1.0');
+  //Permissions.Spaces.3.1
+  //CORE.Posts.1.0
+  const pathSnippets = location.pathname.split('/').filter((i) => i);
+  var index
+  console.log('route',enteredRoute);
+  for (index=0;index<pathSnippets.length;index++) {
+    const url = `/${pathSnippets.slice(0, index + 1 ).join('/')}`;
+    const tempRoute = _.find(routes, { path: url });
+    if ( tempRoute && enteredRoute === null ) {
+      console.log(tempRoute);
+      setRoute(tempRoute);
+      console.log(enteredRoute);
+      break;
+    }  
+  }
   const {
     sider: { collapsed },
     navTheme,
@@ -56,6 +76,14 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
+          {console.log('key all',`${title}.${route.title}.${index}.${childIndex}`)}
+          { key = `${title}.${route.title}.${index}.${childIndex}`, 
+            enteredRoute !== null && route.path === enteredRoute.path && selectedmenu !== key 
+            ? 
+            ( setSelectedMenu(key), console.log('enteredRoute',enteredRoute,' searched route title',route,'key',key) ) 
+            : null
+          }
+          {/* {console.log('key of child',`${title}.${route.title}.${index}.${childIndex}`)} */}
           <Link to={route.path}>
             <span>{route.title}</span>
           </Link>
@@ -91,7 +119,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
           />
         </div>
       </Link>
-      <Menu theme={navTheme} mode="inline" className="slider-menu">
+      <Menu theme={navTheme} mode="inline" className="slider-menu" defaultSelectedKeys={[selectedmenu]}>
         {sidebarMenu.map((menu, index) => {
           const { Icon } = menu;
           return (
