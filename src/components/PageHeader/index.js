@@ -12,7 +12,6 @@ function PageHeader() {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
       const route = _.find(routes, { path: url });
-      console.log('route',route)
       if(route) {
         return {
           path: route.path,
