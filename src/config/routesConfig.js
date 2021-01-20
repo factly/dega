@@ -118,7 +118,7 @@ const routes = {
   editSpace: {
     path: '/spaces/:id/edit',
     Component: EditSpace,
-    title: 'Edit Space',
+    title: 'Edit',
     permission: {
       resource: 'spaces',
       action: 'update',
@@ -139,7 +139,7 @@ const routes = {
   editOrganisationPermission: {
     path: '/organisations/:oid/permissions/:pid/edit',
     Component: EditOrganisationPermission,
-    title: 'Edit Organisation Permission',
+    title: 'Edit',
     isAdmin: true,
   },
   spacePermissions: {
@@ -157,7 +157,7 @@ const routes = {
   editSpacePermission: {
     path: '/spaces/:sid/permissions/:pid/edit',
     Component: EditSpacePermission,
-    title: 'Edit Space Permission',
+    title: 'Edit',
     isAdmin: true,
   },
   organisationRequests: {
@@ -205,7 +205,7 @@ const routes = {
   editCategory: {
     path: '/categories/:id/edit',
     Component: EditCategory,
-    title: 'Edit Category',
+    title: 'Edit',
     permission: {
       resource: 'categories',
       action: 'update',
@@ -228,7 +228,7 @@ const routes = {
   editPolicy: {
     path: '/policies/:id/edit',
     Component: EditPolicy,
-    title: 'Edit Policies',
+    title: 'Edit',
     permission: {
       resource: 'policies',
       action: 'update',
@@ -255,7 +255,7 @@ const routes = {
   editFormat: {
     path: '/formats/:id/edit',
     Component: EditFormat,
-    title: 'Edit Format',
+    title: 'Edit',
     permission: {
       resource: 'formats',
       action: 'update',
@@ -282,7 +282,7 @@ const routes = {
   editTag: {
     path: '/tags/:id/edit',
     Component: EditTag,
-    title: 'Edit Tag',
+    title: 'Edit',
     permission: {
       resource: 'tags',
       action: 'update',
@@ -309,7 +309,7 @@ const routes = {
   editMedium: {
     path: '/media/:id/edit',
     Component: EditMedium,
-    title: 'Edit Media',
+    title: 'Edit',
     permission: {
       resource: 'media',
       action: 'update',
@@ -332,7 +332,7 @@ const routes = {
   editPost: {
     path: '/posts/:id/edit',
     Component: EditPost,
-    title: 'Edit Post',
+    title: 'Edit',
     permission: {
       resource: 'posts',
       action: 'update',
@@ -359,7 +359,7 @@ const routes = {
   editRating: {
     path: '/ratings/:id/edit',
     Component: EditRating,
-    title: 'Edit Rating',
+    title: 'Edit',
     permission: {
       resource: 'ratings',
       action: 'update',
@@ -386,7 +386,7 @@ const routes = {
   editClaimant: {
     path: '/claimants/:id/edit',
     Component: EditClaimant,
-    title: 'Edit Claimant',
+    title: 'Edit',
     permission: {
       resource: 'claimants',
       action: 'update',
@@ -413,7 +413,7 @@ const routes = {
   editClaim: {
     path: '/claims/:id/edit',
     Component: EditClaim,
-    title: 'Edit Claim',
+    title: 'Edit',
     permission: {
       action: 'update',
       resource: 'claims',

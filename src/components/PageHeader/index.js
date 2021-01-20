@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import { PageHeader as AntPageHeader } from 'antd';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
@@ -7,7 +7,6 @@ import _ from 'lodash';
 function PageHeader() {
   const location = useLocation();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
-
   const breadcrumbItems = useMemo(() => {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
@@ -18,8 +17,21 @@ function PageHeader() {
           breadcrumbName: route.title,
         };
       } else {
-        if ( url === '/permissions' ) return { breadcrumbName : 'Permissions',}
-        if ( url === '/requests') return { breadcrumbName : 'Requests', }
+        if ( url === '/permissions' && !pathSnippets[index+2] ) return { breadcrumbName : 'Permissions',}
+        if ( url === '/requests' && !pathSnippets[index+2] ) return { breadcrumbName : 'Requests', }
+        if( (index === pathSnippets.length - 1) && !(location.pathname.includes('permissions') || location.pathname.includes('requests'))) {
+          const generatedReferenceURL = `/${pathSnippets.slice(0, index-1).join('/')}`.concat('/:id/').concat(pathSnippets.slice(index,index+2).join('/'));
+          let match = useRouteMatch(generatedReferenceURL);
+          if(match) {
+            const route = _.find(routes, {path: generatedReferenceURL});
+            if(route) {
+              return {
+                path: route.path,
+                breadcrumbName: route.title,
+              }
+            }
+          }
+        }
         return null;
       }
     });
