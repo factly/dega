@@ -1,20 +1,18 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { toggleSider } from '../../actions/settings';
 import { sidebarMenu } from '../../config/routesConfig';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Sidebar({ superOrg, permission, orgs, loading }) {
-  const {
-    sider: { collapsed },
-    navTheme,
-  } = useSelector((state) => state.settings);
-  const dispatch = useDispatch();
-
+  const { navTheme } = useSelector((state) => state.settings);
+  const [collapsed, setCollapsed] = useState(false);
+  const onCollapse = () => {
+    setCollapsed(!collapsed);
+  };
   if (loading) {
     return null;
   }
@@ -70,10 +68,8 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
       theme={navTheme}
       collapsible
       collapsed={collapsed}
-      trigger={null}
-      onBreakpoint={(broken) => {
-        dispatch(toggleSider());
-      }}
+      onCollapse={onCollapse}
+      style={{ position: 'sticky', left: 0, top: 0, overflow: 'auto', height: '100vh' }}
     >
       <Link to="/">
         <div className="menu-header" style={{ backgroundColor: '#1890ff' }}>
@@ -91,7 +87,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
           />
         </div>
       </Link>
-      <Menu theme={navTheme} mode="inline" className="slider-menu">
+      <Menu theme={navTheme} mode="inline" className="slider-menu" defaultOpenKeys={['0', '1']}>
         {sidebarMenu.map((menu, index) => {
           const { Icon } = menu;
           return (
