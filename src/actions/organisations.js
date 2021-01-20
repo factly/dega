@@ -8,6 +8,7 @@ import {
   ORGANISATION_PERMISSIONS_API,
 } from '../constants/organisations';
 import { addErrorNotification, addSuccessNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getOrganisations = (query) => {
   return (dispatch) => {
@@ -31,16 +32,7 @@ export const getOrganisations = (query) => {
         );
       })
       .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors &&
-          error.response.data.errors.length > 0
-        ) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopOrganisationPermissionsLoading()));
   };
@@ -56,11 +48,7 @@ export const addOrganisationPermission = (data) => {
         dispatch(addSuccessNotification('Organisation Permission added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -75,11 +63,7 @@ export const updateOrganisationPermission = (data) => {
         dispatch(addSuccessNotification('Organisation Permission updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopOrganisationPermissionsLoading()));
   };
@@ -95,11 +79,7 @@ export const deleteOrganisationPermission = (id) => {
         dispatch(addSuccessNotification('Organisation Permission deleted'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };

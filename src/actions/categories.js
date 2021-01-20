@@ -9,6 +9,7 @@ import {
 } from '../constants/categories';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
+import getError from '../utils/getError';
 
 export const getCategories = (query) => {
   return (dispatch) => {
@@ -41,11 +42,7 @@ export const getCategories = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopCategoriesLoading()));
   };
@@ -62,11 +59,7 @@ export const getCategory = (id) => {
         dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopCategoriesLoading()));
   };
@@ -82,11 +75,7 @@ export const addCategory = (data) => {
         dispatch(addSuccessNotification('Category added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -103,11 +92,7 @@ export const updateCategory = (data) => {
         dispatch(addSuccessNotification('Category updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopCategoriesLoading()));
   };
@@ -123,11 +108,7 @@ export const deleteCategory = (id) => {
         dispatch(addSuccessNotification('Category deleted'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };

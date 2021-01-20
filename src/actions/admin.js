@@ -3,6 +3,7 @@ import { ADD_SUPER_ORGANISATION, SET_SUPER_ORGANISATIONS_LOADING } from '../cons
 import { ORGANISATION_PERMISSIONS_API } from '../constants/organisations';
 
 import { addErrorNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getSuperOrganisation = () => {
   return (dispatch) => {
@@ -15,16 +16,7 @@ export const getSuperOrganisation = () => {
         return response.data;
       })
       .catch((error) => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errors &&
-          error.response.data.errors.length > 0
-        ) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopOrganisationPermissionsLoading()));
   };

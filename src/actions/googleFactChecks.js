@@ -5,6 +5,7 @@ import {
   SET_GOOGLE_FACT_CHECKS_LOADING,
 } from '../constants/googleFactChecks';
 import { addErrorNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getGoogleFactChecks = (query) => {
   return (dispatch) => {
@@ -23,11 +24,7 @@ export const getGoogleFactChecks = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopLoading()));
   };
