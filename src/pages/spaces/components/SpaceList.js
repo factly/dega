@@ -15,10 +15,16 @@ function SpaceList() {
 
   const columns = [
     {
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'spaceId',
+      width: '8%',
+    },
+    {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: '20%',
+      width: '12%',
     },
     {
       title: 'Site Address',
