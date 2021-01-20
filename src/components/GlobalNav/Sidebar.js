@@ -13,19 +13,14 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
   let key;
   const location = useLocation();
   const [enteredRoute, setRoute] = React.useState(null);
-  const [selectedmenu, setSelectedMenu] = React.useState('CORE.Posts.1.0');
-  //Permissions.Spaces.3.1
-  //CORE.Posts.1.0
+  const [selectedmenu, setSelectedMenu] = React.useState('DASHBOARD.Home.0.0');
   const pathSnippets = location.pathname.split('/').filter((i) => i);
   var index
-  console.log('route',enteredRoute);
   for (index=0;index<pathSnippets.length;index++) {
     const url = `/${pathSnippets.slice(0, index + 1 ).join('/')}`;
     const tempRoute = _.find(routes, { path: url });
     if ( tempRoute && enteredRoute === null ) {
-      console.log(tempRoute);
       setRoute(tempRoute);
-      console.log(enteredRoute);
       break;
     }  
   }
@@ -76,14 +71,12 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
-          {console.log('key all',`${title}.${route.title}.${index}.${childIndex}`)}
           { key = `${title}.${route.title}.${index}.${childIndex}`, 
             enteredRoute !== null && route.path === enteredRoute.path && selectedmenu !== key 
             ? 
-            ( setSelectedMenu(key), console.log('enteredRoute',enteredRoute,' searched route title',route,'key',key) ) 
+            setSelectedMenu(key)
             : null
           }
-          {/* {console.log('key of child',`${title}.${route.title}.${index}.${childIndex}`)} */}
           <Link to={route.path}>
             <span>{route.title}</span>
           </Link>
