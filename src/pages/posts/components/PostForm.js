@@ -9,7 +9,7 @@ import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { addClaim } from '../../../actions/claims';
 
-function PostForm({ onCreate, data = {} }) {
+function PostForm({ onCreate, data = {}, actions = {} }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { Option } = Select;
@@ -36,9 +36,11 @@ function PostForm({ onCreate, data = {} }) {
   };
 
   const onTitleChange = (string) => {
-    form.setFieldsValue({
-      slug: maker(string),
-    });
+    if(form.getFieldValue('status') !== 'publish') {
+      form.setFieldsValue({
+        slug: maker(string),
+      });
+    }
   };
 
   const showModal = () => {
@@ -138,7 +140,7 @@ function PostForm({ onCreate, data = {} }) {
                   <Option key={'draft'} value={'draft'}>
                     Draft
                   </Option>
-                  <Option key={'publish'} value={'publish'}>
+                  <Option disabled={!(actions.includes('admin') || actions.includes('publish'))} key={'publish'} value={'publish'}>
                     Publish
                   </Option>
                   {data.id ? (
