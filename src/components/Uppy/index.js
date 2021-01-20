@@ -25,9 +25,8 @@ function UppyUploader({ onUpload }) {
       const updatedFiles = {};
 
       Object.keys(files).forEach((fileID) => {
-        const name = checker.test(files[fileID].meta.name)
-          ? files[fileID].meta.name
-          : maker(files[fileID].meta.name);
+        const fileName = files[fileID].meta.name.replace(/\.[^/.]+$/, '');
+        const name = checker.test(fileName) ? files[fileID].meta.name : maker(fileName);
         updatedFiles[fileID] = {
           ...files[fileID],
           file_name: name,
@@ -63,27 +62,36 @@ function UppyUploader({ onUpload }) {
       },
       companionUrl: window.REACT_APP_COMPANION_URL,
     });
-
+  uppy.on('file-added', (file) => {
+    const data = file.data;
+    const url = data.thumbnail ? data.thumbnail : URL.createObjectURL(data);
+    const image = new Image();
+    image.src = url;
+    image.onload = () => {
+      uppy.setFileMeta(file.id, { width: image.width, height: image.height });
+      URL.revokeObjectURL(url);
+    };
+    image.onerror = () => {
+      URL.revokeObjectURL(url);
+    };
+  });
   uppy.on('complete', (result) => {
     const uploadList = result.successful.map((successful) => {
       const upload = {};
-
-      upload['alt_text'] = successful.meta.alt_text
-        ? successful.meta.alt_text
-        : successful.file_name;
-      upload['caption'] = successful.meta.caption;
-      upload['description'] = successful.meta.caption;
-      upload['dimensions'] = '100x100';
+      const { meta } = successful;
+      upload['alt_text'] = meta.alt_text ? meta.alt_text : successful.file_name;
+      upload['caption'] = meta.caption;
+      upload['description'] = meta.caption;
+      upload['dimensions'] = `${meta.width}x${meta.height}`;
       upload['file_size'] = successful.size;
       upload['name'] = successful.file_name;
       upload['slug'] = successful.file_name;
-      upload['title'] = successful.meta.caption ? successful.meta.caption : '';
-      upload['type'] = successful.meta.type;
+      upload['title'] = meta.caption ? meta.caption : '';
+      upload['type'] = meta.type;
       upload['url'] = {};
       upload['url']['raw'] = successful.uploadURL;
       return upload;
     });
-
     onUpload(uploadList);
   });
   return (

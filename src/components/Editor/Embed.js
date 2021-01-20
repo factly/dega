@@ -1,11 +1,19 @@
 import axios from 'axios';
-
+import './embed.css';
 export default class Embed {
   constructor({ data, api, readOnly }) {
     this.api = api;
     this._data = {};
-    this.element = null;
     this.readOnly = readOnly;
+    this.nodes = {
+      wrapper: null,
+      container: null,
+      progress: null,
+      input: null,
+      inputHolder: null,
+      caption: null,
+      captionHolder: null,
+    };
 
     this.data = data;
   }
@@ -23,80 +31,218 @@ export default class Embed {
       throw Error('Embed Tool data should be object');
     }
 
-    const { html, meta } = data;
+    const { html, meta, caption } = data;
 
     this._data = {
       html: html || this.data.html,
       meta: meta || this.data.meta,
+      caption: caption || this.data.caption || '',
     };
-
-    const oldView = this.element;
-
-    if (oldView) {
-      oldView.parentNode.replaceChild(this.render(), oldView);
-    }
   }
 
   get data() {
-    if (this.element) {
-      const caption = this.element.querySelector(`.${this.api.styles.input}`);
-
-      this._data.caption = caption ? caption.innerHTML : '';
-    }
-
     return this._data;
   }
 
   render() {
-    const container = document.createElement('div');
-    container.setAttribute('style', 'margin: 15px');
+    this.nodes.wrapper = this.make('div', this.CSS.baseClass);
+    this.nodes.container = this.make('div', this.CSS.container);
 
-    if (this.data.meta) {
+    this.nodes.inputHolder = this.makeInputHolder();
+    this.nodes.captionHolder = this.makeCaptionHolder();
+
+    /**
+     * If Tool already has data, render link preview, otherwise insert input
+     */
+    if (this.data.html) {
       const { html } = this.data;
-
-      container.innerHTML = html;
+      // this.nodes.container.innerHTML = html;
+      this.setInnerHTML(this.nodes.container, html);
+      this.nodes.container.appendChild(this.nodes.captionHolder);
     } else {
-      container.appendChild(this.makeInputHolder());
+      this.nodes.container.appendChild(this.nodes.inputHolder);
     }
-    this.element = container;
+    this.nodes.wrapper.appendChild(this.nodes.container);
 
-    return container;
+    return this.nodes.wrapper;
+  }
+
+  get CSS() {
+    return {
+      baseClass: this.api.styles.block,
+      input: this.api.styles.input,
+
+      /**
+       * Tool's classes
+       */
+      container: 'embed-tool',
+      inputEl: 'embed-tool__input',
+      captionEl: 'embed-tool__caption',
+      inputHolder: 'embed-tool__input-holder',
+      captionHolder: 'embed-tool__caption-holder',
+      inputError: 'embed-tool__input-holder--error',
+      progress: 'embed-tool__progress',
+      progressLoading: 'embed-tool__progress--loading',
+      progressLoaded: 'embed-tool__progress--loaded',
+    };
   }
   makeInputHolder() {
-    const inputHolder = document.createElement('div');
-    const input = document.createElement('INPUT');
-    input.setAttribute('type', 'text');
-    input.setAttribute('placeholder', 'Paste your link here');
-    input.setAttribute('style', 'width: 100%; padding: 5px');
+    const inputHolder = this.make('div', this.CSS.inputHolder);
 
-    // paste event requires setTimeout
-    input.addEventListener('paste', (event) => {
-      setTimeout(() => {
-        axios
-          .get('/meta', {
-            params: { url: event.target.value, type: 'iframely' },
-          })
-          .then((res) => {
-            this.data = {
-              ...res.data,
-            };
-          })
-          .catch((error) => {
-            this.api.notifier.show({
-              message: error.message,
-              style: 'error',
-            });
-          });
-      }, 100);
+    this.nodes.progress = this.make('label', this.CSS.progress);
+    this.nodes.input = this.make('div', [this.CSS.input, this.CSS.inputEl], {
+      contentEditable: !this.readOnly,
     });
 
-    inputHolder.appendChild(input);
+    this.nodes.input.dataset.placeholder = this.api.i18n.t(
+      "Paste your Link here or type and press 'Enter'",
+    );
+
+    if (!this.readOnly) {
+      this.nodes.input.addEventListener('paste', (event) => {
+        this.startFetching(event);
+      });
+
+      this.nodes.input.addEventListener('keydown', (event) => {
+        const [ENTER, A] = [13, 65];
+        const cmdPressed = event.ctrlKey || event.metaKey;
+
+        switch (event.keyCode) {
+          case ENTER:
+            event.preventDefault();
+            event.stopPropagation();
+
+            this.startFetching(event);
+            break;
+          case A:
+            if (cmdPressed) {
+              this.selectLinkUrl(event);
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    }
+
+    inputHolder.appendChild(this.nodes.progress);
+    inputHolder.appendChild(this.nodes.input);
 
     return inputHolder;
   }
+  makeCaptionHolder() {
+    const captionHolder = this.make('div', this.CSS.captionHolder);
 
+    this.nodes.caption = this.make('div', [this.CSS.input, this.CSS.captionEl], {
+      contentEditable: !this.readOnly,
+      innerHTML: this.data.caption,
+    });
+    this.nodes.caption.dataset.placeholder = 'Caption';
+
+    captionHolder.appendChild(this.nodes.caption);
+
+    return captionHolder;
+  }
+
+  startFetching(event) {
+    let url = this.nodes.input.textContent;
+
+    if (event.type === 'paste') {
+      url = (event.clipboardData || window.clipboardData).getData('text');
+    }
+
+    this.removeErrorStyle();
+    this.fetchLinkData(url);
+  }
+  removeErrorStyle() {
+    this.nodes.inputHolder.classList.remove(this.CSS.inputError);
+    this.nodes.inputHolder.insertBefore(this.nodes.progress, this.nodes.input);
+  }
+  selectLinkUrl(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const selection = window.getSelection();
+    const range = new Range();
+
+    const currentNode = selection.anchorNode.parentNode;
+    const currentItem = currentNode.closest(`.${this.CSS.inputHolder}`);
+    const inputElement = currentItem.querySelector(`.${this.CSS.inputEl}`);
+
+    range.selectNodeContents(inputElement);
+
+    selection.removeAllRanges();
+    selection.addRange(range);
+  }
+  showProgress() {
+    this.nodes.progress.classList.add(this.CSS.progressLoading);
+  }
+  hideProgress() {
+    return new Promise((resolve) => {
+      this.nodes.progress.classList.remove(this.CSS.progressLoading);
+      this.nodes.progress.classList.add(this.CSS.progressLoaded);
+
+      setTimeout(resolve, 500);
+    });
+  }
+  applyErrorStyle() {
+    this.nodes.inputHolder.classList.add(this.CSS.inputError);
+    this.nodes.progress.remove();
+  }
+  async fetchLinkData(url) {
+    this.showProgress();
+    try {
+      const response = await axios.get('/meta', {
+        params: { url, type: 'iframely' },
+      });
+      this.onFetch(response);
+    } catch (error) {
+      this.fetchingFailed(this.api.i18n.t("Couldn't fetch the link data"));
+    }
+  }
+  onFetch(response) {
+    if (!response) {
+      this.fetchingFailed(this.api.i18n.t("Couldn't get this link data, try the other one"));
+
+      return;
+    }
+
+    const metaData = response.data.meta;
+    const html = response.data.html;
+
+    this.data = {
+      ...response.data,
+    };
+    if (!metaData) {
+      this.fetchingFailed(this.api.i18n.t("Couldn't get meta data from the server"));
+
+      return;
+    }
+    if (!html) {
+      this.fetchingFailed(this.api.i18n.t("Couldn't get html data from the server"));
+
+      return;
+    }
+
+    this.hideProgress().then(() => {
+      this.nodes.inputHolder.remove();
+      // this.nodes.container.innerHTML = html;
+      this.setInnerHTML(this.nodes.container, html);
+      this.nodes.container.appendChild(this.nodes.captionHolder);
+      return this.nodes.container;
+    });
+  }
+  fetchingFailed(errorMessage) {
+    this.api.notifier.show({
+      message: errorMessage,
+      style: 'error',
+    });
+
+    this.applyErrorStyle();
+  }
   save() {
-    return this.data;
+    const caption = this.nodes.captionHolder.querySelector(`.${this.CSS.captionEl}`);
+    return { ...this.data, caption: caption.innerHTML };
   }
 
   static get isReadOnlySupported() {
@@ -107,5 +253,31 @@ export default class Embed {
     return {
       html: true, // Allow HTML tags
     };
+  }
+  make(tagName, classNames = null, attributes = {}) {
+    const el = document.createElement(tagName);
+
+    if (Array.isArray(classNames)) {
+      el.classList.add(...classNames);
+    } else if (classNames) {
+      el.classList.add(classNames);
+    }
+
+    for (const attrName in attributes) {
+      el[attrName] = attributes[attrName];
+    }
+
+    return el;
+  }
+  setInnerHTML(elm, html) {
+    elm.innerHTML = html;
+    Array.from(elm.querySelectorAll('script')).forEach((oldScript) => {
+      const newScript = document.createElement('script');
+      Array.from(oldScript.attributes).forEach((attr) =>
+        newScript.setAttribute(attr.name, attr.value),
+      );
+      newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
   }
 }
