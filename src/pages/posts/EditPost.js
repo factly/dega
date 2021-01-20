@@ -6,10 +6,13 @@ import { updatePost, getPost, publishPost, addTemplate } from '../../actions/pos
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import getUserPermission from '../../utils/getUserPermission';
 
 function EditPost() {
   const history = useHistory();
   const { id } = useParams();
+  const spaces = useSelector(({ spaces }) => spaces);
+  const actions = getUserPermission({ resource: 'posts', action:'get', spaces });
 
   const dispatch = useDispatch();
 
@@ -43,7 +46,7 @@ function EditPost() {
     if (values.status === 'template')
       dispatch(addTemplate({ post_id: parseInt(id) })).then(() => history.push('/posts'));
   };
-  return <PostEditForm data={post} onCreate={onUpdate} />;
+  return <PostEditForm data={post} onCreate={onUpdate} actions={actions}/>;
 }
 
 export default EditPost;
