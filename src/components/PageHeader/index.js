@@ -18,6 +18,8 @@ function PageHeader() {
           breadcrumbName: route.title,
         };
       } else {
+        if ( url === '/permissions' ) return { breadcrumbName : 'Permissions',}
+        if ( url === '/requests') return { breadcrumbName : 'Requests', }
         return null;
       }
     });

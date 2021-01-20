@@ -108,7 +108,7 @@ const routes = {
   createSpace: {
     path: '/spaces/create',
     Component: CreateSpace,
-    title: 'Create Space',
+    title: 'Create',
     permission: {
       resource: 'spaces',
       action: 'create',
@@ -133,7 +133,7 @@ const routes = {
   createOrganisationPermission: {
     path: '/permissions/organisations/create',
     Component: CreateOrganisationPermission,
-    title: 'Create Organisation Permission',
+    title: 'Create',
     isAdmin: true,
   },
   editOrganisationPermission: {
@@ -151,7 +151,7 @@ const routes = {
   createSpacePermission: {
     path: '/permissions/spaces/create',
     Component: CreateSpacePermission,
-    title: 'Create Space Permission',
+    title: 'Create',
     isAdmin: true,
   },
   editSpacePermission: {
@@ -169,7 +169,7 @@ const routes = {
   createOrganisationRequest: {
     path: '/requests/organisations/create',
     Component: CreateOrganisationRequest,
-    title: 'Create Organisation Request',
+    title: 'Create',
     isOwner: true,
   },
   spaceRequests: {
@@ -181,7 +181,7 @@ const routes = {
   createSpaceRequest: {
     path: '/requests/spaces/create',
     Component: CreateSpaceRequest,
-    title: 'Create Space Request',
+    title: 'Create',
     isOwner: true,
   },
   categories: {
@@ -196,7 +196,7 @@ const routes = {
   createCategory: {
     path: '/categories/create',
     Component: CreateCategory,
-    title: 'Create Category',
+    title: 'Create',
     permission: {
       resource: 'categories',
       action: 'create',
@@ -219,7 +219,7 @@ const routes = {
   createPolicy: {
     path: '/policies/create',
     Component: CreatePolicy,
-    title: 'Create Policies',
+    title: 'Create',
     permission: {
       resource: 'policies',
       action: 'create',
@@ -246,7 +246,7 @@ const routes = {
   createFormat: {
     path: '/formats/create',
     Component: CreateFormat,
-    title: 'Create Format',
+    title: 'Create',
     permission: {
       resource: 'formats',
       action: 'create',
@@ -273,7 +273,7 @@ const routes = {
   createTag: {
     path: '/tags/create',
     Component: CreateTag,
-    title: 'Create Tag',
+    title: 'Create',
     permission: {
       resource: 'tags',
       action: 'create',
@@ -300,7 +300,7 @@ const routes = {
   createMedia: {
     path: '/media/upload',
     Component: UploadMedium,
-    title: 'Medium Upload',
+    title: 'Upload',
     permission: {
       resource: 'media',
       action: 'create',
@@ -323,7 +323,7 @@ const routes = {
   createPost: {
     path: '/posts/create',
     Component: CreatePost,
-    title: 'Add Posts',
+    title: 'Create',
     permission: {
       resource: 'posts',
       action: 'create',
@@ -350,7 +350,7 @@ const routes = {
   createRating: {
     path: '/ratings/create',
     Component: CreateRating,
-    title: 'Create Rating',
+    title: 'Create',
     permission: {
       resource: 'ratings',
       action: 'create',
@@ -377,7 +377,7 @@ const routes = {
   createClaimant: {
     path: '/claimants/create',
     Component: CreateClaimant,
-    title: 'Create Claimant',
+    title: 'Create',
     permission: {
       resource: 'claimants',
       action: 'create',
@@ -404,7 +404,7 @@ const routes = {
   createClaim: {
     path: '/claims/create',
     Component: CreateClaim,
-    title: 'Create Claim',
+    title: 'Create',
     permission: {
       resource: 'claims',
       action: 'create',
