@@ -140,9 +140,12 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
                   <Option key={'draft'} value={'draft'}>
                     Draft
                   </Option>
-                  <Option disabled={!(actions.includes('admin') || actions.includes('publish'))} key={'publish'} value={'publish'}>
-                    Publish
-                  </Option>
+                  { (actions.includes('admin') || actions.includes('publish')) ?
+                    <Option key={'publish'} value={'publish'}>
+                      Publish
+                    </Option>
+                    : null
+                  } 
                   {data.id ? (
                     <Option key={'template'} value={'template'}>
                       Template
