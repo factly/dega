@@ -8,8 +8,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { addClaim } from '../../../actions/claims';
+import { addTemplate } from '../../../actions/posts';
+import { useHistory } from 'react-router-dom';
 
-function PostForm({ onCreate, data = {} }) {
+function PostForm({ onCreate, data = {}, actions = {} }) {
+  const history = useHistory();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { Option } = Select;
@@ -36,9 +39,11 @@ function PostForm({ onCreate, data = {} }) {
   };
 
   const onTitleChange = (string) => {
-    form.setFieldsValue({
-      slug: maker(string),
-    });
+    if (form.getFieldValue('status') !== 'publish') {
+      form.setFieldsValue({
+        slug: maker(string),
+      });
+    }
   };
 
   const showModal = () => {
@@ -55,6 +60,10 @@ function PostForm({ onCreate, data = {} }) {
 
   const onClaimCreate = (values) => {
     dispatch(addClaim(values)).then(() => setVisible(false));
+  };
+
+  const createTemplate = () => {
+    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
   };
 
   return (
@@ -80,11 +89,22 @@ function PostForm({ onCreate, data = {} }) {
         }}
       >
         <Space direction="vertical">
-          <Form.Item name="status" style={{ float: 'right' }}>
-            <Button type="secondary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
+          <div style={{ float: 'right' }}>
+            <Space direction="horizontal">
+              {data.id ? (
+                <Form.Item name="template">
+                  <Button type="secondary" onClick={createTemplate}>
+                    Create Template
+                  </Button>
+                </Form.Item>
+              ) : null}
+              <Form.Item name="status">
+                <Button type="secondary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Space>
+          </div>
           <Row gutter={16}>
             <Col span={18}>
               <Form.Item
@@ -138,12 +158,9 @@ function PostForm({ onCreate, data = {} }) {
                   <Option key={'draft'} value={'draft'}>
                     Draft
                   </Option>
-                  <Option key={'publish'} value={'publish'}>
-                    Publish
-                  </Option>
-                  {data.id ? (
-                    <Option key={'template'} value={'template'}>
-                      Template
+                  {actions.includes('admin') || actions.includes('publish') ? (
+                    <Option key={'publish'} value={'publish'}>
+                      Publish
                     </Option>
                   ) : null}
                 </Select>

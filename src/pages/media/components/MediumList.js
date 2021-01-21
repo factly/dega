@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Avatar, Button, Table, Space, Form, Input, Select } from 'antd';
+import { Popconfirm, Avatar, Button, Table, Space, Form, Input, Select, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia, deleteMedium } from '../../../actions/media';
 import { Link } from 'react-router-dom';
@@ -54,6 +54,14 @@ function MediumList({ actions }) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (name) => (
+        <Tooltip placement="topLeft" title={name}>
+          {name}
+        </Tooltip>
+      ),
     },
     {
       title: 'File size',

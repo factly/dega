@@ -90,22 +90,34 @@ class UppyUploader {
         .use(GoogleDrive, { target: Dashboard, companionUrl: window.REACT_APP_COMPANION_URL })
         .use(Url, { target: Dashboard, companionUrl: window.REACT_APP_COMPANION_URL })
         .use(AwsS3, { companionUrl: window.REACT_APP_COMPANION_URL });
-
+      uppy.on('file-added', (file) => {
+        const data = file.data;
+        const url = data.thumbnail ? data.thumbnail : URL.createObjectURL(data);
+        const image = new Image();
+        image.src = url;
+        image.onload = () => {
+          uppy.setFileMeta(file.id, { width: image.width, height: image.height });
+          URL.revokeObjectURL(url);
+        };
+        image.onerror = () => {
+          URL.revokeObjectURL(url);
+        };
+      });
       uppy.on('complete', (result) => {
         const successful = result.successful[0];
+        const { meta } = successful;
         const upload = {};
-        upload['alt_text'] = successful.meta.caption;
-        upload['caption'] = successful.meta.caption;
-        upload['description'] = successful.meta.caption;
-        upload['dimensions'] = '100x100';
+        upload['alt_text'] = meta.caption;
+        upload['caption'] = meta.caption;
+        upload['description'] = meta.caption;
+        upload['dimensions'] = `${meta.width}x${meta.height}`;
         upload['file_size'] = successful.size;
         upload['name'] = successful.fileName;
         upload['slug'] = successful.response.body.key;
-        upload['title'] = successful.meta.caption ? successful.meta.caption : ' ';
+        upload['title'] = meta.caption ? meta.caption : ' ';
         upload['type'] = successful.meta.type;
         upload['url'] = {};
         upload['url']['raw'] = successful.uploadURL;
-
         axios
           .post(MEDIA_API, [upload])
           .then((res) => {

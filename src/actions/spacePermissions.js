@@ -8,6 +8,7 @@ import {
   SPACE_PERMISSIONS_API,
 } from '../constants/spacePermissions';
 import { addErrorNotification, addSuccessNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getSpaces = (query) => {
   return (dispatch) => {
@@ -29,11 +30,7 @@ export const getSpaces = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopSpacePermissionsLoading()));
   };
@@ -49,11 +46,7 @@ export const addSpacePermission = (data) => {
         dispatch(addSuccessNotification('Space Permission added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -68,11 +61,7 @@ export const updateSpacePermission = (data) => {
         dispatch(addSuccessNotification('Space Permission updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopSpacePermissionsLoading()));
   };
@@ -88,11 +77,7 @@ export const deleteSpacePermission = (id) => {
         dispatch(addSuccessNotification('Space Permission deleted'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };

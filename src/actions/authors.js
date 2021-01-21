@@ -6,6 +6,7 @@ import {
   ADD_AUTHORS_REQUEST,
 } from '../constants/authors';
 import { addErrorNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getAuthors = (query) => {
   return (dispatch) => {
@@ -25,11 +26,7 @@ export const getAuthors = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopAuthorsLoading()));
   };

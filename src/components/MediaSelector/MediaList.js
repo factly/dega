@@ -1,10 +1,11 @@
 import React from 'react';
-import { List, Avatar, Badge, Space, Input } from 'antd';
+import { List, Avatar, Space, Input } from 'antd';
+import { CheckCircleTwoTone } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia } from '../../actions/media';
 import deepEqual from 'deep-equal';
 
-function MediaList({ onSelect, selected }) {
+function MediaList({ onSelect, selected, onUnselect }) {
   const dispatch = useDispatch();
 
   const [filters, setFilters] = React.useState({
@@ -60,21 +61,32 @@ function MediaList({ onSelect, selected }) {
         renderItem={(item) => (
           <List.Item>
             {selected && item.id === selected.id ? (
-              <Badge dot>
+              <div style={{ position: 'relative' }}>
                 <Avatar
-                  onClick={() => onSelect(null)}
+                  onClick={() => {
+                    onSelect(null);
+                    onUnselect();
+                  }}
                   shape="square"
                   size={174}
                   src={item.url?.proxy}
+                  style={{ opacity: '0.7', padding: '0.5rem', border: '2px solid #1890ff' }}
                 />
-              </Badge>
+                <CheckCircleTwoTone
+                  twoToneColor="#52c41a"
+                  style={{ fontSize: '2.5rem', position: 'absolute', top: 8, right: 8 }}
+                />
+              </div>
             ) : (
-              <Avatar
-                onClick={() => onSelect(item)}
-                shape="square"
-                size={174}
-                src={item.url?.proxy}
-              />
+              <div style={{ position: 'relative' }}>
+                <Avatar
+                  onClick={() => onSelect(item)}
+                  shape="square"
+                  size={174}
+                  src={item.url?.proxy}
+                  style={{ padding: '0.5rem', border: '2px solid transparent' }}
+                />
+              </div>
             )}
           </List.Item>
         )}

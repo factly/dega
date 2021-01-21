@@ -6,6 +6,7 @@ import {
   ADD_PERMISSIONS,
 } from '../constants/permissions';
 import { addErrorNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getPermissions = (id) => {
   return (dispatch) => {
@@ -19,11 +20,7 @@ export const getPermissions = (id) => {
         return { data: response.data, user_id: parseInt(id) };
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopLoading()));
   };

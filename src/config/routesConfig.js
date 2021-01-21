@@ -108,7 +108,7 @@ const routes = {
   createSpace: {
     path: '/spaces/create',
     Component: CreateSpace,
-    title: 'Create Space',
+    title: 'Create',
     permission: {
       resource: 'spaces',
       action: 'create',
@@ -118,7 +118,7 @@ const routes = {
   editSpace: {
     path: '/spaces/:id/edit',
     Component: EditSpace,
-    title: 'Edit Space',
+    title: 'Edit',
     permission: {
       resource: 'spaces',
       action: 'update',
@@ -133,13 +133,13 @@ const routes = {
   createOrganisationPermission: {
     path: '/permissions/organisations/create',
     Component: CreateOrganisationPermission,
-    title: 'Create Organisation Permission',
+    title: 'Create',
     isAdmin: true,
   },
   editOrganisationPermission: {
     path: '/organisations/:oid/permissions/:pid/edit',
     Component: EditOrganisationPermission,
-    title: 'Edit Organisation Permission',
+    title: 'Edit',
     isAdmin: true,
   },
   spacePermissions: {
@@ -151,13 +151,13 @@ const routes = {
   createSpacePermission: {
     path: '/permissions/spaces/create',
     Component: CreateSpacePermission,
-    title: 'Create Space Permission',
+    title: 'Create',
     isAdmin: true,
   },
   editSpacePermission: {
     path: '/spaces/:sid/permissions/:pid/edit',
     Component: EditSpacePermission,
-    title: 'Edit Space Permission',
+    title: 'Edit',
     isAdmin: true,
   },
   organisationRequests: {
@@ -169,7 +169,7 @@ const routes = {
   createOrganisationRequest: {
     path: '/requests/organisations/create',
     Component: CreateOrganisationRequest,
-    title: 'Create Organisation Request',
+    title: 'Create',
     isOwner: true,
   },
   spaceRequests: {
@@ -181,7 +181,7 @@ const routes = {
   createSpaceRequest: {
     path: '/requests/spaces/create',
     Component: CreateSpaceRequest,
-    title: 'Create Space Request',
+    title: 'Create',
     isOwner: true,
   },
   categories: {
@@ -196,7 +196,7 @@ const routes = {
   createCategory: {
     path: '/categories/create',
     Component: CreateCategory,
-    title: 'Create Category',
+    title: 'Create',
     permission: {
       resource: 'categories',
       action: 'create',
@@ -205,7 +205,7 @@ const routes = {
   editCategory: {
     path: '/categories/:id/edit',
     Component: EditCategory,
-    title: 'Edit Category',
+    title: 'Edit',
     permission: {
       resource: 'categories',
       action: 'update',
@@ -219,7 +219,7 @@ const routes = {
   createPolicy: {
     path: '/policies/create',
     Component: CreatePolicy,
-    title: 'Create Policies',
+    title: 'Create',
     permission: {
       resource: 'policies',
       action: 'create',
@@ -228,7 +228,7 @@ const routes = {
   editPolicy: {
     path: '/policies/:id/edit',
     Component: EditPolicy,
-    title: 'Edit Policies',
+    title: 'Edit',
     permission: {
       resource: 'policies',
       action: 'update',
@@ -246,7 +246,7 @@ const routes = {
   createFormat: {
     path: '/formats/create',
     Component: CreateFormat,
-    title: 'Create Format',
+    title: 'Create',
     permission: {
       resource: 'formats',
       action: 'create',
@@ -255,7 +255,7 @@ const routes = {
   editFormat: {
     path: '/formats/:id/edit',
     Component: EditFormat,
-    title: 'Edit Format',
+    title: 'Edit',
     permission: {
       resource: 'formats',
       action: 'update',
@@ -273,7 +273,7 @@ const routes = {
   createTag: {
     path: '/tags/create',
     Component: CreateTag,
-    title: 'Create Tag',
+    title: 'Create',
     permission: {
       resource: 'tags',
       action: 'create',
@@ -282,7 +282,7 @@ const routes = {
   editTag: {
     path: '/tags/:id/edit',
     Component: EditTag,
-    title: 'Edit Tag',
+    title: 'Edit',
     permission: {
       resource: 'tags',
       action: 'update',
@@ -300,7 +300,7 @@ const routes = {
   createMedia: {
     path: '/media/upload',
     Component: UploadMedium,
-    title: 'Medium Upload',
+    title: 'Upload',
     permission: {
       resource: 'media',
       action: 'create',
@@ -309,7 +309,7 @@ const routes = {
   editMedium: {
     path: '/media/:id/edit',
     Component: EditMedium,
-    title: 'Edit Media',
+    title: 'Edit',
     permission: {
       resource: 'media',
       action: 'update',
@@ -323,7 +323,7 @@ const routes = {
   createPost: {
     path: '/posts/create',
     Component: CreatePost,
-    title: 'Add Posts',
+    title: 'Create',
     permission: {
       resource: 'posts',
       action: 'create',
@@ -332,7 +332,7 @@ const routes = {
   editPost: {
     path: '/posts/:id/edit',
     Component: EditPost,
-    title: 'Edit Post',
+    title: 'Edit',
     permission: {
       resource: 'posts',
       action: 'update',
@@ -350,7 +350,7 @@ const routes = {
   createRating: {
     path: '/ratings/create',
     Component: CreateRating,
-    title: 'Create Rating',
+    title: 'Create',
     permission: {
       resource: 'ratings',
       action: 'create',
@@ -359,7 +359,7 @@ const routes = {
   editRating: {
     path: '/ratings/:id/edit',
     Component: EditRating,
-    title: 'Edit Rating',
+    title: 'Edit',
     permission: {
       resource: 'ratings',
       action: 'update',
@@ -377,7 +377,7 @@ const routes = {
   createClaimant: {
     path: '/claimants/create',
     Component: CreateClaimant,
-    title: 'Create Claimant',
+    title: 'Create',
     permission: {
       resource: 'claimants',
       action: 'create',
@@ -386,7 +386,7 @@ const routes = {
   editClaimant: {
     path: '/claimants/:id/edit',
     Component: EditClaimant,
-    title: 'Edit Claimant',
+    title: 'Edit',
     permission: {
       resource: 'claimants',
       action: 'update',
@@ -404,7 +404,7 @@ const routes = {
   createClaim: {
     path: '/claims/create',
     Component: CreateClaim,
-    title: 'Create Claim',
+    title: 'Create',
     permission: {
       resource: 'claims',
       action: 'create',
@@ -413,7 +413,7 @@ const routes = {
   editClaim: {
     path: '/claims/:id/edit',
     Component: EditClaim,
-    title: 'Edit Claim',
+    title: 'Edit',
     permission: {
       action: 'update',
       resource: 'claims',

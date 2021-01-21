@@ -1,5 +1,5 @@
 .slider-menu {
-  height: 100vh;
+  height: calc(100vh - 64px);
 }
 
 .menu-header {

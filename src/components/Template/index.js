@@ -54,6 +54,12 @@ function Template() {
     </div>
   );
 
+  const handleAddPost = (item) => {
+    dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
+      history.push(`/posts/${res.id}/edit`),
+    );
+  };
+
   if (loading) return <Spin style={{ marginLeft: '50%' }} />;
 
   if (posts.length === 0) return null;
@@ -67,20 +73,18 @@ function Template() {
           renderItem={(item) => (
             <List.Item>
               <Card
-                cover={ 
-                  item.medium ?
-                  <img
-                    style={{ cursor: 'pointer' }}
-                    alt="example" 
-                    src={media[item.medium].url.proxy}
-                    height="230"
-                    onClick={() => {
-                      dispatch(addPost({ ...item, status: null })).then((res) =>
-                        history.push(`/posts/${res.id}/edit`),
-                      );
-                    }}
-                  /> 
-                  : <PlaceholderImage />
+                cover={
+                  item.medium ? (
+                    <img
+                      style={{ cursor: 'pointer' }}
+                      alt="example"
+                      src={media[item.medium].url.proxy}
+                      height="230"
+                      onClick={() => handleAddPost(item)}
+                    />
+                  ) : (
+                    <PlaceholderImage />
+                  )
                 }
                 actions={[
                   <Link to={`/posts/${item.id}/edit`}>
@@ -100,7 +104,7 @@ function Template() {
                   </Popconfirm>,
                 ]}
               >
-                <Meta description={item.title} />
+                <Meta description={item.title} onClick={() => handleAddPost(item)} />
               </Card>
             </List.Item>
           )}

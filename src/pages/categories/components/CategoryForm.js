@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Input, Space, Switch } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
-import Selector from '../../../components/Selector';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
+import JsonEditor from '../../../components/JsonEditor';
 
 const layout = {
   labelCol: {
@@ -23,6 +23,14 @@ const tailLayout = {
 const CategoryForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
 
+  const [json, setJson] = useState(
+    data.meta_fields && Object.keys(data.meta_fields).length > 0
+      ? data.meta_fields
+      : {
+          sample: 'testing',
+        },
+  );
+
   const onReset = () => {
     form.resetFields();
   };
@@ -40,13 +48,13 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
-        onCreate(values);
+        onCreate({ ...values, meta_fields: json });
         onReset();
       }}
     >
-      <Form.Item name="parent_id" label="Parent Category">
+      {/* <Form.Item name="parent_id" label="Parent Category">
         <Selector action="Categories" />
-      </Form.Item>
+      </Form.Item> */}
       <Form.Item
         name="name"
         label="Category"
@@ -85,6 +93,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item name="description" label="Description">
         <Editor style={{ width: '600px' }} />
+      </Form.Item>
+      <Form.Item name="meta_fields" label="Meta">
+        <JsonEditor json={json} onChangeJSON={(data) => setJson(data)} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
