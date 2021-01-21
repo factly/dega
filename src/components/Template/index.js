@@ -54,6 +54,12 @@ function Template() {
     </div>
   );
 
+  const handleAddPost = (item) => {
+    dispatch(addPost({ ...item, status: null })).then((res) =>
+      history.push(`/posts/${res.id}/edit`),
+    );
+  }
+
   if (loading) return <Spin style={{ marginLeft: '50%' }} />;
 
   if (posts.length === 0) return null;
@@ -74,11 +80,7 @@ function Template() {
                     alt="example" 
                     src={media[item.medium].url.proxy}
                     height="230"
-                    onClick={() => {
-                      dispatch(addPost({ ...item, status: null })).then((res) =>
-                        history.push(`/posts/${res.id}/edit`),
-                      );
-                    }}
+                    onClick={() => handleAddPost(item)}
                   /> 
                   : <PlaceholderImage />
                 }
@@ -101,11 +103,7 @@ function Template() {
                 ]}
               >
                 <Meta description={item.title} 
-                  onClick={(e) => {
-                    dispatch(addPost({ ...item, status: null })).then((res) =>
-                      history.push(`/posts/${res.id}/edit`),
-                    );
-                  }}
+                  onClick={() => handleAddPost(item)}
                 />
               </Card>
             </List.Item>

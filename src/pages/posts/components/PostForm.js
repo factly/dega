@@ -90,20 +90,20 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
       >
         <Space direction="vertical">
           <div style={{ float: 'right' }}>
-          <Space direction="horizontal">
-            <Form.Item name="status">
-              <Button type="secondary" htmlType="submit">
-                Submit
-              </Button>
-            </Form.Item>
-            { data.id ? (
-            <Form.Item name="template">
-              <Button type="secondary" onClick={createTemplate}>
-                Create Template
-              </Button>
-            </Form.Item>
-            ): null}  
-          </Space>
+            <Space direction="horizontal">
+              { data.id ? (
+              <Form.Item name="template">
+                <Button type="secondary" onClick={createTemplate}>
+                  Create Template
+                </Button>
+              </Form.Item>
+              ): null}  
+              <Form.Item name="status">
+                <Button type="secondary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Space>
           </div>
           <Row gutter={16}>
             <Col span={18}>
