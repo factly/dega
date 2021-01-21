@@ -55,7 +55,7 @@ function Template() {
   );
 
   const handleAddPost = (item) => {
-    dispatch(addPost({ ...item, status: null })).then((res) =>
+    dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
       history.push(`/posts/${res.id}/edit`),
     );
   }
