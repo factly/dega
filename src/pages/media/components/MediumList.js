@@ -57,7 +57,7 @@ function MediumList({ actions }) {
       ellipsis: {
         showTitle: false,
       },
-      render: name => (
+      render: (name) => (
         <Tooltip placement="topLeft" title={name}>
           {name}
         </Tooltip>

@@ -8,7 +8,6 @@ function Header({ applications }) {
   return (
     <Layout.Header className="layout-header">
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-
         <SpaceSelector />
 
         {applications.length > 0 ? (

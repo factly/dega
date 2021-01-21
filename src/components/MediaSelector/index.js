@@ -17,14 +17,14 @@ function MediaSelector({ value = null, onChange }) {
   });
 
   const setValue = () => {
-     value = null;
-  }
+    value = null;
+  };
 
   React.useEffect(() => {
     if (value) {
       dispatch(getMedium(value));
       setSelected(medium);
-    }  
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -64,7 +64,11 @@ function MediaSelector({ value = null, onChange }) {
         </Space>
       </Modal>
       <Space direction="vertical">
-        {medium ? <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" /> : <ImagePlaceholder />}
+        {medium ? (
+          <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" />
+        ) : (
+          <ImagePlaceholder />
+        )}
         <Button onClick={() => setShow(true)}>Select</Button>
       </Space>
     </>

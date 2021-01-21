@@ -39,7 +39,7 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
   };
 
   const onTitleChange = (string) => {
-    if(form.getFieldValue('status') !== 'publish') {
+    if (form.getFieldValue('status') !== 'publish') {
       form.setFieldsValue({
         slug: maker(string),
       });
@@ -64,7 +64,7 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
 
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
-  }
+  };
 
   return (
     <>
@@ -91,13 +91,13 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
         <Space direction="vertical">
           <div style={{ float: 'right' }}>
             <Space direction="horizontal">
-              { data.id ? (
-              <Form.Item name="template">
-                <Button type="secondary" onClick={createTemplate}>
-                  Create Template
-                </Button>
-              </Form.Item>
-              ): null}  
+              {data.id ? (
+                <Form.Item name="template">
+                  <Button type="secondary" onClick={createTemplate}>
+                    Create Template
+                  </Button>
+                </Form.Item>
+              ) : null}
               <Form.Item name="status">
                 <Button type="secondary" htmlType="submit">
                   Submit
@@ -158,12 +158,11 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
                   <Option key={'draft'} value={'draft'}>
                     Draft
                   </Option>
-                  { (actions.includes('admin') || actions.includes('publish')) ?
+                  {actions.includes('admin') || actions.includes('publish') ? (
                     <Option key={'publish'} value={'publish'}>
                       Publish
                     </Option>
-                    : null
-                  } 
+                  ) : null}
                 </Select>
               </Form.Item>
               <Form.Item name="featured_medium_id" label="Featured Image">

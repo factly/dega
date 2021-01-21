@@ -11,24 +11,30 @@ function PageHeader() {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
       const route = _.find(routes, { path: url });
-      if(route) {
+      if (route) {
         return {
           path: route.path,
           breadcrumbName: route.title,
         };
       } else {
-        if ( url === '/permissions' && !pathSnippets[index+2] ) return { breadcrumbName : 'Permissions',}
-        if ( url === '/requests' && !pathSnippets[index+2] ) return { breadcrumbName : 'Requests', }
-        if( (index === pathSnippets.length - 1) && !(location.pathname.includes('permissions') || location.pathname.includes('requests'))) {
-          const generatedReferenceURL = `/${pathSnippets.slice(0, index-1).join('/')}`.concat('/:id/').concat(pathSnippets.slice(index,index+2).join('/'));
+        if (url === '/permissions' && !pathSnippets[index + 2])
+          return { breadcrumbName: 'Permissions' };
+        if (url === '/requests' && !pathSnippets[index + 2]) return { breadcrumbName: 'Requests' };
+        if (
+          index === pathSnippets.length - 1 &&
+          !(location.pathname.includes('permissions') || location.pathname.includes('requests'))
+        ) {
+          const generatedReferenceURL = `/${pathSnippets.slice(0, index - 1).join('/')}`
+            .concat('/:id/')
+            .concat(pathSnippets.slice(index, index + 2).join('/'));
           let match = useRouteMatch(generatedReferenceURL);
-          if(match) {
-            const route = _.find(routes, {path: generatedReferenceURL});
-            if(route) {
+          if (match) {
+            const route = _.find(routes, { path: generatedReferenceURL });
+            if (route) {
               return {
                 path: route.path,
                 breadcrumbName: route.title,
-              }
+              };
             }
           }
         }
@@ -45,7 +51,7 @@ function PageHeader() {
 
   const lastItem = useMemo(() => {
     return (
-      _.find(routes, { path: breadcrumbItems[breadcrumbItems.length -1].path}) || {
+      _.find(routes, { path: breadcrumbItems[breadcrumbItems.length - 1].path }) || {
         path: '/',
         breadcrumbName: 'Home',
       }
@@ -57,15 +63,10 @@ function PageHeader() {
     if (last) {
       return <span>{route.breadcrumbName}</span>;
     }
-    return <Link to={route.path}>{route.breadcrumbName}</Link>
+    return <Link to={route.path}>{route.breadcrumbName}</Link>;
   };
 
-  return (
-    <AntPageHeader
-      ghost={false}
-      breadcrumb={{ itemRender, routes: breadcrumbItems }}
-    />  
-  );
+  return <AntPageHeader ghost={false} breadcrumb={{ itemRender, routes: breadcrumbItems }} />;
 }
 
 export default PageHeader;

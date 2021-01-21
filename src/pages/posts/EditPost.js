@@ -12,7 +12,7 @@ function EditPost() {
   const history = useHistory();
   const { id } = useParams();
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'posts', action:'get', spaces });
+  const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
 
   const dispatch = useDispatch();
 
@@ -28,12 +28,11 @@ function EditPost() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  if (loading) return <Skeleton />
-  
-  if (!post) {
-    return <RecordNotFound />
-  }; 
+  if (loading) return <Skeleton />;
 
+  if (!post) {
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     if (values.status === 'draft')
@@ -43,7 +42,7 @@ function EditPost() {
     if (values.status === 'publish')
       dispatch(publishPost({ ...post, ...values })).then(() => history.push('/posts'));
   };
-  return <PostEditForm data={post} onCreate={onUpdate} actions={actions}/>;
+  return <PostEditForm data={post} onCreate={onUpdate} actions={actions} />;
 }
 
 export default EditPost;

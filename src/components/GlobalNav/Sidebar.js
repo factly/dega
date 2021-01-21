@@ -1,15 +1,32 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { sidebarMenu } from '../../config/routesConfig';
+import routes, { sidebarMenu } from '../../config/routesConfig';
+import _ from 'lodash';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Sidebar({ superOrg, permission, orgs, loading }) {
-  const [showCoreMenu, setCoreMenu] = useState(false);
+  let key;
+  const location = useLocation();
+  const [enteredRoute, setRoute] = React.useState(null);
+  const [selectedmenu, setSelectedMenu] = React.useState('DASHBOARD.Home.0.0');
+  const pathSnippets = location.pathname.split('/').filter((i) => i);
+  var index;
+  for (index = 0; index < pathSnippets.length; index++) {
+    const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+    const tempRoute = _.find(routes, { path: url });
+    if (tempRoute && enteredRoute === null) {
+      setRoute(tempRoute);
+      break;
+    }
+  }
   const { navTheme } = useSelector((state) => state.settings);
+
+  const [showCoreMenu, setCoreMenu] = useState(false);
+
   const [collapsed, setCollapsed] = useState(false);
   const onCollapse = () => {
     setCollapsed(!collapsed);
@@ -24,13 +41,13 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     'analytics',
     'google',
     'factly',
-    'posts',
     'policies',
     'users',
     'spaces',
   ];
 
   let protectedResouces = [
+    'posts',
     'categories',
     'tags',
     'media',
@@ -44,11 +61,11 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
   permission.forEach((each) => {
     if (each.resource === 'admin') {
       resource = resource.concat(protectedResouces);
-      if( !showCoreMenu ) {
+      if (!showCoreMenu) {
         setCoreMenu(true);
       }
     } else {
-      if( !showCoreMenu && protectedResouces.includes(each.resource)) {
+      if (!showCoreMenu && protectedResouces.includes(each.resource)) {
         setCoreMenu(true);
       }
       resource.push(each.resource);
@@ -61,6 +78,12 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
+          {
+            ((key = `${title}.${route.title}.${index}.${childIndex}`),
+            enteredRoute !== null && route.path === enteredRoute.path && selectedmenu !== key
+              ? setSelectedMenu(key)
+              : null)
+          }
           <Link to={route.path}>
             <span>{route.title}</span>
           </Link>
@@ -94,28 +117,34 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
           />
         </div>
       </Link>
-      <Menu theme={navTheme} mode="inline" className="slider-menu" defaultOpenKeys={['0', '1']}>
+      <Menu
+        theme={navTheme}
+        mode="inline"
+        className="slider-menu"
+        defaultOpenKeys={['0', '1']}
+        defaultSelectedKeys={[selectedmenu]}
+      >
         {sidebarMenu.map((menu, index) => {
           const { Icon } = menu;
-          return (
-            (menu.title === 'CORE' && !showCoreMenu) ? null : ( 
+          return menu.title === 'CORE' && !showCoreMenu ? null : (
             <SubMenu key={index} title={menu.title} icon={<Icon />}>
               {menu.submenu && menu.submenu.length > 0 ? (
                 <>
-                  {(menu.submenu[0].isAdmin === superOrg.is_admin && orgs[0]?.permission.role === 'owner')? (
+                  {menu.submenu[0].isAdmin === superOrg.is_admin &&
+                  orgs[0]?.permission.role === 'owner' ? (
                     <SubMenu key={menu.submenu[0].title + index} title={menu.submenu[0].title}>
                       {getMenuItems(menu.submenu[0].children, index, menu.submenu[0].title)}
                     </SubMenu>
                   ) : null}
-                  { orgs[0]?.permission.role === 'owner' ?  (
-                  <SubMenu key={menu.submenu[1].title + index} title={menu.submenu[1].title}>
-                    {getMenuItems(menu.submenu[1].children, index, menu.submenu[1].title)}
-                  </SubMenu>
-                  ) : null }
+                  {orgs[0]?.permission.role === 'owner' ? (
+                    <SubMenu key={menu.submenu[1].title + index} title={menu.submenu[1].title}>
+                      {getMenuItems(menu.submenu[1].children, index, menu.submenu[1].title)}
+                    </SubMenu>
+                  ) : null}
                 </>
               ) : null}
               {getMenuItems(menu.children, index, menu.title)}
-            </SubMenu> )
+            </SubMenu>
           );
         })}
       </Menu>
