@@ -97,6 +97,7 @@ type User {
   updated_at: Time
   first_name: String!
   last_name: String
+  slug: String
   email: String!
   birth_date: String
   gender:  String

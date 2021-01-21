@@ -11,6 +11,7 @@ type User struct {
 	ID               uint           `gorm:"primary_key" json:"id"`
 	CreatedAt        time.Time      `json:"created_at"`
 	UpdatedAt        time.Time      `json:"updated_at"`
+	Slug             string         `gorm:"column:slug" json:"slug"`
 	Email            string         `gorm:"column:email;unique_index" json:"email"`
 	FirstName        string         `gorm:"column:first_name" json:"first_name"`
 	LastName         string         `gorm:"column:last_name" json:"last_name"`

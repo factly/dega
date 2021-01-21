@@ -286,6 +286,7 @@ type ComplexityRoot struct {
 		ID              func(childComplexity int) int
 		LastName        func(childComplexity int) int
 		Medium          func(childComplexity int) int
+		Slug            func(childComplexity int) int
 		SocialMediaUrls func(childComplexity int) int
 		UpdatedAt       func(childComplexity int) int
 	}
@@ -1659,6 +1660,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.User.Medium(childComplexity), true
 
+	case "User.slug":
+		if e.complexity.User.Slug == nil {
+			break
+		}
+
+		return e.complexity.User.Slug(childComplexity), true
+
 	case "User.social_media_urls":
 		if e.complexity.User.SocialMediaUrls == nil {
 			break
@@ -1836,6 +1844,7 @@ type User {
   updated_at: Time
   first_name: String!
   last_name: String
+  slug: String
   email: String!
   birth_date: String
   gender:  String
@@ -8094,6 +8103,38 @@ func (ec *executionContext) _User_last_name(ctx context.Context, field graphql.C
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _User_slug(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "User",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Slug, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _User_email(ctx context.Context, field graphql.CollectedField, obj *models.User) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -11185,6 +11226,8 @@ func (ec *executionContext) _User(ctx context.Context, sel ast.SelectionSet, obj
 			}
 		case "last_name":
 			out.Values[i] = ec._User_last_name(ctx, field, obj)
+		case "slug":
+			out.Values[i] = ec._User_slug(ctx, field, obj)
 		case "email":
 			out.Values[i] = ec._User_email(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
