@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
 import './basic.css';
 import { getSuperOrganisation } from '../actions/admin';
+import PageHeader from '../components/PageHeader';
 
 function BasicLayout(props) {
   const { location } = props;
@@ -67,6 +68,7 @@ function BasicLayout(props) {
       <Layout>
         <Header applications={applications} />
         <Content className="layout-content">
+          <PageHeader location={location} />
           <Card key={selected.toString()} className="wrap-children-content">
             {children}
           </Card>
