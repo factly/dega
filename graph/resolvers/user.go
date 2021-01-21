@@ -8,6 +8,7 @@ import (
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
+	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
@@ -16,6 +17,17 @@ import (
 
 func (r *userResolver) ID(ctx context.Context, obj *models.User) (string, error) {
 	return fmt.Sprint(obj.ID), nil
+}
+func (r *userResolver) Medium(ctx context.Context, obj *models.User) (*models.Medium, error) {
+	if obj.FeaturedMediumID == 0 {
+		return nil, nil
+	}
+
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.FeaturedMediumID))
+}
+
+func (r *userResolver) SocialMediaUrls(ctx context.Context, obj *models.User) (interface{}, error) {
+	return obj.SocialMediaURLs, nil
 }
 
 func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error) {
