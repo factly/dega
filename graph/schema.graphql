@@ -97,9 +97,14 @@ type User {
   updated_at: Time
   first_name: String!
   last_name: String
+  slug: String
   email: String!
   birth_date: String
   gender:  String
+  description: String
+  display_name: String
+  social_media_urls: Any
+  medium: Medium
 }
 
 type Rating {
