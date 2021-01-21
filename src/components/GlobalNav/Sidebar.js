@@ -8,6 +8,7 @@ const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Sidebar({ superOrg, permission, orgs, loading }) {
+  const [showCoreMenu, setCoreMenu] = useState(false);
   const { navTheme } = useSelector((state) => state.settings);
   const [collapsed, setCollapsed] = useState(false);
   const onCollapse = () => {
@@ -43,7 +44,13 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
   permission.forEach((each) => {
     if (each.resource === 'admin') {
       resource = resource.concat(protectedResouces);
+      if( !showCoreMenu ) {
+        setCoreMenu(true);
+      }
     } else {
+      if( !showCoreMenu && protectedResouces.includes(each.resource)) {
+        setCoreMenu(true);
+      }
       resource.push(each.resource);
     }
   });
@@ -91,21 +98,24 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
         {sidebarMenu.map((menu, index) => {
           const { Icon } = menu;
           return (
+            (menu.title === 'CORE' && !showCoreMenu) ? null : ( 
             <SubMenu key={index} title={menu.title} icon={<Icon />}>
               {menu.submenu && menu.submenu.length > 0 ? (
                 <>
-                  {menu.submenu[0].isAdmin === superOrg.is_admin ? (
+                  {(menu.submenu[0].isAdmin === superOrg.is_admin && orgs[0]?.permission.role === 'owner')? (
                     <SubMenu key={menu.submenu[0].title + index} title={menu.submenu[0].title}>
                       {getMenuItems(menu.submenu[0].children, index, menu.submenu[0].title)}
                     </SubMenu>
                   ) : null}
+                  { orgs[0]?.permission.role === 'owner' ?  (
                   <SubMenu key={menu.submenu[1].title + index} title={menu.submenu[1].title}>
                     {getMenuItems(menu.submenu[1].children, index, menu.submenu[1].title)}
                   </SubMenu>
+                  ) : null }
                 </>
               ) : null}
               {getMenuItems(menu.children, index, menu.title)}
-            </SubMenu>
+            </SubMenu> )
           );
         })}
       </Menu>
