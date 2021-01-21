@@ -100,7 +100,13 @@ function Template() {
                   </Popconfirm>,
                 ]}
               >
-                <Meta description={item.title} />
+                <Meta description={item.title} 
+                  onClick={(e) => {
+                    dispatch(addPost({ ...item, status: null })).then((res) =>
+                      history.push(`/posts/${res.id}/edit`),
+                    );
+                  }}
+                />
               </Card>
             </List.Item>
           )}

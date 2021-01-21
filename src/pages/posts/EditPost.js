@@ -42,9 +42,6 @@ function EditPost() {
       });
     if (values.status === 'publish')
       dispatch(publishPost({ ...post, ...values })).then(() => history.push('/posts'));
-
-    if (values.status === 'template')
-      dispatch(addTemplate({ post_id: parseInt(id) })).then(() => history.push('/posts'));
   };
   return <PostEditForm data={post} onCreate={onUpdate} actions={actions}/>;
 }

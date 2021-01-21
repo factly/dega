@@ -8,8 +8,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { addClaim } from '../../../actions/claims';
+import { addTemplate } from '../../../actions/posts';
+import { useHistory } from 'react-router-dom';
 
 function PostForm({ onCreate, data = {}, actions = {} }) {
+  const history = useHistory();
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const { Option } = Select;
@@ -59,6 +62,10 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
     dispatch(addClaim(values)).then(() => setVisible(false));
   };
 
+  const createTemplate = () => {
+    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
+  }
+
   return (
     <>
       <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
@@ -82,11 +89,22 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
         }}
       >
         <Space direction="vertical">
-          <Form.Item name="status" style={{ float: 'right' }}>
-            <Button type="secondary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
+          <div style={{ float: 'right' }}>
+          <Space direction="horizontal">
+            <Form.Item name="status">
+              <Button type="secondary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+            { data.id ? (
+            <Form.Item name="template">
+              <Button type="secondary" onClick={createTemplate}>
+                Create Template
+              </Button>
+            </Form.Item>
+            ): null}  
+          </Space>
+          </div>
           <Row gutter={16}>
             <Col span={18}>
               <Form.Item
@@ -146,11 +164,6 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
                     </Option>
                     : null
                   } 
-                  {data.id ? (
-                    <Option key={'template'} value={'template'}>
-                      Template
-                    </Option>
-                  ) : null}
                 </Select>
               </Form.Item>
               <Form.Item name="featured_medium_id" label="Featured Image">
