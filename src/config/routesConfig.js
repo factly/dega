@@ -84,6 +84,11 @@ import CreateOrganisationRequest from '../pages/requests/organisations/CreateOrg
 import SpaceRequests from '../pages/requests/spaces';
 import CreateSpaceRequest from '../pages/requests/spaces/CreateSpaceRequest';
 
+// Menu
+import Menu from '../pages/menu';
+import CreateMenu from '../pages/menu/CreateMenu';
+import EditMenu from '../pages/menu/EditMenu';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -443,6 +448,29 @@ const routes = {
       action: 'get',
     },
   },
+  menu : {
+    path: '/menu',
+    Component: Menu,
+    title: 'Menu',
+  },
+  createMenu : {
+    path: '/menu/create',
+    Component: CreateMenu,
+    title: 'Create Menu',
+    permission: {
+      resource: 'menu',
+      action: 'create',
+    },
+  },
+  editMenu: {
+    path: '/menu/:id/edit',
+    Component: EditMenu,
+    title: 'Edit Menu',
+    permission: {
+      resource: 'menu',
+      action: 'update',
+    },
+  },
 };
 
 export const sidebarMenu = [
@@ -454,7 +482,7 @@ export const sidebarMenu = [
   {
     title: 'CORE',
     Icon: FileDoneOutlined,
-    children: [routes.posts, routes.categories, routes.tags, routes.media, routes.formats],
+    children: [routes.posts, routes.categories, routes.tags, routes.media, routes.formats, routes.menu],
   },
   {
     title: 'FACT CHECKING',
