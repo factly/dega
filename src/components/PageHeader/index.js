@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation, useRouteMatch } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { PageHeader as AntPageHeader } from 'antd';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
+import { matchPath } from "react-router";
 
 function PageHeader() {
   const location = useLocation();
@@ -27,7 +28,11 @@ function PageHeader() {
           const generatedReferenceURL = `/${pathSnippets.slice(0, index - 1).join('/')}`
             .concat('/:id/')
             .concat(pathSnippets.slice(index, index + 2).join('/'));
-          let match = useRouteMatch(generatedReferenceURL);
+          let match = matchPath(location.pathname,{
+            path: generatedReferenceURL,
+            exact: true,
+            strict: false
+          });  
           if (match) {
             const route = _.find(routes, { path: generatedReferenceURL });
             if (route) {
