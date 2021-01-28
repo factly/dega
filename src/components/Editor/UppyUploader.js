@@ -25,7 +25,6 @@ class UppyUploader {
     };
     this.total = 0;
     this.mediaData = [];
-    this.tab = 'upload';
     this.nodes.wrapper = document.createElement('div');
     this.nodes.wrapper.id = 'Uploader-' + this.blockIndex;
 
@@ -60,7 +59,9 @@ class UppyUploader {
   
   createRadioButtons () {
 
-    const radioGroup = this.make('div','ant-radio-group ant-radio-group-solid');
+    const radioGroup = this.make('div','ant-radio-group ant-radio-group-solid',{
+      'style' : 'margin-bottom: 8px',
+    });
     const list = this.make('input','ant-radio-button-input',{
       'type' : 'radio',
       'id' : 'opt1',
@@ -111,9 +112,9 @@ class UppyUploader {
   }
 
 
-  handlePaginationButtonCLick ( value ) {
+  handlePaginationButtonCLick ( value ,query) {
     const newQuery = {
-      page : this.query.page + value,
+      page : query.page + value,
       limit : 8,
     };
     this.getMediaList(newQuery);
@@ -130,14 +131,21 @@ class UppyUploader {
 
     }
     
+    
     const ul = this.make('ul','ant-pagination');
+    ul.unselectable = 'unselectable';
     const previous = this.make('li','ant-pagination-prev');
-    const prevButton = this.make('button','ant-pagination-item-link');
+    const prevButton = this.make('button','ant-pagination-item-link',{'type' : 'button'});
+    prevButton.tabindex = '-1';
     previous.addEventListener('click',() => { 
-      if( this.query.page !== 1) {
-        this.handlePaginationButtonCLick(-1);
+      if( query.page > 1) {
+        this.handlePaginationButtonCLick(-1, query);
       }
      });
+    if( query.page <= 1) {
+      prevButton.disabled = true;
+      previous.className = 'ant-pagination-prev ant-pagination-disabled';
+    }  
     prevButton.innerHTML = '<span role="img" aria-label="left" class="anticon anticon-left"> <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="left" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"></path></svg></span>';
     previous.appendChild(prevButton);
     ul.appendChild(previous);
@@ -161,12 +169,17 @@ class UppyUploader {
       }(query,this));
     }
     const next = this.make('li','ant-pagination-next');
-    const nextButton = this.make('button','ant-pagination-item-link');
+    const nextButton = this.make('button','ant-pagination-item-link',{'type' : 'button'});
     nextButton.addEventListener('click',() => { 
-      if(this.query.page !== last) {
-        this.handlePaginationButtonCLick(1);
+      if(query.page < last) {
+        this.handlePaginationButtonCLick(1, query);
       }})
+    if( query.page >= last) {
+      nextButton.disabled = true;
+      next.className = 'ant-pagination-next ant-pagination-disabled';
+    }    
     nextButton.innerHTML = '<span role="img" aria-label="right" class="anticon anticon-right"><svg viewBox="64 64 896 896" focusable="false" class="" data-icon="right" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"></path></svg></span>';
+    nextButton.tabindex = '-1';
     next.appendChild(nextButton);
     ul.appendChild(next);
     return ul;
@@ -183,6 +196,18 @@ class UppyUploader {
     const listDiv = this.make('div','ant-list ant-list-split ant-list-grid',{
       'style' : 'width:750px',
       'id' : 'DashboardContainer-' + this.blockIndex,
+    })
+
+    const searchInput = this.make('input','ant-input',{
+      'placeholder' : 'Search Media',
+      'style' : 'margin-bottom: 8px',
+    });
+    
+    searchInput.addEventListener('input',(e) => {
+      if(e.target.value) {
+        const newQuery = {...this.query, q: e.target.value };
+        this.getMediaList(newQuery);
+      }
     })
     const rowDiv = this.make('div','ant-row',{
       'style' : 'margin-left:-18px;margin-right:-18px',
@@ -214,13 +239,13 @@ class UppyUploader {
       }(this));
 
     }
+    listDiv.appendChild(searchInput);
     listDiv.appendChild(rowDiv);
     listDiv.appendChild(this.createPagniation(query,total));
     this.nodes.wrapper.replaceChild(listDiv,this.nodes.wrapper.children[2]); //replace list to upload vice versa
 
   }
   getMediaList (query) {
-    this.query = query;
     axios.get(MEDIA_API, {
       params: query,
     })
