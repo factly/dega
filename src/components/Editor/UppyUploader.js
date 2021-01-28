@@ -5,8 +5,6 @@ import '@uppy/url/dist/style.css';
 
 
 import 'antd/dist/antd.css';
-import { LeftOutlined } from '@ant-design/icons';
-import { Space, Radio, Pagination, List, Card, Avatar} from 'antd';
 const Uppy = require('@uppy/core');
 const Dashboard = require('@uppy/dashboard');
 const GoogleDrive = require('@uppy/google-drive');
@@ -38,8 +36,10 @@ class UppyUploader {
     imageContainer.id = 'ImageContainer';
     imageContainer.style.width = '100%';
 
-    this.getMediaList(this.query);
-    this.createRadioButtons();
+    if(!this.data.url) {
+      this.getMediaList(this.query);
+      this.createRadioButtons();
+    }
     this.nodes.wrapper.appendChild(imageContainer);
     this.nodes.wrapper.appendChild(uploader);
     
@@ -95,7 +95,6 @@ class UppyUploader {
     radioGroup.appendChild(label1);
     radioGroup.appendChild(label2);
     this.nodes.wrapper.appendChild(radioGroup);
-
   }
   static get toolbox() {
     return {
@@ -134,7 +133,11 @@ class UppyUploader {
     const ul = this.make('ul','ant-pagination');
     const previous = this.make('li','ant-pagination-prev');
     const prevButton = this.make('button','ant-pagination-item-link');
-    previous.addEventListener('click',() => { this.query.page !== 1 ? this.handlePaginationButtonCLick(-1): null });
+    previous.addEventListener('click',() => { 
+      if( this.query.page !== 1) {
+        this.handlePaginationButtonCLick(-1);
+      }
+     });
     prevButton.innerHTML = '<span role="img" aria-label="left" class="anticon anticon-left"> <svg viewBox="64 64 896 896" focusable="false" class="" data-icon="left" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"></path></svg></span>';
     previous.appendChild(prevButton);
     ul.appendChild(previous);
@@ -145,7 +148,9 @@ class UppyUploader {
        
         const li = document.createElement('li');
         let liClassName = 'ant-pagination-item ant-pagination-item-'+'i';
-        i === query.page ? liClassName = liClassName+ ' ant-pagination-item-active' : liClassName;
+        if( i === query.page ) {
+          liClassName = liClassName+ ' ant-pagination-item-active';
+        }
         li.className = liClassName;
         li.title = i;
         li.innerHTML=i;
@@ -157,7 +162,10 @@ class UppyUploader {
     }
     const next = this.make('li','ant-pagination-next');
     const nextButton = this.make('button','ant-pagination-item-link');
-    nextButton.addEventListener('click',() => { this.query.page !== last ? this.handlePaginationButtonCLick(1): null });
+    nextButton.addEventListener('click',() => { 
+      if(this.query.page !== last) {
+        this.handlePaginationButtonCLick(1);
+      }})
     nextButton.innerHTML = '<span role="img" aria-label="right" class="anticon anticon-right"><svg viewBox="64 64 896 896" focusable="false" class="" data-icon="right" width="1em" height="1em" fill="currentColor" aria-hidden="true"><path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"></path></svg></span>';
     next.appendChild(nextButton);
     ul.appendChild(next);
@@ -166,11 +174,11 @@ class UppyUploader {
   
   createDisplayList (data, query, total) {
 
-    function handleCLick ( imageDetails ,nodes, imageData) {
-      imageData = imageDetails;
-      nodes.wrapper.children[1].src = imageDetails.url.proxy;
-      nodes.wrapper.children[2].style.display = 'none'; // dashboard/ list div
-      nodes.wrapper.children[0].style.display = 'none'; // radio button div
+    function handleCLick ( imageDetails, obj) {
+      obj.data = imageDetails;
+      obj.nodes.wrapper.children[1].src = imageDetails.url.proxy;
+      obj.nodes.wrapper.children[2].style.display = 'none'; // dashboard/ list div
+      obj.nodes.wrapper.children[0].style.display = 'none'; // radio button div
     }
     const listDiv = this.make('div','ant-list ant-list-split ant-list-grid',{
       'style' : 'width:750px',
@@ -181,13 +189,13 @@ class UppyUploader {
     })
    
     for(var i = 0; i<data.length;i++) {
-      (function (nodes,imageData) {
+      (function (obj) {
       const image = document.createElement('img');
       image.src=data[i].url.proxy;
       image.height='154';
       image.width='154';
       var imageDetails = data[i];
-      image.addEventListener('click', function () { handleCLick(imageDetails, nodes, imageData);}, false);
+      image.addEventListener('click', function () { handleCLick(imageDetails, obj);}, false);
 
       const columnDiv = document.createElement('div');
       columnDiv.className='ant-col';
@@ -203,7 +211,7 @@ class UppyUploader {
       columnDiv.appendChild(imageDiv);
       newDiv.appendChild(columnDiv);
       rowDiv.appendChild(newDiv);
-      }(this.nodes, this.data));
+      }(this));
 
     }
     listDiv.appendChild(rowDiv);
@@ -212,7 +220,6 @@ class UppyUploader {
 
   }
   getMediaList (query) {
-
     this.query = query;
     axios.get(MEDIA_API, {
       params: query,
@@ -222,7 +229,6 @@ class UppyUploader {
       this.total = response.data.total;
       this.createDisplayList(response.data.nodes, query, response.data.total);
     })
-    
   }
 
   getDashboard () {
