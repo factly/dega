@@ -36,11 +36,11 @@ class UppyUploader {
     imageContainer.id = 'ImageContainer';
     imageContainer.style.width = '100%';
 
+    this.nodes.wrapper.appendChild(imageContainer);
     if(!this.data.url) {
       this.getMediaList(this.query);
       this.createRadioButtons();
     }
-    this.nodes.wrapper.appendChild(imageContainer);
     this.nodes.wrapper.appendChild(uploader);
     
   }
@@ -105,7 +105,7 @@ class UppyUploader {
   }
   render() {
     if (this.data.url) {
-      this.nodes.wrapper.children[1].src = this.data.url.proxy;
+      this.nodes.wrapper.children[0].src = this.data.url.proxy;
     }
     return this.nodes.wrapper;
   }
@@ -176,9 +176,9 @@ class UppyUploader {
 
     function handleCLick ( imageDetails, obj) {
       obj.data = imageDetails;
-      obj.nodes.wrapper.children[1].src = imageDetails.url.proxy;
+      obj.nodes.wrapper.children[0].src = imageDetails.url.proxy;
       obj.nodes.wrapper.children[2].style.display = 'none'; // dashboard/ list div
-      obj.nodes.wrapper.children[0].style.display = 'none'; // radio button div
+      obj.nodes.wrapper.children[1].style.display = 'none'; // radio button div
     }
     const listDiv = this.make('div','ant-list ant-list-split ant-list-grid',{
       'style' : 'width:750px',
@@ -310,8 +310,8 @@ class UppyUploader {
         .then((res) => {
           this.data = res.data.nodes[0];
           this.nodes.wrapper.children[2].style.display = 'none';
-          this.nodes.wrapper.children[0].style.display = 'none';
-          this.nodes.wrapper.children[1].src = this.data.url.proxy;
+          this.nodes.wrapper.children[1].style.display = 'none';
+          this.nodes.wrapper.children[0].src = this.data.url.proxy;
 
         })
         .catch((error) => {
