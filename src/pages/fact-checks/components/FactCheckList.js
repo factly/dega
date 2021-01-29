@@ -9,7 +9,7 @@ import deepEqual from 'deep-equal';
 import Template from '../../../components/Template';
 import ImagePlaceholder from '../../../components/ErrorsAndImage/PlaceholderImage';
 
-function PostList({ actions }) {
+function FactCheckList({ actions }) {
   const dispatch = useDispatch();
 
   const { Option } = Select;
@@ -18,9 +18,9 @@ function PostList({ actions }) {
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 5,
-    format: [1],
+    format: [2],
   });
-
+  
   const { posts, total, loading } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       return deepEqual(item.query, filters);
@@ -60,10 +60,9 @@ function PostList({ actions }) {
 
     setFilters({ ...filters, ...filterValue });
   };
-
   return (
     <Space direction="vertical">
-      <Template formatId={1}/>
+      <Template formatId={2}/>
       <Form
         initialValues={filters}
         form={form}
@@ -131,7 +130,7 @@ function PostList({ actions }) {
                 style={{
                   marginRight: 8,
                 }}
-                to={`/posts/${item.id}/edit`}
+                to={`/fact-check/${item.id}/edit`}
               >
                 <Button
                   icon={<EditOutlined />}
@@ -170,7 +169,7 @@ function PostList({ actions }) {
             }
           >
             <List.Item.Meta
-              title={<Link to={`/posts/${item.id}/edit`}>{item.title}</Link>}
+              title={<Link to={`/fact-check/${item.id}/edit`}>{item.title}</Link>}
               description={item.excerpt}
             />
           </List.Item>
@@ -180,4 +179,4 @@ function PostList({ actions }) {
   );
 }
 
-export default PostList;
+export default FactCheckList;

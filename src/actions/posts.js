@@ -17,7 +17,6 @@ import { addClaims } from './claims';
 import getError from '../utils/getError';
 
 export const getPosts = (query) => {
-  console.log('query',query);
   return (dispatch) => {
     dispatch(loadingPosts());
 
@@ -239,7 +238,6 @@ export const addTemplate = (data) => {
       .post(POSTS_API + '/templates', data)
       .then((response) => {
         let post = response.data;
-        console.log('post response',post);
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));

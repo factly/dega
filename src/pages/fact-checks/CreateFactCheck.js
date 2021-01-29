@@ -12,9 +12,8 @@ function CreateFactCheck() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    console.log('values',values);
-    if (values.status === 'draft') dispatch(addPost(values)).then(() => history.push('/posts'));
-    if (values.status === 'publish') dispatch(publish(values)).then(() => history.push('/posts'));
+    if (values.status === 'draft') dispatch(addPost(values)).then(() => history.push('/fact-check'));
+    if (values.status === 'publish') dispatch(publish(values)).then(() => history.push('/fact-check'));
   };
   return <FactCheckForm onCreate={onCreate} actions={actions} />;
 }

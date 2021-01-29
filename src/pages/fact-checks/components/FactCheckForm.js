@@ -22,10 +22,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {} }) {
   const [visible, setVisible] = React.useState(false);
 
   const onSave = (values) => {
-
-    console.log(
-      'save'
-    )
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
     values.format_id = 2;

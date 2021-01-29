@@ -63,6 +63,7 @@ import GoogleFactCheck from '../pages/fact-checks/GoogleFactCheck';
 import Factly from '../pages/fact-checks/Factly';
 import FactCheck from '../pages/fact-checks';
 import CreateFactCheck from '../pages/fact-checks/CreateFactCheck';
+import EditFactCheck from '../pages/fact-checks/EditFactCheck';
 
 // Users & Permissions
 import Users from '../pages/users';
@@ -439,6 +440,15 @@ const routes = {
       resource: 'fact check',
       action: 'create',
     },
+  },
+  editFactCheck:{
+    path: '/fact-check/:id/edit',
+    Component: EditFactCheck,
+    title: 'Edit',
+    permission: {
+      action: 'update',
+      resource: 'fact check'
+    }
   },
   googleFactCheck: {
     path: '/fact-check/google',

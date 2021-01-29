@@ -4,10 +4,7 @@ import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import { useSelector, useDispatch } from 'react-redux';
-import Modal from 'antd/lib/modal/Modal';
-import ClaimCreateForm from '../../claims/components/ClaimForm';
-import { addClaim } from '../../../actions/claims';
+import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory } from 'react-router-dom';
 
@@ -17,24 +14,13 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
   const dispatch = useDispatch();
   const { Option } = Select;
 
-  const [visible, setVisible] = React.useState(false);
-
-  const formats = useSelector((state) => state.formats.details);
-
   if (!data.status) data.status = 'draft';
-
-  const [claimHide, setClaimHide] = React.useState(
-    data.format && formats[data.format] && formats[data.format].slug === 'fact-check'
-      ? false
-      : true,
-  );
 
   const onSave = (values) => {
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
-    values.format_id = values.format || 0;
+    values.format_id = 1;
     values.author_ids = values.authors || [];
-    values.claim_ids = values.claims || [];
     onCreate(values);
   };
 
@@ -46,47 +32,18 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
     }
   };
 
-  const showModal = () => {
-    setVisible(true);
-  };
-
-  const handleOk = () => {
-    setVisible(false);
-  };
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
-  const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then(() => setVisible(false));
-  };
-
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
   };
 
   return (
     <>
-      <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <ClaimCreateForm onCreate={onClaimCreate} width={560} />
-      </Modal>
       <Form
         form={form}
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
         layout="vertical"
-        onValuesChange={(changedValues, allValues) => {
-          if (changedValues.format) {
-            const flag =
-              form.getFieldValue('format') &&
-              formats[form.getFieldValue('format')] &&
-              formats[form.getFieldValue('format')].slug === 'fact-check';
-
-            setClaimHide(!flag);
-          }
-        }}
       >
         <Space direction="vertical">
           <div style={{ float: 'right' }}>
@@ -139,15 +96,6 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
                   style={{ fontSize: 'medium' }}
                 />
               </Form.Item>
-              <Form.Item name="claims" label="Claims" hidden={claimHide} key={!visible}>
-                <Selector mode="multiple" display={'title'} action="Claims" />
-              </Form.Item>
-              <Form.Item hidden={claimHide}>
-                <Button type="primary" onClick={showModal}>
-                  Add Claim
-                </Button>
-              </Form.Item>
-
               <Form.Item name="description">
                 <Editor />
               </Form.Item>
@@ -192,18 +140,6 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
                 <Selector mode="multiple" action="Tags" createEntity="Tag" />
               </Form.Item>
 
-              <Form.Item
-                name="format"
-                label="Formats"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please add format!',
-                  },
-                ]}
-              >
-                <Selector action="Formats" />
-              </Form.Item>
               <Form.Item name="authors" label="Authors">
                 <Selector mode="multiple" display={'email'} action="Authors" />
               </Form.Item>
