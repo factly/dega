@@ -2,9 +2,10 @@ import { MEDIA_API } from '../../constants/media';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/url/dist/style.css';
-
-
 import 'antd/dist/antd.css';
+import { Empty } from 'antd';
+import ReactDOMServer from 'react-dom/server';
+import React from 'react';
 const Uppy = require('@uppy/core');
 const Dashboard = require('@uppy/dashboard');
 const GoogleDrive = require('@uppy/google-drive');
@@ -26,6 +27,8 @@ class UppyUploader {
     this.total = 0;
     this.mediaData = [];
     this.nodes.wrapper = document.createElement('div');
+    this.nodes.wrapper.className = 'ant-card ant-card-bordered';
+    this.nodes.wrapper.setAttribute('style','width:800px')
     this.nodes.wrapper.id = 'Uploader-' + this.blockIndex;
 
     var uploader = document.createElement('div');
@@ -41,26 +44,23 @@ class UppyUploader {
       this.createRadioButtons();
     }
     this.nodes.wrapper.appendChild(uploader);
-    
   }
  
   make(tagName, className = null, attributes = {}) {
     const el = document.createElement(tagName);
-
     if(className) {
       el.className = className;
     }
     for (const attrName in attributes) {
       el[attrName] = attributes[attrName];
     }
-
     return el;
   }
   
   createRadioButtons () {
 
     const radioGroup = this.make('div','ant-radio-group ant-radio-group-solid',{
-      'style' : 'margin-bottom: 8px',
+      'style' : 'margin-bottom: 8px;width:750px;margin-left:8px',
     });
     const list = this.make('input','ant-radio-button-input',{
       'type' : 'radio',
@@ -77,24 +77,37 @@ class UppyUploader {
       'value' : 'uploader',
       'name' : 'tabOption',
     })
-
+    const searchInput = this.make('input','ant-input',{
+      'placeholder' : 'Search Media',
+      'style' : 'margin-bottom: 8px;margin-top: 8px',
+      'type' : 'text',
+      'id' : 'searchBar',
+    });
+    searchInput.addEventListener('input',(e) => {
+      if(e.target.value) {
+        const newQuery = {...this.query, q: e.target.value };
+        this.getMediaList(newQuery);
+      }
+    })
     list.addEventListener('click',(event) => {
       label2.className = 'ant-radio-button-wrapper';
       label1.className = 'ant-radio-button-wrapper ant-radio-button-wrapper-checked';
+      document.getElementById('searchBar').setAttribute('style', 'margin-bottom: 8px;margin-top: 8px');
       this.getMediaList(this.query);
     })
     label1.innerHTML = 'List';
     uploader.addEventListener('click',(event) => {
       label1.className = 'ant-radio-button-wrapper';
       label2.className = 'ant-radio-button-wrapper ant-radio-button-wrapper-checked';
+      document.getElementById('searchBar').setAttribute('style','display : none');
       this.getDashboard();
-
     })
     label2.innerHTML = 'Upload';
     label1.appendChild(list);
     label2.appendChild(uploader);
     radioGroup.appendChild(label1);
     radioGroup.appendChild(label2);
+    radioGroup.appendChild(searchInput);
     this.nodes.wrapper.appendChild(radioGroup);
   }
   static get toolbox() {
@@ -111,7 +124,6 @@ class UppyUploader {
     return this.nodes.wrapper;
   }
 
-
   handlePaginationButtonCLick ( value ,query) {
     const newQuery = {
       page : query.page + value,
@@ -119,20 +131,17 @@ class UppyUploader {
     };
     this.getMediaList(newQuery);
   }
+
   createPagniation (query, total) {
-  
     function paginationClick(current,obj) {
       const newQuery = {
         page : current,
         limit: 8,
       }
       obj.getMediaList(newQuery);
-     
-
     }
     
-    
-    const ul = this.make('ul','ant-pagination');
+    const ul = this.make('ul','ant-pagination',{'style' : 'margin-bottom:8px'});
     ul.unselectable = 'unselectable';
     const previous = this.make('li','ant-pagination-prev');
     const prevButton = this.make('button','ant-pagination-item-link',{'type' : 'button'});
@@ -152,8 +161,8 @@ class UppyUploader {
 
     const last = Math.ceil(total/query.limit);
     for (var i = 1; i <= last; i++ ) {
+
       (function (query,obj) { 
-       
         const li = document.createElement('li');
         let liClassName = 'ant-pagination-item ant-pagination-item-'+'i';
         if( i === query.page ) {
@@ -165,7 +174,6 @@ class UppyUploader {
         var current = i;
         li.addEventListener('click', function() { paginationClick(current,obj);}, false);
         ul.appendChild(li);
-     
       }(query,this));
     }
     const next = this.make('li','ant-pagination-next');
@@ -190,24 +198,12 @@ class UppyUploader {
     function handleCLick ( imageDetails, obj) {
       obj.data = imageDetails;
       obj.nodes.wrapper.children[0].src = imageDetails.url.proxy;
-      obj.nodes.wrapper.children[2].style.display = 'none'; // dashboard/ list div
-      obj.nodes.wrapper.children[1].style.display = 'none'; // radio button div
+      obj.nodes.wrapper.children[2].style.display = 'none';
+      obj.nodes.wrapper.children[1].style.display = 'none';
     }
     const listDiv = this.make('div','ant-list ant-list-split ant-list-grid',{
       'style' : 'width:750px',
       'id' : 'DashboardContainer-' + this.blockIndex,
-    })
-
-    const searchInput = this.make('input','ant-input',{
-      'placeholder' : 'Search Media',
-      'style' : 'margin-bottom: 8px',
-    });
-    
-    searchInput.addEventListener('input',(e) => {
-      if(e.target.value) {
-        const newQuery = {...this.query, q: e.target.value };
-        this.getMediaList(newQuery);
-      }
     })
     const rowDiv = this.make('div','ant-row',{
       'style' : 'margin-left:-18px;margin-right:-18px',
@@ -239,20 +235,36 @@ class UppyUploader {
       }(this));
 
     }
-    listDiv.appendChild(searchInput);
     listDiv.appendChild(rowDiv);
     listDiv.appendChild(this.createPagniation(query,total));
-    this.nodes.wrapper.replaceChild(listDiv,this.nodes.wrapper.children[2]); //replace list to upload vice versa
+    listDiv.setAttribute('style','margin-left:8px');
+    this.nodes.wrapper.replaceChild(listDiv,this.nodes.wrapper.children[2]);
 
   }
+  getEmptyDataComponent () {
+    const noDataFound = ReactDOMServer.renderToString(
+      <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+    )
+    const emptyDataDiv = this.make('div',null,{
+      'id' : 'DashboardContainer-' + this.blockIndex,
+    });
+    emptyDataDiv.innerHTML = noDataFound;
+    this.nodes.wrapper.replaceChild(emptyDataDiv,this.nodes.wrapper.children[2]);
+  }
+
   getMediaList (query) {
     axios.get(MEDIA_API, {
       params: query,
     })
     .then((response) => {
+      if(response.data.nodes.length<1) {
+        this.getEmptyDataComponent();
+      }
+      else {
       this.mediaData = response.data.nodes;
       this.total = response.data.total;
       this.createDisplayList(response.data.nodes, query, response.data.total);
+      }
     })
   }
 
@@ -293,7 +305,7 @@ class UppyUploader {
       .use(Dashboard, {
         trigger: '.UppyModalOpenerBtn',
         inline: true,
-        target: '#' + this.nodes.wrapper.children[2].id,   //target to dashboard div list/upload div
+        target: '#' + this.nodes.wrapper.children[2].id,
         replaceTargetContent: true,
         showProgressDetails: true,
         height: 470,
