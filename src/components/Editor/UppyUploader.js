@@ -35,6 +35,7 @@ class UppyUploader {
     uploader.id = 'DashboardContainer-' + this.blockIndex;
 
     var imageContainer = document.createElement('img');
+    imageContainer.setAttribute('style','padding:8px');
     imageContainer.id = 'ImageContainer';
     imageContainer.style.width = '100%';
 
