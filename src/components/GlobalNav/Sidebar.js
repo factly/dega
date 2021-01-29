@@ -57,6 +57,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     'ratings',
     'organisations',
     'menu',
+    'fact check',
   ];
 
   permission.forEach((each) => {

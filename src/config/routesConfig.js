@@ -61,6 +61,8 @@ import EditPolicy from '../pages/policies/EditPolicy';
 //Fact Checks
 import GoogleFactCheck from '../pages/fact-checks/GoogleFactCheck';
 import Factly from '../pages/fact-checks/Factly';
+import FactCheck from '../pages/fact-checks';
+import CreateFactCheck from '../pages/fact-checks/CreateFactCheck';
 
 // Users & Permissions
 import Users from '../pages/users';
@@ -424,6 +426,20 @@ const routes = {
       resource: 'claims',
     },
   },
+  factCheck: {
+    path: '/fact-check',
+    Component: FactCheck,
+    title: 'Fact Check',
+  },
+  createFactCheck: {
+    path: '/fact-check/create',
+    Component: CreateFactCheck,
+    title: 'Create',
+    permission: {
+      resource: 'fact check',
+      action: 'create',
+    },
+  },
   googleFactCheck: {
     path: '/fact-check/google',
     Component: GoogleFactCheck,
@@ -488,6 +504,7 @@ export const sidebarMenu = [
     title: 'FACT CHECKING',
     Icon: CheckCircleOutlined,
     children: [
+      routes.factCheck,
       routes.claims,
       routes.claimants,
       routes.ratings,

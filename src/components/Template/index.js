@@ -7,23 +7,25 @@ import { Link, useHistory } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import PlaceholderImage from '../ErrorsAndImage/PlaceholderImage';
 
-function Template() {
+function Template( {formatId} ) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { Meta } = Card;
   const { Panel } = Collapse;
   const page = 1;
+  // const format = [formatId];
   const [show, setShow] = React.useState(false);
   const { posts, loading, media } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       let query = {
         page,
         status: 'template',
+        format: [formatId],
       };
 
       return deepEqual(item.query, query);
     });
-
+    console.log('media',state.media.details);
     if (node)
       return {
         posts: node.data.map((element) => state.posts.details[element]),
@@ -39,7 +41,7 @@ function Template() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
   const fetchTemplates = () => {
-    dispatch(getPosts({ page: page, status: 'template' }));
+    dispatch(getPosts({ page: page, status: 'template' , format: [formatId]}));
   };
 
   const genExtra = () => (
@@ -67,10 +69,13 @@ function Template() {
   return (
     <Collapse defaultActiveKey={['1']}>
       <Panel header="Templates" key="1" extra={genExtra()}>
+        {console.log('posts',posts)}
         <List
           grid={{ gutter: 16, column: 5 }}
           dataSource={show ? posts : posts.slice(0, 5)}
           renderItem={(item) => (
+            console.log('item',item),
+            console.log('item media',media[item.medium]),
             <List.Item>
               <Card
                 cover={
@@ -97,7 +102,7 @@ function Template() {
                         .then(() => {
                           fetchTemplates();
                         })
-                        .then(() => dispatch(getPosts({ page: 1, limit: 5 })))
+                        .then(() => dispatch(getPosts({ page: 1, limit: 5, format : [formatId] })))
                     }
                   >
                     <DeleteOutlined key="delete" />

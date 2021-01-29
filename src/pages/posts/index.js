@@ -16,7 +16,7 @@ function Posts() {
           Create New
         </Button>
       </Link>
-      <PostList actions={actions} />
+      <PostList actions={actions} format={1} />
     </Space>
   );
 }

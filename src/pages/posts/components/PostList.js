@@ -9,7 +9,7 @@ import deepEqual from 'deep-equal';
 import Template from '../../../components/Template';
 import ImagePlaceholder from '../../../components/ErrorsAndImage/PlaceholderImage';
 
-function PostList({ actions }) {
+function PostList({ actions, format }) {
   const dispatch = useDispatch();
 
   const { Option } = Select;
@@ -18,6 +18,7 @@ function PostList({ actions }) {
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 5,
+    format: [format],
   });
 
   const { posts, total, loading } = useSelector((state) => {
@@ -62,7 +63,7 @@ function PostList({ actions }) {
 
   return (
     <Space direction="vertical">
-      <Template />
+      <Template formatId={format} />
       <Form
         initialValues={filters}
         form={form}
@@ -121,7 +122,7 @@ function PostList({ actions }) {
           current: filters.page,
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+            setFilters({ ...filters, page: pageNumber, limit: pageSize, format: filters.format }),
         }}
         renderItem={(item) => (
           <List.Item
