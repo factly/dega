@@ -163,7 +163,7 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
                   style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
-              <Form.Item name="description">
+              <Form.Item name="description" className="post-description">
                 <Editor />
               </Form.Item>
               <Drawer
