@@ -53,7 +53,6 @@ function PostList({ actions }) {
     let filterValue = {
       tag: values.tags,
       category: values.categories,
-      format: values.formats,
       sort: values.sort,
       q: values.q,
     };
@@ -94,14 +93,6 @@ function PostList({ actions }) {
             mode="multiple"
             action="Categories"
             placeholder="Filter Categories"
-            style={{ maxWidth: '160px' }}
-          />
-        </Form.Item>
-        <Form.Item name="formats" label="Formats" style={{ width: '15%' }}>
-          <Selector
-            mode="multiple"
-            action="Formats"
-            placeholder="Filter Formats"
             style={{ maxWidth: '160px' }}
           />
         </Form.Item>

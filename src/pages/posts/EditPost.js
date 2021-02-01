@@ -41,6 +41,10 @@ function EditPost() {
       });
     if (values.status === 'publish')
       dispatch(publishPost({ ...post, ...values })).then(() => history.push('/posts'));
+    if (values.status === 'template')
+      dispatch(updatePost({ ...post, ...values})).then(() => {
+        history.push('/posts');
+      })    
   };
   return <PostEditForm data={post} onCreate={onUpdate} actions={actions} />;
 }
