@@ -35,16 +35,12 @@ function EditPost() {
   }
 
   const onUpdate = (values) => {
-    if (values.status === 'draft')
+    if (values.status === 'draft' || values.status === 'template')
       dispatch(updatePost({ ...post, ...values })).then(() => {
         history.push('/posts');
       });
     if (values.status === 'publish')
       dispatch(publishPost({ ...post, ...values })).then(() => history.push('/posts'));
-    if (values.status === 'template')
-      dispatch(updatePost({ ...post, ...values})).then(() => {
-        history.push('/posts');
-      })    
   };
   return <PostEditForm data={post} onCreate={onUpdate} actions={actions} />;
 }

@@ -31,16 +31,12 @@ function EditFactCheck() {
     return <RecordNotFound />;
   }
   const onUpdate = (values) => {
-    if (values.status === 'draft')
+    if (values.status === 'draft' || values.status === 'template')
       dispatch(updatePost({ ...post, ...values })).then(() => {
         history.push('/fact-check');
       });
     if (values.status === 'publish')
       dispatch(publishPost({ ...post, ...values })).then(() => history.push('/fact-check'));
-    if (values.status === 'template')
-      dispatch(updatePost({ ...post, ...values})).then(() => {
-        history.push('/fact-check');
-      })  
       
   };
   return <EditFactCheckForm data={post} onCreate={onUpdate} actions={actions} />;
