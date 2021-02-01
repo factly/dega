@@ -14,15 +14,16 @@ import InlineCode from '@editorjs/inline-code';
 import { useSelector } from 'react-redux';
 import Embed from './Embed';
 
-function Editor({ value, onChange, style }) {
+function Editor({ value, onChange, style, placeholder = 'Begin writing your post...' }) {
   const editor_block = React.useRef(null);
   const space_slug = useSelector((state) => {
     return state.spaces.details[state.spaces.selected]?.slug;
   });
 
   React.useEffect(() => {
-    new EditorJS({
+    const editor = new EditorJS({
       holder: editor_block.current,
+      placeholder: placeholder,
       tools: {
         header: {
           class: Header,
@@ -64,6 +65,7 @@ function Editor({ value, onChange, style }) {
         }),
       data: value,
     });
+    return () => editor.destroy();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -128,11 +128,11 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           </Form.Item>
 
           <Form.Item name="review" label="Fact" wrapperCol={24}>
-            <Editor />
+            <Editor placeholder="Enter Review..." />
           </Form.Item>
 
           <Form.Item name="description" label="Description" wrapperCol={24}>
-            <Editor />
+            <Editor placeholder="Enter Description..." />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>
@@ -143,10 +143,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             <DatePicker />
           </Form.Item>
           <Form.Item name="claim_sources" label="Claim Sources" wrapperCol={24}>
-            <Editor />
+            <Editor placeholder="Enter Claim Sources..." />
           </Form.Item>
           <Form.Item name="review_tag_line" label="Review Tagline" wrapperCol={24}>
-            <Editor />
+            <Editor placeholder="Enter Taglines..." />
           </Form.Item>
           <Form.List name="review_sources" label="Review sources">
             {(fields, { add, remove }) => (

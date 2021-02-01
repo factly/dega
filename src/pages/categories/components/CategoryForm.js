@@ -92,7 +92,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         <Switch />
       </Form.Item>
       <Form.Item name="description" label="Description">
-        <Editor style={{ width: '600px' }} />
+        <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
       </Form.Item>
       <Form.Item name="meta_fields" label="Meta">
         <JsonEditor json={json} onChangeJSON={(data) => setJson(data)} />
