@@ -65,7 +65,14 @@ function Editor({ value, onChange, style, placeholder = 'Begin writing your post
         }),
       data: value,
     });
-    return () => editor.destroy();
+    // return () =>
+    //   editor.isReady.then(() => {
+    //     editor.destroy();
+    //     if (document.querySelectorAll('.ct')) {
+    //       document.querySelectorAll('.ct').forEach((e) => e.remove());
+    //     }
+    //     return;
+    //   });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
