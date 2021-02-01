@@ -25,7 +25,9 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
     if (!sidebar.collapsed) {
       dispatch(setCollapse(true));
     }
-    return () => (prev ? dispatch(setCollapse(true)) : dispatch(setCollapse(false)));
+    return () => {
+      if (!prev) dispatch(setCollapse(false));
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
