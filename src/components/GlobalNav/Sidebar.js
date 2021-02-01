@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import routes, { sidebarMenu } from '../../config/routesConfig';
 import _ from 'lodash';
+import { setCollapse, setExpand } from './../../actions/sidebar';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Sidebar({ superOrg, permission, orgs, loading }) {
+  const { collapsed } = useSelector((state) => state.sidebar);
+  const dispatch = useDispatch();
+
   let key;
   const location = useLocation();
   const [enteredRoute, setRoute] = React.useState(null);
@@ -27,9 +31,8 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
 
   const [showCoreMenu, setCoreMenu] = useState(false);
 
-  const [collapsed, setCollapsed] = useState(false);
-  const onCollapse = () => {
-    setCollapsed(!collapsed);
+  const onCollapse = (collapsed) => {
+    collapsed ? dispatch(setCollapse()) : dispatch(setExpand());
   };
   if (loading) {
     return null;
