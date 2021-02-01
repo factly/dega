@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
 import routes, { sidebarMenu } from '../../config/routesConfig';
 import _ from 'lodash';
-import { setCollapse, setExpand } from './../../actions/sidebar';
+import { setCollapse } from './../../actions/sidebar';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -32,7 +32,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
   const [showCoreMenu, setCoreMenu] = useState(false);
 
   const onCollapse = (collapsed) => {
-    collapsed ? dispatch(setCollapse()) : dispatch(setExpand());
+    collapsed ? dispatch(setCollapse(true)) : dispatch(setCollapse(false));
   };
   if (loading) {
     return null;

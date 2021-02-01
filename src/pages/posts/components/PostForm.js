@@ -11,7 +11,7 @@ import { addClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
-import { setCollapse, setExpand } from './../../../actions/sidebar';
+import { setCollapse } from './../../../actions/sidebar';
 
 function PostForm({ onCreate, data = {}, actions = {} }) {
   const history = useHistory();
@@ -23,9 +23,9 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
   React.useEffect(() => {
     const prev = sidebar.collapsed;
     if (!sidebar.collapsed) {
-      dispatch(setCollapse());
+      dispatch(setCollapse(true));
     }
-    return () => (prev ? dispatch(setCollapse()) : dispatch(setExpand()));
+    return () => (prev ? dispatch(setCollapse(true)) : dispatch(setCollapse(false)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

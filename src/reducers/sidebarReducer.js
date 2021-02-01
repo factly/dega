@@ -1,4 +1,4 @@
-import { COLLAPSE, EXPAND } from './../constants/sidebar';
+import { SET_COLLAPSE } from './../constants/sidebar';
 
 const initialState = {
   collapsed: false,
@@ -6,10 +6,8 @@ const initialState = {
 
 export default function sidebarReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case COLLAPSE:
-      return { collapsed: true };
-    case EXPAND:
-      return { collapsed: false };
+    case SET_COLLAPSE:
+      return { collapsed: action.payload };
     default:
       return state;
   }

@@ -1,17 +1,9 @@
-import { COLLAPSE, EXPAND } from './../constants/sidebar';
-
-export const setCollapse = () => {
+import { SET_COLLAPSE } from '../constants/sidebar';
+export const setCollapse = (collapsed) => {
   return (dispatch) => {
     dispatch({
-      type: COLLAPSE,
-    });
-  };
-};
-
-export const setExpand = () => {
-  return (dispatch) => {
-    dispatch({
-      type: EXPAND,
+      type: SET_COLLAPSE,
+      payload: collapsed,
     });
   };
 };

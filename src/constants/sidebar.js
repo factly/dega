@@ -1,2 +1,1 @@
-export const COLLAPSE = 'COLLAPSE';
-export const EXPAND = 'EXPAND';
+export const SET_COLLAPSE = 'SET_COLLAPSE';
