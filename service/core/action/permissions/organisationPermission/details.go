@@ -37,6 +37,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
+	uID, err := util.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 
 	result := orgPermissionRes{}
 	err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
@@ -55,7 +61,8 @@ func details(w http.ResponseWriter, r *http.Request) {
 		var policy model.KetoPolicy
 		err = json.NewDecoder(resp.Body).Decode(&policy)
 		if err == nil && len(policy.Subjects) > 0 && policy.Subjects[0] == fmt.Sprint(oID) {
-			result.IsAdmin = true
+			isOwner, _ := util.CheckOwnerFromKavach(uID, oID)
+			result.IsAdmin = isOwner
 		}
 	}
 
