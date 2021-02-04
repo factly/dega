@@ -105,7 +105,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             <Input />
           </Form.Item>
           <Form.Item name="description" label="Description">
-            <Editor style={{ width: '600px' }} />
+            <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>

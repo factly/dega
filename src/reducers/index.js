@@ -22,6 +22,7 @@ import admin from './adminReducer';
 import users from './usersReducer';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
 import menu from './menuReducer';
+import sidebar from './sidebarReducer';
 
 const appReducer = combineReducers({
   admin,
@@ -46,6 +47,7 @@ const appReducer = combineReducers({
   permissions,
   users,
   menu,
+  sidebar,
 });
 
 const rootReducer = (state, action) => {

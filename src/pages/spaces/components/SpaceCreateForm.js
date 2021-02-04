@@ -104,7 +104,7 @@ const SpaceCreateForm = ({ onCreate }) => {
         <Input />
       </Form.Item>
       <Form.Item name="description" label="Description">
-        <Editor />
+        <Editor placeholder="Enter Description..." />
       </Form.Item>
 
       <Form.Item {...tailLayout}>
