@@ -7,7 +7,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import PlaceholderImage from '../ErrorsAndImage/PlaceholderImage';
 
-function Template() {
+function Template({ formatId }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { Meta } = Card;
@@ -19,14 +19,19 @@ function Template() {
       let query = {
         page,
         status: 'template',
+        format: [formatId],
       };
 
       return deepEqual(item.query, query);
     });
-
     if (node)
       return {
-        posts: node.data.map((element) => state.posts.details[element]),
+        posts: node.data.map((element) => {
+          const post = state.posts.details[element];
+
+          post.medium = state.media.details[post.featured_medium_id];
+          return post;
+        }),
         total: node.total,
         loading: state.posts.loading,
         media: state.media.details,
@@ -39,7 +44,7 @@ function Template() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
   const fetchTemplates = () => {
-    dispatch(getPosts({ page: page, status: 'template' }));
+    dispatch(getPosts({ page: page, status: 'template', format:[formatId] }));
   };
 
   const genExtra = () => (
@@ -55,9 +60,17 @@ function Template() {
   );
 
   const handleAddPost = (item) => {
-    dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
-      history.push(`/posts/${res.id}/edit`),
-    );
+    if(formatId === 1) {
+      dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
+        history.push(`/posts/${res.id}/edit`),
+      );
+    }
+    else if(formatId === 2) {
+      dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
+        history.push(`/fact-check/${res.id}/edit`),
+      );
+    }
+  
   };
 
   if (loading) return <Spin style={{ marginLeft: '50%' }} />;
@@ -78,7 +91,7 @@ function Template() {
                     <img
                       style={{ cursor: 'pointer' }}
                       alt="example"
-                      src={media[item.medium].url.proxy}
+                      src={item.medium.url.proxy}
                       height="230"
                       onClick={() => handleAddPost(item)}
                     />
@@ -87,7 +100,7 @@ function Template() {
                   )
                 }
                 actions={[
-                  <Link to={`/posts/${item.id}/edit`}>
+                  <Link to={formatId === 1 ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit`}>
                     <EditOutlined key="edit" />
                   </Link>,
                   <Popconfirm
@@ -97,7 +110,7 @@ function Template() {
                         .then(() => {
                           fetchTemplates();
                         })
-                        .then(() => dispatch(getPosts({ page: 1, limit: 5 })))
+                        .then(() => dispatch(getPosts({ page: 1, limit: 5, format: [formatId] })))
                     }
                   >
                     <DeleteOutlined key="delete" />

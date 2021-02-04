@@ -61,6 +61,9 @@ import EditPolicy from '../pages/policies/EditPolicy';
 //Fact Checks
 import GoogleFactCheck from '../pages/fact-checks/GoogleFactCheck';
 import Factly from '../pages/fact-checks/Factly';
+import FactCheck from '../pages/fact-checks';
+import CreateFactCheck from '../pages/fact-checks/CreateFactCheck';
+import EditFactCheck from '../pages/fact-checks/EditFactCheck';
 
 // Users & Permissions
 import Users from '../pages/users';
@@ -424,6 +427,29 @@ const routes = {
       resource: 'claims',
     },
   },
+  factCheck: {
+    path: '/fact-check',
+    Component: FactCheck,
+    title: 'Fact Check',
+  },
+  createFactCheck: {
+    path: '/fact-check/create',
+    Component: CreateFactCheck,
+    title: 'Create',
+    permission: {
+      resource: 'factchecks',
+      action: 'create',
+    },
+  },
+  editFactCheck: {
+    path: '/fact-check/:id/edit',
+    Component: EditFactCheck,
+    title: 'Edit',
+    permission: {
+      action: 'update',
+      resource: 'factchecks',
+    },
+  },
   googleFactCheck: {
     path: '/fact-check/google',
     Component: GoogleFactCheck,
@@ -448,12 +474,12 @@ const routes = {
       action: 'get',
     },
   },
-  menu : {
+  menu: {
     path: '/menu',
     Component: Menu,
     title: 'Menu',
   },
-  createMenu : {
+  createMenu: {
     path: '/menu/create',
     Component: CreateMenu,
     title: 'Create Menu',
@@ -482,12 +508,20 @@ export const sidebarMenu = [
   {
     title: 'CORE',
     Icon: FileDoneOutlined,
-    children: [routes.posts, routes.categories, routes.tags, routes.media, routes.formats, routes.menu],
+    children: [
+      routes.posts,
+      routes.categories,
+      routes.tags,
+      routes.media,
+      routes.formats,
+      routes.menu,
+    ],
   },
   {
     title: 'FACT CHECKING',
     Icon: CheckCircleOutlined,
     children: [
+      routes.factCheck,
       routes.claims,
       routes.claimants,
       routes.ratings,

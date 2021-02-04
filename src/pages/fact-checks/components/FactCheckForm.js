@@ -5,16 +5,20 @@ import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from 'antd/lib/modal/Modal';
+import ClaimCreateForm from '../../claims/components/ClaimForm';
+import { addClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 
-function PostForm({ onCreate, data = {}, actions = {} }) {
+function FactCheckForm({ onCreate, data = {}, actions = {} }) {
   const history = useHistory();
   const [form] = Form.useForm();
   const sidebar = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
+  const [visible, setVisible] = React.useState(false);
 
   React.useEffect(() => {
     const prev = sidebar.collapsed;
@@ -42,8 +46,9 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
   const onSave = (values) => {
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
-    values.format_id = 1;
+    values.format_id = 2;
     values.author_ids = values.authors || [];
+    values.claim_ids = values.claims || [];
     onCreate(values);
   };
 
@@ -54,13 +59,31 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
       });
     }
   };
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = () => {
+    setVisible(false);
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
+
+  const onClaimCreate = (values) => {
+    dispatch(addClaim(values)).then(() => setVisible(false));
+  };
 
   const createTemplate = () => {
-    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
+    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/fact-check'));
   };
 
   return (
     <>
+      <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
+        <ClaimCreateForm onCreate={onClaimCreate} width={560} />
+      </Modal>
       <Form
         form={form}
         initialValues={{ ...data }}
@@ -117,9 +140,9 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
               >
                 <Input.TextArea
                   bordered={false}
-                  placeholder="Add title for the post"
+                  placeholder="Add title for the fact-check"
                   onChange={(e) => onTitleChange(e.target.value)}
-                  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center' }}
+                  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center'}}
                 />
               </Form.Item>
 
@@ -139,18 +162,23 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
                 <Form.Item name="featured_medium_id" label="Featured Image">
                   <MediaSelector />
                 </Form.Item>
+                <Form.Item name="claims" label="Claims" key={!visible}>
+                  <Selector mode="multiple" display={'title'} action="Claims" />
+                </Form.Item>
+                <Form.Item>
+                  <Button type="primary" onClick={showModal}>
+                    Add Claim
+                  </Button>
+                </Form.Item>
                 <Form.Item
                   name="excerpt"
                   label="Excerpt"
                   rules={[
                     { min: 3, message: 'Title must be minimum 3 characters.' },
                     { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
-                    {
-                      message: 'Add Excerpt',
-                    },
                   ]}
                 >
-                  <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
+                  <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }}/>
                 </Form.Item>
                 <Form.Item
                   name="slug"
@@ -171,14 +199,13 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
                 <Form.Item name="categories" label="Categories">
                   <Selector mode="multiple" action="Categories" createEntity="Category" />
                 </Form.Item>
-
                 <Form.Item name="tags" label="Tags">
                   <Selector mode="multiple" action="Tags" createEntity="Tag" />
                 </Form.Item>
                 <Form.Item name="authors" label="Authors">
                   <Selector mode="multiple" display={'email'} action="Authors" />
                 </Form.Item>
-              </Drawer>
+              </Drawer>  
             </Col>
           </Row>
         </Space>
@@ -187,4 +214,4 @@ function PostForm({ onCreate, data = {}, actions = {} }) {
   );
 }
 
-export default PostForm;
+export default FactCheckForm;

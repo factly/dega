@@ -1,24 +1,23 @@
 import React from 'react';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import PostList from '../../components/List';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
+import FactCheckList from '../../components/List';
 
-function Posts() {
+function FactCheck() {
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
-
+  const actions = getUserPermission({ resource: 'factchecks', action: 'get', spaces });
   return (
     <Space direction="vertical">
-      <Link to="/posts/create">
+      <Link to="/fact-check/create">
         <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
           Create New
         </Button>
       </Link>
-      <PostList actions={actions} format={1} />
+      <FactCheckList actions={actions} format={2} />
     </Space>
   );
 }
 
-export default Posts;
+export default FactCheck;

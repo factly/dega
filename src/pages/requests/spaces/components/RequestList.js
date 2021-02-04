@@ -34,7 +34,7 @@ function RequestList() {
   React.useEffect(() => {
     fetchSpaceRequests();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
+  }, [filters, is_admin]);
 
   const fetchSpaceRequests = () => {
     dispatch(getSpaces(filters, is_admin));
