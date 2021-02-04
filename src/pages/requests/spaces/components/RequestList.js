@@ -41,7 +41,6 @@ function RequestList() {
   };
 
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title' },
     {
       title: 'Media',
       dataIndex: 'media',
@@ -74,7 +73,7 @@ function RequestList() {
         return (
           <span>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Approve?"
               onConfirm={() =>
                 dispatch(approveSpaceRequest(record.id, 'approve')).then(() => fetchSpaceRequests())
               }
@@ -82,7 +81,7 @@ function RequestList() {
               <Button>Approve</Button>
             </Popconfirm>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Reject?"
               onConfirm={() =>
                 dispatch(approveSpaceRequest(record.id, 'reject')).then(() => fetchSpaceRequests())
               }

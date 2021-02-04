@@ -65,7 +65,7 @@ function RatingList({ actions }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Delete?"
               onConfirm={() => dispatch(deleteRating(record.id)).then(() => fetchRatings())}
             >
               <Link to="" className="ant-dropdown-link">

@@ -39,14 +39,13 @@ function RequestList() {
   React.useEffect(() => {
     fetchOrganisationRequests();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
+  }, [filters, is_admin]);
 
   const fetchOrganisationRequests = () => {
     dispatch(getOrganisations(filters, is_admin));
   };
 
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title' },
     { title: 'Description', dataIndex: 'description', key: 'description' },
     {
       title: 'Spaces',
@@ -66,7 +65,7 @@ function RequestList() {
         return (
           <span>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Approve?"
               onConfirm={() =>
                 dispatch(approveOrganisationRequest(record.id, 'approve')).then(() =>
                   fetchOrganisationRequests(),
@@ -76,7 +75,7 @@ function RequestList() {
               <Button>Approve</Button>
             </Popconfirm>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Reject?"
               onConfirm={() =>
                 dispatch(approveOrganisationRequest(record.id, 'reject')).then(() =>
                   fetchOrganisationRequests(),

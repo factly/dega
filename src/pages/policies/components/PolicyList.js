@@ -87,7 +87,7 @@ function PolicyList({ actions }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Delete?"
               onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
             >
               <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>

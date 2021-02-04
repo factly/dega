@@ -78,7 +78,7 @@ function PermissionList() {
               <Button>Edit</Button>
             </Link>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Delete?"
               onConfirm={() =>
                 dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
                   fetchOrganisationPermissions(),

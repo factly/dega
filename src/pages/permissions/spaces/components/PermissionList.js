@@ -103,7 +103,7 @@ function PermissionList() {
               <Button>Edit</Button>
             </Link>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Delete?"
               onConfirm={() =>
                 dispatch(deleteSpacePermission(record.permission.id)).then(() =>
                   fetchSpacePermissions(),

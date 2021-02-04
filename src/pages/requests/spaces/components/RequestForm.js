@@ -39,9 +39,6 @@ const RequestForm = ({ onCreate, data = {} }) => {
         onReset();
       }}
     >
-      <Form.Item name="title" label="Title">
-        <Input />
-      </Form.Item>
       <Form.Item name="space_id" label="Space">
         <Select
           allowClear
