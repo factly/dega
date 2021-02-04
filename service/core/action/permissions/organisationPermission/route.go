@@ -37,11 +37,3 @@ func Router() chi.Router {
 	return r
 
 }
-
-// OrgRequestRouter - Create endpoint for organisation permission request
-func OrgRequestRouter() chi.Router {
-	r := chi.NewRouter()
-	r.Post("/", request)
-
-	return r
-}
