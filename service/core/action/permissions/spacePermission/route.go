@@ -42,11 +42,3 @@ func Router() chi.Router {
 
 	return r
 }
-
-// SpaceRequestRouter - Create endpoint for space permission request
-func SpaceRequestRouter() chi.Router {
-	r := chi.NewRouter()
-	r.Post("/", request)
-
-	return r
-}
