@@ -36,6 +36,11 @@ const entities = [
     options: options,
   },
   {
+    name: 'factchecks',
+    label: 'Fact Check',
+    options: options,
+  },
+  {
     name: 'claims',
     label: 'Claims',
     options: options,

@@ -8,12 +8,14 @@ import getUserPermission from '../../utils/getUserPermission';
 function CreateFactCheck() {
   const history = useHistory();
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'fact check', action: 'get', spaces });
+  const actions = getUserPermission({ resource: 'factchecks', action: 'get', spaces });
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    if (values.status === 'draft') dispatch(addPost(values)).then(() => history.push('/fact-check'));
-    if (values.status === 'publish') dispatch(publish(values)).then(() => history.push('/fact-check'));
+    if (values.status === 'draft')
+      dispatch(addPost(values)).then(() => history.push('/fact-check'));
+    if (values.status === 'publish')
+      dispatch(publish(values)).then(() => history.push('/fact-check'));
   };
   return <FactCheckForm onCreate={onCreate} actions={actions} />;
 }

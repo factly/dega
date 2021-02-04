@@ -437,18 +437,18 @@ const routes = {
     Component: CreateFactCheck,
     title: 'Create',
     permission: {
-      resource: 'fact check',
+      resource: 'factchecks',
       action: 'create',
     },
   },
-  editFactCheck:{
+  editFactCheck: {
     path: '/fact-check/:id/edit',
     Component: EditFactCheck,
     title: 'Edit',
     permission: {
       action: 'update',
-      resource: 'fact check'
-    }
+      resource: 'factchecks',
+    },
   },
   googleFactCheck: {
     path: '/fact-check/google',
@@ -474,12 +474,12 @@ const routes = {
       action: 'get',
     },
   },
-  menu : {
+  menu: {
     path: '/menu',
     Component: Menu,
     title: 'Menu',
   },
-  createMenu : {
+  createMenu: {
     path: '/menu/create',
     Component: CreateMenu,
     title: 'Create Menu',
@@ -508,7 +508,14 @@ export const sidebarMenu = [
   {
     title: 'CORE',
     Icon: FileDoneOutlined,
-    children: [routes.posts, routes.categories, routes.tags, routes.media, routes.formats, routes.menu],
+    children: [
+      routes.posts,
+      routes.categories,
+      routes.tags,
+      routes.media,
+      routes.formats,
+      routes.menu,
+    ],
   },
   {
     title: 'FACT CHECKING',
