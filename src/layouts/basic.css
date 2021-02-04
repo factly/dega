@@ -52,3 +52,7 @@
 .ant-form {
   max-width: 600px;
 }
+
+.post-description .codex-editor {
+  font-size: 1.5rem;
+}

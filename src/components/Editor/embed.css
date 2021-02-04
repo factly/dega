@@ -1,6 +1,10 @@
 .embed-tool {
   position: relative;
   margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 .embed-tool__input {
   padding-left: 38px;
@@ -17,6 +21,8 @@
 }
 .embed-tool__caption-holder {
   margin-top: 1rem;
+  width: 100%;
+  font-size: 0.75rem;
 }
 .embed-tool__caption {
   padding-left: 39px;

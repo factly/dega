@@ -75,7 +75,7 @@ const TagForm = ({ onCreate, data = {} }) => {
         <Switch />
       </Form.Item>
       <Form.Item name="description" label="Description">
-        <Editor style={{ width: '600px' }} />
+        <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
