@@ -97,7 +97,7 @@ function MediumList({ actions }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Delete?"
               onConfirm={() => dispatch(deleteMedium(record.id)).then(() => fetchMedia())}
             >
               <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>

@@ -7,4 +7,4 @@ export const SET_ORGANISATION_REQUESTS_LOADING = 'SET_ORGANISATION_REQUESTS_LOAD
 
 //API
 export const ORGANISATION_REQUESTS_API = '/core/requests/organisation-permissions';
-export const ORGANISATION_REQUESTS_CREATE_API = '/core/permissions/organisations/request';
+export const ORGANISATION_REQUESTS_CREATE_API = '/core/requests/organisations';

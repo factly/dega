@@ -58,7 +58,7 @@ function TagList({ actions }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to cancel?"
+              title="Sure to Delete?"
               onConfirm={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
             >
               <Link to="" className="ant-dropdown-link">

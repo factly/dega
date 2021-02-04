@@ -7,4 +7,4 @@ export const SET_SPACE_REQUESTS_LOADING = 'SET_SPACE_REQUESTS_LOADING';
 
 //API
 export const SPACE_REQUESTS_API = '/core/requests/space-permissions';
-export const SPACE_REQUESTS_CREATE_API = '/core/permissions/spaces/request';
+export const SPACE_REQUESTS_CREATE_API = '/core/requests/spaces';

@@ -91,7 +91,7 @@ function Template() {
                     <EditOutlined key="edit" />
                   </Link>,
                   <Popconfirm
-                    title="Sure to cancel?"
+                    title="Sure to Delete?"
                     onConfirm={() =>
                       dispatch(deletePost(item.id))
                         .then(() => {
