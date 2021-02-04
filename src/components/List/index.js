@@ -2,23 +2,22 @@ import React from 'react';
 import { Popconfirm, Button, List, Input, Select, Form, Space } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { getPosts, deletePost } from '../../../actions/posts';
+import { getPosts, deletePost } from '../../actions/posts';
 import { Link } from 'react-router-dom';
-import Selector from '../../../components/Selector';
+import Selector from '../../components/Selector';
 import deepEqual from 'deep-equal';
-import Template from '../../../components/Template';
-import ImagePlaceholder from '../../../components/ErrorsAndImage/PlaceholderImage';
+import Template from '../../components/Template';
+import ImagePlaceholder from '../../components/ErrorsAndImage/PlaceholderImage';
 
-function PostList({ actions }) {
+function PostList({ actions, format }) {
   const dispatch = useDispatch();
-
   const { Option } = Select;
   const [form] = Form.useForm();
 
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 5,
-    format: [1],
+    format: [format],
   });
 
   const { posts, total, loading } = useSelector((state) => {
@@ -62,7 +61,7 @@ function PostList({ actions }) {
 
   return (
     <Space direction="vertical">
-      <Template formatId={1}/>
+      <Template formatId={format}/>
       <Form
         initialValues={filters}
         form={form}
@@ -122,7 +121,7 @@ function PostList({ actions }) {
                 style={{
                   marginRight: 8,
                 }}
-                to={`/posts/${item.id}/edit`}
+                to={format === 1 ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit`}
               >
                 <Button
                   icon={<EditOutlined />}
@@ -161,7 +160,7 @@ function PostList({ actions }) {
             }
           >
             <List.Item.Meta
-              title={<Link to={`/posts/${item.id}/edit`}>{item.title}</Link>}
+              title={<Link to={format === 1 ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit` }>{item.title}</Link>}
               description={item.excerpt}
             />
           </List.Item>

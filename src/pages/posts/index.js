@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space, Button } from 'antd';
 import { Link } from 'react-router-dom';
-import PostList from './components/PostList';
+import PostList from '../../components/List';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
 
