@@ -88,6 +88,8 @@ class UppyUploader {
       if(e.target.value) {
         const newQuery = {...this.query, q: e.target.value };
         this.getMediaList(newQuery);
+      } else {
+        this.getMediaList(this.query);
       }
     })
     list.addEventListener('click',(event) => {

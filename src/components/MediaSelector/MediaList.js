@@ -41,7 +41,7 @@ function MediaList({ onSelect, selected, onUnselect }) {
       <Input
         placeholder="Search Media"
         onChange={(e) =>
-          e.target.value ? setFilters({ ...filters, q: e.target.value }) : setFilters(filters)
+          setFilters({ ...filters, q: e.target.value })
         }
       />
       <List
