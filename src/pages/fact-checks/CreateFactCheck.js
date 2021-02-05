@@ -4,11 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPost, publish } from '../../actions/posts';
 import { useHistory } from 'react-router-dom';
 import getUserPermission from '../../utils/getUserPermission';
-import {Skeleton} from 'antd';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
-
-function CreateFactCheck({formats}) {
+function CreateFactCheck({ formats }) {
   const history = useHistory();
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'factchecks', action: 'get', spaces });
@@ -20,15 +18,12 @@ function CreateFactCheck({formats}) {
     if (values.status === 'publish')
       dispatch(publish(values)).then(() => history.push('/fact-check'));
   };
-  
-  if(!formats.loading && formats.factcheck ) {
-    return <FactCheckForm onCreate={onCreate} actions={actions} format={formats.factcheck}/>;
-  } 
-  else {
-    return (
-      <FormatNotFound status="info" title="Fact-Check format not found" link="/formats"/>
-    ) 
-  } 
+
+  if (!formats.loading && formats.factcheck) {
+    return <FactCheckForm onCreate={onCreate} actions={actions} format={formats.factcheck} />;
+  }
+
+  return <FormatNotFound status="info" title="Fact-Check format not found" link="/formats" />;
 }
 
 export default CreateFactCheck;
