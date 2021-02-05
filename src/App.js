@@ -36,7 +36,8 @@ function App() {
   });
 
   const fetchFormats = () => {
-    dispatch(getFormats({space_id : selected}));
+    if(selected > 0)
+      dispatch(getFormats({space_id : selected}));
   };
 
   React.useEffect(() => {
@@ -45,7 +46,7 @@ function App() {
   return (
     <div className="App">
       <Router basename={process.env.PUBLIC_URL}>
-        <BasicLayout formats={formats}>
+        <BasicLayout>
           <Switch>
             {Object.values(routes).map((route) =>
               route.permission ? (
