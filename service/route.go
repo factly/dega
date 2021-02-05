@@ -49,7 +49,7 @@ func RegisterRoutes() http.Handler {
 		"meilisearch": util.MeiliChecker,
 	})
 
-	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation).Group(func(r chi.Router) {
+	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, util.CheckAccess("dega")).Group(func(r chi.Router) {
 		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
 		r.Mount("/core", core.Router())
 	})
