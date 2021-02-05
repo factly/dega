@@ -18,6 +18,7 @@
 
 .embed-tool__input-holder {
   position: relative;
+  width: 100%;
 }
 .embed-tool__caption-holder {
   margin-top: 1rem;
