@@ -32,7 +32,6 @@ func Router() chi.Router {
 
 	r.With(util.CheckSuperOrganisation).Get("/", list)
 	r.Get("/my", my)
-	r.Post("/request", request)
 	r.With(util.CheckSuperOrganisation).Post("/", create)
 	r.Route("/{permission_id}", func(r chi.Router) {
 		r.With(util.CheckSuperOrganisation).Get("/", details)

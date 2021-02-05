@@ -304,7 +304,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -589,7 +591,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -840,7 +844,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -1070,7 +1076,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -1122,7 +1130,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/organisationPermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_organisationPermission.paging"
                             }
                         }
                     }
@@ -1219,61 +1227,6 @@
                 }
             }
         },
-        "/core/permissions/organisations/request": {
-            "post": {
-                "description": "Create organisation permission request",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Organisation_Permissions"
-                ],
-                "summary": "Create organisation permission request",
-                "operationId": "add-org-permission-request",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Request Object",
-                        "name": "Request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/organisationPermission.organisationPermissionRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.OrganisationPermissionRequest"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/core/permissions/organisations/{permission_id}": {
             "put": {
                 "description": "Update Organisation permission by ID",
@@ -1356,7 +1309,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -1408,7 +1363,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/spacePermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_spacePermission.paging"
                             }
                         }
                     }
@@ -1500,61 +1455,6 @@
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.SpacePermission"
-                        }
-                    }
-                }
-            }
-        },
-        "/core/permissions/spaces/request": {
-            "post": {
-                "description": "Create space permission request",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Space_Permissions"
-                ],
-                "summary": "Create space permission request",
-                "operationId": "add-space-permission-request",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Request Object",
-                        "name": "Request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/spacePermission.spacePermissionRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.SpacePermissionRequest"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
                         }
                     }
                 }
@@ -1684,7 +1584,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2314,7 +2216,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -2401,7 +2305,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/organisationPermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisationPermission.paging"
                             }
                         }
                     }
@@ -2441,7 +2345,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/organisationPermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisationPermission.paging"
                             }
                         }
                     }
@@ -2522,7 +2426,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2623,7 +2529,64 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/requests/organisations": {
+            "post": {
+                "description": "Create organisation permission request",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Organisation_Permissions_Request"
+                ],
+                "summary": "Create organisation permission request",
+                "operationId": "add-org-permission-request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Request Object",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/organisationPermission.organisationPermissionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.OrganisationPermissionRequest"
+                        }
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2675,7 +2638,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/spacePermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_spacePermission.paging"
                             }
                         }
                     }
@@ -2715,7 +2678,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/spacePermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_spacePermission.paging"
                             }
                         }
                     }
@@ -2796,7 +2759,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2897,7 +2862,64 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/requests/spaces": {
+            "post": {
+                "description": "Create space permission request",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions_Request"
+                ],
+                "summary": "Create space permission request",
+                "operationId": "add-space-permission-request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Request Object",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/spacePermission.spacePermissionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermissionRequest"
+                        }
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2946,7 +2968,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -3099,7 +3123,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -3344,7 +3370,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -3679,7 +3707,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -3891,7 +3921,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -4234,7 +4266,9 @@
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -4445,6 +4479,62 @@
                 }
             }
         },
+        "github.com_factly_dega-server_service_core_action_permissions_organisationPermission.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/organisationPermission.orgWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_permissions_spacePermission.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/spacePermission.spaceWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_request_organisationPermission.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.OrganisationPermissionRequest"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_request_spacePermission.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SpacePermissionRequest"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "google.paging": {
             "type": "object",
             "properties": {
@@ -4556,7 +4646,6 @@
             "type": "object",
             "properties": {
                 "meta": {
-                    "type": "object",
                     "$ref": "#/definitions/meta.meta"
                 },
                 "success": {
@@ -4624,7 +4713,6 @@
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -4649,7 +4737,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4676,7 +4763,6 @@
                     "type": "string"
                 },
                 "claimant": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Claimant"
                 },
                 "claimant_id": {
@@ -4698,7 +4784,6 @@
                     "type": "integer"
                 },
                 "rating": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Rating"
                 },
                 "rating_id": {
@@ -4717,7 +4802,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4753,7 +4837,6 @@
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -4766,7 +4849,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4812,7 +4894,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4911,7 +4992,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5060,7 +5140,6 @@
                     "type": "integer"
                 },
                 "format": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
@@ -5079,7 +5158,6 @@
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
@@ -5089,7 +5167,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5140,7 +5217,6 @@
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -5156,7 +5232,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5189,7 +5264,6 @@
                     "type": "string"
                 },
                 "fav_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
@@ -5199,21 +5273,18 @@
                     "type": "integer"
                 },
                 "logo": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
                 },
                 "mobile_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
@@ -5276,7 +5347,6 @@
                     "type": "integer"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5318,7 +5388,6 @@
                     "type": "integer"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5376,7 +5445,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5450,11 +5518,9 @@
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "permission": {
-                    "type": "object",
                     "$ref": "#/definitions/model.OrganisationPermission"
                 },
                 "slug": {
@@ -5488,8 +5554,7 @@
         "organisationPermission.organisationPermissionRequest": {
             "type": "object",
             "required": [
-                "organisation_id",
-                "title"
+                "organisation_id"
             ],
             "properties": {
                 "description": {
@@ -5499,23 +5564,6 @@
                     "type": "integer"
                 },
                 "spaces": {
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "organisationPermission.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/organisationPermission.orgWithPermissions"
-                    }
-                },
-                "total": {
                     "type": "integer"
                 }
             }
@@ -5666,7 +5714,6 @@
                     "type": "integer"
                 },
                 "format": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
@@ -5685,7 +5732,6 @@
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
@@ -5695,7 +5741,6 @@
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5819,7 +5864,6 @@
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -5861,7 +5905,6 @@
                     "type": "integer"
                 },
                 "permission": {
-                    "type": "object",
                     "$ref": "#/definitions/space.organisationUser"
                 },
                 "slug": {
@@ -5980,7 +6023,6 @@
                     "type": "string"
                 },
                 "fav_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
@@ -5990,21 +6032,18 @@
                     "type": "integer"
                 },
                 "logo": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
                 },
                 "mobile_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
@@ -6048,20 +6087,6 @@
                 }
             }
         },
-        "spacePermission.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/spacePermission.spaceWithPermissions"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
         "spacePermission.spacePermission": {
             "type": "object",
             "required": [
@@ -6085,8 +6110,7 @@
         "spacePermission.spacePermissionRequest": {
             "type": "object",
             "required": [
-                "space_id",
-                "title"
+                "space_id"
             ],
             "properties": {
                 "description": {
@@ -6103,9 +6127,6 @@
                 },
                 "space_id": {
                     "type": "integer"
-                },
-                "title": {
-                    "type": "string"
                 }
             }
         },
@@ -6128,7 +6149,6 @@
                     "type": "string"
                 },
                 "fav_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
@@ -6138,21 +6158,18 @@
                     "type": "integer"
                 },
                 "logo": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
                 },
                 "mobile_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
@@ -6165,7 +6182,6 @@
                     "type": "integer"
                 },
                 "permission": {
-                    "type": "object",
                     "$ref": "#/definitions/model.SpacePermission"
                 },
                 "site_address": {

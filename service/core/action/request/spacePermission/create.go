@@ -18,7 +18,7 @@ import (
 // request - Create space permission request
 // @Summary Create space permission request
 // @Description Create space permission request
-// @Tags Space_Permissions
+// @Tags Space_Permissions_Request
 // @ID add-space-permission-request
 // @Consume json
 // @Produce json
@@ -27,7 +27,7 @@ import (
 // @Param Request body spacePermissionRequest true "Request Object"
 // @Success 201 {object} model.SpacePermissionRequest
 // @Failure 400 {array} string
-// @Router /core/permissions/spaces/request [post]
+// @Router /core/requests/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
 	uID, err := util.GetUser(r.Context())
 	if err != nil {

@@ -20,7 +20,7 @@ import (
 // request - Create organisation permission request
 // @Summary Create organisation permission request
 // @Description Create organisation permission request
-// @Tags Organisation_Permissions
+// @Tags Organisation_Permissions_Request
 // @ID add-org-permission-request
 // @Consume json
 // @Produce json
@@ -29,7 +29,7 @@ import (
 // @Param Request body organisationPermissionRequest true "Request Object"
 // @Success 201 {object} model.OrganisationPermissionRequest
 // @Failure 400 {array} string
-// @Router /core/requests/organisations/ [post]
+// @Router /core/requests/organisations [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
 	uID, err := util.GetUser(r.Context())
