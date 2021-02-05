@@ -26,7 +26,7 @@ function CreateFactCheck({formats}) {
   } 
   else {
     return (
-      <FormatNotFound status="warning" title="Fact-Check Format not found" link="/formats"/>
+      <FormatNotFound status="info" title="Fact-Check format not found" link="/formats"/>
     ) 
   } 
 }

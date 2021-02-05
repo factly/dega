@@ -23,7 +23,7 @@ function CreatePost({formats}) {
   } 
   else {
     return (
-      <FormatNotFound status="warning" title="Article Format not found" link="/formats"/>
+      <FormatNotFound status="info" title="Article format not found" link="/formats"/>
     ) 
   }
 }
