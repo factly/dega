@@ -1,14 +1,21 @@
 import React from 'react';
-import { Result } from 'antd';
+import { Result, Button } from 'antd';
+import { Link } from 'react-router-dom';
 
-function RecordNotFound() {
+function RecordNotFound({ status, title, link }) {
   return (
-    <Result 
-        status="404"
-        title="404"
-        subTitle="Sorry, could not find what you are looking for."
-      />
+    <Result
+      status={status ? status : '404'}
+      title={title ? title : 'Sorry, could not find what you are looking for.'}
+      extra={
+        link ? (
+          <Link to="/formats/create">
+            <Button>Create Format</Button>
+          </Link>
+        ) : null
+      }
+    />
   );
-};
+}
 
 export default RecordNotFound;

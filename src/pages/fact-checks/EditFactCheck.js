@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import getUserPermission from '../../utils/getUserPermission';
 
-function EditFactCheck() {
+function EditFactCheck({ formats }) {
   const history = useHistory();
   const { id } = useParams();
   const spaces = useSelector(({ spaces }) => spaces);
@@ -39,8 +39,7 @@ function EditFactCheck() {
       dispatch(publishPost({ ...post, ...values })).then(() => history.push('/fact-check'));
       
   };
-  return <EditFactCheckForm data={post} onCreate={onUpdate} actions={actions} />;
-
+  return <EditFactCheckForm data={post} onCreate={onUpdate} actions={actions} format={formats.factcheck}/>;
 
 }
 

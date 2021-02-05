@@ -17,7 +17,7 @@ function PostList({ actions, format }) {
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 5,
-    format: [format],
+    format: [format.id],
   });
 
   const { posts, total, loading } = useSelector((state) => {
@@ -61,7 +61,7 @@ function PostList({ actions, format }) {
 
   return (
     <Space direction="vertical">
-      <Template formatId={format}/>
+      <Template format={format}/>
       <Form
         initialValues={filters}
         form={form}
@@ -121,7 +121,7 @@ function PostList({ actions, format }) {
                 style={{
                   marginRight: 8,
                 }}
-                to={format === 1 ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit`}
+                to={format.slug === "article" ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit`}
               >
                 <Button
                   icon={<EditOutlined />}
@@ -160,7 +160,7 @@ function PostList({ actions, format }) {
             }
           >
             <List.Item.Meta
-              title={<Link to={format === 1 ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit` }>{item.title}</Link>}
+              title={<Link to={format.slug === "article" ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit` }>{item.title}</Link>}
               description={item.excerpt}
             />
           </List.Item>
