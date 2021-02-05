@@ -61,38 +61,38 @@ function PermissionList() {
         );
       },
     },
-    {
-      title: 'Action',
-      dataIndex: 'operation',
-      width: '30%',
-      render: (_, record) => {
-        return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
-            >
-              <Button>Edit</Button>
-            </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() =>
-                dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
-                  fetchOrganisationPermissions(),
-                )
-              }
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button>Delete</Button>
-              </Link>
-            </Popconfirm>
-          </span>
-        );
-      },
-    },
+    // {
+    //   title: 'Action',
+    //   dataIndex: 'operation',
+    //   width: '30%',
+    //   render: (_, record) => {
+    //     return (
+    //       <span>
+    //         <Link
+    //           className="ant-dropdown-link"
+    //           style={{
+    //             marginRight: 8,
+    //           }}
+    //           to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
+    //         >
+    //           <Button>Edit</Button>
+    //         </Link>
+    //         <Popconfirm
+    //           title="Sure to Delete?"
+    //           onConfirm={() =>
+    //             dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
+    //               fetchOrganisationPermissions(),
+    //             )
+    //           }
+    //         >
+    //           <Link to="" className="ant-dropdown-link">
+    //             <Button>Delete</Button>
+    //           </Link>
+    //         </Popconfirm>
+    //       </span>
+    //     );
+    //   },
+    // },
   ];
 
   return (
