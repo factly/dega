@@ -5,7 +5,7 @@ import PostList from '../../components/List';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
 
-function Posts() {
+function Posts({formats}) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
 
@@ -16,7 +16,7 @@ function Posts() {
           Create New
         </Button>
       </Link>
-      <PostList actions={actions} format={1} />
+      { (!formats.loading && formats.article) ? <PostList actions={actions} format={formats.article} />: null}
     </Space>
   );
 }

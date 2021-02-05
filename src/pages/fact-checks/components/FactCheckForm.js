@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 
-function FactCheckForm({ onCreate, data = {}, actions = {} }) {
+function FactCheckForm({ onCreate, data = {}, actions = {}, format}) {
   const history = useHistory();
   const [form] = Form.useForm();
   const sidebar = useSelector((state) => state.sidebar);
@@ -46,7 +46,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {} }) {
   const onSave = (values) => {
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
-    values.format_id = 2;
+    values.format_id = format.id;
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims || [];
     onCreate(values);

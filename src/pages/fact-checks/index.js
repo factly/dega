@@ -5,7 +5,7 @@ import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
 import FactCheckList from '../../components/List';
 
-function FactCheck() {
+function FactCheck({formats}) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'factchecks', action: 'get', spaces });
   return (
@@ -15,7 +15,7 @@ function FactCheck() {
           Create New
         </Button>
       </Link>
-      <FactCheckList actions={actions} format={2} />
+      { (!formats.loading && formats.factcheck) ? <FactCheckList actions={actions} format={formats.factcheck} /> : null}
     </Space>
   );
 }
