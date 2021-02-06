@@ -17,6 +17,7 @@ import (
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 	"github.com/spf13/viper"
@@ -85,7 +86,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.Unauthorized()
 	}
 
-	uID, err := util.GetUser(ctx)
+	uID, err := middlewarex.GetUser(ctx)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.Unauthorized()

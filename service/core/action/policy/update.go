@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 	"github.com/spf13/viper"
@@ -36,7 +37,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userID, err := util.GetUser(r.Context())
+	userID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

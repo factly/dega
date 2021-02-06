@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/spf13/viper"
 )
 
@@ -14,7 +15,7 @@ func CheckAccess(appSlug string) func(h http.Handler) http.Handler {
 	return func(h http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-			uID, err := GetUser(r.Context())
+			uID, err := middlewarex.GetUser(r.Context())
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

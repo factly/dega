@@ -16,6 +16,7 @@ import (
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -32,7 +33,7 @@ import (
 // @Success 201 {object} model.Space
 // @Router /core/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

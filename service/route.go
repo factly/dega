@@ -15,6 +15,7 @@ import (
 	factCheck "github.com/factly/dega-server/service/fact-check"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/spf13/viper"
@@ -49,12 +50,12 @@ func RegisterRoutes() http.Handler {
 		"meilisearch": util.MeiliChecker,
 	})
 
-	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation, util.CheckAccess("dega")).Group(func(r chi.Router) {
+	r.With(middlewarex.CheckUser, util.CheckSpace, util.GenerateOrganisation, util.CheckAccess("dega")).Group(func(r chi.Router) {
 		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
 		r.Mount("/core", core.Router())
 	})
 
-	r.With(util.CheckUser).Group(func(r chi.Router) {
+	r.With(middlewarex.CheckUser).Group(func(r chi.Router) {
 		r.Mount("/core/requests/organisations", organisationPermission.OrgRequestRouter())
 		r.With(util.CheckSpace).Mount("/core/requests/spaces", spacePermission.SpaceRequestRouter())
 	})
