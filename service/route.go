@@ -30,6 +30,7 @@ func RegisterRoutes() http.Handler {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/ping"))
+	r.Use(middlewarex.GormRequestID(&config.DB))
 
 	if viper.IsSet("mode") && viper.GetString("mode") == "development" {
 		r.Get("/swagger/*", httpSwagger.WrapHandler)
@@ -50,7 +51,7 @@ func RegisterRoutes() http.Handler {
 		"meilisearch": util.MeiliChecker,
 	})
 
-	r.With(middlewarex.CheckUser, middlewarex.CheckSpace(1), util.GenerateOrganisation, util.CheckAccess("dega")).Group(func(r chi.Router) {
+	r.With(middlewarex.CheckUser, middlewarex.CheckSpace(1), util.GenerateOrganisation, middlewarex.CheckAccess("dega", util.GetOrganisation)).Group(func(r chi.Router) {
 		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
 		r.Mount("/core", core.Router())
 	})
