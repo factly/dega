@@ -12,9 +12,9 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
@@ -114,7 +114,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"space_id": result.SpaceID,
 	}
 
-	err = meili.AddDocument(meiliObj)
+	err = meilisearchx.AddDocument("dega", meiliObj)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)

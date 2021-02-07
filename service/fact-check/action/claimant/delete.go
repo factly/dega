@@ -7,9 +7,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -73,7 +73,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 	tx.Model(&model.Claimant{}).Delete(&result)
 
-	err = meili.DeleteDocument(result.ID, "claimant")
+	err = meilisearchx.DeleteDocument("dega", result.ID, "claimant")
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)

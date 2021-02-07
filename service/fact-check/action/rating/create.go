@@ -9,10 +9,10 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
@@ -149,5 +149,5 @@ func insertIntoMeili(rating model.Rating) error {
 		"space_id":      rating.SpaceID,
 	}
 
-	return meili.AddDocument(meiliObj)
+	return meilisearchx.AddDocument("dega", meiliObj)
 }

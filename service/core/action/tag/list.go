@@ -6,9 +6,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
@@ -56,7 +56,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		filters := fmt.Sprint("space_id=", sID)
 		var hits []interface{}
 
-		hits, err = meili.SearchWithQuery(searchQuery, filters, "tag")
+		hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "tag")
 
 		if err != nil {
 			loggerx.Error(err)
@@ -64,7 +64,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		filteredTagIDs = meili.GetIDArray(hits)
+		filteredTagIDs = meilisearchx.GetIDArray(hits)
 		if len(filteredTagIDs) == 0 {
 			renderx.JSON(w, http.StatusOK, result)
 			return

@@ -30,7 +30,7 @@ func RegisterRoutes() http.Handler {
 	r.Use(middleware.RealIP)
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/ping"))
-	r.Use(middlewarex.GormRequestID(&config.DB))
+	// r.Use(middlewarex.GormRequestID(&config.DB))
 
 	if viper.IsSet("mode") && viper.GetString("mode") == "development" {
 		r.Get("/swagger/*", httpSwagger.WrapHandler)

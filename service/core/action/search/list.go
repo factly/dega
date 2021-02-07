@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/dega-server/util/meili"
+	"github.com/factly/x/meilisearchx"
 	"github.com/meilisearch/meilisearch-go"
 
 	"github.com/factly/x/errorx"
@@ -57,7 +57,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		filters = fmt.Sprint(searchQuery.Filters, " AND ", filters)
 	}
 
-	result, err := meili.Client.Search("dega").Search(meilisearch.SearchRequest{
+	result, err := meilisearchx.Client.Search("dega").Search(meilisearch.SearchRequest{
 		Query:        searchQuery.Query,
 		Limit:        searchQuery.Limit,
 		Filters:      filters,
