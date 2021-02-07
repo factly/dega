@@ -30,7 +30,7 @@ import (
 // @Success 200 {object} model.Policy
 // @Router /core/policies/{policy_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := util.GetSpace(r.Context())
+	spaceID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

@@ -3,6 +3,7 @@ package spacePermission
 import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/middlewarex"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -30,13 +31,15 @@ var requestUserContext config.ContextKey = "request_user"
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.With(util.CheckSuperOrganisation).Get("/", list)
+	app := "dega"
+
+	r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Get("/", list)
 	r.Get("/my", my)
-	r.With(util.CheckSuperOrganisation).Post("/", create)
+	r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Post("/", create)
 	r.Route("/{permission_id}", func(r chi.Router) {
-		r.With(util.CheckSuperOrganisation).Get("/", details)
-		r.With(util.CheckSuperOrganisation).Put("/", update)
-		r.With(util.CheckSuperOrganisation).Delete("/", delete)
+		r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Get("/", details)
+		r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Put("/", update)
+		r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Delete("/", delete)
 	})
 
 	return r

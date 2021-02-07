@@ -5,9 +5,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
-	"github.com/jinzhu/gorm/dialects/postgres"
-
+	"github.com/factly/x/middlewarex"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var permissionContext config.ContextKey = "org_perm_user"
@@ -22,9 +22,11 @@ type organisationPermissionRequest struct {
 func Router() http.Handler {
 	r := chi.NewRouter()
 
-	r.With(util.CheckSuperOrganisation).Get("/", list)
+	app := "dega"
+
+	r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Get("/", list)
 	r.Get("/my", my)
-	r.With(util.CheckSuperOrganisation).Route("/{request_id}", func(r chi.Router) {
+	r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Route("/{request_id}", func(r chi.Router) {
 		r.Get("/", details)
 		r.Delete("/", delete)
 		r.Post("/approve", approve)

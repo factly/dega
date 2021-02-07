@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 	"github.com/spf13/viper"
@@ -26,7 +27,7 @@ import (
 // @Success 200 {object} model.Policy
 // @Router /core/policies/{policy_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := util.GetSpace(r.Context())
+	spaceID, err := middlewarex.GetSpace(r.Context())
 
 	if err != nil {
 		loggerx.Error(err)

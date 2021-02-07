@@ -50,14 +50,14 @@ func RegisterRoutes() http.Handler {
 		"meilisearch": util.MeiliChecker,
 	})
 
-	r.With(middlewarex.CheckUser, util.CheckSpace, util.GenerateOrganisation, util.CheckAccess("dega")).Group(func(r chi.Router) {
+	r.With(middlewarex.CheckUser, middlewarex.CheckSpace(1), util.GenerateOrganisation, util.CheckAccess("dega")).Group(func(r chi.Router) {
 		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
 		r.Mount("/core", core.Router())
 	})
 
 	r.With(middlewarex.CheckUser).Group(func(r chi.Router) {
 		r.Mount("/core/requests/organisations", organisationPermission.OrgRequestRouter())
-		r.With(util.CheckSpace).Mount("/core/requests/spaces", spacePermission.SpaceRequestRouter())
+		r.With(middlewarex.CheckSpace(1)).Mount("/core/requests/spaces", spacePermission.SpaceRequestRouter())
 	})
 
 	return r

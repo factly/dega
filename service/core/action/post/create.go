@@ -12,7 +12,6 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
@@ -38,7 +37,7 @@ import (
 // @Router /core/posts [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -80,7 +79,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factCheckModel.Claim, 0)
 
-	sID, err := util.GetSpace(ctx)
+	sID, err := middlewarex.GetSpace(ctx)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.Unauthorized()

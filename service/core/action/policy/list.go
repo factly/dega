@@ -41,7 +41,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	spaceID, err := util.GetSpace(r.Context())
+	spaceID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
