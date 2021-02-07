@@ -8,12 +8,12 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"gorm.io/gorm"
 )
@@ -71,15 +71,15 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tableName := stmt.Schema.Table
 
 	var claimSlug string
-	if claim.Slug != "" && slug.Check(claim.Slug) {
+	if claim.Slug != "" && slugx.Check(claim.Slug) {
 		claimSlug = claim.Slug
 	} else {
-		claimSlug = slug.Make(claim.Title)
+		claimSlug = slugx.Make(claim.Title)
 	}
 
 	result := &model.Claim{
 		Title:         claim.Title,
-		Slug:          slug.Approve(claimSlug, sID, tableName),
+		Slug:          slugx.Approve(&config.DB, claimSlug, sID, tableName),
 		ClaimDate:     claim.ClaimDate,
 		CheckedDate:   claim.CheckedDate,
 		ClaimSources:  claim.ClaimSources,

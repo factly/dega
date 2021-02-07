@@ -9,12 +9,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -68,10 +68,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var formatSlug string
-	if format.Slug != "" && slug.Check(format.Slug) {
+	if format.Slug != "" && slugx.Check(format.Slug) {
 		formatSlug = format.Slug
 	} else {
-		formatSlug = slug.Make(format.Name)
+		formatSlug = slugx.Make(format.Name)
 	}
 
 	// Get table name
@@ -102,7 +102,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Format{
 		Name:        format.Name,
 		Description: format.Description,
-		Slug:        slug.Approve(formatSlug, sID, tableName),
+		Slug:        slugx.Approve(&config.DB, formatSlug, sID, tableName),
 		SpaceID:     uint(sID),
 	}
 

@@ -9,12 +9,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"gorm.io/gorm"
 )
@@ -72,10 +72,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tableName := stmt.Schema.Table
 
 	var ratingSlug string
-	if rating.Slug != "" && slug.Check(rating.Slug) {
+	if rating.Slug != "" && slugx.Check(rating.Slug) {
 		ratingSlug = rating.Slug
 	} else {
-		ratingSlug = slug.Make(rating.Name)
+		ratingSlug = slugx.Make(rating.Name)
 	}
 
 	// Check if rating with same name exist
@@ -105,7 +105,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	result := &model.Rating{
 		Name:         rating.Name,
-		Slug:         slug.Approve(ratingSlug, sID, tableName),
+		Slug:         slugx.Approve(&config.DB, ratingSlug, sID, tableName),
 		Colour:       rating.Colour,
 		Description:  rating.Description,
 		MediumID:     mediumID,

@@ -12,12 +12,12 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -119,10 +119,10 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	tableName := stmt.Schema.Table
 
 	var postSlug string
-	if post.Slug != "" && slug.Check(post.Slug) {
+	if post.Slug != "" && slugx.Check(post.Slug) {
 		postSlug = post.Slug
 	} else {
-		postSlug = slug.Make(post.Title)
+		postSlug = slugx.Make(post.Title)
 	}
 
 	featuredMediumID := &post.FeaturedMediumID
@@ -132,7 +132,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 
 	result.Post = model.Post{
 		Title:            post.Title,
-		Slug:             slug.Approve(postSlug, sID, tableName),
+		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
 		Status:           status,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,

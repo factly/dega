@@ -12,11 +12,11 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 )
 
@@ -68,10 +68,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var menuSlug string
-	if menu.Slug != "" && slug.Check(menu.Slug) {
+	if menu.Slug != "" && slugx.Check(menu.Slug) {
 		menuSlug = menu.Slug
 	} else {
-		menuSlug = slug.Make(menu.Name)
+		menuSlug = slugx.Make(menu.Name)
 	}
 
 	// Get table name
@@ -89,7 +89,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Menu{
 		Name:    menu.Name,
 		Menu:    menu.Menu,
-		Slug:    slug.Approve(menuSlug, sID, tableName),
+		Slug:    slugx.Approve(&config.DB, menuSlug, sID, tableName),
 		SpaceID: uint(sID),
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

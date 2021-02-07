@@ -9,12 +9,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 	"gorm.io/gorm"
@@ -99,10 +99,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == menu.Slug {
 		menuSlug = result.Slug
-	} else if menu.Slug != "" && slug.Check(menu.Slug) {
-		menuSlug = slug.Approve(menu.Slug, sID, tableName)
+	} else if menu.Slug != "" && slugx.Check(menu.Slug) {
+		menuSlug = slugx.Approve(&config.DB, menu.Slug, sID, tableName)
 	} else {
-		menuSlug = slug.Approve(slug.Make(menu.Name), sID, tableName)
+		menuSlug = slugx.Approve(&config.DB, slugx.Make(menu.Name), sID, tableName)
 	}
 
 	// Check if menu with same name exist

@@ -15,12 +15,12 @@ import (
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 	"gorm.io/gorm"
@@ -128,10 +128,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == post.Slug {
 		postSlug = result.Slug
-	} else if post.Slug != "" && slug.Check(post.Slug) {
-		postSlug = slug.Approve(post.Slug, sID, tableName)
+	} else if post.Slug != "" && slugx.Check(post.Slug) {
+		postSlug = slugx.Approve(&config.DB, post.Slug, sID, tableName)
 	} else {
-		postSlug = slug.Approve(slug.Make(post.Title), sID, tableName)
+		postSlug = slugx.Approve(&config.DB, slugx.Make(post.Title), sID, tableName)
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

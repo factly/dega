@@ -12,11 +12,11 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 )
 
@@ -81,10 +81,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var categorySlug string
-	if category.Slug != "" && slug.Check(category.Slug) {
+	if category.Slug != "" && slugx.Check(category.Slug) {
 		categorySlug = category.Slug
 	} else {
-		categorySlug = slug.Make(category.Name)
+		categorySlug = slugx.Make(category.Name)
 	}
 
 	// Get table name
@@ -112,7 +112,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Category{
 		Name:        category.Name,
 		Description: category.Description,
-		Slug:        slug.Approve(categorySlug, sID, tableName),
+		Slug:        slugx.Approve(&config.DB, categorySlug, sID, tableName),
 		ParentID:    parentID,
 		MediumID:    mediumID,
 		SpaceID:     uint(sID),

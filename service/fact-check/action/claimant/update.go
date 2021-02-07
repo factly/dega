@@ -8,12 +8,12 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 	"gorm.io/gorm"
@@ -97,10 +97,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == claimant.Slug {
 		claimantSlug = result.Slug
-	} else if claimant.Slug != "" && slug.Check(claimant.Slug) {
-		claimantSlug = slug.Approve(claimant.Slug, sID, tableName)
+	} else if claimant.Slug != "" && slugx.Check(claimant.Slug) {
+		claimantSlug = slugx.Approve(&config.DB, claimant.Slug, sID, tableName)
 	} else {
-		claimantSlug = slug.Approve(slug.Make(claimant.Name), sID, tableName)
+		claimantSlug = slugx.Approve(&config.DB, slugx.Make(claimant.Name), sID, tableName)
 	}
 
 	tx := config.DB.Begin()

@@ -12,12 +12,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 )
 
@@ -105,10 +105,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var spaceSlug string
-	if space.Slug != "" && slug.Check(space.Slug) {
+	if space.Slug != "" && slugx.Check(space.Slug) {
 		spaceSlug = space.Slug
 	} else {
-		spaceSlug = slug.Make(space.Name)
+		spaceSlug = slugx.Make(space.Name)
 	}
 
 	result := model.Space{
