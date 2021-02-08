@@ -44,7 +44,7 @@ function Template({ format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
   const fetchTemplates = () => {
-    dispatch(getPosts({ page: page, status: 'template', format:[format.id] }));
+    dispatch(getPosts({ page: page, status: 'template', format: [format.id] }));
   };
 
   const genExtra = () => (
@@ -60,17 +60,15 @@ function Template({ format }) {
   );
 
   const handleAddPost = (item) => {
-    if(format.slug === "article") {
+    if (format.slug === 'article') {
       dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
         history.push(`/posts/${res.id}/edit`),
       );
-    }
-    else if(format.slug === "fact-check") {
+    } else if (format.slug === 'fact-check') {
       dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
-        history.push(`/fact-check/${res.id}/edit`),
+        history.push(`/fact-checks/${res.id}/edit`),
       );
     }
-  
   };
 
   if (loading) return <Spin style={{ marginLeft: '50%' }} />;
@@ -100,7 +98,13 @@ function Template({ format }) {
                   )
                 }
                 actions={[
-                  <Link to={format.slug === "article" ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit`}>
+                  <Link
+                    to={
+                      format.slug === 'article'
+                        ? `/posts/${item.id}/edit`
+                        : `/fact-checks/${item.id}/edit`
+                    }
+                  >
                     <EditOutlined key="edit" />
                   </Link>,
                   <Popconfirm

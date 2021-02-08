@@ -12,7 +12,7 @@ function EditFactCheck({ formats }) {
   const history = useHistory();
   const { id } = useParams();
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'fact check', action: 'get', spaces });
+  const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
   const dispatch = useDispatch();
 
   const { post, loading } = useSelector((state) => {
@@ -33,14 +33,19 @@ function EditFactCheck({ formats }) {
   const onUpdate = (values) => {
     if (values.status === 'draft' || values.status === 'template')
       dispatch(updatePost({ ...post, ...values })).then(() => {
-        history.push('/fact-check');
+        history.push('/fact-checks');
       });
     if (values.status === 'publish')
-      dispatch(publishPost({ ...post, ...values })).then(() => history.push('/fact-check'));
-      
+      dispatch(publishPost({ ...post, ...values })).then(() => history.push('/fact-checks'));
   };
-  return <EditFactCheckForm data={post} onCreate={onUpdate} actions={actions} format={formats.factcheck}/>;
-
+  return (
+    <EditFactCheckForm
+      data={post}
+      onCreate={onUpdate}
+      actions={actions}
+      format={formats.factcheck}
+    />
+  );
 }
 
 export default EditFactCheck;

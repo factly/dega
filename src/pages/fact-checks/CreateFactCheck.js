@@ -9,14 +9,14 @@ import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 function CreateFactCheck({ formats }) {
   const history = useHistory();
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'factchecks', action: 'get', spaces });
+  const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
     if (values.status === 'draft')
-      dispatch(addPost(values)).then(() => history.push('/fact-check'));
+      dispatch(addPost(values)).then(() => history.push('/fact-checks'));
     if (values.status === 'publish')
-      dispatch(publish(values)).then(() => history.push('/fact-check'));
+      dispatch(publish(values)).then(() => history.push('/fact-checks'));
   };
 
   if (!formats.loading && formats.factcheck) {

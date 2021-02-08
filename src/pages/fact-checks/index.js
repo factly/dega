@@ -8,12 +8,12 @@ import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function FactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'factchecks', action: 'get', spaces });
+  const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
 
   if (!formats.loading && formats.factcheck)
     return (
       <Space direction="vertical">
-        <Link to="/fact-check/create">
+        <Link to="/fact-checks/create">
           <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
             Create New
           </Button>
