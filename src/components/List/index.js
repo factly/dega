@@ -61,7 +61,7 @@ function PostList({ actions, format }) {
 
   return (
     <Space direction="vertical">
-      <Template format={format}/>
+      <Template format={format} />
       <Form
         initialValues={filters}
         form={form}
@@ -121,7 +121,11 @@ function PostList({ actions, format }) {
                 style={{
                   marginRight: 8,
                 }}
-                to={format.slug === "article" ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit`}
+                to={
+                  format.slug === 'article'
+                    ? `/posts/${item.id}/edit`
+                    : `/fact-checks/${item.id}/edit`
+                }
               >
                 <Button
                   icon={<EditOutlined />}
@@ -160,7 +164,17 @@ function PostList({ actions, format }) {
             }
           >
             <List.Item.Meta
-              title={<Link to={format.slug === "article" ? `/posts/${item.id}/edit` : `/fact-check/${item.id}/edit` }>{item.title}</Link>}
+              title={
+                <Link
+                  to={
+                    format.slug === 'article'
+                      ? `/posts/${item.id}/edit`
+                      : `/fact-checks/${item.id}/edit`
+                  }
+                >
+                  {item.title}
+                </Link>
+              }
               description={item.excerpt}
             />
           </List.Item>

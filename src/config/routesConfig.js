@@ -428,35 +428,35 @@ const routes = {
     },
   },
   factCheck: {
-    path: '/fact-check',
+    path: '/fact-checks',
     Component: FactCheck,
-    title: 'Fact Check',
+    title: 'Fact-Checks',
   },
   createFactCheck: {
-    path: '/fact-check/create',
+    path: '/fact-checks/create',
     Component: CreateFactCheck,
     title: 'Create',
     permission: {
-      resource: 'factchecks',
+      resource: 'fact-checks',
       action: 'create',
     },
   },
   editFactCheck: {
-    path: '/fact-check/:id/edit',
+    path: '/fact-checks/:id/edit',
     Component: EditFactCheck,
     title: 'Edit',
     permission: {
       action: 'update',
-      resource: 'factchecks',
+      resource: 'fact-checks',
     },
   },
   googleFactCheck: {
-    path: '/fact-check/google',
+    path: '/fact-checks/google',
     Component: GoogleFactCheck,
     title: 'Google',
   },
   factly: {
-    path: '/fact-check/factly',
+    path: '/fact-checks/factly',
     Component: Factly,
     title: 'Factly',
   },

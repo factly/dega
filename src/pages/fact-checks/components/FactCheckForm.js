@@ -13,7 +13,7 @@ import { useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 
-function FactCheckForm({ onCreate, data = {}, actions = {}, format}) {
+function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
   const [form] = Form.useForm();
   const sidebar = useSelector((state) => state.sidebar);
@@ -76,7 +76,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format}) {
   };
 
   const createTemplate = () => {
-    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/fact-check'));
+    dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/fact-checks'));
   };
 
   return (
@@ -142,7 +142,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format}) {
                   bordered={false}
                   placeholder="Add title for the fact-check"
                   onChange={(e) => onTitleChange(e.target.value)}
-                  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center'}}
+                  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
 
@@ -178,7 +178,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format}) {
                     { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
                   ]}
                 >
-                  <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }}/>
+                  <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
                 </Form.Item>
                 <Form.Item
                   name="slug"
@@ -205,7 +205,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format}) {
                 <Form.Item name="authors" label="Authors">
                   <Selector mode="multiple" display={'email'} action="Authors" />
                 </Form.Item>
-              </Drawer>  
+              </Drawer>
             </Col>
           </Row>
         </Space>
