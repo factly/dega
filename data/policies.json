@@ -36,7 +36,7 @@
                 "actions": ["get", "create", "update", "delete"]
             },
             {
-                "resource": "factchecks",
+                "resource": "fact-checks",
                 "actions": ["get", "create", "update", "delete"]
             },
             {
@@ -82,7 +82,7 @@
                 "actions": ["get", "create", "update"]
             },
             {
-                "resource": "factchecks",
+                "resource": "fact-checks",
                 "actions": ["get", "create", "update"]
             },
             {
@@ -120,7 +120,7 @@
                 "actions": ["get", "create", "update"]
             },
             {
-                "resource": "factchecks",
+                "resource": "fact-checks",
                 "actions": ["get", "create", "update"]
             }
         ]
