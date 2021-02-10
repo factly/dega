@@ -3,9 +3,8 @@ package request
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/service/core/action/request/organisationPermission"
-	"github.com/factly/dega-server/service/core/action/request/spacePermission"
-
+	"github.com/factly/dega-server/service/core/action/request/organisation"
+	"github.com/factly/dega-server/service/core/action/request/space"
 	"github.com/go-chi/chi"
 )
 
@@ -13,8 +12,8 @@ import (
 func Router() http.Handler {
 	r := chi.NewRouter()
 
-	r.Mount("/space-permissions", spacePermission.Router())
-	r.Mount("/organisation-permissions", organisationPermission.Router())
+	r.Mount("/spaces", space.Router())
+	r.Mount("/organisations", organisation.Router())
 
 	return r
 }
