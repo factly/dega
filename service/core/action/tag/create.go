@@ -121,5 +121,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tx.Commit()
+
+	util.NC.Publish("tag.create", result)
+
 	renderx.JSON(w, http.StatusCreated, result)
 }

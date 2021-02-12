@@ -144,5 +144,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tx.Commit()
+
+	util.NC.Publish("tag.updated", result)
+
 	renderx.JSON(w, http.StatusOK, result)
 }

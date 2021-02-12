@@ -199,5 +199,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	util.NC.Publish("space.deleted", result)
+
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -379,6 +379,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tx.Commit()
+
+	util.NC.Publish("post.updated", result)
+
 	renderx.JSON(w, http.StatusOK, result)
 }
 

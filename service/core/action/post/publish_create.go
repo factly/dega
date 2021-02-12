@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -58,6 +59,8 @@ func publishCreate(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errMessage))
 		return
 	}
+
+	util.NC.Publish("post.published", result)
 
 	renderx.JSON(w, http.StatusCreated, result)
 }
