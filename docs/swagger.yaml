@@ -90,6 +90,22 @@ definitions:
       total:
         type: integer
     type: object
+  event.event:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  event.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Event'
+        type: array
+      total:
+        type: integer
+    type: object
   format.format:
     properties:
       description:
@@ -466,6 +482,23 @@ definitions:
       space_id:
         type: integer
       tag_line:
+        type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+    type: object
+  model.Event:
+    properties:
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      name:
         type: string
       updated_at:
         type: string
@@ -863,6 +896,29 @@ definitions:
     required:
     - name
     - slug
+    type: object
+  model.Webhook:
+    properties:
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      enabled:
+        type: boolean
+      events:
+        items:
+          $ref: '#/definitions/model.Event'
+        type: array
+      id:
+        type: integer
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+      url:
+        type: string
     type: object
   organisation.orgPermissionRes:
     properties:
@@ -1312,6 +1368,29 @@ definitions:
       updated_by_id:
         type: integer
     type: object
+  webhook.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Webhook'
+        type: array
+      total:
+        type: integer
+    type: object
+  webhook.webhook:
+    properties:
+      enabled:
+        type: boolean
+      event_ids:
+        items:
+          type: integer
+        type: array
+      url:
+        type: string
+    required:
+    - event_ids
+    - url
+    type: object
 host: localhost:7789
 info:
   contact:
@@ -1530,6 +1609,170 @@ paths:
       summary: Update a category by id
       tags:
       - Category
+  /core/events:
+    get:
+      description: Get all events
+      operationId: get-all-events
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/event.paging'
+      summary: Show all events
+      tags:
+      - Events
+    post:
+      description: Create Event
+      operationId: add-event
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Event Object
+        in: body
+        name: Event
+        required: true
+        schema:
+          $ref: '#/definitions/event.event'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Event'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create Event
+      tags:
+      - Events
+  /core/events/{event_id}:
+    delete:
+      description: Delete Event by id
+      operationId: delete-event-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: event_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete Event by id
+      tags:
+      - Events
+    get:
+      description: Get event by ID
+      operationId: get-event-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: event_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Event'
+      summary: Show a event by id
+      tags:
+      - Events
+    put:
+      description: Update event by ID
+      operationId: update-event-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: event_id
+        required: true
+        type: string
+      - description: Event Object
+        in: body
+        name: Event
+        schema:
+          $ref: '#/definitions/event.event'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Event'
+      summary: Update a event by id
+      tags:
+      - Events
   /core/formats:
     get:
       description: Get all formats
@@ -3667,6 +3910,170 @@ paths:
       summary: Get user's permission
       tags:
       - Users
+  /core/webhooks:
+    get:
+      description: Get all webhooks
+      operationId: get-all-webhooks
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/webhook.paging'
+      summary: Show all webhooks
+      tags:
+      - Webhooks
+    post:
+      description: Create Webhook
+      operationId: add-webhook
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Webhook Object
+        in: body
+        name: Webhook
+        required: true
+        schema:
+          $ref: '#/definitions/webhook.webhook'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Webhook'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create Webhook
+      tags:
+      - Webhooks
+  /core/webhooks/{webhook_id}:
+    delete:
+      description: Delete webhook by id
+      operationId: delete-webhook-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Webhook ID
+        in: path
+        name: webhook_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete webhook by id
+      tags:
+      - Webhooks
+    get:
+      description: Get webhook by ID
+      operationId: get-webhook-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Webhook ID
+        in: path
+        name: webhook_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Webhook'
+      summary: Show a webhook by id
+      tags:
+      - Webhooks
+    put:
+      description: Update webhook by ID
+      operationId: update-webhook-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Webhook ID
+        in: path
+        name: webhook_id
+        required: true
+        type: string
+      - description: Webhook Object
+        in: body
+        name: Webhook
+        schema:
+          $ref: '#/definitions/webhook.webhook'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Webhook'
+      summary: Update a webhook by id
+      tags:
+      - Webhooks
   /fact-check/claimants:
     get:
       description: Get all claimants
