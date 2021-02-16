@@ -3823,6 +3823,55 @@ var doc = `{
                 }
             }
         },
+        "/core/webhooks/logs": {
+            "get": {
+                "description": "Get all webhooks logs",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Show all webhooks logs",
+                "operationId": "get-all-webhooks-logs",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/webhook.paging"
+                        }
+                    }
+                }
+            }
+        },
         "/core/webhooks/{webhook_id}": {
             "get": {
                 "description": "Get webhook by ID",
@@ -4949,6 +4998,9 @@ var doc = `{
             "properties": {
                 "name": {
                     "type": "string"
+                },
+                "tags": {
+                    "type": "string"
                 }
             }
         },
@@ -5563,6 +5615,12 @@ var doc = `{
                 },
                 "name": {
                     "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "updated_at": {
                     "type": "string"
@@ -6188,6 +6246,12 @@ var doc = `{
                 },
                 "id": {
                     "type": "integer"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "updated_at": {
                     "type": "string"
@@ -6910,6 +6974,9 @@ var doc = `{
                     "items": {
                         "type": "integer"
                     }
+                },
+                "tags": {
+                    "type": "string"
                 },
                 "url": {
                     "type": "string"

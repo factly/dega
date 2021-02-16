@@ -1,9 +1,13 @@
 package event
 
-import "github.com/go-chi/chi"
+import (
+	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
+)
 
 type event struct {
-	Name string `json:"name" validate:"required"`
+	Name string         `json:"name" validate:"required"`
+	Tags postgres.Jsonb `json:"tags" swaggertype:"primitive,string"`
 }
 
 // Router events endpoint router

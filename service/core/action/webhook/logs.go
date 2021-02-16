@@ -14,25 +14,24 @@ import (
 	"github.com/spf13/viper"
 )
 
-type paging struct {
-	Total int64           `json:"total"`
-	Nodes []model.Webhook `json:"nodes"`
+type logPaging struct {
+	Total int64              `json:"total"`
+	Nodes []model.WebhookLog `json:"nodes"`
 }
 
-// list - Get all webhooks
-// @Summary Show all webhooks
-// @Description Get all webhooks
+// list - Get all webhooks logs
+// @Summary Show all webhooks logs
+// @Description Get all webhooks logs
 // @Tags Webhooks
-// @ID get-all-webhooks
+// @ID get-all-webhooks-logs
 // @Produce json
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Success 200 {object} paging
-// @Router /core/webhooks [get]
-func list(w http.ResponseWriter, r *http.Request) {
-
+// @Router /core/webhooks/logs [get]
+func logs(w http.ResponseWriter, r *http.Request) {
 	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -40,7 +39,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hukzURL := viper.GetString("hukz_url") + "/webhooks?tag=app:dega&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
+	hukzURL := viper.GetString("hukz_url") + "/webhooks/logs?tag=app:dega&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
 
 	resp, err := requestx.Request("GET", hukzURL, nil, map[string]string{
 		"X-User": fmt.Sprint(uID),
@@ -51,7 +50,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var webhooksPaging paging
+	var webhooksPaging logPaging
 
 	if err = json.NewDecoder(resp.Body).Decode(&webhooksPaging); err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

@@ -94,6 +94,8 @@ definitions:
     properties:
       name:
         type: string
+      tags:
+        type: string
     required:
     - name
     type: object
@@ -500,6 +502,10 @@ definitions:
         type: integer
       name:
         type: string
+      tags:
+        additionalProperties:
+          type: string
+        type: object
       updated_at:
         type: string
       updated_by_id:
@@ -913,6 +919,10 @@ definitions:
         type: array
       id:
         type: integer
+      tags:
+        additionalProperties:
+          type: string
+        type: object
       updated_at:
         type: string
       updated_by_id:
@@ -1385,6 +1395,8 @@ definitions:
         items:
           type: integer
         type: array
+      tags:
+        type: string
       url:
         type: string
     required:
@@ -4072,6 +4084,39 @@ paths:
           schema:
             $ref: '#/definitions/model.Webhook'
       summary: Update a webhook by id
+      tags:
+      - Webhooks
+  /core/webhooks/logs:
+    get:
+      description: Get all webhooks logs
+      operationId: get-all-webhooks-logs
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/webhook.paging'
+      summary: Show all webhooks logs
       tags:
       - Webhooks
   /fact-check/claimants:
