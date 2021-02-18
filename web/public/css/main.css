@@ -1,0 +1,7 @@
+body {
+  font-family: monospace;
+}
+
+div#post_description.description {
+  font-family: sans-serif;
+}
