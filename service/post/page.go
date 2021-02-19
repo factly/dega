@@ -3,14 +3,13 @@ package post
 import (
 	"encoding/json"
 	"fmt"
-	"html/template"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-templates/config"
 	"github.com/factly/dega-templates/model"
 	"github.com/factly/dega-templates/util"
-	"github.com/factly/x/editorx"
+	"github.com/factly/dega-templates/util/editorjs"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -92,7 +91,7 @@ func page(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	html, err := editorx.EditorjsToHTML(editorjsBlocks)
+	bmap, err := editorjs.BlockMap(editorjsBlocks)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -100,8 +99,8 @@ func page(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = util.Template.ExecuteTemplate(w, "post.gohtml", map[string]interface{}{
-		"post":     result,
-		"HTMLDesc": template.HTML(html),
+		"post": result,
+		"bmap": bmap,
 	})
 	if err != nil {
 		loggerx.Error(err)

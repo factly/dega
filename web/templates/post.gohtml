@@ -8,10 +8,40 @@
   <title>{{.post.Slug}}</title>
 </head>
 <body>
-  <h1>{{.post.Title}}<h1>
-  <h3>{{.post.Excerpt}}</h3>
+
+  {{$urlMap := unmar .post.Medium.URL}}
+
+  <h1>{{.post.Title}} <img class="featured_image" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> </h1>
+  <h3>{{.post.Subtitle}}</h3>
+  <blockquote>{{.post.Excerpt}}</blockquote>
+  <br><br>
+  <p id="format"><b> Format: {{.post.Format.Name}}</b></p>
+  
+  <p><b>Tags: </b></p>
+  <ul>
+  {{range .post.Tags}}
+    {{$tagDesc := unmar .Description}}
+    <li>{{.Name}} - {{template "description" $tagDesc.blocks}}</li>
+  {{end}}
+  </ul>
+
+  <p><b>Categories: </b></p>
+  <ul>
+  {{range .post.Categories}}
+    {{$catDesc := unmar .Description}}
+    <li>{{.Name}} - {{template "description" $catDesc.blocks}}</li>
+  {{end}}
+  </ul>
+
+  <p><b>Authors: </b></p>
+  <ul>
+  {{range .post.Authors}}
+    <li>{{.FirstName}} {{.LastName}} - {{.Email}}</li>
+  {{end}}
+  </ul>
+  <br><hr>
   <div id="post_description" class="description">
-    {{.HTMLDesc}}
+    {{template "description" .bmap}}
   </div>
   
 </body>
