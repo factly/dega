@@ -15,7 +15,8 @@ type postData struct {
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/{post_id}", page)
+	r.Get("/", list)
+	r.Get("/{post_id}", details)
 
 	return r
 }
