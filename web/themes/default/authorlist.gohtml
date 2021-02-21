@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Author List</title>
+  <link rel="stylesheet" href="/default/css/main.css">
+</head>
+<body>
+  <h1>Author List</h1>
+
+    <div class="row"> 
+  
+      {{range $index, $author := .}}
+      <div class="column" style="text-align: justify;">
+        {{if $author.Medium}}
+          {{$urlMap := unmar $author.Medium.URL}}
+          <img style="width: 10%;" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
+          <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
+        {{end}}
+        <h3>{{.FirstName}} {{.LastName}}</h3>
+        <table>
+          <tr>
+            <td><b>Description:</b></td>
+            <td>{{.Description}}</td>
+          </tr>
+          <tr>
+            <td><b>Email:</b></td>
+            <td>{{.Email}}</td>
+          </tr>
+          <tr>
+            <td><b>Display Name:</b></td>
+            <td>{{.DisplayName}}</td>
+          </tr>
+          <tr>
+            <td><b>Birth Date:</b></td>
+            <td>{{.BirthDate}}</td>
+          </tr>
+          <tr>
+            <td><b>Gender:</b></td>
+            <td>{{.Gender}}</td>
+          </tr>
+          </table>
+      </div>
+    {{end}}
+
+    </div>
+</body>
+</html>

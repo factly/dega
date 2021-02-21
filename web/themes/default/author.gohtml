@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{.FirstName}}</title>
+</head>
+<body>
+  <h2>{{.FirstName}} {{.LastName}}</h2>
+  {{if .Medium}}
+    {{$urlMap := unmar .Medium.URL}}
+    <img class="featured_image" style="width: 500px; height: 500px;" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
+    <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
+  {{end}}
+  <table>
+    <tr>
+      <td><b>Description:</b></td>
+      <td>{{.Description}}</td>
+    </tr>
+    <tr>
+      <td><b>Email:</b></td>
+      <td>{{.Email}}</td>
+    </tr>
+    <tr>
+      <td><b>Display Name:</b></td>
+      <td>{{.DisplayName}}</td>
+    </tr>
+    <tr>
+      <td><b>Birth Date:</b></td>
+      <td>{{.BirthDate}}</td>
+    </tr>
+    <tr>
+      <td><b>Gender:</b></td>
+      <td>{{.Gender}}</td>
+    </tr>
+    <tr>
+      <td><b>Social Media URLs:</b></td>
+      
+    </tr>
+    {{range $key, $val := unmar .SocialMediaURLs}}
+      <tr>
+        <td></td>
+        <td><a href="{{$val}}">{{$key}}</a></td>
+      </tr>
+      {{end}}
+  </table>
+
+</body>
+</html>
