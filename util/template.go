@@ -19,6 +19,7 @@ func SetupTemplates() {
 		"bmap":    editorjs.BlockMap,
 		"dateFmt": formatDate,
 		"dateVal": validateDate,
+		"noesc":   noescape,
 	}).ParseGlob("web/themes/default/*"))
 }
 
@@ -34,4 +35,8 @@ func formatDate(date time.Time) string {
 
 func validateDate(date time.Time) bool {
 	return !date.Equal(time.Time{})
+}
+
+func noescape(str string) template.HTML {
+	return template.HTML(str)
 }

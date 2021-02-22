@@ -8,6 +8,7 @@ import (
 
 	"github.com/factly/dega-templates/config"
 	"github.com/factly/dega-templates/service/author"
+	"github.com/factly/dega-templates/service/category"
 	"github.com/factly/dega-templates/service/post"
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
@@ -40,6 +41,7 @@ func RegisterRoutes() http.Handler {
 	r.With(middlewarex.CheckSpace(0)).Group(func(r chi.Router) {
 		r.Mount("/posts", post.Router())
 		r.Mount("/authors", author.Router())
+		r.Mount("/categories", category.Router())
 	})
 
 	return r

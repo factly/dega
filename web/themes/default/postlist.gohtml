@@ -17,11 +17,11 @@
       <div class="column">
         {{if $post.Medium}}
           {{$urlMap := unmar $post.Medium.URL}}
-          <img class="featured_image" style="width: 500px; height: 500px;" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
+          <img class="featured_image" style="width: 500; height: 500;" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
           <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
         {{end}}
         <br>
-        <h3>{{$post.Title}}</h3>
+        <h3><a href="/posts/{{$post.ID}}">{{$post.Title}}</a></h3>
         {{if dateVal $post.PublishedDate}} <b>Published Date:</b> {{$post.PublishedDate | dateFmt}} {{end}} <br>
 
         <b>Authors:</b>

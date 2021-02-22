@@ -1,7 +1,7 @@
 {{define "description"}}
   {{range .}}
     {{if eq .type "paragraph"}} 
-      <p>{{.data.text}}</p>
+      <p>{{noesc .data.text}}</p>
     
     {{else if eq .type "header"}}
       <h{{.data.level}}>{{.data.text}}</h{{.data.level}}>
@@ -25,7 +25,7 @@
       <blockquote>{{.data.text}}</blockquote>
 
     {{else if eq .type "raw"}}
-        {{.data.html}}
+        {{noesc .data.html}}
 
     {{else if eq .type "code"}}
       <pre>

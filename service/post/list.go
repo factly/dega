@@ -13,11 +13,6 @@ import (
 	"github.com/factly/x/paginationx"
 )
 
-type paging struct {
-	Total int64      `json:"total"`
-	Nodes []postData `json:"nodes"`
-}
-
 func list(w http.ResponseWriter, r *http.Request) {
 	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
@@ -26,8 +21,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := paging{}
-	result.Nodes = make([]postData, 0)
+	result := make([]postData, 0)
 
 	posts := make([]model.Post, 0)
 
@@ -35,7 +29,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	err = config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Order("created_at").Where("status != ?", "template").Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+	}).Order("created_at").Where("status != ?", "template").Offset(offset).Limit(limit).Find(&posts).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -100,11 +94,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		}
-		result.Nodes = append(result.Nodes, *postList)
+		result = append(result, *postList)
 	}
 
 	err = util.Template.ExecuteTemplate(w, "postlist.gohtml", map[string]interface{}{
-		"postList": result.Nodes,
+		"postList": result,
 	})
 	if err != nil {
 		loggerx.Error(err)

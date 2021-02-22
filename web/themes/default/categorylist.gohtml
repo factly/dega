@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/default/css/main.css">
+  <title>Category List</title>
+</head>
+<body>
+  <h1>Category List</h1>
+
+  <div class="row">      
+    {{range $index, $cat := .}}
+    <div class="column">
+      {{if $cat.Medium}}
+      {{$urlMap := unmar $cat.Medium.URL}}
+      <img class="featured_image" style="width: 500; height: 500;" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
+      <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
+      {{end}}
+
+      <br>
+      <h3>{{$cat.Name}}</h3> <br>
+      <b>Is Featured:</b> {{$cat.IsFeatured}}
+      <br>
+      
+      {{$bmap := unmar $cat.Description}}
+      
+      <div id="cat_description" class="description">
+        {{template "description" $bmap.blocks}}
+      </div>
+      
+      <br>
+      {{$meta := unmar $cat.MetaFields}}
+      <b>Meta Fields:</b>
+      <ul>
+      {{range $k, $v := $meta}}
+        <li>{{$k}} - {{$v}}</li>  
+      {{end}}
+      </ul>
+    </div>
+    {{end}}
+  </div>
+  
+</body>
+</html>
