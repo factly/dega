@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-templates/service/author"
 	"github.com/factly/dega-templates/service/category"
 	"github.com/factly/dega-templates/service/post"
+	"github.com/factly/dega-templates/service/tag"
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -42,6 +43,7 @@ func RegisterRoutes() http.Handler {
 		r.Mount("/posts", post.Router())
 		r.Mount("/authors", author.Router())
 		r.Mount("/categories", category.Router())
+		r.Mount("/tags", tag.Router())
 	})
 
 	return r
