@@ -1,7 +1,7 @@
 package post
 
 import (
-	"github.com/factly/dega-templates/model"
+	"github.com/factly/dega-vito/model"
 	"github.com/go-chi/chi"
 )
 

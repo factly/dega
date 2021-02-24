@@ -19,7 +19,7 @@
           <img style="width: 10%;" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
           <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
         {{end}}
-        <h3>{{.FirstName}} {{.LastName}}</h3>
+        <h3><a href="/authors/{{$author.ID}}">{{.FirstName}} {{.LastName}}</a></h3>
         <table>
           <tr>
             <td><b>Description:</b></td>

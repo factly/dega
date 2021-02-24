@@ -4,14 +4,14 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/factly/dega-templates/config"
-	"github.com/factly/dega-templates/service"
-	"github.com/factly/dega-templates/util"
+	"github.com/factly/dega-vito/config"
+	"github.com/factly/dega-vito/service"
+	"github.com/factly/dega-vito/util"
 )
 
-// @title Dega Templates
+// @title Dega Vito
 // @version 1.0
-// @description Dega Templates Service
+// @description Dega Vito Service
 
 // @contact.name API Support
 // @contact.url http://www.swagger.io/support

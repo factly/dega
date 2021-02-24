@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/dega-templates/config"
-	"github.com/factly/dega-templates/model"
-	"github.com/factly/dega-templates/util"
+	"github.com/factly/dega-vito/config"
+	"github.com/factly/dega-vito/model"
+	"github.com/factly/dega-vito/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"

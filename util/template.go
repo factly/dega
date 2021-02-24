@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"time"
 
-	"github.com/factly/dega-templates/util/editorjs"
+	"github.com/factly/dega-vito/util/editorjs"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 

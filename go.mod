@@ -1,4 +1,4 @@
-module github.com/factly/dega-templates
+module github.com/factly/dega-vito
 
 go 1.15
 

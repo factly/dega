@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/factly/dega-templates/config"
-	"github.com/factly/dega-templates/model"
+	"github.com/factly/dega-vito/config"
+	"github.com/factly/dega-vito/model"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/requestx"
 	"github.com/spf13/viper"
