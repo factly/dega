@@ -27,3 +27,4 @@ COPY --from=build_base /tmp/dega-server/out/dega-server /app/dega-server
 
 # Run the binary program produced by `go install`
 ENTRYPOINT ["/app/dega-server"]
+CMD ["serve"]
