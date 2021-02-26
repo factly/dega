@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/util"
 	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -36,6 +37,10 @@ func TestRatingList(t *testing.T) {
 		}},
 	}
 
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
+
 	t.Run("get empty list of ratings", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		spacePermission.SelectQuery(mock, 1)
@@ -62,8 +67,8 @@ func TestRatingList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratinglist[0]["name"], ratinglist[0]["slug"], ratinglist[0]["medium_id"], ratinglist[0]["description"], ratinglist[0]["numeric_value"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, ratinglist[1]["name"], ratinglist[1]["slug"], ratinglist[1]["medium_id"], ratinglist[1]["description"], ratinglist[1]["numeric_value"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratinglist[0]["name"], ratinglist[0]["slug"], ratinglist[0]["colour"], ratinglist[0]["medium_id"], ratinglist[0]["description"], ratinglist[0]["numeric_value"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, ratinglist[1]["name"], ratinglist[1]["slug"], ratinglist[0]["colour"], ratinglist[1]["medium_id"], ratinglist[1]["description"], ratinglist[1]["numeric_value"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -89,7 +94,7 @@ func TestRatingList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, ratinglist[1]["name"], ratinglist[1]["slug"], ratinglist[1]["medium_id"], ratinglist[1]["description"], ratinglist[1]["numeric_value"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, ratinglist[1]["name"], ratinglist[1]["slug"], ratinglist[0]["colour"], ratinglist[1]["medium_id"], ratinglist[1]["description"], ratinglist[1]["numeric_value"], 1))
 
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{

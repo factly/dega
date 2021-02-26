@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
@@ -20,6 +21,9 @@ var updatedRating = map[string]interface{}{
 	"name": "True",
 	"description": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"description"}`),
+	},
+	"colour": postgres.Jsonb{
+		RawMessage: []byte(`"green"`),
 	},
 	"numeric_value": 5,
 	"medium_id":     uint(1),
@@ -38,6 +42,10 @@ func TestRatingUpdate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("invalid rating id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)

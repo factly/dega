@@ -1,4 +1,4 @@
-package rating
+package menu
 
 import (
 	"net/http"
@@ -8,13 +8,12 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
 	"github.com/factly/dega-server/util"
-	"github.com/gavv/httpexpect/v2"
+	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestRatingDelete(t *testing.T) {
+func TestMenuDelete(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	test.MockServer()
@@ -32,50 +31,36 @@ func TestRatingDelete(t *testing.T) {
 	defer s.Shutdown()
 	util.ConnectNats()
 
-	t.Run("invalid rating id", func(t *testing.T) {
+	t.Run("invalid menu id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
 
 		e.DELETE(path).
-			WithPath("rating_id", "invalid_id").
+			WithPath("menu_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
-
+		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("rating record not found", func(t *testing.T) {
+	t.Run("menu record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
-		recordNotFoundMock(mock)
+
+		mock.ExpectQuery(selectQuery).
+			WithArgs(1, 1).
+			WillReturnRows(sqlmock.NewRows(Columns))
 
 		e.DELETE(path).
-			WithPath("rating_id", "100").
+			WithPath("menu_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
+		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("check rating associated with other entity", func(t *testing.T) {
+	t.Run("delete menu", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
-		SelectWithSpace(mock)
 
-		ratingClaimExpect(mock, 1)
-
-		e.DELETE(path).
-			WithPath("rating_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-	})
-
-	t.Run("rating record deleted", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
-		SelectWithSpace(mock)
-
-		ratingClaimExpect(mock, 0)
+		SelectQuery(mock, 1, 1)
 
 		mock.ExpectBegin()
 		mock.ExpectExec(deleteQuery).
@@ -84,19 +69,18 @@ func TestRatingDelete(t *testing.T) {
 		mock.ExpectCommit()
 
 		e.DELETE(path).
-			WithPath("rating_id", 1).
+			WithPath("menu_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK)
+		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("delete when meili is down", func(t *testing.T) {
+	t.Run("meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
-		SelectWithSpace(mock)
 
-		ratingClaimExpect(mock, 0)
+		SelectQuery(mock, 1, 1)
 
 		mock.ExpectBegin()
 		mock.ExpectExec(deleteQuery).
@@ -105,9 +89,10 @@ func TestRatingDelete(t *testing.T) {
 		mock.ExpectRollback()
 
 		e.DELETE(path).
-			WithPath("rating_id", 1).
+			WithPath("menu_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
 	})
 }

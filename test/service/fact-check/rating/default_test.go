@@ -8,6 +8,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service/fact-check/action/rating"
 	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/util"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -27,10 +28,14 @@ func TestDefaultRatingCreate(t *testing.T) {
 	defer gock.DisableNetworking()
 	defer testServer.Close()
 
-	rating.DataFile = "../../../../data/ratings.json"
+	rating.DataFile = "./testDefault.json"
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("create default ratings", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -39,7 +44,17 @@ func TestDefaultRatingCreate(t *testing.T) {
 		mock.ExpectBegin()
 
 		mock.ExpectQuery(`INSERT INTO "ratings"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], nil, defaultData[0]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], nil, defaultData[1]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[2]["name"], defaultData[2]["slug"], nil, defaultData[2]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[3]["name"], defaultData[3]["slug"], nil, defaultData[3]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[4]["name"], defaultData[4]["slug"], nil, defaultData[4]["numeric_value"], nil, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["colour"], defaultData[0]["description"], defaultData[0]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["colour"], defaultData[1]["description"], defaultData[1]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[2]["name"], defaultData[2]["slug"], defaultData[2]["colour"], defaultData[2]["description"], defaultData[2]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[3]["name"], defaultData[3]["slug"], defaultData[3]["colour"], defaultData[3]["description"], defaultData[3]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[4]["name"], defaultData[4]["slug"], defaultData[4]["colour"], defaultData[4]["description"], defaultData[4]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[5]["name"], defaultData[5]["slug"], defaultData[5]["colour"], defaultData[5]["description"], defaultData[5]["numeric_value"], nil, 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))
@@ -81,7 +96,7 @@ func TestDefaultRatingCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
-		rating.DataFile = "../../../../data/ratings.json"
+		rating.DataFile = "./testDefault.json"
 	})
 
 	t.Run("when meili is down", func(t *testing.T) {
@@ -92,7 +107,17 @@ func TestDefaultRatingCreate(t *testing.T) {
 		mock.ExpectBegin()
 
 		mock.ExpectQuery(`INSERT INTO "ratings"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], nil, defaultData[0]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], nil, defaultData[1]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[2]["name"], defaultData[2]["slug"], nil, defaultData[2]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[3]["name"], defaultData[3]["slug"], nil, defaultData[3]["numeric_value"], nil, 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[4]["name"], defaultData[4]["slug"], nil, defaultData[4]["numeric_value"], nil, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["colour"], defaultData[0]["description"], defaultData[0]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["colour"], defaultData[1]["description"], defaultData[1]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[2]["name"], defaultData[2]["slug"], defaultData[2]["colour"], defaultData[2]["description"], defaultData[2]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[3]["name"], defaultData[3]["slug"], defaultData[3]["colour"], defaultData[3]["description"], defaultData[3]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[4]["name"], defaultData[4]["slug"], defaultData[4]["colour"], defaultData[4]["description"], defaultData[4]["numeric_value"], nil, 1,
+
+				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[5]["name"], defaultData[5]["slug"], defaultData[5]["colour"], defaultData[5]["description"], defaultData[5]["numeric_value"], nil, 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

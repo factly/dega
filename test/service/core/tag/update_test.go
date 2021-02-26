@@ -29,6 +29,9 @@ func TestTagUpdate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("invalid tag id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -100,10 +103,6 @@ func TestTagUpdate(t *testing.T) {
 			Status(http.StatusOK).JSON().Object().ContainsMap(updatedTag)
 
 	})
-
-	s := test.RunDefaultNATSServer()
-	defer s.Shutdown()
-	util.ConnectNats()
 
 	t.Run("update tag by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)

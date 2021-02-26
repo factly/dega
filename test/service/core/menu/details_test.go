@@ -1,21 +1,23 @@
-package rating
+package menu
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
 	"github.com/factly/dega-server/util"
-	"github.com/gavv/httpexpect/v2"
+	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestRatingDetails(t *testing.T) {
+func TestMenuDetails(t *testing.T) {
 	mock := test.SetupMockDB()
+
+	test.MockServer()
+	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
@@ -29,39 +31,41 @@ func TestRatingDetails(t *testing.T) {
 	defer s.Shutdown()
 	util.ConnectNats()
 
-	t.Run("invalid rating id", func(t *testing.T) {
+	t.Run("invalid menu id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
 		e.GET(path).
-			WithPath("rating_id", "invalid_id").
+			WithPath("menu_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
+		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("rating record not found", func(t *testing.T) {
+	t.Run("menu record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
-		recordNotFoundMock(mock)
+
+		mock.ExpectQuery(selectQuery).
+			WithArgs(1, 1).
+			WillReturnRows(sqlmock.NewRows(Columns))
 
 		e.GET(path).
-			WithPath("rating_id", "100").
+			WithPath("menu_id", "1").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusInternalServerError)
+			Status(http.StatusNotFound)
+		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("get rating by id", func(t *testing.T) {
+	t.Run("get menu by id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
-		SelectWithSpace(mock)
-		medium.SelectWithOutSpace(mock)
+
+		SelectQuery(mock)
 
 		e.GET(path).
-			WithPath("rating_id", 1).
+			WithPath("menu_id", "1").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
+			Status(http.StatusOK)
+		test.ExpectationsMet(t, mock)
 	})
-
 }
