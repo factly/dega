@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	podcastModel "github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util/meili"
 	"github.com/go-chi/chi"
 )
@@ -36,6 +37,7 @@ func main() {
 
 	factCheckModel.Migration()
 	coreModel.Migration()
+	podcastModel.Migration()
 
 	err := config.CreateSuperOrganisation()
 	if err != nil {
