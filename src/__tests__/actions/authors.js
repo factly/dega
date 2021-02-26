@@ -124,6 +124,10 @@ describe('authors actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_AUTHORS_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });
