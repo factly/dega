@@ -168,6 +168,10 @@ describe('categories actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });
@@ -195,6 +199,10 @@ describe('categories actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -333,16 +341,16 @@ describe('categories actions', () => {
         payload: { id: 1, name: 'Category', medium: undefined },
       },
       {
-        type: types.SET_CATEGORIES_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Category updated',
         },
+      },
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -372,16 +380,16 @@ describe('categories actions', () => {
         payload: { id: 1, name: 'Category', medium: 4 },
       },
       {
-        type: types.SET_CATEGORIES_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Category updated',
         },
+      },
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -408,6 +416,10 @@ describe('categories actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_CATEGORIES_LOADING,
+        payload: false,
       },
     ];
 
