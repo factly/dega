@@ -13,6 +13,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/request/organisationPermission"
 	"github.com/factly/dega-server/service/core/action/request/spacePermission"
 	factCheck "github.com/factly/dega-server/service/fact-check"
+	"github.com/factly/dega-server/service/podcast"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/loggerx"
 	"github.com/go-chi/chi"
@@ -52,6 +53,7 @@ func RegisterRoutes() http.Handler {
 	r.With(util.CheckUser, util.CheckSpace, util.GenerateOrganisation).Group(func(r chi.Router) {
 		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
 		r.Mount("/core", core.Router())
+		r.Mount("/podcast", podcast.Router())
 	})
 
 	r.With(util.CheckUser).Group(func(r chi.Router) {
