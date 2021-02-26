@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/factly/dega-server/service/core/action/format"
+	"github.com/factly/dega-server/util"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -30,6 +31,10 @@ func TestDefaultFormatCreate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("create default formats", func(t *testing.T) {
 		test.CheckSpaceMock(mock)

@@ -7,7 +7,8 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/permissions/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/util"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -30,9 +31,16 @@ func TestMediumCreate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
+
 	t.Run("Unprocessable medium", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
+
+		spacePermission.SelectQuery(mock)
+		countQuery(mock, 1)
 
 		e.POST(basePath).
 			WithJSON(invalidData).
@@ -57,8 +65,8 @@ func TestMediumCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
-		countQuery(mock, 1)
+		spacePermission.SelectQuery(mock)
+		countQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
 
@@ -82,9 +90,9 @@ func TestMediumCreate(t *testing.T) {
 	t.Run("create medium when permission not present", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "space_permissions"`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts"}))
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "space_id", "mediums", "posts"}))
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -98,7 +106,7 @@ func TestMediumCreate(t *testing.T) {
 	t.Run("create more than permitted medium", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		countQuery(mock, 100)
 
 		e.POST(basePath).
@@ -114,8 +122,8 @@ func TestMediumCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
-		countQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		countQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
 
@@ -139,8 +147,8 @@ func TestMediumCreate(t *testing.T) {
 	t.Run("medium does not belong same space", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
-		countQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		countQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
 		mediumInsertError(mock)
@@ -157,8 +165,8 @@ func TestMediumCreate(t *testing.T) {
 	t.Run("create medium when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		organisationPermission.SelectQuery(mock, 1)
-		countQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		countQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
 

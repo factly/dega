@@ -158,7 +158,7 @@ func oneMediaIDZeroMock(mock sqlmock.Sqlmock, updateargs ...driver.Value) {
 
 func spacePermissionCreateQuery(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1, -1, -1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))

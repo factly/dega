@@ -8,7 +8,8 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/permissions/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/util"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -31,6 +32,10 @@ func TestPostCreate(t *testing.T) {
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
@@ -62,8 +67,8 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
-		postCountQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
 
@@ -89,9 +94,9 @@ func TestPostCreate(t *testing.T) {
 	t.Run("create post when permission not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "space_permissions"`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "organisation_id", "spaces", "mediums", "posts"}))
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "space_id", "media", "posts"}))
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -104,7 +109,7 @@ func TestPostCreate(t *testing.T) {
 	t.Run("create more than permitted posts", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
 		postCountQuery(mock, 100)
 
 		e.POST(basePath).
@@ -120,8 +125,8 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
-		postCountQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -149,8 +154,8 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
-		postCountQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -178,8 +183,8 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
-		postCountQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -200,8 +205,8 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
-		postCountQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
@@ -224,8 +229,8 @@ func TestPostCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		organisationPermission.SelectQuery(mock, 1)
-		postCountQuery(mock, 1)
+		spacePermission.SelectQuery(mock, 1)
+		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
 		tag.SelectMock(mock, tag.Data, 1)
