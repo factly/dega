@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/factly/dega-server/service/fact-check/action/google"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -35,7 +35,7 @@ func TestGoogleList(t *testing.T) {
 
 	t.Run("get list of google factchecks", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.GET(path).
 			WithHeaders(headers).
@@ -49,7 +49,7 @@ func TestGoogleList(t *testing.T) {
 
 	t.Run("get google factcheck without query", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.GET(path).
 			WithHeaders(headers).
@@ -62,7 +62,7 @@ func TestGoogleList(t *testing.T) {
 
 	t.Run("get list of google factchecks with pageToken query param", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.GET(path).
 			WithHeaders(headers).
@@ -82,7 +82,7 @@ func TestGoogleList(t *testing.T) {
 		defer gock.DisableNetworking()
 
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.GET(path).
 			WithHeaders(headers).
@@ -99,7 +99,7 @@ func TestGoogleList(t *testing.T) {
 
 	t.Run("when google returns empty result", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		gock.New(google.GoogleURL).
 			Reply(http.StatusOK).

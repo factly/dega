@@ -1,4 +1,4 @@
-package organisationPermission
+package organisation
 
 import (
 	"net/http"

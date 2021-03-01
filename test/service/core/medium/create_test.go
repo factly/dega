@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/util"
 
 	"github.com/factly/dega-server/service"
@@ -39,7 +39,7 @@ func TestMediumCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock)
+		space.SelectQuery(mock)
 		countQuery(mock, 1)
 
 		e.POST(basePath).
@@ -65,7 +65,7 @@ func TestMediumCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock)
+		space.SelectQuery(mock)
 		countQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
@@ -106,7 +106,7 @@ func TestMediumCreate(t *testing.T) {
 	t.Run("create more than permitted medium", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		countQuery(mock, 100)
 
 		e.POST(basePath).
@@ -122,7 +122,7 @@ func TestMediumCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		countQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
@@ -147,7 +147,7 @@ func TestMediumCreate(t *testing.T) {
 	t.Run("medium does not belong same space", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		countQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
@@ -165,7 +165,7 @@ func TestMediumCreate(t *testing.T) {
 	t.Run("create medium when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		countQuery(mock, 0)
 
 		slugCheckMock(mock, Data)

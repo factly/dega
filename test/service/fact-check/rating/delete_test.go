@@ -8,7 +8,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
@@ -34,7 +34,7 @@ func TestRatingDelete(t *testing.T) {
 
 	t.Run("invalid rating id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.DELETE(path).
 			WithPath("rating_id", "invalid_id").
@@ -46,7 +46,7 @@ func TestRatingDelete(t *testing.T) {
 
 	t.Run("rating record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		recordNotFoundMock(mock)
 
 		e.DELETE(path).
@@ -58,7 +58,7 @@ func TestRatingDelete(t *testing.T) {
 
 	t.Run("check rating associated with other entity", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		SelectWithSpace(mock)
 
 		ratingClaimExpect(mock, 1)
@@ -72,7 +72,7 @@ func TestRatingDelete(t *testing.T) {
 
 	t.Run("rating record deleted", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		SelectWithSpace(mock)
 
 		ratingClaimExpect(mock, 0)
@@ -93,7 +93,7 @@ func TestRatingDelete(t *testing.T) {
 	t.Run("delete when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		SelectWithSpace(mock)
 
 		ratingClaimExpect(mock, 0)

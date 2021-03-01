@@ -9,7 +9,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -44,7 +44,7 @@ func TestClaimantList(t *testing.T) {
 
 	t.Run("get empty list of claimants", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		claimantCountQuery(mock, 0)
 
 		mock.ExpectQuery(selectQuery).
@@ -63,7 +63,7 @@ func TestClaimantList(t *testing.T) {
 
 	t.Run("get non-empty list of claimants", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		claimantCountQuery(mock, len(claimantlist))
 
 		mock.ExpectQuery(selectQuery).
@@ -89,7 +89,7 @@ func TestClaimantList(t *testing.T) {
 
 	t.Run("get claimants with pagination", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		claimantCountQuery(mock, len(claimantlist))
 
 		mock.ExpectQuery(paginationQuery).
@@ -119,7 +119,7 @@ func TestClaimantList(t *testing.T) {
 
 	t.Run("get list of claimants based on search query q", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		claimantCountQuery(mock, len(claimantlist))
 
 		mock.ExpectQuery(selectQuery).
@@ -149,7 +149,7 @@ func TestClaimantList(t *testing.T) {
 
 	t.Run("when query does not match any claimant", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		test.DisableMeiliGock(testServer.URL)
 
 		gock.New(viper.GetString("meili_url") + "/indexes/dega/search").
@@ -177,7 +177,7 @@ func TestClaimantList(t *testing.T) {
 	t.Run("search with query q when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.GET(basePath).
 			WithHeaders(headers).

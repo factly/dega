@@ -1,4 +1,4 @@
-package organisationPermission
+package organisation
 
 import (
 	"net/http"
@@ -56,7 +56,7 @@ func TestOrganisationPermissionCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "organisation_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["organisation_id"], Data["spaces"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

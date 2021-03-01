@@ -1,15 +1,14 @@
-package organisationPermission
+package organisation
 
 import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
-
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -45,7 +44,7 @@ func TestOrganisationPermissionDetails(t *testing.T) {
 		SelectQuery(mock, 1)
 
 		spaceSelectQuery(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.GET(mypath).
 			WithHeaders(headers).

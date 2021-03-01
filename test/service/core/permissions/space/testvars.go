@@ -1,4 +1,4 @@
-package spacePermission
+package space
 
 import (
 	"database/sql/driver"

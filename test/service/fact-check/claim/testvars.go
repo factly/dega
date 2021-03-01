@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -120,7 +120,7 @@ func claimInsertMock(mock sqlmock.Sqlmock) {
 
 func claimListMock(mock sqlmock.Sqlmock) {
 	test.CheckSpaceMock(mock)
-	spacePermission.SelectQuery(mock, 1)
+	space.SelectQuery(mock, 1)
 	claimCountQuery(mock, len(claimList))
 
 	mock.ExpectQuery(selectQuery).

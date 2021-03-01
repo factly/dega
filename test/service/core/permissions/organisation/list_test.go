@@ -1,4 +1,4 @@
-package organisationPermission
+package organisation
 
 import (
 	"net/http"
@@ -51,7 +51,7 @@ func TestOrganisationPermissionList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["organisation_id"], Data["spaces"], Data["media"], Data["posts"]))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["organisation_id"], Data["spaces"]))
 
 		e.GET(basePath).
 			WithHeaders(headers).

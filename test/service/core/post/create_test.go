@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/util"
 
 	"github.com/factly/dega-server/service"
@@ -67,7 +67,7 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
@@ -109,7 +109,7 @@ func TestPostCreate(t *testing.T) {
 	t.Run("create more than permitted posts", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 100)
 
 		e.POST(basePath).
@@ -125,7 +125,7 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -154,7 +154,7 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -183,7 +183,7 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -205,7 +205,7 @@ func TestPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -229,7 +229,7 @@ func TestPostCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 

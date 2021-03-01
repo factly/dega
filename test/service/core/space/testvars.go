@@ -6,11 +6,10 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/factly/dega-server/test/service/core/permissions/organisationPermission"
-
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/core/permissions/organisation"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -80,7 +79,7 @@ func slugCheckMock(mock sqlmock.Sqlmock) {
 }
 
 func insertMock(mock sqlmock.Sqlmock) {
-	organisationPermission.SelectQuery(mock, 1)
+	organisation.SelectQuery(mock, 1)
 
 	mock.ExpectQuery(countQuery).
 		WithArgs(1).

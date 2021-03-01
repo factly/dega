@@ -11,7 +11,7 @@ import (
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
@@ -67,7 +67,7 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -95,7 +95,7 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -124,7 +124,7 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -153,7 +153,7 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -175,7 +175,7 @@ func TestPublishedPostCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
@@ -199,7 +199,7 @@ func TestPublishedPostCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		postCountQuery(mock, 0)
 		slugCheckMock(mock, Data)
 
