@@ -17,6 +17,7 @@ import (
 func TestGoogleList(t *testing.T) {
 	mock := test.SetupMockDB()
 	test.GoogleFactCheckGock()
+	test.KavachGock()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
@@ -76,6 +77,10 @@ func TestGoogleList(t *testing.T) {
 
 	t.Run("when google server is down", func(t *testing.T) {
 		gock.Off()
+		test.KavachGock()
+		gock.New(testServer.URL).EnableNetworking().Persist()
+		defer gock.DisableNetworking()
+
 		test.CheckSpaceMock(mock)
 		spacePermission.SelectQuery(mock, 1)
 
