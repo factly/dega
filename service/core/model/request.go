@@ -31,12 +31,13 @@ type SpacePermissionRequest struct {
 	Space     *Space `gorm:"foreignKey:space_id" json:"space,omitempty"`
 }
 
-var requestUser config.ContextKey = "request_user"
+var spaceRequestUser config.ContextKey = "space_perm_user"
+var orgRequestUser config.ContextKey = "org_perm_user"
 
 // BeforeCreate hook
 func (opr *OrganisationPermissionRequest) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(requestUser)
+	userID := ctx.Value(orgRequestUser)
 
 	if userID == nil {
 		return nil
@@ -51,7 +52,7 @@ func (opr *OrganisationPermissionRequest) BeforeCreate(tx *gorm.DB) error {
 // BeforeCreate hook
 func (spr *SpacePermissionRequest) BeforeCreate(tx *gorm.DB) error {
 	ctx := tx.Statement.Context
-	userID := ctx.Value(requestUser)
+	userID := ctx.Value(spaceRequestUser)
 
 	if userID == nil {
 		return nil

@@ -110,7 +110,7 @@ func TestSpaceRequestCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "space_permission_requests"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 0, 0, Data["title"], Data["description"], "pending", Data["media"], Data["posts"], Data["fact_check"], Data["space_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["description"], "pending", Data["media"], Data["posts"], Data["fact_check"], Data["space_id"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))
