@@ -8,6 +8,7 @@ import {
   MENUS_API,
 } from '../constants/menu';
 import { addErrorNotification, addSuccessNotification } from './notifications';
+import getError from '../utils/getError';
 
 export const getMenus = (query) => {
   return (dispatch) => {
@@ -27,11 +28,7 @@ export const getMenus = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0 ) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopMenusLoading()));
   };
@@ -46,11 +43,7 @@ export const getMenu = (id) => {
         dispatch(getMenuById(response.data));
       })
       .catch((error) => {
-        if(error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopMenusLoading()));
   };
@@ -66,11 +59,7 @@ export const addMenu = (data) => {
         dispatch(addSuccessNotification('Menu added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data &&  error.response.data.errors && error.response.data.errors.length > 0 ) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
@@ -85,11 +74,7 @@ export const updateMenu = (data) => {
         dispatch(addSuccessNotification('Menu updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopMenusLoading()));
   };
@@ -105,11 +90,7 @@ export const deleteMenu = (id) => {
         dispatch(addSuccessNotification('Menu deleted'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
-          dispatch(addErrorNotification(error.response.data.errors[0].message));
-        } else {
-          dispatch(addErrorNotification(error.message));
-        }
+        dispatch(addErrorNotification(getError(error)));
       });
   };
 };
