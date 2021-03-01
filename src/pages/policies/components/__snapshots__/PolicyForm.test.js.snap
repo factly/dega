@@ -191,6 +191,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         validateTrigger="onChange"
                       >
                         <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-policy",
+                              },
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
                           key="_name"
                           label="Name"
                           messageVariables={
@@ -299,6 +324,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                     },
                                   ]
                                 }
+                                status=""
                                 touched={false}
                                 validateStatus=""
                                 validating={false}
@@ -365,16 +391,21 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </Component>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -400,6 +431,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         validateTrigger="onChange"
                       >
                         <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-policy",
+                              },
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
                           key="_description"
                           label="Description"
                           messageVariables={
@@ -460,6 +516,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 }
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 touched={false}
                                 validateStatus=""
                                 validating={false}
@@ -537,16 +594,21 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </Component>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -586,6 +648,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         validateTrigger="onChange"
                       >
                         <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-policy",
+                              },
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
                           key="_users"
                           label="Users"
                           messageVariables={
@@ -646,6 +733,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 }
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 touched={false}
                                 validateStatus=""
                                 validating={false}
@@ -673,22 +761,22 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                             mode="multiple"
                                             onChange={[Function]}
                                           >
-                                            <Select
+                                            <ForwardRef(InternalSelect)
+                                              allowClear={true}
                                               bordered={true}
-                                              choiceTransitionName=""
                                               defaultValue={Array []}
                                               filterOption={[Function]}
                                               listHeight={128}
                                               loading={false}
                                               mode="multiple"
+                                              notFoundContent={null}
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
                                               onSearch={[Function]}
                                               placeholder="Select authors"
-                                              transitionName="slide-up"
                                             >
                                               <Select
-                                                choiceTransitionName=""
+                                                allowClear={true}
                                                 className=""
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                 defaultValue={Array []}
@@ -700,11 +788,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                 loading={false}
                                                 menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                 mode="multiple"
-                                                notFoundContent={
-                                                  <Context.Consumer>
-                                                    [Function]
-                                                  </Context.Consumer>
-                                                }
+                                                notFoundContent={null}
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
@@ -714,7 +798,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                 transitionName="slide-up"
                                               >
                                                 <ForwardRef(Select)
-                                                  choiceTransitionName=""
+                                                  allowClear={true}
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   defaultValue={Array []}
@@ -726,11 +810,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                   loading={false}
                                                   menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                   mode="multiple"
-                                                  notFoundContent={
-                                                    <Context.Consumer>
-                                                      [Function]
-                                                    </Context.Consumer>
-                                                  }
+                                                  notFoundContent={null}
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
@@ -740,7 +820,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                   transitionName="slide-up"
                                                 >
                                                   <div
-                                                    className="ant-select ant-select-multiple ant-select-show-search"
+                                                    className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
                                                     onBlur={[Function]}
                                                     onFocus={[Function]}
                                                     onKeyDown={[Function]}
@@ -761,11 +841,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                           itemHeight={24}
                                                           menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                           multiple={true}
-                                                          notFoundContent={
-                                                            <Context.Consumer>
-                                                              [Function]
-                                                            </Context.Consumer>
-                                                          }
+                                                          notFoundContent={null}
                                                           onActiveValue={[Function]}
                                                           onMouseEnter={[Function]}
                                                           onScroll={[Function]}
@@ -780,6 +856,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                       }
                                                       prefixCls="ant-select"
                                                       transitionName="slide-up"
+                                                      visible={false}
                                                     >
                                                       <Trigger
                                                         action={Array []}
@@ -869,11 +946,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                               itemHeight={24}
                                                               menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                               multiple={true}
-                                                              notFoundContent={
-                                                                <Context.Consumer>
-                                                                  [Function]
-                                                                </Context.Consumer>
-                                                              }
+                                                              notFoundContent={null}
                                                               onActiveValue={[Function]}
                                                               onMouseEnter={[Function]}
                                                               onScroll={[Function]}
@@ -897,13 +970,14 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                           }
                                                         }
                                                         popupTransitionName="slide-up"
+                                                        popupVisible={false}
                                                         prefixCls="ant-select-dropdown"
                                                         showAction={Array []}
                                                       >
                                                         <Selector
                                                           accessibilityIndex={0}
                                                           activeValue={null}
-                                                          choiceTransitionName=""
+                                                          allowClear={true}
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue={Array []}
@@ -959,11 +1033,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                           menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                           mode="multiple"
                                                           multiple={true}
-                                                          notFoundContent={
-                                                            <Context.Consumer>
-                                                              [Function]
-                                                            </Context.Consumer>
-                                                          }
+                                                          notFoundContent={null}
                                                           onChange={[Function]}
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
@@ -987,7 +1057,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                             <SelectSelector
                                                               accessibilityIndex={0}
                                                               activeValue={null}
-                                                              choiceTransitionName=""
+                                                              allowClear={true}
                                                               className=""
                                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                               defaultValue={Array []}
@@ -1062,11 +1132,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                               menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                               mode="multiple"
                                                               multiple={true}
-                                                              notFoundContent={
-                                                                <Context.Consumer>
-                                                                  [Function]
-                                                                </Context.Consumer>
-                                                              }
+                                                              notFoundContent={null}
                                                               onChange={[Function]}
                                                               onInputChange={[Function]}
                                                               onInputCompositionEnd={[Function]}
@@ -1092,7 +1158,6 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                                 component={false}
                                                                 keys={Array []}
                                                                 motionAppear={false}
-                                                                motionName=""
                                                               />
                                                               <span
                                                                 className="ant-select-selection-search"
@@ -1161,21 +1226,26 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                   </div>
                                                 </ForwardRef(Select)>
                                               </Select>
-                                            </Select>
+                                            </ForwardRef(InternalSelect)>
                                           </Selector>
                                         </Component>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -1216,6 +1286,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_posts"
                   label="Posts"
                   messageVariables={
@@ -1283,6 +1378,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -1303,7 +1399,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_posts"
                                     onChange={[Function]}
                                     options={
@@ -1566,20 +1662,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -1616,6 +1717,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_categories"
                   label="Categories"
                   messageVariables={
@@ -1683,6 +1809,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -1703,7 +1830,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_categories"
                                     onChange={[Function]}
                                     options={
@@ -1916,20 +2043,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -1966,6 +2098,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_tags"
                   label="Tags"
                   messageVariables={
@@ -2033,6 +2190,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -2053,7 +2211,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_tags"
                                     onChange={[Function]}
                                     options={
@@ -2266,20 +2424,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -2316,6 +2479,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_formats"
                   label="Formats"
                   messageVariables={
@@ -2383,6 +2571,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -2403,7 +2592,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_formats"
                                     onChange={[Function]}
                                     options={
@@ -2616,20 +2805,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -2666,6 +2860,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_media"
                   label="Media"
                   messageVariables={
@@ -2733,6 +2952,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -2753,7 +2973,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_media"
                                     onChange={[Function]}
                                     options={
@@ -2966,20 +3186,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -2990,6 +3215,387 @@ exports[`Policy Create Form component snapshot testing should match component wi
             </FormItem>
             <FormItem
               key="permissions-5"
+              label="Fact Check"
+              name={
+                Array [
+                  "permissions",
+                  "fact-checks",
+                ]
+              }
+            >
+              <WrapperField
+                label="Fact Check"
+                messageVariables={
+                  Object {
+                    "label": "Fact Check",
+                  }
+                }
+                name={
+                  Array [
+                    "permissions",
+                    "fact-checks",
+                  ]
+                }
+                onReset={[Function]}
+                trigger="onChange"
+                validateTrigger="onChange"
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_permissions_fact-checks"
+                  label="Fact Check"
+                  messageVariables={
+                    Object {
+                      "label": "Fact Check",
+                    }
+                  }
+                  name={
+                    Array [
+                      "permissions",
+                      "fact-checks",
+                    ]
+                  }
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="value"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        htmlFor="create-policy_permissions_fact-checks"
+                        label="Fact Check"
+                        name={
+                          Array [
+                            "permissions",
+                            "fact-checks",
+                          ]
+                        }
+                        prefixCls="ant-form"
+                        required={false}
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              htmlFor="create-policy_permissions_fact-checks"
+                              title="Fact Check"
+                            >
+                              Fact Check
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Fact Check"
+                        name={
+                          Array [
+                            "permissions",
+                            "fact-checks",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        touched={false}
+                        validateStatus=""
+                        validating={false}
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <Component
+                                  update={1}
+                                >
+                                  <Memo(CheckboxGroup)
+                                    id="create-policy_permissions_fact-checks"
+                                    onChange={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Get",
+                                          "value": "get",
+                                        },
+                                        Object {
+                                          "label": "Create",
+                                          "value": "create",
+                                        },
+                                        Object {
+                                          "label": "Update",
+                                          "value": "update",
+                                        },
+                                        Object {
+                                          "label": "Delete",
+                                          "value": "delete",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="ant-checkbox-group"
+                                      id="create-policy_permissions_fact-checks"
+                                    >
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="get"
+                                        prefixCls="ant-checkbox"
+                                        value="get"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="get"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="get"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Get
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="create"
+                                        prefixCls="ant-checkbox"
+                                        value="create"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="create"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="create"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Create
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="update"
+                                        prefixCls="ant-checkbox"
+                                        value="update"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="update"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="update"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Update
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="delete"
+                                        prefixCls="ant-checkbox"
+                                        value="delete"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="delete"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="delete"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Delete
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                    </div>
+                                  </Memo(CheckboxGroup)>
+                                </Component>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </Field>
+              </WrapperField>
+            </FormItem>
+            <FormItem
+              key="permissions-6"
               label="Claims"
               name={
                 Array [
@@ -3016,6 +3622,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_claims"
                   label="Claims"
                   messageVariables={
@@ -3083,6 +3714,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -3103,7 +3735,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_claims"
                                     onChange={[Function]}
                                     options={
@@ -3316,20 +3948,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -3339,7 +3976,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
               </WrapperField>
             </FormItem>
             <FormItem
-              key="permissions-6"
+              key="permissions-7"
               label="Claimants"
               name={
                 Array [
@@ -3366,6 +4003,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_claimants"
                   label="Claimants"
                   messageVariables={
@@ -3433,6 +4095,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -3453,7 +4116,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_claimants"
                                     onChange={[Function]}
                                     options={
@@ -3666,20 +4329,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -3689,7 +4357,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
               </WrapperField>
             </FormItem>
             <FormItem
-              key="permissions-7"
+              key="permissions-8"
               label="Ratings"
               name={
                 Array [
@@ -3716,6 +4384,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_ratings"
                   label="Ratings"
                   messageVariables={
@@ -3783,6 +4476,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -3803,7 +4497,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_ratings"
                                     onChange={[Function]}
                                     options={
@@ -4016,20 +4710,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -4039,7 +4738,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
               </WrapperField>
             </FormItem>
             <FormItem
-              key="permissions-8"
+              key="permissions-9"
               label="policies"
               name={
                 Array [
@@ -4066,6 +4765,31 @@ exports[`Policy Create Form component snapshot testing should match component wi
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_policies"
                   label="policies"
                   messageVariables={
@@ -4133,6 +4857,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -4153,7 +4878,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_policies"
                                     onChange={[Function]}
                                     options={
@@ -4366,20 +5091,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -4609,6 +5339,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         validateTrigger="onChange"
                       >
                         <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-policy",
+                              },
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
                           key="_name"
                           label="Name"
                           messageVariables={
@@ -4717,6 +5472,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                     },
                                   ]
                                 }
+                                status=""
                                 touched={false}
                                 validateStatus=""
                                 validating={false}
@@ -4780,16 +5536,21 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </Component>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -4815,6 +5576,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         validateTrigger="onChange"
                       >
                         <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-policy",
+                              },
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
                           key="_description"
                           label="Description"
                           messageVariables={
@@ -4875,6 +5661,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 }
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 touched={false}
                                 validateStatus=""
                                 validating={false}
@@ -4952,16 +5739,21 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </Component>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -5001,6 +5793,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         validateTrigger="onChange"
                       >
                         <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-policy",
+                              },
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
                           key="_users"
                           label="Users"
                           messageVariables={
@@ -5061,6 +5878,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 }
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 touched={false}
                                 validateStatus=""
                                 validating={false}
@@ -5088,22 +5906,22 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                             mode="multiple"
                                             onChange={[Function]}
                                           >
-                                            <Select
+                                            <ForwardRef(InternalSelect)
+                                              allowClear={true}
                                               bordered={true}
-                                              choiceTransitionName=""
                                               defaultValue={Array []}
                                               filterOption={[Function]}
                                               listHeight={128}
                                               loading={false}
                                               mode="multiple"
+                                              notFoundContent={null}
                                               onChange={[Function]}
                                               onPopupScroll={[Function]}
                                               onSearch={[Function]}
                                               placeholder="Select authors"
-                                              transitionName="slide-up"
                                             >
                                               <Select
-                                                choiceTransitionName=""
+                                                allowClear={true}
                                                 className=""
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                 defaultValue={Array []}
@@ -5115,11 +5933,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                 loading={false}
                                                 menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                 mode="multiple"
-                                                notFoundContent={
-                                                  <Context.Consumer>
-                                                    [Function]
-                                                  </Context.Consumer>
-                                                }
+                                                notFoundContent={null}
                                                 onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
@@ -5129,7 +5943,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                 transitionName="slide-up"
                                               >
                                                 <ForwardRef(Select)
-                                                  choiceTransitionName=""
+                                                  allowClear={true}
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   defaultValue={Array []}
@@ -5141,11 +5955,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                   loading={false}
                                                   menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                   mode="multiple"
-                                                  notFoundContent={
-                                                    <Context.Consumer>
-                                                      [Function]
-                                                    </Context.Consumer>
-                                                  }
+                                                  notFoundContent={null}
                                                   onChange={[Function]}
                                                   onPopupScroll={[Function]}
                                                   onSearch={[Function]}
@@ -5155,7 +5965,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                   transitionName="slide-up"
                                                 >
                                                   <div
-                                                    className="ant-select ant-select-multiple ant-select-show-search"
+                                                    className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
                                                     onBlur={[Function]}
                                                     onFocus={[Function]}
                                                     onKeyDown={[Function]}
@@ -5176,11 +5986,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                           itemHeight={24}
                                                           menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                           multiple={true}
-                                                          notFoundContent={
-                                                            <Context.Consumer>
-                                                              [Function]
-                                                            </Context.Consumer>
-                                                          }
+                                                          notFoundContent={null}
                                                           onActiveValue={[Function]}
                                                           onMouseEnter={[Function]}
                                                           onScroll={[Function]}
@@ -5195,6 +6001,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                       }
                                                       prefixCls="ant-select"
                                                       transitionName="slide-up"
+                                                      visible={false}
                                                     >
                                                       <Trigger
                                                         action={Array []}
@@ -5284,11 +6091,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                               itemHeight={24}
                                                               menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                               multiple={true}
-                                                              notFoundContent={
-                                                                <Context.Consumer>
-                                                                  [Function]
-                                                                </Context.Consumer>
-                                                              }
+                                                              notFoundContent={null}
                                                               onActiveValue={[Function]}
                                                               onMouseEnter={[Function]}
                                                               onScroll={[Function]}
@@ -5312,13 +6115,14 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                           }
                                                         }
                                                         popupTransitionName="slide-up"
+                                                        popupVisible={false}
                                                         prefixCls="ant-select-dropdown"
                                                         showAction={Array []}
                                                       >
                                                         <Selector
                                                           accessibilityIndex={0}
                                                           activeValue={null}
-                                                          choiceTransitionName=""
+                                                          allowClear={true}
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue={Array []}
@@ -5374,11 +6178,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                           menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                           mode="multiple"
                                                           multiple={true}
-                                                          notFoundContent={
-                                                            <Context.Consumer>
-                                                              [Function]
-                                                            </Context.Consumer>
-                                                          }
+                                                          notFoundContent={null}
                                                           onChange={[Function]}
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
@@ -5402,7 +6202,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                             <SelectSelector
                                                               accessibilityIndex={0}
                                                               activeValue={null}
-                                                              choiceTransitionName=""
+                                                              allowClear={true}
                                                               className=""
                                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                               defaultValue={Array []}
@@ -5477,11 +6277,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                               menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                                                               mode="multiple"
                                                               multiple={true}
-                                                              notFoundContent={
-                                                                <Context.Consumer>
-                                                                  [Function]
-                                                                </Context.Consumer>
-                                                              }
+                                                              notFoundContent={null}
                                                               onChange={[Function]}
                                                               onInputChange={[Function]}
                                                               onInputCompositionEnd={[Function]}
@@ -5507,7 +6303,6 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                                 component={false}
                                                                 keys={Array []}
                                                                 motionAppear={false}
-                                                                motionName=""
                                                               />
                                                               <span
                                                                 className="ant-select-selection-search"
@@ -5576,21 +6371,26 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                   </div>
                                                 </ForwardRef(Select)>
                                               </Select>
-                                            </Select>
+                                            </ForwardRef(InternalSelect)>
                                           </Selector>
                                         </Component>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -5631,6 +6431,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_posts"
                   label="Posts"
                   messageVariables={
@@ -5698,6 +6523,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -5718,7 +6544,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_posts"
                                     onChange={[Function]}
                                     options={
@@ -5981,20 +6807,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -6031,6 +6862,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_categories"
                   label="Categories"
                   messageVariables={
@@ -6098,6 +6954,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -6118,7 +6975,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_categories"
                                     onChange={[Function]}
                                     options={
@@ -6331,20 +7188,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -6381,6 +7243,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_tags"
                   label="Tags"
                   messageVariables={
@@ -6448,6 +7335,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -6468,7 +7356,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_tags"
                                     onChange={[Function]}
                                     options={
@@ -6681,20 +7569,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -6731,6 +7624,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_formats"
                   label="Formats"
                   messageVariables={
@@ -6798,6 +7716,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -6818,7 +7737,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_formats"
                                     onChange={[Function]}
                                     options={
@@ -7031,20 +7950,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -7081,6 +8005,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_media"
                   label="Media"
                   messageVariables={
@@ -7148,6 +8097,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -7168,7 +8118,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_media"
                                     onChange={[Function]}
                                     options={
@@ -7381,20 +8331,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -7405,6 +8360,387 @@ exports[`Policy Create Form component snapshot testing should render the compone
             </FormItem>
             <FormItem
               key="permissions-5"
+              label="Fact Check"
+              name={
+                Array [
+                  "permissions",
+                  "fact-checks",
+                ]
+              }
+            >
+              <WrapperField
+                label="Fact Check"
+                messageVariables={
+                  Object {
+                    "label": "Fact Check",
+                  }
+                }
+                name={
+                  Array [
+                    "permissions",
+                    "fact-checks",
+                  ]
+                }
+                onReset={[Function]}
+                trigger="onChange"
+                validateTrigger="onChange"
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_permissions_fact-checks"
+                  label="Fact Check"
+                  messageVariables={
+                    Object {
+                      "label": "Fact Check",
+                    }
+                  }
+                  name={
+                    Array [
+                      "permissions",
+                      "fact-checks",
+                    ]
+                  }
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="value"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        htmlFor="create-policy_permissions_fact-checks"
+                        label="Fact Check"
+                        name={
+                          Array [
+                            "permissions",
+                            "fact-checks",
+                          ]
+                        }
+                        prefixCls="ant-form"
+                        required={false}
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              htmlFor="create-policy_permissions_fact-checks"
+                              title="Fact Check"
+                            >
+                              Fact Check
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Fact Check"
+                        name={
+                          Array [
+                            "permissions",
+                            "fact-checks",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        touched={false}
+                        validateStatus=""
+                        validating={false}
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <Component
+                                  update={1}
+                                >
+                                  <Memo(CheckboxGroup)
+                                    id="create-policy_permissions_fact-checks"
+                                    onChange={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Get",
+                                          "value": "get",
+                                        },
+                                        Object {
+                                          "label": "Create",
+                                          "value": "create",
+                                        },
+                                        Object {
+                                          "label": "Update",
+                                          "value": "update",
+                                        },
+                                        Object {
+                                          "label": "Delete",
+                                          "value": "delete",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="ant-checkbox-group"
+                                      id="create-policy_permissions_fact-checks"
+                                    >
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="get"
+                                        prefixCls="ant-checkbox"
+                                        value="get"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="get"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="get"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Get
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="create"
+                                        prefixCls="ant-checkbox"
+                                        value="create"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="create"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="create"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Create
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="update"
+                                        prefixCls="ant-checkbox"
+                                        value="update"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="update"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="update"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Update
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="delete"
+                                        prefixCls="ant-checkbox"
+                                        value="delete"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="delete"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="delete"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Delete
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                    </div>
+                                  </Memo(CheckboxGroup)>
+                                </Component>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </Field>
+              </WrapperField>
+            </FormItem>
+            <FormItem
+              key="permissions-6"
               label="Claims"
               name={
                 Array [
@@ -7431,6 +8767,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_claims"
                   label="Claims"
                   messageVariables={
@@ -7498,6 +8859,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -7518,7 +8880,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_claims"
                                     onChange={[Function]}
                                     options={
@@ -7731,20 +9093,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -7754,7 +9121,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
               </WrapperField>
             </FormItem>
             <FormItem
-              key="permissions-6"
+              key="permissions-7"
               label="Claimants"
               name={
                 Array [
@@ -7781,6 +9148,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_claimants"
                   label="Claimants"
                   messageVariables={
@@ -7848,6 +9240,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -7868,7 +9261,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_claimants"
                                     onChange={[Function]}
                                     options={
@@ -8081,20 +9474,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -8104,7 +9502,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
               </WrapperField>
             </FormItem>
             <FormItem
-              key="permissions-7"
+              key="permissions-8"
               label="Ratings"
               name={
                 Array [
@@ -8131,6 +9529,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_ratings"
                   label="Ratings"
                   messageVariables={
@@ -8198,6 +9621,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -8218,7 +9642,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_ratings"
                                     onChange={[Function]}
                                     options={
@@ -8431,20 +9855,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
@@ -8454,7 +9883,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
               </WrapperField>
             </FormItem>
             <FormItem
-              key="permissions-8"
+              key="permissions-9"
               label="policies"
               name={
                 Array [
@@ -8481,6 +9910,31 @@ exports[`Policy Create Form component snapshot testing should render the compone
                 validateTrigger="onChange"
               >
                 <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
                   key="_permissions_policies"
                   label="policies"
                   messageVariables={
@@ -8548,6 +10002,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                         }
                         onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
+                        status=""
                         touched={false}
                         validateStatus=""
                         validating={false}
@@ -8568,7 +10023,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <CheckboxGroup
+                                  <Memo(CheckboxGroup)
                                     id="create-policy_permissions_policies"
                                     onChange={[Function]}
                                     options={
@@ -8781,20 +10236,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         </label>
                                       </Checkbox>
                                     </div>
-                                  </CheckboxGroup>
+                                  </Memo(CheckboxGroup)>
                                 </Component>
                               </div>
                             </div>
-                            <CSSMotion
-                              motionAppear={true}
-                              motionDeadline={500}
-                              motionName="show-help"
-                              onLeaveEnd={[Function]}
-                              removeOnLeave={true}
-                              visible={false}
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
-                              <DomWrapper />
-                            </CSSMotion>
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
                           </div>
                         </Col>
                       </FormItemInput>
