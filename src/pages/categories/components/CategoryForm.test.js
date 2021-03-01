@@ -1,6 +1,5 @@
 import React from 'react';
 import { Provider, useSelector, useDispatch } from 'react-redux';
-import renderer, { act as RendererAct } from 'react-test-renderer';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
@@ -12,6 +11,8 @@ import CategoryCreateForm from './CategoryForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
+jest.mock('jsoneditor');
 jest.mock('../../../actions/categories', () => ({
   getCategories: jest.fn(),
   deleteCategory: jest.fn(),
@@ -24,7 +25,11 @@ jest.mock('react-redux', () => ({
 }));
 
 let onCreate, store;
-const data = { parent_id: 1, name: 'Name', description: 'Description', medium_id: 2 };
+const data = { 
+  name: 'Name', 
+  description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}, 
+  medium_id: 2 
+};
 
 describe('Categories Create Form component', () => {
   store = mockStore({
@@ -50,39 +55,27 @@ describe('Categories Create Form component', () => {
       );
     });
     it('should render the component', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <CategoryCreateForm />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <CategoryCreateForm />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <CategoryCreateForm data={[]} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <CategoryCreateForm data={[]}/>
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with data', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <CategoryCreateForm onCreate={onCreate} data={data} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <CategoryCreateForm onCreate={onCreate} data={data}/>
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -91,7 +84,16 @@ describe('Categories Create Form component', () => {
     beforeEach(() => {
       props = {
         onCreate: jest.fn(),
-        data: { name: 'Name', description: 'Description', slug: 'slug', parent_id: 1 },
+        data: { 
+          name: 'Name',
+          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+          slug: 'slug',
+          is_featured : false,
+          medium_id: 2,
+          meta_fields : {
+            sample: "testing",
+          } 
+        },
       };
       act(() => {
         wrapper = mount(
@@ -139,7 +141,7 @@ describe('Categories Create Form component', () => {
     });
     it('should submit form with new title', (done) => {
       act(() => {
-        const input = wrapper.find('FormItem').at(1).find('Input');
+        const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -150,9 +152,13 @@ describe('Categories Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          description: 'Description',
+          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
           slug: 'new-name',
-          parent_id: 1,
+          is_featured : false,
+          medium_id: 2,
+          meta_fields : {
+            sample: "testing",
+          }
         });
         done();
       }, 0);
@@ -161,18 +167,19 @@ describe('Categories Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(3)
-          .find('TextArea')
-          .at(0)
-          .simulate('change', { target: { value: 'new description' } });
+          .at(4)
+          .find('Editor')
+          .props()
+          .onChange({ target: { value: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
+        } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(0)
           .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(1)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
 
@@ -184,9 +191,13 @@ describe('Categories Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          description: 'new description',
+          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
           slug: 'new-slug',
-          parent_id: 1,
+          is_featured : false,
+          medium_id: 2,
+          meta_fields : {
+            sample: "testing",
+          }
         });
         done();
       }, 0);

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -15,6 +14,8 @@ import CategoryCreateForm from './components/CategoryForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('jsoneditor');
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -45,6 +46,11 @@ describe('Categories create component', () => {
       details: {},
       loading: true,
     },
+    spaces: {
+      orgs: [],
+      details: {},
+      loading: true,
+    }
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -52,13 +58,11 @@ describe('Categories create component', () => {
 
   describe('snapshot testing', () => {
     it('should render the component', () => {
-      const tree = renderer
-        .create(
-          <Provider store={store}>
+      const tree = mount(
+        <Provider store={store}>
             <CreateCategory />
           </Provider>,
-        )
-        .toJSON();
+      );
       expect(tree).toMatchSnapshot();
     });
   });
