@@ -15,6 +15,7 @@ import TagEditForm from './components/TagForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -42,13 +43,13 @@ describe('Tags List component', () => {
           id: 1,
           name: 'Tag-1',
           slug: 'tag-1',
-          description: 'description',
+          description: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}
         },
         '2': {
           id: 2,
           name: 'Tag-2',
           slug: 'tag-2',
-          description: 'description',
+          description: {time: 1613561493781, blocks: [{type: "paragraph", data: {text: "Description 2"}}], version: "2.19.0"}
         },
       },
       loading: true,
@@ -66,7 +67,7 @@ describe('Tags List component', () => {
           id: 1,
           name: 'tag',
           slug: 'slug',
-          description: 'description',
+          description: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}
         },
         loading: false,
       });
@@ -119,6 +120,17 @@ describe('Tags List component', () => {
     let wrapper;
     afterEach(() => {
       wrapper.unmount();
+    });
+    it('should display RecordNotFound when tag not found', () => {
+      useSelector.mockReturnValueOnce({ tag: null, loading: false });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditTag />
+          </Provider>,
+        );
+      });
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
     });
     it('should call get action', () => {
       useSelector.mockReturnValueOnce({ tag: null, loading: true });

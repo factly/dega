@@ -17,9 +17,9 @@ exports[`Tags List component snapshot testing should match component with empty 
       <label
         className="ant-form-item-required"
         htmlFor="create-tag_name"
-        title="Tag Name"
+        title="Tag"
       >
-        Tag Name
+        Tag
       </label>
     </div>
     <div
@@ -96,6 +96,52 @@ exports[`Tags List component snapshot testing should match component with empty 
     >
       <label
         className=""
+        htmlFor="create-tag_is_featured"
+        title="Featured"
+      >
+        Featured
+      </label>
+    </div>
+    <div
+      className="ant-col ant-col-14 ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        >
+          <button
+            aria-checked={false}
+            className="ant-switch"
+            id="create-tag_is_featured"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="switch"
+            type="button"
+          >
+            <div
+              className="ant-switch-handle"
+            />
+            <span
+              className="ant-switch-inner"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-row ant-form-item"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-10 ant-form-item-label"
+      style={Object {}}
+    >
+      <label
+        className=""
         htmlFor="create-tag_description"
         title="Description"
       >
@@ -112,13 +158,12 @@ exports[`Tags List component snapshot testing should match component with empty 
         <div
           className="ant-form-item-control-input-content"
         >
-          <textarea
-            className="ant-input"
-            id="create-tag_description"
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            style={Object {}}
-            value=""
+          <div
+            style={
+              Object {
+                "width": "600px",
+              }
+            }
           />
         </div>
       </div>
@@ -242,9 +287,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
       <label
         className="ant-form-item-required"
         htmlFor="create-tag_name"
-        title="Tag Name"
+        title="Tag"
       >
-        Tag Name
+        Tag
       </label>
     </div>
     <div
@@ -321,6 +366,52 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
     >
       <label
         className=""
+        htmlFor="create-tag_is_featured"
+        title="Featured"
+      >
+        Featured
+      </label>
+    </div>
+    <div
+      className="ant-col ant-col-14 ant-form-item-control"
+      style={Object {}}
+    >
+      <div
+        className="ant-form-item-control-input"
+      >
+        <div
+          className="ant-form-item-control-input-content"
+        >
+          <button
+            aria-checked={false}
+            className="ant-switch"
+            id="create-tag_is_featured"
+            onClick={[Function]}
+            onKeyDown={[Function]}
+            role="switch"
+            type="button"
+          >
+            <div
+              className="ant-switch-handle"
+            />
+            <span
+              className="ant-switch-inner"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-row ant-form-item"
+    style={Object {}}
+  >
+    <div
+      className="ant-col ant-col-10 ant-form-item-label"
+      style={Object {}}
+    >
+      <label
+        className=""
         htmlFor="create-tag_description"
         title="Description"
       >
@@ -337,13 +428,12 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
         <div
           className="ant-form-item-control-input-content"
         >
-          <textarea
-            className="ant-input"
-            id="create-tag_description"
-            onChange={[Function]}
-            onKeyDown={[Function]}
-            style={Object {}}
-            value="description"
+          <div
+            style={
+              Object {
+                "width": "600px",
+              }
+            }
           />
         </div>
       </div>
