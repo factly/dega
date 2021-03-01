@@ -252,22 +252,25 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 		tx.Where("space_id IN (?)", spaces)
 	}
 
-	tx.Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id").Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id").Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id").Group("posts.id")
-
 	filterStr := ""
 
 	if len(categories) > 0 {
+		tx.Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id")
 		filterStr = filterStr + fmt.Sprint("post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories), " ", ",", -1), "[]"), ") AND ")
 	}
 	if len(users) > 0 {
+		tx.Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id")
 		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(users), " ", ",", -1), "[]"), ") AND ")
 	}
 	if len(tags) > 0 {
+		tx.Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id")
 		filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tags), " ", ",", -1), "[]"), ") AND ")
 	}
 	if len(formats) > 0 {
 		filterStr = filterStr + fmt.Sprint("posts.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formats), " ", ",", -1), "[]"), ") AND ")
 	}
+
+	tx.Group("posts.id")
 
 	filterStr = strings.Trim(filterStr, " AND ")
 	var total int64
