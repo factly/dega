@@ -15,6 +15,7 @@ import RatingEditForm from './components/RatingForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -38,6 +39,10 @@ describe('Ratings Edit component', () => {
   let mockedDispatch;
 
   describe('snapshot testing', () => {
+    window.HTMLCanvasElement.prototype.getContext = () => { 
+      return;
+      // return whatever getContext has to return
+    };
     beforeEach(() => {
       store = mockStore({
         ratings: {
@@ -47,14 +52,14 @@ describe('Ratings Edit component', () => {
               id: 1,
               name: 'True',
               slug: 'true',
-              description: 'description',
+              description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
               numeric_value: 5,
             },
             '2': {
               id: 2,
               name: 'False',
               slug: 'false',
-              description: 'description',
+              description: {time: 1613559903398, blocks: [{type: "paragraph", data: {text: "Description2"}}], version: "2.19.0"},
               numeric_value: 5,
             },
           },
@@ -76,18 +81,16 @@ describe('Ratings Edit component', () => {
           id: 1,
           name: 'True',
           slug: 'true',
-          description: 'description',
+          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
           numeric_value: 5,
         },
         loading: false,
       });
-      const tree = renderer
-        .create(
-          <Provider store={store}>
-            <EditRating />
-          </Provider>,
-        )
-        .toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditRating />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
@@ -95,15 +98,11 @@ describe('Ratings Edit component', () => {
         rating: {},
         loading: false,
       });
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditRating />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditRating />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
@@ -111,15 +110,11 @@ describe('Ratings Edit component', () => {
         rating: {},
         loading: true,
       });
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditRating />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditRating />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -138,6 +133,19 @@ describe('Ratings Edit component', () => {
           </Provider>,
         );
       });
+      expect(actions.getRating).toHaveBeenCalledWith('1');
+    });
+    it('should display RecordNotFound when rating not found', () => {
+      useSelector.mockReturnValueOnce({ rating: null, loading: false });
+      actions.getRating.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditRating />
+          </Provider>,
+        );
+      });
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
       expect(actions.getRating).toHaveBeenCalledWith('1');
     });
     it('should call updateRating', (done) => {

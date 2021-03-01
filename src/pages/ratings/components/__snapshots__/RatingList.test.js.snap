@@ -104,16 +104,14 @@ exports[`Ratings List component snapshot testing should match component with rat
                 "title": "Slug",
               },
               Object {
-                "dataIndex": "description",
-                "key": "description",
-                "render": [Function],
-                "title": "Description",
-                "width": "50%",
-              },
-              Object {
                 "dataIndex": "numeric_value",
                 "key": "numeric_value",
                 "title": "Rating Value",
+              },
+              Object {
+                "dataIndex": "color",
+                "render": [Function],
+                "title": "Colour",
               },
               Object {
                 "dataIndex": "operation",
@@ -137,6 +135,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                 "updated_at": "2020-10-01T06:25:47.227933Z",
               },
               Object {
+                "colour": Object {
+                  "hex": "#108040",
+                },
                 "created_at": "2020-10-01T06:25:37.717922Z",
                 "deleted_at": null,
                 "description": "",
@@ -192,16 +193,14 @@ exports[`Ratings List component snapshot testing should match component with rat
                           "title": "Slug",
                         },
                         Object {
-                          "dataIndex": "description",
-                          "key": "description",
-                          "render": [Function],
-                          "title": "Description",
-                          "width": "50%",
-                        },
-                        Object {
                           "dataIndex": "numeric_value",
                           "key": "numeric_value",
                           "title": "Rating Value",
+                        },
+                        Object {
+                          "dataIndex": "color",
+                          "render": [Function],
+                          "title": "Colour",
                         },
                         Object {
                           "dataIndex": "operation",
@@ -225,6 +224,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                           "updated_at": "2020-10-01T06:25:47.227933Z",
                         },
                         Object {
+                          "colour": Object {
+                            "hex": "#108040",
+                          },
                           "created_at": "2020-10-01T06:25:37.717922Z",
                           "deleted_at": null,
                           "description": "",
@@ -253,6 +255,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                           "updated_at": "2020-10-01T06:25:47.227933Z",
                         },
                         Object {
+                          "colour": Object {
+                            "hex": "#108040",
+                          },
                           "created_at": "2020-10-01T06:25:37.717922Z",
                           "deleted_at": null,
                           "description": "",
@@ -290,13 +295,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                             <table
                               style="table-layout: auto;"
                             >
-                              <colgroup>
-                                <col />
-                                <col />
-                                <col
-                                  style="width: 50%; min-width: 50%;"
-                                />
-                              </colgroup>
+                              <colgroup />
                               <thead
                                 class="ant-table-thead"
                               >
@@ -314,12 +313,12 @@ exports[`Ratings List component snapshot testing should match component with rat
                                   <th
                                     class="ant-table-cell"
                                   >
-                                    Description
+                                    Rating Value
                                   </th>
                                   <th
                                     class="ant-table-cell"
                                   >
-                                    Rating Value
+                                    Colour
                                   </th>
                                   <th
                                     class="ant-table-cell"
@@ -348,16 +347,16 @@ exports[`Ratings List component snapshot testing should match component with rat
                                   <td
                                     class="ant-table-cell"
                                   >
-                                    <div
-                                      class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                    >
-                                      
-                                    </div>
+                                    1
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
-                                    1
+                                    <span
+                                      class="ant-tag"
+                                    >
+                                      False
+                                    </span>
                                   </td>
                                   <td
                                     class="ant-table-cell"
@@ -410,16 +409,17 @@ exports[`Ratings List component snapshot testing should match component with rat
                                   <td
                                     class="ant-table-cell"
                                   >
-                                    <div
-                                      class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                    >
-                                      
-                                    </div>
+                                    5
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
-                                    5
+                                    <span
+                                      class="ant-tag ant-tag-has-color"
+                                      style="background-color: rgb(16, 128, 64);"
+                                    >
+                                      True
+                                    </span>
                                   </td>
                                   <td
                                     class="ant-table-cell"
@@ -497,16 +497,14 @@ exports[`Ratings List component snapshot testing should match component with rat
                                 "title": "Slug",
                               },
                               Object {
-                                "dataIndex": "description",
-                                "key": "description",
-                                "render": [Function],
-                                "title": "Description",
-                                "width": "50%",
-                              },
-                              Object {
                                 "dataIndex": "numeric_value",
                                 "key": "numeric_value",
                                 "title": "Rating Value",
+                              },
+                              Object {
+                                "dataIndex": "color",
+                                "render": [Function],
+                                "title": "Colour",
                               },
                               Object {
                                 "dataIndex": "operation",
@@ -528,6 +526,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                 "updated_at": "2020-10-01T06:25:47.227933Z",
                               },
                               Object {
+                                "colour": Object {
+                                  "hex": "#108040",
+                                },
                                 "created_at": "2020-10-01T06:25:37.717922Z",
                                 "deleted_at": null,
                                 "description": "",
@@ -554,6 +555,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                 "updated_at": "2020-10-01T06:25:47.227933Z",
                               },
                               Object {
+                                "colour": Object {
+                                  "hex": "#108040",
+                                },
                                 "created_at": "2020-10-01T06:25:37.717922Z",
                                 "deleted_at": null,
                                 "description": "",
@@ -586,13 +590,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                   <table
                                     style="table-layout: auto;"
                                   >
-                                    <colgroup>
-                                      <col />
-                                      <col />
-                                      <col
-                                        style="width: 50%; min-width: 50%;"
-                                      />
-                                    </colgroup>
+                                    <colgroup />
                                     <thead
                                       class="ant-table-thead"
                                     >
@@ -610,12 +608,12 @@ exports[`Ratings List component snapshot testing should match component with rat
                                         <th
                                           class="ant-table-cell"
                                         >
-                                          Description
+                                          Rating Value
                                         </th>
                                         <th
                                           class="ant-table-cell"
                                         >
-                                          Rating Value
+                                          Colour
                                         </th>
                                         <th
                                           class="ant-table-cell"
@@ -644,16 +642,16 @@ exports[`Ratings List component snapshot testing should match component with rat
                                         <td
                                           class="ant-table-cell"
                                         >
-                                          <div
-                                            class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                          >
-                                            
-                                          </div>
+                                          1
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
-                                          1
+                                          <span
+                                            class="ant-tag"
+                                          >
+                                            False
+                                          </span>
                                         </td>
                                         <td
                                           class="ant-table-cell"
@@ -706,16 +704,17 @@ exports[`Ratings List component snapshot testing should match component with rat
                                         <td
                                           class="ant-table-cell"
                                         >
-                                          <div
-                                            class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                          >
-                                            
-                                          </div>
+                                          5
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
-                                          5
+                                          <span
+                                            class="ant-tag ant-tag-has-color"
+                                            style="background-color: rgb(16, 128, 64);"
+                                          >
+                                            True
+                                          </span>
                                         </td>
                                         <td
                                           class="ant-table-cell"
@@ -807,7 +806,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                   Array [
                                     undefined,
                                     undefined,
-                                    "50%",
+                                    undefined,
                                     undefined,
                                     undefined,
                                   ]
@@ -827,18 +826,16 @@ exports[`Ratings List component snapshot testing should match component with rat
                                       "title": "Slug",
                                     },
                                     Object {
-                                      "dataIndex": "description",
-                                      "fixed": undefined,
-                                      "key": "description",
-                                      "render": [Function],
-                                      "title": "Description",
-                                      "width": "50%",
-                                    },
-                                    Object {
                                       "dataIndex": "numeric_value",
                                       "fixed": undefined,
                                       "key": "numeric_value",
                                       "title": "Rating Value",
+                                    },
+                                    Object {
+                                      "dataIndex": "color",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Colour",
                                     },
                                     Object {
                                       "dataIndex": "operation",
@@ -849,35 +846,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                   ]
                                 }
                               >
-                                <colgroup>
-                                  <col
-                                    key="0"
-                                    style={
-                                      Object {
-                                        "minWidth": undefined,
-                                        "width": undefined,
-                                      }
-                                    }
-                                  />
-                                  <col
-                                    key="1"
-                                    style={
-                                      Object {
-                                        "minWidth": undefined,
-                                        "width": undefined,
-                                      }
-                                    }
-                                  />
-                                  <col
-                                    key="2"
-                                    style={
-                                      Object {
-                                        "minWidth": "50%",
-                                        "width": "50%",
-                                      }
-                                    }
-                                  />
-                                </colgroup>
+                                <colgroup />
                               </ColGroup>
                               <Header
                                 colWidths={
@@ -903,16 +872,14 @@ exports[`Ratings List component snapshot testing should match component with rat
                                       "title": "Slug",
                                     },
                                     Object {
-                                      "dataIndex": "description",
-                                      "key": "description",
-                                      "render": [Function],
-                                      "title": "Description",
-                                      "width": "50%",
-                                    },
-                                    Object {
                                       "dataIndex": "numeric_value",
                                       "key": "numeric_value",
                                       "title": "Rating Value",
+                                    },
+                                    Object {
+                                      "dataIndex": "color",
+                                      "render": [Function],
+                                      "title": "Colour",
                                     },
                                     Object {
                                       "dataIndex": "operation",
@@ -936,18 +903,16 @@ exports[`Ratings List component snapshot testing should match component with rat
                                       "title": "Slug",
                                     },
                                     Object {
-                                      "dataIndex": "description",
-                                      "fixed": undefined,
-                                      "key": "description",
-                                      "render": [Function],
-                                      "title": "Description",
-                                      "width": "50%",
-                                    },
-                                    Object {
                                       "dataIndex": "numeric_value",
                                       "fixed": undefined,
                                       "key": "numeric_value",
                                       "title": "Rating Value",
+                                    },
+                                    Object {
+                                      "dataIndex": "color",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Colour",
                                     },
                                     Object {
                                       "dataIndex": "operation",
@@ -1012,33 +977,31 @@ exports[`Ratings List component snapshot testing should match component with rat
                                           "rowSpan": 1,
                                         },
                                         Object {
-                                          "children": "Description",
+                                          "children": "Rating Value",
                                           "className": "",
                                           "colEnd": 2,
                                           "colSpan": 1,
                                           "colStart": 2,
-                                          "column": Object {
-                                            "dataIndex": "description",
-                                            "key": "description",
-                                            "render": [Function],
-                                            "title": "Description",
-                                            "width": "50%",
-                                          },
-                                          "key": "description",
-                                          "rowSpan": 1,
-                                        },
-                                        Object {
-                                          "children": "Rating Value",
-                                          "className": "",
-                                          "colEnd": 3,
-                                          "colSpan": 1,
-                                          "colStart": 3,
                                           "column": Object {
                                             "dataIndex": "numeric_value",
                                             "key": "numeric_value",
                                             "title": "Rating Value",
                                           },
                                           "key": "numeric_value",
+                                          "rowSpan": 1,
+                                        },
+                                        Object {
+                                          "children": "Colour",
+                                          "className": "",
+                                          "colEnd": 3,
+                                          "colSpan": 1,
+                                          "colStart": 3,
+                                          "column": Object {
+                                            "dataIndex": "color",
+                                            "render": [Function],
+                                            "title": "Colour",
+                                          },
+                                          "key": undefined,
                                           "rowSpan": 1,
                                         },
                                         Object {
@@ -1072,18 +1035,16 @@ exports[`Ratings List component snapshot testing should match component with rat
                                           "title": "Slug",
                                         },
                                         Object {
-                                          "dataIndex": "description",
-                                          "fixed": undefined,
-                                          "key": "description",
-                                          "render": [Function],
-                                          "title": "Description",
-                                          "width": "50%",
-                                        },
-                                        Object {
                                           "dataIndex": "numeric_value",
                                           "fixed": undefined,
                                           "key": "numeric_value",
                                           "title": "Rating Value",
+                                        },
+                                        Object {
+                                          "dataIndex": "color",
+                                          "fixed": undefined,
+                                          "render": [Function],
+                                          "title": "Colour",
                                         },
                                         Object {
                                           "dataIndex": "operation",
@@ -1185,39 +1146,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                         colStart={2}
                                         column={
                                           Object {
-                                            "dataIndex": "description",
-                                            "key": "description",
-                                            "render": [Function],
-                                            "title": "Description",
-                                            "width": "50%",
-                                          }
-                                        }
-                                        component="th"
-                                        firstFixLeft={false}
-                                        firstFixRight={false}
-                                        key="description"
-                                        lastFixLeft={false}
-                                        lastFixRight={false}
-                                        prefixCls="ant-table"
-                                        rowSpan={1}
-                                        rowType="header"
-                                      >
-                                        <th
-                                          className="ant-table-cell"
-                                          colSpan={null}
-                                          rowSpan={null}
-                                          style={Object {}}
-                                        >
-                                          Description
-                                        </th>
-                                      </Cell>
-                                      <Cell
-                                        className=""
-                                        colEnd={3}
-                                        colSpan={1}
-                                        colStart={3}
-                                        column={
-                                          Object {
                                             "dataIndex": "numeric_value",
                                             "key": "numeric_value",
                                             "title": "Rating Value",
@@ -1240,6 +1168,37 @@ exports[`Ratings List component snapshot testing should match component with rat
                                           style={Object {}}
                                         >
                                           Rating Value
+                                        </th>
+                                      </Cell>
+                                      <Cell
+                                        className=""
+                                        colEnd={3}
+                                        colSpan={1}
+                                        colStart={3}
+                                        column={
+                                          Object {
+                                            "dataIndex": "color",
+                                            "render": [Function],
+                                            "title": "Colour",
+                                          }
+                                        }
+                                        component="th"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        key="color"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        rowSpan={1}
+                                        rowType="header"
+                                      >
+                                        <th
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          Colour
                                         </th>
                                       </Cell>
                                       <Cell
@@ -1294,6 +1253,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                       "updated_at": "2020-10-01T06:25:47.227933Z",
                                     },
                                     Object {
+                                      "colour": Object {
+                                        "hex": "#108040",
+                                      },
                                       "created_at": "2020-10-01T06:25:37.717922Z",
                                       "deleted_at": null,
                                       "description": "",
@@ -1416,84 +1378,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                       </Cell>
                                       <Cell
                                         component="td"
-                                        dataIndex="description"
-                                        firstFixLeft={false}
-                                        firstFixRight={false}
-                                        index={0}
-                                        key="description"
-                                        lastFixLeft={false}
-                                        lastFixRight={false}
-                                        prefixCls="ant-table"
-                                        record={
-                                          Object {
-                                            "created_at": "2020-10-01T06:25:47.227933Z",
-                                            "deleted_at": null,
-                                            "description": "",
-                                            "id": 2,
-                                            "medium_id": 0,
-                                            "name": "False",
-                                            "numeric_value": 1,
-                                            "slug": "false",
-                                            "space_id": 1,
-                                            "updated_at": "2020-10-01T06:25:47.227933Z",
-                                          }
-                                        }
-                                        render={[Function]}
-                                      >
-                                        <td
-                                          className="ant-table-cell"
-                                          colSpan={null}
-                                          rowSpan={null}
-                                          style={Object {}}
-                                        >
-                                          <Paragraph
-                                            ellipsis={
-                                              Object {
-                                                "rows": 2,
-                                              }
-                                            }
-                                          >
-                                            <Base
-                                              component="div"
-                                              ellipsis={
-                                                Object {
-                                                  "rows": 2,
-                                                }
-                                              }
-                                            >
-                                              <LocaleReceiver
-                                                componentName="Text"
-                                              >
-                                                <ResizeObserver
-                                                  disabled={false}
-                                                  onResize={[Function]}
-                                                >
-                                                  <Typography
-                                                    className="ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                    component="div"
-                                                    style={
-                                                      Object {
-                                                        "WebkitLineClamp": 2,
-                                                      }
-                                                    }
-                                                  >
-                                                    <div
-                                                      className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                      style={
-                                                        Object {
-                                                          "WebkitLineClamp": 2,
-                                                        }
-                                                      }
-                                                    />
-                                                  </Typography>
-                                                </ResizeObserver>
-                                              </LocaleReceiver>
-                                            </Base>
-                                          </Paragraph>
-                                        </td>
-                                      </Cell>
-                                      <Cell
-                                        component="td"
                                         dataIndex="numeric_value"
                                         firstFixLeft={false}
                                         firstFixRight={false}
@@ -1524,6 +1408,54 @@ exports[`Ratings List component snapshot testing should match component with rat
                                           style={Object {}}
                                         >
                                           1
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
+                                        dataIndex="color"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={0}
+                                        key="color"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "created_at": "2020-10-01T06:25:47.227933Z",
+                                            "deleted_at": null,
+                                            "description": "",
+                                            "id": 2,
+                                            "medium_id": 0,
+                                            "name": "False",
+                                            "numeric_value": 1,
+                                            "slug": "false",
+                                            "space_id": 1,
+                                            "updated_at": "2020-10-01T06:25:47.227933Z",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <Tag
+                                            color=""
+                                          >
+                                            <span
+                                              className="ant-tag"
+                                              style={
+                                                Object {
+                                                  "backgroundColor": undefined,
+                                                }
+                                              }
+                                            >
+                                              False
+                                            </span>
+                                          </Tag>
                                         </td>
                                       </Cell>
                                       <Cell
@@ -1638,7 +1570,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                               okType="primary"
                                               onConfirm={[Function]}
                                               placement="top"
-                                              title="Sure to cancel?"
+                                              title="Sure to Delete?"
                                               transitionName="zoom-big"
                                               trigger="click"
                                             >
@@ -1668,7 +1600,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                 overlayClassName="ant-popconfirm"
                                                 placement="top"
                                                 prefixCls="ant-popover"
-                                                title="Sure to cancel?"
+                                                title="Sure to Delete?"
                                                 transitionName="zoom-big"
                                                 trigger="click"
                                               >
@@ -1936,7 +1868,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                   overlayClassName="ant-popconfirm"
                                                   placement="top"
                                                   prefixCls="ant-popover"
-                                                  title="Sure to cancel?"
+                                                  title="Sure to Delete?"
                                                   transitionName="zoom-big"
                                                   trigger="click"
                                                 >
@@ -2221,7 +2153,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                     popupTransitionName="zoom-big"
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
-                                                    title="Sure to cancel?"
+                                                    title="Sure to Delete?"
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -2311,6 +2243,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                     key="1"
                                     record={
                                       Object {
+                                        "colour": Object {
+                                          "hex": "#108040",
+                                        },
                                         "created_at": "2020-10-01T06:25:37.717922Z",
                                         "deleted_at": null,
                                         "description": "",
@@ -2345,6 +2280,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                         prefixCls="ant-table"
                                         record={
                                           Object {
+                                            "colour": Object {
+                                              "hex": "#108040",
+                                            },
                                             "created_at": "2020-10-01T06:25:37.717922Z",
                                             "deleted_at": null,
                                             "description": "",
@@ -2379,6 +2317,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                         prefixCls="ant-table"
                                         record={
                                           Object {
+                                            "colour": Object {
+                                              "hex": "#108040",
+                                            },
                                             "created_at": "2020-10-01T06:25:37.717922Z",
                                             "deleted_at": null,
                                             "description": "",
@@ -2403,84 +2344,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                       </Cell>
                                       <Cell
                                         component="td"
-                                        dataIndex="description"
-                                        firstFixLeft={false}
-                                        firstFixRight={false}
-                                        index={1}
-                                        key="description"
-                                        lastFixLeft={false}
-                                        lastFixRight={false}
-                                        prefixCls="ant-table"
-                                        record={
-                                          Object {
-                                            "created_at": "2020-10-01T06:25:37.717922Z",
-                                            "deleted_at": null,
-                                            "description": "",
-                                            "id": 1,
-                                            "medium_id": 0,
-                                            "name": "True",
-                                            "numeric_value": 5,
-                                            "slug": "true",
-                                            "space_id": 1,
-                                            "updated_at": "2020-10-01T06:25:37.717922Z",
-                                          }
-                                        }
-                                        render={[Function]}
-                                      >
-                                        <td
-                                          className="ant-table-cell"
-                                          colSpan={null}
-                                          rowSpan={null}
-                                          style={Object {}}
-                                        >
-                                          <Paragraph
-                                            ellipsis={
-                                              Object {
-                                                "rows": 2,
-                                              }
-                                            }
-                                          >
-                                            <Base
-                                              component="div"
-                                              ellipsis={
-                                                Object {
-                                                  "rows": 2,
-                                                }
-                                              }
-                                            >
-                                              <LocaleReceiver
-                                                componentName="Text"
-                                              >
-                                                <ResizeObserver
-                                                  disabled={false}
-                                                  onResize={[Function]}
-                                                >
-                                                  <Typography
-                                                    className="ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                    component="div"
-                                                    style={
-                                                      Object {
-                                                        "WebkitLineClamp": 2,
-                                                      }
-                                                    }
-                                                  >
-                                                    <div
-                                                      className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                      style={
-                                                        Object {
-                                                          "WebkitLineClamp": 2,
-                                                        }
-                                                      }
-                                                    />
-                                                  </Typography>
-                                                </ResizeObserver>
-                                              </LocaleReceiver>
-                                            </Base>
-                                          </Paragraph>
-                                        </td>
-                                      </Cell>
-                                      <Cell
-                                        component="td"
                                         dataIndex="numeric_value"
                                         firstFixLeft={false}
                                         firstFixRight={false}
@@ -2491,6 +2354,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                         prefixCls="ant-table"
                                         record={
                                           Object {
+                                            "colour": Object {
+                                              "hex": "#108040",
+                                            },
                                             "created_at": "2020-10-01T06:25:37.717922Z",
                                             "deleted_at": null,
                                             "description": "",
@@ -2515,6 +2381,57 @@ exports[`Ratings List component snapshot testing should match component with rat
                                       </Cell>
                                       <Cell
                                         component="td"
+                                        dataIndex="color"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={1}
+                                        key="color"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "colour": Object {
+                                              "hex": "#108040",
+                                            },
+                                            "created_at": "2020-10-01T06:25:37.717922Z",
+                                            "deleted_at": null,
+                                            "description": "",
+                                            "id": 1,
+                                            "medium_id": 0,
+                                            "name": "True",
+                                            "numeric_value": 5,
+                                            "slug": "true",
+                                            "space_id": 1,
+                                            "updated_at": "2020-10-01T06:25:37.717922Z",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <Tag
+                                            color="#108040"
+                                          >
+                                            <span
+                                              className="ant-tag ant-tag-has-color"
+                                              style={
+                                                Object {
+                                                  "backgroundColor": "#108040",
+                                                }
+                                              }
+                                            >
+                                              True
+                                            </span>
+                                          </Tag>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
                                         firstFixRight={false}
@@ -2525,6 +2442,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                         prefixCls="ant-table"
                                         record={
                                           Object {
+                                            "colour": Object {
+                                              "hex": "#108040",
+                                            },
                                             "created_at": "2020-10-01T06:25:37.717922Z",
                                             "deleted_at": null,
                                             "description": "",
@@ -2625,7 +2545,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                               okType="primary"
                                               onConfirm={[Function]}
                                               placement="top"
-                                              title="Sure to cancel?"
+                                              title="Sure to Delete?"
                                               transitionName="zoom-big"
                                               trigger="click"
                                             >
@@ -2655,7 +2575,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                 overlayClassName="ant-popconfirm"
                                                 placement="top"
                                                 prefixCls="ant-popover"
-                                                title="Sure to cancel?"
+                                                title="Sure to Delete?"
                                                 transitionName="zoom-big"
                                                 trigger="click"
                                               >
@@ -2923,7 +2843,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                   overlayClassName="ant-popconfirm"
                                                   placement="top"
                                                   prefixCls="ant-popover"
-                                                  title="Sure to cancel?"
+                                                  title="Sure to Delete?"
                                                   transitionName="zoom-big"
                                                   trigger="click"
                                                 >
@@ -3208,7 +3128,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                     popupTransitionName="zoom-big"
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
-                                                    title="Sure to cancel?"
+                                                    title="Sure to Delete?"
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -3400,7 +3320,15 @@ exports[`Ratings List component snapshot testing should match component with rat
                             <ForwardRef(LeftOutlined) />
                           </button>
                         }
-                        selectComponentClass={[Function]}
+                        selectComponentClass={
+                          Object {
+                            "$$typeof": Symbol(react.forward_ref),
+                            "OptGroup": [Function],
+                            "Option": [Function],
+                            "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                            "render": [Function],
+                          }
+                        }
                         selectPrefixCls="ant-select"
                         showLessItems={false}
                         showPrevNextJumpers={true}
@@ -3660,7 +3588,15 @@ exports[`Ratings List component snapshot testing should match component with rat
                             }
                             quickGo={null}
                             rootPrefixCls="ant-pagination"
-                            selectComponentClass={[Function]}
+                            selectComponentClass={
+                              Object {
+                                "$$typeof": Symbol(react.forward_ref),
+                                "OptGroup": [Function],
+                                "Option": [Function],
+                                "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                "render": [Function],
+                              }
+                            }
                             selectPrefixCls="ant-select"
                           />
                         </ul>
