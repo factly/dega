@@ -225,7 +225,7 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 	return result, nil
 }
 
-func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	order := "created_at desc"
 	pageSortBy := "created_at"
@@ -250,6 +250,10 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	if len(spaces) > 0 {
 		tx.Where("space_id IN (?)", spaces)
+	}
+
+	if status != nil {
+		tx.Where("status = ?", status)
 	}
 
 	filterStr := ""
