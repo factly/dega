@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -15,6 +14,7 @@ import ClaimantCreateForm from './components/ClaimantForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -45,6 +45,11 @@ describe('Claimants create component', () => {
       details: {},
       loading: true,
     },
+    spaces: {
+      orgs: [],
+      details: {},
+      loading: true,
+    }
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -52,13 +57,11 @@ describe('Claimants create component', () => {
 
   describe('snapshot testing', () => {
     it('should render the component', () => {
-      const tree = renderer
-        .create(
-          <Provider store={store}>
-            <CreateClaimant />
-          </Provider>,
-        )
-        .toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <CreateClaimant />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });

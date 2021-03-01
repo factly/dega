@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer, { act as rendererAct } from 'react-test-renderer';
 import { useDispatch, Provider, useSelector } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -15,6 +14,7 @@ import ClaimantEditForm from './components/ClaimantForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -55,7 +55,7 @@ describe('Claimants edit component', () => {
               id: 1,
               name: 'TOI',
               slug: 'toi',
-              description: 'description',
+              description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
               tag_line: 'tag line',
               claimant_date: '2017-12-12',
             },
@@ -63,7 +63,7 @@ describe('Claimants edit component', () => {
               id: 2,
               name: 'CNN',
               slug: 'cnn',
-              description: 'description',
+              description: {"time":1613556798293,"blocks":[{"type":"header","data":{"text":"Description-2","level":2}}],"version":"2.19.0"},
               tag_line: 'tag line',
               claimant_date: '2017-12-12',
             },
@@ -86,19 +86,17 @@ describe('Claimants edit component', () => {
           id: 1,
           name: 'TOI',
           slug: 'toi',
-          description: 'description',
+          description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
           tag_line: 'tag line',
           claimant_date: '2017-12-12',
         },
         loading: false,
       });
-      const tree = renderer
-        .create(
-          <Provider store={store}>
-            <EditClaimant />
-          </Provider>,
-        )
-        .toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditClaimant />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
@@ -106,15 +104,11 @@ describe('Claimants edit component', () => {
         claimant: {},
         loading: false,
       });
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditClaimant />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditClaimant />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
@@ -122,15 +116,11 @@ describe('Claimants edit component', () => {
         claimant: {},
         loading: true,
       });
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditClaimant />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditClaimant />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -151,11 +141,34 @@ describe('Claimants edit component', () => {
       });
       expect(actions.getClaimant).toHaveBeenCalledWith('1');
     });
+    it('should display RecordNotFound if not claimant found', () => {
+      useSelector.mockReturnValueOnce({
+        claimant: null,
+        loading: false,
+      });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditClaimant />
+          </Provider>,
+        );
+      });
+      expect(wrapper.find(ClaimantEditForm).length).toBe(0);
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
+    });
     it('should call updateClaimant', (done) => {
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       useDispatch.mockReturnValueOnce(() => Promise.resolve({}));
-      useSelector.mockReturnValueOnce({ rating: {}, loading: false });
+      useSelector.mockReturnValueOnce({ claimant: {
+        id: 1,
+        name: 'TOI',
+        slug: 'toi',
+        description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
+        tag_line: 'tag line',
+        claimant_date: '2017-12-12',
+      },
+      loading: false, });
       actions.updateClaimant.mockReset();
       act(() => {
         wrapper = mount(
@@ -166,7 +179,15 @@ describe('Claimants edit component', () => {
       });
       wrapper.find(ClaimantEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.updateClaimant).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.updateClaimant).toHaveBeenCalledWith({ 
+          id: 1,
+          name: 'TOI',
+          slug: 'toi',
+          description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
+          tag_line: 'tag line',
+          claimant_date: '2017-12-12',
+          test: 'test',
+         });
         expect(push).toHaveBeenCalledWith('/claimants');
         done();
       }, 0);
