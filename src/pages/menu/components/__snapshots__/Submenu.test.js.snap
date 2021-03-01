@@ -1,0 +1,324 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Submenu component snapshot testing should render the component 1`] = `
+<ForwardRef(InternalForm)>
+  <SizeContextProvider>
+    <ForwardRef(Form)
+      className="ant-form ant-form-horizontal"
+      form={
+        Object {
+          "__INTERNAL__": Object {
+            "itemRef": [Function],
+            "name": undefined,
+          },
+          "getFieldError": [Function],
+          "getFieldInstance": [Function],
+          "getFieldValue": [Function],
+          "getFieldsError": [Function],
+          "getFieldsValue": [Function],
+          "getInternalHooks": [Function],
+          "isFieldTouched": [Function],
+          "isFieldValidating": [Function],
+          "isFieldsTouched": [Function],
+          "isFieldsValidating": [Function],
+          "resetFields": [Function],
+          "scrollToField": [Function],
+          "setFields": [Function],
+          "setFieldsValue": [Function],
+          "submit": [Function],
+          "validateFields": [Function],
+        }
+      }
+      onFinishFailed={[Function]}
+    >
+      <form
+        className="ant-form ant-form-horizontal"
+        onSubmit={[Function]}
+      >
+        <Submenu
+          fieldKey="1"
+        >
+          <FormList
+            name={
+              Array [
+                "1",
+                "menu",
+              ]
+            }
+          >
+            <List
+              name={
+                Array [
+                  "1",
+                  "menu",
+                ]
+              }
+            >
+              <WrapperField
+                name={Array []}
+                shouldUpdate={[Function]}
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": undefined,
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "prefixName": Array [
+                        "1",
+                        "menu",
+                      ],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_"
+                  name={Array []}
+                  shouldUpdate={[Function]}
+                  trigger="onChange"
+                  valuePropName="value"
+                >
+                  <div>
+                    <div>
+                      <FormItem>
+                        <Row
+                          className="ant-form-item"
+                          key="row"
+                        >
+                          <div
+                            className="ant-row ant-form-item"
+                            style={Object {}}
+                          >
+                            <FormItemLabel
+                              prefixCls="ant-form"
+                              requiredMark={true}
+                            />
+                            <FormItemInput
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                              prefixCls="ant-form"
+                              status=""
+                              validateStatus=""
+                            >
+                              <Col
+                                className="ant-form-item-control"
+                              >
+                                <div
+                                  className="ant-col ant-form-item-control"
+                                  style={Object {}}
+                                >
+                                  <div
+                                    className="ant-form-item-control-input"
+                                  >
+                                    <div
+                                      className="ant-form-item-control-input-content"
+                                    >
+                                      <Button
+                                        block={false}
+                                        ghost={false}
+                                        htmlType="button"
+                                        loading={false}
+                                        onClick={[Function]}
+                                      >
+                                        <Wave>
+                                          <button
+                                            className="ant-btn"
+                                            onClick={[Function]}
+                                            type="button"
+                                          >
+                                            <LoadingIcon
+                                              existIcon={false}
+                                              loading={false}
+                                              prefixCls="ant-btn"
+                                            >
+                                              <CSSMotion
+                                                motionName="ant-btn-loading-icon-motion"
+                                                onAppearActive={[Function]}
+                                                onAppearStart={[Function]}
+                                                onEnterActive={[Function]}
+                                                onEnterStart={[Function]}
+                                                onLeaveActive={[Function]}
+                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
+                                                visible={false}
+                                              >
+                                                <DomWrapper />
+                                              </CSSMotion>
+                                            </LoadingIcon>
+                                            <ForwardRef(PlusOutlined)
+                                              key=".0"
+                                            >
+                                              <AntdIcon
+                                                icon={
+                                                  Object {
+                                                    "icon": Object {
+                                                      "attrs": Object {
+                                                        "focusable": "false",
+                                                        "viewBox": "64 64 896 896",
+                                                      },
+                                                      "children": Array [
+                                                        Object {
+                                                          "attrs": Object {},
+                                                          "children": Array [
+                                                            Object {
+                                                              "attrs": Object {},
+                                                              "tag": "style",
+                                                            },
+                                                          ],
+                                                          "tag": "defs",
+                                                        },
+                                                        Object {
+                                                          "attrs": Object {
+                                                            "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                                          },
+                                                          "tag": "path",
+                                                        },
+                                                        Object {
+                                                          "attrs": Object {
+                                                            "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                                          },
+                                                          "tag": "path",
+                                                        },
+                                                      ],
+                                                      "tag": "svg",
+                                                    },
+                                                    "name": "plus",
+                                                    "theme": "outlined",
+                                                  }
+                                                }
+                                              >
+                                                <span
+                                                  aria-label="plus"
+                                                  className="anticon anticon-plus"
+                                                  role="img"
+                                                >
+                                                  <IconReact
+                                                    className=""
+                                                    icon={
+                                                      Object {
+                                                        "icon": Object {
+                                                          "attrs": Object {
+                                                            "focusable": "false",
+                                                            "viewBox": "64 64 896 896",
+                                                          },
+                                                          "children": Array [
+                                                            Object {
+                                                              "attrs": Object {},
+                                                              "children": Array [
+                                                                Object {
+                                                                  "attrs": Object {},
+                                                                  "tag": "style",
+                                                                },
+                                                              ],
+                                                              "tag": "defs",
+                                                            },
+                                                            Object {
+                                                              "attrs": Object {
+                                                                "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                                              },
+                                                              "tag": "path",
+                                                            },
+                                                            Object {
+                                                              "attrs": Object {
+                                                                "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                                              },
+                                                              "tag": "path",
+                                                            },
+                                                          ],
+                                                          "tag": "svg",
+                                                        },
+                                                        "name": "plus",
+                                                        "theme": "outlined",
+                                                      }
+                                                    }
+                                                  >
+                                                    <svg
+                                                      aria-hidden="true"
+                                                      className=""
+                                                      data-icon="plus"
+                                                      fill="currentColor"
+                                                      focusable="false"
+                                                      height="1em"
+                                                      key="svg-plus"
+                                                      viewBox="64 64 896 896"
+                                                      width="1em"
+                                                    >
+                                                      <defs
+                                                        key="svg-plus-svg-0"
+                                                      >
+                                                        <style
+                                                          key="svg-plus-svg-0-defs-0"
+                                                        />
+                                                      </defs>
+                                                      <path
+                                                        d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                                                        key="svg-plus-svg-1"
+                                                      />
+                                                      <path
+                                                        d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+                                                        key="svg-plus-svg-2"
+                                                      />
+                                                    </svg>
+                                                  </IconReact>
+                                                </span>
+                                              </AntdIcon>
+                                            </ForwardRef(PlusOutlined)>
+                                            <span
+                                              key=".1"
+                                            >
+                                                Add submenu
+                                            </span>
+                                          </button>
+                                        </Wave>
+                                      </Button>
+                                    </div>
+                                  </div>
+                                  <ErrorList
+                                    errors={Array []}
+                                    onDomErrorVisibleChange={[Function]}
+                                  >
+                                    <CSSMotion
+                                      motionAppear={true}
+                                      motionDeadline={500}
+                                      motionName="show-help"
+                                      onLeaveEnd={[Function]}
+                                      removeOnLeave={true}
+                                      visible={false}
+                                    >
+                                      <DomWrapper />
+                                    </CSSMotion>
+                                  </ErrorList>
+                                </div>
+                              </Col>
+                            </FormItemInput>
+                          </div>
+                        </Row>
+                      </FormItem>
+                    </div>
+                  </div>
+                </Field>
+              </WrapperField>
+            </List>
+          </FormList>
+        </Submenu>
+      </form>
+    </ForwardRef(Form)>
+  </SizeContextProvider>
+</ForwardRef(InternalForm)>
+`;
