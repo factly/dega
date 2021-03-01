@@ -5,11 +5,11 @@ import renderer from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import '../../matchMedia.mock';
 import Sidebar from './Sidebar';
-import * as actions from '../../actions/settings';
+import * as actions from '../../actions/sidebar';
 import { Layout } from 'antd';
 
 const { Sider } = Layout;
@@ -27,8 +27,8 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(),
 }));
 
-jest.mock('../../actions/settings', () => ({
-  toggleSider: jest.fn(),
+jest.mock('../../actions/sidebar', () => ({
+  setCollapse: jest.fn(),
 }));
 
 describe('Sidebar component', () => {
@@ -43,7 +43,11 @@ describe('Sidebar component', () => {
         collapsed: true,
       },
     },
+    sidebar: {
+      collapsed: true,
+    },
     spaces: {
+      orgs: [{ id: 1, spaces: [1]}],
       details: {
         '1': {
           id: 1,
@@ -63,6 +67,12 @@ describe('Sidebar component', () => {
       loading: false,
       selected: 1,
     },
+    admin: {
+      organisation: {
+        id: 1,
+        is_admin: true,
+      }
+    }
   };
   store = mockStore(() => state);
   store.dispatch = jest.fn(() => ({}));
@@ -70,35 +80,39 @@ describe('Sidebar component', () => {
   useDispatch.mockReturnValue(mockedDispatch);
   describe('snapshot testing', () => {
     it('should render the component', () => {
-      const tree = renderer
-        .create(
+      const tree = shallow(
           <Provider store={store}>
             <Router>
-              <Sidebar />
-            </Router>
+              <Sidebar 
+              permission= {[ {resource: 'posts', actions: ['create']} ]}
+              orgs= {[{ id: 1, spaces: [1], permission: { role: 'owner'} }]}
+              superOrg= { {id: 1, is_admin: true,} }
+              />
+           </Router>
           </Provider>,
-        )
-        .toJSON();
+        );
       expect(tree).toMatchSnapshot();
     });
     it('should not render the component when no space', () => {
-      store = mockStore({ settings: state.settings, spaces: { selected: 0 } });
-      const tree = renderer
-        .create(
+      store = mockStore({ settings: state.settings,sidebar: {collapsed: true}, spaces: { selected: 0 } });
+      const tree = shallow(
           <Provider store={store}>
             <Router>
-              <Sidebar />
+              <Sidebar 
+              permission= {[ {resource: 'posts', actions: ['create']} ]}
+              orgs= {[{ id: 1, spaces: [], permission: { role: 'owner'} }]}
+              superOrg= { {id: 1, is_admin: true,} }
+              />
             </Router>
           </Provider>,
-        )
-        .toJSON();
+        );
       expect(tree).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
     let wrapper;
     it('should call toggleSider', (done) => {
-      actions.toggleSider.mockReset();
+      actions.setCollapse.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       store = mockStore(state);
@@ -106,15 +120,65 @@ describe('Sidebar component', () => {
       wrapper = mount(
         <Provider store={store}>
           <Router>
-            <Sidebar />
+            <Sidebar 
+            permission= {[ {resource: 'posts', actions: ['create']} ]}
+            orgs= {[{ id: 1, spaces: [1], permission: { role: 'owner'} }]}
+            superOrg= { {id: 1, is_admin: true,} }
+            />
           </Router>
         </Provider>,
       );
 
-      wrapper.find(Sider).props().onBreakpoint();
+      wrapper.find(Sider).props().onCollapse();
       wrapper.update();
 
-      expect(actions.toggleSider).toHaveBeenCalledWith();
+      expect(actions.setCollapse).toHaveBeenCalled();
+      done();
+    });
+    it('should work alos when resource is admin', (done) => {
+      actions.setCollapse.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      store = mockStore(state);
+
+      wrapper = mount(
+        <Provider store={store}>
+          <Router>
+            <Sidebar 
+            permission= {[ {resource: 'admin'} ]}
+            orgs= {[{ id: 1, spaces: [1], permission: { role: 'owner'} }]}
+            superOrg= { {id: 1, is_admin: true,} }
+            />
+          </Router>
+        </Provider>,
+      );
+
+      wrapper.find(Sider).props().onCollapse();
+      wrapper.update();
+
+      expect(actions.setCollapse).toHaveBeenCalled();
+      done();
+    });
+    it('should not display when loading', (done) => {
+      actions.setCollapse.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      store = mockStore(state);
+
+      wrapper = mount(
+        <Provider store={store}>
+          <Router>
+            <Sidebar 
+            loading = {true}
+            permission= {[ {resource: 'admin'} ]}
+            orgs= {[{ id: 1, spaces: [1], permission: { role: 'owner'} }]}
+            superOrg= { {id: 1, is_admin: true,} }
+            />
+          </Router>
+        </Provider>,
+      );
+      expect(wrapper.find(Sider).length).toBe(0);
+      expect(actions.setCollapse).not.toHaveBeenCalled();
       done();
     });
   });
