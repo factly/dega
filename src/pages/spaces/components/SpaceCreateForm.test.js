@@ -1,6 +1,5 @@
 import React from 'react';
-import renderer, { act as rendererAct } from 'react-test-renderer';
-import { Provider } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
@@ -8,6 +7,13 @@ import { mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
 import SpaceCreateForm from './SpaceCreateForm';
+
+jest.mock('@editorjs/editorjs');
+jest.mock('react-redux', () => ({
+  ...jest.requireActual('react-redux'),
+  useSelector: jest.fn(),
+  useDispatch: jest.fn(),
+}));
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -19,19 +25,21 @@ const data = {
   slug: 'slug',
   site_title: 'site_title',
   tag_line: 'tag_line',
-  description: 'description',
+  description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
   site_address: 'site_address',
 };
 
 describe('Spaces Create Form component', () => {
   store = mockStore({
     spaces: {
-      orgs: [],
+      orgs: [{ id: 2, title: 'Organization 2', spaces: [] }],
       details: {},
-      loading: true,
+      loading: false,
       selected: 0,
     },
   });
+  useDispatch.mockReturnValue(jest.fn());
+  useSelector.mockImplementation((state) => ([{ id: 2, title: 'Organization 2', spaces: []}] ));
 
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -41,30 +49,20 @@ describe('Spaces Create Form component', () => {
       );
     });
     it('should render the component', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <SpaceCreateForm />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <SpaceCreateForm />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
-      rendererAct(() => component.unmount());
     });
     it('should render the component with props', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <SpaceCreateForm onCreate={onCreate} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <SpaceCreateForm onCreate={onCreate} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
-      rendererAct(() => component.unmount());
     });
   });
   describe('component testing', () => {
@@ -117,7 +115,7 @@ describe('Spaces Create Form component', () => {
           .find('FormItem')
           .at(2)
           .find('Input')
-          .simulate('change', { target: { value: 'name' } });
+          .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
           .at(3)
@@ -135,13 +133,15 @@ describe('Spaces Create Form component', () => {
           .simulate('change', { target: { value: 'tag line' } });
         wrapper
           .find('FormItem')
-          .at(6)
-          .find('TextArea')
+          .at(7)
+          .find('Editor')
           .at(0)
-          .simulate('change', { target: { value: 'description' } });
+          .props()
+          .onChange({ target: { value: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
+        } });
         wrapper
           .find('FormItem')
-          .at(7)
+          .at(6)
           .find('Input')
           .simulate('change', { target: { value: 'site address' } });
 
@@ -153,12 +153,12 @@ describe('Spaces Create Form component', () => {
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
-          name: 'name',
+          name: 'new name',
           organisation_id: 2,
           slug: 'slug',
           site_title: 'site title',
           tag_line: 'tag line',
-          description: 'description',
+          description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
           site_address: 'site address',
         });
         done();

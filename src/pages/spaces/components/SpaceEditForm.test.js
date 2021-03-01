@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer, { act as rendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -16,7 +15,7 @@ const data = {
   slug: 'slug',
   site_title: 'site_title',
   tag_line: 'tag_line',
-  description: 'description',
+  description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
   site_address: 'site_address',
   logo_id: 1,
   logo_mobile_id: 1,
@@ -30,6 +29,7 @@ const data = {
   },
 };
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
@@ -41,7 +41,7 @@ const mockStore = configureMockStore(middlewares);
 
 let onCreate, store;
 
-describe('Claims Create Form component', () => {
+describe('Space Edit Form component', () => {
   store = mockStore({
     claims: {
       req: [],
@@ -75,51 +75,36 @@ describe('Claims Create Form component', () => {
       );
     });
     it('should render the component', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <SpaceEditForm />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <SpaceEditForm />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
-      rendererAct(() => component.unmount());
     });
     it('should match component in all steps', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <SpaceEditForm data={{}} />
-          </Provider>,
-        );
-      });
-      expect(component.toJSON()).toMatchSnapshot();
-
-      const root = component.root;
-      rendererAct(() => root.findAllByType(Button)[6].props.onClick());
-      expect(root.findByType(Steps).props.current).toEqual(1);
-      expect(component.toJSON()).toMatchSnapshot();
-      rendererAct(() => component.unmount());
+      const tree = mount(
+        <Provider store={store}>
+          <SpaceEditForm data={{}} />
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+      const nextButton = tree.find('FormItem').at(17).find('Button').at(1);
+      expect(nextButton.text()).toBe('Next');
+      nextButton.simulate('click');
+      expect(tree.find('Steps').at(0).props().current).toEqual(1); 
     });
     it('should match component with data', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <SpaceEditForm onCreate={onCreate} data={data} />
-          </Provider>,
-        );
-      });
-      expect(component.toJSON()).toMatchSnapshot();
-
-      const root = component.root;
-      rendererAct(() => root.findAllByType(Button)[6].props.onClick());
-      expect(root.findByType(Steps).props.current).toEqual(1);
-      expect(component.toJSON()).toMatchSnapshot();
-      rendererAct(() => component.unmount());
+      const tree = mount(
+        <Provider store={store}>
+          <SpaceEditForm onCreate={onCreate} data={data} />
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+      const nextButton = tree.find('FormItem').at(17).find('Button').at(1);
+      expect(nextButton.text()).toBe('Next');
+      nextButton.simulate('click');
+      expect(tree.find('Steps').at(0).props().current).toEqual(1); 
     });
   });
   describe('component testing', () => {
@@ -175,7 +160,7 @@ describe('Claims Create Form component', () => {
           slug: 'slug',
           site_title: 'site_title',
           tag_line: 'tag_line',
-          description: 'description',
+          description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
           site_address: 'site_address',
           logo_id: 1,
           logo_mobile_id: 1,
@@ -222,13 +207,14 @@ describe('Claims Create Form component', () => {
           .simulate('change', { target: { value: 'new tag line' } });
         wrapper
           .find('FormItem')
-          .at(6)
-          .find('TextArea')
-          .at(0)
-          .simulate('change', { target: { value: 'new description' } });
+          .at(7)
+          .find('Editor')
+          .props()
+          .onChange({ target: { value: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
+        } });
         wrapper
           .find('FormItem')
-          .at(7)
+          .at(6)
           .find('Input')
           .simulate('change', { target: { value: 'new site address' } });
         wrapper
@@ -293,7 +279,7 @@ describe('Claims Create Form component', () => {
           slug: 'new-slug',
           site_title: 'new site title',
           tag_line: 'new tag line',
-          description: 'new description',
+          description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
           site_address: 'new site address',
           logo_id: 2,
           logo_mobile_id: 3,
