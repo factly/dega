@@ -47,6 +47,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	resp, err := requestx.Request("DELETE", hukzURL, nil, map[string]string{
 		"X-User": fmt.Sprint(uID),
 	})
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	if resp.StatusCode == http.StatusNotFound {
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))

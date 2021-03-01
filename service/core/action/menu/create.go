@@ -124,7 +124,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	util.NC.Publish("menu.created", result)
+	if err = util.NC.Publish("menu.created", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusCreated, result)
 }
