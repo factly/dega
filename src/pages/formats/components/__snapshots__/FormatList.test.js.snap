@@ -1428,7 +1428,7 @@ exports[`Formats List component snapshot testing should match component when loa
                                               okType="primary"
                                               onConfirm={[Function]}
                                               placement="top"
-                                              title="Sure to cancel?"
+                                              title="Sure to Delete?"
                                               transitionName="zoom-big"
                                               trigger="click"
                                             >
@@ -1458,7 +1458,7 @@ exports[`Formats List component snapshot testing should match component when loa
                                                 overlayClassName="ant-popconfirm"
                                                 placement="top"
                                                 prefixCls="ant-popover"
-                                                title="Sure to cancel?"
+                                                title="Sure to Delete?"
                                                 transitionName="zoom-big"
                                                 trigger="click"
                                               >
@@ -1726,7 +1726,7 @@ exports[`Formats List component snapshot testing should match component when loa
                                                   overlayClassName="ant-popconfirm"
                                                   placement="top"
                                                   prefixCls="ant-popover"
-                                                  title="Sure to cancel?"
+                                                  title="Sure to Delete?"
                                                   transitionName="zoom-big"
                                                   trigger="click"
                                                 >
@@ -2011,7 +2011,7 @@ exports[`Formats List component snapshot testing should match component when loa
                                                     popupTransitionName="zoom-big"
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
-                                                    title="Sure to cancel?"
+                                                    title="Sure to Delete?"
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -2371,7 +2371,7 @@ exports[`Formats List component snapshot testing should match component when loa
                                               okType="primary"
                                               onConfirm={[Function]}
                                               placement="top"
-                                              title="Sure to cancel?"
+                                              title="Sure to Delete?"
                                               transitionName="zoom-big"
                                               trigger="click"
                                             >
@@ -2401,7 +2401,7 @@ exports[`Formats List component snapshot testing should match component when loa
                                                 overlayClassName="ant-popconfirm"
                                                 placement="top"
                                                 prefixCls="ant-popover"
-                                                title="Sure to cancel?"
+                                                title="Sure to Delete?"
                                                 transitionName="zoom-big"
                                                 trigger="click"
                                               >
@@ -2669,7 +2669,7 @@ exports[`Formats List component snapshot testing should match component when loa
                                                   overlayClassName="ant-popconfirm"
                                                   placement="top"
                                                   prefixCls="ant-popover"
-                                                  title="Sure to cancel?"
+                                                  title="Sure to Delete?"
                                                   transitionName="zoom-big"
                                                   trigger="click"
                                                 >
@@ -2954,7 +2954,7 @@ exports[`Formats List component snapshot testing should match component when loa
                                                     popupTransitionName="zoom-big"
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
-                                                    title="Sure to cancel?"
+                                                    title="Sure to Delete?"
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -3146,7 +3146,15 @@ exports[`Formats List component snapshot testing should match component when loa
                             <ForwardRef(LeftOutlined) />
                           </button>
                         }
-                        selectComponentClass={[Function]}
+                        selectComponentClass={
+                          Object {
+                            "$$typeof": Symbol(react.forward_ref),
+                            "OptGroup": [Function],
+                            "Option": [Function],
+                            "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                            "render": [Function],
+                          }
+                        }
                         selectPrefixCls="ant-select"
                         showLessItems={false}
                         showPrevNextJumpers={true}
@@ -3406,7 +3414,15 @@ exports[`Formats List component snapshot testing should match component when loa
                             }
                             quickGo={null}
                             rootPrefixCls="ant-pagination"
-                            selectComponentClass={[Function]}
+                            selectComponentClass={
+                              Object {
+                                "$$typeof": Symbol(react.forward_ref),
+                                "OptGroup": [Function],
+                                "Option": [Function],
+                                "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                "render": [Function],
+                              }
+                            }
                             selectPrefixCls="ant-select"
                           />
                         </ul>
@@ -4828,7 +4844,7 @@ exports[`Formats List component snapshot testing should match component with for
                                               okType="primary"
                                               onConfirm={[Function]}
                                               placement="top"
-                                              title="Sure to cancel?"
+                                              title="Sure to Delete?"
                                               transitionName="zoom-big"
                                               trigger="click"
                                             >
@@ -4858,7 +4874,7 @@ exports[`Formats List component snapshot testing should match component with for
                                                 overlayClassName="ant-popconfirm"
                                                 placement="top"
                                                 prefixCls="ant-popover"
-                                                title="Sure to cancel?"
+                                                title="Sure to Delete?"
                                                 transitionName="zoom-big"
                                                 trigger="click"
                                               >
@@ -5126,7 +5142,7 @@ exports[`Formats List component snapshot testing should match component with for
                                                   overlayClassName="ant-popconfirm"
                                                   placement="top"
                                                   prefixCls="ant-popover"
-                                                  title="Sure to cancel?"
+                                                  title="Sure to Delete?"
                                                   transitionName="zoom-big"
                                                   trigger="click"
                                                 >
@@ -5411,7 +5427,7 @@ exports[`Formats List component snapshot testing should match component with for
                                                     popupTransitionName="zoom-big"
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
-                                                    title="Sure to cancel?"
+                                                    title="Sure to Delete?"
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -5771,7 +5787,7 @@ exports[`Formats List component snapshot testing should match component with for
                                               okType="primary"
                                               onConfirm={[Function]}
                                               placement="top"
-                                              title="Sure to cancel?"
+                                              title="Sure to Delete?"
                                               transitionName="zoom-big"
                                               trigger="click"
                                             >
@@ -5801,7 +5817,7 @@ exports[`Formats List component snapshot testing should match component with for
                                                 overlayClassName="ant-popconfirm"
                                                 placement="top"
                                                 prefixCls="ant-popover"
-                                                title="Sure to cancel?"
+                                                title="Sure to Delete?"
                                                 transitionName="zoom-big"
                                                 trigger="click"
                                               >
@@ -6069,7 +6085,7 @@ exports[`Formats List component snapshot testing should match component with for
                                                   overlayClassName="ant-popconfirm"
                                                   placement="top"
                                                   prefixCls="ant-popover"
-                                                  title="Sure to cancel?"
+                                                  title="Sure to Delete?"
                                                   transitionName="zoom-big"
                                                   trigger="click"
                                                 >
@@ -6354,7 +6370,7 @@ exports[`Formats List component snapshot testing should match component with for
                                                     popupTransitionName="zoom-big"
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
-                                                    title="Sure to cancel?"
+                                                    title="Sure to Delete?"
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -6546,7 +6562,15 @@ exports[`Formats List component snapshot testing should match component with for
                             <ForwardRef(LeftOutlined) />
                           </button>
                         }
-                        selectComponentClass={[Function]}
+                        selectComponentClass={
+                          Object {
+                            "$$typeof": Symbol(react.forward_ref),
+                            "OptGroup": [Function],
+                            "Option": [Function],
+                            "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                            "render": [Function],
+                          }
+                        }
                         selectPrefixCls="ant-select"
                         showLessItems={false}
                         showPrevNextJumpers={true}
@@ -6806,7 +6830,15 @@ exports[`Formats List component snapshot testing should match component with for
                             }
                             quickGo={null}
                             rootPrefixCls="ant-pagination"
-                            selectComponentClass={[Function]}
+                            selectComponentClass={
+                              Object {
+                                "$$typeof": Symbol(react.forward_ref),
+                                "OptGroup": [Function],
+                                "Option": [Function],
+                                "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                "render": [Function],
+                              }
+                            }
                             selectPrefixCls="ant-select"
                           />
                         </ul>
@@ -8228,7 +8260,7 @@ exports[`Formats List component snapshot testing should render the component 1`]
                                               okType="primary"
                                               onConfirm={[Function]}
                                               placement="top"
-                                              title="Sure to cancel?"
+                                              title="Sure to Delete?"
                                               transitionName="zoom-big"
                                               trigger="click"
                                             >
@@ -8258,7 +8290,7 @@ exports[`Formats List component snapshot testing should render the component 1`]
                                                 overlayClassName="ant-popconfirm"
                                                 placement="top"
                                                 prefixCls="ant-popover"
-                                                title="Sure to cancel?"
+                                                title="Sure to Delete?"
                                                 transitionName="zoom-big"
                                                 trigger="click"
                                               >
@@ -8526,7 +8558,7 @@ exports[`Formats List component snapshot testing should render the component 1`]
                                                   overlayClassName="ant-popconfirm"
                                                   placement="top"
                                                   prefixCls="ant-popover"
-                                                  title="Sure to cancel?"
+                                                  title="Sure to Delete?"
                                                   transitionName="zoom-big"
                                                   trigger="click"
                                                 >
@@ -8811,7 +8843,7 @@ exports[`Formats List component snapshot testing should render the component 1`]
                                                     popupTransitionName="zoom-big"
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
-                                                    title="Sure to cancel?"
+                                                    title="Sure to Delete?"
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -9171,7 +9203,7 @@ exports[`Formats List component snapshot testing should render the component 1`]
                                               okType="primary"
                                               onConfirm={[Function]}
                                               placement="top"
-                                              title="Sure to cancel?"
+                                              title="Sure to Delete?"
                                               transitionName="zoom-big"
                                               trigger="click"
                                             >
@@ -9201,7 +9233,7 @@ exports[`Formats List component snapshot testing should render the component 1`]
                                                 overlayClassName="ant-popconfirm"
                                                 placement="top"
                                                 prefixCls="ant-popover"
-                                                title="Sure to cancel?"
+                                                title="Sure to Delete?"
                                                 transitionName="zoom-big"
                                                 trigger="click"
                                               >
@@ -9469,7 +9501,7 @@ exports[`Formats List component snapshot testing should render the component 1`]
                                                   overlayClassName="ant-popconfirm"
                                                   placement="top"
                                                   prefixCls="ant-popover"
-                                                  title="Sure to cancel?"
+                                                  title="Sure to Delete?"
                                                   transitionName="zoom-big"
                                                   trigger="click"
                                                 >
@@ -9754,7 +9786,7 @@ exports[`Formats List component snapshot testing should render the component 1`]
                                                     popupTransitionName="zoom-big"
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
-                                                    title="Sure to cancel?"
+                                                    title="Sure to Delete?"
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -9946,7 +9978,15 @@ exports[`Formats List component snapshot testing should render the component 1`]
                             <ForwardRef(LeftOutlined) />
                           </button>
                         }
-                        selectComponentClass={[Function]}
+                        selectComponentClass={
+                          Object {
+                            "$$typeof": Symbol(react.forward_ref),
+                            "OptGroup": [Function],
+                            "Option": [Function],
+                            "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                            "render": [Function],
+                          }
+                        }
                         selectPrefixCls="ant-select"
                         showLessItems={false}
                         showPrevNextJumpers={true}
@@ -10206,7 +10246,15 @@ exports[`Formats List component snapshot testing should render the component 1`]
                             }
                             quickGo={null}
                             rootPrefixCls="ant-pagination"
-                            selectComponentClass={[Function]}
+                            selectComponentClass={
+                              Object {
+                                "$$typeof": Symbol(react.forward_ref),
+                                "OptGroup": [Function],
+                                "Option": [Function],
+                                "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                "render": [Function],
+                              }
+                            }
                             selectPrefixCls="ant-select"
                           />
                         </ul>

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -47,13 +46,11 @@ describe('Formats create component', () => {
   useDispatch.mockReturnValue(mockedDispatch);
   describe('snapshot testing', () => {
     it('should render the component', () => {
-      const tree = renderer
-        .create(
-          <Provider store={store}>
-            <CreateFormat />
-          </Provider>,
-        )
-        .toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <CreateFormat />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
