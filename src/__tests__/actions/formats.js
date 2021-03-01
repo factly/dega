@@ -121,6 +121,10 @@ describe('formats actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });
@@ -175,6 +179,10 @@ describe('formats actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: false,
       },
     ];
 
@@ -254,16 +262,16 @@ describe('formats actions', () => {
         payload: { id: 1, name: 'Format' },
       },
       {
-        type: types.SET_FORMATS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Format updated',
         },
+      },
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: false,
       },
     ];
 
@@ -290,6 +298,10 @@ describe('formats actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: false,
       },
     ];
 
@@ -350,5 +362,64 @@ describe('formats actions', () => {
       .dispatch(actions.deleteFormat(1))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.FORMATS_API + '/1');
+  });
+  it('should create actions to add default formats', () => {
+    const formats = [{ id: 1, name: 'Format' }];
+    const resp = { data: { nodes: formats, total: 1 } };
+    axios.post.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: true,
+      },
+      {
+        type: types.ADD_FORMATS,
+        payload: [{ id: 1, name: 'Format' }],
+      },
+      {
+        type: types.ADD_FORMATS_REQUEST,
+        payload: {
+          data: [1],
+          total: 1,
+        },
+      },
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: false,
+      },
+    ]  
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addDefaultFormats())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.FORMATS_API + '/default');
+  });
+  it('should create actions to add default formats failure', () => {
+    const errorMessage = 'Failed to add default format';
+    axios.post.mockRejectedValue(new Error(errorMessage));
+    const expectedActions = [
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+        },
+      },
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: false,
+      },
+    ]  
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addDefaultFormats())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.FORMATS_API + '/default');
   });
 });

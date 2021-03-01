@@ -223,6 +223,10 @@ describe('ratings actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });
@@ -250,6 +254,10 @@ describe('ratings actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -388,16 +396,16 @@ describe('ratings actions', () => {
         payload: { id: 1, name: 'Rating', medium: undefined },
       },
       {
-        type: types.SET_RATINGS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Rating updated',
         },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -427,16 +435,16 @@ describe('ratings actions', () => {
         payload: { id: 1, name: 'Rating', medium: 4 },
       },
       {
-        type: types.SET_RATINGS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Rating updated',
         },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -463,6 +471,10 @@ describe('ratings actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -582,5 +594,67 @@ describe('ratings actions', () => {
     const store = mockStore({ initialState });
     store.dispatch(actions.addRatings(ratings));
     expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('should create actions to add default ratings success', () => {
+    const ratings = [{ id: 1, name: 'Rating' }];
+    const resp = { data: { nodes: ratings, total: 1 } };
+    axios.post.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: true,
+      },
+      {
+        type: types.ADD_RATINGS,
+        payload: [{ id: 1, name: 'Rating', medium: undefined }],
+      },
+      {
+        type: types.ADD_RATINGS_REQUEST,
+        payload: {
+          data: [1],
+          total: 1,
+        },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addDefaultRatings())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.RATINGS_API + '/default');
+  });
+  it('should create actions to add default ratings failure', () => {
+    const errorMessage = 'Failed to add default rating';
+    axios.post.mockRejectedValue( new Error(errorMessage) );
+
+    const expectedActions = [
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+        },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addDefaultRatings())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.RATINGS_API + '/default');
   });
 });

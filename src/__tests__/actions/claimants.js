@@ -224,6 +224,10 @@ describe('claimants actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });
@@ -251,6 +255,10 @@ describe('claimants actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -389,16 +397,16 @@ describe('claimants actions', () => {
         payload: { id: 1, name: 'Claimant', medium: undefined },
       },
       {
-        type: types.SET_CLAIMANTS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Claimant updated',
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -428,16 +436,16 @@ describe('claimants actions', () => {
         payload: { id: 1, name: 'Claimant', medium: 4 },
       },
       {
-        type: types.SET_CLAIMANTS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Claimant updated',
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -464,6 +472,10 @@ describe('claimants actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 

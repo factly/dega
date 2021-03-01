@@ -110,6 +110,10 @@ describe('google fact checks actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_GOOGLE_FACT_CHECKS_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });

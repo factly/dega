@@ -158,6 +158,10 @@ describe('media actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });
@@ -185,6 +189,10 @@ describe('media actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
       },
     ];
 
@@ -318,16 +326,16 @@ describe('media actions', () => {
         payload: { id: 1, name: 'Medium' },
       },
       {
-        type: types.SET_MEDIA_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Medium updated',
         },
+      },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
       },
     ];
 
@@ -354,6 +362,10 @@ describe('media actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
       },
     ];
 

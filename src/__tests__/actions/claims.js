@@ -38,6 +38,13 @@ const claim2 = {
 };
 const { claimant: claimant2, rating: rating2, ...claim_without_claimant_and_rating2 } = claim2;
 
+const claim3 = {
+  id: 3,
+  name: 'New Claim',
+  claimant: { id: 13, name: 'Claimant 3', medium: { id: 23, name: 'Medium-Claimant 3' } },
+  rating: { id: 300, name: 'Rating 3', medium: { id: 320, name: 'Medium-Rating 3' } },
+};
+
 describe('claims actions', () => {
   it('should create an action to set loading to true', () => {
     const startLoadingAction = {
@@ -146,6 +153,59 @@ describe('claims actions', () => {
       params: params,
     });
   });
+  it('should create actions to fetch claims list without page and limit', () => {
+    const query = { q: 'New'};
+    const claims = [claim3];
+    const resp = { data: { nodes: claims, total: 1 } };
+    axios.get.mockResolvedValue(resp);
+    
+    const expectedActions = [
+      {
+        type: types.SET_CLAIMS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 23, name: 'Medium-Claimant 3' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{ id: 13, name: 'Claimant 3', medium: 23 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 320, name: 'Medium-Rating 3' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{ id: 300, name: 'Rating 3', medium: 320 }],
+      },
+      {
+        type: types.ADD_CLAIMS,
+        payload: [{ id: 3, name: 'New Claim', claimant: 13, rating: 300 }],
+      },
+      {
+        type: types.ADD_CLAIMS_REQUEST,
+        payload: {
+          data: [3],
+          query: query,
+          total: 1,
+        },
+      },
+      {
+        type: types.SET_CLAIMS_LOADING,
+        payload: false,
+      },
+    ];
+    const params = new URLSearchParams('q=New');
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getClaims(query))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.CLAIMS_API, {
+      params: params,
+    });
+  });
   it('should create actions to fetch claims list without claimants and ratings', () => {
     const query = { page: 1, limit: 5 };
     const claims = [claim_without_claimant_and_rating, claim_without_claimant_and_rating2];
@@ -211,6 +271,10 @@ describe('claims actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_CLAIMS_LOADING,
+        payload: false,
       },
     ];
 
@@ -314,6 +378,10 @@ describe('claims actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_CLAIMS_LOADING,
+        payload: false,
       },
     ];
 
@@ -422,16 +490,16 @@ describe('claims actions', () => {
         payload: { id: 1, name: 'Claim 1', claimant: 11, rating: 100 },
       },
       {
-        type: types.SET_CLAIMS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Claim updated',
         },
+      },
+      {
+        type: types.SET_CLAIMS_LOADING,
+        payload: false,
       },
     ];
 
@@ -488,6 +556,10 @@ describe('claims actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_CLAIMS_LOADING,
+        payload: false,
       },
     ];
 

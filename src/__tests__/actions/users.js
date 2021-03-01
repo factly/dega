@@ -101,6 +101,10 @@ describe('users actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_USERS_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });

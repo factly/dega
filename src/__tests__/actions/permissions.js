@@ -89,6 +89,10 @@ describe('permissions actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_PERMISSIONS_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });

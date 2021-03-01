@@ -120,6 +120,10 @@ describe('tags actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });
@@ -174,6 +178,10 @@ describe('tags actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -253,16 +261,16 @@ describe('tags actions', () => {
         payload: { id: 1, name: 'Tag' },
       },
       {
-        type: types.SET_TAGS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Tag updated',
         },
+      },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -289,6 +297,10 @@ describe('tags actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
       },
     ];
 

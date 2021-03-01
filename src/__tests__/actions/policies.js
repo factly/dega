@@ -121,6 +121,10 @@ describe('policies actions', () => {
           message: errorMessage,
         },
       },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
+      },
     ];
 
     const store = mockStore({ initialState });
@@ -148,6 +152,10 @@ describe('policies actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -254,16 +262,16 @@ describe('policies actions', () => {
         payload: { id: 1, name: 'Policy' },
       },
       {
-        type: types.SET_POLICIES_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Policy updated',
         },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -290,6 +298,10 @@ describe('policies actions', () => {
           title: 'Error',
           message: errorMessage,
         },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -384,5 +396,67 @@ describe('policies actions', () => {
     const store = mockStore({ initialState });
     store.dispatch(actions.addPolicies(policies));
     expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('should create actions to add default policies success', () => {
+    const policies = [{ id: 1, name: 'Policy' }];
+    const resp = { data: { nodes: policies, total: 1 } };
+    axios.post.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: true,
+      },
+      {
+        type: types.ADD_POLICIES,
+        payload: [{ id: 1, name: 'Policy' }],
+      },
+      {
+        type: types.ADD_POLICIES_REQUEST,
+        payload: {
+          data: [1],
+          total: 1,
+        },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addDefaultPolicies())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.POLICIES_API + '/default');
+  });
+  it('should create actions to add default policies failure', () => {
+    const errorMessage = 'Failed to add default policy';
+    axios.post.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+        },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addDefaultPolicies())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.POLICIES_API + '/default');
   });
 });
