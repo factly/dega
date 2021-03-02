@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post List</title>
+  <link rel="stylesheet" href="/default/css/main.css">
+</head>
+<body>
+
+  <h1>Post List</h1>
+
+  <div class="row">      
+      
+    {{range $index, $post := .postList}}
+      <div class="column">
+        {{if $post.Medium}}
+          {{$urlMap := unmar $post.Medium.URL}}
+          <img class="featured_image" style="width: 500; height: 500;" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
+          <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
+        {{end}}
+        <br>
+        <h3><a href="/posts/{{$post.ID}}">{{$post.Title}}</a></h3>
+        {{if dateVal $post.PublishedDate}} <b>Published Date:</b> {{$post.PublishedDate | dateFmt}} {{end}} <br>
+
+        <b>Authors:</b>
+        {{range $idx, $author := $post.Authors}}
+          {{$author.FirstName}} {{$author.LastName}} ({{$author.Email}})
+        {{end}}
+        <br>
+        <b>Format:</b> {{$post.Format.Name}} <br>
+        <b>{{$post.Excerpt}}</b> <br>
+      </div>
+    {{end}}
+
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/default/css/main.css">
+  <title>Tag List</title>
+</head>
+<body>
+  <h1>Tag List</h1>
+
+  <div class="row">      
+    {{range $index, $tag := .}}
+    <div class="column">
+      <h3>{{$tag.Name}}</h3> <br>
+      <b>Is Featured:</b> {{$tag.IsFeatured}}
+      <br>
+      {{$bmap := unmar $tag.Description}}
+      <div id="tag_description" class="description">
+        <b>Description:</b>{{template "description" $bmap.blocks}}
+      </div>
+    </div>
+    {{end}}
+  </div>
+</body>
+</html>

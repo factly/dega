@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/default/css/main.css">
+  {{if .post.Medium}}
+    {{$urlMap := unmar .post.Medium.URL}}
+    <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
+  {{end}}
+  <title>{{.post.Slug}}</title>
+</head>
+<body>
+  
+  <h1>{{.post.Title}}  
+    {{if .post.Medium}}
+    {{$urlMap := unmar .post.Medium.URL}}
+      <img class="featured_image" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
+      <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
+    {{end}}
+  </h1>
+  
+  <h3>{{.post.Subtitle}}</h3>
+  <blockquote>{{.post.Excerpt}}</blockquote>
+  <br><br>
+  <p id="format"><b> Format: {{.post.Format.Name}}</b></p>
+  
+  <p><b>Tags: </b></p>
+  <ul>
+  {{range .post.Tags}}
+    {{$tagDesc := unmar .Description}}
+    <li>{{.Name}} - {{template "description" $tagDesc.blocks}}</li>
+  {{end}}
+  </ul>
+
+  <p><b>Categories: </b></p>
+  <ul>
+  {{range .post.Categories}}
+    {{$catDesc := unmar .Description}}
+    <li>{{.Name}} - {{template "description" $catDesc.blocks}}</li>
+  {{end}}
+  </ul>
+
+  <p><b>Authors: </b></p>
+  <ul>
+  {{range .post.Authors}}
+    <li>{{.FirstName}} {{.LastName}} - {{.Email}}</li>
+  {{end}}
+  </ul>
+  <br><hr>
+
+  {{$bmap := unmar .post.Description | bmap}}
+
+  <div id="post_description" class="description">
+    {{template "description" $bmap}}
+  </div>
+  
+</body>
+</html>
