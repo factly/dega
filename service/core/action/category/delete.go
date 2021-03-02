@@ -103,7 +103,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	util.NC.Publish("category.deleted", result)
+	if err = util.NC.Publish("category.deleted", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, nil)
 }

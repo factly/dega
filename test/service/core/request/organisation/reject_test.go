@@ -1,4 +1,4 @@
-package spacePermission
+package organisation
 
 import (
 	"net/http"
@@ -12,7 +12,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestSpacePermissionDelete(t *testing.T) {
+func TestOrganisationRequestReject(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	test.MockServer()
@@ -26,45 +26,41 @@ func TestSpacePermissionDelete(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("invalid permission id", func(t *testing.T) {
+	t.Run("invalid request id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-
-		e.DELETE(path).
-			WithPath("permission_id", "invalid_id").
+		e.POST(rejectPath).
+			WithPath("request_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("space permission record does not exist", func(t *testing.T) {
+	t.Run("request record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-
 		mock.ExpectQuery(selectQuery).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows(columns))
+			WithArgs("pending", 1).
+			WillReturnRows(sqlmock.NewRows(Columns))
 
-		e.DELETE(path).
-			WithPath("permission_id", "1").
+		e.POST(rejectPath).
+			WithPath("request_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("delete space permission", func(t *testing.T) {
+	t.Run("reject the request", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-
-		SelectQuery(mock, 1)
+		SelectQuery(mock)
 
 		mock.ExpectBegin()
-		mock.ExpectExec(`UPDATE \"space_permissions\"`).
-			WithArgs(test.AnyTime{}, 1).
+		mock.ExpectExec(`UPDATE \"organisation_permission_requests\"`).
+			WithArgs(test.AnyTime{}, 1, "rejected", 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		mock.ExpectCommit()
 
-		e.DELETE(path).
-			WithPath("permission_id", "1").
+		e.POST(rejectPath).
+			WithPath("request_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK)

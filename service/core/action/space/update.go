@@ -200,7 +200,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	util.NC.Publish("space.deleted", result)
+	if err = util.NC.Publish("space.updated", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
 }

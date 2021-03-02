@@ -16,6 +16,7 @@ require (
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/meilisearch/meilisearch-go v0.12.0
 	github.com/moul/http2curl v1.0.0 // indirect
+	github.com/nats-io/gnatsd v1.4.1
 	github.com/nats-io/nats-server/v2 v2.1.9 // indirect
 	github.com/nats-io/nats.go v1.10.0
 	github.com/prometheus/client_golang v0.9.3

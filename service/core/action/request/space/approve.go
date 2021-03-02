@@ -79,6 +79,7 @@ func approve(w http.ResponseWriter, r *http.Request) {
 		err = tx.Model(&model.SpacePermission{}).Create(&result).Error
 	} else {
 		// Update the space permission
+		tx.Model(&spacePermission).Select("FactCheck").Updates(model.SpacePermission{FactCheck: result.FactCheck})
 		err = tx.Model(&spacePermission).Updates(&result).First(&result).Error
 	}
 

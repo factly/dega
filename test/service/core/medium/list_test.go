@@ -9,6 +9,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
@@ -31,6 +32,10 @@ func TestMediumList(t *testing.T) {
 		{"name": "Sample Medium 1", "slug": "test-medium-1"},
 		{"name": "Sample Medium 2", "slug": "test-medium-2"},
 	}
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("get empty list of media", func(t *testing.T) {
 		test.CheckSpaceMock(mock)

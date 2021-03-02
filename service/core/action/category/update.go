@@ -197,7 +197,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	util.NC.Publish("category.updated", result)
+	if err = util.NC.Publish("category.created", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	renderx.JSON(w, http.StatusOK, result)
 }

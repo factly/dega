@@ -1,0 +1,44 @@
+[
+  {
+    "name": "True",
+    "slug": "true",
+    "description": "True",
+    "numeric_value": 5,
+    "colour": "green"
+  },
+  {
+    "name": "Partly True",
+    "slug": "partly-true",
+    "description": "Partly True",
+    "numeric_value": 4,
+    "colour": "yellow"
+  },
+  {
+    "name": "Unverified",
+    "slug": "unverified",
+    "description": "Unverified",
+    "numeric_value": 3,
+    "colour": "dark yellow"
+  },
+  {
+    "name": "Misleading",
+    "slug": "misleading",
+    "description": "Misleading",
+    "numeric_value": 2,
+    "colour": "orange"
+  },
+  {
+    "name": "False",
+    "slug": "false",
+    "description": "False",
+    "numeric_value": 1,
+    "colour": "red"
+  },
+  {
+    "name": "Not a Claim",
+    "slug": "not-a-claim",
+    "description": "Not a Claim",
+    "numeric_value": 0,
+    "colour": "grey"
+  }
+]

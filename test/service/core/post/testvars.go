@@ -25,6 +25,7 @@ var Data = map[string]interface{}{
 	"subtitle":           "post subtitle",
 	"slug":               "post",
 	"status":             "draft",
+	"page":               true,
 	"excerpt":            "post excerpt",
 	"description":        test.NilJsonb(),
 	"is_featured":        false,
@@ -42,6 +43,7 @@ var postData = map[string]interface{}{
 	"subtitle":       "post subtitle",
 	"slug":           "post",
 	"status":         "draft",
+	"page":           true,
 	"excerpt":        "post excerpt",
 	"description":    test.NilJsonb(),
 	"is_featured":    false,
@@ -56,6 +58,7 @@ var postList = []map[string]interface{}{
 		"subtitle":           "post subtitle 1",
 		"slug":               "post-1",
 		"status":             "draft",
+		"page":               true,
 		"excerpt":            "post excerpt",
 		"description":        test.NilJsonb(),
 		"is_featured":        false,
@@ -69,6 +72,7 @@ var postList = []map[string]interface{}{
 		"subtitle":           "post subtitle",
 		"slug":               "post-2",
 		"status":             "draft",
+		"page":               true,
 		"excerpt":            "post excerpt",
 		"description":        test.NilJsonb(),
 		"is_featured":        false,
@@ -99,7 +103,7 @@ var undecodableTemplateData = map[string]interface{}{
 	"post_id": "dfdsf",
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "subtitle", "slug", "status", "excerpt", "description", "is_featured", "is_sticky", "is_highlighted", "featured_medium_id", "format_id", "published_date", "space_id"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "subtitle", "slug", "status", "page", "excerpt", "description", "is_featured", "is_sticky", "is_highlighted", "featured_medium_id", "format_id", "published_date", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "posts"`)
 var paginationQuery = `SELECT \* FROM "posts" (.+) LIMIT 1 OFFSET 1`
@@ -123,7 +127,7 @@ func postInsertMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	format.SelectMock(mock, 1, 1)
 
 	mock.ExpectQuery(`INSERT INTO "posts"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["excerpt"], post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], test.AnyTime{}, 1, post["featured_medium_id"]).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["page"], post["excerpt"], post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], test.AnyTime{}, 1, post["featured_medium_id"]).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"featured_medium_id", "id"}).
 			AddRow(1, 1))
@@ -141,7 +145,7 @@ func postInsertMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	medium.SelectWithSpace(mock)
 
 	mock.ExpectQuery(`INSERT INTO "categories"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id", "parent_id", "medium_id"}).
 			AddRow(1, 1, 1))
@@ -157,9 +161,9 @@ func postListMock(mock sqlmock.Sqlmock) {
 
 	mock.ExpectQuery(selectQuery).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, postList[0]["title"], postList[0]["subtitle"], postList[0]["slug"], postList[0]["status"], postList[0]["excerpt"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, postList[0]["title"], postList[0]["subtitle"], postList[0]["slug"], postList[0]["status"], postList[0]["page"], postList[0]["excerpt"],
 				postList[0]["description"], postList[0]["is_featured"], postList[0]["is_sticky"], postList[0]["is_highlighted"], postList[0]["featured_medium_id"], postList[0]["format_id"], postList[0]["published_date"], 1).
-			AddRow(2, time.Now(), time.Now(), nil, 1, 1, postList[1]["title"], postList[1]["subtitle"], postList[1]["slug"], postList[1]["status"], postList[1]["excerpt"],
+			AddRow(2, time.Now(), time.Now(), nil, 1, 1, postList[1]["title"], postList[1]["subtitle"], postList[1]["slug"], postList[1]["status"], postList[1]["page"], postList[1]["excerpt"],
 				postList[1]["description"], postList[1]["is_featured"], postList[1]["is_sticky"], postList[1]["is_highlighted"], postList[1]["featured_medium_id"], postList[1]["format_id"], postList[1]["published_date"], 1))
 
 	preloadMock(mock, sqlmock.AnyArg(), sqlmock.AnyArg())
@@ -184,9 +188,9 @@ func postListWithFiltersMock(mock sqlmock.Sqlmock) {
 
 	mock.ExpectQuery(selectQuery).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, postList[0]["title"], postList[0]["subtitle"], postList[0]["slug"], postList[0]["status"], postList[0]["excerpt"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, postList[0]["title"], postList[0]["subtitle"], postList[0]["slug"], postList[0]["status"], postList[0]["page"], postList[0]["excerpt"],
 				postList[0]["description"], postList[0]["is_featured"], postList[0]["is_sticky"], postList[0]["is_highlighted"], postList[0]["featured_medium_id"], postList[0]["format_id"], postList[0]["published_date"], 1).
-			AddRow(2, time.Now(), time.Now(), nil, 1, 1, postList[1]["title"], postList[1]["subtitle"], postList[1]["slug"], postList[1]["status"], postList[1]["excerpt"],
+			AddRow(2, time.Now(), time.Now(), nil, 1, 1, postList[1]["title"], postList[1]["subtitle"], postList[1]["slug"], postList[1]["status"], postList[1]["page"], postList[1]["excerpt"],
 				postList[1]["description"], postList[1]["is_featured"], postList[1]["is_sticky"], postList[1]["is_highlighted"], postList[1]["featured_medium_id"], postList[1]["format_id"], postList[1]["published_date"], 1))
 
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
@@ -237,7 +241,7 @@ func postSelectWithOutSpace(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["excerpt"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["page"], post["excerpt"],
 				post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["featured_medium_id"], post["format_id"], post["published_date"], 1))
 
 	// Preload Claimant & Rating
@@ -248,7 +252,7 @@ func postSelectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["excerpt"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["page"], Data["excerpt"],
 				Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1))
 }
 
@@ -256,7 +260,7 @@ func postSelectPublishedWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], "publish", Data["excerpt"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], "publish", Data["page"], Data["excerpt"],
 				Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1))
 }
 
@@ -339,7 +343,7 @@ func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckR
 	medium.SelectWithSpace(mock)
 
 	mock.ExpectQuery(`INSERT INTO "categories"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id", "parent_id", "medium_id"}).
 			AddRow(1, 1, 1))
@@ -371,7 +375,7 @@ func preUpdatePublishedMock(mock sqlmock.Sqlmock, post map[string]interface{}, s
 
 func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	mock.ExpectExec(`UPDATE \"posts\"`).
-		WithArgs(post["is_featured"], 1).
+		WithArgs(post["page"], post["is_featured"], post["is_sticky"], post["is_highlighted"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	medium.SelectWithSpace(mock)
 	format.SelectMock(mock, 1, 1)
@@ -384,7 +388,7 @@ func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugChec
 
 func updatePublishedQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	mock.ExpectExec(`UPDATE \"posts\"`).
-		WithArgs(post["is_featured"], 1).
+		WithArgs(post["page"], post["is_featured"], post["is_sticky"], post["is_highlighted"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	medium.SelectWithSpace(mock)
 	format.SelectMock(mock, 1, 1)
@@ -409,7 +413,7 @@ func postUpdateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	medium.SelectWithSpace(mock)
 
 	mock.ExpectQuery(`INSERT INTO "categories"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id", "parent_id", "medium_id"}).
 			AddRow(1, 1, 1))
@@ -420,7 +424,7 @@ func postUpdateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["excerpt"], post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["featured_medium_id"], post["format_id"], post["published_date"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["page"], post["excerpt"], post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["featured_medium_id"], post["format_id"], post["published_date"], 1))
 
 	preloadMock(mock)
 }
@@ -514,7 +518,7 @@ func publishMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["excerpt"],
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["page"], Data["excerpt"],
 				Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1))
 
 	preloadMock(mock)

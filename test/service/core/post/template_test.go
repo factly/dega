@@ -14,6 +14,7 @@ import (
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/core/tag"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -32,6 +33,10 @@ func TestPostTemplateCreate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	Data["status"] = "template"
 	t.Run("Create a template from post", func(t *testing.T) {
@@ -126,7 +131,7 @@ func TestPostTemplateCreate(t *testing.T) {
 		format.SelectMock(mock, 1, 1)
 
 		mock.ExpectQuery(`INSERT INTO "posts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["excerpt"], Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], test.AnyTime{}, 1, Data["featured_medium_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["page"], Data["excerpt"], Data["description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], test.AnyTime{}, 1, Data["featured_medium_id"]).
 			WillReturnError(errors.New("cannot create post"))
 		mock.ExpectRollback()
 

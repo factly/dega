@@ -13,6 +13,7 @@ import (
 var permissionContext config.ContextKey = "space_perm_user"
 
 type spacePermissionRequest struct {
+	Title       string         `json:"title" validate:"required,min=3,max=150"`
 	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	FactCheck   bool           `json:"fact_check"`
 	Media       int64          `json:"media"`

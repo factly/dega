@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
@@ -26,6 +27,10 @@ func TestCategoryList(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("get empty list of categories", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -55,8 +60,8 @@ func TestCategoryList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["parent_id"], categorylist[0]["medium_id"], categorylist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["parent_id"], categorylist[0]["meta_fields"], categorylist[0]["medium_id"], categorylist[0]["is_featured"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["meta_fields"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
 
 		medium.SelectWithOutSpace(mock)
 
@@ -87,7 +92,7 @@ func TestCategoryList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["parent_id"], categorylist[1]["meta_fields"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
 
 		medium.SelectWithOutSpace(mock)
 
@@ -122,8 +127,8 @@ func TestCategoryList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], 0, 1, categorylist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], 0, 1, categorylist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], 0, categorylist[0]["meta_fields"], 1, categorylist[0]["is_featured"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], 0, categorylist[1]["meta_fields"], 1, categorylist[1]["is_featured"], 1))
 
 		medium.SelectWithOutSpace(mock)
 

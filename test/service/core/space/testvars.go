@@ -6,11 +6,10 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/factly/dega-server/test/service/core/permissions/organisationPermission"
-
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/core/permissions/organisation"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -80,7 +79,7 @@ func slugCheckMock(mock sqlmock.Sqlmock) {
 }
 
 func insertMock(mock sqlmock.Sqlmock) {
-	organisationPermission.SelectQuery(mock, 1)
+	organisation.SelectQuery(mock, 1)
 
 	mock.ExpectQuery(countQuery).
 		WithArgs(1).
@@ -158,7 +157,7 @@ func oneMediaIDZeroMock(mock sqlmock.Sqlmock, updateargs ...driver.Value) {
 
 func spacePermissionCreateQuery(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1, -1, -1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))

@@ -45,6 +45,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 	resp, err := requestx.Request("GET", hukzURL, nil, map[string]string{
 		"X-User": fmt.Sprint(uID),
 	})
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	if resp.StatusCode != http.StatusOK {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

@@ -1,4 +1,4 @@
-package spacePermission
+package organisation
 
 import (
 	"net/http"
@@ -8,15 +8,13 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/space"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestSpacePermissionsMy(t *testing.T) {
+func TestOrganisationRequestDetails(t *testing.T) {
 	mock := test.SetupMockDB()
 
-	defer gock.Disable()
 	test.MockServer()
 	defer gock.DisableNetworking()
 
@@ -28,34 +26,41 @@ func TestSpacePermissionsMy(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("get my spaces permissions", func(t *testing.T) {
+	t.Run("invalid request id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-
-		SelectQuery(mock, 1)
-
-		space.SelectQuery(mock, 1)
-
-		e.GET(mypath).
+		e.GET(path).
+			WithPath("request_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			ContainsMap(Data)
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusBadRequest)
 	})
 
-	t.Run("no spaces permissions found", func(t *testing.T) {
+	t.Run("organisation request record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows(columns))
+			WillReturnRows(sqlmock.NewRows(Columns))
 
-		e.GET(mypath).
+		e.GET(path).
+			WithPath("request_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 		test.ExpectationsMet(t, mock)
 	})
+
+	t.Run("get organisation request record by id", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		SelectQuery(mock, 1)
+
+		e.GET(path).
+			WithPath("request_id", "1").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK)
+		test.ExpectationsMet(t, mock)
+	})
+
 }

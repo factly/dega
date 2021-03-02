@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -66,6 +67,10 @@ func TestList(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		test.DisableKavachGock(testServer.URL)
+
+		gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/dega/access").
+			Persist().
+			Reply(http.StatusOK)
 
 		e.GET(basePath).
 			WithHeaders(headers).

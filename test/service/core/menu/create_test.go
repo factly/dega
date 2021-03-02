@@ -1,19 +1,20 @@
-package spacePermission
+package menu
 
 import (
-	"errors"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestSpacePermissionCreate(t *testing.T) {
+func TestMenuCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
@@ -28,7 +29,11 @@ func TestSpacePermissionCreate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable permission", func(t *testing.T) {
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
+
+	t.Run("Unprocessable menu", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		e.POST(basePath).
@@ -36,21 +41,25 @@ func TestSpacePermissionCreate(t *testing.T) {
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
+
+		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("Undecodable permission", func(t *testing.T) {
+	t.Run("Undecodable menu", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
+
+		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("space's permission already exist", func(t *testing.T) {
+	t.Run("menu with same name exists", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(countQuery).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
 
 		e.POST(basePath).
@@ -58,44 +67,54 @@ func TestSpacePermissionCreate(t *testing.T) {
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
+
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("create space permission", func(t *testing.T) {
+	t.Run("create menu", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(countQuery).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
+		slugCheckMock(mock)
+
 		mock.ExpectBegin()
-		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"]).
+		mock.ExpectQuery(`INSERT INTO "menus"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["menu"], 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))
+
+		SelectQuery(mock)
 		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithJSON(Data).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusCreated).
-			JSON().
-			Object().
-			ContainsMap(Data)
+			Status(http.StatusCreated)
+
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("creating space permission fails", func(t *testing.T) {
+	t.Run("meili server fails", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(countQuery).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
+		slugCheckMock(mock)
+
 		mock.ExpectBegin()
-		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"]).
-			WillReturnError(errors.New("cannot create space permission"))
+		mock.ExpectQuery(`INSERT INTO "menus"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["menu"], 1).
+			WillReturnRows(sqlmock.
+				NewRows([]string{"id"}).
+				AddRow(1))
+
+		SelectQuery(mock)
 		mock.ExpectRollback()
 
 		e.POST(basePath).
@@ -103,6 +122,8 @@ func TestSpacePermissionCreate(t *testing.T) {
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
+
 		test.ExpectationsMet(t, mock)
 	})
+
 }

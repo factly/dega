@@ -13,6 +13,7 @@ import (
 var permissionContext config.ContextKey = "org_perm_user"
 
 type organisationPermissionRequest struct {
+	Title          string         `json:"title" validate:"required,min=3,max=150"`
 	OrganisationID uint           `json:"organisation_id" validate:"required"`
 	Description    postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	Spaces         int64          `json:"spaces"`
