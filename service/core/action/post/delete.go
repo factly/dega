@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	factcheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -71,6 +72,10 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Delete(&model.PostAuthor{})
+
+	tx.Model(&factcheckModel.PostClaim{}).Where(&factcheckModel.PostClaim{
+		PostID: uint(id),
+	}).Delete(&factcheckModel.PostClaim{})
 
 	tx.Model(&model.Post{}).Delete(&result)
 
