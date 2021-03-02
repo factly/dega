@@ -134,6 +134,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	util.NC.Publish("rating.created", result)
+
 	renderx.JSON(w, http.StatusCreated, result)
 }
 

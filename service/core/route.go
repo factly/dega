@@ -3,9 +3,11 @@ package core
 import (
 	"net/http"
 
+	"github.com/factly/dega-server/service/core/action/event"
 	"github.com/factly/dega-server/service/core/action/menu"
 	"github.com/factly/dega-server/service/core/action/permissions"
 	"github.com/factly/dega-server/service/core/action/request"
+	"github.com/factly/dega-server/service/core/action/webhook"
 
 	"github.com/go-chi/chi"
 
@@ -38,6 +40,8 @@ func Router() http.Handler {
 	r.Mount("/users", user.Router())
 	r.Mount("/permissions", permissions.Router())
 	r.Mount("/requests", request.Router())
+	r.Mount("/webhooks", webhook.Router())
+	r.Mount("/events", event.Router())
 
 	return r
 }

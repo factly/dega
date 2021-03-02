@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -147,5 +148,8 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	util.NC.Publish("post.published", result)
+
 	renderx.JSON(w, http.StatusOK, result)
 }

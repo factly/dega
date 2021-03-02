@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -135,5 +136,8 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	util.NC.Publish("media.deleted", result)
+
 	renderx.JSON(w, http.StatusOK, nil)
 }
