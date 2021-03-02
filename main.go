@@ -11,7 +11,7 @@ import (
 	"github.com/factly/dega-server/service"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/util/meili"
+	"github.com/factly/x/meilisearchx"
 	"github.com/go-chi/chi"
 )
 
@@ -42,7 +42,7 @@ func main() {
 		log.Println(err)
 	}
 
-	meili.SetupMeiliSearch()
+	meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "site_title", "site_address", "tag_line", "review", "review_tag_line"})
 
 	r := service.RegisterRoutes()
 

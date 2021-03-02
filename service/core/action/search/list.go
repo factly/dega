@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/dega-server/util/meili"
+	"github.com/factly/x/meilisearchx"
 	"github.com/meilisearch/meilisearch-go"
 
-	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -29,7 +29,7 @@ import (
 // @Success 200
 // @Router /core/search [post]
 func list(w http.ResponseWriter, r *http.Request) {
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -57,7 +57,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		filters = fmt.Sprint(searchQuery.Filters, " AND ", filters)
 	}
 
-	result, err := meili.Client.Search("dega").Search(meilisearch.SearchRequest{
+	result, err := meilisearchx.Client.Search("dega").Search(meilisearch.SearchRequest{
 		Query:        searchQuery.Query,
 		Limit:        searchQuery.Limit,
 		Filters:      filters,

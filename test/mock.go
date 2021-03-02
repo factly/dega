@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/service/fact-check/action/google"
-	"github.com/factly/dega-server/util/meili"
+	"github.com/factly/x/meilisearchx"
 	"github.com/meilisearch/meilisearch-go"
 	"github.com/spf13/viper"
 
@@ -39,7 +39,7 @@ func SetupMockDB() sqlmock.Sqlmock {
 	viper.Set("create_super_organisation", true)
 	google.GoogleURL = "http://googlefactchecktest.com"
 
-	meili.Client = meilisearch.NewClient(meilisearch.Config{
+	meilisearchx.Client = meilisearch.NewClient(meilisearch.Config{
 		Host:   viper.GetString("meili_url"),
 		APIKey: viper.GetString("meili_key"),
 	})

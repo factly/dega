@@ -8,12 +8,12 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -34,14 +34,14 @@ import (
 // @Router /core/media [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -96,10 +96,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var mediumSlug string
-		if medium.Slug != "" && slug.Check(medium.Slug) {
+		if medium.Slug != "" && slugx.Check(medium.Slug) {
 			mediumSlug = medium.Slug
 		} else {
-			mediumSlug = slug.Make(medium.Name)
+			mediumSlug = slugx.Make(medium.Name)
 		}
 
 		// Get table name
@@ -109,7 +109,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 		med := model.Medium{
 			Name:        medium.Name,
-			Slug:        slug.Approve(mediumSlug, sID, tableName),
+			Slug:        slugx.Approve(&config.DB, mediumSlug, sID, tableName),
 			Title:       medium.Title,
 			Type:        medium.Type,
 			Description: medium.Description,
@@ -148,7 +148,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			"space_id":    result.Nodes[i].SpaceID,
 		}
 
-		err = meili.AddDocument(meiliObj)
+		err = meilisearchx.AddDocument("dega", meiliObj)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)

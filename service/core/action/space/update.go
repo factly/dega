@@ -10,11 +10,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 )
@@ -32,7 +33,7 @@ import (
 // @Success 200 {object} model.Space
 // @Router /core/spaces/{space_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -146,10 +147,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	var spaceSlug string
 	if result.Slug == space.Slug {
 		spaceSlug = result.Slug
-	} else if space.Slug != "" && slug.Check(space.Slug) {
+	} else if space.Slug != "" && slugx.Check(space.Slug) {
 		spaceSlug = approveSpaceSlug(space.Slug)
 	} else {
-		spaceSlug = approveSpaceSlug(slug.Make(space.Name))
+		spaceSlug = approveSpaceSlug(slugx.Make(space.Name))
 	}
 
 	err = tx.Model(&result).Updates(model.Space{
@@ -189,7 +190,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"organisation_id": result.OrganisationID,
 	}
 
-	err = meili.UpdateDocument(meiliObj)
+	err = meilisearchx.UpdateDocument("dega", meiliObj)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)

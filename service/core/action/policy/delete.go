@@ -5,9 +5,10 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
 	"github.com/spf13/viper"
@@ -26,7 +27,7 @@ import (
 // @Success 200 {object} model.Policy
 // @Router /core/policies/{policy_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := util.GetSpace(r.Context())
+	spaceID, err := middlewarex.GetSpace(r.Context())
 
 	if err != nil {
 		loggerx.Error(err)
@@ -67,7 +68,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	objectID := fmt.Sprint("policy_", policyId)
-	_, err = meili.Client.Documents("dega").Delete(objectID)
+	_, err = meilisearchx.Client.Documents("dega").Delete(objectID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
