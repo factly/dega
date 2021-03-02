@@ -135,6 +135,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		Title:            post.Title,
 		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
 		Status:           status,
+		Page:             post.Page,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      post.Description,
