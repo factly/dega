@@ -22,7 +22,7 @@ function BasicLayout(props) {
     if (selected > 0) {
       const space = state.spaces.details[selected];
 
-      const applications = orgs.find((org) => org.id === space.id)?.applications || [];
+      const applications = orgs.find((org) => org.spaces.includes(space.id))?.applications || [];
 
       return {
         applications: applications,
