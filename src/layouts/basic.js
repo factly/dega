@@ -35,7 +35,7 @@ function BasicLayout(props) {
     return { orgs: orgs, loading: loading, permission: [], selected: selected, applications: [] };
   });
 
-  const { type, message, description } = useSelector((state) => state.notifications);
+  const { type, message, description, time } = useSelector((state) => state.notifications);
 
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
@@ -55,7 +55,7 @@ function BasicLayout(props) {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [description]);
+  }, [time, description]);
 
   // React.useEffect(() => {
   //   if (orgs.length > 0 && selected === 0) history.push('/spaces/create');
