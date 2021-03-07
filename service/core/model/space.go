@@ -16,7 +16,7 @@ type Space struct {
 	Slug              string         `gorm:"column:slug" json:"slug"`
 	SiteTitle         string         `gorm:"column:site_title" json:"site_title"`
 	TagLine           string         `gorm:"column:tag_line" json:"tag_line"`
-	Description       string         `gorm:"column:description" json:"description"`
+	Description       postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	SiteAddress       string         `gorm:"column:site_address" json:"site_address"`
 	LogoID            *uint          `gorm:"column:logo_id;default:NULL" json:"logo_id"`
 	Logo              *Medium        `gorm:"foreignKey:logo_id" json:"logo"`

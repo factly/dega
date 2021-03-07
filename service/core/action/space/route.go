@@ -12,7 +12,7 @@ type space struct {
 	Slug              string         `json:"slug"`
 	SiteTitle         string         `json:"site_title"`
 	TagLine           string         `json:"tag_line"`
-	Description       string         `json:"description"`
+	Description       postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	SiteAddress       string         `json:"site_address"`
 	LogoID            uint           `json:"logo_id"`
 	LogoMobileID      uint           `json:"logo_mobile_id"`
