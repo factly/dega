@@ -17,6 +17,7 @@ export default function notificationsReducer(state = initialState, action = {}) 
         type: action.payload.type,
         message: action.payload.title,
         description: action.payload.message,
+        time: action.payload.time,
       };
     default:
       return state;
