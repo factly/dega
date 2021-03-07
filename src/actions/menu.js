@@ -27,7 +27,12 @@ export const getMenus = (query) => {
         );
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0 ) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors &&
+          error.response.data.errors.length > 0
+        ) {
           dispatch(addErrorNotification(error.response.data.errors[0].message));
         } else {
           dispatch(addErrorNotification(error.message));
@@ -46,7 +51,12 @@ export const getMenu = (id) => {
         dispatch(getMenuById(response.data));
       })
       .catch((error) => {
-        if(error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors &&
+          error.response.data.errors.length > 0
+        ) {
           dispatch(addErrorNotification(error.response.data.errors[0].message));
         } else {
           dispatch(addErrorNotification(error.message));
@@ -66,7 +76,12 @@ export const addMenu = (data) => {
         dispatch(addSuccessNotification('Menu added'));
       })
       .catch((error) => {
-        if (error.response && error.response.data &&  error.response.data.errors && error.response.data.errors.length > 0 ) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors &&
+          error.response.data.errors.length > 0
+        ) {
           dispatch(addErrorNotification(error.response.data.errors[0].message));
         } else {
           dispatch(addErrorNotification(error.message));
@@ -85,7 +100,12 @@ export const updateMenu = (data) => {
         dispatch(addSuccessNotification('Menu updated'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors &&
+          error.response.data.errors.length > 0
+        ) {
           dispatch(addErrorNotification(error.response.data.errors[0].message));
         } else {
           dispatch(addErrorNotification(error.message));
@@ -105,7 +125,12 @@ export const deleteMenu = (id) => {
         dispatch(addSuccessNotification('Menu deleted'));
       })
       .catch((error) => {
-        if (error.response && error.response.data && error.response.data.errors && error.response.data.errors.length > 0) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errors &&
+          error.response.data.errors.length > 0
+        ) {
           dispatch(addErrorNotification(error.response.data.errors[0].message));
         } else {
           dispatch(addErrorNotification(error.message));
@@ -142,4 +167,3 @@ export const addMenusRequest = (data) => ({
 export const resetMenus = () => ({
   type: RESET_MENUS,
 });
-

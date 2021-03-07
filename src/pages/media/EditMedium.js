@@ -42,11 +42,11 @@ function EditMedium() {
     dispatch(updateMedium(data));
   };
 
-  if (loading) return <Skeleton />
-  
+  if (loading) return <Skeleton />;
+
   if (!media) {
-    return <RecordNotFound />
-  }; 
+    return <RecordNotFound />;
+  }
 
   return (
     <Row>

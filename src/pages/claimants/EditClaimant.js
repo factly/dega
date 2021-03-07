@@ -24,11 +24,11 @@ function EditClaimant() {
     dispatch(getClaimant(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />
-  
+  if (loading) return <Skeleton />;
+
   if (!claimant) {
-    return <RecordNotFound />
-  }; 
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updateClaimant({ ...claimant, ...values })).then(() => history.push('/claimants'));

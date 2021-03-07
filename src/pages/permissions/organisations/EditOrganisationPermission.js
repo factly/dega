@@ -24,12 +24,11 @@ function EditOrganisationPermission() {
     dispatch(getOrganisations());
   }, [dispatch, oid, pid]);
 
-  if (loading) return <Skeleton />
-  
-  if (!organisation) {
-    return <RecordNotFound />
-  }; 
+  if (loading) return <Skeleton />;
 
+  if (!organisation) {
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updateOrganisationPermission({ ...organisation.permission, ...values })).then(() =>

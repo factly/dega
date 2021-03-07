@@ -8,16 +8,20 @@ function MenuField({ field }) {
   const handleInputChange = (e) => {
     var header = e.target.value;
     setPanelHeader(header);
-  }
+  };
   useEffect(() => {
-    if(inputRef) {
-      setPanelHeader(inputRef.props.value)
+    if (inputRef) {
+      setPanelHeader(inputRef.props.value);
     }
   });
   return (
     <Collapse defaultActiveKey={['1']}>
-      <Panel header={panelHeader} key={['1']} >
-        <Form.Item {...field} fieldKey={[field.fieldKey, "name"]} name={[field.name, "name"]} label="Navigation Label"
+      <Panel header={panelHeader} key={['1']}>
+        <Form.Item
+          {...field}
+          fieldKey={[field.fieldKey, 'name']}
+          name={[field.name, 'name']}
+          label="Navigation Label"
           rules={[
             {
               required: true,
@@ -25,12 +29,26 @@ function MenuField({ field }) {
             },
           ]}
         >
-          <Input ref={(input) => setInputRef(input)} placeholder="Enter Label" onChange={(e) => handleInputChange(e)}/>
+          <Input
+            ref={(input) => setInputRef(input)}
+            placeholder="Enter Label"
+            onChange={(e) => handleInputChange(e)}
+          />
         </Form.Item>
-        <Form.Item {...field} fieldKey={[field.fieldKey, "title"]} name={[field.name, "title"]} label="Title Attribute">
+        <Form.Item
+          {...field}
+          fieldKey={[field.fieldKey, 'title']}
+          name={[field.name, 'title']}
+          label="Title Attribute"
+        >
           <Input placeholder="Enter Title" />
         </Form.Item>
-        <Form.Item  {...field} fieldKey={[field.fieldKey, "url"]} name={[field.name, "url"]} label="URL">
+        <Form.Item
+          {...field}
+          fieldKey={[field.fieldKey, 'url']}
+          name={[field.name, 'url']}
+          label="URL"
+        >
           <Input placeholder="Enter URL" />
         </Form.Item>
       </Panel>
@@ -38,4 +56,4 @@ function MenuField({ field }) {
   );
 }
 
-export default MenuField; 
+export default MenuField;

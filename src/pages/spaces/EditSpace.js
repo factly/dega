@@ -22,12 +22,11 @@ function EditSpace() {
     dispatch(updateSpace({ ...space, ...values })).then(() => history.push('/spaces'));
   };
 
-  if (loading) return <Skeleton />
-  
-  if (!space) {
-    return <RecordNotFound />
-  }; 
+  if (loading) return <Skeleton />;
 
+  if (!space) {
+    return <RecordNotFound />;
+  }
 
   return <SpaceEditForm onCreate={onCreate} data={space} />;
 }
