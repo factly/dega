@@ -71,11 +71,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		permission.Posts = viper.GetInt64("default_number_of_posts")
 	}
 
+	if permission.Episodes == 0 {
+		permission.Episodes = viper.GetInt64("default_number_of_episodes")
+	}
+
 	result := model.SpacePermission{
 		SpaceID:   permission.SpaceID,
 		FactCheck: permission.FactCheck,
 		Media:     permission.Media,
 		Posts:     permission.Posts,
+		Podcast:   permission.Podcast,
+		Episodes:  permission.Episodes,
 	}
 
 	err = config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Create(&result).Error

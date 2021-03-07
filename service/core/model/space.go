@@ -40,6 +40,8 @@ type SpacePermission struct {
 	Space     *Space `gorm:"foreignKey:space_id" json:"space,omitempty"`
 	Media     int64  `gorm:"column:media" json:"media"`
 	Posts     int64  `gorm:"column:posts" json:"posts"`
+	Podcast   bool   `gorm:"column:podcast" json:"podcast"`
+	Episodes  int64  `gorm:"column:episodes" json:"episodes"`
 }
 
 var spaceUser config.ContextKey = "space_user"
