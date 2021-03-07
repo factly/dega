@@ -23,12 +23,18 @@ import users from './usersReducer';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
 import menu from './menuReducer';
 import sidebar from './sidebarReducer';
+import episodes from './episodesReducer';
+import podcasts from './podcastReducer';
+import redirect from './redirectReducer';
 
 const appReducer = combineReducers({
   admin,
   settings,
   spaces,
   organisations,
+  redirect,
+  episodes,
+  podcasts,
   organisationRequests,
   spacePermissions,
   spaceRequests,
