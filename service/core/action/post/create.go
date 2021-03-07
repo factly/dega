@@ -13,11 +13,12 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -37,7 +38,7 @@ import (
 // @Router /core/posts [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -79,13 +80,13 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factCheckModel.Claim, 0)
 
-	sID, err := util.GetSpace(ctx)
+	sID, err := middlewarex.GetSpace(ctx)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.Unauthorized()
 	}
 
-	uID, err := util.GetUser(ctx)
+	uID, err := middlewarex.GetUser(ctx)
 	if err != nil {
 		loggerx.Error(err)
 		return nil, errorx.Unauthorized()
@@ -119,10 +120,10 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	tableName := stmt.Schema.Table
 
 	var postSlug string
-	if post.Slug != "" && slug.Check(post.Slug) {
+	if post.Slug != "" && slugx.Check(post.Slug) {
 		postSlug = post.Slug
 	} else {
-		postSlug = slug.Make(post.Title)
+		postSlug = slugx.Make(post.Title)
 	}
 
 	featuredMediumID := &post.FeaturedMediumID
@@ -132,8 +133,9 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 
 	result.Post = model.Post{
 		Title:            post.Title,
-		Slug:             slug.Approve(postSlug, sID, tableName),
+		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
 		Status:           status,
+		Page:             post.Page,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      post.Description,
@@ -244,7 +246,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		meiliObj["claim_ids"] = post.ClaimIDs
 	}
 
-	err = meili.AddDocument(meiliObj)
+	err = meilisearchx.AddDocument("dega", meiliObj)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
@@ -252,6 +254,10 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	}
 
 	tx.Commit()
+
+	if err = util.NC.Publish("post.created", result); err != nil {
+		return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
+	}
 
 	return result, errorx.Message{}
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/fact-check/claim"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
@@ -25,6 +26,10 @@ func TestPostList(t *testing.T) {
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
@@ -79,7 +84,7 @@ func TestPostList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, postList[1]["title"], postList[1]["subtitle"], postList[1]["slug"], postList[1]["status"], postList[1]["excerpt"],
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, postList[1]["title"], postList[1]["subtitle"], postList[1]["slug"], postList[1]["status"], postList[1]["page"], postList[1]["excerpt"],
 					postList[1]["description"], postList[1]["is_featured"], postList[1]["is_sticky"], postList[1]["is_highlighted"], postList[1]["featured_medium_id"], postList[1]["format_id"], postList[1]["published_date"], 1))
 
 		preloadMock(mock, sqlmock.AnyArg())

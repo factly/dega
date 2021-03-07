@@ -9,10 +9,10 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
@@ -44,7 +44,7 @@ type paging struct {
 // @Router /core/posts [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -74,9 +74,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 		var res map[string]interface{}
 
 		if searchQuery != "" {
-			hits, err = meili.SearchWithQuery(searchQuery, filters, "post")
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "post")
 		} else {
-			res, err = meili.SearchWithoutQuery(filters, "post")
+			res, err = meilisearchx.SearchWithoutQuery("dega", filters, "post")
 			if _, found := res["hits"]; found {
 				hits = res["hits"].([]interface{})
 			}
@@ -87,7 +87,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		filteredPostIDs = meili.GetIDArray(hits)
+		filteredPostIDs = meilisearchx.GetIDArray(hits)
 		if len(filteredPostIDs) == 0 {
 			renderx.JSON(w, http.StatusOK, result)
 			return
@@ -184,23 +184,23 @@ func list(w http.ResponseWriter, r *http.Request) {
 func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs, status []string) string {
 	filters := ""
 	if len(tagIDs) > 0 {
-		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
 	}
 
 	if len(categoryIDs) > 0 {
-		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
 	}
 
 	if len(authorIDs) > 0 {
-		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(authorIDs, "author_ids"), " AND ")
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(authorIDs, "author_ids"), " AND ")
 	}
 
 	if len(formatIDs) > 0 {
-		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(formatIDs, "format_id"), " AND ")
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(formatIDs, "format_id"), " AND ")
 	}
 
 	if len(status) > 0 {
-		filters = fmt.Sprint(filters, meili.GenerateFieldFilter(status, "status"), " AND ")
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(status, "status"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {

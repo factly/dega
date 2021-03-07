@@ -9,6 +9,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -26,6 +27,10 @@ func TestCategoryDelete(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("invalid category id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)

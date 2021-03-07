@@ -10,7 +10,8 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/organisationPermission"
+	"github.com/factly/dega-server/test/service/core/permissions/organisation"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -29,6 +30,10 @@ func TestSpaceCreate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
+
 	t.Run("create a space", func(t *testing.T) {
 		insertMock(mock)
 		mock.ExpectCommit()
@@ -43,7 +48,7 @@ func TestSpaceCreate(t *testing.T) {
 	})
 
 	t.Run("creating space fails", func(t *testing.T) {
-		organisationPermission.SelectQuery(mock, 1)
+		organisation.SelectQuery(mock, 1)
 
 		mock.ExpectQuery(countQuery).
 			WithArgs(1).
@@ -66,7 +71,7 @@ func TestSpaceCreate(t *testing.T) {
 	})
 
 	t.Run("creating space permission fails", func(t *testing.T) {
-		organisationPermission.SelectQuery(mock, 1)
+		organisation.SelectQuery(mock, 1)
 
 		mock.ExpectQuery(countQuery).
 			WithArgs(1).
@@ -81,7 +86,7 @@ func TestSpaceCreate(t *testing.T) {
 				AddRow(1, 1, 1, 1, 1))
 
 		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1, -1, -1).
 			WillReturnError(errors.New("cannot create space permission"))
 
 		mock.ExpectRollback()
@@ -113,7 +118,7 @@ func TestSpaceCreate(t *testing.T) {
 
 	t.Run("create more than allowed spaces", func(t *testing.T) {
 
-		organisationPermission.SelectQuery(mock, 1)
+		organisation.SelectQuery(mock, 1)
 
 		mock.ExpectQuery(countQuery).
 			WithArgs(1).

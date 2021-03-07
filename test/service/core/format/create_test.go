@@ -8,7 +8,8 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
+	"github.com/factly/dega-server/util"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -30,6 +31,10 @@ func TestFormatCreate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("Unprocessable format", func(t *testing.T) {
 
@@ -58,7 +63,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -76,7 +81,7 @@ func TestFormatCreate(t *testing.T) {
 	t.Run("create format with slug is empty", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -99,7 +104,7 @@ func TestFormatCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 
@@ -135,7 +140,7 @@ func TestFormatCreate(t *testing.T) {
 	t.Run("format with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		sameNameCount(mock, 1, Data["name"])
 
 		e.POST(basePath).
@@ -150,7 +155,7 @@ func TestFormatCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock)
 

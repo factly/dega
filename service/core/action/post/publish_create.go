@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
 )
@@ -26,7 +27,7 @@ import (
 // @Router /core/posts/publish [post]
 func publishCreate(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -56,6 +57,12 @@ func publishCreate(w http.ResponseWriter, r *http.Request) {
 	result, errMessage := createPost(r.Context(), post, "publish")
 	if errMessage.Code != 0 {
 		errorx.Render(w, errorx.Parser(errMessage))
+		return
+	}
+
+	if err = util.NC.Publish("post.published", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 

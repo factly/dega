@@ -9,6 +9,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
@@ -37,6 +38,10 @@ func TestTagList(t *testing.T) {
 			RawMessage: []byte(`{"type":"description2"}`),
 		}},
 	}
+
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
 
 	t.Run("get empty list of tags", func(t *testing.T) {
 		test.CheckSpaceMock(mock)

@@ -319,7 +319,250 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/events": {
+            "get": {
+                "description": "Get all events",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Show all events",
+                "operationId": "get-all-events",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/event.paging"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Event",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Create Event",
+                "operationId": "add-event",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Event Object",
+                        "name": "Event",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/event.event"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Event"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/events/{event_id}": {
+            "get": {
+                "description": "Get event by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Show a event by id",
+                "operationId": "get-event-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Event ID",
+                        "name": "event_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Event"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update event by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Update a event by id",
+                "operationId": "update-event-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Event ID",
+                        "name": "event_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Event Object",
+                        "name": "Event",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/event.event"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Event"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Event by id",
+                "tags": [
+                    "Events"
+                ],
+                "summary": "Delete Event by id",
+                "operationId": "delete-event-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Event ID",
+                        "name": "event_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -604,7 +847,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -855,7 +1100,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -1085,7 +1332,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -1137,7 +1386,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/organisationPermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_organisation.paging"
                             }
                         }
                     }
@@ -1174,7 +1423,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/organisationPermission.organisationPermission"
+                            "$ref": "#/definitions/organisation.organisationPermission"
                         }
                     }
                 ],
@@ -1228,62 +1477,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/organisationPermission.orgPermissionRes"
-                        }
-                    }
-                }
-            }
-        },
-        "/core/permissions/organisations/request": {
-            "post": {
-                "description": "Create organisation permission request",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Organisation_Permissions"
-                ],
-                "summary": "Create organisation permission request",
-                "operationId": "add-org-permission-request",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Request Object",
-                        "name": "Request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/organisationPermission.organisationPermissionRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.OrganisationPermissionRequest"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/organisation.orgPermissionRes"
                         }
                     }
                 }
@@ -1327,7 +1521,7 @@ var doc = `{
                         "name": "Permission",
                         "in": "body",
                         "schema": {
-                            "$ref": "#/definitions/organisationPermission.organisationPermission"
+                            "$ref": "#/definitions/organisation.organisationPermission"
                         }
                     }
                 ],
@@ -1371,7 +1565,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -1423,7 +1619,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/spacePermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_space.paging"
                             }
                         }
                     }
@@ -1460,7 +1656,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/spacePermission.spacePermission"
+                            "$ref": "#/definitions/space.spacePermission"
                         }
                     }
                 ],
@@ -1515,61 +1711,6 @@ var doc = `{
                         "description": "OK",
                         "schema": {
                             "$ref": "#/definitions/model.SpacePermission"
-                        }
-                    }
-                }
-            }
-        },
-        "/core/permissions/spaces/request": {
-            "post": {
-                "description": "Create space permission request",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Space_Permissions"
-                ],
-                "summary": "Create space permission request",
-                "operationId": "add-space-permission-request",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Request Object",
-                        "name": "Request",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/spacePermission.spacePermissionRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/model.SpacePermissionRequest"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "type": "array",
-                            "items": {
-                                "type": "string"
-                            }
                         }
                     }
                 }
@@ -1655,7 +1796,7 @@ var doc = `{
                         "name": "Permission",
                         "in": "body",
                         "schema": {
-                            "$ref": "#/definitions/spacePermission.spacePermission"
+                            "$ref": "#/definitions/space.spacePermission"
                         }
                     }
                 ],
@@ -1699,7 +1840,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2329,7 +2472,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -2377,7 +2522,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/organisation-permissions": {
+        "/core/requests/organisations": {
             "get": {
                 "description": "Get all organisation permissions requests",
                 "produces": [
@@ -2416,14 +2561,67 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/organisationPermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisation.paging"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create organisation permission request",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Organisation_Permissions_Request"
+                ],
+                "summary": "Create organisation permission request",
+                "operationId": "add-org-permission-request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Request Object",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/organisation.organisationPermissionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.OrganisationPermissionRequest"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
                             }
                         }
                     }
                 }
             }
         },
-        "/core/requests/organisation-permissions/my": {
+        "/core/requests/organisations/my": {
             "get": {
                 "description": "Get all my organisation permissions requests",
                 "produces": [
@@ -2456,14 +2654,14 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/organisationPermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisation.paging"
                             }
                         }
                     }
                 }
             }
         },
-        "/core/requests/organisation-permissions/{request_id}": {
+        "/core/requests/organisations/{request_id}": {
             "get": {
                 "description": "Get organisation permissions requests detail",
                 "produces": [
@@ -2537,7 +2735,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2550,7 +2750,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/organisation-permissions/{request_id}/approve": {
+        "/core/requests/organisations/{request_id}/approve": {
             "post": {
                 "description": "approve organisation permission",
                 "produces": [
@@ -2603,7 +2803,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/organisation-permissions/{request_id}/reject": {
+        "/core/requests/organisations/{request_id}/reject": {
             "post": {
                 "description": "reject organisation permission",
                 "produces": [
@@ -2638,7 +2838,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2651,7 +2853,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/space-permissions": {
+        "/core/requests/spaces": {
             "get": {
                 "description": "Get all space permissions requests",
                 "produces": [
@@ -2690,14 +2892,67 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/spacePermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_space.paging"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create space permission request",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Space_Permissions_Request"
+                ],
+                "summary": "Create space permission request",
+                "operationId": "add-space-permission-request",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Request Object",
+                        "name": "Request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/space.spacePermissionRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.SpacePermissionRequest"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
                             }
                         }
                     }
                 }
             }
         },
-        "/core/requests/space-permissions/my": {
+        "/core/requests/spaces/my": {
             "get": {
                 "description": "Get all my space permissions requests",
                 "produces": [
@@ -2730,14 +2985,14 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/spacePermission.paging"
+                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_space.paging"
                             }
                         }
                     }
                 }
             }
         },
-        "/core/requests/space-permissions/{request_id}": {
+        "/core/requests/spaces/{request_id}": {
             "get": {
                 "description": "Get space permissions requests detail",
                 "produces": [
@@ -2811,7 +3066,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2824,7 +3081,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/space-permissions/{request_id}/approve": {
+        "/core/requests/spaces/{request_id}/approve": {
             "post": {
                 "description": "approve space permission",
                 "produces": [
@@ -2877,7 +3134,7 @@ var doc = `{
                 }
             }
         },
-        "/core/requests/space-permissions/{request_id}/reject": {
+        "/core/requests/spaces/{request_id}/reject": {
             "post": {
                 "description": "reject space permission",
                 "produces": [
@@ -2912,7 +3169,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2961,7 +3220,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -3114,7 +3375,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -3359,7 +3622,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": ""
+                    },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -3450,6 +3715,296 @@ var doc = `{
                             "type": "array",
                             "items": {
                                 "$ref": "#/definitions/model.Permission"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/webhooks": {
+            "get": {
+                "description": "Get all webhooks",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Show all webhooks",
+                "operationId": "get-all-webhooks",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/webhook.paging"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Webhook",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Create Webhook",
+                "operationId": "add-webhook",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Webhook Object",
+                        "name": "Webhook",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/webhook.webhook"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Webhook"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/core/webhooks/logs": {
+            "get": {
+                "description": "Get all webhooks logs",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Show all webhooks logs",
+                "operationId": "get-all-webhooks-logs",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/webhook.paging"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/webhooks/{webhook_id}": {
+            "get": {
+                "description": "Get webhook by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Show a webhook by id",
+                "operationId": "get-webhook-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Webhook ID",
+                        "name": "webhook_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Webhook"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update webhook by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Update a webhook by id",
+                "operationId": "update-webhook-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Webhook ID",
+                        "name": "webhook_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Webhook Object",
+                        "name": "Webhook",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/webhook.webhook"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Webhook"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete webhook by id",
+                "tags": [
+                    "Webhooks"
+                ],
+                "summary": "Delete webhook by id",
+                "operationId": "delete-webhook-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Webhook ID",
+                        "name": "webhook_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
                             }
                         }
                     }
@@ -3694,7 +4249,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -3906,7 +4463,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -4249,7 +4808,9 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {}
+                    "200": {
+                        "description": ""
+                    }
                 }
             }
         },
@@ -4429,6 +4990,34 @@ var doc = `{
                 }
             }
         },
+        "event.event": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "string"
+                }
+            }
+        },
+        "event.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Event"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "format.format": {
             "type": "object",
             "required": [
@@ -4457,6 +5046,225 @@ var doc = `{
                 },
                 "total": {
                     "type": "integer"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_permissions_organisation.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/organisation.orgWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_permissions_space.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions": {
+            "type": "object",
+            "properties": {
+                "contact_info": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fav_icon": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "fav_icon_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "logo": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_id": {
+                    "type": "integer"
+                },
+                "logo_mobile": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_mobile_id": {
+                    "type": "integer"
+                },
+                "mobile_icon": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "mobile_icon_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "permission": {
+                    "$ref": "#/definitions/model.SpacePermission"
+                },
+                "site_address": {
+                    "type": "string"
+                },
+                "site_title": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "social_media_urls": {
+                    "type": "string"
+                },
+                "tag_line": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                },
+                "verification_codes": {
+                    "type": "string"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_request_organisation.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.OrganisationPermissionRequest"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_request_space.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.SpacePermissionRequest"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "github.com_factly_dega-server_service_core_action_space.spaceWithPermissions": {
+            "type": "object",
+            "properties": {
+                "contact_info": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fav_icon": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "fav_icon_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "logo": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_id": {
+                    "type": "integer"
+                },
+                "logo_mobile": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_mobile_id": {
+                    "type": "integer"
+                },
+                "mobile_icon": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "mobile_icon_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Permission"
+                    }
+                },
+                "site_address": {
+                    "type": "string"
+                },
+                "site_title": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "social_media_urls": {
+                    "type": "string"
+                },
+                "tag_line": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                },
+                "verification_codes": {
+                    "type": "string"
                 }
             }
         },
@@ -4571,7 +5379,6 @@ var doc = `{
             "type": "object",
             "properties": {
                 "meta": {
-                    "type": "object",
                     "$ref": "#/definitions/meta.meta"
                 },
                 "success": {
@@ -4639,7 +5446,6 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -4664,7 +5470,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4691,7 +5496,6 @@ var doc = `{
                     "type": "string"
                 },
                 "claimant": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Claimant"
                 },
                 "claimant_id": {
@@ -4713,7 +5517,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "rating": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Rating"
                 },
                 "rating_id": {
@@ -4732,7 +5535,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4768,7 +5570,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -4781,7 +5582,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4789,6 +5589,38 @@ var doc = `{
                 },
                 "tag_line": {
                     "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "model.Event": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
                 },
                 "updated_at": {
                     "type": "string"
@@ -4827,7 +5659,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -4926,7 +5757,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5075,7 +5905,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "format": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
@@ -5094,7 +5923,6 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
@@ -5104,7 +5932,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5155,7 +5982,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -5171,7 +5997,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5204,7 +6029,6 @@ var doc = `{
                     "type": "string"
                 },
                 "fav_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
@@ -5214,21 +6038,18 @@ var doc = `{
                     "type": "integer"
                 },
                 "logo": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
                 },
                 "mobile_icon": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
@@ -5291,7 +6112,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5333,7 +6153,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5391,7 +6210,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5405,7 +6223,48 @@ var doc = `{
                 }
             }
         },
-        "organisationPermission.orgPermissionRes": {
+        "model.Webhook": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "events": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Event"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "tags": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                },
+                "url": {
+                    "type": "string"
+                }
+            }
+        },
+        "organisation.orgPermissionRes": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -5443,7 +6302,7 @@ var doc = `{
                 }
             }
         },
-        "organisationPermission.orgWithPermissions": {
+        "organisation.orgWithPermissions": {
             "type": "object",
             "properties": {
                 "created_at": {
@@ -5465,11 +6324,9 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "permission": {
-                    "type": "object",
                     "$ref": "#/definitions/model.OrganisationPermission"
                 },
                 "slug": {
@@ -5486,7 +6343,7 @@ var doc = `{
                 }
             }
         },
-        "organisationPermission.organisationPermission": {
+        "organisation.organisationPermission": {
             "type": "object",
             "required": [
                 "organisation_id"
@@ -5500,11 +6357,10 @@ var doc = `{
                 }
             }
         },
-        "organisationPermission.organisationPermissionRequest": {
+        "organisation.organisationPermissionRequest": {
             "type": "object",
             "required": [
-                "organisation_id",
-                "title"
+                "organisation_id"
             ],
             "properties": {
                 "description": {
@@ -5514,23 +6370,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "spaces": {
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "organisationPermission.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/organisationPermission.orgWithPermissions"
-                    }
-                },
-                "total": {
                     "type": "integer"
                 }
             }
@@ -5681,7 +6520,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "format": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
@@ -5700,7 +6538,6 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
@@ -5710,7 +6547,6 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -5834,7 +6670,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
-                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -5876,7 +6711,6 @@ var doc = `{
                     "type": "integer"
                 },
                 "permission": {
-                    "type": "object",
                     "$ref": "#/definitions/space.organisationUser"
                 },
                 "slug": {
@@ -5885,7 +6719,7 @@ var doc = `{
                 "spaces": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/space.spaceWithPermissions"
+                        "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_space.spaceWithPermissions"
                     }
                 },
                 "title": {
@@ -5976,108 +6810,7 @@ var doc = `{
                 }
             }
         },
-        "space.spaceWithPermissions": {
-            "type": "object",
-            "properties": {
-                "contact_info": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "created_by_id": {
-                    "type": "integer"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "fav_icon": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "fav_icon_id": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "logo": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "logo_id": {
-                    "type": "integer"
-                },
-                "logo_mobile": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "logo_mobile_id": {
-                    "type": "integer"
-                },
-                "mobile_icon": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "mobile_icon_id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "organisation_id": {
-                    "type": "integer"
-                },
-                "permissions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Permission"
-                    }
-                },
-                "site_address": {
-                    "type": "string"
-                },
-                "site_title": {
-                    "type": "string"
-                },
-                "slug": {
-                    "type": "string"
-                },
-                "social_media_urls": {
-                    "type": "string"
-                },
-                "tag_line": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "updated_by_id": {
-                    "type": "integer"
-                },
-                "verification_codes": {
-                    "type": "string"
-                }
-            }
-        },
-        "spacePermission.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/spacePermission.spaceWithPermissions"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "spacePermission.spacePermission": {
+        "space.spacePermission": {
             "type": "object",
             "required": [
                 "space_id"
@@ -6097,11 +6830,10 @@ var doc = `{
                 }
             }
         },
-        "spacePermission.spacePermissionRequest": {
+        "space.spacePermissionRequest": {
             "type": "object",
             "required": [
-                "space_id",
-                "title"
+                "space_id"
             ],
             "properties": {
                 "description": {
@@ -6118,94 +6850,6 @@ var doc = `{
                 },
                 "space_id": {
                     "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                }
-            }
-        },
-        "spacePermission.spaceWithPermissions": {
-            "type": "object",
-            "properties": {
-                "contact_info": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "created_by_id": {
-                    "type": "integer"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "fav_icon": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "fav_icon_id": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "logo": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "logo_id": {
-                    "type": "integer"
-                },
-                "logo_mobile": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "logo_mobile_id": {
-                    "type": "integer"
-                },
-                "mobile_icon": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "mobile_icon_id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "organisation_id": {
-                    "type": "integer"
-                },
-                "permission": {
-                    "type": "object",
-                    "$ref": "#/definitions/model.SpacePermission"
-                },
-                "site_address": {
-                    "type": "string"
-                },
-                "site_title": {
-                    "type": "string"
-                },
-                "slug": {
-                    "type": "string"
-                },
-                "social_media_urls": {
-                    "type": "string"
-                },
-                "tag_line": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "updated_by_id": {
-                    "type": "integer"
-                },
-                "verification_codes": {
-                    "type": "string"
                 }
             }
         },
@@ -6298,6 +6942,44 @@ var doc = `{
                 },
                 "updated_by_id": {
                     "type": "integer"
+                }
+            }
+        },
+        "webhook.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Webhook"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "webhook.webhook": {
+            "type": "object",
+            "required": [
+                "event_ids",
+                "url"
+            ],
+            "properties": {
+                "enabled": {
+                    "type": "boolean"
+                },
+                "event_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "tags": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
                 }
             }
         }

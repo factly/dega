@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 	"github.com/spf13/viper"
@@ -33,14 +34,14 @@ type paging struct {
 // @Success 200 {object} paging
 // @Router /core/policies [get]
 func list(w http.ResponseWriter, r *http.Request) {
-	userID, err := util.GetUser(r.Context())
+	userID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	spaceID, err := util.GetSpace(r.Context())
+	spaceID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

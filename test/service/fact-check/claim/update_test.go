@@ -10,9 +10,10 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/spacePermission"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/test/service/fact-check/claimant"
 	"github.com/factly/dega-server/test/service/fact-check/rating"
+	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
@@ -53,9 +54,13 @@ func TestClaimUpdate(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
+	s := test.RunDefaultNATSServer()
+	defer s.Shutdown()
+	util.ConnectNats()
+
 	t.Run("invalid claim id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		e.PUT(path).
 			WithPath("claim_id", "invalid_id").
 			WithHeaders(headers).
@@ -65,7 +70,7 @@ func TestClaimUpdate(t *testing.T) {
 
 	t.Run("claim record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		recordNotFoundMock(mock)
 
 		e.PUT(path).
@@ -78,7 +83,7 @@ func TestClaimUpdate(t *testing.T) {
 	t.Run("Unable to decode claim data", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.PUT(path).
 			WithPath("claim_id", 1).
@@ -92,7 +97,7 @@ func TestClaimUpdate(t *testing.T) {
 	t.Run("Unprocessable claim", func(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		e.PUT(path).
 			WithPath("claim_id", 1).
@@ -107,7 +112,7 @@ func TestClaimUpdate(t *testing.T) {
 	t.Run("update claim", func(t *testing.T) {
 		updatedClaim["slug"] = "claim"
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 
@@ -126,7 +131,7 @@ func TestClaimUpdate(t *testing.T) {
 
 	t.Run("update claim by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		updatedClaim["slug"] = "claim"
 		SelectWithSpace(mock)
 
@@ -150,7 +155,7 @@ func TestClaimUpdate(t *testing.T) {
 
 	t.Run("update claim with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 		updatedClaim["slug"] = "claim-test"
 
 		SelectWithSpace(mock)
@@ -175,7 +180,7 @@ func TestClaimUpdate(t *testing.T) {
 	t.Run("claimant do not belong to same space", func(t *testing.T) {
 		updatedClaim["slug"] = "claim"
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 
@@ -196,7 +201,7 @@ func TestClaimUpdate(t *testing.T) {
 	t.Run("rating do not belong to same space", func(t *testing.T) {
 		updatedClaim["slug"] = "claim"
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 
@@ -219,7 +224,7 @@ func TestClaimUpdate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		updatedClaim["slug"] = "claim"
 		test.CheckSpaceMock(mock)
-		spacePermission.SelectQuery(mock, 1)
+		space.SelectQuery(mock, 1)
 
 		SelectWithSpace(mock)
 

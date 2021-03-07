@@ -90,6 +90,24 @@ definitions:
       total:
         type: integer
     type: object
+  event.event:
+    properties:
+      name:
+        type: string
+      tags:
+        type: string
+    required:
+    - name
+    type: object
+  event.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Event'
+        type: array
+      total:
+        type: integer
+    type: object
   format.format:
     properties:
       description:
@@ -109,6 +127,150 @@ definitions:
         type: array
       total:
         type: integer
+    type: object
+  github.com_factly_dega-server_service_core_action_permissions_organisation.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/organisation.orgWithPermissions'
+        type: array
+      total:
+        type: integer
+    type: object
+  github.com_factly_dega-server_service_core_action_permissions_space.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions'
+        type: array
+      total:
+        type: integer
+    type: object
+  github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions:
+    properties:
+      contact_info:
+        type: string
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      fav_icon:
+        $ref: '#/definitions/model.Medium'
+      fav_icon_id:
+        type: integer
+      id:
+        type: integer
+      logo:
+        $ref: '#/definitions/model.Medium'
+      logo_id:
+        type: integer
+      logo_mobile:
+        $ref: '#/definitions/model.Medium'
+      logo_mobile_id:
+        type: integer
+      mobile_icon:
+        $ref: '#/definitions/model.Medium'
+      mobile_icon_id:
+        type: integer
+      name:
+        type: string
+      organisation_id:
+        type: integer
+      permission:
+        $ref: '#/definitions/model.SpacePermission'
+      site_address:
+        type: string
+      site_title:
+        type: string
+      slug:
+        type: string
+      social_media_urls:
+        type: string
+      tag_line:
+        type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+      verification_codes:
+        type: string
+    type: object
+  github.com_factly_dega-server_service_core_action_request_organisation.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.OrganisationPermissionRequest'
+        type: array
+      total:
+        type: integer
+    type: object
+  github.com_factly_dega-server_service_core_action_request_space.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.SpacePermissionRequest'
+        type: array
+      total:
+        type: integer
+    type: object
+  github.com_factly_dega-server_service_core_action_space.spaceWithPermissions:
+    properties:
+      contact_info:
+        type: string
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      fav_icon:
+        $ref: '#/definitions/model.Medium'
+      fav_icon_id:
+        type: integer
+      id:
+        type: integer
+      logo:
+        $ref: '#/definitions/model.Medium'
+      logo_id:
+        type: integer
+      logo_mobile:
+        $ref: '#/definitions/model.Medium'
+      logo_mobile_id:
+        type: integer
+      mobile_icon:
+        $ref: '#/definitions/model.Medium'
+      mobile_icon_id:
+        type: integer
+      name:
+        type: string
+      organisation_id:
+        type: integer
+      permissions:
+        items:
+          $ref: '#/definitions/model.Permission'
+        type: array
+      site_address:
+        type: string
+      site_title:
+        type: string
+      slug:
+        type: string
+      social_media_urls:
+        type: string
+      tag_line:
+        type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+      verification_codes:
+        type: string
     type: object
   google.paging:
     properties:
@@ -185,7 +347,6 @@ definitions:
     properties:
       meta:
         $ref: '#/definitions/meta.meta'
-        type: object
       success:
         type: integer
     type: object
@@ -230,7 +391,6 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       medium_id:
         type: integer
       meta_fields:
@@ -247,7 +407,6 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       updated_at:
@@ -265,7 +424,6 @@ definitions:
         type: string
       claimant:
         $ref: '#/definitions/model.Claimant'
-        type: object
       claimant_id:
         type: integer
       created_at:
@@ -280,7 +438,6 @@ definitions:
         type: integer
       rating:
         $ref: '#/definitions/model.Rating'
-        type: object
       rating_id:
         type: integer
       review:
@@ -293,7 +450,6 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       title:
@@ -317,7 +473,6 @@ definitions:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       medium_id:
         type: integer
       name:
@@ -326,11 +481,31 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       tag_line:
         type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+    type: object
+  model.Event:
+    properties:
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      tags:
+        additionalProperties:
+          type: string
+        type: object
       updated_at:
         type: string
       updated_by_id:
@@ -354,7 +529,6 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       updated_at:
@@ -420,7 +594,6 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       updated_at:
@@ -521,7 +694,6 @@ definitions:
         type: integer
       format:
         $ref: '#/definitions/model.Format'
-        type: object
       format_id:
         type: integer
       id:
@@ -534,14 +706,12 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       published_date:
         type: string
       slug:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       status:
@@ -575,7 +745,6 @@ definitions:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       medium_id:
         type: integer
       name:
@@ -586,7 +755,6 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       updated_at:
@@ -608,24 +776,20 @@ definitions:
         type: string
       fav_icon:
         $ref: '#/definitions/model.Medium'
-        type: object
       fav_icon_id:
         type: integer
       id:
         type: integer
       logo:
         $ref: '#/definitions/model.Medium'
-        type: object
       logo_id:
         type: integer
       logo_mobile:
         $ref: '#/definitions/model.Medium'
-        type: object
       logo_mobile_id:
         type: integer
       mobile_icon:
         $ref: '#/definitions/model.Medium'
-        type: object
       mobile_icon_id:
         type: integer
       name:
@@ -667,7 +831,6 @@ definitions:
         type: integer
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       updated_at:
@@ -695,7 +858,6 @@ definitions:
         type: integer
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       status:
@@ -731,7 +893,6 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       updated_at:
@@ -742,7 +903,34 @@ definitions:
     - name
     - slug
     type: object
-  organisationPermission.orgPermissionRes:
+  model.Webhook:
+    properties:
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      enabled:
+        type: boolean
+      events:
+        items:
+          $ref: '#/definitions/model.Event'
+        type: array
+      id:
+        type: integer
+      tags:
+        additionalProperties:
+          type: string
+        type: object
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+      url:
+        type: string
+    type: object
+  organisation.orgPermissionRes:
     properties:
       created_at:
         type: string
@@ -767,7 +955,7 @@ definitions:
       updated_by_id:
         type: integer
     type: object
-  organisationPermission.orgWithPermissions:
+  organisation.orgWithPermissions:
     properties:
       created_at:
         type: string
@@ -783,10 +971,8 @@ definitions:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       permission:
         $ref: '#/definitions/model.OrganisationPermission'
-        type: object
       slug:
         type: string
       title:
@@ -796,7 +982,7 @@ definitions:
       updated_by_id:
         type: integer
     type: object
-  organisationPermission.organisationPermission:
+  organisation.organisationPermission:
     properties:
       organisation_id:
         type: integer
@@ -805,7 +991,7 @@ definitions:
     required:
     - organisation_id
     type: object
-  organisationPermission.organisationPermissionRequest:
+  organisation.organisationPermissionRequest:
     properties:
       description:
         type: string
@@ -813,20 +999,8 @@ definitions:
         type: integer
       spaces:
         type: integer
-      title:
-        type: string
     required:
     - organisation_id
-    - title
-    type: object
-  organisationPermission.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/organisationPermission.orgWithPermissions'
-        type: array
-      total:
-        type: integer
     type: object
   policy.paging:
     properties:
@@ -926,7 +1100,6 @@ definitions:
         type: integer
       format:
         $ref: '#/definitions/model.Format'
-        type: object
       format_id:
         type: integer
       id:
@@ -939,14 +1112,12 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       published_date:
         type: string
       slug:
         type: string
       space:
         $ref: '#/definitions/model.Space'
-        type: object
       space_id:
         type: integer
       status:
@@ -1028,7 +1199,6 @@ definitions:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
-        type: object
       medium_id:
         type: integer
       name:
@@ -1056,12 +1226,11 @@ definitions:
         type: integer
       permission:
         $ref: '#/definitions/space.organisationUser'
-        type: object
       slug:
         type: string
       spaces:
         items:
-          $ref: '#/definitions/space.spaceWithPermissions'
+          $ref: '#/definitions/github.com_factly_dega-server_service_core_action_space.spaceWithPermissions'
         type: array
       title:
         type: string
@@ -1121,75 +1290,7 @@ definitions:
     - name
     - organisation_id
     type: object
-  space.spaceWithPermissions:
-    properties:
-      contact_info:
-        type: string
-      created_at:
-        type: string
-      created_by_id:
-        type: integer
-      deleted_at:
-        type: string
-      description:
-        type: string
-      fav_icon:
-        $ref: '#/definitions/model.Medium'
-        type: object
-      fav_icon_id:
-        type: integer
-      id:
-        type: integer
-      logo:
-        $ref: '#/definitions/model.Medium'
-        type: object
-      logo_id:
-        type: integer
-      logo_mobile:
-        $ref: '#/definitions/model.Medium'
-        type: object
-      logo_mobile_id:
-        type: integer
-      mobile_icon:
-        $ref: '#/definitions/model.Medium'
-        type: object
-      mobile_icon_id:
-        type: integer
-      name:
-        type: string
-      organisation_id:
-        type: integer
-      permissions:
-        items:
-          $ref: '#/definitions/model.Permission'
-        type: array
-      site_address:
-        type: string
-      site_title:
-        type: string
-      slug:
-        type: string
-      social_media_urls:
-        type: string
-      tag_line:
-        type: string
-      updated_at:
-        type: string
-      updated_by_id:
-        type: integer
-      verification_codes:
-        type: string
-    type: object
-  spacePermission.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/spacePermission.spaceWithPermissions'
-        type: array
-      total:
-        type: integer
-    type: object
-  spacePermission.spacePermission:
+  space.spacePermission:
     properties:
       fact_check:
         type: boolean
@@ -1202,7 +1303,7 @@ definitions:
     required:
     - space_id
     type: object
-  spacePermission.spacePermissionRequest:
+  space.spacePermissionRequest:
     properties:
       description:
         type: string
@@ -1214,69 +1315,8 @@ definitions:
         type: integer
       space_id:
         type: integer
-      title:
-        type: string
     required:
     - space_id
-    - title
-    type: object
-  spacePermission.spaceWithPermissions:
-    properties:
-      contact_info:
-        type: string
-      created_at:
-        type: string
-      created_by_id:
-        type: integer
-      deleted_at:
-        type: string
-      description:
-        type: string
-      fav_icon:
-        $ref: '#/definitions/model.Medium'
-        type: object
-      fav_icon_id:
-        type: integer
-      id:
-        type: integer
-      logo:
-        $ref: '#/definitions/model.Medium'
-        type: object
-      logo_id:
-        type: integer
-      logo_mobile:
-        $ref: '#/definitions/model.Medium'
-        type: object
-      logo_mobile_id:
-        type: integer
-      mobile_icon:
-        $ref: '#/definitions/model.Medium'
-        type: object
-      mobile_icon_id:
-        type: integer
-      name:
-        type: string
-      organisation_id:
-        type: integer
-      permission:
-        $ref: '#/definitions/model.SpacePermission'
-        type: object
-      site_address:
-        type: string
-      site_title:
-        type: string
-      slug:
-        type: string
-      social_media_urls:
-        type: string
-      tag_line:
-        type: string
-      updated_at:
-        type: string
-      updated_by_id:
-        type: integer
-      verification_codes:
-        type: string
     type: object
   tag.tag:
     properties:
@@ -1337,6 +1377,31 @@ definitions:
         type: string
       updated_by_id:
         type: integer
+    type: object
+  webhook.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Webhook'
+        type: array
+      total:
+        type: integer
+    type: object
+  webhook.webhook:
+    properties:
+      enabled:
+        type: boolean
+      event_ids:
+        items:
+          type: integer
+        type: array
+      tags:
+        type: string
+      url:
+        type: string
+    required:
+    - event_ids
+    - url
     type: object
 host: localhost:7789
 info:
@@ -1482,7 +1547,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -1555,6 +1621,170 @@ paths:
       summary: Update a category by id
       tags:
       - Category
+  /core/events:
+    get:
+      description: Get all events
+      operationId: get-all-events
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/event.paging'
+      summary: Show all events
+      tags:
+      - Events
+    post:
+      description: Create Event
+      operationId: add-event
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Event Object
+        in: body
+        name: Event
+        required: true
+        schema:
+          $ref: '#/definitions/event.event'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Event'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create Event
+      tags:
+      - Events
+  /core/events/{event_id}:
+    delete:
+      description: Delete Event by id
+      operationId: delete-event-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: event_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete Event by id
+      tags:
+      - Events
+    get:
+      description: Get event by ID
+      operationId: get-event-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: event_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Event'
+      summary: Show a event by id
+      tags:
+      - Events
+    put:
+      description: Update event by ID
+      operationId: update-event-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Event ID
+        in: path
+        name: event_id
+        required: true
+        type: string
+      - description: Event Object
+        in: body
+        name: Event
+        schema:
+          $ref: '#/definitions/event.event'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Event'
+      summary: Update a event by id
+      tags:
+      - Events
   /core/formats:
     get:
       description: Get all formats
@@ -1645,7 +1875,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: Delete a format
       tags:
       - Format
@@ -1847,7 +2078,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: Delete a medium
       tags:
       - Medium
@@ -2004,7 +2236,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -2103,7 +2336,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/organisationPermission.paging'
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_permissions_organisation.paging'
             type: array
       summary: Show all organisation permissions
       tags:
@@ -2127,7 +2360,7 @@ paths:
         name: Permission
         required: true
         schema:
-          $ref: '#/definitions/organisationPermission.organisationPermission'
+          $ref: '#/definitions/organisation.organisationPermission'
       produces:
       - application/json
       responses:
@@ -2165,7 +2398,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -2198,7 +2432,7 @@ paths:
         in: body
         name: Permission
         schema:
-          $ref: '#/definitions/organisationPermission.organisationPermission'
+          $ref: '#/definitions/organisation.organisationPermission'
       produces:
       - application/json
       responses:
@@ -2230,45 +2464,8 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/organisationPermission.orgPermissionRes'
+            $ref: '#/definitions/organisation.orgPermissionRes'
       summary: Show a my organisation permissions
-      tags:
-      - Organisation_Permissions
-  /core/permissions/organisations/request:
-    post:
-      description: Create organisation permission request
-      operationId: add-org-permission-request
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Request Object
-        in: body
-        name: Request
-        required: true
-        schema:
-          $ref: '#/definitions/organisationPermission.organisationPermissionRequest'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.OrganisationPermissionRequest'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create organisation permission request
       tags:
       - Organisation_Permissions
   /core/permissions/spaces:
@@ -2297,7 +2494,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/spacePermission.paging'
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_permissions_space.paging'
             type: array
       summary: Show all Space permissions
       tags:
@@ -2321,7 +2518,7 @@ paths:
         name: Permission
         required: true
         schema:
-          $ref: '#/definitions/spacePermission.spacePermission'
+          $ref: '#/definitions/space.spacePermission'
       produces:
       - application/json
       responses:
@@ -2359,7 +2556,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -2421,7 +2619,7 @@ paths:
         in: body
         name: Permission
         schema:
-          $ref: '#/definitions/spacePermission.spacePermission'
+          $ref: '#/definitions/space.spacePermission'
       produces:
       - application/json
       responses:
@@ -2455,43 +2653,6 @@ paths:
           schema:
             $ref: '#/definitions/model.SpacePermission'
       summary: Show a my Space permissions
-      tags:
-      - Space_Permissions
-  /core/permissions/spaces/request:
-    post:
-      description: Create space permission request
-      operationId: add-space-permission-request
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Request Object
-        in: body
-        name: Request
-        required: true
-        schema:
-          $ref: '#/definitions/spacePermission.spacePermissionRequest'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/model.SpacePermissionRequest'
-        "400":
-          description: Bad Request
-          schema:
-            items:
-              type: string
-            type: array
-      summary: Create space permission request
       tags:
       - Space_Permissions
   /core/policies:
@@ -2788,7 +2949,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: Delete a post
       tags:
       - Post
@@ -2946,7 +3108,7 @@ paths:
       summary: create template
       tags:
       - Post
-  /core/requests/organisation-permissions:
+  /core/requests/organisations:
     get:
       description: Get all organisation permissions requests
       operationId: get-all-org-permissions-requests
@@ -2972,12 +3134,48 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/organisationPermission.paging'
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_organisation.paging'
             type: array
       summary: Show all organisation permissions requests
       tags:
       - Organisation_Permissions_Request
-  /core/requests/organisation-permissions/{request_id}:
+    post:
+      description: Create organisation permission request
+      operationId: add-org-permission-request
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request Object
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/organisation.organisationPermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.OrganisationPermissionRequest'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create organisation permission request
+      tags:
+      - Organisation_Permissions_Request
+  /core/requests/organisations/{request_id}:
     delete:
       description: Delete Organisation permission request by ID
       operationId: delete-org-permission-request-by-id
@@ -2998,7 +3196,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -3037,7 +3236,7 @@ paths:
       summary: Show a organisation permissions requests detail
       tags:
       - Organisation_Permissions_Request
-  /core/requests/organisation-permissions/{request_id}/approve:
+  /core/requests/organisations/{request_id}/approve:
     post:
       description: approve organisation permission
       operationId: approve-org-permission
@@ -3073,7 +3272,7 @@ paths:
       summary: approve organisation permission
       tags:
       - Organisation_Permissions_Request
-  /core/requests/organisation-permissions/{request_id}/reject:
+  /core/requests/organisations/{request_id}/reject:
     post:
       description: reject organisation permission
       operationId: reject-org-permission
@@ -3096,7 +3295,8 @@ paths:
       produces:
       - application/json
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -3106,7 +3306,7 @@ paths:
       summary: reject organisation permission
       tags:
       - Organisation_Permissions_Request
-  /core/requests/organisation-permissions/my:
+  /core/requests/organisations/my:
     get:
       description: Get all my organisation permissions requests
       operationId: get-all-my-org-permissions-requests
@@ -3128,12 +3328,12 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/organisationPermission.paging'
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_organisation.paging'
             type: array
       summary: Show all my organisation permissions requests
       tags:
       - Organisation_Permissions_Request
-  /core/requests/space-permissions:
+  /core/requests/spaces:
     get:
       description: Get all space permissions requests
       operationId: get-all-space-permissions-requests
@@ -3159,12 +3359,48 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/spacePermission.paging'
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_space.paging'
             type: array
       summary: Show all space permissions requests
       tags:
       - Space_Permissions_Request
-  /core/requests/space-permissions/{request_id}:
+    post:
+      description: Create space permission request
+      operationId: add-space-permission-request
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Request Object
+        in: body
+        name: Request
+        required: true
+        schema:
+          $ref: '#/definitions/space.spacePermissionRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.SpacePermissionRequest'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create space permission request
+      tags:
+      - Space_Permissions_Request
+  /core/requests/spaces/{request_id}:
     delete:
       description: Delete Space permission request by ID
       operationId: delete-space-permission-request-by-id
@@ -3185,7 +3421,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -3224,7 +3461,7 @@ paths:
       summary: Show a space permissions requests detail
       tags:
       - Space_Permissions_Request
-  /core/requests/space-permissions/{request_id}/approve:
+  /core/requests/spaces/{request_id}/approve:
     post:
       description: approve space permission
       operationId: approve-space-permission
@@ -3260,7 +3497,7 @@ paths:
       summary: approve space permission
       tags:
       - Space_Permissions_Request
-  /core/requests/space-permissions/{request_id}/reject:
+  /core/requests/spaces/{request_id}/reject:
     post:
       description: reject space permission
       operationId: reject-space-permission
@@ -3283,7 +3520,8 @@ paths:
       produces:
       - application/json
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -3293,7 +3531,7 @@ paths:
       summary: reject space permission
       tags:
       - Space_Permissions_Request
-  /core/requests/space-permissions/my:
+  /core/requests/spaces/my:
     get:
       description: Get all my space permissions requests
       operationId: get-all-my-space-permissions-requests
@@ -3315,7 +3553,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/spacePermission.paging'
+              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_space.paging'
             type: array
       summary: Show all my space permissions requests
       tags:
@@ -3343,7 +3581,8 @@ paths:
       produces:
       - application/json
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: Global search for all entities
       tags:
       - Search
@@ -3417,7 +3656,8 @@ paths:
       produces:
       - application/json
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: Delete space
       tags:
       - Space
@@ -3551,7 +3791,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
         "400":
           description: Bad Request
           schema:
@@ -3681,6 +3922,203 @@ paths:
       summary: Get user's permission
       tags:
       - Users
+  /core/webhooks:
+    get:
+      description: Get all webhooks
+      operationId: get-all-webhooks
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/webhook.paging'
+      summary: Show all webhooks
+      tags:
+      - Webhooks
+    post:
+      description: Create Webhook
+      operationId: add-webhook
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Webhook Object
+        in: body
+        name: Webhook
+        required: true
+        schema:
+          $ref: '#/definitions/webhook.webhook'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Webhook'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create Webhook
+      tags:
+      - Webhooks
+  /core/webhooks/{webhook_id}:
+    delete:
+      description: Delete webhook by id
+      operationId: delete-webhook-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Webhook ID
+        in: path
+        name: webhook_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete webhook by id
+      tags:
+      - Webhooks
+    get:
+      description: Get webhook by ID
+      operationId: get-webhook-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Webhook ID
+        in: path
+        name: webhook_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Webhook'
+      summary: Show a webhook by id
+      tags:
+      - Webhooks
+    put:
+      description: Update webhook by ID
+      operationId: update-webhook-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Webhook ID
+        in: path
+        name: webhook_id
+        required: true
+        type: string
+      - description: Webhook Object
+        in: body
+        name: Webhook
+        schema:
+          $ref: '#/definitions/webhook.webhook'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Webhook'
+      summary: Update a webhook by id
+      tags:
+      - Webhooks
+  /core/webhooks/logs:
+    get:
+      description: Get all webhooks logs
+      operationId: get-all-webhooks-logs
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/webhook.paging'
+      summary: Show all webhooks logs
+      tags:
+      - Webhooks
   /fact-check/claimants:
     get:
       description: Get all claimants
@@ -3779,7 +4217,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: Delete a claimant
       tags:
       - Claimant
@@ -3952,7 +4391,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: Delete a claim
       tags:
       - Claim
@@ -4125,7 +4565,8 @@ paths:
         required: true
         type: string
       responses:
-        "200": {}
+        "200":
+          description: ""
       summary: Delete a rating
       tags:
       - Rating

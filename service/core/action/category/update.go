@@ -9,11 +9,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 	"gorm.io/gorm"
@@ -34,14 +35,14 @@ import (
 // @Router /core/categories/{category_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -117,10 +118,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == category.Slug {
 		categorySlug = result.Slug
-	} else if category.Slug != "" && slug.Check(category.Slug) {
-		categorySlug = slug.Approve(category.Slug, sID, tableName)
+	} else if category.Slug != "" && slugx.Check(category.Slug) {
+		categorySlug = slugx.Approve(&config.DB, category.Slug, sID, tableName)
 	} else {
-		categorySlug = slug.Approve(slug.Make(category.Name), sID, tableName)
+		categorySlug = slugx.Approve(&config.DB, slugx.Make(category.Name), sID, tableName)
 	}
 
 	// Check if category with same name exist
@@ -186,7 +187,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"meta_fields": result.MetaFields,
 	}
 
-	err = meili.UpdateDocument(meiliObj)
+	err = meilisearchx.UpdateDocument("dega", meiliObj)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
@@ -195,5 +196,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	if err = util.NC.Publish("category.created", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	renderx.JSON(w, http.StatusOK, result)
 }

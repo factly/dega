@@ -12,11 +12,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 )
 
@@ -32,7 +33,7 @@ import (
 // @Success 201 {object} model.Space
 // @Router /core/spaces [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -70,7 +71,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	var superOrgID int
 	if viper.GetBool("create_super_organisation") {
-		superOrgID, err = util.GetSuperOrganisationID()
+		superOrgID, err = middlewarex.GetSuperOrganisationID("dega")
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -104,10 +105,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var spaceSlug string
-	if space.Slug != "" && slug.Check(space.Slug) {
+	if space.Slug != "" && slugx.Check(space.Slug) {
 		spaceSlug = space.Slug
 	} else {
-		spaceSlug = slug.Make(space.Name)
+		spaceSlug = slugx.Make(space.Name)
 	}
 
 	result := model.Space{
@@ -174,7 +175,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"organisation_id": result.OrganisationID,
 	}
 
-	err = meili.AddDocument(meiliObj)
+	err = meilisearchx.AddDocument("dega", meiliObj)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
@@ -183,6 +184,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	if err = util.NC.Publish("space.created", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	renderx.JSON(w, http.StatusCreated, result)
 }
 

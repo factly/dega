@@ -7,9 +7,10 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 )
 
@@ -26,7 +27,7 @@ import (
 // @Success 201 {object} model.Policy
 // @Router /core/policies [post]
 func create(w http.ResponseWriter, r *http.Request) {
-	spaceID, err := util.GetSpace(r.Context())
+	spaceID, err := middlewarex.GetSpace(r.Context())
 
 	if err != nil {
 		loggerx.Error(err)
@@ -34,7 +35,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userID, err := util.GetUser(r.Context())
+	userID, err := middlewarex.GetUser(r.Context())
 
 	if err != nil {
 		loggerx.Error(err)
@@ -80,5 +81,5 @@ func insertIntoMeili(result model.Policy) error {
 		"description": result.Description,
 	}
 
-	return meili.AddDocument(meiliObj)
+	return meilisearchx.AddDocument("dega", meiliObj)
 }

@@ -8,6 +8,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/x/middlewarex"
 )
 
 type ctxKeyOrganisationID int
@@ -21,7 +22,7 @@ func GenerateOrganisation(h http.Handler) http.Handler {
 
 		if strings.Split(strings.Trim(r.URL.Path, "/"), "/")[1] != "spaces" {
 			ctx := r.Context()
-			sID, err := GetSpace(ctx)
+			sID, err := middlewarex.GetSpace(ctx)
 
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)

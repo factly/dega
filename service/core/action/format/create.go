@@ -9,11 +9,12 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -34,14 +35,14 @@ import (
 // @Router /core/formats [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -67,10 +68,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var formatSlug string
-	if format.Slug != "" && slug.Check(format.Slug) {
+	if format.Slug != "" && slugx.Check(format.Slug) {
 		formatSlug = format.Slug
 	} else {
-		formatSlug = slug.Make(format.Name)
+		formatSlug = slugx.Make(format.Name)
 	}
 
 	// Get table name
@@ -101,7 +102,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Format{
 		Name:        format.Name,
 		Description: format.Description,
-		Slug:        slug.Approve(formatSlug, sID, tableName),
+		Slug:        slugx.Approve(&config.DB, formatSlug, sID, tableName),
 		SpaceID:     uint(sID),
 	}
 
@@ -124,6 +125,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	if err = util.NC.Publish("format.created", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	renderx.JSON(w, http.StatusCreated, result)
 }
 
@@ -137,5 +145,5 @@ func insertIntoMeili(format model.Format) error {
 		"space_id":    format.SpaceID,
 	}
 
-	return meili.AddDocument(meiliObj)
+	return meilisearchx.AddDocument("dega", meiliObj)
 }

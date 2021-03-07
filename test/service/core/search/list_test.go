@@ -16,6 +16,7 @@ func TestPostList(t *testing.T) {
 
 	test.MeiliGock()
 	test.KetoGock()
+	test.KavachGock()
 	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())

@@ -8,8 +8,11 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/service/fact-check/action/google"
-	"github.com/factly/dega-server/util/meili"
+	"github.com/factly/x/meilisearchx"
 	"github.com/meilisearch/meilisearch-go"
+	"github.com/nats-io/gnatsd/server"
+	gnatsd "github.com/nats-io/gnatsd/test"
+	"github.com/nats-io/nats.go"
 	"github.com/spf13/viper"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -37,9 +40,10 @@ func SetupMockDB() sqlmock.Sqlmock {
 	viper.Set("meili_key", "password")
 	viper.Set("imageproxy_url", "http://imageproxy")
 	viper.Set("create_super_organisation", true)
+	viper.Set("nats_url", "nats://127.0.0.1:4222")
 	google.GoogleURL = "http://googlefactchecktest.com"
 
-	meili.Client = meilisearch.NewClient(meilisearch.Config{
+	meilisearchx.Client = meilisearch.NewClient(meilisearch.Config{
 		Host:   viper.GetString("meili_url"),
 		APIKey: viper.GetString("meili_key"),
 	})
@@ -63,7 +67,30 @@ func SetupMockDB() sqlmock.Sqlmock {
 	if err != nil {
 		log.Println(err)
 	}
+
 	return mock
+}
+
+// RunDefaultNATSServer will run a nats server on the default port.
+func RunDefaultNATSServer() *server.Server {
+	return RunServerOnPort(nats.DefaultPort)
+}
+
+// RunServerOnPort will run a server on the given port.
+func RunServerOnPort(port int) *server.Server {
+	opts := gnatsd.DefaultTestOptions
+	opts.Port = port
+	return RunServerWithOptions(opts)
+}
+
+// RunServerWithOptions will run a server with the given options.
+func RunServerWithOptions(opts server.Options) *server.Server {
+	return gnatsd.RunServer(&opts)
+}
+
+// RunServerWithConfig will run a server with the given configuration file.
+func RunServerWithConfig(configFile string) (*server.Server, *server.Options) {
+	return gnatsd.RunServerWithConfig(configFile)
 }
 
 //ExpectationsMet checks if all the expectations are fulfilled

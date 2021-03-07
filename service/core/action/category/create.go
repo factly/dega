@@ -12,10 +12,11 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 )
 
@@ -34,14 +35,14 @@ import (
 // @Router /core/categories [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -80,10 +81,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var categorySlug string
-	if category.Slug != "" && slug.Check(category.Slug) {
+	if category.Slug != "" && slugx.Check(category.Slug) {
 		categorySlug = category.Slug
 	} else {
-		categorySlug = slug.Make(category.Name)
+		categorySlug = slugx.Make(category.Name)
 	}
 
 	// Get table name
@@ -111,7 +112,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Category{
 		Name:        category.Name,
 		Description: category.Description,
-		Slug:        slug.Approve(categorySlug, sID, tableName),
+		Slug:        slugx.Approve(&config.DB, categorySlug, sID, tableName),
 		ParentID:    parentID,
 		MediumID:    mediumID,
 		SpaceID:     uint(sID),
@@ -141,7 +142,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"meta_fields": result.MetaFields,
 	}
 
-	err = meili.AddDocument(meiliObj)
+	err = meilisearchx.AddDocument("dega", meiliObj)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
@@ -150,5 +151,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	if err = util.NC.Publish("category.created", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	renderx.JSON(w, http.StatusCreated, result)
 }

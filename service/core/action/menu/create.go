@@ -12,10 +12,11 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 )
 
@@ -34,14 +35,14 @@ import (
 // @Router /core/menus [post]
 func create(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -67,10 +68,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var menuSlug string
-	if menu.Slug != "" && slug.Check(menu.Slug) {
+	if menu.Slug != "" && slugx.Check(menu.Slug) {
 		menuSlug = menu.Slug
 	} else {
-		menuSlug = slug.Make(menu.Name)
+		menuSlug = slugx.Make(menu.Name)
 	}
 
 	// Get table name
@@ -88,7 +89,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	result := &model.Menu{
 		Name:    menu.Name,
 		Menu:    menu.Menu,
-		Slug:    slug.Approve(menuSlug, sID, tableName),
+		Slug:    slugx.Approve(&config.DB, menuSlug, sID, tableName),
 		SpaceID: uint(sID),
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
@@ -113,7 +114,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"space_id": result.SpaceID,
 	}
 
-	err = meili.AddDocument(meiliObj)
+	err = meilisearchx.AddDocument("dega", meiliObj)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
@@ -122,5 +123,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	if err = util.NC.Publish("menu.created", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	renderx.JSON(w, http.StatusCreated, result)
 }
