@@ -10,11 +10,12 @@ import (
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/meili"
-	"github.com/factly/dega-server/util/slug"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
 	"gorm.io/gorm"
@@ -35,14 +36,14 @@ import (
 // @Router /podcast/{podcast_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
-	sID, err := util.GetSpace(r.Context())
+	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	uID, err := util.GetUser(r.Context())
+	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
@@ -98,10 +99,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == podcast.Slug {
 		podcastSlug = result.Slug
-	} else if podcast.Slug != "" && slug.Check(podcast.Slug) {
-		podcastSlug = slug.Approve(podcast.Slug, sID, tableName)
+	} else if podcast.Slug != "" && slugx.Check(podcast.Slug) {
+		podcastSlug = slugx.Approve(&config.DB, podcast.Slug, sID, tableName)
 	} else {
-		podcastSlug = slug.Approve(slug.Make(podcast.Title), sID, tableName)
+		podcastSlug = slugx.Approve(&config.DB, slugx.Make(podcast.Title), sID, tableName)
 	}
 
 	// Check if podcast with same title exist
@@ -153,31 +154,29 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Model(&result).Updates(model.Podcast{
-		Base:              config.Base{UpdatedByID: uint(uID)},
-		Description:       podcast.Description,
-		Slug:              slug.Approve(podcastSlug, sID, tableName),
-		Language:          podcast.Language,
-		MediumID:          mediumID,
-		SpaceID:           uint(sID),
-		PrimaryCategoryID: &podcast.PrimaryCategoryID,
+		Base:        config.Base{UpdatedByID: uint(uID)},
+		Description: podcast.Description,
+		Slug:        slugx.Approve(&config.DB, podcastSlug, sID, tableName),
+		Language:    podcast.Language,
+		MediumID:    mediumID,
+		SpaceID:     uint(sID),
 	}).Preload("Episodes").Preload("Categories").First(&result)
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":                  result.ID,
-		"kind":                "podcast",
-		"title":               result.Title,
-		"slug":                result.Slug,
-		"description":         result.Description,
-		"language":            result.Language,
-		"episode_ids":         podcast.EpisodeIDs,
-		"category_ids":        podcast.CategoryIDs,
-		"space_id":            result.SpaceID,
-		"primary_category_id": result.PrimaryCategoryID,
-		"medium_id":           result.MediumID,
+		"id":           result.ID,
+		"kind":         "podcast",
+		"title":        result.Title,
+		"slug":         result.Slug,
+		"description":  result.Description,
+		"language":     result.Language,
+		"episode_ids":  podcast.EpisodeIDs,
+		"category_ids": podcast.CategoryIDs,
+		"space_id":     result.SpaceID,
+		"medium_id":    result.MediumID,
 	}
 
-	err = meili.UpdateDocument(meiliObj)
+	err = meilisearchx.UpdateDocument("dega", meiliObj)
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
@@ -186,5 +185,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
+
+	if err = util.NC.Publish("podcast.created", result); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	renderx.JSON(w, http.StatusOK, result)
 }
