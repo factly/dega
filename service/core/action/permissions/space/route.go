@@ -12,6 +12,8 @@ type spacePermission struct {
 	FactCheck bool  `json:"fact_check"`
 	Media     int64 `json:"media"`
 	Posts     int64 `json:"posts"`
+	Podcast   bool  `json:"podcast"`
+	Episodes  int64 `json:"episodes"`
 }
 
 var userContext config.ContextKey = "space_perm_user"
