@@ -9,6 +9,7 @@ import {
 } from '../constants/formats';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
+import { SET_REDIRECT } from '../constants/settings';
 
 export const addDefaultFormats = (query) => {
   return (dispatch) => {
@@ -50,6 +51,7 @@ export const getFormats = (query) => {
         );
       })
       .catch((error) => {
+        if (error && error.response && error.response.status === 307) dispatch(setRedirect(307));
         dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => dispatch(stopFormatsLoading()));
@@ -116,6 +118,11 @@ export const deleteFormat = (id) => {
       });
   };
 };
+
+export const setRedirect = (code) => ({
+  type: SET_REDIRECT,
+  payload: code,
+});
 
 export const loadingFormats = () => ({
   type: SET_FORMATS_LOADING,
