@@ -6,5 +6,5 @@ export const RESET_ORGANISATION_REQUESTS = 'RESET_ORGANISATION_REQUESTS';
 export const SET_ORGANISATION_REQUESTS_LOADING = 'SET_ORGANISATION_REQUESTS_LOADING';
 
 //API
-export const ORGANISATION_REQUESTS_API = '/core/requests/organisation-permissions';
+export const ORGANISATION_REQUESTS_API = '/core/requests/organisations';
 export const ORGANISATION_REQUESTS_CREATE_API = '/core/requests/organisations';

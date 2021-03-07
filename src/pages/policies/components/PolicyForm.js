@@ -60,6 +60,16 @@ const entities = [
     label: 'policies',
     options: options,
   },
+  {
+    name: 'podcast',
+    label: 'Podcast',
+    options: options,
+  },
+  {
+    name: 'episodes',
+    label: 'Episodes',
+    options: options,
+  },
 ];
 
 function PolicyForm({ data = {}, onCreate }) {

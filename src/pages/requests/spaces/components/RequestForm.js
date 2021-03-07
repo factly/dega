@@ -70,6 +70,18 @@ const RequestForm = ({ onCreate, data = {} }) => {
         <InputNumber min={-1} />
       </Form.Item>
       <Form.Item
+        name="episodes"
+        label="Episodes"
+        rules={[
+          {
+            required: true,
+            message: 'Please enter the numeric value!',
+          },
+        ]}
+      >
+        <InputNumber min={-1} />
+      </Form.Item>
+      <Form.Item
         name="media"
         label="Media"
         rules={[
@@ -82,6 +94,9 @@ const RequestForm = ({ onCreate, data = {} }) => {
         <InputNumber min={-1} />
       </Form.Item>
       <Form.Item label="Fact Check" name="fact_check" valuePropName="checked">
+        <Switch />
+      </Form.Item>
+      <Form.Item label="Podcast" name="podcast" valuePropName="checked">
         <Switch />
       </Form.Item>
       <Form.Item name="description" label="Description">

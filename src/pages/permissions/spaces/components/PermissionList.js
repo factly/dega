@@ -80,10 +80,28 @@ function PermissionList() {
       },
     },
     {
+      title: 'Episodes',
+      dataIndex: ['permission', 'episodes'],
+      render: (_, record) => {
+        return record.permission.episodes > 0 ? (
+          <p>{record.permission.episodes ? record.permission.episodes : 0}</p>
+        ) : (
+          <p>Unlimited</p>
+        );
+      },
+    },
+    {
       title: 'Fact Check',
       dataIndex: ['permission', 'fact_check'],
       render: (_, record) => {
         return <p>{record.permission.fact_check ? 'Enabled' : 'Disabled'}</p>;
+      },
+    },
+    {
+      title: 'Podcast',
+      dataIndex: ['permission', 'podcast'],
+      render: (_, record) => {
+        return <p>{record.permission.podcast ? 'Enabled' : 'Disabled'}</p>;
       },
     },
     // {

@@ -65,6 +65,9 @@ const PermissionForm = ({ onCreate, data = {} }) => {
       <Form.Item label="Fact Check" name="fact_check" valuePropName="checked">
         <Switch />
       </Form.Item>
+      <Form.Item label="Podcast" name="podcast" valuePropName="checked">
+        <Switch />
+      </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
           <Button type="primary" htmlType="submit">
