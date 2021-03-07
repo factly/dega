@@ -9,7 +9,7 @@ const layout = {
     span: 10,
   },
   wrapperCol: {
-    span: 14,
+    span: 8,
   },
 };
 const tailLayout = {
