@@ -56,10 +56,28 @@ function RequestList() {
       },
     },
     {
+      title: 'Episodes',
+      dataIndex: 'episodes',
+      render: (_, record) => {
+        return record.episodes > 0 ? (
+          <p>{record.episodes ? record.episodes : 0}</p>
+        ) : (
+          <p>Unlimited</p>
+        );
+      },
+    },
+    {
       title: 'Fact Check',
       dataIndex: 'fact_check',
       render: (_, record) => {
         return <p>{record.fact_check ? 'Enabled' : 'Disabled'}</p>;
+      },
+    },
+    {
+      title: 'Podcast',
+      dataIndex: 'podcast',
+      render: (_, record) => {
+        return <p>{record.podcast ? 'Enabled' : 'Disabled'}</p>;
       },
     },
     { title: 'Status', dataIndex: 'status', key: 'status' },

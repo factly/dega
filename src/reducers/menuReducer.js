@@ -18,7 +18,7 @@ export default function menuReducer(state = initialState, action = {}) {
     case RESET_MENUS:
       return {
         ...state,
-        req : [],
+        req: [],
         details: {},
         loading: true,
       };
@@ -54,6 +54,6 @@ export default function menuReducer(state = initialState, action = {}) {
         },
       };
     default:
-      return state;     
+      return state;
   }
 }

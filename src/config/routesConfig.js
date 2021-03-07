@@ -28,6 +28,16 @@ import Tags from '../pages/tags';
 import CreateTag from '../pages/tags/CreateTag';
 import EditTag from '../pages/tags/EditTag';
 
+//Episodes
+import Episodes from '../pages/episodes';
+import CreateEpisode from '../pages/episodes/CreateEpisode';
+import EditEpisode from '../pages/episodes/EditEpisode';
+
+//Podcasts
+import Podcasts from '../pages/podcasts';
+import CreatePodcast from '../pages/podcasts/CreatePodcast';
+import EditPodcast from '../pages/podcasts/EditPodcast';
+
 //Formats
 import Formats from '../pages/formats';
 import CreateFormat from '../pages/formats/CreateFormat';
@@ -129,6 +139,52 @@ const routes = {
     title: 'Edit',
     permission: {
       resource: 'spaces',
+      action: 'update',
+    },
+  },
+  episodes: {
+    path: '/episodes',
+    Component: Episodes,
+    title: 'Episodes',
+  },
+  createEpisode: {
+    path: '/episodes/create',
+    Component: CreateEpisode,
+    title: 'Create',
+    permission: {
+      resource: 'episodes',
+      action: 'create',
+    },
+  },
+  editEpisode: {
+    path: '/episodes/:id/edit',
+    Component: EditEpisode,
+    title: 'Edit',
+    permission: {
+      resource: 'episodes',
+      action: 'update',
+    },
+  },
+  podcasts: {
+    path: '/podcasts',
+    Component: Podcasts,
+    title: 'Podcasts',
+  },
+  createPodcast: {
+    path: '/podcasts/create',
+    Component: CreatePodcast,
+    title: 'Create',
+    permission: {
+      resource: 'podcasts',
+      action: 'create',
+    },
+  },
+  editPodcast: {
+    path: '/podcasts/:id/edit',
+    Component: EditPodcast,
+    title: 'Edit',
+    permission: {
+      resource: 'podcasts',
       action: 'update',
     },
   },
@@ -528,6 +584,11 @@ export const sidebarMenu = [
       routes.googleFactCheck,
       routes.factly,
     ],
+  },
+  {
+    title: 'PODCAST',
+    Icon: CheckCircleOutlined,
+    children: [routes.episodes, routes.podcasts],
   },
   {
     title: 'ADMINSTRATION',

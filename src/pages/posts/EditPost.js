@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import getUserPermission from '../../utils/getUserPermission';
 
-function EditPost({formats}) {
+function EditPost({ formats }) {
   const history = useHistory();
   const { id } = useParams();
   const spaces = useSelector(({ spaces }) => spaces);
@@ -42,7 +42,9 @@ function EditPost({formats}) {
     if (values.status === 'publish')
       dispatch(publishPost({ ...post, ...values })).then(() => history.push('/posts'));
   };
-  return <PostEditForm data={post} onCreate={onUpdate} actions={actions} format={formats.article} />;
+  return (
+    <PostEditForm data={post} onCreate={onUpdate} actions={actions} format={formats.article} />
+  );
 }
 
 export default EditPost;

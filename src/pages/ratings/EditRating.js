@@ -24,11 +24,11 @@ function EditRating() {
     dispatch(getRating(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />
-  
+  if (loading) return <Skeleton />;
+
   if (!rating) {
-    return <RecordNotFound />
-  }; 
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updateRating({ ...rating, ...values })).then(() => history.push('/ratings'));
