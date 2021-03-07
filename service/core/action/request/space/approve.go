@@ -71,6 +71,8 @@ func approve(w http.ResponseWriter, r *http.Request) {
 		FactCheck: request.FactCheck,
 		Media:     request.Media,
 		Posts:     request.Posts,
+		Podcast:   request.Podcast,
+		Episodes:  request.Episodes,
 		SpaceID:   request.SpaceID,
 	}
 

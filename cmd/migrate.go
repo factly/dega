@@ -4,6 +4,7 @@ import (
 	"github.com/factly/dega-server/config"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	podcastModel "github.com/factly/dega-server/service/podcast/model"
 	"github.com/spf13/cobra"
 )
 
@@ -20,5 +21,7 @@ var migrateCmd = &cobra.Command{
 
 		factCheckModel.Migration()
 		coreModel.Migration()
+		podcastModel.Migration()
+
 	},
 }

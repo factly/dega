@@ -26,6 +26,8 @@ type SpacePermissionRequest struct {
 	Request
 	Media     int64  `gorm:"column:media" json:"media"`
 	Posts     int64  `gorm:"column:posts" json:"posts"`
+	Episodes  int64  `gorm:"column:episodes" json:"episodes"`
+	Podcast   bool   `gorm:"column:podcast" json:"podcast"`
 	FactCheck bool   `gorm:"column:fact_check" json:"fact_check"`
 	SpaceID   uint   `gorm:"column:space_id" json:"space_id"`
 	Space     *Space `gorm:"foreignKey:space_id" json:"space,omitempty"`

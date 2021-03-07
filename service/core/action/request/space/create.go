@@ -84,6 +84,8 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		},
 		SpaceID:   uint(request.SpaceID),
 		Posts:     request.Posts,
+		Podcast:   request.Podcast,
+		Episodes:  request.Episodes,
 		Media:     request.Media,
 		FactCheck: request.FactCheck,
 	}
