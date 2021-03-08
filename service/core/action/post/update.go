@@ -385,10 +385,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	tx.Commit()
 
-	if err = util.NC.Publish("post.updated", result); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if util.CheckNats() {
+		if err = util.NC.Publish("post.updated", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

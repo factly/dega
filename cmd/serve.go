@@ -29,8 +29,10 @@ var serveCmd = &cobra.Command{
 
 		meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "site_title", "site_address", "tag_line", "review", "review_tag_line"})
 
-		util.ConnectNats()
-		defer util.NC.Close()
+		if util.CheckNats() {
+			util.ConnectNats()
+			defer util.NC.Close()
+		}
 
 		r := service.RegisterRoutes()
 
