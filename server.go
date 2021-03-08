@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
@@ -14,6 +15,7 @@ import (
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/resolvers"
 	"github.com/factly/dega-api/graph/validator"
+	"github.com/factly/dega-api/util"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -43,6 +45,12 @@ func main() {
 
 	config.SetupVars()
 	config.SetupDB()
+
+	sqlDB, _ := config.DB.DB()
+	healthx.RegisterRoutes(router, healthx.ReadyCheckers{
+		"database": sqlDB.Ping,
+		"kavach":   util.KavachChecker,
+	})
 
 	go func() {
 		promRouter := chi.NewRouter()

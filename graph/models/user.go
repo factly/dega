@@ -21,6 +21,7 @@ type User struct {
 	SocialMediaURLs  postgres.Jsonb `gorm:"column:social_media_urls" json:"social_media_urls"`
 	Description      string         `gorm:"column:description" json:"description"`
 	FeaturedMediumID uint           `gorm:"column:featured_medium_id" json:"featured_medium_id" sql:"DEFAULT:NULL"`
+	Medium           *Medium        `gorm:"foreignKey:featured_medium_id" json:"medium"`
 }
 
 // UsersPaging model

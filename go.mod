@@ -6,7 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.13.0
 	github.com/agnivade/levenshtein v1.1.0 // indirect
 	github.com/dgryski/trifles v0.0.0-20200830180326-aaf60a07f6a3 // indirect
-	github.com/factly/x v0.0.10
+	github.com/factly/x v0.0.25
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.1.1
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
