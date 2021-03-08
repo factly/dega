@@ -35,7 +35,7 @@ function BasicLayout(props) {
     return { orgs: orgs, loading: loading, permission: [], selected: selected, applications: [] };
   });
 
-  const { type, message, description, redirect } = useSelector((state) => {
+  const { type, message, description, time, redirect } = useSelector((state) => {
     return { ...state.notifications, redirect: state.redirect };
   });
 
