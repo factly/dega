@@ -139,7 +139,7 @@ func updateMock(mock sqlmock.Sqlmock) {
 
 	medium.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"categories\"`).
-		WithArgs(Data["is_featured"], 1).
+		WithArgs(test.AnyTime{}, Data["is_featured"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 
 	medium.SelectWithSpace(mock)

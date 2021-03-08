@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/factly/dega-server/util"
 	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/DATA-DOG/go-sqlmock"
@@ -36,10 +35,6 @@ func TestRatingList(t *testing.T) {
 			RawMessage: []byte(`{"type":"description2"}`),
 		}},
 	}
-
-	s := test.RunDefaultNATSServer()
-	defer s.Shutdown()
-	util.ConnectNats()
 
 	t.Run("get empty list of ratings", func(t *testing.T) {
 		test.CheckSpaceMock(mock)

@@ -82,15 +82,15 @@ func TestSpacePermissionUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["space_id"], false, Data["media"], Data["posts"]))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["space_id"], false, Data["media"], Data["posts"], Data["podcast"], Data["episodes"]))
 
 		mock.ExpectBegin()
 		mock.ExpectExec(`UPDATE \"space_permissions\"`).
-			WithArgs(Data["fact_check"], 1).
+			WithArgs(test.AnyTime{}, Data["fact_check"], Data["podcast"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(`UPDATE \"space_permissions\"`).
-			WithArgs(test.AnyTime{}, 1, Data["media"], Data["posts"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["media"], Data["posts"], Data["episodes"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		SelectQuery(mock, 1, 1)
 		mock.ExpectCommit()
@@ -113,15 +113,15 @@ func TestSpacePermissionUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["space_id"], false, Data["media"], Data["posts"]))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["space_id"], false, Data["media"], Data["posts"], Data["podcast"], Data["episodes"]))
 
 		mock.ExpectBegin()
 		mock.ExpectExec(`UPDATE \"space_permissions\"`).
-			WithArgs(Data["fact_check"], 1).
+			WithArgs(test.AnyTime{}, Data["fact_check"], Data["podcast"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(`UPDATE \"space_permissions\"`).
-			WithArgs(test.AnyTime{}, 1, Data["media"], Data["posts"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["media"], Data["posts"], Data["episodes"], 1).
 			WillReturnError(errors.New(`cannot update space permission`))
 		mock.ExpectRollback()
 

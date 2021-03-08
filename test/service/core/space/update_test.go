@@ -10,7 +10,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -28,10 +27,6 @@ func TestSpaceUpdate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	s := test.RunDefaultNATSServer()
-	defer s.Shutdown()
-	util.ConnectNats()
 
 	t.Run("update a space", func(t *testing.T) {
 		updateMock(mock)
@@ -95,7 +90,7 @@ func TestSpaceUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 		mock.ExpectBegin()
 		slugCheckMock(mock)
@@ -116,7 +111,7 @@ func TestSpaceUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 		mock.ExpectBegin()
 		slugCheckMock(mock)
@@ -138,7 +133,7 @@ func TestSpaceUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 		mock.ExpectBegin()
 		slugCheckMock(mock)
@@ -161,7 +156,7 @@ func TestSpaceUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 		mock.ExpectBegin()
 		slugCheckMock(mock)

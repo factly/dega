@@ -69,7 +69,7 @@ func TestSpacePermissionCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"], Data["media"], Data["posts"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"], Data["media"], Data["posts"], Data["podcast"], Data["episodes"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))
@@ -94,7 +94,7 @@ func TestSpacePermissionCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"], Data["media"], Data["posts"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"], Data["media"], Data["posts"], Data["podcast"], Data["episodes"]).
 			WillReturnError(errors.New("cannot create space permission"))
 		mock.ExpectRollback()
 

@@ -22,6 +22,8 @@ var Data = map[string]interface{}{
 	"status":     "pending",
 	"space_id":   1,
 	"posts":      10,
+	"episodes":   10,
+	"podcast":    true,
 	"media":      10,
 	"fact_check": true,
 }
@@ -35,6 +37,8 @@ var requestList = []map[string]interface{}{
 		"status":     "pending",
 		"space_id":   1,
 		"posts":      10,
+		"episodes":   10,
+		"podcast":    true,
 		"media":      10,
 		"fact_check": true,
 	},
@@ -46,6 +50,8 @@ var requestList = []map[string]interface{}{
 		"status":     "pending",
 		"space_id":   1,
 		"posts":      20,
+		"episodes":   20,
+		"podcast":    true,
 		"media":      20,
 		"fact_check": true,
 	},
@@ -55,7 +61,7 @@ var invalidData = map[string]interface{}{
 	"title": "aa",
 }
 
-var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "description", "status", "media", "posts", "fact_check", "space_id"}
+var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "description", "status", "media", "posts", "episodes", "podcast", "fact_check", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "space_permission_requests"`)
 var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "space_permission_requests"`)
@@ -70,5 +76,5 @@ func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["description"], Data["status"], Data["media"], Data["posts"], Data["fact_check"], Data["space_id"]))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["description"], Data["status"], Data["media"], Data["posts"], Data["episodes"], Data["podcast"], Data["fact_check"], Data["space_id"]))
 }

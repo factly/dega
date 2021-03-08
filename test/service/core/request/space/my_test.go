@@ -56,8 +56,8 @@ func TestMySpaceRequestList(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, requestList[0]["title"], requestList[0]["description"], requestList[0]["status"], requestList[0]["media"], requestList[0]["posts"], requestList[0]["fact_check"], requestList[0]["space_id"]).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, requestList[1]["title"], requestList[1]["description"], requestList[1]["status"], requestList[1]["media"], requestList[1]["posts"], requestList[1]["fact_check"], requestList[1]["space_id"]))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, requestList[0]["title"], requestList[0]["description"], requestList[0]["status"], requestList[0]["media"], requestList[0]["posts"], requestList[0]["episodes"], requestList[0]["podcast"], requestList[0]["fact_check"], requestList[0]["space_id"]).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, requestList[1]["title"], requestList[1]["description"], requestList[1]["status"], requestList[1]["media"], requestList[1]["posts"], requestList[1]["episodes"], requestList[1]["podcast"], requestList[1]["fact_check"], requestList[1]["space_id"]))
 
 		e.GET(myPath).
 			WithHeaders(headers).
@@ -81,7 +81,7 @@ func TestMySpaceRequestList(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, requestList[1]["title"], requestList[1]["description"], requestList[1]["status"], requestList[1]["media"], requestList[1]["posts"], requestList[1]["fact_check"], requestList[1]["space_id"]))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, requestList[1]["title"], requestList[1]["description"], requestList[1]["status"], requestList[1]["media"], requestList[1]["posts"], requestList[1]["episodes"], requestList[1]["podcast"], requestList[1]["fact_check"], requestList[1]["space_id"]))
 
 		e.GET(myPath).
 			WithHeaders(headers).

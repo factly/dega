@@ -142,6 +142,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 				SpaceID:   result.ID,
 				Media:     -1,
 				Posts:     -1,
+				Podcast:   true,
+				Episodes:  -1,
 				FactCheck: true,
 			}
 		} else {
@@ -149,6 +151,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 				SpaceID:   result.ID,
 				Media:     viper.GetInt64("default_number_of_media"),
 				Posts:     viper.GetInt64("default_number_of_posts"),
+				Episodes:  viper.GetInt64("default_number_of_episodes"),
+				Podcast:   false,
 				FactCheck: false,
 			}
 		}

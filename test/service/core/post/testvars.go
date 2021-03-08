@@ -322,6 +322,10 @@ func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckR
 	medium.SelectWithSpace(mock)
 	format.SelectMock(mock, 1, 1)
 
+	mock.ExpectExec(`UPDATE "posts" SET`).
+		WithArgs(test.AnyTime{}, 1).
+		WillReturnResult(driver.ResultNoRows)
+
 	mock.ExpectQuery(`INSERT INTO "tags"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, tag.Data["name"], tag.Data["slug"], tag.Data["description"], tag.Data["is_featured"], 1, 1).
 		WillReturnRows(sqlmock.
@@ -340,8 +344,11 @@ func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckR
 
 	medium.SelectWithSpace(mock)
 	format.SelectMock(mock, 1, 1)
-	medium.SelectWithSpace(mock)
+	mock.ExpectExec(`UPDATE "posts" SET`).
+		WithArgs(test.AnyTime{}, 1).
+		WillReturnResult(driver.ResultNoRows)
 
+	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "categories"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.
@@ -375,7 +382,7 @@ func preUpdatePublishedMock(mock sqlmock.Sqlmock, post map[string]interface{}, s
 
 func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	mock.ExpectExec(`UPDATE \"posts\"`).
-		WithArgs(post["page"], post["is_featured"], post["is_sticky"], post["is_highlighted"], 1).
+		WithArgs(test.AnyTime{}, post["page"], post["is_featured"], post["is_sticky"], post["is_highlighted"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	medium.SelectWithSpace(mock)
 	format.SelectMock(mock, 1, 1)
@@ -388,7 +395,7 @@ func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugChec
 
 func updatePublishedQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
 	mock.ExpectExec(`UPDATE \"posts\"`).
-		WithArgs(post["page"], post["is_featured"], post["is_sticky"], post["is_highlighted"], 1).
+		WithArgs(test.AnyTime{}, post["page"], post["is_featured"], post["is_sticky"], post["is_highlighted"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	medium.SelectWithSpace(mock)
 	format.SelectMock(mock, 1, 1)

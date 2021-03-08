@@ -25,7 +25,7 @@ var Data map[string]interface{} = map[string]interface{}{
 	"slug":               "test-space",
 	"site_title":         "Test site title",
 	"tag_line":           "Test tagline",
-	"description":        "Test Description",
+	"description":        nilJsonb(),
 	"site_address":       "testaddress.com",
 	"logo_id":            1,
 	"logo_mobile_id":     1,
@@ -42,7 +42,7 @@ var resData map[string]interface{} = map[string]interface{}{
 	"slug":               "test-space",
 	"site_title":         "Test site title",
 	"tag_line":           "Test tagline",
-	"description":        "Test Description",
+	"description":        nilJsonb(),
 	"site_address":       "testaddress.com",
 	"verification_codes": nilJsonb(),
 	"social_media_urls":  nilJsonb(),
@@ -106,7 +106,7 @@ func updateMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 	mock.ExpectBegin()
 	slugCheckMock(mock)
@@ -128,7 +128,7 @@ func oneMediaIDZeroMock(mock sqlmock.Sqlmock, updateargs ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", "description", "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
@@ -157,7 +157,7 @@ func oneMediaIDZeroMock(mock sqlmock.Sqlmock, updateargs ...driver.Value) {
 
 func spacePermissionCreateQuery(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1, -1, -1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, true, 1, -1, -1, true, -1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))

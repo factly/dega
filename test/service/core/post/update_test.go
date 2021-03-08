@@ -13,7 +13,6 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
@@ -50,10 +49,6 @@ func TestPostUpdate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	s := test.RunDefaultNATSServer()
-	defer s.Shutdown()
-	util.ConnectNats()
 
 	t.Run("invalid post id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -126,7 +121,7 @@ func TestPostUpdate(t *testing.T) {
 		preUpdateDraftMock(mock, updatePost, false)
 
 		mock.ExpectExec(`UPDATE \"posts\"`).
-			WithArgs(Data["page"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], 1).
+			WithArgs(test.AnyTime{}, Data["page"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		medium.SelectWithSpace(mock)
 		format.SelectMock(mock, 1, 1)

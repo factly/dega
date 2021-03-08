@@ -13,7 +13,6 @@ import (
 	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/test/service/fact-check/claimant"
 	"github.com/factly/dega-server/test/service/fact-check/rating"
-	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
@@ -53,10 +52,6 @@ func TestClaimUpdate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	s := test.RunDefaultNATSServer()
-	defer s.Shutdown()
-	util.ConnectNats()
 
 	t.Run("invalid claim id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
