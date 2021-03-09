@@ -592,3 +592,49 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
   </BrowserRouter>
 </Provider>
 `;
+
+exports[`Tags List component snapshot testing should render without data 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <PermissionList>
+        <Space
+          direction="vertical"
+        />
+      </PermissionList>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;

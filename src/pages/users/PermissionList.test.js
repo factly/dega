@@ -55,6 +55,23 @@ describe('Tags List component', () => {
       mockedDispatch = jest.fn();
       useDispatch.mockReturnValue(mockedDispatch);
     });
+    it('should render without data', () => {
+      store = mockStore({
+        permissions: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+      });
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <PermissionList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
     it('should render the component', () => {
       store = mockStore(state);
       const tree = mount(
