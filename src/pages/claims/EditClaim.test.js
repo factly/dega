@@ -14,6 +14,7 @@ import ClaimEditForm from './components/ClaimForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),

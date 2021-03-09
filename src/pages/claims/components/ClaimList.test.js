@@ -27,12 +27,12 @@ let state = {
   claims: {
     req: [
       {
-        data: [1],
+        data: [1, 2],
         query: {
           page: 1,
           limit: 5,
         },
-        total: 1,
+        total: 2,
       },
     ],
     details: {
@@ -44,6 +44,37 @@ let state = {
         title: 'No, these three IPS officers are not siblings, they are batch mates',
         slug: 'no-these-three-ips-officers-are-not-siblings-they-are-batch-mates',
         claim_date: '2020-09-02T10:12:41Z',
+        checked_date: '2020-09-10T10:12:44Z',
+        claim_sources: '',
+        description: {
+          time: 1599732752528,
+          blocks: [
+            {
+              data: {
+                text:
+                  'Fact: The three people in the image are identified as Pooja Vashisth, Tushar Gupta and Shruta Kirti Somavanshi. All these three are IPS officers. They are batchmates but not siblings which was confirmed by Tushar when we reached out to him. Also, Somavanshi reiterated the same through an Instagram account called ‘upscmeme’ of which he is the admin. Hence the claim made in the post is FALSE.',
+              },
+              type: 'paragraph',
+            },
+          ],
+          version: '2.18.0',
+        },
+        claimant_id: 1,
+        claimant: 'Facebook',
+        rating_id: 1,
+        rating: 'False',
+        review: '',
+        review_tag_line: '',
+        review_sources: '',
+        space_id: 1,
+      },
+      '2': {
+        id: 2,
+        created_at: '2020-09-10T10:12:47.819677Z',
+        updated_at: '2020-09-10T10:12:47.819677Z',
+        deleted_at: null,
+        title: 'No, these three IPS officers are not siblings, they are batch mates',
+        slug: 'no-these-three-ips-officers-are-not-siblings-they-are-batch-mates',
         checked_date: '2020-09-10T10:12:44Z',
         claim_sources: '',
         description: {
@@ -306,7 +337,7 @@ describe('Claims List component', () => {
           .props()
           .onChange({ target: { value: [1] } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
 

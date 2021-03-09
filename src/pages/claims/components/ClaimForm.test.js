@@ -4,13 +4,15 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
-import { Steps, DatePicker } from 'antd';
+import { Steps, DatePicker, Input } from 'antd';
 import moment from 'moment';
+import { MinusCircleOutlined } from '@ant-design/icons';
 
 import '../../../matchMedia.mock';
 import ClaimCreateForm from './ClaimForm';
 import { addClaimant } from '../../../actions/claimants';
 
+jest.mock('@editorjs/editorjs');
 jest.mock('../../../actions/claimants', () => ({
   ...jest.requireActual('../../../actions/claimants'),
   addClaimant: jest.fn(),
@@ -293,6 +295,63 @@ describe('Claims Create Form component', () => {
         ],
         version: '2.18.0',
       };
+      const newClaimSources = {
+        time: 1595747741807,
+        blocks: [
+          {
+            type: 'header',
+            data: {
+              text: 'Editor.js',
+              level: 2,
+            },
+          },
+          {
+            type: 'paragraph',
+            data: {
+              text: 'updated claim sources',
+            },
+          },
+        ],
+        version: '2.18.0',
+      };
+      const newReview = {
+        time: 1595747741807,
+        blocks: [
+          {
+            type: 'header',
+            data: {
+              text: 'Editor.js',
+              level: 2,
+            },
+          },
+          {
+            type: 'paragraph',
+            data: {
+              text: 'updated review',
+            },
+          },
+        ],
+        version: '2.18.0',
+      };
+      const newReviewTagLines = {
+        time: 1595747741807,
+        blocks: [
+          {
+            type: 'header',
+            data: {
+              text: 'Editor.js',
+              level: 2,
+            },
+          },
+          {
+            type: 'paragraph',
+            data: {
+              text: 'updated review taglines',
+            },
+          },
+        ],
+        version: '2.18.0',
+      };
       act(() => {
         wrapper
           .find('FormItem')
@@ -320,7 +379,7 @@ describe('Claims Create Form component', () => {
           .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(3)
           .find('Select')
           .at(0)
           .props()
@@ -342,27 +401,24 @@ describe('Claims Create Form component', () => {
         wrapper
           .find('FormItem')
           .at(8)
-          .find('TextArea')
+          .find('Editor')
           .at(0)
-          .simulate('change', { target: { value: 'new sources' } });
+          .props()
+          .onChange({ target: { value: newClaimSources } });
+        wrapper
+          .find('FormItem')
+          .at(4)
+          .find('Editor')
+          .at(0)
+          .props()
+          .onChange({ target: { value: newReview } });
         wrapper
           .find('FormItem')
           .at(9)
-          .find('TextArea')
+          .find('Editor')
           .at(0)
-          .simulate('change', { target: { value: 'new reiviews' } });
-        wrapper
-          .find('FormItem')
-          .at(10)
-          .find('TextArea')
-          .at(0)
-          .simulate('change', { target: { value: 'new review tag lines' } });
-        wrapper
-          .find('FormItem')
-          .at(11)
-          .find('TextArea')
-          .at(0)
-          .simulate('change', { target: { value: 'new review sources' } });
+          .props()
+          .onChange({ target: { value: newReviewTagLines } });
 
         const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');
@@ -379,10 +435,10 @@ describe('Claims Create Form component', () => {
           rating_id: 2,
           claim_date: moment(new Date('2020-01-01')).format('YYYY-MM-DDTHH:mm:ssZ'),
           checked_date: moment(new Date('2020-04-04')).format('YYYY-MM-DDTHH:mm:ssZ'),
-          claim_sources: 'new sources',
-          review: 'new reiviews',
-          review_tag_line: 'new review tag lines',
-          review_sources: 'new review sources',
+          claim_sources: newClaimSources,
+          review: newReview,
+          review_tag_line: newReviewTagLines,
+          review_sources: 'review_sources',
           description: newDescription,
         });
         done();
@@ -403,23 +459,122 @@ describe('Claims Create Form component', () => {
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(0);
     });
-    it('should call addClaimant', async (done) => {
-      await act(async () => {
-        wrapper
-          .find('FormItem')
-          .at(3)
-          .find('Input')
-          .simulate('change', { target: { value: 'new claimant' } });
+    it('should add review sources input field on button click', () => {
+      const formListInputCount = wrapper.find('FormList').find('Input').length;
+      expect(formListInputCount).toBe(0);
+      act(() => {
+        const button = wrapper.find('FormItem').at(10).find('Button');
+        expect(button.text()).toBe('Add Review sources');
+        button.simulate('click');
       });
       wrapper.update();
+      expect(wrapper.find('FormList').find('Input').length).not.toBe(0);
+    });
+    it('should remove review sources input field on button click', () => {
 
-      await act(async () => {
-        wrapper.find('FormItem').at(3).find('Button').props().onClick();
+      act(() => {
+        const button = wrapper.find('FormItem').at(10).find('Button');
+        expect(button.text()).toBe('Add Review sources');
+        button.simulate('click');
       });
+      wrapper.update();
+      const formInputFieldCount = wrapper.find('FormList').find(Input).length;
+      act(() => {
+        wrapper.find('FormList').find(MinusCircleOutlined).at(0).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find('FormList').find(Input).length).toBe(formInputFieldCount - 2);
+    });
+    it('should submit with no dates', (done) => {
+      const data2 = {
+        id: 1,
+        title: 'title',
+        slug: 'slug',
+        claimant: 1,
+        rating: 1,
+        claim_sources: 'claim_sources',
+        review: 'review',
+        review_tag_line: 'review_tag_line',
+        review_sources: 'review_sources',
+        description: {
+          time: 1595747741807,
+          blocks: [
+            {
+              type: 'header',
+              data: {
+                text: 'Editor.js',
+                level: 2,
+              },
+            },
+            {
+              type: 'paragraph',
+              data: {
+                text:
+                  'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+              },
+            },
+          ],
+          version: '2.18.0',
+        },
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <ClaimCreateForm data={data2} onCreate={props.onCreate} />
+          </Provider>,
+        );
+      });
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(1);
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+
       setTimeout(() => {
-        expect(addClaimant).toHaveBeenCalledWith({ name: 'new claimant' });
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'title',
+          slug: 'slug',
+          claimant: 1,
+          claimant_id: 1,
+          rating: 1,
+          rating_id: 1,
+          claim_date: null,
+          checked_date: null,
+          claim_sources: 'claim_sources',
+          review: 'review',
+          review_tag_line: 'review_tag_line',
+          review_sources: 'review_sources',
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+        });
         done();
-      });
+      }, 0);
+    });
+    it('should handle step change', () => {
+     act(() => {
+       wrapper.find('Steps').at(0).props().onChange(1);
+     });
+      wrapper.update();
+      expect(wrapper.find(Steps).props().current).toEqual(1);
     });
   });
 });
