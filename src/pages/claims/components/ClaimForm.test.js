@@ -471,7 +471,6 @@ describe('Claims Create Form component', () => {
       expect(wrapper.find('FormList').find('Input').length).not.toBe(0);
     });
     it('should remove review sources input field on button click', () => {
-
       act(() => {
         const button = wrapper.find('FormItem').at(10).find('Button');
         expect(button.text()).toBe('Add Review sources');
@@ -570,9 +569,9 @@ describe('Claims Create Form component', () => {
       }, 0);
     });
     it('should handle step change', () => {
-     act(() => {
-       wrapper.find('Steps').at(0).props().onChange(1);
-     });
+      act(() => {
+        wrapper.find('Steps').at(0).props().onChange(1);
+      });
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(1);
     });

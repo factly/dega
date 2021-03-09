@@ -43,7 +43,7 @@ let claims = {
     },
   ],
   details: {
-    '1': {
+    1: {
       id: 1,
       created_at: '2020-07-17T10:14:44.251814Z',
       updated_at: '2020-07-17T10:14:44.251814Z',
@@ -57,7 +57,7 @@ let claims = {
       rating_id: 1,
       space_id: 1,
     },
-    '2': {
+    2: {
       id: 2,
       created_at: '2020-07-17T10:14:48.173442Z',
       updated_at: '2020-07-17T10:14:48.173442Z',

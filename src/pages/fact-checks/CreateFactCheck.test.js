@@ -32,9 +32,9 @@ jest.mock('../../actions/posts', () => ({
   addPost: jest.fn(),
   publish: jest.fn(),
 }));
-const formats =  {
-  article: {id: 1, name: 'article', slug: 'article'},
-  factcheck: {id: 2, name: 'factcheck', slug: 'fact-check'},
+const formats = {
+  article: { id: 1, name: 'article', slug: 'article' },
+  factcheck: { id: 2, name: 'factcheck', slug: 'fact-check' },
   loading: false,
 };
 
@@ -99,7 +99,7 @@ describe('Fact check create component', () => {
     },
     sidebar: {
       collapsed: false,
-    }
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -110,14 +110,14 @@ describe('Fact check create component', () => {
       act(() => {
         tree = shallow(
           <Provider store={store}>
-            <CreateFactCheck formats={formats}/>
+            <CreateFactCheck formats={formats} />
           </Provider>,
         );
       });
       expect(tree).toMatchSnapshot();
       tree.unmount();
     });
-  });  
+  });
   describe('component testing', () => {
     let wrapper;
     afterEach(() => {
@@ -162,8 +162,8 @@ describe('Fact check create component', () => {
     it('should not display FactCheck form if fact-check format not found', () => {
       const format = {
         loading: false,
-        article: {id: 1, name: 'Article', slug: 'article'},
-      }
+        article: { id: 1, name: 'Article', slug: 'article' },
+      };
       actions.publish.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });

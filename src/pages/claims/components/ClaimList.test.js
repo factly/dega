@@ -36,7 +36,7 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         created_at: '2020-09-10T10:12:47.819677Z',
         updated_at: '2020-09-10T10:12:47.819677Z',
@@ -68,7 +68,7 @@ let state = {
         review_sources: '',
         space_id: 1,
       },
-      '2': {
+      2: {
         id: 2,
         created_at: '2020-09-10T10:12:47.819677Z',
         updated_at: '2020-09-10T10:12:47.819677Z',
@@ -114,7 +114,7 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         created_at: '2020-09-09T06:50:18.471677Z',
         updated_at: '2020-09-09T06:50:18.471677Z',
@@ -141,7 +141,7 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         created_at: '2020-09-09T06:51:15.770644Z',
         updated_at: '2020-09-09T06:51:15.770644Z',

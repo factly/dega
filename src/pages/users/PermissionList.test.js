@@ -32,7 +32,7 @@ let state = {
   permissions: {
     req: [1],
     details: {
-      '1': [
+      1: [
         {
           resource: 'categories',
           actions: ['get', 'create', 'update', 'delete'],

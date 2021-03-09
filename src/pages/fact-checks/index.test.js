@@ -26,9 +26,9 @@ jest.mock('../../actions/posts', () => ({
   getPosts: jest.fn(),
   addPost: jest.fn(),
 }));
-const formats =  {
-  article: {id: 1, name: 'article', slug: 'article'},
-  factcheck: {id: 2, name: 'Factcheck', slug: 'fact-check'},
+const formats = {
+  article: { id: 1, name: 'article', slug: 'article' },
+  factcheck: { id: 2, name: 'Factcheck', slug: 'fact-check' },
   loading: false,
 };
 let state = {
@@ -105,7 +105,7 @@ describe('FactCheck component', () => {
     const tree = mount(
       <Provider store={store}>
         <Router>
-          <FactCheck permission={{ actions: ['create'] }} formats={formats}/>
+          <FactCheck permission={{ actions: ['create'] }} formats={formats} />
         </Router>
       </Provider>,
     );
@@ -137,8 +137,8 @@ describe('FactCheck component', () => {
       },
       sidebar: {
         collapsed: false,
-      }
-    })
+      },
+    });
     const tree = shallow(
       <Provider store={store2}>
         <Router>
@@ -152,9 +152,12 @@ describe('FactCheck component', () => {
     const tree = mount(
       <Provider store={store}>
         <Router>
-          <FactCheck permission={{ actions: ['create'] }} formats={{
-            loading: false,
-          }}/>
+          <FactCheck
+            permission={{ actions: ['create'] }}
+            formats={{
+              loading: false,
+            }}
+          />
         </Router>
       </Provider>,
     );

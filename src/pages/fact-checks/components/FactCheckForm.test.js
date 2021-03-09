@@ -238,7 +238,6 @@ describe('Fact-check form component', () => {
         submitButtom.simulate('submit');
         wrapper.update();
       });
-      
 
       setTimeout(() => {
         expect(props.onCreate).not.toHaveBeenCalled();
@@ -405,12 +404,12 @@ describe('Fact-check form component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 1 } }); 
-        
+          .onChange({ target: { value: 1 } });
+
         const nextButton = claimForm.find('Button').at(3);
-        expect(nextButton.text()).toBe('Next');  
+        expect(nextButton.text()).toBe('Next');
         nextButton.simulate('click');
-        const submitBtn  = claimForm.find('Button').at(1);
+        const submitBtn = claimForm.find('Button').at(1);
         expect(submitBtn.text()).toBe('Submit');
         submitBtn.simulate('submit');
         wrapper.update();
@@ -502,12 +501,17 @@ describe('Fact-check form component', () => {
           ],
           version: '2.18.0',
         },
-      }
+      };
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FactCheckForm actions={['publish']} data={data2} format={format} onCreate={props.onCreate} />
-          </Provider>
+            <FactCheckForm
+              actions={['publish']}
+              data={data2}
+              format={format}
+              onCreate={props.onCreate}
+            />
+          </Provider>,
         );
       });
       act(() => {
@@ -595,12 +599,17 @@ describe('Fact-check form component', () => {
           ],
           version: '2.18.0',
         },
-      }
+      };
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FactCheckForm actions={['publish']} data={data2} format={format} onCreate={props.onCreate} />
-          </Provider>
+            <FactCheckForm
+              actions={['publish']}
+              data={data2}
+              format={format}
+              onCreate={props.onCreate}
+            />
+          </Provider>,
         );
       });
       act(() => {

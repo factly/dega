@@ -82,7 +82,7 @@ describe('Posts Create Form component', () => {
     formats: {
       req: [],
       details: {
-        '1': {
+        1: {
           name: 'Fact check',
           slug: 'fact-check',
         },
@@ -117,7 +117,7 @@ describe('Posts Create Form component', () => {
     media: {
       req: [],
       details: {
-        '1': {
+        1: {
           name: 'Sample Image',
           slug: 'sample-img',
         },
@@ -126,10 +126,15 @@ describe('Posts Create Form component', () => {
     },
     sidebar: {
       collapsed: false,
-    }
+    },
   });
   useDispatch.mockReturnValue(jest.fn(() => Promise.resolve({})));
-  useSelector.mockImplementation((state) => ({ details: [], total: 0, loading: false, sidebar: false, }));
+  useSelector.mockImplementation((state) => ({
+    details: [],
+    total: 0,
+    loading: false,
+    sidebar: false,
+  }));
 
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -143,7 +148,7 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']}/>
+            <PostForm actions={['publish']} />
           </Provider>,
         );
       });
@@ -154,7 +159,12 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']} onCreate={onCreate} data={data} format={ {id: 1, name: 'article', slug: 'article'} } />
+            <PostForm
+              actions={['publish']}
+              onCreate={onCreate}
+              data={data}
+              format={{ id: 1, name: 'article', slug: 'article' }}
+            />
           </Provider>,
         );
       });
@@ -165,7 +175,12 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']} onCreate={onCreate} data={data} format={ {id: 1, name: 'article', slug: 'article'} } />
+            <PostForm
+              actions={['publish']}
+              onCreate={onCreate}
+              data={data}
+              format={{ id: 1, name: 'article', slug: 'article' }}
+            />
           </Provider>,
         );
       });
@@ -182,7 +197,12 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostForm actions={['create']} data={data} onCreate={onCreate} format={ {id: 1, name: 'article', slug: 'article'} } />
+            <PostForm
+              actions={['create']}
+              data={data}
+              onCreate={onCreate}
+              format={{ id: 1, name: 'article', slug: 'article' }}
+            />
           </Provider>,
         );
       });
@@ -199,7 +219,11 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']} {...props} format={ {id: 1, name: 'article', slug: 'article'} } />
+            <PostForm
+              actions={['publish']}
+              {...props}
+              format={{ id: 1, name: 'article', slug: 'article' }}
+            />
           </Provider>,
         );
       });
@@ -227,7 +251,6 @@ describe('Posts Create Form component', () => {
         expect(props.onCreate).not.toHaveBeenCalled();
         done();
       }, 0);
-
     });
     it('should submit form with given data', (done) => {
       act(() => {
@@ -334,7 +357,11 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']} {...props} format={ {id: 1, name: 'article', slug: 'article'} } />
+            <PostForm
+              actions={['publish']}
+              {...props}
+              format={{ id: 1, name: 'article', slug: 'article' }}
+            />
           </Provider>,
         );
       });
@@ -347,7 +374,7 @@ describe('Posts Create Form component', () => {
       setTimeout(() => {
         expect(addTemplate).toHaveBeenCalledTimes(1);
         expect(addTemplate).toHaveBeenCalledWith({
-          post_id: 1, 
+          post_id: 1,
         });
         expect(push).toHaveBeenCalledWith('/posts');
         done();
@@ -396,7 +423,12 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']} data={data2} onCreate={props.onCreate} format={ {id: 1, name: 'article', slug: 'article'} } />
+            <PostForm
+              actions={['publish']}
+              data={data2}
+              onCreate={props.onCreate}
+              format={{ id: 1, name: 'article', slug: 'article' }}
+            />
           </Provider>,
         );
       });
@@ -479,7 +511,12 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']} data={data2} onCreate={props.onCreate} format={ {id: 1, name: 'article', slug: 'article'} } />
+            <PostForm
+              actions={['publish']}
+              data={data2}
+              onCreate={props.onCreate}
+              format={{ id: 1, name: 'article', slug: 'article' }}
+            />
           </Provider>,
         );
       });
@@ -533,6 +570,5 @@ describe('Posts Create Form component', () => {
         done();
       }, 0);
     });
-
   });
 });

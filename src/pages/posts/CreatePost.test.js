@@ -32,11 +32,11 @@ jest.mock('../../actions/posts', () => ({
   addPost: jest.fn(),
   publish: jest.fn(),
 }));
-const formats =  {
-  article: {id: 1, name: 'article', slug: 'article'},
-  factcheck: {id: 2, name: 'factcheck', slug: 'fact-check'},
+const formats = {
+  article: { id: 1, name: 'article', slug: 'article' },
+  factcheck: { id: 2, name: 'factcheck', slug: 'fact-check' },
   loading: false,
-}
+};
 describe('Post create component', () => {
   let store;
   let mockedDispatch;
@@ -98,7 +98,7 @@ describe('Post create component', () => {
     },
     sidebar: {
       collapsed: false,
-    }
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -109,7 +109,7 @@ describe('Post create component', () => {
       act(() => {
         tree = shallow(
           <Provider store={store}>
-            <CreatePost formats={formats}/>
+            <CreatePost formats={formats} />
           </Provider>,
         );
       });
@@ -161,8 +161,8 @@ describe('Post create component', () => {
     it('should not display Post form if no article format found', () => {
       const format = {
         loading: false,
-        factcheck: {id: 2, name: 'factcheck', slug: 'fact-check'},
-      }
+        factcheck: { id: 2, name: 'factcheck', slug: 'fact-check' },
+      };
       actions.publish.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });

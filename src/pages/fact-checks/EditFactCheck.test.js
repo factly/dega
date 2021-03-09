@@ -34,9 +34,9 @@ jest.mock('../../actions/posts', () => ({
   publishPost: jest.fn(),
   addTemplate: jest.fn(),
 }));
-const formats =  {
-  article: {id: 1, name: 'article', slug: 'article'},
-  factcheck: {id: 2, name: 'factcheck', slug: 'fact-check'},
+const formats = {
+  article: { id: 1, name: 'article', slug: 'article' },
+  factcheck: { id: 2, name: 'factcheck', slug: 'fact-check' },
   loading: false,
 };
 let state = {
@@ -96,7 +96,7 @@ let state = {
   },
   sidebar: {
     collapsed: false,
-  }
+  },
 };
 
 describe('FactCheck edit component', () => {
@@ -137,12 +137,12 @@ describe('FactCheck edit component', () => {
         },
         sidebar: {
           collapsed: false,
-        }
+        },
       });
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <EditFactCheck formats={formats}  />
+            <EditFactCheck formats={formats} />
           </Provider>,
         );
       });
@@ -216,7 +216,7 @@ describe('FactCheck edit component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditFactCheck formats={formats}  />
+            <EditFactCheck formats={formats} />
           </Provider>,
         );
       });
@@ -255,7 +255,7 @@ describe('FactCheck edit component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditFactCheck formats={formats}  />
+            <EditFactCheck formats={formats} />
           </Provider>,
         );
       });

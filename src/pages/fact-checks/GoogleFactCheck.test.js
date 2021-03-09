@@ -31,7 +31,8 @@ let state = {
                 },
                 url:
                   'https://www.boomlive.in/world/video-from-saudi-arabia-shared-as-russian-doctors-celebrating-covid-19-vaccine-9654',
-                title: 'Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine',
+                title:
+                  'Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine',
                 reviewDate: '2020-09-08T02:48:10Z',
                 textualRating: 'False',
                 languageCode: 'en',
@@ -39,7 +40,8 @@ let state = {
             ],
           },
           {
-            text: 'Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel',
+            text:
+              'Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel',
             claimant: 'social media users',
             claimDate: '2021-02-21T00:00:00Z',
             claimReview: [
@@ -56,16 +58,16 @@ let state = {
                 languageCode: 'en',
               },
             ],
-          }, 
-        ],  
+          },
+        ],
         query: {
           page: 1,
           query: 'factcheck',
         },
         total: 2,
-      }
+      },
     ],
-    loading:  false,
+    loading: false,
   },
 };
 jest.mock('react-redux', () => ({
@@ -117,7 +119,7 @@ describe('GoogleFactCheck component', () => {
   describe('component testing', () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      mockedDispatch = jest.fn(() => new Promise((resolve)=> resolve(true)));
+      mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should change the page', () => {
@@ -156,8 +158,8 @@ describe('GoogleFactCheck component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 'en'} });
-       
+          .onChange({ target: { value: 'en' } });
+
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
@@ -188,8 +190,8 @@ describe('GoogleFactCheck component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 'all'} });
-       
+          .onChange({ target: { value: 'all' } });
+
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });

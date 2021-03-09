@@ -37,7 +37,7 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         created_at: '2020-07-17T10:14:44.251814Z',
         updated_at: '2020-07-17T10:14:44.251814Z',
@@ -69,7 +69,11 @@ let state = {
         id: 1,
         name: 'TOI',
         slug: 'toi',
-        description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
+        description: {
+          time: 1613556798273,
+          blocks: [{ type: 'header', data: { text: 'Description', level: 2 } }],
+          version: '2.19.0',
+        },
         tag_line: 'tag line',
         claimant_date: '2017-12-12',
       },
@@ -83,7 +87,11 @@ let state = {
         id: 1,
         name: 'True',
         slug: 'true',
-        description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+        description: {
+          time: 1613559903378,
+          blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+          version: '2.19.0',
+        },
         numeric_value: 5,
       },
     },
