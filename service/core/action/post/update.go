@@ -250,7 +250,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		// delete post claims
 		if len(postClaimIDs) > 0 {
-			err = tx.Where(postClaimIDs).Delete(factCheckModel.PostClaim{}).Error
+			err = tx.Where(&postClaimIDs).Delete(&factCheckModel.PostClaim{}).Error
 			if err != nil {
 				tx.Rollback()
 				loggerx.Error(err)
@@ -309,7 +309,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// delete post authors
 	if len(postAuthorIDs) > 0 {
-		err = tx.Where(postAuthorIDs).Delete(model.PostAuthor{}).Error
+		err = tx.Where(&postAuthorIDs).Delete(&model.PostAuthor{}).Error
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -385,10 +385,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	tx.Commit()
 
-	if err = util.NC.Publish("post.updated", result); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if util.CheckNats() {
+		if err = util.NC.Publish("post.updated", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

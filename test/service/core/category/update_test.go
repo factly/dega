@@ -11,7 +11,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -29,10 +28,6 @@ func TestCategoryUpdate(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	s := test.RunDefaultNATSServer()
-	defer s.Shutdown()
-	util.ConnectNats()
 
 	t.Run("invalid category id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
@@ -132,7 +127,7 @@ func TestCategoryUpdate(t *testing.T) {
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(Data["is_featured"], 1).
+			WithArgs(test.AnyTime{}, Data["is_featured"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
@@ -204,7 +199,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(Data["is_featured"], 1).
+			WithArgs(test.AnyTime{}, Data["is_featured"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(`UPDATE \"categories\"`).
@@ -243,7 +238,7 @@ func TestCategoryUpdate(t *testing.T) {
 
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(Data["is_featured"], 1).
+			WithArgs(test.AnyTime{}, Data["is_featured"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		medium.SelectWithSpace(mock)

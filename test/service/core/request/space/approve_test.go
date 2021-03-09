@@ -62,12 +62,13 @@ func TestSpaceRequestApprove(t *testing.T) {
 		space.SelectQuery(mock, 1)
 
 		mock.ExpectBegin()
+
 		mock.ExpectExec(`UPDATE \"space_permissions\"`).
-			WithArgs(Data["fact_check"], 1).
+			WithArgs(test.AnyTime{}, Data["fact_check"], Data["podcast"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(`UPDATE \"space_permissions\"`).
-			WithArgs(test.AnyTime{}, 1, Data["fact_check"], Data["space_id"], Data["media"], Data["posts"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["fact_check"], Data["space_id"], Data["media"], Data["posts"], Data["podcast"], Data["episodes"], 1).
 			WillReturnResult(driver.ResultNoRows)
 		space.SelectQuery(mock)
 
@@ -95,7 +96,7 @@ func TestSpaceRequestApprove(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "space_permissions"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"], Data["media"], Data["posts"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["fact_check"], Data["space_id"], Data["media"], Data["posts"], Data["podcast"], Data["episodes"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

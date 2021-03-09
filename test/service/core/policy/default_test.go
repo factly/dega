@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/factly/dega-server/service/core/action/policy"
-	"github.com/factly/dega-server/util"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -27,10 +26,6 @@ func TestCreateDefaultPolicy(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	policy.DataFile = "../../../../data/formats.json"
-
-	s := test.RunDefaultNATSServer()
-	defer s.Shutdown()
-	util.ConnectNats()
 
 	// Create a policy
 	t.Run("create default policies", func(t *testing.T) {

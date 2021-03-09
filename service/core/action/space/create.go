@@ -142,6 +142,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 				SpaceID:   result.ID,
 				Media:     -1,
 				Posts:     -1,
+				Podcast:   true,
+				Episodes:  -1,
 				FactCheck: true,
 			}
 		} else {
@@ -149,6 +151,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 				SpaceID:   result.ID,
 				Media:     viper.GetInt64("default_number_of_media"),
 				Posts:     viper.GetInt64("default_number_of_posts"),
+				Episodes:  viper.GetInt64("default_number_of_episodes"),
+				Podcast:   false,
 				FactCheck: false,
 			}
 		}
@@ -185,10 +189,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	if err = util.NC.Publish("space.created", result); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if util.CheckNats() {
+		if err = util.NC.Publish("space.created", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)

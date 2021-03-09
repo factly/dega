@@ -84,12 +84,16 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	tx.Model(&result).Select("FactCheck").Updates(model.SpacePermission{FactCheck: permission.FactCheck})
+	tx.Model(&result).Select("FactCheck", "Podcast").Updates(model.SpacePermission{
+		FactCheck: permission.FactCheck,
+		Podcast:   permission.Podcast,
+	})
 
 	err = tx.Model(&result).Updates(&model.SpacePermission{
-		Base:  config.Base{UpdatedByID: uint(uID)},
-		Posts: permission.Posts,
-		Media: permission.Media,
+		Base:     config.Base{UpdatedByID: uint(uID)},
+		Posts:    permission.Posts,
+		Media:    permission.Media,
+		Episodes: permission.Episodes,
 	}).First(&result).Error
 
 	if err != nil {

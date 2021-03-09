@@ -11,7 +11,6 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/tag"
-	"github.com/factly/dega-server/util"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -26,10 +25,6 @@ func TestPostDelete(t *testing.T) {
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
-
-	s := test.RunDefaultNATSServer()
-	defer s.Shutdown()
-	util.ConnectNats()
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
