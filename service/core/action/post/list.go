@@ -106,7 +106,17 @@ func list(w http.ResponseWriter, r *http.Request) {
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
+	var statusTemplate bool = false
+	for _, status := range queryMap["status"] {
+		if status == "template" {
+			statusTemplate = true
+			break
+		}
+	}
 	if len(filteredPostIDs) > 0 {
+		if !statusTemplate {
+			tx.Where("status != ?", "template")
+		}
 		err = tx.Where(filteredPostIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 	} else {
 		err = tx.Where("status != ?", "template").Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
