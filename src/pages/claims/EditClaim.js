@@ -25,11 +25,11 @@ function EditClaim() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  if (loading) return <Skeleton />
-  
+  if (loading) return <Skeleton />;
+
   if (!claim) {
-    return <RecordNotFound />
-  }; 
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updateClaim({ ...claim, ...values })).then(() => history.push('/claims'));

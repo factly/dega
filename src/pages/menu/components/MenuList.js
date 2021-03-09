@@ -5,7 +5,7 @@ import deepEqual from 'deep-equal';
 import { Space, Button, Popconfirm, Table } from 'antd';
 import { Link } from 'react-router-dom';
 
-function MenuList () {
+function MenuList() {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -15,7 +15,7 @@ function MenuList () {
     const node = state.menu.req.find((item) => {
       return deepEqual(item.query, filters);
     });
-    if (node) 
+    if (node)
       return {
         menus: node.data.map((element) => state.menu.details[element]),
         total: node.total,
@@ -24,7 +24,6 @@ function MenuList () {
     return { menus: [], total: 0, loading: state.menu.loading };
   });
   React.useEffect(() => {
-    
     fetchMenus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
@@ -34,33 +33,33 @@ function MenuList () {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key:'name'},
-    { title: 'Action',
+    { title: 'Name', dataIndex: 'name', key: 'name' },
+    {
+      title: 'Action',
       dataIndex: 'operation',
       render: (_, record) => {
         return (
           <span>
-            <Link 
+            <Link
               className="andt-dropdown-link"
               style={{
                 marginRight: 8,
               }}
               to={`/menu/${record.id}/edit`}
             >
-              <Button>
-                Edit
-              </Button>
+              <Button>Edit</Button>
             </Link>
-            <Popconfirm title="Sure to delete?"
-              onConfirm={() => dispatch(deleteMenu(menus[0].id)).then(() => {
-                fetchMenus();
-                window.location.reload();
-              })}
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() =>
+                dispatch(deleteMenu(menus[0].id)).then(() => {
+                  fetchMenus();
+                  window.location.reload();
+                })
+              }
             >
-              <Button>
-                Delete
-              </Button>
-          </Popconfirm>   
+              <Button>Delete</Button>
+            </Popconfirm>
           </span>
         );
       },

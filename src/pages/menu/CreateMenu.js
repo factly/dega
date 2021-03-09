@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addMenu } from '../../actions/menu';
 
-function CreateMenu () {
+function CreateMenu() {
   const history = useHistory();
   const dispatch = useDispatch();
   const onCreate = (values) => {
@@ -12,9 +12,9 @@ function CreateMenu () {
   };
   return (
     <div>
-    <MenuForm onCreate={onCreate} />
+      <MenuForm onCreate={onCreate} />
     </div>
-  )
+  );
 }
 
 export default CreateMenu;

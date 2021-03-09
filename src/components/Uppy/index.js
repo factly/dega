@@ -12,13 +12,13 @@ import '@uppy/url/dist/style.css';
 import '@uppy/image-editor/dist/style.css';
 import { checker, maker } from '../../utils/sluger';
 
-function UppyUploader({ onUpload }) {
+function UppyUploader({ onUpload, allowedFileTypes = ['image/*'] }) {
   const space_slug = useSelector((state) => state.spaces.details[state.spaces.selected].slug);
   const uppy = Uppy({
     id: 'uppy-media',
     meta: { type: 'avatar' },
     restrictions: {
-      allowedFileTypes: ['image/*'],
+      allowedFileTypes: allowedFileTypes,
     },
     autoProceed: false,
     onBeforeUpload: (files) => {

@@ -123,4 +123,3 @@ export const addMenusRequest = (data) => ({
 export const resetMenus = () => ({
   type: RESET_MENUS,
 });
-

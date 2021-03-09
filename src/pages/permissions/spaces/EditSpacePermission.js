@@ -24,11 +24,11 @@ function EditSpacePermission() {
     dispatch(getSpaces());
   }, [dispatch, oid, pid]);
 
-  if (loading) return <Skeleton />
-  
+  if (loading) return <Skeleton />;
+
   if (!space) {
-    return <RecordNotFound />
-  }; 
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updateSpacePermission({ ...space.permission, ...values })).then(() =>

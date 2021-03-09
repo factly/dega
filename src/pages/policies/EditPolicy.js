@@ -39,11 +39,11 @@ function EditPolicy() {
     dispatch(getPolicy(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />
-  
+  if (loading) return <Skeleton />;
+
   if (!policy) {
-    return <RecordNotFound />
-  }; 
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updatePolicy({ ...policy, ...values })).then(() => history.push('/policies'));

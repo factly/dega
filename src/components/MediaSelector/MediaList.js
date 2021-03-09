@@ -40,9 +40,7 @@ function MediaList({ onSelect, selected, onUnselect }) {
     <Space direction={'vertical'}>
       <Input
         placeholder="Search Media"
-        onChange={(e) =>
-          setFilters({ ...filters, q: e.target.value })
-        }
+        onChange={(e) => setFilters({ ...filters, q: e.target.value })}
       />
       <List
         grid={{

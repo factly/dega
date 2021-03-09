@@ -7,7 +7,7 @@ const layout = {
     span: 10,
   },
   wrapperCol: {
-    span: 14,
+    span: 8,
   },
 };
 const tailLayout = {
@@ -63,6 +63,9 @@ const PermissionForm = ({ onCreate, data = {} }) => {
         <InputNumber min={-1} />
       </Form.Item>
       <Form.Item label="Fact Check" name="fact_check" valuePropName="checked">
+        <Switch />
+      </Form.Item>
+      <Form.Item label="Podcast" name="podcast" valuePropName="checked">
         <Switch />
       </Form.Item>
       <Form.Item {...tailLayout}>

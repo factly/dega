@@ -23,11 +23,11 @@ function EditTag() {
     dispatch(getTag(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />
-  
+  if (loading) return <Skeleton />;
+
   if (!tag) {
-    return <RecordNotFound />
-  }; 
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updateTag({ ...tag, ...values }));

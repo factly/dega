@@ -23,12 +23,11 @@ function EditFormat() {
     dispatch(getFormat(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />
-  
-  if (!format) {
-    return <RecordNotFound />
-  }; 
+  if (loading) return <Skeleton />;
 
+  if (!format) {
+    return <RecordNotFound />;
+  }
 
   const onUpdate = (values) => {
     dispatch(updateFormat({ ...format, ...values }));

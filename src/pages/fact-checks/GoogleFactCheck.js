@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getGoogleFactChecks } from '../../actions/googleFactChecks';
 import { Form, Input, Select, Button, List, Typography, Space } from 'antd';
 import deepEqual from 'deep-equal';
-import { languageCode }  from '../fact-checks/LanguageCode';
+import { languageCode } from '../fact-checks/LanguageCode';
 
 function GoogleFactCheck() {
   const dispatch = useDispatch();
@@ -72,7 +72,11 @@ function GoogleFactCheck() {
         <Form.Item name="language" label="language" style={{ width: '25%' }}>
           <Select defaultValue={'all'}>
             {langCode.map((e, key) => {
-              return <Option key={key} value={e.code}>{e.language}</Option>
+              return (
+                <Option key={key} value={e.code}>
+                  {e.language}
+                </Option>
+              );
             })}
           </Select>
         </Form.Item>

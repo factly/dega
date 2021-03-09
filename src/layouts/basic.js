@@ -22,7 +22,7 @@ function BasicLayout(props) {
     if (selected > 0) {
       const space = state.spaces.details[selected];
 
-      const applications = orgs.find((org) => org.id === space.id)?.applications || [];
+      const applications = orgs.find((org) => org.spaces.includes(space.id))?.applications || [];
 
       return {
         applications: applications,
@@ -35,7 +35,9 @@ function BasicLayout(props) {
     return { orgs: orgs, loading: loading, permission: [], selected: selected, applications: [] };
   });
 
-  const { type, message, description } = useSelector((state) => state.notifications);
+  const { type, message, description, time, redirect } = useSelector((state) => {
+    return { ...state.notifications, redirect: state.redirect };
+  });
 
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
@@ -55,7 +57,14 @@ function BasicLayout(props) {
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [description]);
+  }, [time, description]);
+
+  React.useEffect(() => {
+    if (redirect?.code === 307) {
+      window.location.href = window.REACT_APP_KAVACH_PUBLIC_URL;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [redirect]);
 
   // React.useEffect(() => {
   //   if (orgs.length > 0 && selected === 0) history.push('/spaces/create');
