@@ -1,39 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Posts List component snapshot testing should match skeleton while loading 1`] = `
-<ContextProvider
-  value={
+<Provider
+  store={
     Object {
-      "store": Object {
-        "clearActions": [Function],
-        "dispatch": [Function],
-        "getActions": [Function],
-        "getState": [Function],
-        "replaceReducer": [Function],
-        "subscribe": [Function],
-      },
-      "subscription": Subscription {
-        "handleChangeWrapper": [Function],
-        "listeners": Object {
-          "notify": [Function],
-        },
-        "onStateChange": [Function],
-        "parentSub": undefined,
-        "store": Object {
-          "clearActions": [Function],
-          "dispatch": [Function],
-          "getActions": [Function],
-          "getState": [Function],
-          "replaceReducer": [Function],
-          "subscribe": [Function],
-        },
-        "unsubscribe": null,
-      },
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
     }
   }
 >
-  <EditPost />
-</ContextProvider>
+  <EditPost
+    formats={
+      Object {
+        "article": Object {
+          "id": 1,
+          "name": "article",
+          "slug": "article",
+        },
+        "factcheck": Object {
+          "id": 2,
+          "name": "factcheck",
+          "slug": "fact-check",
+        },
+        "loading": false,
+      }
+    }
+  >
+    <Skeleton
+      avatar={false}
+      paragraph={true}
+      title={true}
+    >
+      <div
+        className="ant-skeleton"
+      >
+        <div
+          className="ant-skeleton-content"
+        >
+          <Title
+            prefixCls="ant-skeleton-title"
+            width="38%"
+          >
+            <h3
+              className="ant-skeleton-title"
+              style={
+                Object {
+                  "width": "38%",
+                }
+              }
+            />
+          </Title>
+          <Paragraph
+            prefixCls="ant-skeleton-paragraph"
+            rows={3}
+            width="61%"
+          >
+            <ul
+              className="ant-skeleton-paragraph"
+            >
+              <li
+                key="0"
+                style={
+                  Object {
+                    "width": undefined,
+                  }
+                }
+              />
+              <li
+                key="1"
+                style={
+                  Object {
+                    "width": undefined,
+                  }
+                }
+              />
+              <li
+                key="2"
+                style={
+                  Object {
+                    "width": "61%",
+                  }
+                }
+              />
+            </ul>
+          </Paragraph>
+        </div>
+      </div>
+    </Skeleton>
+  </EditPost>
+</Provider>
 `;
 
 exports[`Posts List component snapshot testing should render the component 1`] = `
@@ -68,6 +127,22 @@ exports[`Posts List component snapshot testing should render the component 1`] =
     }
   }
 >
-  <EditPost />
+  <EditPost
+    formats={
+      Object {
+        "article": Object {
+          "id": 1,
+          "name": "article",
+          "slug": "article",
+        },
+        "factcheck": Object {
+          "id": 2,
+          "name": "factcheck",
+          "slug": "fact-check",
+        },
+        "loading": false,
+      }
+    }
+  />
 </ContextProvider>
 `;
