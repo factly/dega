@@ -274,7 +274,7 @@ exports[`Claims Create Form component snapshot testing should match component in
         }
         wrapperCol={
           Object {
-            "span": 16,
+            "span": 6,
           }
         }
       >
@@ -555,10 +555,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -813,10 +813,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -1047,10 +1047,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -1920,10 +1920,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -3133,10 +3133,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -4100,10 +4100,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -5358,10 +5358,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                               >
                                 <Col
                                   className="ant-form-item-control"
-                                  span={16}
+                                  span={6}
                                 >
                                   <div
-                                    className="ant-col ant-col-16 ant-form-item-control"
+                                    className="ant-col ant-col-6 ant-form-item-control"
                                     style={Object {}}
                                   >
                                     <div
@@ -5558,10 +5558,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={6}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-6 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -5656,10 +5656,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                     >
                       <Col
                         className="ant-form-item-control"
-                        span={16}
+                        span={6}
                       >
                         <div
-                          className="ant-col ant-col-16 ant-form-item-control"
+                          className="ant-col ant-col-6 ant-form-item-control"
                           style={Object {}}
                         >
                           <div
@@ -6133,7 +6133,7 @@ exports[`Claims Create Form component snapshot testing should match component in
         }
         wrapperCol={
           Object {
-            "span": 16,
+            "span": 6,
           }
         }
       >
@@ -6414,10 +6414,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -6672,10 +6672,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -6906,10 +6906,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -7785,10 +7785,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -9004,10 +9004,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -9971,10 +9971,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -11229,10 +11229,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                               >
                                 <Col
                                   className="ant-form-item-control"
-                                  span={16}
+                                  span={6}
                                 >
                                   <div
-                                    className="ant-col ant-col-16 ant-form-item-control"
+                                    className="ant-col ant-col-6 ant-form-item-control"
                                     style={Object {}}
                                   >
                                     <div
@@ -11429,10 +11429,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={6}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-6 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -11527,10 +11527,10 @@ exports[`Claims Create Form component snapshot testing should match component in
                     >
                       <Col
                         className="ant-form-item-control"
-                        span={16}
+                        span={6}
                       >
                         <div
-                          className="ant-col ant-col-16 ant-form-item-control"
+                          className="ant-col ant-col-6 ant-form-item-control"
                           style={Object {}}
                         >
                           <div
@@ -11930,7 +11930,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
         }
         wrapperCol={
           Object {
-            "span": 16,
+            "span": 6,
           }
         }
       >
@@ -12211,10 +12211,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -12469,10 +12469,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -12703,10 +12703,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -13576,10 +13576,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -14789,10 +14789,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -15756,10 +15756,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -17014,10 +17014,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                               >
                                 <Col
                                   className="ant-form-item-control"
-                                  span={16}
+                                  span={6}
                                 >
                                   <div
-                                    className="ant-col ant-col-16 ant-form-item-control"
+                                    className="ant-col ant-col-6 ant-form-item-control"
                                     style={Object {}}
                                   >
                                     <div
@@ -17214,10 +17214,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={6}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-6 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -17312,10 +17312,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                     >
                       <Col
                         className="ant-form-item-control"
-                        span={16}
+                        span={6}
                       >
                         <div
-                          className="ant-col ant-col-16 ant-form-item-control"
+                          className="ant-col ant-col-6 ant-form-item-control"
                           style={Object {}}
                         >
                           <div
@@ -17790,7 +17790,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
         }
         wrapperCol={
           Object {
-            "span": 16,
+            "span": 6,
           }
         }
       >
@@ -18071,10 +18071,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -18329,10 +18329,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -18563,10 +18563,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -19442,10 +19442,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -20661,10 +20661,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -21628,10 +21628,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -22886,10 +22886,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                               >
                                 <Col
                                   className="ant-form-item-control"
-                                  span={16}
+                                  span={6}
                                 >
                                   <div
-                                    className="ant-col ant-col-16 ant-form-item-control"
+                                    className="ant-col ant-col-6 ant-form-item-control"
                                     style={Object {}}
                                   >
                                     <div
@@ -23086,10 +23086,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={6}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-6 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -23184,10 +23184,10 @@ exports[`Claims Create Form component snapshot testing should match component wi
                     >
                       <Col
                         className="ant-form-item-control"
-                        span={16}
+                        span={6}
                       >
                         <div
-                          className="ant-col ant-col-16 ant-form-item-control"
+                          className="ant-col ant-col-6 ant-form-item-control"
                           style={Object {}}
                         >
                           <div
@@ -23520,7 +23520,7 @@ exports[`Claims Create Form component snapshot testing should render the compone
         }
         wrapperCol={
           Object {
-            "span": 16,
+            "span": 6,
           }
         }
       >
@@ -23769,10 +23769,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -24024,10 +24024,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -24255,10 +24255,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -25117,10 +25117,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -26275,10 +26275,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -27159,10 +27159,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                           >
                             <Col
                               className="ant-form-item-control"
-                              span={16}
+                              span={6}
                             >
                               <div
-                                className="ant-col ant-col-16 ant-form-item-control"
+                                className="ant-col ant-col-6 ant-form-item-control"
                                 style={Object {}}
                               >
                                 <div
@@ -28330,10 +28330,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                               >
                                 <Col
                                   className="ant-form-item-control"
-                                  span={16}
+                                  span={6}
                                 >
                                   <div
-                                    className="ant-col ant-col-16 ant-form-item-control"
+                                    className="ant-col ant-col-6 ant-form-item-control"
                                     style={Object {}}
                                   >
                                     <div
@@ -28530,10 +28530,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={6}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-6 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -28628,10 +28628,10 @@ exports[`Claims Create Form component snapshot testing should render the compone
                     >
                       <Col
                         className="ant-form-item-control"
-                        span={16}
+                        span={6}
                       >
                         <div
-                          className="ant-col ant-col-16 ant-form-item-control"
+                          className="ant-col ant-col-6 ant-form-item-control"
                           style={Object {}}
                         >
                           <div

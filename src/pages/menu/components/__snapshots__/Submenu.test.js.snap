@@ -282,7 +282,7 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                             <span
                                               key=".1"
                                             >
-                                                Add submenu
+                                               Add submenu
                                             </span>
                                           </button>
                                         </Wave>

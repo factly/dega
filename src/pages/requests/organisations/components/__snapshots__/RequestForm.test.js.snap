@@ -64,7 +64,7 @@ exports[`Organisation Request Form component snapshot testing should match compo
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -222,10 +222,10 @@ exports[`Organisation Request Form component snapshot testing should match compo
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1114,10 +1114,10 @@ exports[`Organisation Request Form component snapshot testing should match compo
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1512,10 +1512,10 @@ exports[`Organisation Request Form component snapshot testing should match compo
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1864,7 +1864,7 @@ exports[`Organisation Request Form component snapshot testing should match compo
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -2016,10 +2016,10 @@ exports[`Organisation Request Form component snapshot testing should match compo
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2784,10 +2784,10 @@ exports[`Organisation Request Form component snapshot testing should match compo
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3178,10 +3178,10 @@ exports[`Organisation Request Form component snapshot testing should match compo
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3525,7 +3525,7 @@ exports[`Organisation Request Form component snapshot testing should render the 
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -3677,10 +3677,10 @@ exports[`Organisation Request Form component snapshot testing should render the 
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -4445,10 +4445,10 @@ exports[`Organisation Request Form component snapshot testing should render the 
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -4839,10 +4839,10 @@ exports[`Organisation Request Form component snapshot testing should render the 
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div

@@ -52,7 +52,7 @@ exports[`Categories create component snapshot testing should render the componen
         onFinish={[Function]}
         wrapperCol={
           Object {
-            "span": 16,
+            "span": 8,
           }
         }
       >
@@ -284,10 +284,10 @@ exports[`Categories create component snapshot testing should render the componen
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -535,10 +535,10 @@ exports[`Categories create component snapshot testing should render the componen
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -726,10 +726,10 @@ exports[`Categories create component snapshot testing should render the componen
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -1117,10 +1117,10 @@ exports[`Categories create component snapshot testing should render the componen
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -1305,10 +1305,10 @@ exports[`Categories create component snapshot testing should render the componen
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -1474,10 +1474,10 @@ exports[`Categories create component snapshot testing should render the componen
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div

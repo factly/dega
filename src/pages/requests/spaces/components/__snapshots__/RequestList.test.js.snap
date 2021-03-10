@@ -52,9 +52,19 @@ exports[`Space Request List component snapshot testing should match the componen
                 "title": "Posts",
               },
               Object {
+                "dataIndex": "episodes",
+                "render": [Function],
+                "title": "Episodes",
+              },
+              Object {
                 "dataIndex": "fact_check",
                 "render": [Function],
                 "title": "Fact Check",
+              },
+              Object {
+                "dataIndex": "podcast",
+                "render": [Function],
+                "title": "Podcast",
               },
               Object {
                 "dataIndex": "status",
@@ -158,9 +168,19 @@ exports[`Space Request List component snapshot testing should match the componen
                           "title": "Posts",
                         },
                         Object {
+                          "dataIndex": "episodes",
+                          "render": [Function],
+                          "title": "Episodes",
+                        },
+                        Object {
                           "dataIndex": "fact_check",
                           "render": [Function],
                           "title": "Fact Check",
+                        },
+                        Object {
+                          "dataIndex": "podcast",
+                          "render": [Function],
+                          "title": "Podcast",
                         },
                         Object {
                           "dataIndex": "status",
@@ -264,7 +284,17 @@ exports[`Space Request List component snapshot testing should match the componen
                                   <th
                                     class="ant-table-cell"
                                   >
+                                    Episodes
+                                  </th>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
                                     Fact Check
+                                  </th>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
+                                    Podcast
                                   </th>
                                   <th
                                     class="ant-table-cell"
@@ -303,7 +333,21 @@ exports[`Space Request List component snapshot testing should match the componen
                                     class="ant-table-cell"
                                   >
                                     <p>
+                                      Unlimited
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
                                       Enabled
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Disabled
                                     </p>
                                   </td>
                                   <td
@@ -355,6 +399,20 @@ exports[`Space Request List component snapshot testing should match the componen
                                   >
                                     <p>
                                       5
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Unlimited
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Disabled
                                     </p>
                                   </td>
                                   <td
@@ -439,9 +497,19 @@ exports[`Space Request List component snapshot testing should match the componen
                                 "title": "Posts",
                               },
                               Object {
+                                "dataIndex": "episodes",
+                                "render": [Function],
+                                "title": "Episodes",
+                              },
+                              Object {
                                 "dataIndex": "fact_check",
                                 "render": [Function],
                                 "title": "Fact Check",
+                              },
+                              Object {
+                                "dataIndex": "podcast",
+                                "render": [Function],
+                                "title": "Podcast",
                               },
                               Object {
                                 "dataIndex": "status",
@@ -536,7 +604,17 @@ exports[`Space Request List component snapshot testing should match the componen
                                         <th
                                           class="ant-table-cell"
                                         >
+                                          Episodes
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
                                           Fact Check
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
+                                          Podcast
                                         </th>
                                         <th
                                           class="ant-table-cell"
@@ -575,7 +653,21 @@ exports[`Space Request List component snapshot testing should match the componen
                                           class="ant-table-cell"
                                         >
                                           <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
                                             Enabled
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                         <td
@@ -627,6 +719,20 @@ exports[`Space Request List component snapshot testing should match the componen
                                         >
                                           <p>
                                             5
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                         <td
@@ -692,8 +798,12 @@ exports[`Space Request List component snapshot testing should match the componen
                                 0,
                                 0,
                                 0,
+                                0,
+                                0,
                               ],
                               "right": Array [
+                                0,
+                                0,
                                 0,
                                 0,
                                 0,
@@ -728,6 +838,8 @@ exports[`Space Request List component snapshot testing should match the componen
                                     undefined,
                                     undefined,
                                     undefined,
+                                    undefined,
+                                    undefined,
                                   ]
                                 }
                                 columns={
@@ -745,10 +857,22 @@ exports[`Space Request List component snapshot testing should match the componen
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -775,9 +899,11 @@ exports[`Space Request List component snapshot testing should match the componen
                                     undefined,
                                     undefined,
                                     undefined,
+                                    undefined,
+                                    undefined,
                                   ]
                                 }
-                                columCount={5}
+                                columCount={7}
                                 columns={
                                   Array [
                                     Object {
@@ -791,9 +917,19 @@ exports[`Space Request List component snapshot testing should match the componen
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -822,10 +958,22 @@ exports[`Space Request List component snapshot testing should match the componen
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -849,8 +997,12 @@ exports[`Space Request List component snapshot testing should match the componen
                                       0,
                                       0,
                                       0,
+                                      0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
+                                      0,
                                       0,
                                       0,
                                       0,
@@ -896,11 +1048,25 @@ exports[`Space Request List component snapshot testing should match the componen
                                           "rowSpan": 1,
                                         },
                                         Object {
-                                          "children": "Fact Check",
+                                          "children": "Episodes",
                                           "className": "",
                                           "colEnd": 2,
                                           "colSpan": 1,
                                           "colStart": 2,
+                                          "column": Object {
+                                            "dataIndex": "episodes",
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          "key": undefined,
+                                          "rowSpan": 1,
+                                        },
+                                        Object {
+                                          "children": "Fact Check",
+                                          "className": "",
+                                          "colEnd": 3,
+                                          "colSpan": 1,
+                                          "colStart": 3,
                                           "column": Object {
                                             "dataIndex": "fact_check",
                                             "render": [Function],
@@ -910,11 +1076,25 @@ exports[`Space Request List component snapshot testing should match the componen
                                           "rowSpan": 1,
                                         },
                                         Object {
+                                          "children": "Podcast",
+                                          "className": "",
+                                          "colEnd": 4,
+                                          "colSpan": 1,
+                                          "colStart": 4,
+                                          "column": Object {
+                                            "dataIndex": "podcast",
+                                            "render": [Function],
+                                            "title": "Podcast",
+                                          },
+                                          "key": undefined,
+                                          "rowSpan": 1,
+                                        },
+                                        Object {
                                           "children": "Status",
                                           "className": "",
-                                          "colEnd": 3,
+                                          "colEnd": 5,
                                           "colSpan": 1,
-                                          "colStart": 3,
+                                          "colStart": 5,
                                           "column": Object {
                                             "dataIndex": "status",
                                             "key": "status",
@@ -926,9 +1106,9 @@ exports[`Space Request List component snapshot testing should match the componen
                                         Object {
                                           "children": "Action",
                                           "className": "",
-                                          "colEnd": 4,
+                                          "colEnd": 6,
                                           "colSpan": 1,
-                                          "colStart": 4,
+                                          "colStart": 6,
                                           "column": Object {
                                             "dataIndex": "operation",
                                             "render": [Function],
@@ -954,10 +1134,22 @@ exports[`Space Request List component snapshot testing should match the componen
                                           "title": "Posts",
                                         },
                                         Object {
+                                          "dataIndex": "episodes",
+                                          "fixed": undefined,
+                                          "render": [Function],
+                                          "title": "Episodes",
+                                        },
+                                        Object {
                                           "dataIndex": "fact_check",
                                           "fixed": undefined,
                                           "render": [Function],
                                           "title": "Fact Check",
+                                        },
+                                        Object {
+                                          "dataIndex": "podcast",
+                                          "fixed": undefined,
+                                          "render": [Function],
+                                          "title": "Podcast",
                                         },
                                         Object {
                                           "dataIndex": "status",
@@ -984,8 +1176,12 @@ exports[`Space Request List component snapshot testing should match the componen
                                           0,
                                           0,
                                           0,
+                                          0,
+                                          0,
                                         ],
                                         "right": Array [
+                                          0,
+                                          0,
                                           0,
                                           0,
                                           0,
@@ -1065,6 +1261,37 @@ exports[`Space Request List component snapshot testing should match the componen
                                         colStart={2}
                                         column={
                                           Object {
+                                            "dataIndex": "episodes",
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          }
+                                        }
+                                        component="th"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        rowSpan={1}
+                                        rowType="header"
+                                      >
+                                        <th
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          Episodes
+                                        </th>
+                                      </Cell>
+                                      <Cell
+                                        className=""
+                                        colEnd={3}
+                                        colSpan={1}
+                                        colStart={3}
+                                        column={
+                                          Object {
                                             "dataIndex": "fact_check",
                                             "render": [Function],
                                             "title": "Fact Check",
@@ -1091,9 +1318,40 @@ exports[`Space Request List component snapshot testing should match the componen
                                       </Cell>
                                       <Cell
                                         className=""
-                                        colEnd={3}
+                                        colEnd={4}
                                         colSpan={1}
-                                        colStart={3}
+                                        colStart={4}
+                                        column={
+                                          Object {
+                                            "dataIndex": "podcast",
+                                            "render": [Function],
+                                            "title": "Podcast",
+                                          }
+                                        }
+                                        component="th"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        key="podcast"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        rowSpan={1}
+                                        rowType="header"
+                                      >
+                                        <th
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          Podcast
+                                        </th>
+                                      </Cell>
+                                      <Cell
+                                        className=""
+                                        colEnd={5}
+                                        colSpan={1}
+                                        colStart={5}
                                         column={
                                           Object {
                                             "dataIndex": "status",
@@ -1122,9 +1380,9 @@ exports[`Space Request List component snapshot testing should match the componen
                                       </Cell>
                                       <Cell
                                         className=""
-                                        colEnd={4}
+                                        colEnd={6}
                                         colSpan={1}
-                                        colStart={4}
+                                        colStart={6}
                                         column={
                                           Object {
                                             "dataIndex": "operation",
@@ -1290,6 +1548,41 @@ exports[`Space Request List component snapshot testing should match the componen
                                       </Cell>
                                       <Cell
                                         component="td"
+                                        dataIndex="episodes"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={0}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": true,
+                                            "id": 1,
+                                            "media": -1,
+                                            "posts": -1,
+                                            "space_id": 1,
+                                            "status": "pending",
+                                            "title": "Request 1",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
                                         dataIndex="fact_check"
                                         firstFixLeft={false}
                                         firstFixRight={false}
@@ -1320,6 +1613,41 @@ exports[`Space Request List component snapshot testing should match the componen
                                         >
                                           <p>
                                             Enabled
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
+                                        dataIndex="podcast"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={0}
+                                        key="podcast"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": true,
+                                            "id": 1,
+                                            "media": -1,
+                                            "posts": -1,
+                                            "space_id": 1,
+                                            "status": "pending",
+                                            "title": "Request 1",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                       </Cell>
@@ -2797,11 +3125,81 @@ exports[`Space Request List component snapshot testing should match the componen
                                       </Cell>
                                       <Cell
                                         component="td"
+                                        dataIndex="episodes"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={1}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": false,
+                                            "id": 2,
+                                            "media": 5,
+                                            "posts": 5,
+                                            "space_id": 2,
+                                            "status": "pending",
+                                            "title": "Request 2",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
                                         dataIndex="fact_check"
                                         firstFixLeft={false}
                                         firstFixRight={false}
                                         index={1}
                                         key="fact_check"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": false,
+                                            "id": 2,
+                                            "media": 5,
+                                            "posts": 5,
+                                            "space_id": 2,
+                                            "status": "pending",
+                                            "title": "Request 2",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Disabled
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
+                                        dataIndex="podcast"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={1}
+                                        key="podcast"
                                         lastFixLeft={false}
                                         lastFixRight={false}
                                         prefixCls="ant-table"
@@ -4660,9 +5058,19 @@ exports[`Space Request List component snapshot testing should match the componen
                 "title": "Posts",
               },
               Object {
+                "dataIndex": "episodes",
+                "render": [Function],
+                "title": "Episodes",
+              },
+              Object {
                 "dataIndex": "fact_check",
                 "render": [Function],
                 "title": "Fact Check",
+              },
+              Object {
+                "dataIndex": "podcast",
+                "render": [Function],
+                "title": "Podcast",
               },
               Object {
                 "dataIndex": "status",
@@ -4742,9 +5150,19 @@ exports[`Space Request List component snapshot testing should match the componen
                           "title": "Posts",
                         },
                         Object {
+                          "dataIndex": "episodes",
+                          "render": [Function],
+                          "title": "Episodes",
+                        },
+                        Object {
                           "dataIndex": "fact_check",
                           "render": [Function],
                           "title": "Fact Check",
+                        },
+                        Object {
+                          "dataIndex": "podcast",
+                          "render": [Function],
+                          "title": "Podcast",
                         },
                         Object {
                           "dataIndex": "status",
@@ -4848,7 +5266,17 @@ exports[`Space Request List component snapshot testing should match the componen
                                   <th
                                     class="ant-table-cell"
                                   >
+                                    Episodes
+                                  </th>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
                                     Fact Check
+                                  </th>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
+                                    Podcast
                                   </th>
                                   <th
                                     class="ant-table-cell"
@@ -4887,7 +5315,21 @@ exports[`Space Request List component snapshot testing should match the componen
                                     class="ant-table-cell"
                                   >
                                     <p>
+                                      Unlimited
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
                                       Enabled
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Disabled
                                     </p>
                                   </td>
                                   <td
@@ -4939,6 +5381,20 @@ exports[`Space Request List component snapshot testing should match the componen
                                   >
                                     <p>
                                       5
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Unlimited
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Disabled
                                     </p>
                                   </td>
                                   <td
@@ -5023,9 +5479,19 @@ exports[`Space Request List component snapshot testing should match the componen
                                 "title": "Posts",
                               },
                               Object {
+                                "dataIndex": "episodes",
+                                "render": [Function],
+                                "title": "Episodes",
+                              },
+                              Object {
                                 "dataIndex": "fact_check",
                                 "render": [Function],
                                 "title": "Fact Check",
+                              },
+                              Object {
+                                "dataIndex": "podcast",
+                                "render": [Function],
+                                "title": "Podcast",
                               },
                               Object {
                                 "dataIndex": "status",
@@ -5120,7 +5586,17 @@ exports[`Space Request List component snapshot testing should match the componen
                                         <th
                                           class="ant-table-cell"
                                         >
+                                          Episodes
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
                                           Fact Check
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
+                                          Podcast
                                         </th>
                                         <th
                                           class="ant-table-cell"
@@ -5159,7 +5635,21 @@ exports[`Space Request List component snapshot testing should match the componen
                                           class="ant-table-cell"
                                         >
                                           <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
                                             Enabled
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                         <td
@@ -5211,6 +5701,20 @@ exports[`Space Request List component snapshot testing should match the componen
                                         >
                                           <p>
                                             5
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                         <td
@@ -5276,8 +5780,12 @@ exports[`Space Request List component snapshot testing should match the componen
                                 0,
                                 0,
                                 0,
+                                0,
+                                0,
                               ],
                               "right": Array [
+                                0,
+                                0,
                                 0,
                                 0,
                                 0,
@@ -5312,6 +5820,8 @@ exports[`Space Request List component snapshot testing should match the componen
                                     undefined,
                                     undefined,
                                     undefined,
+                                    undefined,
+                                    undefined,
                                   ]
                                 }
                                 columns={
@@ -5329,10 +5839,22 @@ exports[`Space Request List component snapshot testing should match the componen
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -5359,9 +5881,11 @@ exports[`Space Request List component snapshot testing should match the componen
                                     undefined,
                                     undefined,
                                     undefined,
+                                    undefined,
+                                    undefined,
                                   ]
                                 }
-                                columCount={5}
+                                columCount={7}
                                 columns={
                                   Array [
                                     Object {
@@ -5375,9 +5899,19 @@ exports[`Space Request List component snapshot testing should match the componen
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -5406,10 +5940,22 @@ exports[`Space Request List component snapshot testing should match the componen
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -5433,8 +5979,12 @@ exports[`Space Request List component snapshot testing should match the componen
                                       0,
                                       0,
                                       0,
+                                      0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
+                                      0,
                                       0,
                                       0,
                                       0,
@@ -5480,11 +6030,25 @@ exports[`Space Request List component snapshot testing should match the componen
                                           "rowSpan": 1,
                                         },
                                         Object {
-                                          "children": "Fact Check",
+                                          "children": "Episodes",
                                           "className": "",
                                           "colEnd": 2,
                                           "colSpan": 1,
                                           "colStart": 2,
+                                          "column": Object {
+                                            "dataIndex": "episodes",
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          "key": undefined,
+                                          "rowSpan": 1,
+                                        },
+                                        Object {
+                                          "children": "Fact Check",
+                                          "className": "",
+                                          "colEnd": 3,
+                                          "colSpan": 1,
+                                          "colStart": 3,
                                           "column": Object {
                                             "dataIndex": "fact_check",
                                             "render": [Function],
@@ -5494,11 +6058,25 @@ exports[`Space Request List component snapshot testing should match the componen
                                           "rowSpan": 1,
                                         },
                                         Object {
+                                          "children": "Podcast",
+                                          "className": "",
+                                          "colEnd": 4,
+                                          "colSpan": 1,
+                                          "colStart": 4,
+                                          "column": Object {
+                                            "dataIndex": "podcast",
+                                            "render": [Function],
+                                            "title": "Podcast",
+                                          },
+                                          "key": undefined,
+                                          "rowSpan": 1,
+                                        },
+                                        Object {
                                           "children": "Status",
                                           "className": "",
-                                          "colEnd": 3,
+                                          "colEnd": 5,
                                           "colSpan": 1,
-                                          "colStart": 3,
+                                          "colStart": 5,
                                           "column": Object {
                                             "dataIndex": "status",
                                             "key": "status",
@@ -5510,9 +6088,9 @@ exports[`Space Request List component snapshot testing should match the componen
                                         Object {
                                           "children": "Action",
                                           "className": "",
-                                          "colEnd": 4,
+                                          "colEnd": 6,
                                           "colSpan": 1,
-                                          "colStart": 4,
+                                          "colStart": 6,
                                           "column": Object {
                                             "dataIndex": "operation",
                                             "render": [Function],
@@ -5538,10 +6116,22 @@ exports[`Space Request List component snapshot testing should match the componen
                                           "title": "Posts",
                                         },
                                         Object {
+                                          "dataIndex": "episodes",
+                                          "fixed": undefined,
+                                          "render": [Function],
+                                          "title": "Episodes",
+                                        },
+                                        Object {
                                           "dataIndex": "fact_check",
                                           "fixed": undefined,
                                           "render": [Function],
                                           "title": "Fact Check",
+                                        },
+                                        Object {
+                                          "dataIndex": "podcast",
+                                          "fixed": undefined,
+                                          "render": [Function],
+                                          "title": "Podcast",
                                         },
                                         Object {
                                           "dataIndex": "status",
@@ -5568,8 +6158,12 @@ exports[`Space Request List component snapshot testing should match the componen
                                           0,
                                           0,
                                           0,
+                                          0,
+                                          0,
                                         ],
                                         "right": Array [
+                                          0,
+                                          0,
                                           0,
                                           0,
                                           0,
@@ -5649,6 +6243,37 @@ exports[`Space Request List component snapshot testing should match the componen
                                         colStart={2}
                                         column={
                                           Object {
+                                            "dataIndex": "episodes",
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          }
+                                        }
+                                        component="th"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        rowSpan={1}
+                                        rowType="header"
+                                      >
+                                        <th
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          Episodes
+                                        </th>
+                                      </Cell>
+                                      <Cell
+                                        className=""
+                                        colEnd={3}
+                                        colSpan={1}
+                                        colStart={3}
+                                        column={
+                                          Object {
                                             "dataIndex": "fact_check",
                                             "render": [Function],
                                             "title": "Fact Check",
@@ -5675,9 +6300,40 @@ exports[`Space Request List component snapshot testing should match the componen
                                       </Cell>
                                       <Cell
                                         className=""
-                                        colEnd={3}
+                                        colEnd={4}
                                         colSpan={1}
-                                        colStart={3}
+                                        colStart={4}
+                                        column={
+                                          Object {
+                                            "dataIndex": "podcast",
+                                            "render": [Function],
+                                            "title": "Podcast",
+                                          }
+                                        }
+                                        component="th"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        key="podcast"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        rowSpan={1}
+                                        rowType="header"
+                                      >
+                                        <th
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          Podcast
+                                        </th>
+                                      </Cell>
+                                      <Cell
+                                        className=""
+                                        colEnd={5}
+                                        colSpan={1}
+                                        colStart={5}
                                         column={
                                           Object {
                                             "dataIndex": "status",
@@ -5706,9 +6362,9 @@ exports[`Space Request List component snapshot testing should match the componen
                                       </Cell>
                                       <Cell
                                         className=""
-                                        colEnd={4}
+                                        colEnd={6}
                                         colSpan={1}
-                                        colStart={4}
+                                        colStart={6}
                                         column={
                                           Object {
                                             "dataIndex": "operation",
@@ -5874,6 +6530,41 @@ exports[`Space Request List component snapshot testing should match the componen
                                       </Cell>
                                       <Cell
                                         component="td"
+                                        dataIndex="episodes"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={0}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": true,
+                                            "id": 1,
+                                            "media": -1,
+                                            "posts": -1,
+                                            "space_id": 1,
+                                            "status": "pending",
+                                            "title": "Request 1",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
                                         dataIndex="fact_check"
                                         firstFixLeft={false}
                                         firstFixRight={false}
@@ -5904,6 +6595,41 @@ exports[`Space Request List component snapshot testing should match the componen
                                         >
                                           <p>
                                             Enabled
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
+                                        dataIndex="podcast"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={0}
+                                        key="podcast"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": true,
+                                            "id": 1,
+                                            "media": -1,
+                                            "posts": -1,
+                                            "space_id": 1,
+                                            "status": "pending",
+                                            "title": "Request 1",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                       </Cell>
@@ -7381,11 +8107,81 @@ exports[`Space Request List component snapshot testing should match the componen
                                       </Cell>
                                       <Cell
                                         component="td"
+                                        dataIndex="episodes"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={1}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": false,
+                                            "id": 2,
+                                            "media": 5,
+                                            "posts": 5,
+                                            "space_id": 2,
+                                            "status": "pending",
+                                            "title": "Request 2",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
                                         dataIndex="fact_check"
                                         firstFixLeft={false}
                                         firstFixRight={false}
                                         index={1}
                                         key="fact_check"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": false,
+                                            "id": 2,
+                                            "media": 5,
+                                            "posts": 5,
+                                            "space_id": 2,
+                                            "status": "pending",
+                                            "title": "Request 2",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Disabled
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
+                                        dataIndex="podcast"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={1}
+                                        key="podcast"
                                         lastFixLeft={false}
                                         lastFixRight={false}
                                         prefixCls="ant-table"
@@ -9244,9 +10040,19 @@ exports[`Space Request List component snapshot testing should render the compone
                 "title": "Posts",
               },
               Object {
+                "dataIndex": "episodes",
+                "render": [Function],
+                "title": "Episodes",
+              },
+              Object {
                 "dataIndex": "fact_check",
                 "render": [Function],
                 "title": "Fact Check",
+              },
+              Object {
+                "dataIndex": "podcast",
+                "render": [Function],
+                "title": "Podcast",
               },
               Object {
                 "dataIndex": "status",
@@ -9326,9 +10132,19 @@ exports[`Space Request List component snapshot testing should render the compone
                           "title": "Posts",
                         },
                         Object {
+                          "dataIndex": "episodes",
+                          "render": [Function],
+                          "title": "Episodes",
+                        },
+                        Object {
                           "dataIndex": "fact_check",
                           "render": [Function],
                           "title": "Fact Check",
+                        },
+                        Object {
+                          "dataIndex": "podcast",
+                          "render": [Function],
+                          "title": "Podcast",
                         },
                         Object {
                           "dataIndex": "status",
@@ -9432,7 +10248,17 @@ exports[`Space Request List component snapshot testing should render the compone
                                   <th
                                     class="ant-table-cell"
                                   >
+                                    Episodes
+                                  </th>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
                                     Fact Check
+                                  </th>
+                                  <th
+                                    class="ant-table-cell"
+                                  >
+                                    Podcast
                                   </th>
                                   <th
                                     class="ant-table-cell"
@@ -9471,7 +10297,21 @@ exports[`Space Request List component snapshot testing should render the compone
                                     class="ant-table-cell"
                                   >
                                     <p>
+                                      Unlimited
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
                                       Enabled
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Disabled
                                     </p>
                                   </td>
                                   <td
@@ -9523,6 +10363,20 @@ exports[`Space Request List component snapshot testing should render the compone
                                   >
                                     <p>
                                       5
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Unlimited
+                                    </p>
+                                  </td>
+                                  <td
+                                    class="ant-table-cell"
+                                  >
+                                    <p>
+                                      Disabled
                                     </p>
                                   </td>
                                   <td
@@ -9607,9 +10461,19 @@ exports[`Space Request List component snapshot testing should render the compone
                                 "title": "Posts",
                               },
                               Object {
+                                "dataIndex": "episodes",
+                                "render": [Function],
+                                "title": "Episodes",
+                              },
+                              Object {
                                 "dataIndex": "fact_check",
                                 "render": [Function],
                                 "title": "Fact Check",
+                              },
+                              Object {
+                                "dataIndex": "podcast",
+                                "render": [Function],
+                                "title": "Podcast",
                               },
                               Object {
                                 "dataIndex": "status",
@@ -9704,7 +10568,17 @@ exports[`Space Request List component snapshot testing should render the compone
                                         <th
                                           class="ant-table-cell"
                                         >
+                                          Episodes
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
                                           Fact Check
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
+                                          Podcast
                                         </th>
                                         <th
                                           class="ant-table-cell"
@@ -9743,7 +10617,21 @@ exports[`Space Request List component snapshot testing should render the compone
                                           class="ant-table-cell"
                                         >
                                           <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
                                             Enabled
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                         <td
@@ -9795,6 +10683,20 @@ exports[`Space Request List component snapshot testing should render the compone
                                         >
                                           <p>
                                             5
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                        <td
+                                          class="ant-table-cell"
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                         <td
@@ -9860,8 +10762,12 @@ exports[`Space Request List component snapshot testing should render the compone
                                 0,
                                 0,
                                 0,
+                                0,
+                                0,
                               ],
                               "right": Array [
+                                0,
+                                0,
                                 0,
                                 0,
                                 0,
@@ -9896,6 +10802,8 @@ exports[`Space Request List component snapshot testing should render the compone
                                     undefined,
                                     undefined,
                                     undefined,
+                                    undefined,
+                                    undefined,
                                   ]
                                 }
                                 columns={
@@ -9913,10 +10821,22 @@ exports[`Space Request List component snapshot testing should render the compone
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -9943,9 +10863,11 @@ exports[`Space Request List component snapshot testing should render the compone
                                     undefined,
                                     undefined,
                                     undefined,
+                                    undefined,
+                                    undefined,
                                   ]
                                 }
-                                columCount={5}
+                                columCount={7}
                                 columns={
                                   Array [
                                     Object {
@@ -9959,9 +10881,19 @@ exports[`Space Request List component snapshot testing should render the compone
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -9990,10 +10922,22 @@ exports[`Space Request List component snapshot testing should render the compone
                                       "title": "Posts",
                                     },
                                     Object {
+                                      "dataIndex": "episodes",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
                                       "dataIndex": "fact_check",
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": "podcast",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                     Object {
                                       "dataIndex": "status",
@@ -10017,8 +10961,12 @@ exports[`Space Request List component snapshot testing should render the compone
                                       0,
                                       0,
                                       0,
+                                      0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
+                                      0,
                                       0,
                                       0,
                                       0,
@@ -10064,11 +11012,25 @@ exports[`Space Request List component snapshot testing should render the compone
                                           "rowSpan": 1,
                                         },
                                         Object {
-                                          "children": "Fact Check",
+                                          "children": "Episodes",
                                           "className": "",
                                           "colEnd": 2,
                                           "colSpan": 1,
                                           "colStart": 2,
+                                          "column": Object {
+                                            "dataIndex": "episodes",
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          "key": undefined,
+                                          "rowSpan": 1,
+                                        },
+                                        Object {
+                                          "children": "Fact Check",
+                                          "className": "",
+                                          "colEnd": 3,
+                                          "colSpan": 1,
+                                          "colStart": 3,
                                           "column": Object {
                                             "dataIndex": "fact_check",
                                             "render": [Function],
@@ -10078,11 +11040,25 @@ exports[`Space Request List component snapshot testing should render the compone
                                           "rowSpan": 1,
                                         },
                                         Object {
+                                          "children": "Podcast",
+                                          "className": "",
+                                          "colEnd": 4,
+                                          "colSpan": 1,
+                                          "colStart": 4,
+                                          "column": Object {
+                                            "dataIndex": "podcast",
+                                            "render": [Function],
+                                            "title": "Podcast",
+                                          },
+                                          "key": undefined,
+                                          "rowSpan": 1,
+                                        },
+                                        Object {
                                           "children": "Status",
                                           "className": "",
-                                          "colEnd": 3,
+                                          "colEnd": 5,
                                           "colSpan": 1,
-                                          "colStart": 3,
+                                          "colStart": 5,
                                           "column": Object {
                                             "dataIndex": "status",
                                             "key": "status",
@@ -10094,9 +11070,9 @@ exports[`Space Request List component snapshot testing should render the compone
                                         Object {
                                           "children": "Action",
                                           "className": "",
-                                          "colEnd": 4,
+                                          "colEnd": 6,
                                           "colSpan": 1,
-                                          "colStart": 4,
+                                          "colStart": 6,
                                           "column": Object {
                                             "dataIndex": "operation",
                                             "render": [Function],
@@ -10122,10 +11098,22 @@ exports[`Space Request List component snapshot testing should render the compone
                                           "title": "Posts",
                                         },
                                         Object {
+                                          "dataIndex": "episodes",
+                                          "fixed": undefined,
+                                          "render": [Function],
+                                          "title": "Episodes",
+                                        },
+                                        Object {
                                           "dataIndex": "fact_check",
                                           "fixed": undefined,
                                           "render": [Function],
                                           "title": "Fact Check",
+                                        },
+                                        Object {
+                                          "dataIndex": "podcast",
+                                          "fixed": undefined,
+                                          "render": [Function],
+                                          "title": "Podcast",
                                         },
                                         Object {
                                           "dataIndex": "status",
@@ -10152,8 +11140,12 @@ exports[`Space Request List component snapshot testing should render the compone
                                           0,
                                           0,
                                           0,
+                                          0,
+                                          0,
                                         ],
                                         "right": Array [
+                                          0,
+                                          0,
                                           0,
                                           0,
                                           0,
@@ -10233,6 +11225,37 @@ exports[`Space Request List component snapshot testing should render the compone
                                         colStart={2}
                                         column={
                                           Object {
+                                            "dataIndex": "episodes",
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          }
+                                        }
+                                        component="th"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        rowSpan={1}
+                                        rowType="header"
+                                      >
+                                        <th
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          Episodes
+                                        </th>
+                                      </Cell>
+                                      <Cell
+                                        className=""
+                                        colEnd={3}
+                                        colSpan={1}
+                                        colStart={3}
+                                        column={
+                                          Object {
                                             "dataIndex": "fact_check",
                                             "render": [Function],
                                             "title": "Fact Check",
@@ -10259,9 +11282,40 @@ exports[`Space Request List component snapshot testing should render the compone
                                       </Cell>
                                       <Cell
                                         className=""
-                                        colEnd={3}
+                                        colEnd={4}
                                         colSpan={1}
-                                        colStart={3}
+                                        colStart={4}
+                                        column={
+                                          Object {
+                                            "dataIndex": "podcast",
+                                            "render": [Function],
+                                            "title": "Podcast",
+                                          }
+                                        }
+                                        component="th"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        key="podcast"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        rowSpan={1}
+                                        rowType="header"
+                                      >
+                                        <th
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          Podcast
+                                        </th>
+                                      </Cell>
+                                      <Cell
+                                        className=""
+                                        colEnd={5}
+                                        colSpan={1}
+                                        colStart={5}
                                         column={
                                           Object {
                                             "dataIndex": "status",
@@ -10290,9 +11344,9 @@ exports[`Space Request List component snapshot testing should render the compone
                                       </Cell>
                                       <Cell
                                         className=""
-                                        colEnd={4}
+                                        colEnd={6}
                                         colSpan={1}
-                                        colStart={4}
+                                        colStart={6}
                                         column={
                                           Object {
                                             "dataIndex": "operation",
@@ -10458,6 +11512,41 @@ exports[`Space Request List component snapshot testing should render the compone
                                       </Cell>
                                       <Cell
                                         component="td"
+                                        dataIndex="episodes"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={0}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": true,
+                                            "id": 1,
+                                            "media": -1,
+                                            "posts": -1,
+                                            "space_id": 1,
+                                            "status": "pending",
+                                            "title": "Request 1",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
                                         dataIndex="fact_check"
                                         firstFixLeft={false}
                                         firstFixRight={false}
@@ -10488,6 +11577,41 @@ exports[`Space Request List component snapshot testing should render the compone
                                         >
                                           <p>
                                             Enabled
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
+                                        dataIndex="podcast"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={0}
+                                        key="podcast"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": true,
+                                            "id": 1,
+                                            "media": -1,
+                                            "posts": -1,
+                                            "space_id": 1,
+                                            "status": "pending",
+                                            "title": "Request 1",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Disabled
                                           </p>
                                         </td>
                                       </Cell>
@@ -11965,11 +13089,81 @@ exports[`Space Request List component snapshot testing should render the compone
                                       </Cell>
                                       <Cell
                                         component="td"
+                                        dataIndex="episodes"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={1}
+                                        key="episodes"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": false,
+                                            "id": 2,
+                                            "media": 5,
+                                            "posts": 5,
+                                            "space_id": 2,
+                                            "status": "pending",
+                                            "title": "Request 2",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Unlimited
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
                                         dataIndex="fact_check"
                                         firstFixLeft={false}
                                         firstFixRight={false}
                                         index={1}
                                         key="fact_check"
+                                        lastFixLeft={false}
+                                        lastFixRight={false}
+                                        prefixCls="ant-table"
+                                        record={
+                                          Object {
+                                            "description": "Description",
+                                            "fact_check": false,
+                                            "id": 2,
+                                            "media": 5,
+                                            "posts": 5,
+                                            "space_id": 2,
+                                            "status": "pending",
+                                            "title": "Request 2",
+                                          }
+                                        }
+                                        render={[Function]}
+                                      >
+                                        <td
+                                          className="ant-table-cell"
+                                          colSpan={null}
+                                          rowSpan={null}
+                                          style={Object {}}
+                                        >
+                                          <p>
+                                            Disabled
+                                          </p>
+                                        </td>
+                                      </Cell>
+                                      <Cell
+                                        component="td"
+                                        dataIndex="podcast"
+                                        firstFixLeft={false}
+                                        firstFixRight={false}
+                                        index={1}
+                                        key="podcast"
                                         lastFixLeft={false}
                                         lastFixRight={false}
                                         prefixCls="ant-table"

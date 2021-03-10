@@ -48,10 +48,26 @@ exports[`Space Permission List component snapshot testing should match component
           Object {
             "dataIndex": Array [
               "permission",
+              "episodes",
+            ],
+            "render": [Function],
+            "title": "Episodes",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
               "fact_check",
             ],
             "render": [Function],
             "title": "Fact Check",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "podcast",
+            ],
+            "render": [Function],
+            "title": "Podcast",
           },
         ]
       }
@@ -166,10 +182,26 @@ exports[`Space Permission List component snapshot testing should match component
                     Object {
                       "dataIndex": Array [
                         "permission",
+                        "episodes",
+                      ],
+                      "render": [Function],
+                      "title": "Episodes",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
                         "fact_check",
                       ],
                       "render": [Function],
                       "title": "Fact Check",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "podcast",
+                      ],
+                      "render": [Function],
+                      "title": "Podcast",
                     },
                   ]
                 }
@@ -282,7 +314,17 @@ exports[`Space Permission List component snapshot testing should match component
                               <th
                                 class="ant-table-cell"
                               >
+                                Episodes
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
                                 Fact Check
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Podcast
                               </th>
                             </tr>
                           </thead>
@@ -321,7 +363,21 @@ exports[`Space Permission List component snapshot testing should match component
                                 class="ant-table-cell"
                               >
                                 <p>
+                                  Unlimited
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
                                   Enabled
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Disabled
                                 </p>
                               </td>
                             </tr>
@@ -351,6 +407,20 @@ exports[`Space Permission List component snapshot testing should match component
                               >
                                 <p>
                                   20
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Unlimited
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Disabled
                                 </p>
                               </td>
                               <td
@@ -422,10 +492,26 @@ exports[`Space Permission List component snapshot testing should match component
                           Object {
                             "dataIndex": Array [
                               "permission",
+                              "episodes",
+                            ],
+                            "render": [Function],
+                            "title": "Episodes",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
                               "fact_check",
                             ],
                             "render": [Function],
                             "title": "Fact Check",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "podcast",
+                            ],
+                            "render": [Function],
+                            "title": "Podcast",
                           },
                         ],
                         "data": Array [
@@ -529,7 +615,17 @@ exports[`Space Permission List component snapshot testing should match component
                                     <th
                                       class="ant-table-cell"
                                     >
+                                      Episodes
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
                                       Fact Check
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Podcast
                                     </th>
                                   </tr>
                                 </thead>
@@ -568,7 +664,21 @@ exports[`Space Permission List component snapshot testing should match component
                                       class="ant-table-cell"
                                     >
                                       <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
                                         Enabled
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
+                                        Disabled
                                       </p>
                                     </td>
                                   </tr>
@@ -604,6 +714,20 @@ exports[`Space Permission List component snapshot testing should match component
                                       class="ant-table-cell"
                                     >
                                       <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
+                                        Disabled
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
                                         Disabled
                                       </p>
                                     </td>
@@ -631,8 +755,12 @@ exports[`Space Permission List component snapshot testing should match component
                             0,
                             0,
                             0,
+                            0,
+                            0,
                           ],
                           "right": Array [
+                            0,
+                            0,
                             0,
                             0,
                             0,
@@ -667,6 +795,8 @@ exports[`Space Permission List component snapshot testing should match component
                                 undefined,
                                 undefined,
                                 undefined,
+                                undefined,
+                                undefined,
                               ]
                             }
                             columns={
@@ -705,11 +835,29 @@ exports[`Space Permission List component snapshot testing should match component
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "fixed": undefined,
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -743,9 +891,11 @@ exports[`Space Permission List component snapshot testing should match component
                                 undefined,
                                 undefined,
                                 undefined,
+                                undefined,
+                                undefined,
                               ]
                             }
-                            columCount={5}
+                            columCount={7}
                             columns={
                               Array [
                                 Object {
@@ -778,10 +928,26 @@ exports[`Space Permission List component snapshot testing should match component
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -821,11 +987,29 @@ exports[`Space Permission List component snapshot testing should match component
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "fixed": undefined,
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -837,8 +1021,12 @@ exports[`Space Permission List component snapshot testing should match component
                                   0,
                                   0,
                                   0,
+                                  0,
+                                  0,
                                 ],
                                 "right": Array [
+                                  0,
+                                  0,
                                   0,
                                   0,
                                   0,
@@ -919,7 +1107,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       "rowSpan": 1,
                                     },
                                     Object {
-                                      "children": "Fact Check",
+                                      "children": "Episodes",
                                       "className": "",
                                       "colEnd": 4,
                                       "colSpan": 1,
@@ -927,10 +1115,44 @@ exports[`Space Permission List component snapshot testing should match component
                                       "column": Object {
                                         "dataIndex": Array [
                                           "permission",
+                                          "episodes",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Episodes",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Fact Check",
+                                      "className": "",
+                                      "colEnd": 5,
+                                      "colSpan": 1,
+                                      "colStart": 5,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
                                           "fact_check",
                                         ],
                                         "render": [Function],
                                         "title": "Fact Check",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Podcast",
+                                      "className": "",
+                                      "colEnd": 6,
+                                      "colSpan": 1,
+                                      "colStart": 6,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "podcast",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Podcast",
                                       },
                                       "key": undefined,
                                       "rowSpan": 1,
@@ -973,11 +1195,29 @@ exports[`Space Permission List component snapshot testing should match component
                                     Object {
                                       "dataIndex": Array [
                                         "permission",
+                                        "episodes",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
                                         "fact_check",
                                       ],
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "podcast",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                   ]
                                 }
@@ -992,8 +1232,12 @@ exports[`Space Permission List component snapshot testing should match component
                                       0,
                                       0,
                                       0,
+                                      0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
+                                      0,
                                       0,
                                       0,
                                       0,
@@ -1144,6 +1388,40 @@ exports[`Space Permission List component snapshot testing should match component
                                       Object {
                                         "dataIndex": Array [
                                           "permission",
+                                          "episodes",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Episodes",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Episodes
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={5}
+                                    colSpan={1}
+                                    colStart={5}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
                                           "fact_check",
                                         ],
                                         "render": [Function],
@@ -1167,6 +1445,40 @@ exports[`Space Permission List component snapshot testing should match component
                                       style={Object {}}
                                     >
                                       Fact Check
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={6}
+                                    colSpan={1}
+                                    colStart={6}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "podcast",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Podcast",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-podcast"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Podcast
                                     </th>
                                   </Cell>
                                 </tr>
@@ -1392,6 +1704,47 @@ exports[`Space Permission List component snapshot testing should match component
                                     dataIndex={
                                       Array [
                                         "permission",
+                                        "episodes",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={0}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 1,
+                                        "name": "Space 1",
+                                        "organisation_id": 9,
+                                        "permission": Object {
+                                          "fact_check": true,
+                                          "id": 1,
+                                          "media": -1,
+                                          "posts": -1,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
                                         "fact_check",
                                       ]
                                     }
@@ -1425,6 +1778,47 @@ exports[`Space Permission List component snapshot testing should match component
                                     >
                                       <p>
                                         Enabled
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
+                                        "podcast",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={0}
+                                    key="permission-podcast"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 1,
+                                        "name": "Space 1",
+                                        "organisation_id": 9,
+                                        "permission": Object {
+                                          "fact_check": true,
+                                          "id": 1,
+                                          "media": -1,
+                                          "posts": -1,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Disabled
                                       </p>
                                     </td>
                                   </Cell>
@@ -1613,6 +2007,47 @@ exports[`Space Permission List component snapshot testing should match component
                                     dataIndex={
                                       Array [
                                         "permission",
+                                        "episodes",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={1}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 2,
+                                        "name": "Space 2",
+                                        "organisation_id": 4,
+                                        "permission": Object {
+                                          "fact_check": false,
+                                          "id": 2,
+                                          "media": 20,
+                                          "posts": 20,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
                                         "fact_check",
                                       ]
                                     }
@@ -1620,6 +2055,47 @@ exports[`Space Permission List component snapshot testing should match component
                                     firstFixRight={false}
                                     index={1}
                                     key="permission-fact_check"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 2,
+                                        "name": "Space 2",
+                                        "organisation_id": 4,
+                                        "permission": Object {
+                                          "fact_check": false,
+                                          "id": 2,
+                                          "media": 20,
+                                          "posts": 20,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Disabled
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
+                                        "podcast",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={1}
+                                    key="permission-podcast"
                                     lastFixLeft={false}
                                     lastFixRight={false}
                                     prefixCls="ant-table"
@@ -2102,10 +2578,26 @@ exports[`Space Permission List component snapshot testing should match component
           Object {
             "dataIndex": Array [
               "permission",
+              "episodes",
+            ],
+            "render": [Function],
+            "title": "Episodes",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
               "fact_check",
             ],
             "render": [Function],
             "title": "Fact Check",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "podcast",
+            ],
+            "render": [Function],
+            "title": "Podcast",
           },
         ]
       }
@@ -2196,10 +2688,26 @@ exports[`Space Permission List component snapshot testing should match component
                     Object {
                       "dataIndex": Array [
                         "permission",
+                        "episodes",
+                      ],
+                      "render": [Function],
+                      "title": "Episodes",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
                         "fact_check",
                       ],
                       "render": [Function],
                       "title": "Fact Check",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "podcast",
+                      ],
+                      "render": [Function],
+                      "title": "Podcast",
                     },
                   ]
                 }
@@ -2312,7 +2820,17 @@ exports[`Space Permission List component snapshot testing should match component
                               <th
                                 class="ant-table-cell"
                               >
+                                Episodes
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
                                 Fact Check
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Podcast
                               </th>
                             </tr>
                           </thead>
@@ -2351,7 +2869,21 @@ exports[`Space Permission List component snapshot testing should match component
                                 class="ant-table-cell"
                               >
                                 <p>
+                                  Unlimited
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
                                   Enabled
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Disabled
                                 </p>
                               </td>
                             </tr>
@@ -2381,6 +2913,20 @@ exports[`Space Permission List component snapshot testing should match component
                               >
                                 <p>
                                   20
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Unlimited
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Disabled
                                 </p>
                               </td>
                               <td
@@ -2452,10 +2998,26 @@ exports[`Space Permission List component snapshot testing should match component
                           Object {
                             "dataIndex": Array [
                               "permission",
+                              "episodes",
+                            ],
+                            "render": [Function],
+                            "title": "Episodes",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
                               "fact_check",
                             ],
                             "render": [Function],
                             "title": "Fact Check",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "podcast",
+                            ],
+                            "render": [Function],
+                            "title": "Podcast",
                           },
                         ],
                         "data": Array [
@@ -2559,7 +3121,17 @@ exports[`Space Permission List component snapshot testing should match component
                                     <th
                                       class="ant-table-cell"
                                     >
+                                      Episodes
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
                                       Fact Check
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Podcast
                                     </th>
                                   </tr>
                                 </thead>
@@ -2598,7 +3170,21 @@ exports[`Space Permission List component snapshot testing should match component
                                       class="ant-table-cell"
                                     >
                                       <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
                                         Enabled
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
+                                        Disabled
                                       </p>
                                     </td>
                                   </tr>
@@ -2634,6 +3220,20 @@ exports[`Space Permission List component snapshot testing should match component
                                       class="ant-table-cell"
                                     >
                                       <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
+                                        Disabled
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
                                         Disabled
                                       </p>
                                     </td>
@@ -2661,8 +3261,12 @@ exports[`Space Permission List component snapshot testing should match component
                             0,
                             0,
                             0,
+                            0,
+                            0,
                           ],
                           "right": Array [
+                            0,
+                            0,
                             0,
                             0,
                             0,
@@ -2697,6 +3301,8 @@ exports[`Space Permission List component snapshot testing should match component
                                 undefined,
                                 undefined,
                                 undefined,
+                                undefined,
+                                undefined,
                               ]
                             }
                             columns={
@@ -2735,11 +3341,29 @@ exports[`Space Permission List component snapshot testing should match component
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "fixed": undefined,
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -2773,9 +3397,11 @@ exports[`Space Permission List component snapshot testing should match component
                                 undefined,
                                 undefined,
                                 undefined,
+                                undefined,
+                                undefined,
                               ]
                             }
-                            columCount={5}
+                            columCount={7}
                             columns={
                               Array [
                                 Object {
@@ -2808,10 +3434,26 @@ exports[`Space Permission List component snapshot testing should match component
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -2851,11 +3493,29 @@ exports[`Space Permission List component snapshot testing should match component
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "fixed": undefined,
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -2867,8 +3527,12 @@ exports[`Space Permission List component snapshot testing should match component
                                   0,
                                   0,
                                   0,
+                                  0,
+                                  0,
                                 ],
                                 "right": Array [
+                                  0,
+                                  0,
                                   0,
                                   0,
                                   0,
@@ -2949,7 +3613,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       "rowSpan": 1,
                                     },
                                     Object {
-                                      "children": "Fact Check",
+                                      "children": "Episodes",
                                       "className": "",
                                       "colEnd": 4,
                                       "colSpan": 1,
@@ -2957,10 +3621,44 @@ exports[`Space Permission List component snapshot testing should match component
                                       "column": Object {
                                         "dataIndex": Array [
                                           "permission",
+                                          "episodes",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Episodes",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Fact Check",
+                                      "className": "",
+                                      "colEnd": 5,
+                                      "colSpan": 1,
+                                      "colStart": 5,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
                                           "fact_check",
                                         ],
                                         "render": [Function],
                                         "title": "Fact Check",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Podcast",
+                                      "className": "",
+                                      "colEnd": 6,
+                                      "colSpan": 1,
+                                      "colStart": 6,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "podcast",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Podcast",
                                       },
                                       "key": undefined,
                                       "rowSpan": 1,
@@ -3003,11 +3701,29 @@ exports[`Space Permission List component snapshot testing should match component
                                     Object {
                                       "dataIndex": Array [
                                         "permission",
+                                        "episodes",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
                                         "fact_check",
                                       ],
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "podcast",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                   ]
                                 }
@@ -3022,8 +3738,12 @@ exports[`Space Permission List component snapshot testing should match component
                                       0,
                                       0,
                                       0,
+                                      0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
+                                      0,
                                       0,
                                       0,
                                       0,
@@ -3174,6 +3894,40 @@ exports[`Space Permission List component snapshot testing should match component
                                       Object {
                                         "dataIndex": Array [
                                           "permission",
+                                          "episodes",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Episodes",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Episodes
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={5}
+                                    colSpan={1}
+                                    colStart={5}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
                                           "fact_check",
                                         ],
                                         "render": [Function],
@@ -3197,6 +3951,40 @@ exports[`Space Permission List component snapshot testing should match component
                                       style={Object {}}
                                     >
                                       Fact Check
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={6}
+                                    colSpan={1}
+                                    colStart={6}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "podcast",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Podcast",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-podcast"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Podcast
                                     </th>
                                   </Cell>
                                 </tr>
@@ -3422,6 +4210,47 @@ exports[`Space Permission List component snapshot testing should match component
                                     dataIndex={
                                       Array [
                                         "permission",
+                                        "episodes",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={0}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 1,
+                                        "name": "Space 1",
+                                        "organisation_id": 9,
+                                        "permission": Object {
+                                          "fact_check": true,
+                                          "id": 1,
+                                          "media": -1,
+                                          "posts": -1,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
                                         "fact_check",
                                       ]
                                     }
@@ -3455,6 +4284,47 @@ exports[`Space Permission List component snapshot testing should match component
                                     >
                                       <p>
                                         Enabled
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
+                                        "podcast",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={0}
+                                    key="permission-podcast"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 1,
+                                        "name": "Space 1",
+                                        "organisation_id": 9,
+                                        "permission": Object {
+                                          "fact_check": true,
+                                          "id": 1,
+                                          "media": -1,
+                                          "posts": -1,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Disabled
                                       </p>
                                     </td>
                                   </Cell>
@@ -3643,6 +4513,47 @@ exports[`Space Permission List component snapshot testing should match component
                                     dataIndex={
                                       Array [
                                         "permission",
+                                        "episodes",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={1}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 2,
+                                        "name": "Space 2",
+                                        "organisation_id": 4,
+                                        "permission": Object {
+                                          "fact_check": false,
+                                          "id": 2,
+                                          "media": 20,
+                                          "posts": 20,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
                                         "fact_check",
                                       ]
                                     }
@@ -3650,6 +4561,47 @@ exports[`Space Permission List component snapshot testing should match component
                                     firstFixRight={false}
                                     index={1}
                                     key="permission-fact_check"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 2,
+                                        "name": "Space 2",
+                                        "organisation_id": 4,
+                                        "permission": Object {
+                                          "fact_check": false,
+                                          "id": 2,
+                                          "media": 20,
+                                          "posts": 20,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Disabled
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
+                                        "podcast",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={1}
+                                    key="permission-podcast"
                                     lastFixLeft={false}
                                     lastFixRight={false}
                                     prefixCls="ant-table"
@@ -4132,10 +5084,26 @@ exports[`Space Permission List component snapshot testing should render componen
           Object {
             "dataIndex": Array [
               "permission",
+              "episodes",
+            ],
+            "render": [Function],
+            "title": "Episodes",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
               "fact_check",
             ],
             "render": [Function],
             "title": "Fact Check",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "podcast",
+            ],
+            "render": [Function],
+            "title": "Podcast",
           },
         ]
       }
@@ -4226,10 +5194,26 @@ exports[`Space Permission List component snapshot testing should render componen
                     Object {
                       "dataIndex": Array [
                         "permission",
+                        "episodes",
+                      ],
+                      "render": [Function],
+                      "title": "Episodes",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
                         "fact_check",
                       ],
                       "render": [Function],
                       "title": "Fact Check",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "podcast",
+                      ],
+                      "render": [Function],
+                      "title": "Podcast",
                     },
                   ]
                 }
@@ -4342,7 +5326,17 @@ exports[`Space Permission List component snapshot testing should render componen
                               <th
                                 class="ant-table-cell"
                               >
+                                Episodes
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
                                 Fact Check
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Podcast
                               </th>
                             </tr>
                           </thead>
@@ -4381,7 +5375,21 @@ exports[`Space Permission List component snapshot testing should render componen
                                 class="ant-table-cell"
                               >
                                 <p>
+                                  Unlimited
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
                                   Enabled
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Disabled
                                 </p>
                               </td>
                             </tr>
@@ -4411,6 +5419,20 @@ exports[`Space Permission List component snapshot testing should render componen
                               >
                                 <p>
                                   20
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Unlimited
+                                </p>
+                              </td>
+                              <td
+                                class="ant-table-cell"
+                              >
+                                <p>
+                                  Disabled
                                 </p>
                               </td>
                               <td
@@ -4482,10 +5504,26 @@ exports[`Space Permission List component snapshot testing should render componen
                           Object {
                             "dataIndex": Array [
                               "permission",
+                              "episodes",
+                            ],
+                            "render": [Function],
+                            "title": "Episodes",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
                               "fact_check",
                             ],
                             "render": [Function],
                             "title": "Fact Check",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "podcast",
+                            ],
+                            "render": [Function],
+                            "title": "Podcast",
                           },
                         ],
                         "data": Array [
@@ -4589,7 +5627,17 @@ exports[`Space Permission List component snapshot testing should render componen
                                     <th
                                       class="ant-table-cell"
                                     >
+                                      Episodes
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
                                       Fact Check
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Podcast
                                     </th>
                                   </tr>
                                 </thead>
@@ -4628,7 +5676,21 @@ exports[`Space Permission List component snapshot testing should render componen
                                       class="ant-table-cell"
                                     >
                                       <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
                                         Enabled
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
+                                        Disabled
                                       </p>
                                     </td>
                                   </tr>
@@ -4664,6 +5726,20 @@ exports[`Space Permission List component snapshot testing should render componen
                                       class="ant-table-cell"
                                     >
                                       <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
+                                        Disabled
+                                      </p>
+                                    </td>
+                                    <td
+                                      class="ant-table-cell"
+                                    >
+                                      <p>
                                         Disabled
                                       </p>
                                     </td>
@@ -4691,8 +5767,12 @@ exports[`Space Permission List component snapshot testing should render componen
                             0,
                             0,
                             0,
+                            0,
+                            0,
                           ],
                           "right": Array [
+                            0,
+                            0,
                             0,
                             0,
                             0,
@@ -4727,6 +5807,8 @@ exports[`Space Permission List component snapshot testing should render componen
                                 undefined,
                                 undefined,
                                 undefined,
+                                undefined,
+                                undefined,
                               ]
                             }
                             columns={
@@ -4765,11 +5847,29 @@ exports[`Space Permission List component snapshot testing should render componen
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "fixed": undefined,
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -4803,9 +5903,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                 undefined,
                                 undefined,
                                 undefined,
+                                undefined,
+                                undefined,
                               ]
                             }
-                            columCount={5}
+                            columCount={7}
                             columns={
                               Array [
                                 Object {
@@ -4838,10 +5940,26 @@ exports[`Space Permission List component snapshot testing should render componen
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -4881,11 +5999,29 @@ exports[`Space Permission List component snapshot testing should render componen
                                 Object {
                                   "dataIndex": Array [
                                     "permission",
+                                    "episodes",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
                                     "fact_check",
                                   ],
                                   "fixed": undefined,
                                   "render": [Function],
                                   "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Podcast",
                                 },
                               ]
                             }
@@ -4897,8 +6033,12 @@ exports[`Space Permission List component snapshot testing should render componen
                                   0,
                                   0,
                                   0,
+                                  0,
+                                  0,
                                 ],
                                 "right": Array [
+                                  0,
+                                  0,
                                   0,
                                   0,
                                   0,
@@ -4979,7 +6119,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                       "rowSpan": 1,
                                     },
                                     Object {
-                                      "children": "Fact Check",
+                                      "children": "Episodes",
                                       "className": "",
                                       "colEnd": 4,
                                       "colSpan": 1,
@@ -4987,10 +6127,44 @@ exports[`Space Permission List component snapshot testing should render componen
                                       "column": Object {
                                         "dataIndex": Array [
                                           "permission",
+                                          "episodes",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Episodes",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Fact Check",
+                                      "className": "",
+                                      "colEnd": 5,
+                                      "colSpan": 1,
+                                      "colStart": 5,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
                                           "fact_check",
                                         ],
                                         "render": [Function],
                                         "title": "Fact Check",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Podcast",
+                                      "className": "",
+                                      "colEnd": 6,
+                                      "colSpan": 1,
+                                      "colStart": 6,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "podcast",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Podcast",
                                       },
                                       "key": undefined,
                                       "rowSpan": 1,
@@ -5033,11 +6207,29 @@ exports[`Space Permission List component snapshot testing should render componen
                                     Object {
                                       "dataIndex": Array [
                                         "permission",
+                                        "episodes",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
                                         "fact_check",
                                       ],
                                       "fixed": undefined,
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "podcast",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                   ]
                                 }
@@ -5052,8 +6244,12 @@ exports[`Space Permission List component snapshot testing should render componen
                                       0,
                                       0,
                                       0,
+                                      0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
+                                      0,
                                       0,
                                       0,
                                       0,
@@ -5204,6 +6400,40 @@ exports[`Space Permission List component snapshot testing should render componen
                                       Object {
                                         "dataIndex": Array [
                                           "permission",
+                                          "episodes",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Episodes",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Episodes
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={5}
+                                    colSpan={1}
+                                    colStart={5}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
                                           "fact_check",
                                         ],
                                         "render": [Function],
@@ -5227,6 +6457,40 @@ exports[`Space Permission List component snapshot testing should render componen
                                       style={Object {}}
                                     >
                                       Fact Check
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={6}
+                                    colSpan={1}
+                                    colStart={6}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "podcast",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Podcast",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-podcast"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Podcast
                                     </th>
                                   </Cell>
                                 </tr>
@@ -5452,6 +6716,47 @@ exports[`Space Permission List component snapshot testing should render componen
                                     dataIndex={
                                       Array [
                                         "permission",
+                                        "episodes",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={0}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 1,
+                                        "name": "Space 1",
+                                        "organisation_id": 9,
+                                        "permission": Object {
+                                          "fact_check": true,
+                                          "id": 1,
+                                          "media": -1,
+                                          "posts": -1,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
                                         "fact_check",
                                       ]
                                     }
@@ -5485,6 +6790,47 @@ exports[`Space Permission List component snapshot testing should render componen
                                     >
                                       <p>
                                         Enabled
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
+                                        "podcast",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={0}
+                                    key="permission-podcast"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 1,
+                                        "name": "Space 1",
+                                        "organisation_id": 9,
+                                        "permission": Object {
+                                          "fact_check": true,
+                                          "id": 1,
+                                          "media": -1,
+                                          "posts": -1,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Disabled
                                       </p>
                                     </td>
                                   </Cell>
@@ -5673,6 +7019,47 @@ exports[`Space Permission List component snapshot testing should render componen
                                     dataIndex={
                                       Array [
                                         "permission",
+                                        "episodes",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={1}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 2,
+                                        "name": "Space 2",
+                                        "organisation_id": 4,
+                                        "permission": Object {
+                                          "fact_check": false,
+                                          "id": 2,
+                                          "media": 20,
+                                          "posts": 20,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Unlimited
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
                                         "fact_check",
                                       ]
                                     }
@@ -5680,6 +7067,47 @@ exports[`Space Permission List component snapshot testing should render componen
                                     firstFixRight={false}
                                     index={1}
                                     key="permission-fact_check"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    record={
+                                      Object {
+                                        "id": 2,
+                                        "name": "Space 2",
+                                        "organisation_id": 4,
+                                        "permission": Object {
+                                          "fact_check": false,
+                                          "id": 2,
+                                          "media": 20,
+                                          "posts": 20,
+                                        },
+                                      }
+                                    }
+                                    render={[Function]}
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <p>
+                                        Disabled
+                                      </p>
+                                    </td>
+                                  </Cell>
+                                  <Cell
+                                    component="td"
+                                    dataIndex={
+                                      Array [
+                                        "permission",
+                                        "podcast",
+                                      ]
+                                    }
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    index={1}
+                                    key="permission-podcast"
                                     lastFixLeft={false}
                                     lastFixRight={false}
                                     prefixCls="ant-table"

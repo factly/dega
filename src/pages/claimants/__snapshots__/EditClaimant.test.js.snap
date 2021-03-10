@@ -53,7 +53,7 @@ exports[`Claimants edit component snapshot testing should match component with e
         onFinish={[Function]}
         wrapperCol={
           Object {
-            "span": 16,
+            "span": 8,
           }
         }
       >
@@ -285,10 +285,10 @@ exports[`Claimants edit component snapshot testing should match component with e
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -536,10 +536,10 @@ exports[`Claimants edit component snapshot testing should match component with e
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -727,10 +727,10 @@ exports[`Claimants edit component snapshot testing should match component with e
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -932,10 +932,10 @@ exports[`Claimants edit component snapshot testing should match component with e
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -1319,10 +1319,10 @@ exports[`Claimants edit component snapshot testing should match component with e
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -1756,7 +1756,7 @@ exports[`Claimants edit component snapshot testing should render the component 1
         onFinish={[Function]}
         wrapperCol={
           Object {
-            "span": 16,
+            "span": 8,
           }
         }
       >
@@ -2009,10 +2009,10 @@ exports[`Claimants edit component snapshot testing should render the component 1
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -2263,10 +2263,10 @@ exports[`Claimants edit component snapshot testing should render the component 1
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -2457,10 +2457,10 @@ exports[`Claimants edit component snapshot testing should render the component 1
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -2665,10 +2665,10 @@ exports[`Claimants edit component snapshot testing should render the component 1
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -3052,10 +3052,10 @@ exports[`Claimants edit component snapshot testing should render the component 1
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div

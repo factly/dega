@@ -165,7 +165,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                       "format": Array [
                         1,
                       ],
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -211,7 +211,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                           "format": Array [
                             1,
                           ],
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -2947,7 +2947,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 1,
                     }
                   }
@@ -3972,7 +3972,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                         current={1}
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
-                        pageSize={5}
+                        pageSize={20}
                         total={1}
                       >
                         <LocaleReceiver
@@ -4060,7 +4060,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                             }
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -4328,7 +4328,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                                     "prev_page": "Previous Page",
                                   }
                                 }
-                                pageSize={5}
+                                pageSize={20}
                                 pageSizeOptions={
                                   Array [
                                     "10",
@@ -4495,7 +4495,7 @@ exports[`List component snapshot testing should match when component loading 2`]
                       "format": Array [
                         1,
                       ],
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -4541,7 +4541,7 @@ exports[`List component snapshot testing should match when component loading 2`]
                           "format": Array [
                             1,
                           ],
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -7277,7 +7277,7 @@ exports[`List component snapshot testing should match when component loading 2`]
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 1,
                     }
                   }
@@ -8278,7 +8278,7 @@ exports[`List component snapshot testing should match when component loading 2`]
                         current={1}
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
-                        pageSize={5}
+                        pageSize={20}
                         total={1}
                       >
                         <LocaleReceiver
@@ -8366,7 +8366,7 @@ exports[`List component snapshot testing should match when component loading 2`]
                             }
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -8634,7 +8634,7 @@ exports[`List component snapshot testing should match when component loading 2`]
                                     "prev_page": "Previous Page",
                                   }
                                 }
-                                pageSize={5}
+                                pageSize={20}
                                 pageSizeOptions={
                                   Array [
                                     "10",
@@ -8801,7 +8801,7 @@ exports[`List component snapshot testing should render the component 1`] = `
                       "format": Array [
                         1,
                       ],
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -8847,7 +8847,7 @@ exports[`List component snapshot testing should render the component 1`] = `
                           "format": Array [
                             1,
                           ],
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -11583,7 +11583,7 @@ exports[`List component snapshot testing should render the component 1`] = `
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 1,
                     }
                   }
@@ -12584,7 +12584,7 @@ exports[`List component snapshot testing should render the component 1`] = `
                         current={1}
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
-                        pageSize={5}
+                        pageSize={20}
                         total={1}
                       >
                         <LocaleReceiver
@@ -12672,7 +12672,7 @@ exports[`List component snapshot testing should render the component 1`] = `
                             }
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -12940,7 +12940,7 @@ exports[`List component snapshot testing should render the component 1`] = `
                                     "prev_page": "Previous Page",
                                   }
                                 }
-                                pageSize={5}
+                                pageSize={20}
                                 pageSizeOptions={
                                   Array [
                                     "10",

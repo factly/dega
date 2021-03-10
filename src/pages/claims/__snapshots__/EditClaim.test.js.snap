@@ -662,7 +662,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
           }
           wrapperCol={
             Object {
-              "span": 16,
+              "span": 6,
             }
           }
         >
@@ -926,10 +926,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={6}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-6 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -1181,10 +1181,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={6}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-6 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -1415,10 +1415,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={6}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-6 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -2297,10 +2297,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={6}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-6 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -3477,10 +3477,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={6}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-6 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -4444,10 +4444,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={6}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-6 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -5698,10 +5698,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                 >
                                   <Col
                                     className="ant-form-item-control"
-                                    span={16}
+                                    span={6}
                                   >
                                     <div
-                                      className="ant-col ant-col-16 ant-form-item-control"
+                                      className="ant-col ant-col-6 ant-form-item-control"
                                       style={Object {}}
                                     >
                                       <div
@@ -5898,10 +5898,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={6}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-6 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -5996,10 +5996,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={6}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-6 ant-form-item-control"
                             style={Object {}}
                           >
                             <div

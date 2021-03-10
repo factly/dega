@@ -277,7 +277,7 @@ exports[`Posts List component should render the component 1`] = `
                                 "format": Array [
                                   1,
                                 ],
-                                "limit": 5,
+                                "limit": 20,
                                 "page": 1,
                               }
                             }
@@ -323,7 +323,7 @@ exports[`Posts List component should render the component 1`] = `
                                     "format": Array [
                                       1,
                                     ],
-                                    "limit": 5,
+                                    "limit": 20,
                                     "page": 1,
                                   }
                                 }
@@ -3180,7 +3180,7 @@ exports[`Posts List component should render the component 1`] = `
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 0,
                               }
                             }
@@ -3242,7 +3242,7 @@ exports[`Posts List component should render the component 1`] = `
                                   current={0}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
-                                  pageSize={5}
+                                  pageSize={20}
                                   total={0}
                                 >
                                   <LocaleReceiver
@@ -3330,7 +3330,7 @@ exports[`Posts List component should render the component 1`] = `
                                       }
                                       onChange={[Function]}
                                       onShowSizeChange={[Function]}
-                                      pageSize={5}
+                                      pageSize={20}
                                       prefixCls="ant-pagination"
                                       prevIcon={
                                         <button
@@ -3598,7 +3598,7 @@ exports[`Posts List component should render the component 1`] = `
                                               "prev_page": "Previous Page",
                                             }
                                           }
-                                          pageSize={5}
+                                          pageSize={20}
                                           pageSizeOptions={
                                             Array [
                                               "10",

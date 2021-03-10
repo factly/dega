@@ -53,7 +53,7 @@ exports[`Formats edit component snapshot testing should match component with emp
         onFinish={[Function]}
         wrapperCol={
           Object {
-            "span": 14,
+            "span": 8,
           }
         }
       >
@@ -285,10 +285,10 @@ exports[`Formats edit component snapshot testing should match component with emp
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={14}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-14 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -536,10 +536,10 @@ exports[`Formats edit component snapshot testing should match component with emp
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={14}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-14 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -727,10 +727,10 @@ exports[`Formats edit component snapshot testing should match component with emp
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={14}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-14 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div

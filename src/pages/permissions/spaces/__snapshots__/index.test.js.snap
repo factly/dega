@@ -67,10 +67,26 @@ exports[`Space Permission component should render the component 1`] = `
                     Object {
                       "dataIndex": Array [
                         "permission",
+                        "episodes",
+                      ],
+                      "render": [Function],
+                      "title": "Episodes",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
                         "fact_check",
                       ],
                       "render": [Function],
                       "title": "Fact Check",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "podcast",
+                      ],
+                      "render": [Function],
+                      "title": "Podcast",
                     },
                   ]
                 }
@@ -134,10 +150,26 @@ exports[`Space Permission component should render the component 1`] = `
                               Object {
                                 "dataIndex": Array [
                                   "permission",
+                                  "episodes",
+                                ],
+                                "render": [Function],
+                                "title": "Episodes",
+                              },
+                              Object {
+                                "dataIndex": Array [
+                                  "permission",
                                   "fact_check",
                                 ],
                                 "render": [Function],
                                 "title": "Fact Check",
+                              },
+                              Object {
+                                "dataIndex": Array [
+                                  "permission",
+                                  "podcast",
+                                ],
+                                "render": [Function],
+                                "title": "Podcast",
                               },
                             ]
                           }
@@ -199,7 +231,17 @@ exports[`Space Permission component should render the component 1`] = `
                                         <th
                                           class="ant-table-cell"
                                         >
+                                          Episodes
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
                                           Fact Check
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
+                                          Podcast
                                         </th>
                                       </tr>
                                     </thead>
@@ -211,7 +253,7 @@ exports[`Space Permission component should render the component 1`] = `
                                       >
                                         <td
                                           class="ant-table-cell"
-                                          colspan="5"
+                                          colspan="7"
                                         >
                                           <div
                                             class="ant-empty ant-empty-normal"
@@ -321,10 +363,26 @@ exports[`Space Permission component should render the component 1`] = `
                                     Object {
                                       "dataIndex": Array [
                                         "permission",
+                                        "episodes",
+                                      ],
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
                                         "fact_check",
                                       ],
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "podcast",
+                                      ],
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                   ],
                                   "data": Array [],
@@ -382,7 +440,17 @@ exports[`Space Permission component should render the component 1`] = `
                                               <th
                                                 class="ant-table-cell"
                                               >
+                                                Episodes
+                                              </th>
+                                              <th
+                                                class="ant-table-cell"
+                                              >
                                                 Fact Check
+                                              </th>
+                                              <th
+                                                class="ant-table-cell"
+                                              >
+                                                Podcast
                                               </th>
                                             </tr>
                                           </thead>
@@ -394,7 +462,7 @@ exports[`Space Permission component should render the component 1`] = `
                                             >
                                               <td
                                                 class="ant-table-cell"
-                                                colspan="5"
+                                                colspan="7"
                                               >
                                                 <div
                                                   class="ant-empty ant-empty-normal"
@@ -467,8 +535,12 @@ exports[`Space Permission component should render the component 1`] = `
                                       0,
                                       0,
                                       0,
+                                      0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
+                                      0,
                                       0,
                                       0,
                                       0,
@@ -503,6 +575,8 @@ exports[`Space Permission component should render the component 1`] = `
                                           undefined,
                                           undefined,
                                           undefined,
+                                          undefined,
+                                          undefined,
                                         ]
                                       }
                                       columns={
@@ -541,11 +615,29 @@ exports[`Space Permission component should render the component 1`] = `
                                           Object {
                                             "dataIndex": Array [
                                               "permission",
+                                              "episodes",
+                                            ],
+                                            "fixed": undefined,
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
                                               "fact_check",
                                             ],
                                             "fixed": undefined,
                                             "render": [Function],
                                             "title": "Fact Check",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
+                                              "podcast",
+                                            ],
+                                            "fixed": undefined,
+                                            "render": [Function],
+                                            "title": "Podcast",
                                           },
                                         ]
                                       }
@@ -579,9 +671,11 @@ exports[`Space Permission component should render the component 1`] = `
                                           undefined,
                                           undefined,
                                           undefined,
+                                          undefined,
+                                          undefined,
                                         ]
                                       }
-                                      columCount={5}
+                                      columCount={7}
                                       columns={
                                         Array [
                                           Object {
@@ -614,10 +708,26 @@ exports[`Space Permission component should render the component 1`] = `
                                           Object {
                                             "dataIndex": Array [
                                               "permission",
+                                              "episodes",
+                                            ],
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
                                               "fact_check",
                                             ],
                                             "render": [Function],
                                             "title": "Fact Check",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
+                                              "podcast",
+                                            ],
+                                            "render": [Function],
+                                            "title": "Podcast",
                                           },
                                         ]
                                       }
@@ -657,11 +767,29 @@ exports[`Space Permission component should render the component 1`] = `
                                           Object {
                                             "dataIndex": Array [
                                               "permission",
+                                              "episodes",
+                                            ],
+                                            "fixed": undefined,
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
                                               "fact_check",
                                             ],
                                             "fixed": undefined,
                                             "render": [Function],
                                             "title": "Fact Check",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
+                                              "podcast",
+                                            ],
+                                            "fixed": undefined,
+                                            "render": [Function],
+                                            "title": "Podcast",
                                           },
                                         ]
                                       }
@@ -673,8 +801,12 @@ exports[`Space Permission component should render the component 1`] = `
                                             0,
                                             0,
                                             0,
+                                            0,
+                                            0,
                                           ],
                                           "right": Array [
+                                            0,
+                                            0,
                                             0,
                                             0,
                                             0,
@@ -755,7 +887,7 @@ exports[`Space Permission component should render the component 1`] = `
                                                 "rowSpan": 1,
                                               },
                                               Object {
-                                                "children": "Fact Check",
+                                                "children": "Episodes",
                                                 "className": "",
                                                 "colEnd": 4,
                                                 "colSpan": 1,
@@ -763,10 +895,44 @@ exports[`Space Permission component should render the component 1`] = `
                                                 "column": Object {
                                                   "dataIndex": Array [
                                                     "permission",
+                                                    "episodes",
+                                                  ],
+                                                  "render": [Function],
+                                                  "title": "Episodes",
+                                                },
+                                                "key": undefined,
+                                                "rowSpan": 1,
+                                              },
+                                              Object {
+                                                "children": "Fact Check",
+                                                "className": "",
+                                                "colEnd": 5,
+                                                "colSpan": 1,
+                                                "colStart": 5,
+                                                "column": Object {
+                                                  "dataIndex": Array [
+                                                    "permission",
                                                     "fact_check",
                                                   ],
                                                   "render": [Function],
                                                   "title": "Fact Check",
+                                                },
+                                                "key": undefined,
+                                                "rowSpan": 1,
+                                              },
+                                              Object {
+                                                "children": "Podcast",
+                                                "className": "",
+                                                "colEnd": 6,
+                                                "colSpan": 1,
+                                                "colStart": 6,
+                                                "column": Object {
+                                                  "dataIndex": Array [
+                                                    "permission",
+                                                    "podcast",
+                                                  ],
+                                                  "render": [Function],
+                                                  "title": "Podcast",
                                                 },
                                                 "key": undefined,
                                                 "rowSpan": 1,
@@ -809,11 +975,29 @@ exports[`Space Permission component should render the component 1`] = `
                                               Object {
                                                 "dataIndex": Array [
                                                   "permission",
+                                                  "episodes",
+                                                ],
+                                                "fixed": undefined,
+                                                "render": [Function],
+                                                "title": "Episodes",
+                                              },
+                                              Object {
+                                                "dataIndex": Array [
+                                                  "permission",
                                                   "fact_check",
                                                 ],
                                                 "fixed": undefined,
                                                 "render": [Function],
                                                 "title": "Fact Check",
+                                              },
+                                              Object {
+                                                "dataIndex": Array [
+                                                  "permission",
+                                                  "podcast",
+                                                ],
+                                                "fixed": undefined,
+                                                "render": [Function],
+                                                "title": "Podcast",
                                               },
                                             ]
                                           }
@@ -828,8 +1012,12 @@ exports[`Space Permission component should render the component 1`] = `
                                                 0,
                                                 0,
                                                 0,
+                                                0,
+                                                0,
                                               ],
                                               "right": Array [
+                                                0,
+                                                0,
                                                 0,
                                                 0,
                                                 0,
@@ -980,6 +1168,40 @@ exports[`Space Permission component should render the component 1`] = `
                                                 Object {
                                                   "dataIndex": Array [
                                                     "permission",
+                                                    "episodes",
+                                                  ],
+                                                  "render": [Function],
+                                                  "title": "Episodes",
+                                                }
+                                              }
+                                              component="th"
+                                              firstFixLeft={false}
+                                              firstFixRight={false}
+                                              key="permission-episodes"
+                                              lastFixLeft={false}
+                                              lastFixRight={false}
+                                              prefixCls="ant-table"
+                                              rowSpan={1}
+                                              rowType="header"
+                                            >
+                                              <th
+                                                className="ant-table-cell"
+                                                colSpan={null}
+                                                rowSpan={null}
+                                                style={Object {}}
+                                              >
+                                                Episodes
+                                              </th>
+                                            </Cell>
+                                            <Cell
+                                              className=""
+                                              colEnd={5}
+                                              colSpan={1}
+                                              colStart={5}
+                                              column={
+                                                Object {
+                                                  "dataIndex": Array [
+                                                    "permission",
                                                     "fact_check",
                                                   ],
                                                   "render": [Function],
@@ -1005,6 +1227,40 @@ exports[`Space Permission component should render the component 1`] = `
                                                 Fact Check
                                               </th>
                                             </Cell>
+                                            <Cell
+                                              className=""
+                                              colEnd={6}
+                                              colSpan={1}
+                                              colStart={6}
+                                              column={
+                                                Object {
+                                                  "dataIndex": Array [
+                                                    "permission",
+                                                    "podcast",
+                                                  ],
+                                                  "render": [Function],
+                                                  "title": "Podcast",
+                                                }
+                                              }
+                                              component="th"
+                                              firstFixLeft={false}
+                                              firstFixRight={false}
+                                              key="permission-podcast"
+                                              lastFixLeft={false}
+                                              lastFixRight={false}
+                                              prefixCls="ant-table"
+                                              rowSpan={1}
+                                              rowType="header"
+                                            >
+                                              <th
+                                                className="ant-table-cell"
+                                                colSpan={null}
+                                                rowSpan={null}
+                                                style={Object {}}
+                                              >
+                                                Podcast
+                                              </th>
+                                            </Cell>
                                           </tr>
                                         </HeaderRow>
                                       </thead>
@@ -1027,7 +1283,7 @@ exports[`Space Permission component should render the component 1`] = `
                                         <ExpandedRow
                                           cellComponent="td"
                                           className="ant-table-placeholder"
-                                          colSpan={5}
+                                          colSpan={7}
                                           component="tr"
                                           componentWidth={0}
                                           expanded={true}
@@ -1042,13 +1298,13 @@ exports[`Space Permission component should render the component 1`] = `
                                             }
                                           >
                                             <Cell
-                                              colSpan={5}
+                                              colSpan={7}
                                               component="td"
                                               prefixCls="ant-table"
                                             >
                                               <td
                                                 className="ant-table-cell"
-                                                colSpan={5}
+                                                colSpan={7}
                                                 rowSpan={null}
                                                 style={Object {}}
                                               >
@@ -1201,10 +1457,26 @@ exports[`Space Permission component should render the component with data 1`] = 
                     Object {
                       "dataIndex": Array [
                         "permission",
+                        "episodes",
+                      ],
+                      "render": [Function],
+                      "title": "Episodes",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
                         "fact_check",
                       ],
                       "render": [Function],
                       "title": "Fact Check",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "podcast",
+                      ],
+                      "render": [Function],
+                      "title": "Podcast",
                     },
                   ]
                 }
@@ -1268,10 +1540,26 @@ exports[`Space Permission component should render the component with data 1`] = 
                               Object {
                                 "dataIndex": Array [
                                   "permission",
+                                  "episodes",
+                                ],
+                                "render": [Function],
+                                "title": "Episodes",
+                              },
+                              Object {
+                                "dataIndex": Array [
+                                  "permission",
                                   "fact_check",
                                 ],
                                 "render": [Function],
                                 "title": "Fact Check",
+                              },
+                              Object {
+                                "dataIndex": Array [
+                                  "permission",
+                                  "podcast",
+                                ],
+                                "render": [Function],
+                                "title": "Podcast",
                               },
                             ]
                           }
@@ -1333,7 +1621,17 @@ exports[`Space Permission component should render the component with data 1`] = 
                                         <th
                                           class="ant-table-cell"
                                         >
+                                          Episodes
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
                                           Fact Check
+                                        </th>
+                                        <th
+                                          class="ant-table-cell"
+                                        >
+                                          Podcast
                                         </th>
                                       </tr>
                                     </thead>
@@ -1345,7 +1643,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                       >
                                         <td
                                           class="ant-table-cell"
-                                          colspan="5"
+                                          colspan="7"
                                         >
                                           <div
                                             class="ant-empty ant-empty-normal"
@@ -1455,10 +1753,26 @@ exports[`Space Permission component should render the component with data 1`] = 
                                     Object {
                                       "dataIndex": Array [
                                         "permission",
+                                        "episodes",
+                                      ],
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
                                         "fact_check",
                                       ],
                                       "render": [Function],
                                       "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "podcast",
+                                      ],
+                                      "render": [Function],
+                                      "title": "Podcast",
                                     },
                                   ],
                                   "data": Array [],
@@ -1516,7 +1830,17 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               <th
                                                 class="ant-table-cell"
                                               >
+                                                Episodes
+                                              </th>
+                                              <th
+                                                class="ant-table-cell"
+                                              >
                                                 Fact Check
+                                              </th>
+                                              <th
+                                                class="ant-table-cell"
+                                              >
+                                                Podcast
                                               </th>
                                             </tr>
                                           </thead>
@@ -1528,7 +1852,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                             >
                                               <td
                                                 class="ant-table-cell"
-                                                colspan="5"
+                                                colspan="7"
                                               >
                                                 <div
                                                   class="ant-empty ant-empty-normal"
@@ -1601,8 +1925,12 @@ exports[`Space Permission component should render the component with data 1`] = 
                                       0,
                                       0,
                                       0,
+                                      0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
+                                      0,
                                       0,
                                       0,
                                       0,
@@ -1637,6 +1965,8 @@ exports[`Space Permission component should render the component with data 1`] = 
                                           undefined,
                                           undefined,
                                           undefined,
+                                          undefined,
+                                          undefined,
                                         ]
                                       }
                                       columns={
@@ -1675,11 +2005,29 @@ exports[`Space Permission component should render the component with data 1`] = 
                                           Object {
                                             "dataIndex": Array [
                                               "permission",
+                                              "episodes",
+                                            ],
+                                            "fixed": undefined,
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
                                               "fact_check",
                                             ],
                                             "fixed": undefined,
                                             "render": [Function],
                                             "title": "Fact Check",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
+                                              "podcast",
+                                            ],
+                                            "fixed": undefined,
+                                            "render": [Function],
+                                            "title": "Podcast",
                                           },
                                         ]
                                       }
@@ -1713,9 +2061,11 @@ exports[`Space Permission component should render the component with data 1`] = 
                                           undefined,
                                           undefined,
                                           undefined,
+                                          undefined,
+                                          undefined,
                                         ]
                                       }
-                                      columCount={5}
+                                      columCount={7}
                                       columns={
                                         Array [
                                           Object {
@@ -1748,10 +2098,26 @@ exports[`Space Permission component should render the component with data 1`] = 
                                           Object {
                                             "dataIndex": Array [
                                               "permission",
+                                              "episodes",
+                                            ],
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
                                               "fact_check",
                                             ],
                                             "render": [Function],
                                             "title": "Fact Check",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
+                                              "podcast",
+                                            ],
+                                            "render": [Function],
+                                            "title": "Podcast",
                                           },
                                         ]
                                       }
@@ -1791,11 +2157,29 @@ exports[`Space Permission component should render the component with data 1`] = 
                                           Object {
                                             "dataIndex": Array [
                                               "permission",
+                                              "episodes",
+                                            ],
+                                            "fixed": undefined,
+                                            "render": [Function],
+                                            "title": "Episodes",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
                                               "fact_check",
                                             ],
                                             "fixed": undefined,
                                             "render": [Function],
                                             "title": "Fact Check",
+                                          },
+                                          Object {
+                                            "dataIndex": Array [
+                                              "permission",
+                                              "podcast",
+                                            ],
+                                            "fixed": undefined,
+                                            "render": [Function],
+                                            "title": "Podcast",
                                           },
                                         ]
                                       }
@@ -1807,8 +2191,12 @@ exports[`Space Permission component should render the component with data 1`] = 
                                             0,
                                             0,
                                             0,
+                                            0,
+                                            0,
                                           ],
                                           "right": Array [
+                                            0,
+                                            0,
                                             0,
                                             0,
                                             0,
@@ -1889,7 +2277,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                 "rowSpan": 1,
                                               },
                                               Object {
-                                                "children": "Fact Check",
+                                                "children": "Episodes",
                                                 "className": "",
                                                 "colEnd": 4,
                                                 "colSpan": 1,
@@ -1897,10 +2285,44 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                 "column": Object {
                                                   "dataIndex": Array [
                                                     "permission",
+                                                    "episodes",
+                                                  ],
+                                                  "render": [Function],
+                                                  "title": "Episodes",
+                                                },
+                                                "key": undefined,
+                                                "rowSpan": 1,
+                                              },
+                                              Object {
+                                                "children": "Fact Check",
+                                                "className": "",
+                                                "colEnd": 5,
+                                                "colSpan": 1,
+                                                "colStart": 5,
+                                                "column": Object {
+                                                  "dataIndex": Array [
+                                                    "permission",
                                                     "fact_check",
                                                   ],
                                                   "render": [Function],
                                                   "title": "Fact Check",
+                                                },
+                                                "key": undefined,
+                                                "rowSpan": 1,
+                                              },
+                                              Object {
+                                                "children": "Podcast",
+                                                "className": "",
+                                                "colEnd": 6,
+                                                "colSpan": 1,
+                                                "colStart": 6,
+                                                "column": Object {
+                                                  "dataIndex": Array [
+                                                    "permission",
+                                                    "podcast",
+                                                  ],
+                                                  "render": [Function],
+                                                  "title": "Podcast",
                                                 },
                                                 "key": undefined,
                                                 "rowSpan": 1,
@@ -1943,11 +2365,29 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               Object {
                                                 "dataIndex": Array [
                                                   "permission",
+                                                  "episodes",
+                                                ],
+                                                "fixed": undefined,
+                                                "render": [Function],
+                                                "title": "Episodes",
+                                              },
+                                              Object {
+                                                "dataIndex": Array [
+                                                  "permission",
                                                   "fact_check",
                                                 ],
                                                 "fixed": undefined,
                                                 "render": [Function],
                                                 "title": "Fact Check",
+                                              },
+                                              Object {
+                                                "dataIndex": Array [
+                                                  "permission",
+                                                  "podcast",
+                                                ],
+                                                "fixed": undefined,
+                                                "render": [Function],
+                                                "title": "Podcast",
                                               },
                                             ]
                                           }
@@ -1962,8 +2402,12 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                 0,
                                                 0,
                                                 0,
+                                                0,
+                                                0,
                                               ],
                                               "right": Array [
+                                                0,
+                                                0,
                                                 0,
                                                 0,
                                                 0,
@@ -2114,6 +2558,40 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                 Object {
                                                   "dataIndex": Array [
                                                     "permission",
+                                                    "episodes",
+                                                  ],
+                                                  "render": [Function],
+                                                  "title": "Episodes",
+                                                }
+                                              }
+                                              component="th"
+                                              firstFixLeft={false}
+                                              firstFixRight={false}
+                                              key="permission-episodes"
+                                              lastFixLeft={false}
+                                              lastFixRight={false}
+                                              prefixCls="ant-table"
+                                              rowSpan={1}
+                                              rowType="header"
+                                            >
+                                              <th
+                                                className="ant-table-cell"
+                                                colSpan={null}
+                                                rowSpan={null}
+                                                style={Object {}}
+                                              >
+                                                Episodes
+                                              </th>
+                                            </Cell>
+                                            <Cell
+                                              className=""
+                                              colEnd={5}
+                                              colSpan={1}
+                                              colStart={5}
+                                              column={
+                                                Object {
+                                                  "dataIndex": Array [
+                                                    "permission",
                                                     "fact_check",
                                                   ],
                                                   "render": [Function],
@@ -2139,6 +2617,40 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                 Fact Check
                                               </th>
                                             </Cell>
+                                            <Cell
+                                              className=""
+                                              colEnd={6}
+                                              colSpan={1}
+                                              colStart={6}
+                                              column={
+                                                Object {
+                                                  "dataIndex": Array [
+                                                    "permission",
+                                                    "podcast",
+                                                  ],
+                                                  "render": [Function],
+                                                  "title": "Podcast",
+                                                }
+                                              }
+                                              component="th"
+                                              firstFixLeft={false}
+                                              firstFixRight={false}
+                                              key="permission-podcast"
+                                              lastFixLeft={false}
+                                              lastFixRight={false}
+                                              prefixCls="ant-table"
+                                              rowSpan={1}
+                                              rowType="header"
+                                            >
+                                              <th
+                                                className="ant-table-cell"
+                                                colSpan={null}
+                                                rowSpan={null}
+                                                style={Object {}}
+                                              >
+                                                Podcast
+                                              </th>
+                                            </Cell>
                                           </tr>
                                         </HeaderRow>
                                       </thead>
@@ -2161,7 +2673,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                         <ExpandedRow
                                           cellComponent="td"
                                           className="ant-table-placeholder"
-                                          colSpan={5}
+                                          colSpan={7}
                                           component="tr"
                                           componentWidth={0}
                                           expanded={true}
@@ -2176,13 +2688,13 @@ exports[`Space Permission component should render the component with data 1`] = 
                                             }
                                           >
                                             <Cell
-                                              colSpan={5}
+                                              colSpan={7}
                                               component="td"
                                               prefixCls="ant-table"
                                             >
                                               <td
                                                 className="ant-table-cell"
-                                                colSpan={5}
+                                                colSpan={7}
                                                 rowSpan={null}
                                                 style={Object {}}
                                               >

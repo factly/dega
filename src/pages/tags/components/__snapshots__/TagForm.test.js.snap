@@ -86,7 +86,7 @@ exports[`Tags Create Form component snapshot testing should match component with
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -335,10 +335,10 @@ exports[`Tags Create Form component snapshot testing should match component with
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -589,10 +589,10 @@ exports[`Tags Create Form component snapshot testing should match component with
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -787,10 +787,10 @@ exports[`Tags Create Form component snapshot testing should match component with
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -975,10 +975,10 @@ exports[`Tags Create Form component snapshot testing should match component with
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1316,7 +1316,7 @@ exports[`Tags Create Form component snapshot testing should match component with
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -1548,10 +1548,10 @@ exports[`Tags Create Form component snapshot testing should match component with
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1799,10 +1799,10 @@ exports[`Tags Create Form component snapshot testing should match component with
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1994,10 +1994,10 @@ exports[`Tags Create Form component snapshot testing should match component with
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2182,10 +2182,10 @@ exports[`Tags Create Form component snapshot testing should match component with
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2493,7 +2493,7 @@ exports[`Tags Create Form component snapshot testing should render the component
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -2725,10 +2725,10 @@ exports[`Tags Create Form component snapshot testing should render the component
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2976,10 +2976,10 @@ exports[`Tags Create Form component snapshot testing should render the component
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3171,10 +3171,10 @@ exports[`Tags Create Form component snapshot testing should render the component
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3359,10 +3359,10 @@ exports[`Tags Create Form component snapshot testing should render the component
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div

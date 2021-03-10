@@ -369,7 +369,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
           }
           wrapperCol={
             Object {
-              "span": 16,
+              "span": 8,
             }
           }
         >
@@ -503,10 +503,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                         >
                           <Col
                             className="ant-form-item-control"
-                            span={16}
+                            span={8}
                           >
                             <div
-                              className="ant-col ant-col-16 ant-form-item-control"
+                              className="ant-col ant-col-8 ant-form-item-control"
                               style={Object {}}
                             >
                               <div
@@ -1567,10 +1567,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -1761,10 +1761,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -1955,10 +1955,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -2149,10 +2149,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -2343,10 +2343,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -2548,10 +2548,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -2937,10 +2937,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -3326,10 +3326,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -3715,10 +3715,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -4129,10 +4129,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -4360,10 +4360,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -4591,10 +4591,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -4822,10 +4822,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={16}
+                                span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-16 ant-form-item-control"
+                                  className="ant-col ant-col-8 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -5066,10 +5066,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div

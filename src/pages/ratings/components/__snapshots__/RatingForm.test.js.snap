@@ -136,7 +136,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -410,10 +410,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -664,10 +664,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -898,10 +898,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1297,10 +1297,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1621,10 +1621,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2737,10 +2737,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3078,7 +3078,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -3310,10 +3310,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3561,10 +3561,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3792,10 +3792,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -4187,10 +4187,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -4509,10 +4509,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -5550,10 +5550,10 @@ exports[`Ratings Create Form component snapshot testing should match component w
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -5861,7 +5861,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 14,
+          "span": 8,
         }
       }
     >
@@ -6093,10 +6093,10 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -6344,10 +6344,10 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -6575,10 +6575,10 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -6970,10 +6970,10 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -7292,10 +7292,10 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -8333,10 +8333,10 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={14}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-14 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div

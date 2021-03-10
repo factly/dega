@@ -86,7 +86,7 @@ exports[`Categories Create Form component snapshot testing should match componen
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 16,
+          "span": 8,
         }
       }
     >
@@ -335,10 +335,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -589,10 +589,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -780,10 +780,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1108,10 +1108,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1296,10 +1296,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1493,10 +1493,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -1808,7 +1808,7 @@ exports[`Categories Create Form component snapshot testing should match componen
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 16,
+          "span": 8,
         }
       }
     >
@@ -2040,10 +2040,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2291,10 +2291,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2482,10 +2482,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2808,10 +2808,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -2996,10 +2996,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3165,10 +3165,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3478,7 +3478,7 @@ exports[`Categories Create Form component snapshot testing should render the com
       onFinish={[Function]}
       wrapperCol={
         Object {
-          "span": 16,
+          "span": 8,
         }
       }
     >
@@ -3710,10 +3710,10 @@ exports[`Categories Create Form component snapshot testing should render the com
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -3961,10 +3961,10 @@ exports[`Categories Create Form component snapshot testing should render the com
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -4152,10 +4152,10 @@ exports[`Categories Create Form component snapshot testing should render the com
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -4478,10 +4478,10 @@ exports[`Categories Create Form component snapshot testing should render the com
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -4666,10 +4666,10 @@ exports[`Categories Create Form component snapshot testing should render the com
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div
@@ -4835,10 +4835,10 @@ exports[`Categories Create Form component snapshot testing should render the com
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={16}
+                          span={8}
                         >
                           <div
-                            className="ant-col ant-col-16 ant-form-item-control"
+                            className="ant-col ant-col-8 ant-form-item-control"
                             style={Object {}}
                           >
                             <div

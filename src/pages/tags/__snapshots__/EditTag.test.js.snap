@@ -23,7 +23,7 @@ exports[`Tags List component snapshot testing should match component with empty 
       </label>
     </div>
     <div
-      className="ant-col ant-col-14 ant-form-item-control"
+      className="ant-col ant-col-8 ant-form-item-control"
       style={Object {}}
     >
       <div
@@ -63,7 +63,7 @@ exports[`Tags List component snapshot testing should match component with empty 
       </label>
     </div>
     <div
-      className="ant-col ant-col-14 ant-form-item-control"
+      className="ant-col ant-col-8 ant-form-item-control"
       style={Object {}}
     >
       <div
@@ -103,7 +103,7 @@ exports[`Tags List component snapshot testing should match component with empty 
       </label>
     </div>
     <div
-      className="ant-col ant-col-14 ant-form-item-control"
+      className="ant-col ant-col-8 ant-form-item-control"
       style={Object {}}
     >
       <div
@@ -149,7 +149,7 @@ exports[`Tags List component snapshot testing should match component with empty 
       </label>
     </div>
     <div
-      className="ant-col ant-col-14 ant-form-item-control"
+      className="ant-col ant-col-8 ant-form-item-control"
       style={Object {}}
     >
       <div
@@ -293,7 +293,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
       </label>
     </div>
     <div
-      className="ant-col ant-col-14 ant-form-item-control"
+      className="ant-col ant-col-8 ant-form-item-control"
       style={Object {}}
     >
       <div
@@ -333,7 +333,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
       </label>
     </div>
     <div
-      className="ant-col ant-col-14 ant-form-item-control"
+      className="ant-col ant-col-8 ant-form-item-control"
       style={Object {}}
     >
       <div
@@ -373,7 +373,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
       </label>
     </div>
     <div
-      className="ant-col ant-col-14 ant-form-item-control"
+      className="ant-col ant-col-8 ant-form-item-control"
       style={Object {}}
     >
       <div
@@ -419,7 +419,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
       </label>
     </div>
     <div
-      className="ant-col ant-col-14 ant-form-item-control"
+      className="ant-col ant-col-8 ant-form-item-control"
       style={Object {}}
     >
       <div
