@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Layout, Popover, List } from 'antd';
+import { Divider, Layout, Popover, List, Avatar } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 import AccountMenu from './AccountMenu';
 import SpaceSelector from './SpaceSelector';
@@ -30,11 +30,13 @@ function Header({ applications }) {
                   renderItem={(item) => (
                     <List.Item>
                       <a href={item.url} style={{ textDecoration: 'none', color: 'inherit' }}>
-                        <img
-                          alt="logo"
-                          className="menu-logo"
-                          src={require(`../../assets/${item.name.toLowerCase()}_icon.png`)}
-                        />
+                        {item.medium && item.medium.url ? (
+                          <img alt="logo" className="menu-logo" src={item.medium.url.raw} />
+                        ) : (
+                          <Avatar shape="square" size={35}>
+                            {item.name.charAt(0)}
+                          </Avatar>
+                        )}
                         <p>{item.name}</p>
                       </a>
                     </List.Item>

@@ -21,9 +21,7 @@ function Posts({ formats }) {
         <PostList actions={actions} format={formats.article} />
       </Space>
     );
-  return (
-    <FormatNotFound status="info" title="Fact-Check format not found" link="/formats/create" />
-  );
+  return <FormatNotFound status="info" title="Article format not found" link="/formats/create" />;
 }
 
 export default Posts;

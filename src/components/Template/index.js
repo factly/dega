@@ -61,13 +61,13 @@ function Template({ format }) {
 
   const handleAddPost = (item) => {
     if (format.slug === 'article') {
-      dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
-        history.push(`/posts/${res.id}/edit`),
-      );
+      dispatch(
+        addPost({ ...item, tag_ids: item.tags, category_ids: item.categories, status: 'draft' }),
+      ).then((res) => history.push(`/posts/${res.id}/edit`));
     } else if (format.slug === 'fact-check') {
-      dispatch(addPost({ ...item, status: 'draft' })).then((res) =>
-        history.push(`/fact-checks/${res.id}/edit`),
-      );
+      dispatch(
+        addPost({ ...item, tag_ids: item.tags, category_ids: item.categories, status: 'draft' }),
+      ).then((res) => history.push(`/fact-checks/${res.id}/edit`));
     }
   };
 
@@ -94,7 +94,9 @@ function Template({ format }) {
                       onClick={() => handleAddPost(item)}
                     />
                   ) : (
-                    <PlaceholderImage />
+                    <a onClick={() => handleAddPost(item)}>
+                      <PlaceholderImage />
+                    </a>
                   )
                 }
                 actions={[
