@@ -9,6 +9,7 @@ import { ADD_NOTIFICATION } from '../../constants/notifications';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -150,6 +151,7 @@ describe(' organisations actions' ,() => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -183,6 +185,7 @@ describe(' organisations actions' ,() => {
           type: 'success',
           title: 'Success',
           message: 'Organisation Permission added',
+          time: Date.now(),
         },
       },
     ];
@@ -207,6 +210,7 @@ describe(' organisations actions' ,() => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -235,6 +239,7 @@ describe(' organisations actions' ,() => {
           type: 'success',
           title: 'Success',
           message: 'Organisation Permission updated',
+          time: Date.now(),
         },
       },
       {
@@ -263,6 +268,7 @@ describe(' organisations actions' ,() => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -292,6 +298,7 @@ describe(' organisations actions' ,() => {
           type: 'success',
           title: 'Success',
           message: 'Organisation Permission deleted',
+          time: Date.now(),
         },
       },
     ];
@@ -315,6 +322,7 @@ describe(' organisations actions' ,() => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];

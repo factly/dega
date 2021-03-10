@@ -17,6 +17,7 @@ import { ADD_CLAIMS } from '../../constants/claims';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -487,6 +488,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -699,6 +701,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -781,6 +784,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post added',
+          time: Date.now(),
         },
       },
     ];
@@ -856,6 +860,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post added',
+          time: Date.now(),
         },
       },
     ];
@@ -894,6 +899,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -982,6 +988,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post updated',
+          time: Date.now(),
         },
       },
       {
@@ -1074,6 +1081,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post published',
+          time: Date.now(),
         },
       },
       {
@@ -1161,6 +1169,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post published',
+          time: Date.now(),
         },
       },
       {
@@ -1253,6 +1262,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post published',
+          time: Date.now(),
         },
       },
       {
@@ -1340,6 +1350,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post published',
+          time: Date.now(),
         },
       },
       {
@@ -1370,6 +1381,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -1463,6 +1475,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Template created',
+          time: Date.now(),
         },
       },
       {
@@ -1551,6 +1564,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Template created',
+          time: Date.now(),
         },
       },
       {
@@ -1581,6 +1595,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -1671,6 +1686,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post updated',
+          time: Date.now(),
         },
       },
       {
@@ -1712,6 +1728,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -1741,6 +1758,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -1772,6 +1790,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post deleted',
+          time: Date.now(),
         },
       },
     ];
@@ -1797,6 +1816,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];

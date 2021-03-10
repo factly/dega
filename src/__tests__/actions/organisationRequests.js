@@ -9,6 +9,7 @@ import { ADD_NOTIFICATION } from '../../constants/notifications';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -116,6 +117,7 @@ describe('Organisation Requests actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -181,6 +183,7 @@ describe('Organisation Requests actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -214,6 +217,7 @@ describe('Organisation Requests actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Organisation Request added',
+          time: Date.now(),
         },
       },
     ];
@@ -238,6 +242,7 @@ describe('Organisation Requests actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -265,6 +270,7 @@ describe('Organisation Requests actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Organisation Request ' + action + 'ed',
+          time: Date.now(),
         },
       },
     ];
@@ -290,6 +296,7 @@ describe('Organisation Requests actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -317,6 +324,7 @@ describe('Organisation Requests actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Organisation Request ' + action + 'ed',
+          time: Date.now(),
         },
       },
     ];
@@ -342,6 +350,7 @@ describe('Organisation Requests actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];

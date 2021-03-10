@@ -10,6 +10,7 @@ import { ADD_NOTIFICATION } from '../../constants/notifications';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   organisation: {},
@@ -69,7 +70,8 @@ describe('admin actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
-        }
+          time: Date.now(),
+        },
       },
       {
         type: types.SET_SUPER_ORGANISATIONS_LOADING,

@@ -10,6 +10,7 @@ import { ADD_MEDIA } from '../../constants/media';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -222,6 +223,7 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -254,6 +256,7 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -346,6 +349,7 @@ describe('claimants actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Claimant added',
+          time: Date.now(),
         },
       },
     ];
@@ -372,6 +376,7 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -402,6 +407,7 @@ describe('claimants actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Claimant updated',
+          time: Date.now(),
         },
       },
       {
@@ -441,6 +447,7 @@ describe('claimants actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Claimant updated',
+          time: Date.now(),
         },
       },
       {
@@ -471,6 +478,7 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -502,6 +510,7 @@ describe('claimants actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Claimant deleted',
+          time: Date.now(),
         },
       },
     ];
@@ -527,6 +536,7 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];

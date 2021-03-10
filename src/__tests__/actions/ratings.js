@@ -10,6 +10,7 @@ import { ADD_MEDIA } from '../../constants/media';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -221,6 +222,7 @@ describe('ratings actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -253,6 +255,7 @@ describe('ratings actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -345,6 +348,7 @@ describe('ratings actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Rating added',
+          time: Date.now(),
         },
       },
     ];
@@ -371,6 +375,7 @@ describe('ratings actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -401,6 +406,7 @@ describe('ratings actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Rating updated',
+          time: Date.now(),
         },
       },
       {
@@ -440,6 +446,7 @@ describe('ratings actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Rating updated',
+          time: Date.now(),
         },
       },
       {
@@ -470,6 +477,7 @@ describe('ratings actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
@@ -518,6 +526,7 @@ describe('ratings actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -643,6 +652,7 @@ describe('ratings actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {

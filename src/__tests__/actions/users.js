@@ -9,6 +9,7 @@ import { ADD_NOTIFICATION } from '../../constants/notifications';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   details: [],
@@ -99,6 +100,7 @@ describe('users actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
       {
