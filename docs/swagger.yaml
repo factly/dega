@@ -90,6 +90,41 @@ definitions:
       total:
         type: integer
     type: object
+  episode.episode:
+    properties:
+      audio_url:
+        type: string
+      description:
+        type: string
+      episode:
+        type: integer
+      medium_id:
+        type: integer
+      published_date:
+        type: string
+      season:
+        type: integer
+      slug:
+        type: string
+      space_id:
+        type: integer
+      title:
+        type: string
+    required:
+    - audio_url
+    - episode
+    - season
+    - title
+    type: object
+  episode.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Episode'
+        type: array
+      total:
+        type: integer
+    type: object
   event.event:
     properties:
       name:
@@ -490,6 +525,43 @@ definitions:
       updated_by_id:
         type: integer
     type: object
+  model.Episode:
+    properties:
+      audio_url:
+        type: string
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      episode:
+        type: integer
+      id:
+        type: integer
+      medium:
+        $ref: '#/definitions/model.Medium'
+      medium_id:
+        type: integer
+      published_date:
+        type: string
+      season:
+        type: integer
+      slug:
+        type: string
+      space:
+        $ref: '#/definitions/model.Space'
+      space_id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+    type: object
   model.Event:
     properties:
       created_at:
@@ -657,6 +729,49 @@ definitions:
       resource:
         type: string
     type: object
+  model.Podcast:
+    properties:
+      categories:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      episodes:
+        items:
+          $ref: '#/definitions/model.Episode'
+        type: array
+      id:
+        type: integer
+      language:
+        type: string
+      medium:
+        $ref: '#/definitions/model.Medium'
+      medium_id:
+        type: integer
+      primary_category:
+        $ref: '#/definitions/model.Category'
+      primary_category_id:
+        type: integer
+      slug:
+        type: string
+      space:
+        $ref: '#/definitions/model.Space'
+      space_id:
+        type: integer
+      title:
+        type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+    type: object
   model.Policy:
     properties:
       description:
@@ -706,6 +821,8 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
+      page:
+        type: boolean
       published_date:
         type: string
       slug:
@@ -821,12 +938,16 @@ definitions:
         type: integer
       deleted_at:
         type: string
+      episodes:
+        type: integer
       fact_check:
         type: boolean
       id:
         type: integer
       media:
         type: integer
+      podcast:
+        type: boolean
       posts:
         type: integer
       space:
@@ -848,12 +969,16 @@ definitions:
         type: string
       description:
         type: string
+      episodes:
+        type: integer
       fact_check:
         type: boolean
       id:
         type: integer
       media:
         type: integer
+      podcast:
+        type: boolean
       posts:
         type: integer
       space:
@@ -999,8 +1124,46 @@ definitions:
         type: integer
       spaces:
         type: integer
+      title:
+        type: string
     required:
     - organisation_id
+    - title
+    type: object
+  podcast.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Podcast'
+        type: array
+      total:
+        type: integer
+    type: object
+  podcast.podcast:
+    properties:
+      category_ids:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      episode_ids:
+        items:
+          type: integer
+        type: array
+      language:
+        type: string
+      medium_id:
+        type: integer
+      slug:
+        type: string
+      space_id:
+        type: integer
+      title:
+        type: string
+    required:
+    - language
+    - title
     type: object
   policy.paging:
     properties:
@@ -1053,6 +1216,8 @@ definitions:
       is_highlighted:
         type: boolean
       is_sticky:
+        type: boolean
+      page:
         type: boolean
       slug:
         type: string
@@ -1112,6 +1277,8 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
+      page:
+        type: boolean
       published_date:
         type: string
       slug:
@@ -1292,10 +1459,14 @@ definitions:
     type: object
   space.spacePermission:
     properties:
+      episodes:
+        type: integer
       fact_check:
         type: boolean
       media:
         type: integer
+      podcast:
+        type: boolean
       posts:
         type: integer
       space_id:
@@ -1307,14 +1478,20 @@ definitions:
     properties:
       description:
         type: string
+      episodes:
+        type: integer
       fact_check:
         type: boolean
       media:
         type: integer
+      podcast:
+        type: boolean
       posts:
         type: integer
       space_id:
         type: integer
+      title:
+        type: string
     required:
     - space_id
     type: object
@@ -1621,6 +1798,79 @@ paths:
       summary: Update a category by id
       tags:
       - Category
+  /core/episodes:
+    get:
+      description: Get all episodes
+      operationId: get-all-episodes
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      - description: Sort
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/episode.paging'
+      summary: Show all episodes
+      tags:
+      - Episode
+  /core/episodes/{episode_id}:
+    delete:
+      description: Delete episode by ID
+      operationId: delete-episode-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Episode ID
+        in: path
+        name: episode_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Delete a episode
+      tags:
+      - Episode
   /core/events:
     get:
       description: Get all events
@@ -4689,4 +4939,272 @@ paths:
       summary: Get meta info
       tags:
       - Meta
+  /podcast:
+    get:
+      description: Get all podcasts
+      operationId: get-all-podcasts
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: Query
+        in: query
+        name: q
+        type: string
+      - description: Sort
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/podcast.paging'
+      summary: Show all podcasts
+      tags:
+      - Podcast
+    post:
+      description: Create podcast
+      operationId: add-podcast
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Podcast Object
+        in: body
+        name: Podcast
+        required: true
+        schema:
+          $ref: '#/definitions/podcast.podcast'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Podcast'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create podcast
+      tags:
+      - Podcast
+  /podcast/{podcast_id}:
+    get:
+      description: Get podcast by ID
+      operationId: get-podcast-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Podcast ID
+        in: path
+        name: podcast_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Podcast'
+      summary: Show a podcast by id
+      tags:
+      - Podcast
+    put:
+      description: Update podcast by ID
+      operationId: update-podcast-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Podcast ID
+        in: path
+        name: podcast_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Podcast
+        in: body
+        name: Podcast
+        schema:
+          $ref: '#/definitions/podcast.podcast'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Podcast'
+      summary: Update a podcast by id
+      tags:
+      - Podcast
+  /podcast/episodes:
+    post:
+      description: Create episode
+      operationId: add-episode
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Episode Object
+        in: body
+        name: Episode
+        required: true
+        schema:
+          $ref: '#/definitions/episode.episode'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Episode'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create episode
+      tags:
+      - Episode
+  /podcast/episodes/{episode_id}:
+    get:
+      description: Get episode by ID
+      operationId: get-episode-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Episode ID
+        in: path
+        name: episode_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Episode'
+      summary: Show a episode by id
+      tags:
+      - Episode
+    put:
+      description: Update episode by ID
+      operationId: update-episode-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Episode ID
+        in: path
+        name: episode_id
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Episode
+        in: body
+        name: Episode
+        schema:
+          $ref: '#/definitions/episode.episode'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.Episode'
+      summary: Update a episode by id
+      tags:
+      - Episode
+  /podcasts/{podcast_id}:
+    delete:
+      description: Delete podcast by ID
+      operationId: delete-podcast-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Podcast ID
+        in: path
+        name: podcast_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+      summary: Delete a podcast
+      tags:
+      - Podcast
 swagger: "2.0"
