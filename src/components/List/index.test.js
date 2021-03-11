@@ -24,7 +24,7 @@ let state = {
         total: 1,
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
           format: [1],
         },
       },
@@ -187,7 +187,7 @@ describe('List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getPosts).toHaveBeenCalledWith({ page: 1, limit: 5, format: [1] });
+      expect(getPosts).toHaveBeenCalledWith({ page: 1, limit: 20, format: [1] });
     });
   });
   describe('component testing', () => {
@@ -236,7 +236,7 @@ describe('List component', () => {
 
       expect(deletePost).toHaveBeenCalled();
       expect(deletePost).toHaveBeenCalledWith(1);
-      expect(getPosts).toHaveBeenCalledWith({ page: 1, limit: 5, format: [1] });
+      expect(getPosts).toHaveBeenCalledWith({ page: 1, limit: 20, format: [1] });
     });
     it('should edit the post', () => {
       store = mockStore(state);
@@ -298,7 +298,7 @@ describe('List component', () => {
       setTimeout(() => {
         expect(getPosts).toHaveBeenCalledWith({
           page: 1,
-          limit: 5,
+          limit: 20,
           sort: 'asc',
           format: [1],
           q: 'Explainer',

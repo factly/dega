@@ -25,6 +25,7 @@ const data = {
   space_id: 11,
   media: -1,
   posts: -1,
+  episodes: 2,
   fact_check: true,
   description: 'Description',
 };
@@ -148,17 +149,23 @@ describe('Space Request Form component', () => {
           .at(2)
           .find('InputNumber')
           .props()
-          .onChange({ target: { value:  20} });
+          .onChange({ target: { value:  15} });
         wrapper
           .find('FormItem')
           .at(3)
+          .find('InputNumber')
+          .props()
+          .onChange({ target: { value:  20} });
+        wrapper
+          .find('FormItem')
+          .at(4)
           .find('Switch')
           .at(0)
           .props()
           .onChange({target: {checked: false} });  
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(6)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'New description' } });
@@ -174,6 +181,7 @@ describe('Space Request Form component', () => {
           space_id: 12,
           posts: 10,
           media: 20,
+          episodes: 15,
           fact_check: false,
           description: 'New description',
         });

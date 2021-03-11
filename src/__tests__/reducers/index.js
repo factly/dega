@@ -25,6 +25,19 @@ const initialState = {
     details: {},
     loading: true,
   },
+  redirect: {
+    code: 200,
+  },
+  episodes: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  podcasts: {
+    req: [],
+    details: {},
+    loading: true,
+  },
   organisationRequests: {
     req: [],
     details: {},
