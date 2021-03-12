@@ -141,6 +141,7 @@ function Selector({
           />
         ) : null
       }
+      getPopupContainer={(trigger) => trigger.parentNode}
     >
       {details.map((item) => (
         <Select.Option value={item.id} key={entity + item.id}>
