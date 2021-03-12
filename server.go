@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -41,6 +42,7 @@ func main() {
 	router.Use(loggerx.Init())
 	router.Use(validator.CheckSpace())
 	router.Use(middleware.RealIP)
+	router.Use(middlewarex.ValidateAPIToken("dega"))
 	// router.Use(util.GormRequestID)
 
 	config.SetupVars()
