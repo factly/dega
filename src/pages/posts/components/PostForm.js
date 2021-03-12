@@ -6,7 +6,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Prompt } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 
@@ -61,6 +61,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
 
   return (
     <>
+      <Prompt message="You have unsaved changes, are you sure you want to leave?" />
       <Form
         form={form}
         initialValues={{ ...data }}
@@ -103,7 +104,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
             </Space>
           </div>
           <Row gutter={16}>
-            <Col span={12} offset={6}>
+            <Col xs={{ span: 24 }}  xl={{span: 18, offset: 3}} xxl={{ span: 12, offset:6 }}>
               <Form.Item
                 name="title"
                 rules={[
@@ -117,9 +118,15 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
               >
                 <Input.TextArea
                   bordered={false}
+                  autoSize
                   placeholder="Add title for the post"
                   onChange={(e) => onTitleChange(e.target.value)}
-                  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center' }}
+                  style={{
+                    fontSize: '2.5rem',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    resize: 'none',
+                  }}
                 />
               </Form.Item>
 
@@ -134,6 +141,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                 visible={drawerVisible}
                 getContainer={false}
                 width={366}
+                bodyStyle={{   paddingBottom: 40   }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
                 <Form.Item name="featured_medium_id" label="Featured Image">

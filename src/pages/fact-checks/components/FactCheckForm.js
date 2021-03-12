@@ -9,7 +9,7 @@ import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { addClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
-import { useHistory } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 
@@ -81,6 +81,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   return (
     <>
+      <Prompt message="You have unsaved changes, are you sure you want to leave?" />
       <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
         <ClaimCreateForm onCreate={onClaimCreate} width={560} />
       </Modal>
@@ -125,8 +126,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
               </Form.Item>
             </Space>
           </div>
-          <Row gutter={16}>
-            <Col span={12} offset={6}>
+          <Row gutter={16} >
+            <Col xs={{ span: 24 }}  xl={{span: 18, offset: 3}} xxl={{ span: 12, offset:6 }}>
               <Form.Item
                 name="title"
                 rules={[
@@ -142,7 +143,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   bordered={false}
                   placeholder="Add title for the fact-check"
                   onChange={(e) => onTitleChange(e.target.value)}
-                  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center' }}
+                  style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
 
