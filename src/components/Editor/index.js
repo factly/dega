@@ -13,6 +13,7 @@ import Delimiter from '@editorjs/delimiter';
 import InlineCode from '@editorjs/inline-code';
 import { useSelector } from 'react-redux';
 import Embed from './Embed';
+import './index.css';
 
 function Editor({ value, onChange, style, placeholder = 'Begin writing your post...' }) {
   const editor_block = React.useRef(null);
