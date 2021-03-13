@@ -13,7 +13,7 @@ var NC *nats.EncodedConn
 // ConnectNats connect to nats server
 func ConnectNats() {
 	var err error
-	nc, err := nats.Connect(viper.GetString("nats_url"))
+	nc, err := nats.Connect(viper.GetString("nats_url"), nats.UserInfo(viper.GetString("nats_user_name"), viper.GetString("nats_user_password")))
 	if err != nil {
 		log.Fatal(err)
 	}
