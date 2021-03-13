@@ -59,20 +59,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Podcast{}
-	result.ID = uint(id)
-
-	// check record exists or not
-	err = config.DB.Where(&model.Podcast{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-		return
-	}
-
 	podcast := &podcast{}
 	err = json.NewDecoder(r.Body).Decode(&podcast)
 
@@ -87,6 +73,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if validationError != nil {
 		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
+		return
+	}
+
+	result := &model.Podcast{}
+	result.ID = uint(id)
+
+	// check record exists or not
+	err = config.DB.Where(&model.Podcast{
+		SpaceID: uint(sID),
+	}).First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
@@ -153,7 +153,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx.Model(&result).Updates(model.Podcast{
+	tx.Model(&result).Omit("Episodes", "Categories").Updates(model.Podcast{
 		Base:        config.Base{UpdatedByID: uint(uID)},
 		Description: podcast.Description,
 		Slug:        slugx.Approve(&config.DB, podcastSlug, sID, tableName),
@@ -186,10 +186,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	if err = util.NC.Publish("podcast.created", result); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if util.CheckNats() {
+		if err = util.NC.Publish("podcast.updated", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

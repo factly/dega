@@ -1,0 +1,345 @@
+package podcast
+
+import (
+	"database/sql/driver"
+	"errors"
+	"net/http"
+	"net/http/httptest"
+	"strings"
+	"testing"
+
+	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/service"
+	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/test/service/core/category"
+	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/core/permissions/space"
+	"github.com/factly/dega-server/test/service/podcast/episode"
+	"github.com/gavv/httpexpect"
+	"gopkg.in/h2non/gock.v1"
+)
+
+func TestPodcastUpdate(t *testing.T) {
+	mock := test.SetupMockDB()
+
+	test.MockServer()
+	gock.DisableNetworking()
+
+	testServer := httptest.NewServer(service.RegisterRoutes())
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer testServer.Close()
+
+	// create httpexpect instance
+	e := httpexpect.New(t, testServer.URL)
+
+	t.Run("invalid podcast id", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+		e.PUT(path).
+			WithPath("podcast_id", "invalid_id").
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusBadRequest)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("podcast record not found", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		mock.ExpectQuery(selectQuery).
+			WillReturnRows(sqlmock.NewRows(Columns))
+
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusNotFound)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("invalid podcast body", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithHeaders(headers).
+			WithJSON(invalidData).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("undecodable podcast body", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("podcast with same name already exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectQuery(mock)
+		Data["title"] = "New Title"
+
+		mock.ExpectQuery(countQuery).
+			WithArgs(1, strings.ToLower(Data["title"].(string))).
+			WillReturnRows(sqlmock.NewRows([]string{"count"}).
+				AddRow(1))
+
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		Data["title"] = "Test Podcast"
+	})
+
+	t.Run("updating episodes fails", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectQuery(mock)
+
+		mock.ExpectBegin()
+		episode.SelectQuery(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectQuery(`INSERT INTO "episodes"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, episode.Data["title"], episode.Data["slug"], episode.Data["season"], episode.Data["episode"], episode.Data["audio_url"], episode.Data["description"], episode.Data["published_date"], 1, episode.Data["medium_id"], 1).
+			WillReturnError(errors.New("cannot update episodes"))
+
+		mock.ExpectExec(`INSERT INTO "podcast_episodes"`).
+			WithArgs(1, 1).
+			WillReturnError(errors.New("cannot update episodes"))
+
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("updating categories fails", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectQuery(mock)
+
+		mock.ExpectBegin()
+		episode.SelectQuery(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		podcastEpisodesInsert(mock)
+
+		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
+			WithArgs(1, 1).
+			WillReturnResult(driver.ResultNoRows)
+
+		category.SelectWithOutSpace(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectQuery(`INSERT INTO "categories"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], 1, category.Data["meta_fields"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnError(errors.New("cannot update categories"))
+		mock.ExpectExec(`INSERT INTO "podcast_categories"`).
+			WithArgs(1, 1).
+			WillReturnError(errors.New("cannot update categories"))
+
+		mock.ExpectRollback()
+
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("updating podcast", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectQuery(mock)
+
+		mock.ExpectBegin()
+		episode.SelectQuery(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		podcastEpisodesInsert(mock)
+
+		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
+			WithArgs(1, 1).
+			WillReturnResult(driver.ResultNoRows)
+
+		category.SelectWithOutSpace(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		podcastCategoriesInsert(mock)
+		mock.ExpectExec(`DELETE FROM "podcast_categories"`).
+			WithArgs(1, 1).
+			WillReturnResult(driver.ResultNoRows)
+
+		slugCheckMock(mock, Data)
+		medium.SelectWithSpace(mock)
+		mock.ExpectExec(`UPDATE \"podcasts\"`).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["language"], Data["medium_id"], 1, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		SelectQuery(mock)
+		PodcastCategorySelect(mock)
+		PodcastEpisodeSelect(mock)
+
+		mock.ExpectCommit()
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("updating podcast when medium_id = 0", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectQuery(mock)
+
+		mock.ExpectBegin()
+		episode.SelectQuery(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		podcastEpisodesInsert(mock)
+
+		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
+			WithArgs(1, 1).
+			WillReturnResult(driver.ResultNoRows)
+
+		category.SelectWithOutSpace(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		podcastCategoriesInsert(mock)
+		mock.ExpectExec(`DELETE FROM "podcast_categories"`).
+			WithArgs(1, 1).
+			WillReturnResult(driver.ResultNoRows)
+
+		mock.ExpectExec(`UPDATE \"podcasts\"`).
+			WithArgs(nil, test.AnyTime{}, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		slugCheckMock(mock, Data)
+		mock.ExpectExec(`UPDATE \"podcasts\"`).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["language"], 1, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		SelectQuery(mock)
+		PodcastCategorySelect(mock)
+		PodcastEpisodeSelect(mock)
+
+		mock.ExpectCommit()
+		Data["medium_id"] = 0
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusOK)
+		test.ExpectationsMet(t, mock)
+		Data["medium_id"] = 1
+	})
+
+	t.Run("updating podcast when meili is down", func(t *testing.T) {
+		test.DisableMeiliGock(testServer.URL)
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectQuery(mock)
+
+		mock.ExpectBegin()
+		episode.SelectQuery(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		podcastEpisodesInsert(mock)
+
+		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
+			WithArgs(1, 1).
+			WillReturnResult(driver.ResultNoRows)
+
+		category.SelectWithOutSpace(mock)
+		medium.SelectWithSpace(mock)
+
+		mock.ExpectExec(`UPDATE "podcasts" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
+
+		podcastCategoriesInsert(mock)
+		mock.ExpectExec(`DELETE FROM "podcast_categories"`).
+			WithArgs(1, 1).
+			WillReturnResult(driver.ResultNoRows)
+
+		slugCheckMock(mock, Data)
+		medium.SelectWithSpace(mock)
+		mock.ExpectExec(`UPDATE \"podcasts\"`).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["language"], Data["medium_id"], 1, 1).
+			WillReturnResult(sqlmock.NewResult(1, 1))
+
+		SelectQuery(mock)
+		PodcastCategorySelect(mock)
+		PodcastEpisodeSelect(mock)
+
+		mock.ExpectRollback()
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+
+	})
+
+}
