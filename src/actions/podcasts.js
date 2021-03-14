@@ -7,8 +7,10 @@ import {
   RESET_PODCASTS,
   PODCASTS_API,
 } from '../constants/podcasts';
+import { addCategories } from './categories';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
+import { addEpisodes } from './episodes';
 
 export const getPodcasts = (query) => {
   return (dispatch) => {
@@ -18,7 +20,37 @@ export const getPodcasts = (query) => {
         params: query,
       })
       .then((response) => {
-        dispatch(addPodcastsList(response.data.nodes));
+        dispatch(
+          addCategories(
+            response.data.nodes
+              .filter((podcast) => podcast.categories.length > 0)
+              .map((podcast) => {
+                return podcast.categories;
+              })
+              .flat(1),
+          ),
+        );
+        dispatch(
+          addEpisodes(
+            response.data.nodes
+              .filter((podcast) => podcast.episodes.length > 0)
+              .map((podcast) => {
+                return podcast.episodes;
+              })
+              .flat(1),
+          ),
+        );
+        dispatch(
+          addPodcastsList(
+            response.data.nodes.map((podcast) => {
+              return {
+                ...podcast,
+                categories: podcast.categories.map((category) => category.id),
+                episodes: podcast.episodes.map((episode) => episode.id),
+              };
+            }),
+          ),
+        );
         dispatch(
           addPodcastsRequest({
             data: response.data.nodes.map((item) => item.id),
@@ -40,7 +72,16 @@ export const getPodcast = (id) => {
     return axios
       .get(PODCASTS_API + '/' + id)
       .then((response) => {
-        dispatch(getPodcastByID(response.data));
+        let podcast = response.data;
+        dispatch(addEpisodes(podcast.episodes));
+        dispatch(addCategories(podcast.categories));
+        dispatch(
+          getPodcastByID({
+            ...podcast,
+            episodes: podcast.episodes.map((episode) => episode.id),
+            categories: podcast.categories.map((category) => category.id),
+          }),
+        );
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -70,7 +111,16 @@ export const updatePodcast = (data) => {
     return axios
       .put(PODCASTS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getPodcastByID(response.data));
+        let podcast = response.data;
+        dispatch(addEpisodes(podcast.episodes));
+        dispatch(addCategories(podcast.categories));
+        dispatch(
+          getPodcastByID({
+            ...podcast,
+            episodes: podcast.episodes.map((episode) => episode.id),
+            categories: podcast.categories.map((category) => category.id),
+          }),
+        );
         dispatch(addSuccessNotification('Podcast updated'));
       })
       .catch((error) => {
