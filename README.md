@@ -18,6 +18,11 @@ DATABASE_PORT=5432
 DATABASE_SSL_MODE=disable
 MODE=development
 OATHKEEPER_HOST=oathkeeper:4455
+ENABLE_HUKZ=true
+NATS_URL=nats://nats:4222
+NATS_USER_NAME=natsuser
+NATS_USER_PASSWORD=natspassword
+HUKZ_URL=http://hukz:7790
 
 KAVACH_URL=http://kavach-server:8000
 IMAGEPROXY_URL=http://127.0.0.1:7001
