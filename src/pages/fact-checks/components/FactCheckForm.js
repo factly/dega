@@ -19,6 +19,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const sidebar = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const [status, setStatus] = useState(data.status ? data.status : 'draft');
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -52,11 +53,12 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.format_id = format.id;
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims || [];
+    values.status = status;
     onCreate(values);
   };
 
   const onTitleChange = (string) => {
-    if (form.getFieldValue('status') !== 'publish') {
+    if (status !== 'publish') {
       form.setFieldsValue({
         slug: maker(string),
       });
@@ -117,23 +119,18 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   </Button>
                 </Form.Item>
               ) : null}
-              <Form.Item name="status">
-                <Select>
-                  <Option key={'draft'} value={'draft'}>
-                    Draft
-                  </Option>
-                  {actions.includes('admin') || actions.includes('publish') ? (
-                    <Option key={'publish'} value={'publish'}>
-                      Publish
-                    </Option>
-                  ) : null}
-                </Select>
-              </Form.Item>
-              <Form.Item name="submit">
-                <Button type="secondary" htmlType="submit">
-                  Submit
+              <Form.Item name="draft">
+                <Button type="secondary" htmlType="submit" onClick={() => setStatus('draft')}>
+                  Save as draft
                 </Button>
               </Form.Item>
+              {actions.includes('admin') || actions.includes('publish') ? (
+                <Form.Item name="submit">
+                  <Button type="secondary" htmlType="submit" onClick={() => setStatus('publish')}>
+                    {data.id && status === 'publish' ? 'Update' : 'Publish'}
+                  </Button>
+                </Form.Item>
+              ) : null}
               <Form.Item name="drawerOpen">
                 <Button type="secondary" onClick={showDrawer}>
                   <SettingFilled />
