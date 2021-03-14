@@ -2,7 +2,7 @@ import React from 'react';
 import PostEditForm from './components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
 import { Skeleton } from 'antd';
-import { updatePost, getPost, publishPost, addTemplate } from '../../actions/posts';
+import { updatePost, getPost } from '../../actions/posts';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
@@ -35,12 +35,9 @@ function EditPost({ formats }) {
   }
 
   const onUpdate = (values) => {
-    if (values.status === 'draft' || values.status === 'template')
-      dispatch(updatePost({ ...post, ...values })).then(() => {
-        history.push('/posts');
-      });
-    if (values.status === 'publish')
-      dispatch(publishPost({ ...post, ...values })).then(() => history.push('/posts'));
+    dispatch(updatePost({ ...post, ...values })).then(() => {
+      history.push('/posts');
+    });
   };
   return (
     <PostEditForm data={post} onCreate={onUpdate} actions={actions} format={formats.article} />
