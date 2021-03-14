@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, InputNumber, Space, Row, Col, Radio } from 'antd';
+import { Button, Form, Input, InputNumber, Space, Radio } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
-import UppyUploader from '../../../components/Uppy';
 import Audio from './Audio';
 
 const layout = {
