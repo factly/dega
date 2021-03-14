@@ -1,12 +1,12 @@
-import React from 'react';
-import { Row, Col, Form, Input, Button, Space, Select, Drawer } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Row, Col, Form, Input, Button, Space, Select, Drawer, Modal } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Prompt } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 
@@ -16,7 +16,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const sidebar = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     const prev = sidebar.collapsed;
     if (!sidebar.collapsed) {
       dispatch(setCollapse(true));
@@ -29,7 +29,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
 
   const { Option } = Select;
 
-  const [drawerVisible, setDrawerVisible] = React.useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {
     setDrawerVisible(true);
   };
@@ -39,7 +39,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
 
   if (!data.status) data.status = 'draft';
 
+  const [shouldBlockNavigation, setShouldBlockNavigation] = useState(false);
+
   const onSave = (values) => {
+    setShouldBlockNavigation(false);
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
     values.format_id = format.id;
@@ -59,13 +62,26 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
   };
 
+  useEffect(() => {
+    if (shouldBlockNavigation) {
+      window.onbeforeunload = () => true;
+    } else {
+      window.onbeforeunload = undefined;
+    }
+  }, [shouldBlockNavigation]);
+
   return (
     <>
+      <Prompt
+        when={shouldBlockNavigation}
+        message="You have unsaved changes, are you sure you want to leave?"
+      />
       <Form
         form={form}
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
+        onValuesChange={() => setShouldBlockNavigation(true)}
         layout="vertical"
       >
         <Space direction="vertical">
@@ -103,7 +119,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
             </Space>
           </div>
           <Row gutter={16}>
-            <Col span={12} offset={6}>
+            <Col xs={{ span: 24 }} xl={{ span: 18, offset: 3 }} xxl={{ span: 12, offset: 6 }}>
               <Form.Item
                 name="title"
                 rules={[
@@ -117,9 +133,15 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
               >
                 <Input.TextArea
                   bordered={false}
+                  autoSize
                   placeholder="Add title for the post"
                   onChange={(e) => onTitleChange(e.target.value)}
-                  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center' }}
+                  style={{
+                    fontSize: '2.5rem',
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                    resize: 'none',
+                  }}
                 />
               </Form.Item>
 
@@ -134,6 +156,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                 visible={drawerVisible}
                 getContainer={false}
                 width={366}
+                bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
                 <Form.Item name="featured_medium_id" label="Featured Image">

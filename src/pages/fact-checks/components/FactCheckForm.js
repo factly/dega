@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Form, Input, Button, Space, Select, Drawer } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
@@ -9,7 +9,7 @@ import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { addClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
-import { useHistory } from 'react-router-dom';
+import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 
@@ -18,9 +18,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [form] = Form.useForm();
   const sidebar = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const prev = sidebar.collapsed;
     if (!sidebar.collapsed) {
       dispatch(setCollapse(true));
@@ -33,7 +33,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   const { Option } = Select;
 
-  const [drawerVisible, setDrawerVisible] = React.useState(false);
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {
     setDrawerVisible(true);
   };
@@ -43,7 +43,10 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   if (!data.status) data.status = 'draft';
 
+  const [shouldBlockNavigation, setShouldBlockNavigation] = useState(false);
+
   const onSave = (values) => {
+    setShouldBlockNavigation(false);
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
     values.format_id = format.id;
@@ -79,8 +82,20 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/fact-checks'));
   };
 
+  useEffect(() => {
+    if (shouldBlockNavigation) {
+      window.onbeforeunload = () => true;
+    } else {
+      window.onbeforeunload = undefined;
+    }
+  }, [shouldBlockNavigation]);
+
   return (
     <>
+      <Prompt
+        when={shouldBlockNavigation}
+        message="You have unsaved changes, are you sure you want to leave?"
+      />
       <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
         <ClaimCreateForm onCreate={onClaimCreate} width={560} />
       </Modal>
@@ -89,6 +104,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
+        onValuesChange={() => setShouldBlockNavigation(true)}
         layout="vertical"
       >
         <Space direction="vertical">
@@ -126,7 +142,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
             </Space>
           </div>
           <Row gutter={16}>
-            <Col span={12} offset={6}>
+            <Col xs={{ span: 24 }} xl={{ span: 18, offset: 3 }} xxl={{ span: 12, offset: 6 }}>
               <Form.Item
                 name="title"
                 rules={[
@@ -142,7 +158,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   bordered={false}
                   placeholder="Add title for the fact-check"
                   onChange={(e) => onTitleChange(e.target.value)}
-                  style={{ fontSize: '2rem', fontWeight: 'bold', textAlign: 'center' }}
+                  style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
 
