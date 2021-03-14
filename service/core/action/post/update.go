@@ -202,7 +202,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			if post.Status == "draft" {
 				updatedPost.PublishedDate = time.Time{}
 			}
-			updatedPost.Status = "publish"
+			updatedPost.Status = post.Status
 		} else {
 			updatedPost.Status = result.Post.Status
 		}
