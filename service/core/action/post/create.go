@@ -45,6 +45,20 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	uID, err := middlewarex.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	oID, err := util.GetOrganisation(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	post := post{}
 
 	err = json.NewDecoder(r.Body).Decode(&post)
@@ -63,9 +77,26 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var status string = " draft"
+
+	if post.Status == "publish" {
+
+		stat, err := getPublishPermissions(oID, sID, uID)
+
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+
+		if stat == http.StatusOK {
+			status = "publish"
+		}
+	}
+
 	post.SpaceID = uint(sID)
 
-	result, errMessage := createPost(r.Context(), post, "draft")
+	result, errMessage := createPost(r.Context(), post, status)
 
 	if errMessage.Code != 0 {
 		errorx.Render(w, errorx.Parser(errMessage))
