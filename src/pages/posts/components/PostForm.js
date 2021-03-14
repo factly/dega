@@ -14,6 +14,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
   const [form] = Form.useForm();
   const sidebar = useSelector((state) => state.sidebar);
+  const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -47,11 +48,12 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
     values.tag_ids = values.tags || [];
     values.format_id = format.id;
     values.author_ids = values.authors || [];
+    values.status = status;
     onCreate(values);
   };
 
   const onTitleChange = (string) => {
-    if (form.getFieldValue('status') !== 'publish') {
+    if (status !== 'publish') {
       form.setFieldsValue({
         slug: maker(string),
       });
@@ -94,23 +96,18 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                   </Button>
                 </Form.Item>
               ) : null}
-              <Form.Item name="status">
-                <Select>
-                  <Option key={'draft'} value={'draft'}>
-                    Draft
-                  </Option>
-                  {actions.includes('admin') || actions.includes('publish') ? (
-                    <Option key={'publish'} value={'publish'}>
-                      Publish
-                    </Option>
-                  ) : null}
-                </Select>
-              </Form.Item>
-              <Form.Item name="submit">
-                <Button type="secondary" htmlType="submit">
-                  Submit
+              <Form.Item name="draft">
+                <Button type="secondary" htmlType="submit" onClick={() => setStatus('draft')}>
+                  Save as draft
                 </Button>
               </Form.Item>
+              {actions.includes('admin') || actions.includes('publish') ? (
+                <Form.Item name="submit">
+                  <Button type="secondary" htmlType="submit" onClick={() => setStatus('publish')}>
+                    {data.id && status === 'publish' ? 'Update' : 'Publish'}
+                  </Button>
+                </Form.Item>
+              ) : null}
               <Form.Item name="drawerOpen">
                 <Button type="secondary" onClick={showDrawer}>
                   <SettingFilled />
