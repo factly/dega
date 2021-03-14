@@ -188,8 +188,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FeaturedMediumID: featuredMediumID,
 	}
 
-	// Check if post status is changed back to draft from published
-	if result.Post.Status == "publish" && post.Status == "draft" {
+	if result.Post.Status == "publish" || post.Status == "publish" {
 		status, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			tx.Rollback()
@@ -199,13 +198,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if status == http.StatusOK {
-			updatedPost.Status = "draft"
-			updatedPost.PublishedDate = time.Time{}
+			// Check if post status is changed back to draft from published
+			if post.Status == "draft" {
+				updatedPost.PublishedDate = time.Time{}
+			}
+			updatedPost.Status = "publish"
 		} else {
-			tx.Rollback()
-			w.WriteHeader(http.StatusUnauthorized)
-			return
+			updatedPost.Status = result.Post.Status
 		}
+
 	}
 
 	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted", "Page").Omit("Tags", "Categories").Updates(model.Post{
