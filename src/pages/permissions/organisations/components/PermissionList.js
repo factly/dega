@@ -8,7 +8,7 @@ function PermissionList() {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
-    limit: 5,
+    limit: 20,
   });
 
   const { organisation_permissions, total, loading } = useSelector((state) => {

@@ -9,7 +9,7 @@ function FormatList({ actions }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
-    limit: 5,
+    limit: 20,
   });
   const { formats, total, loading } = useSelector((state) => {
     const node = state.formats.req.find((item) => {
