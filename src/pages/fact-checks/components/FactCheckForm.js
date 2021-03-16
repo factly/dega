@@ -83,11 +83,17 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   useEffect(() => {
-    if (shouldBlockNavigation) {
-      window.onbeforeunload = () => true;
-    } else {
-      window.onbeforeunload = undefined;
-    }
+    const handleBeforeUnload = () => {
+      if (shouldBlockNavigation) {
+        window.onbeforeunload = () => true;
+      } else {
+        window.onbeforeunload = undefined;
+      }
+    };
+    handleBeforeUnload();
+    return () => {
+      window.removeEventListener('onbeforeunload', handleBeforeUnload);
+    };
   }, [shouldBlockNavigation]);
 
   return (
