@@ -10,7 +10,7 @@ function EpisodeList({ actions }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
-    limit: 5,
+    limit: 20,
   });
   const [form] = Form.useForm();
   const { Option } = Select;

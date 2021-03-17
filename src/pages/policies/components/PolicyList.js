@@ -10,7 +10,7 @@ function PolicyList({ actions }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
-    limit: 5,
+    limit: 20,
   });
 
   const { policies, total, loading } = useSelector((state) => {

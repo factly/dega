@@ -13,7 +13,7 @@ function RequestList() {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
-    limit: 5,
+    limit: 20,
   });
 
   const { organisationRequests, total, loading } = useSelector((state) => {
