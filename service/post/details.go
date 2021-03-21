@@ -3,7 +3,6 @@ package post
 import (
 	"fmt"
 	"net/http"
-	"strconv"
 
 	"github.com/factly/dega-vito/config"
 	"github.com/factly/dega-vito/model"
@@ -23,12 +22,9 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	postID := chi.URLParam(r, "post_id")
-	id, err := strconv.Atoi(postID)
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+	slug := chi.URLParam(r, "post_slug")
+	if slug == "" {
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("Invalid Slug", http.StatusBadRequest)))
 		return
 	}
 
@@ -37,9 +33,10 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	postAuthors := []model.PostAuthor{}
 	postClaims := []model.PostClaim{}
-	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Where(&model.Post{
+		Slug: slug,
+	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
 		SpaceID: uint(sID),
 	}).First(&result.Post).Error
 
@@ -51,7 +48,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	if result.Format.Slug == "fact-check" {
 		config.DB.Model(&model.PostClaim{}).Where(&model.PostClaim{
-			PostID: uint(id),
+			PostID: uint(result.Post.ID),
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
 		// appending all post claims
@@ -62,7 +59,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	// fetch all authors
 	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
-		PostID: uint(id),
+		PostID: uint(result.Post.ID),
 	}).Find(&postAuthors)
 
 	if len(postAuthors) != 0 {
