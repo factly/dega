@@ -34,10 +34,9 @@ func details(w http.ResponseWriter, r *http.Request) {
 	postAuthors := []model.PostAuthor{}
 	postClaims := []model.PostClaim{}
 
-	err = config.DB.Model(&model.Post{}).Where(&model.Post{
-		Slug: slug,
-	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
 		SpaceID: uint(sID),
+		Slug:    slug,
 	}).First(&result.Post).Error
 
 	if err != nil {
