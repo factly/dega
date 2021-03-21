@@ -4,9 +4,14 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/dlmiddlecote/sqlstats"
 	"github.com/factly/dega-vito/config"
 	"github.com/factly/dega-vito/service"
 	"github.com/factly/dega-vito/util"
+	"github.com/go-chi/chi"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/spf13/viper"
 )
 
 // @title Dega Vito
@@ -31,6 +36,18 @@ func main() {
 
 	// parse templates
 	util.SetupTemplates()
+
+	go func() {
+		promRouter := chi.NewRouter()
+
+		sqlDB, _ := config.DB.DB()
+		collector := sqlstats.NewStatsCollector(viper.GetString("database_name"), sqlDB)
+
+		prometheus.MustRegister(collector)
+
+		promRouter.Mount("/metrics", promhttp.Handler())
+		log.Fatal(http.ListenAndServe(":8001", promRouter))
+	}()
 
 	r := service.RegisterRoutes()
 	if err := http.ListenAndServe(":8000", r); err != nil {
