@@ -4,6 +4,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import JsonEditor from '../../../components/JsonEditor';
+import Selector from '../../../components/Selector';
 
 const layout = {
   labelCol: {
@@ -52,9 +53,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         onReset();
       }}
     >
-      {/* <Form.Item name="parent_id" label="Parent Category">
+      <Form.Item name="parent_id" label="Parent Category">
         <Selector action="Categories" />
-      </Form.Item> */}
+      </Form.Item>
       <Form.Item
         name="name"
         label="Category"
