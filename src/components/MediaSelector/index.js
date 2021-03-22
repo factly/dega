@@ -3,7 +3,7 @@ import { Modal, Button, Radio, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import MediaUploader from './UploadMedium';
 import MediaList from './MediaList';
-import { getMedium } from '../../actions/media';
+import { getMedium, getMedia } from '../../actions/media';
 import ImagePlaceholder from '../ErrorsAndImage/PlaceholderImage';
 
 function MediaSelector({ value = null, onChange }) {
@@ -12,10 +12,14 @@ function MediaSelector({ value = null, onChange }) {
   const [tab, setTab] = React.useState('list');
   const dispatch = useDispatch();
 
+  const [mediumFetch, setMediumFetch] = React.useState(false);
+
   const medium = useSelector((state) => {
     return state.media.details[value] || null;
   });
-
+  const {media, loading} = useSelector((state) => {
+    return {media : state.media, loading: state.media.loading };
+  });
   const setValue = () => {
     value = null;
   };
@@ -27,6 +31,41 @@ function MediaSelector({ value = null, onChange }) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    console.log('fetching');
+    if(mediumFetch) {
+      dispatch(getMedia());
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[dispatch, mediumFetch]);
+  const getUploadedMedium = (values) => {
+    if(!loading && mediumFetch) {
+      console.log('media2',media);
+      const medium = media.details[media.req[0].data[0]];
+      if(medium.name === values.name) {
+        console.log('medium',medium);
+      };
+      console.log('medium name if not',medium);
+    };
+  }
+  const onUpload = (values) => {
+    console.log('values',values);
+    setMediumFetch(true);
+    //dispatch(getMedia()).then(() => {
+      console.log('media',media);
+      getUploadedMedium(values);
+      // if(!loading) {
+      //   console.log('media2',media);
+      //   const medium = media.details[media.req[0].data[0]];
+      //   if(medium.name === values.name) {
+      //     console.log('medium',medium);
+      //   };
+      //   console.log('medium name if not',medium);
+      // };
+    //});
+
+  };
 
   return (
     <>
@@ -59,7 +98,7 @@ function MediaSelector({ value = null, onChange }) {
           {tab === 'list' ? (
             <MediaList onSelect={setSelected} selected={selected} onUnselect={setValue} />
           ) : tab === 'upload' ? (
-            <MediaUploader />
+            <MediaUploader onMediaUpload={onUpload} />
           ) : null}
         </Space>
       </Modal>
