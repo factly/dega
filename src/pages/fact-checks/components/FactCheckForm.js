@@ -7,7 +7,7 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
-import { addClaim } from '../../../actions/claims';
+import { addClaim, getClaims } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
@@ -20,6 +20,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
+  const [claimCreatedFlag, setClaimCreatedFlag] = React.useState(false);
+  const [newClaim, setNewClaim] = React.useState(null);
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -31,6 +33,21 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const { claims, loading } = useSelector((state) => {
+    return { claims: state.claims, loading: state.claims.loading };
+  });
+  if (!loading && claimCreatedFlag) {
+    const fetchedClaimId = claims.req[0].data[0];
+    const fetchedClaim = claims.details[fetchedClaimId];
+    if (newClaim.slug === fetchedClaim.slug) {
+      data.claims.push(fetchedClaim.id);
+      setClaimCreatedFlag(false);
+    }
+  }
+  useEffect(() => {
+    dispatch(getClaims({}));
+  }, [newClaim]);
 
   const { Option } = Select;
 
@@ -77,7 +94,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then(() => setVisible(false));
+    dispatch(addClaim(values)).then(
+      () => setVisible(false),
+      setNewClaim(values),
+      setClaimCreatedFlag(true),
+    );
   };
 
   const createTemplate = () => {
