@@ -9,12 +9,13 @@ import (
 
 // rating model
 type rating struct {
-	Name         string         `json:"name" validate:"required,min=3,max=50"`
-	Slug         string         `json:"slug"`
-	Colour       postgres.Jsonb `json:"colour" validate:"required" swaggertype:"primitive,string"`
-	Description  postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	NumericValue int            `json:"numeric_value" validate:"required"`
-	MediumID     uint           `json:"medium_id"`
+	Name             string         `json:"name" validate:"required,min=3,max=50"`
+	Slug             string         `json:"slug"`
+	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`
+	TextColour       postgres.Jsonb `json:"text_colour" validate:"required" swaggertype:"primitive,string"`
+	Description      postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
+	NumericValue     int            `json:"numeric_value" validate:"required"`
+	MediumID         uint           `json:"medium_id"`
 }
 
 var userContext config.ContextKey = "rating_user"
