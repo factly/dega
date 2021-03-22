@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { Button, Form, Input, Steps, Select } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
 import { checker } from '../../../utils/sluger';
-import Editor from '../../../components/Editor';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const layout = {
   labelCol: {
@@ -105,7 +105,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             <Input />
           </Form.Item>
           <Form.Item name="description" label="Description">
-            <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
+            <TextArea placeholder="Enter Description..." />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>
