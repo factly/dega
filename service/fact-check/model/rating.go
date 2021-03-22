@@ -13,15 +13,16 @@ import (
 // Rating model
 type Rating struct {
 	config.Base
-	Name         string         `gorm:"column:name" json:"name"`
-	Slug         string         `gorm:"column:slug" json:"slug"`
-	Colour       postgres.Jsonb `gorm:"column:colour" json:"colour" swaggertype:"primitive,string"`
-	Description  postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
-	NumericValue int            `gorm:"column:numeric_value" json:"numeric_value"`
-	MediumID     *uint          `gorm:"column:medium_id;default=NULL" json:"medium_id"`
-	Medium       *model.Medium  `json:"medium"`
-	SpaceID      uint           `gorm:"column:space_id" json:"space_id"`
-	Space        *model.Space   `json:"space,omitempty"`
+	Name             string         `gorm:"column:name" json:"name"`
+	Slug             string         `gorm:"column:slug" json:"slug"`
+	BackgroundColour postgres.Jsonb `gorm:"column:background_colour" json:"background_colour" swaggertype:"primitive,string"`
+	TextColour       postgres.Jsonb `gorm:"column:text_colour" json:"text_colour" swaggertype:"primitive,string"`
+	Description      postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
+	NumericValue     int            `gorm:"column:numeric_value" json:"numeric_value"`
+	MediumID         *uint          `gorm:"column:medium_id;default=NULL" json:"medium_id"`
+	Medium           *model.Medium  `json:"medium"`
+	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
+	Space            *model.Space   `json:"space,omitempty"`
 }
 
 // BeforeSave - validation for medium

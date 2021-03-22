@@ -141,13 +141,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tx.Model(&result).Updates(model.Rating{
-		Base:         config.Base{UpdatedByID: uint(uID)},
-		Name:         rating.Name,
-		Slug:         ratingSlug,
-		Colour:       rating.Colour,
-		MediumID:     mediumID,
-		Description:  rating.Description,
-		NumericValue: rating.NumericValue,
+		Base:             config.Base{UpdatedByID: uint(uID)},
+		Name:             rating.Name,
+		Slug:             ratingSlug,
+		BackgroundColour: rating.BackgroundColour,
+		TextColour:       rating.TextColour,
+		MediumID:         mediumID,
+		Description:      rating.Description,
+		NumericValue:     rating.NumericValue,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
@@ -159,14 +160,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":            result.ID,
-		"kind":          "rating",
-		"name":          result.Name,
-		"slug":          result.Slug,
-		"colour":        rating.Colour,
-		"description":   result.Description,
-		"numeric_value": result.NumericValue,
-		"space_id":      result.SpaceID,
+		"id":                result.ID,
+		"kind":              "rating",
+		"name":              result.Name,
+		"slug":              result.Slug,
+		"background_colour": rating.BackgroundColour,
+		"text_colour":       rating.TextColour,
+		"description":       result.Description,
+		"numeric_value":     result.NumericValue,
+		"space_id":          result.SpaceID,
 	}
 
 	err = meilisearchx.UpdateDocument("dega", meiliObj)

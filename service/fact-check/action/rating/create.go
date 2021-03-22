@@ -104,13 +104,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Rating{
-		Name:         rating.Name,
-		Slug:         slugx.Approve(&config.DB, ratingSlug, sID, tableName),
-		Colour:       rating.Colour,
-		Description:  rating.Description,
-		MediumID:     mediumID,
-		SpaceID:      uint(sID),
-		NumericValue: rating.NumericValue,
+		Name:             rating.Name,
+		Slug:             slugx.Approve(&config.DB, ratingSlug, sID, tableName),
+		BackgroundColour: rating.BackgroundColour,
+		TextColour:       rating.TextColour,
+		Description:      rating.Description,
+		MediumID:         mediumID,
+		SpaceID:          uint(sID),
+		NumericValue:     rating.NumericValue,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
@@ -148,14 +149,15 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 func insertIntoMeili(rating model.Rating) error {
 	meiliObj := map[string]interface{}{
-		"id":            rating.ID,
-		"kind":          "rating",
-		"name":          rating.Name,
-		"colour":        rating.Colour,
-		"slug":          rating.Slug,
-		"description":   rating.Description,
-		"numeric_value": rating.NumericValue,
-		"space_id":      rating.SpaceID,
+		"id":                rating.ID,
+		"kind":              "rating",
+		"name":              rating.Name,
+		"background_colour": rating.BackgroundColour,
+		"text_colour":       rating.TextColour,
+		"slug":              rating.Slug,
+		"description":       rating.Description,
+		"numeric_value":     rating.NumericValue,
+		"space_id":          rating.SpaceID,
 	}
 
 	return meilisearchx.AddDocument("dega", meiliObj)
