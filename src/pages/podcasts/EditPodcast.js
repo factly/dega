@@ -31,7 +31,7 @@ function EditPodcast() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updatePodcast({ ...podcast, ...values })).then(() => history.push('/podcasts'));
+    dispatch(updatePodcast({ ...podcast, ...values })).then(() => history.push(`/podcasts/${id}/edit`));
   };
 
   return <PodcastEditForm data={podcast} onCreate={onUpdate} />;

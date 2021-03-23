@@ -324,7 +324,9 @@ export const updatePost = (data) => {
             medium: post.medium?.id,
           }),
         );
-        dispatch(addSuccessNotification('Post updated'));
+        data.status === 'publish'
+          ? dispatch(addSuccessNotification(`${post.format.name} Published`))
+          : dispatch(addSuccessNotification('Draft Saved'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));

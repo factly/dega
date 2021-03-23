@@ -31,7 +31,7 @@ function EditCategory() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));
+    dispatch(updateCategory({ ...category, ...values })).then(() => history.push(`/categories/${id}/edit`));
   };
 
   return <CategoryEditForm data={category} onCreate={onUpdate} />;

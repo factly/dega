@@ -31,7 +31,7 @@ function EditRating() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updateRating({ ...rating, ...values })).then(() => history.push('/ratings'));
+    dispatch(updateRating({ ...rating, ...values })).then(() => history.push(`/ratings/${id}/edit`));
   };
 
   return <RatingEditForm data={rating} onCreate={onUpdate} />;
