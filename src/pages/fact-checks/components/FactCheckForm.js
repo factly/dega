@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Select, Drawer } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Select, Drawer, DatePicker } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -12,6 +12,7 @@ import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
+import moment from 'moment';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -46,6 +47,10 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   const [shouldBlockNavigation, setShouldBlockNavigation] = useState(false);
 
+  const getCurrentDate = () => {
+    return moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
+  };
+
   const onSave = (values) => {
     setShouldBlockNavigation(false);
     values.category_ids = values.categories || [];
@@ -54,6 +59,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims || [];
     values.status = status;
+    values.status === 'publish'
+      ? (values.published_date = values.published_date
+          ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+          : getCurrentDate())
+      : (values.published_date = null);
     onCreate(values);
   };
 
@@ -64,6 +74,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       });
     }
   };
+
+  if (data && data.id) {
+    data.published_date = data.published_date ? moment(data.published_date) : null;
+  }
+
   const showModal = () => {
     setVisible(true);
   };
@@ -214,6 +229,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   ]}
                 >
                   <Input />
+                </Form.Item>
+                <Form.Item name="published_date" label="Published Date">
+                  <DatePicker />
                 </Form.Item>
                 <Form.Item name="categories" label="Categories">
                   <Selector mode="multiple" action="Categories" createEntity="Category" />
