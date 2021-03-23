@@ -42,9 +42,11 @@ function RatingList({ actions }) {
     { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
     {
       title: 'Colour',
-      dataIndex: 'color',
+      dataIndex: 'background_colour',
       render: (_, record) => (
-        <Tag color={record.colour ? record.colour.hex : ''}>{record.name}</Tag>
+        <Tag color={record.background_colour ? record.background_colour.hex : ''}>
+          {record.name}
+        </Tag>
       ),
     },
     {

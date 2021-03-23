@@ -22,10 +22,13 @@ const tailLayout = {
 
 const RatingForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const [color, setColor] = useState(data.colour ? data.colour : null);
+  const [backgroundColour, setBackgroundColour] = useState(
+    data.background_colour ? data.background_colour : null,
+  );
+  const [textColour, setTextColour] = useState(data.text_colour ? data.text_colour : null);
 
-  const colorPicker = (e) => {
-    setColor(e);
+  const colorPicker = (e, id) => {
+    id === 'background' ? setBackgroundColour(e) : setTextColour(e);
   };
 
   const onReset = () => {
@@ -94,10 +97,17 @@ const RatingForm = ({ onCreate, data = {} }) => {
       <Form.Item name="medium_id" label="Featured Image">
         <MediaSelector />
       </Form.Item>
-      <Form.Item name="colour" label="Colour">
+      <Form.Item name="background_colour" label="Background Colour">
         <ChromePicker
-          color={color !== null && color.hex}
-          onChange={(e) => colorPicker(e)}
+          color={backgroundColour !== null && backgroundColour.hex}
+          onChange={(e) => colorPicker(e, 'background')}
+          disableAlpha
+        />
+      </Form.Item>
+      <Form.Item name="text_colour" label="Text Colour">
+        <ChromePicker
+          color={textColour !== null && textColour.hex}
+          onChange={(e) => colorPicker(e, 'text')}
           disableAlpha
         />
       </Form.Item>
