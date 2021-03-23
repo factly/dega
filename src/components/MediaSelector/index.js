@@ -13,6 +13,7 @@ function MediaSelector({ value = null, onChange }) {
   const dispatch = useDispatch();
 
   const [mediumFetch, setMediumFetch] = React.useState(false);
+  const [uploadedMedium, setUploadedMedium] = React.useState(null);
 
   const medium = useSelector((state) => {
     return state.media.details[value] || null;
@@ -32,39 +33,27 @@ function MediaSelector({ value = null, onChange }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  React.useEffect(() => {
-    console.log('fetching');
-    if(mediumFetch) {
-      dispatch(getMedia());
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[dispatch, mediumFetch]);
-  const getUploadedMedium = (values) => {
-    if(!loading && mediumFetch) {
-      console.log('media2',media);
-      const medium = media.details[media.req[0].data[0]];
-      if(medium.name === values.name) {
-        console.log('medium',medium);
-      };
-      console.log('medium name if not',medium);
-    };
+  if (!loading && mediumFetch && uploadedMedium) {
+    const fetchedId = media.req[0].data[0];
+    const fetchedMedium = media.details[fetchedId];
+    if (fetchedMedium.name === uploadedMedium.name) {
+      value = fetchedId;
+      setSelected(fetchedMedium);
+      setMediumFetch(false);
+      setUploadedMedium(null);
+    }
   }
-  const onUpload = (values) => {
-    console.log('values',values);
-    setMediumFetch(true);
-    //dispatch(getMedia()).then(() => {
-      console.log('media',media);
-      getUploadedMedium(values);
-      // if(!loading) {
-      //   console.log('media2',media);
-      //   const medium = media.details[media.req[0].data[0]];
-      //   if(medium.name === values.name) {
-      //     console.log('medium',medium);
-      //   };
-      //   console.log('medium name if not',medium);
-      // };
-    //});
 
+  React.useEffect(() => {
+    if (mediumFetch && uploadedMedium) {
+      dispatch(getMedia());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, mediumFetch, uploadedMedium]);
+
+  const onUpload = (values) => {
+    setMediumFetch(true);
+    setUploadedMedium(values[0]);
   };
 
   return (
