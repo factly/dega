@@ -143,7 +143,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	mediumID := &podcast.MediumID
 	result.MediumID = &podcast.MediumID
 	if podcast.MediumID == 0 {
-		err = tx.Model(&result).Omit("Episodes", "Categories").Updates(map[string]interface{}{"featured_medium_id": nil}).Error
+		err = tx.Model(&result).Omit("Episodes", "Categories").Updates(map[string]interface{}{"medium_id": nil}).Error
 		mediumID = nil
 		if err != nil {
 			tx.Rollback()
