@@ -66,9 +66,15 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           onSave(values);
           onReset();
         }}
+        onFinishFailed={(errors) => {
+          if (errors.errorFields[0].name[0] !== 'review_sources') {
+            setCurrent(0);
+          }
+        }}
         onValuesChange={() => {
           setValueChange(true);
         }}
+        scrollToFirstError={true}
         style={{
           paddingTop: '24px',
         }}

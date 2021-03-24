@@ -47,6 +47,10 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           onCreate(values);
           onReset();
         }}
+        scrollToFirstError={true}
+        onFinishFailed={(errors) => {
+          setCurrent(0);
+        }}
         onValuesChange={() => {
           setValueChange(true);
         }}
