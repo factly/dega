@@ -173,7 +173,32 @@ func TestPostUpdate(t *testing.T) {
 			Post("/engines/acp/ory/regex/allowed").
 			Reply(http.StatusForbidden)
 
-		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		postSelectPublishedWithSpace(mock)
+		preUpdateMock(mock, updatePost, false)
+
+		mock.ExpectRollback()
+
+		updatePost["status"] = "draft"
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusUnauthorized)
+
+		test.ExpectationsMet(t, mock)
+		updatePost["status"] = "draft"
+	})
+
+	t.Run("keto down when changing post status back to draft", func(t *testing.T) {
+		test.DisableKetoGock(testServer.URL)
+
+		gock.New(viper.GetString("keto_url")).
+			Post("/engines/acp/ory/regex/allowed").
+			Reply(http.StatusOK)
+
 		test.CheckSpaceMock(mock)
 
 		postSelectPublishedWithSpace(mock)
@@ -191,31 +216,11 @@ func TestPostUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("keto down when changing post status back to draft", func(t *testing.T) {
-		test.DisableKetoGock(testServer.URL)
-		gock.New(viper.GetString("keto_url")).
-			Post("/engines/acp/ory/regex/allowed").
-			Reply(http.StatusOK)
-
-		updatePost["slug"] = "post"
-		test.CheckSpaceMock(mock)
-
-		postSelectPublishedWithSpace(mock)
-		preUpdateMock(mock, updatePost, false)
-
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("post_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatePost).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-	})
-
+	gock.Off()
 	test.MockServer()
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	updatePost["status"] = "draft"
 
 	t.Run("deleting old post_claims fails", func(t *testing.T) {
 		updatePost["slug"] = "post"
@@ -251,7 +256,7 @@ func TestPostUpdate(t *testing.T) {
 		updateQueryMock(mock, updatePost, false)
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "created_by_id", "updated_by_id", "deleted_at", "claim_id", "post_id"}).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "claim_id", "post_id"}).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, 2, 1))
 
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).

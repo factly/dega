@@ -77,7 +77,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var status string = " draft"
+	var status string = "draft"
 
 	if post.Status == "publish" {
 

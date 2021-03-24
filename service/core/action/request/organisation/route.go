@@ -14,6 +14,7 @@ var permissionContext config.ContextKey = "org_perm_user"
 
 type organisationPermissionRequest struct {
 	OrganisationID uint           `json:"organisation_id" validate:"required"`
+	Title          string         `json:"title"`
 	Description    postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	Spaces         int64          `json:"spaces"`
 }
