@@ -17,6 +17,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const sidebar = useSelector((state) => state.sidebar);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
+  const [valueChange, setValueChange] = React.useState(false);
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -103,7 +104,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
-        onValuesChange={() => setShouldBlockNavigation(true)}
+        onValuesChange={() => {
+          setShouldBlockNavigation(true);
+          setValueChange(true);
+        }}
         layout="vertical"
       >
         <Space direction="vertical">
@@ -117,7 +121,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
-                <Button type="secondary" htmlType="submit" onClick={() => setStatus('draft')}>
+                <Button disabled={!valueChange} type="secondary" htmlType="submit" onClick={() => setStatus('draft')}>
                   Save as draft
                 </Button>
               </Form.Item>

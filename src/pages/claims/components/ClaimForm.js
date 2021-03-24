@@ -19,6 +19,7 @@ const layout = {
 
 const ClaimForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
@@ -64,6 +65,9 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         onFinish={(values) => {
           onSave(values);
           onReset();
+        }}
+        onValuesChange={() => {
+          setValueChange(true);
         }}
         style={{
           paddingTop: '24px',
@@ -189,8 +193,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           </Button>
           {current < 1 ? <Button onClick={() => setCurrent(current + 1)}>Next</Button> : null}
           {current === 1 ? (
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button disabled={!valueChange} type="primary" htmlType="submit">
+              {data && data.id ? 'Update' : 'Submit'}
             </Button>
           ) : null}
         </Form.Item>

@@ -74,6 +74,7 @@ const entities = [
 
 function PolicyForm({ data = {}, onCreate }) {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   return (
     <Form
@@ -91,6 +92,9 @@ function PolicyForm({ data = {}, onCreate }) {
           users: values.users.map((item) => item.toString()),
         })
       }
+      onValuesChange={() => {
+        setValueChange(true);
+      }}
     >
       <Row gutter={16}>
         <Col span={12}>
@@ -124,8 +128,8 @@ function PolicyForm({ data = {}, onCreate }) {
           <Checkbox.Group options={entity.options} />
         </Form.Item>
       ))}
-      <Button type="primary" htmlType="submit">
-        Submit
+      <Button disabled={!valueChange} type="primary" htmlType="submit">
+        {data && data.id ? 'Update' : 'Submit'}
       </Button>
     </Form>
   );

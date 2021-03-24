@@ -29,6 +29,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
   };
 
   const [current, setCurrent] = React.useState(0);
+  const [valueChange, setValueChange] = React.useState(false);
 
   return (
     <div>
@@ -45,6 +46,9 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         onFinish={(values) => {
           onCreate(values);
           onReset();
+        }}
+        onValuesChange={() => {
+          setValueChange(true);
         }}
         style={{
           paddingTop: '24px',
@@ -146,8 +150,8 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             </Button>
           ) : null}
           {current === 2 ? (
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button disabled={!valueChange} type="primary" htmlType="submit">
+              Update
             </Button>
           ) : null}
         </Form.Item>

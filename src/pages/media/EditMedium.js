@@ -20,6 +20,7 @@ const tailLayout = {
 
 function EditMedium() {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -61,6 +62,9 @@ function EditMedium() {
           onFinish={(values) => {
             updateMedia(values);
           }}
+          onValuesChange={() => {
+            setValueChange(true);
+          }}
           initialValues={media}
         >
           <Form.Item name="name" label="Name">
@@ -80,8 +84,8 @@ function EditMedium() {
               <Link to="/media">
                 <Button>Back</Button>
               </Link>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button disabled={!valueChange} type="primary" htmlType="submit">
+                Update
               </Button>
             </Space>
           </Form.Item>
