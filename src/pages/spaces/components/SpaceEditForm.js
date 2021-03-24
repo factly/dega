@@ -135,19 +135,21 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           <Form.Item name={['social_media_urls', 'instagram']} label="Instagram">
             <Input style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
         </div>
         <Form.Item>
           <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>
             Back
           </Button>
-          <Button disabled={current === 2} onClick={() => setCurrent(current + 1)}>
-            Next
-          </Button>
+          {current < 2 ? (
+            <Button disabled={current === 2} onClick={() => setCurrent(current + 1)}>
+              Next
+            </Button>
+          ) : null}
+          {current === 2 ? (
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          ) : null}
         </Form.Item>
       </Form>
     </div>

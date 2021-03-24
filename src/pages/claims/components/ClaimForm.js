@@ -182,19 +182,17 @@ const ClaimForm = ({ onCreate, data = {} }) => {
               </>
             )}
           </Form.List>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
         </div>
         <Form.Item>
           <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>
             Back
           </Button>
-          <Button disabled={current === 1} onClick={() => setCurrent(current + 1)}>
-            Next
-          </Button>
+          {current < 1 ? <Button onClick={() => setCurrent(current + 1)}>Next</Button> : null}
+          {current === 1 ? (
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          ) : null}
         </Form.Item>
       </Form>
     </div>
