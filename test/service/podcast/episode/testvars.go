@@ -9,11 +9,6 @@ import (
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
-var headers = map[string]string{
-	"X-Space": "1",
-	"X-User":  "1",
-}
-
 var Data = map[string]interface{}{
 	"title": "Test Episode",
 	"slug":  "test-episode",
@@ -25,10 +20,6 @@ var Data = map[string]interface{}{
 	"audio_url":      "testaudio.com",
 	"published_date": time.Now(),
 	"medium_id":      1,
-}
-
-var invalidData = map[string]interface{}{
-	"title": "a",
 }
 
 var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "slug", "season", "episode", "audio_url", "description", "published_date", "medium_id", "space_id"}

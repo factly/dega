@@ -74,7 +74,6 @@ var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_
 
 var selectQuery = `SELECT (.+) FROM "podcasts"`
 var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "podcasts"`)
-var deleteQuery = regexp.QuoteMeta(`UPDATE "podcasts" SET "deleted_at"=`)
 
 var basePath = "/podcast/podcasts"
 var path = "/podcast/podcasts/{podcast_id}"
