@@ -24,7 +24,7 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  //if (loading) return <Skeleton />;
 
   if (!category) {
     return <RecordNotFound />;
