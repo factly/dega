@@ -37,16 +37,26 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const { claims, loading } = useSelector((state) => {
     return { claims: state.claims, loading: state.claims.loading };
   });
+  const updateClaims = (fetchedClaimId) => {
+    const claimList = form.getFieldValue('claims');
+    form.setFieldsValue({
+      claims: [...claimList, fetchedClaimId],
+    });
+    setClaimCreatedFlag(false);
+  };
   if (!loading && claimCreatedFlag) {
     const fetchedClaimId = claims.req[0].data[0];
     const fetchedClaim = claims.details[fetchedClaimId];
-    if (newClaim.slug === fetchedClaim.slug) {
-      data.claims.push(fetchedClaim.id);
-      setClaimCreatedFlag(false);
+    if (newClaim.title === fetchedClaim.title) {
+      updateClaims(fetchedClaimId);
     }
   }
-  useEffect(() => {
+
+  const fetchAddedClaim = () => {
     dispatch(getClaims({}));
+  };
+  useEffect(() => {
+    fetchAddedClaim();
   }, [newClaim]);
 
   const { Option } = Select;
@@ -96,8 +106,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const onClaimCreate = (values) => {
     dispatch(addClaim(values)).then(
       () => setVisible(false),
-      setNewClaim(values),
       setClaimCreatedFlag(true),
+      setNewClaim(values),
     );
   };
 
