@@ -153,7 +153,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.ReviewRating.WorstRating = worstRating
 		claimSchema.ItemReviewed.Type = "Claim"
 		claimSchema.ItemReviewed.DatePublished = each.Claim.CheckedDate
-		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
+		// claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
 		claimSchema.ItemReviewed.Author.Type = "Organization"
 		claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
 

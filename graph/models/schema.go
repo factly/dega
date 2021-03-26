@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Author of Factcheck
@@ -15,10 +13,10 @@ type Author struct {
 
 // ItemReviewed type
 type ItemReviewed struct {
-	Type          string         `json:"@type"`
-	DatePublished time.Time      `json:"datePublished"`
-	Appearance    postgres.Jsonb `json:"appearance"`
-	Author        Author         `json:"author"`
+	Type          string    `json:"@type"`
+	DatePublished time.Time `json:"datePublished"`
+	// Appearance    postgres.Jsonb `json:"appearance"`
+	Author Author `json:"author"`
 }
 
 // ReviewRating type
