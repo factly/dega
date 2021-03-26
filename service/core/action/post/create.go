@@ -81,6 +81,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	if post.Status == "publish" {
 
+		if len(post.AuthorIDs) == 0 {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish post without author", http.StatusUnprocessableEntity)))
+			return
+		}
+
 		stat, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			loggerx.Error(err)
