@@ -32,6 +32,7 @@ var Data = map[string]interface{}{
 	"is_sticky":          true,
 	"is_highlighted":     true,
 	"featured_medium_id": uint(1),
+	"published_date":     time.Now(),
 	"format_id":          uint(1),
 	"category_ids":       []uint{1},
 	"tag_ids":            []uint{1},
@@ -120,17 +121,25 @@ func slugCheckMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
-func postInsertMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
+func postInsertMock(mock sqlmock.Sqlmock, post map[string]interface{}, isPublished bool) {
 	mock.ExpectBegin()
 
 	medium.SelectWithSpace(mock)
 	format.SelectMock(mock, 1, 1)
 
-	mock.ExpectQuery(`INSERT INTO "posts"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["page"], post["excerpt"], post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], test.AnyTime{}, 1, post["featured_medium_id"]).
-		WillReturnRows(sqlmock.
-			NewRows([]string{"featured_medium_id", "id"}).
-			AddRow(1, 1))
+	if isPublished {
+		mock.ExpectQuery(`INSERT INTO "posts"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["page"], post["excerpt"], post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], test.AnyTime{}, 1, post["featured_medium_id"]).
+			WillReturnRows(sqlmock.
+				NewRows([]string{"featured_medium_id", "id"}).
+				AddRow(1, 1))
+	} else {
+		mock.ExpectQuery(`INSERT INTO "posts"`).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["page"], post["excerpt"], post["description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], nil, 1, post["featured_medium_id"]).
+			WillReturnRows(sqlmock.
+				NewRows([]string{"featured_medium_id", "id"}).
+				AddRow(1, 1))
+	}
 
 	mock.ExpectQuery(`INSERT INTO "tags"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, tag.Data["name"], tag.Data["slug"], tag.Data["description"], tag.Data["is_featured"], 1, 1).
@@ -394,6 +403,11 @@ func updateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugChec
 }
 
 func updatePublishedQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
+	mock.ExpectExec(`UPDATE \"posts\"`).
+		WithArgs(test.AnyTime{}, nil, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	medium.SelectWithSpace(mock)
+	format.SelectMock(mock, 1, 1)
 	mock.ExpectExec(`UPDATE \"posts\"`).
 		WithArgs(test.AnyTime{}, post["page"], post["is_featured"], post["is_sticky"], post["is_highlighted"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))

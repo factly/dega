@@ -190,8 +190,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Check if post status is changed back to draft from published
 	if result.Post.Status == "publish" && post.Status == "draft" {
-		updatedPost.Status = "draft"
-		tx.Model(&result.Post).Select("PublishedDate").Omit("Tags", "Categories").Updates(model.Post{PublishedDate: nil})
+		status, err := getPublishPermissions(oID, sID, uID)
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+			return
+		}
+		if status == http.StatusOK {
+			updatedPost.Status = "draft"
+			tx.Model(&result.Post).Select("PublishedDate").Omit("Tags", "Categories").Updates(model.Post{PublishedDate: nil})
+		} else {
+			tx.Rollback()
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
 
 	} else if post.Status == "publish" {
 		// Check if authors are not added while publishing post

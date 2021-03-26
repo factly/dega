@@ -77,11 +77,9 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
 	if totAuthors == 0 {
-		author := model.PostAuthor{
-			AuthorID: uint(uID),
-			PostID:   uint(id),
-		}
-		tx.Model(&model.PostAuthor{}).Create(&author)
+		tx.Rollback()
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish post without author", http.StatusUnprocessableEntity)))
+		return
 	}
 
 	result.Tags = make([]model.Tag, 0)
@@ -133,11 +131,15 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Update into meili index
+	var meiliPublishDate int64
+	if result.Post.Status == "publish" {
+		meiliPublishDate = result.Post.PublishedDate.Unix()
+	}
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
 		"kind":           "post",
 		"status":         result.Status,
-		"published_date": result.PublishedDate.Unix(),
+		"published_date": &meiliPublishDate,
 	}
 
 	err = meilisearchx.UpdateDocument("dega", meiliObj)

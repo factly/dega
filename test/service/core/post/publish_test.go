@@ -61,21 +61,14 @@ func TestPostPublish(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
 		mock.ExpectBegin()
-		mock.ExpectQuery(`INSERT INTO "post_authors"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"id"}).
-				AddRow(1))
-
-		publishMock(mock)
-		mock.ExpectCommit()
+		mock.ExpectRollback()
 
 		e.PUT(publishPath).
 			WithPath("post_id", "1").
 			WithHeaders(headers).
 			WithJSON(publishData).
 			Expect().
-			Status(http.StatusOK)
+			Status(http.StatusUnprocessableEntity)
 
 		test.ExpectationsMet(t, mock)
 	})
