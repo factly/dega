@@ -35,8 +35,6 @@ const PodcastForm = ({ onCreate, data = {} }) => {
     });
   };
 
-  console.log({ values: form.getFieldsValue() });
-
   return (
     <Form
       {...layout}
@@ -45,7 +43,11 @@ const PodcastForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data, language: 'english' }}
       name="create-category"
       onFinish={(values) => {
-        onCreate(values);
+        onCreate({
+          ...values,
+          category_ids: values.categories || [],
+          episode_ids: values.episodes || [],
+        });
         onReset();
       }}
     >

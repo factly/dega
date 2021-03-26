@@ -31,12 +31,9 @@ function EditFactCheck({ formats }) {
     return <RecordNotFound />;
   }
   const onUpdate = (values) => {
-    if (values.status === 'draft' || values.status === 'template')
-      dispatch(updatePost({ ...post, ...values })).then(() => {
-        history.push('/fact-checks');
-      });
-    if (values.status === 'publish')
-      dispatch(publishPost({ ...post, ...values })).then(() => history.push('/fact-checks'));
+    dispatch(updatePost({ ...post, ...values })).then(() => {
+      history.push('/fact-checks');
+    });
   };
   return (
     <EditFactCheckForm

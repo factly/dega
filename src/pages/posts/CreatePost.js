@@ -13,8 +13,7 @@ function CreatePost({ formats }) {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    if (values.status === 'draft') dispatch(addPost(values)).then(() => history.push('/posts'));
-    if (values.status === 'publish') dispatch(publish(values)).then(() => history.push('/posts'));
+    dispatch(addPost(values)).then(() => history.push('/posts'));
   };
   if (!formats.loading && formats.article) {
     return <PostForm onCreate={onCreate} actions={actions} format={formats.article} />;
