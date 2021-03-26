@@ -71,6 +71,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 	result := model.OrganisationPermissionRequest{
 		Request: model.Request{
+			Title:       request.Title,
 			Description: request.Description,
 			Status:      "pending",
 		},

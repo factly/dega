@@ -20,7 +20,10 @@ var headers = map[string]string{
 var Data = map[string]interface{}{
 	"name": "True",
 	"slug": "true",
-	"colour": postgres.Jsonb{
+	"background_colour": postgres.Jsonb{
+		RawMessage: []byte(`"green"`),
+	},
+	"text_colour": postgres.Jsonb{
 		RawMessage: []byte(`"green"`),
 	},
 	"description": postgres.Jsonb{
@@ -31,9 +34,10 @@ var Data = map[string]interface{}{
 }
 
 var resData = map[string]interface{}{
-	"name":   "True",
-	"slug":   "true",
-	"colour": "green",
+	"name":              "True",
+	"slug":              "true",
+	"background_colour": "green",
+	"text_colour":       "green",
 	"description": map[string]interface{}{
 		"type": "description",
 	},
@@ -114,7 +118,7 @@ var invalidData = map[string]interface{}{
 	"numeric_value": 0,
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "colour", "medium_id", "description", "numeric_value", "space_id"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "background_colour", "text_colour", "medium_id", "description", "numeric_value", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "ratings"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "ratings" SET "deleted_at"=`)
@@ -134,7 +138,7 @@ func ratingInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "ratings"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["colour"], Data["description"], Data["numeric_value"], Data["medium_id"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["background_colour"], Data["text_colour"], Data["description"], Data["numeric_value"], Data["medium_id"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -153,7 +157,7 @@ func ratingUpdateMock(mock sqlmock.Sqlmock, rating map[string]interface{}, err e
 	} else {
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"ratings\"`).
-			WithArgs(test.AnyTime{}, 1, rating["name"], rating["slug"], rating["colour"], rating["description"], rating["numeric_value"], rating["medium_id"], 1).
+			WithArgs(test.AnyTime{}, 1, rating["name"], rating["slug"], rating["background_colour"], rating["text_colour"], rating["description"], rating["numeric_value"], rating["medium_id"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		SelectWithSpace(mock)
 		medium.SelectWithOutSpace(mock)
@@ -165,7 +169,7 @@ func SelectWithOutSpace(mock sqlmock.Sqlmock, rating map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, rating["name"], rating["slug"], rating["colour"], rating["medium_id"], rating["description"], rating["numeric_value"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, rating["name"], rating["slug"], rating["background_colour"], rating["text_colour"], rating["medium_id"], rating["description"], rating["numeric_value"], 1))
 
 	// Preload medium
 	medium.SelectWithOutSpace(mock)
@@ -175,7 +179,7 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["colour"], Data["medium_id"], Data["description"], Data["numeric_value"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["background_colour"], Data["text_colour"], Data["medium_id"], Data["description"], Data["numeric_value"], 1))
 }
 
 //check rating exits or not

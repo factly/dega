@@ -21,7 +21,10 @@ var updatedRating = map[string]interface{}{
 	"description": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"description"}`),
 	},
-	"colour": postgres.Jsonb{
+	"background_colour": postgres.Jsonb{
+		RawMessage: []byte(`"green"`),
+	},
+	"text_colour": postgres.Jsonb{
 		RawMessage: []byte(`"green"`),
 	},
 	"numeric_value": 5,

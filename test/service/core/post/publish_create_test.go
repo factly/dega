@@ -69,7 +69,7 @@ func TestPublishedPostCreate(t *testing.T) {
 		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
-		postInsertMock(mock, Data)
+		postInsertMock(mock, Data, true)
 		postSelectWithOutSpace(mock, Data)
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)
@@ -97,7 +97,7 @@ func TestPublishedPostCreate(t *testing.T) {
 		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
-		postInsertMock(mock, Data)
+		postInsertMock(mock, Data, true)
 		postSelectWithOutSpace(mock, Data)
 		mock.ExpectQuery(`INSERT INTO "post_claims"`).
 			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
@@ -126,7 +126,7 @@ func TestPublishedPostCreate(t *testing.T) {
 		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
-		postInsertMock(mock, Data)
+		postInsertMock(mock, Data, true)
 
 		postSelectWithOutSpace(mock, Data)
 		postClaimInsertMock(mock)
@@ -201,7 +201,7 @@ func TestPublishedPostCreate(t *testing.T) {
 		tag.SelectMock(mock, tag.Data, 1)
 		category.SelectWithOutSpace(mock)
 
-		postInsertMock(mock, Data)
+		postInsertMock(mock, Data, true)
 		postSelectWithOutSpace(mock, Data)
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)

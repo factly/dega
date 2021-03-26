@@ -188,25 +188,47 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FeaturedMediumID: featuredMediumID,
 	}
 
-	if result.Post.Status == "publish" || post.Status == "publish" {
+	// Check if post status is changed back to draft from published
+	if result.Post.Status == "publish" && post.Status == "draft" {
 		status, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+			return
+		}
+		if status == http.StatusOK {
+			updatedPost.Status = "draft"
+			tx.Model(&result.Post).Select("PublishedDate").Omit("Tags", "Categories").Updates(model.Post{PublishedDate: nil})
+		} else {
+			tx.Rollback()
+			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
 
-		if status == http.StatusOK {
-			// Check if post status is changed back to draft from published
-			if post.Status == "draft" {
-				updatedPost.PublishedDate = time.Time{}
-			}
-			updatedPost.Status = post.Status
-		} else {
-			updatedPost.Status = result.Post.Status
+	} else if post.Status == "publish" {
+		// Check if authors are not added while publishing post
+		if len(post.AuthorIDs) == 0 {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish post without author", http.StatusUnprocessableEntity)))
+			return
 		}
 
+		status, err := getPublishPermissions(oID, sID, uID)
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+			return
+		}
+		if status == http.StatusOK {
+			currTime := time.Now()
+			updatedPost.PublishedDate = &currTime
+			updatedPost.Status = "publish"
+		} else {
+			tx.Rollback()
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
 	}
 
 	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted", "Page").Omit("Tags", "Categories").Updates(model.Post{
@@ -353,6 +375,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Update into meili index
+	var meiliPublishDate int64
+	if result.Post.Status == "publish" {
+		meiliPublishDate = result.Post.PublishedDate.Unix()
+	}
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
 		"kind":           "post",
@@ -366,7 +392,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"is_sticky":      result.IsSticky,
 		"is_highlighted": result.IsHighlighted,
 		"format_id":      result.FormatID,
-		"published_date": result.PublishedDate.Unix(),
+		"published_date": meiliPublishDate,
 		"space_id":       result.SpaceID,
 		"tag_ids":        post.TagIDs,
 		"category_ids":   post.CategoryIDs,

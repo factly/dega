@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -81,7 +80,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	template := result
 
 	template.Status = "template"
-	template.PublishedDate = time.Time{}
+	template.PublishedDate = nil
 	template.Base = config.Base{}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

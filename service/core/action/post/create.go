@@ -77,15 +77,19 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var status string = " draft"
+	var status string = "draft"
 
 	if post.Status == "publish" {
 
-		stat, err := getPublishPermissions(oID, sID, uID)
+		if len(post.AuthorIDs) == 0 {
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot publish post without author", http.StatusUnprocessableEntity)))
+			return
+		}
 
+		stat, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 			return
 		}
 
@@ -178,10 +182,11 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		SpaceID:          post.SpaceID,
 	}
 
+	currTime := time.Now()
 	if status == "publish" {
-		result.Post.PublishedDate = time.Now()
+		result.Post.PublishedDate = &currTime
 	} else {
-		result.Post.PublishedDate = time.Time{}
+		result.Post.PublishedDate = nil
 	}
 
 	if len(post.TagIDs) > 0 {
@@ -253,6 +258,10 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	}
 
 	// Insert into meili index
+	var meiliPublishDate int64
+	if result.Post.Status == "publish" {
+		meiliPublishDate = result.Post.PublishedDate.Unix()
+	}
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
 		"kind":           "post",
@@ -266,7 +275,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		"is_sticky":      result.IsSticky,
 		"is_highlighted": result.IsHighlighted,
 		"format_id":      result.FormatID,
-		"published_date": result.PublishedDate.Unix(),
+		"published_date": meiliPublishDate,
 		"space_id":       result.SpaceID,
 		"tag_ids":        post.TagIDs,
 		"category_ids":   post.CategoryIDs,

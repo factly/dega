@@ -334,6 +334,114 @@ var doc = `{
                 }
             }
         },
+        "/core/episodes": {
+            "get": {
+                "description": "Get all episodes",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Episode"
+                ],
+                "summary": "Show all episodes",
+                "operationId": "get-all-episodes",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/episode.paging"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/episodes/{episode_id}": {
+            "delete": {
+                "description": "Delete episode by ID",
+                "tags": [
+                    "Episode"
+                ],
+                "summary": "Delete a episode",
+                "operationId": "delete-episode-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Episode ID",
+                        "name": "episode_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/core/events": {
             "get": {
                 "description": "Get all events",
@@ -4850,6 +4958,401 @@ var doc = `{
                     }
                 }
             }
+        },
+        "/podcast": {
+            "get": {
+                "description": "Get all podcasts",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Podcast"
+                ],
+                "summary": "Show all podcasts",
+                "operationId": "get-all-podcasts",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Query",
+                        "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Sort",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/podcast.paging"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create podcast",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Podcast"
+                ],
+                "summary": "Create podcast",
+                "operationId": "add-podcast",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Podcast Object",
+                        "name": "Podcast",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/podcast.podcast"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Podcast"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/podcast/episodes": {
+            "post": {
+                "description": "Create episode",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Episode"
+                ],
+                "summary": "Create episode",
+                "operationId": "add-episode",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Episode Object",
+                        "name": "Episode",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/episode.episode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/model.Episode"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/podcast/episodes/{episode_id}": {
+            "get": {
+                "description": "Get episode by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Episode"
+                ],
+                "summary": "Show a episode by id",
+                "operationId": "get-episode-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Episode ID",
+                        "name": "episode_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Episode"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update episode by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Episode"
+                ],
+                "summary": "Update a episode by id",
+                "operationId": "update-episode-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Episode ID",
+                        "name": "episode_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Episode",
+                        "name": "Episode",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/episode.episode"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Episode"
+                        }
+                    }
+                }
+            }
+        },
+        "/podcast/{podcast_id}": {
+            "get": {
+                "description": "Get podcast by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Podcast"
+                ],
+                "summary": "Show a podcast by id",
+                "operationId": "get-podcast-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Podcast ID",
+                        "name": "podcast_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Podcast"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update podcast by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Podcast"
+                ],
+                "summary": "Update a podcast by id",
+                "operationId": "update-podcast-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Podcast ID",
+                        "name": "podcast_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Podcast",
+                        "name": "Podcast",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/podcast.podcast"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.Podcast"
+                        }
+                    }
+                }
+            }
+        },
+        "/podcasts/{podcast_id}": {
+            "delete": {
+                "description": "Delete podcast by ID",
+                "tags": [
+                    "Podcast"
+                ],
+                "summary": "Delete a podcast",
+                "operationId": "delete-podcast-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Podcast ID",
+                        "name": "podcast_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -4983,6 +5486,58 @@ var doc = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/model.Claimant"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "episode.episode": {
+            "type": "object",
+            "required": [
+                "audio_url",
+                "episode",
+                "season",
+                "title"
+            ],
+            "properties": {
+                "audio_url": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "episode": {
+                    "type": "integer"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "published_date": {
+                    "type": "string"
+                },
+                "season": {
+                    "type": "integer"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "episode.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Episode"
                     }
                 },
                 "total": {
@@ -5598,6 +6153,62 @@ var doc = `{
                 }
             }
         },
+        "model.Episode": {
+            "type": "object",
+            "properties": {
+                "audio_url": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "episode": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "medium": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "published_date": {
+                    "type": "string"
+                },
+                "season": {
+                    "type": "integer"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.Event": {
             "type": "object",
             "properties": {
@@ -5851,6 +6462,71 @@ var doc = `{
                 }
             }
         },
+        "model.Podcast": {
+            "type": "object",
+            "properties": {
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Category"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "episodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Episode"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "language": {
+                    "type": "string"
+                },
+                "medium": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "primary_category": {
+                    "$ref": "#/definitions/model.Category"
+                },
+                "primary_category_id": {
+                    "type": "integer"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "model.Policy": {
             "type": "object",
             "properties": {
@@ -5924,6 +6600,9 @@ var doc = `{
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
+                },
+                "page": {
+                    "type": "boolean"
                 },
                 "published_date": {
                     "type": "string"
@@ -6099,6 +6778,9 @@ var doc = `{
                 "deleted_at": {
                     "type": "string"
                 },
+                "episodes": {
+                    "type": "integer"
+                },
                 "fact_check": {
                     "type": "boolean"
                 },
@@ -6107,6 +6789,9 @@ var doc = `{
                 },
                 "media": {
                     "type": "integer"
+                },
+                "podcast": {
+                    "type": "boolean"
                 },
                 "posts": {
                     "type": "integer"
@@ -6140,6 +6825,9 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "episodes": {
+                    "type": "integer"
+                },
                 "fact_check": {
                     "type": "boolean"
                 },
@@ -6148,6 +6836,9 @@ var doc = `{
                 },
                 "media": {
                     "type": "integer"
+                },
+                "podcast": {
+                    "type": "boolean"
                 },
                 "posts": {
                     "type": "integer"
@@ -6360,7 +7051,8 @@ var doc = `{
         "organisation.organisationPermissionRequest": {
             "type": "object",
             "required": [
-                "organisation_id"
+                "organisation_id",
+                "title"
             ],
             "properties": {
                 "description": {
@@ -6371,6 +7063,62 @@ var doc = `{
                 },
                 "spaces": {
                     "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "podcast.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Podcast"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
+        "podcast.podcast": {
+            "type": "object",
+            "required": [
+                "language",
+                "title"
+            ],
+            "properties": {
+                "category_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "episode_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "language": {
+                    "type": "string"
+                },
+                "medium_id": {
+                    "type": "integer"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },
@@ -6457,6 +7205,9 @@ var doc = `{
                 "is_sticky": {
                     "type": "boolean"
                 },
+                "page": {
+                    "type": "boolean"
+                },
                 "slug": {
                     "type": "string"
                 },
@@ -6539,6 +7290,9 @@ var doc = `{
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
+                },
+                "page": {
+                    "type": "boolean"
                 },
                 "published_date": {
                     "type": "string"
@@ -6816,11 +7570,17 @@ var doc = `{
                 "space_id"
             ],
             "properties": {
+                "episodes": {
+                    "type": "integer"
+                },
                 "fact_check": {
                     "type": "boolean"
                 },
                 "media": {
                     "type": "integer"
+                },
+                "podcast": {
+                    "type": "boolean"
                 },
                 "posts": {
                     "type": "integer"
@@ -6839,17 +7599,26 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "episodes": {
+                    "type": "integer"
+                },
                 "fact_check": {
                     "type": "boolean"
                 },
                 "media": {
                     "type": "integer"
                 },
+                "podcast": {
+                    "type": "boolean"
+                },
                 "posts": {
                     "type": "integer"
                 },
                 "space_id": {
                     "type": "integer"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         },

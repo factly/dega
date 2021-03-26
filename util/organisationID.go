@@ -19,8 +19,8 @@ const OrganisationIDKey ctxKeyOrganisationID = 0
 // GenerateOrganisation check X-User in header
 func GenerateOrganisation(h http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
-		if strings.Split(strings.Trim(r.URL.Path, "/"), "/")[1] != "spaces" {
+		tokens := strings.Split(strings.Trim(r.URL.Path, "/"), "/")
+		if len(tokens) <= 1 || tokens[1] != "spaces" {
 			ctx := r.Context()
 			sID, err := middlewarex.GetSpace(ctx)
 
