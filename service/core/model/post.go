@@ -27,7 +27,7 @@ type Post struct {
 	Medium           *Medium        `gorm:"foreignKey:featured_medium_id" json:"medium"`
 	FormatID         uint           `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
 	Format           *Format        `json:"format"`
-	PublishedDate    time.Time      `gorm:"column:published_date" json:"published_date"`
+	PublishedDate    *time.Time     `gorm:"column:published_date" json:"published_date"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`

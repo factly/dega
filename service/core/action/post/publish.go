@@ -87,10 +87,11 @@ func publish(w http.ResponseWriter, r *http.Request) {
 	result.Tags = make([]model.Tag, 0)
 	result.Categories = make([]model.Category, 0)
 
+	currTime := time.Now()
 	err = tx.Model(&result.Post).Updates(model.Post{
 		Base:          config.Base{UpdatedByID: uint(uID)},
 		Status:        "publish",
-		PublishedDate: time.Now(),
+		PublishedDate: &currTime,
 	}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
