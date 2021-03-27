@@ -19,6 +19,7 @@ const layout = {
 
 const ClaimForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
@@ -65,6 +66,15 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           onSave(values);
           onReset();
         }}
+        onFinishFailed={(errors) => {
+          if (errors.errorFields[0].name[0] !== 'review_sources') {
+            setCurrent(0);
+          }
+        }}
+        onValuesChange={() => {
+          setValueChange(true);
+        }}
+        scrollToFirstError={true}
         style={{
           paddingTop: '24px',
         }}
@@ -182,19 +192,17 @@ const ClaimForm = ({ onCreate, data = {} }) => {
               </>
             )}
           </Form.List>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
         </div>
         <Form.Item>
           <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>
             Back
           </Button>
-          <Button disabled={current === 1} onClick={() => setCurrent(current + 1)}>
-            Next
-          </Button>
+          {current < 1 ? <Button onClick={() => setCurrent(current + 1)}>Next</Button> : null}
+          {current === 1 ? (
+            <Button disabled={!valueChange} type="primary" htmlType="submit">
+              {data && data.id ? 'Update' : 'Submit'}
+            </Button>
+          ) : null}
         </Form.Item>
       </Form>
     </div>

@@ -21,6 +21,7 @@ const tailLayout = {
 
 const FormatForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
@@ -41,6 +42,9 @@ const FormatForm = ({ onCreate, data = {} }) => {
       onFinish={(values) => {
         onCreate(values);
         onReset();
+      }}
+      onValuesChange={() => {
+        setValueChange(true);
       }}
     >
       <Form.Item
@@ -78,8 +82,8 @@ const FormatForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button disabled={!valueChange} type="primary" htmlType="submit">
+            {data && data.id ? 'Update' : 'Submit'}
           </Button>
           <Button htmlType="button" onClick={onReset}>
             Reset

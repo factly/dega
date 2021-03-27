@@ -22,6 +22,7 @@ const tailLayout = {
 
 const EpisodeForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
@@ -45,6 +46,9 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
       onFinish={(values) => {
         onCreate(values);
         onReset();
+      }}
+      onValuesChange={() => {
+        setValueChange(true);
       }}
     >
       <div style={{ display: 'flex' }}>
@@ -102,8 +106,8 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Space>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button disabled={!valueChange} type="primary" htmlType="submit">
+                {data && data.id ? 'Update' : 'Submit'}
               </Button>
               <Button htmlType="button" onClick={onReset}>
                 Reset

@@ -23,6 +23,7 @@ const tailLayout = {
 const RatingForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const [color, setColor] = useState(data.colour ? data.colour : null);
+  const [valueChange, setValueChange] = React.useState(false);
 
   const colorPicker = (e) => {
     setColor(e);
@@ -47,6 +48,9 @@ const RatingForm = ({ onCreate, data = {} }) => {
       onFinish={(values) => {
         onCreate(values);
         onReset();
+      }}
+      onValuesChange={() => {
+        setValueChange(true);
       }}
     >
       <Form.Item
@@ -106,8 +110,8 @@ const RatingForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button disabled={!valueChange} type="primary" htmlType="submit">
+            {data && data.id ? 'Update' : 'Submit'}
           </Button>
           <Button htmlType="button" onClick={onReset}>
             Reset
