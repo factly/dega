@@ -116,7 +116,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		ClaimantID:    claim.ClaimantID,
 		RatingID:      claim.RatingID,
 		Review:        claim.Review,
-		ReviewTagLine: claim.ReviewTagLine,
 		ReviewSources: claim.ReviewSources,
 	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").First(&result).Error
 
@@ -129,20 +128,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":              result.ID,
-		"kind":            "claim",
-		"title":           result.Title,
-		"slug":            result.Slug,
-		"description":     result.Description,
-		"claim_date":      result.ClaimDate.Unix(),
-		"checked_date":    result.CheckedDate.Unix(),
-		"claim_sources":   result.ClaimSources,
-		"claimant_id":     result.ClaimantID,
-		"rating_id":       result.RatingID,
-		"review":          result.Review,
-		"review_tag_line": result.ReviewTagLine,
-		"review_sources":  result.ReviewSources,
-		"space_id":        result.SpaceID,
+		"id":             result.ID,
+		"kind":           "claim",
+		"title":          result.Title,
+		"slug":           result.Slug,
+		"description":    result.Description,
+		"claim_date":     result.ClaimDate.Unix(),
+		"checked_date":   result.CheckedDate.Unix(),
+		"claim_sources":  result.ClaimSources,
+		"claimant_id":    result.ClaimantID,
+		"rating_id":      result.RatingID,
+		"review":         result.Review,
+		"review_sources": result.ReviewSources,
+		"space_id":       result.SpaceID,
 	}
 
 	err = meilisearchx.UpdateDocument("dega", meiliObj)
