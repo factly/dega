@@ -26,7 +26,6 @@ type Claim struct {
 	RatingID      uint           `gorm:"column:rating_id" json:"rating_id"`
 	Rating        Rating         `json:"rating"`
 	Review        postgres.Jsonb `gorm:"column:review" json:"review" swaggertype:"primitive,string"`
-	ReviewTagLine postgres.Jsonb `gorm:"column:review_tag_line" json:"review_tag_line" swaggertype:"primitive,string"`
 	ReviewSources postgres.Jsonb `gorm:"column:review_sources" json:"review_sources" swaggertype:"primitive,string"`
 	SpaceID       uint           `gorm:"column:space_id" json:"space_id"`
 	Space         *model.Space   `json:"space,omitempty"`
