@@ -34,13 +34,6 @@ const RatingForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
-  const onBgChange = (e) => {
-    setBackgroundColour(e);
-    console.log(e.hex);
-  };
-  const onTextColorChange = (e) => {
-    setTextColour(e);
-  };
   const onTitleChange = (string) => {
     form.setFieldsValue({
       slug: maker(string),
@@ -109,14 +102,14 @@ const RatingForm = ({ onCreate, data = {} }) => {
       <Form.Item name="background_colour" label="Background Colour">
         <ChromePicker
           color={backgroundColour !== null && backgroundColour.hex}
-          onChange={(e) => onBgChange(e)}
+          onChange={(e) => setBackgroundColour(e)}
           disableAlpha
         />
       </Form.Item>
       <Form.Item name="text_colour" label="Text Colour">
         <ChromePicker
           color={textColour !== null && textColour.hex}
-          onChange={(e) => onTextColorChange(e)}
+          onChange={(e) => setTextColour(e)}
           disableAlpha
         />
       </Form.Item>
