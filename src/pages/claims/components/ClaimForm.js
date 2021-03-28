@@ -152,12 +152,41 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           <Form.Item name="checked_date" label="Checked Date">
             <DatePicker />
           </Form.Item>
-          <Form.Item name="claim_sources" label="Claim Sources" wrapperCol={24}>
-            <Editor placeholder="Enter Claim Sources..." />
-          </Form.Item>
-          <Form.Item name="review_tag_line" label="Review Tagline" wrapperCol={24}>
-            <Editor placeholder="Enter Taglines..." />
-          </Form.Item>
+          <Form.List name="claim_sources" label="Claim sources">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map((field) => (
+                  <Space key={field.key} style={{ marginBottom: 8 }} align="baseline">
+                    <Form.Item
+                      {...field}
+                      name={[field.name, 'url']}
+                      fieldKey={[field.fieldKey, 'url']}
+                      rules={[{ required: true, message: 'Url required' }]}
+                      wrapperCol={24}
+                    >
+                      <Input placeholder="Enter url" />
+                    </Form.Item>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, 'description']}
+                      fieldKey={[field.fieldKey, 'description']}
+                      rules={[{ required: true, message: 'Description required' }]}
+                      wrapperCol={24}
+                    >
+                      <Input placeholder="Enter description" />
+                    </Form.Item>
+                    <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                    Add Claim sources
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+
           <Form.List name="review_sources" label="Review sources">
             {(fields, { add, remove }) => (
               <>
