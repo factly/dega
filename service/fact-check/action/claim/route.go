@@ -20,7 +20,6 @@ type claim struct {
 	ClaimantID    uint           `json:"claimant_id" validate:"required"`
 	RatingID      uint           `json:"rating_id" validate:"required"`
 	Review        postgres.Jsonb `json:"review" swaggertype:"primitive,string"`
-	ReviewTagLine postgres.Jsonb `json:"review_tag_line" swaggertype:"primitive,string"`
 	ReviewSources postgres.Jsonb `json:"review_sources" swaggertype:"primitive,string"`
 }
 
