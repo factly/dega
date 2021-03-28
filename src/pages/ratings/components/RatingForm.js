@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Space, InputNumber } from 'antd';
+import { Button, Form, Input, Space, InputNumber, Col, Row } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
@@ -34,6 +34,13 @@ const RatingForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
+  const onBgChange = (e) => {
+    setBackgroundColour(e);
+    console.log(e.hex);
+  };
+  const onTextColorChange = (e) => {
+    setTextColour(e);
+  };
   const onTitleChange = (string) => {
     form.setFieldsValue({
       slug: maker(string),
@@ -102,17 +109,39 @@ const RatingForm = ({ onCreate, data = {} }) => {
       <Form.Item name="background_colour" label="Background Colour">
         <ChromePicker
           color={backgroundColour !== null && backgroundColour.hex}
-          onChange={(e) => setBackgroundColour(e)}
+          onChange={(e) => onBgChange(e)}
           disableAlpha
         />
       </Form.Item>
       <Form.Item name="text_colour" label="Text Colour">
         <ChromePicker
           color={textColour !== null && textColour.hex}
-          onChange={(e) => setTextColour(e)}
+          onChange={(e) => onTextColorChange(e)}
           disableAlpha
         />
       </Form.Item>
+
+      <Row className="preview-container" gutter={16} style={{ marginBottom: '1rem' }}>
+        <Col span={10} style={{ textAlign: 'right' }}>
+          Preview:
+        </Col>
+        <Col span={8}>
+          <div
+            className="preview"
+            style={{
+              textAlign: 'center',
+              color: textColour?.hex,
+              background: backgroundColour?.hex,
+              width: '100px',
+              padding: '0.5rem 1rem',
+              border: '1px solid black',
+            }}
+          >
+            {console.log({ backgroundColour, textColour })}Preview
+          </div>
+        </Col>
+      </Row>
+
       <Form.Item name="description" label="Description">
         <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
       </Form.Item>
