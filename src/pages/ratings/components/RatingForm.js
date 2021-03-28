@@ -22,12 +22,13 @@ const tailLayout = {
 
 const RatingForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const [color, setColor] = useState(data.colour ? data.colour : null);
+  const [backgroundColour, setBackgroundColour] = useState(
+    data.background_colour ? data.background_colour : null,
+  );
+  const [textColour, setTextColour] = useState(data.text_colour ? data.text_colour : null);
   const [valueChange, setValueChange] = React.useState(false);
 
-  const colorPicker = (e) => {
-    setColor(e);
-  };
+  const colorPicker = (e) => {};
 
   const onReset = () => {
     form.resetFields();
@@ -93,15 +94,22 @@ const RatingForm = ({ onCreate, data = {} }) => {
           },
         ]}
       >
-        <InputNumber min={1} max={5} />
+        <InputNumber min={1} />
       </Form.Item>
       <Form.Item name="medium_id" label="Featured Image">
         <MediaSelector />
       </Form.Item>
-      <Form.Item name="colour" label="Colour">
+      <Form.Item name="background_colour" label="Background Colour">
         <ChromePicker
-          color={color !== null && color.hex}
-          onChange={(e) => colorPicker(e)}
+          color={backgroundColour !== null && backgroundColour.hex}
+          onChange={(e) => setBackgroundColour(e)}
+          disableAlpha
+        />
+      </Form.Item>
+      <Form.Item name="text_colour" label="Text Colour">
+        <ChromePicker
+          color={textColour !== null && textColour.hex}
+          onChange={(e) => setTextColour(e)}
           disableAlpha
         />
       </Form.Item>
