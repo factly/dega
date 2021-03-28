@@ -163,7 +163,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                       fieldKey={[field.fieldKey, 'url']}
                       rules={[{ required: true, message: 'Url required' }]}
                       wrapperCol={24}
-                      label="URL"
                     >
                       <Input placeholder="Enter url" />
                     </Form.Item>
@@ -173,7 +172,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                       fieldKey={[field.fieldKey, 'description']}
                       rules={[{ required: true, message: 'Description required' }]}
                       wrapperCol={24}
-                      label="Description"
                     >
                       <Input placeholder="Enter description" />
                     </Form.Item>
@@ -200,7 +198,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                       fieldKey={[field.fieldKey, 'url']}
                       rules={[{ required: true, message: 'Url required' }]}
                       wrapperCol={24}
-                      label="URL"
                     >
                       <Input placeholder="Enter url" />
                     </Form.Item>
@@ -210,7 +207,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                       fieldKey={[field.fieldKey, 'description']}
                       rules={[{ required: true, message: 'Description required' }]}
                       wrapperCol={24}
-                      label="Description"
                     >
                       <Input placeholder="Enter description" />
                     </Form.Item>
