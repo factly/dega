@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -83,13 +84,29 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
+	// Store HTML description
+	editorjsBlocks := make(map[string]interface{})
+	err = json.Unmarshal(claimant.Description.RawMessage, &editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Claimant{
-		Name:        claimant.Name,
-		Slug:        slugx.Approve(&config.DB, claimantSlug, sID, tableName),
-		Description: claimant.Description,
-		MediumID:    mediumID,
-		SpaceID:     uint(sID),
-		TagLine:     claimant.TagLine,
+		Name:            claimant.Name,
+		Slug:            slugx.Approve(&config.DB, claimantSlug, sID, tableName),
+		Description:     claimant.Description,
+		HTMLDescription: description,
+		MediumID:        mediumID,
+		SpaceID:         uint(sID),
+		TagLine:         claimant.TagLine,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -85,12 +86,28 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Store HTML description
+	editorjsBlocks := make(map[string]interface{})
+	err = json.Unmarshal(tag.Description.RawMessage, &editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse tag description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Tag{
-		Name:        tag.Name,
-		Slug:        slugx.Approve(&config.DB, tagSlug, sID, tableName),
-		Description: tag.Description,
-		SpaceID:     uint(sID),
-		IsFeatured:  tag.IsFeatured,
+		Name:            tag.Name,
+		Slug:            slugx.Approve(&config.DB, tagSlug, sID, tableName),
+		Description:     tag.Description,
+		HTMLDescription: description,
+		SpaceID:         uint(sID),
+		IsFeatured:      tag.IsFeatured,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

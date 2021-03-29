@@ -1,0 +1,73 @@
+{{range .}}
+{{if eq .type "paragraph"}} 
+    <p>{{noesc .data.text}}</p>
+
+{{else if eq .type "header"}}
+    <h{{.data.level}}>{{.data.text}}</h{{.data.level}}>
+
+{{else if eq .type "list"}}
+    {{if eq .data.style "ordered"}}
+    <ol>
+        {{range .data.items}}
+        <li>{{.}}</li>
+        {{end}}
+    </ol>
+    {{else if eq .data.style "unordered"}}
+    <ul>
+        {{range .data.items}}
+        <li>{{.}}</li>
+        {{end}}
+    </ul>
+    {{end}}
+
+{{else if eq .type "quote"}}
+    <blockquote>{{.data.text}}</blockquote>
+
+{{else if eq .type "raw"}}
+    {{noesc .data.html}}
+
+{{else if eq .type "code"}}
+    <pre>
+    <code style="display:block">
+        {{.data.code}}
+    </code>
+    </pre>
+
+{{else if eq .type "delimiter"}}
+    <hr>
+
+{{else if eq .type "uppy"}}
+    {{if multipleImgs .data}}
+        {{range .data.nodes}}
+            <div class="image">
+            <img src="{{if .url.proxy}} {{.url.proxy}} {{else}} {{.url.raw}} {{end}}" id="{{.slug}}" alt="{{.alt_text}}">
+            <p>{{.caption}}</p>
+            </div>
+        {{end}}
+
+    {{else}}
+        <div class="image">
+        <img src="{{if .data.url.proxy}} {{.data.url.proxy}} {{else}} {{.data.url.raw}} {{end}}" id="{{.data.slug}}" alt="{{.data.alt_text}}">
+        <p>{{.data.caption}}</p>
+        </div>
+    {{end}}
+
+{{else if eq .type "table"}}
+    <table style="border: 1px solid black; width: 50%;">
+    {{range $index, $element := .data.content}}
+        <tr>
+        
+        {{range $element}}
+        
+        {{if eq $index 0}}<th>{{else}} <td> {{end}} {{.}} {{if eq $index 0}}</td>{{else}} </th> {{end}}
+        {{end}}
+        
+        </tr>
+    {{end}}
+    </table>  
+
+{{else if eq .type "embed"}}
+    {{noesc .data.html}}
+
+{{end}}
+{{end}}

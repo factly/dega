@@ -10,6 +10,7 @@ import (
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -112,6 +113,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Store HTML description
+	editorjsBlocks := make(map[string]interface{})
+	err = json.Unmarshal(podcast.Description.RawMessage, &editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse podcast description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	newEpisodes := make([]model.Episode, 0)
@@ -154,12 +170,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Model(&result).Omit("Episodes", "Categories").Updates(model.Podcast{
-		Base:        config.Base{UpdatedByID: uint(uID)},
-		Description: podcast.Description,
-		Slug:        slugx.Approve(&config.DB, podcastSlug, sID, tableName),
-		Language:    podcast.Language,
-		MediumID:    mediumID,
-		SpaceID:     uint(sID),
+		Base:            config.Base{UpdatedByID: uint(uID)},
+		HTMLDescription: description,
+		Description:     podcast.Description,
+		Slug:            slugx.Approve(&config.DB, podcastSlug, sID, tableName),
+		Language:        podcast.Language,
+		MediumID:        mediumID,
+		SpaceID:         uint(sID),
 	}).Preload("Episodes").Preload("Categories").First(&result)
 
 	// Update into meili index

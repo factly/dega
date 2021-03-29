@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -78,18 +79,34 @@ func create(w http.ResponseWriter, r *http.Request) {
 		claimSlug = slugx.Make(claim.Title)
 	}
 
+	// Store HTML description
+	editorjsBlocks := make(map[string]interface{})
+	err = json.Unmarshal(claim.Description.RawMessage, &editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Claim{
-		Title:         claim.Title,
-		Slug:          slugx.Approve(&config.DB, claimSlug, sID, tableName),
-		ClaimDate:     claim.ClaimDate,
-		CheckedDate:   claim.CheckedDate,
-		ClaimSources:  claim.ClaimSources,
-		Description:   claim.Description,
-		ClaimantID:    claim.ClaimantID,
-		RatingID:      claim.RatingID,
-		Review:        claim.Review,
-		ReviewSources: claim.ReviewSources,
-		SpaceID:       uint(sID),
+		Title:           claim.Title,
+		Slug:            slugx.Approve(&config.DB, claimSlug, sID, tableName),
+		ClaimDate:       claim.ClaimDate,
+		CheckedDate:     claim.CheckedDate,
+		ClaimSources:    claim.ClaimSources,
+		Description:     claim.Description,
+		HTMLDescription: description,
+		ClaimantID:      claim.ClaimantID,
+		RatingID:        claim.RatingID,
+		Review:          claim.Review,
+		ReviewSources:   claim.ReviewSources,
+		SpaceID:         uint(sID),
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

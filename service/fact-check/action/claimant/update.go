@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -104,6 +105,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 		claimantSlug = slugx.Approve(&config.DB, slugx.Make(claimant.Name), sID, tableName)
 	}
 
+	// Store HTML description
+	editorjsBlocks := make(map[string]interface{})
+	err = json.Unmarshal(claimant.Description.RawMessage, &editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	mediumID := &claimant.MediumID
@@ -120,12 +136,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tx.Model(&result).Updates(model.Claimant{
-		Base:        config.Base{UpdatedByID: uint(uID)},
-		Name:        claimant.Name,
-		Slug:        claimantSlug,
-		MediumID:    mediumID,
-		TagLine:     claimant.TagLine,
-		Description: claimant.Description,
+		Base:            config.Base{UpdatedByID: uint(uID)},
+		Name:            claimant.Name,
+		Slug:            claimantSlug,
+		MediumID:        mediumID,
+		TagLine:         claimant.TagLine,
+		Description:     claimant.Description,
+		HTMLDescription: description,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {

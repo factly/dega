@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -104,19 +105,35 @@ func update(w http.ResponseWriter, r *http.Request) {
 		claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Title), sID, tableName)
 	}
 
+	// Store HTML description
+	editorjsBlocks := make(map[string]interface{})
+	err = json.Unmarshal(claim.Description.RawMessage, &editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 	err = tx.Model(&result).Updates(model.Claim{
-		Base:          config.Base{UpdatedByID: uint(uID)},
-		Title:         claim.Title,
-		Slug:          claimSlug,
-		ClaimDate:     claim.ClaimDate,
-		CheckedDate:   claim.CheckedDate,
-		ClaimSources:  claim.ClaimSources,
-		Description:   claim.Description,
-		ClaimantID:    claim.ClaimantID,
-		RatingID:      claim.RatingID,
-		Review:        claim.Review,
-		ReviewSources: claim.ReviewSources,
+		Base:            config.Base{UpdatedByID: uint(uID)},
+		Title:           claim.Title,
+		Slug:            claimSlug,
+		ClaimDate:       claim.ClaimDate,
+		CheckedDate:     claim.CheckedDate,
+		ClaimSources:    claim.ClaimSources,
+		Description:     claim.Description,
+		HTMLDescription: description,
+		ClaimantID:      claim.ClaimantID,
+		RatingID:        claim.RatingID,
+		Review:          claim.Review,
+		ReviewSources:   claim.ReviewSources,
 	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").First(&result).Error
 
 	if err != nil {

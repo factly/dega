@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -111,6 +112,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Store HTML description
+	editorjsBlocks := make(map[string]interface{})
+	err = json.Unmarshal(episode.Description.RawMessage, &editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse episode description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 	mediumID := &episode.MediumID
 	result.MediumID = &episode.MediumID
@@ -126,16 +142,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Model(&result).Updates(model.Episode{
-		Base:          config.Base{UpdatedByID: uint(uID)},
-		Title:         episode.Title,
-		Description:   episode.Description,
-		Slug:          slugx.Approve(&config.DB, episodeSlug, sID, tableName),
-		Season:        episode.Season,
-		Episode:       episode.Episode,
-		AudioURL:      episode.AudioURL,
-		PublishedDate: episode.PublishedDate,
-		MediumID:      mediumID,
-		SpaceID:       uint(sID),
+		Base:            config.Base{UpdatedByID: uint(uID)},
+		Title:           episode.Title,
+		HTMLDescription: description,
+		Description:     episode.Description,
+		Slug:            slugx.Approve(&config.DB, episodeSlug, sID, tableName),
+		Season:          episode.Season,
+		Episode:         episode.Episode,
+		AudioURL:        episode.AudioURL,
+		PublishedDate:   episode.PublishedDate,
+		MediumID:        mediumID,
+		SpaceID:         uint(sID),
 	}).First(&result)
 
 	// Update into meili index
