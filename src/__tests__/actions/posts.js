@@ -987,7 +987,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Post updated',
+          message: 'Draft Saved',
           time: Date.now(),
         },
       },
@@ -1618,6 +1618,7 @@ describe('posts actions', () => {
     post_without_fields.tags = [];
     post_without_fields.claims = [];
     post_without_fields.medium = undefined;
+    post_without_fields.status = 'publish';
 
     const resp = { data: post_without_fields };
     axios.put.mockResolvedValue(resp);
@@ -1678,6 +1679,7 @@ describe('posts actions', () => {
           format: 41,
           medium: undefined,
           claims: [],
+          status: 'publish',
         },
       },
       {
@@ -1685,7 +1687,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Post updated',
+          message: 'Format 1 Published',
           time: Date.now(),
         },
       },

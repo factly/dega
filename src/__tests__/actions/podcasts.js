@@ -5,6 +5,9 @@ import thunk from 'redux-thunk';
 import * as actions from '../../actions/podcasts';
 import * as types from '../../constants/podcasts';
 import { ADD_NOTIFICATION } from '../../constants/notifications';
+import { ADD_EPISODES } from '../../constants/episodes';
+import { ADD_CATEGORIES } from '../../constants/categories';
+import { ADD_MEDIA } from '../../constants/media';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -67,7 +70,14 @@ describe('Podcast actions', () => {
   });
   it('should create actions to fetch podcasts success', () => {
     const query = { page: 1, limit: 5 };
-    const podcasts = [{ id: 1, title: 'Podcast' }];
+    const podcasts = [
+      {
+        id: 1,
+        title: 'Podcast',
+        episodes: [{ id: 1 }],
+        categories: [{ id: 1, medium: { id: 1 } }],
+      },
+    ];
     const resp = { data: { nodes: podcasts, total: 1 } };
     axios.get.mockResolvedValue(resp);
 
@@ -77,8 +87,20 @@ describe('Podcast actions', () => {
         payload: true,
       },
       {
+        type: ADD_MEDIA,
+        payload: [{ id: 1 }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [{ id: 1, medium: 1 }],
+      },
+      {
+        type: ADD_EPISODES,
+        payload: [{ id: 1 }],
+      },
+      {
         type: types.ADD_PODCASTS,
-        payload: [{ id: 1, title: 'Podcast' }],
+        payload: [{ id: 1, title: 'Podcast', episodes: [1], categories: [1] }],
       },
       {
         type: types.ADD_PODCASTS_REQUEST,
@@ -137,7 +159,12 @@ describe('Podcast actions', () => {
   });
   it('should create actions to get podcast by id success', () => {
     const id = 1;
-    const podcast = { id, title: 'Podcast' };
+    const podcast = {
+      id,
+      title: 'Podcast',
+      episodes: [{ id: 1 }],
+      categories: [{ id: 1, medium: { id: 1 } }],
+    };
     const resp = { data: podcast };
     axios.get.mockResolvedValue(resp);
 
@@ -147,8 +174,25 @@ describe('Podcast actions', () => {
         payload: true,
       },
       {
+        type: ADD_EPISODES,
+        payload: [{ id: 1 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 1 }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [{ id: 1, medium: 1 }],
+      },
+      {
         type: types.ADD_PODCAST,
-        payload: { id, title: 'Podcast' },
+        payload: {
+          id,
+          title: 'Podcast',
+          episodes: [1],
+          categories: [1],
+        },
       },
       {
         type: types.SET_PODCASTS_LOADING,
@@ -251,7 +295,12 @@ describe('Podcast actions', () => {
     expect(axios.post).toHaveBeenCalledWith(types.PODCASTS_API, podcast);
   });
   it('should create actions to update podcast success', () => {
-    const podcast = { id: 1, title: 'Podcast' };
+    const podcast = {
+      id: 1,
+      title: 'Podcast',
+      episodes: [{ id: 1 }],
+      categories: [{ id: 1, medium: { id: 1 } }],
+    };
     const resp = { data: podcast };
     axios.put.mockResolvedValue(resp);
 
@@ -261,8 +310,20 @@ describe('Podcast actions', () => {
         payload: true,
       },
       {
+        type: ADD_EPISODES,
+        payload: [{ id: 1 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 1 }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [{ id: 1, medium: 1 }],
+      },
+      {
         type: types.ADD_PODCAST,
-        payload: { id: 1, title: 'Podcast' },
+        payload: { id: 1, title: 'Podcast', episodes: [1], categories: [1] },
       },
       {
         type: ADD_NOTIFICATION,
