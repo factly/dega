@@ -20,8 +20,8 @@ let state = {
   posts: {
     req: [
       {
-        data: [1],
-        total: 1,
+        data: [1, 2, 3],
+        total: 3,
         query: {
           page: 1,
           limit: 20,
@@ -59,6 +59,81 @@ let state = {
         is_highlighted: false,
         featured_medium_id: 1,
         medium: { id: 1, url: { raw: 'http://example.com' }, alt_text: 'example' },
+        format_id: 1,
+        format: 1,
+        published_date: '0001-01-01T00:00:00Z',
+        space_id: 1,
+        tags: [1],
+        categories: [1],
+        authors: [],
+        claims: [],
+      },
+      '2': {
+        id: 2,
+        created_at: '2020-09-09T06:53:03.018593Z',
+        updated_at: '2020-09-09T10:51:20.681562Z',
+        deleted_at: null,
+        title: 'Explainer: The US Presidential Debates – History & Format',
+        subtitle: '',
+        slug: 'explainer-the-us-presidential-debates-history-format',
+        status: 'Publish',
+        excerpt:
+          'One of the unique aspects of the US Presidential election is the face to face debate of the Presidential nominees. ',
+        description: {
+          time: 1599648677547,
+          blocks: [
+            {
+              data: {
+                text:
+                  'The United States of America (USA) is one of the oldest modern democracies in the world. Over its existence as a democracy for nearly two and half centuries, it has developed institutions and practices which strengthen the idea of democracy. Democracy wrests the choice in the people to choose a government to preside over the administration. Hence it is imperative that the people know about the political party or the individual that they would be voting for. This knowledge includes – the ideology, stance on various issues, vision etc.&nbsp;',
+              },
+              type: 'paragraph',
+            },
+          ],
+          version: '2.18.0',
+        },
+        is_featured: false,
+        is_sticky: false,
+        is_highlighted: false,
+        featured_medium_id: null,
+        format_id: 1,
+        format: 1,
+        published_date: '0001-01-01T00:00:00Z',
+        space_id: 1,
+        tags: [1],
+        categories: [1],
+        authors: [],
+        claims: [],
+      },
+      '3': {
+        id: 3,
+        created_at: '2020-09-09T06:53:03.018593Z',
+        updated_at: '2020-09-09T10:51:20.681562Z',
+        deleted_at: null,
+        title: 'Explainer: The US Presidential Debates – History & Format',
+        subtitle: '',
+        slug: 'explainer-the-us-presidential-debates',
+        status: 'Publish',
+        excerpt:
+          'One of the unique aspects of the US Presidential election is the face to face debate of the Presidential nominees. ',
+        description: {
+          time: 1599648677547,
+          blocks: [
+            {
+              data: {
+                text:
+                  'The United States of America (USA) is one of the oldest modern democracies in the world. Over its existence as a democracy for nearly two and half centuries, it has developed institutions and practices which strengthen the idea of democracy. Democracy wrests the choice in the people to choose a government to preside over the administration. Hence it is imperative that the people know about the political party or the individual that they would be voting for. This knowledge includes – the ideology, stance on various issues, vision etc.&nbsp;',
+              },
+              type: 'paragraph',
+            },
+          ],
+          version: '2.18.0',
+        },
+        is_featured: false,
+        is_sticky: false,
+        is_highlighted: false,
+        featured_medium_id: 2,
+        medium: { id: 2, url: { proxy: 'http://example2.com' }, alt_text: 'example' },
         format_id: 1,
         format: 1,
         published_date: '0001-01-01T00:00:00Z',
@@ -131,6 +206,11 @@ let state = {
         id: 1,
         url: { raw: 'http://example.com' },
         alt_text: 'example',
+      },
+      '2': {
+        id: 1,
+        url: { proxy: 'http://example2.com' },
+        alt_text: 'example2',
       },
     },
     loading: true,
@@ -292,7 +372,7 @@ describe('List component', () => {
           .props()
           .onChange({ target: { value: [2] } });
   
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
       setTimeout(() => {
