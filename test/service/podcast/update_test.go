@@ -16,11 +16,13 @@ import (
 	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/test/service/podcast/episode"
 	"github.com/gavv/httpexpect"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestPodcastUpdate(t *testing.T) {
 	mock := test.SetupMockDB()
+	viper.Set("templates_path", "../../../web/templates")
 
 	test.MockServer()
 	gock.DisableNetworking()
@@ -122,7 +124,7 @@ func TestPodcastUpdate(t *testing.T) {
 		medium.SelectWithSpace(mock)
 
 		mock.ExpectQuery(`INSERT INTO "episodes"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, episode.Data["title"], episode.Data["slug"], episode.Data["season"], episode.Data["episode"], episode.Data["audio_url"], episode.Data["description"], episode.Data["published_date"], 1, episode.Data["medium_id"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, episode.Data["title"], episode.Data["slug"], episode.Data["season"], episode.Data["episode"], episode.Data["audio_url"], episode.Data["description"], episode.Data["html_description"], episode.Data["published_date"], 1, episode.Data["medium_id"], 1).
 			WillReturnError(errors.New("cannot update episodes"))
 
 		mock.ExpectExec(`INSERT INTO "podcast_episodes"`).
@@ -168,7 +170,7 @@ func TestPodcastUpdate(t *testing.T) {
 		medium.SelectWithSpace(mock)
 
 		mock.ExpectQuery(`INSERT INTO "categories"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], 1, category.Data["meta_fields"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["is_featured"], 1, category.Data["meta_fields"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnError(errors.New("cannot update categories"))
 		mock.ExpectExec(`INSERT INTO "podcast_categories"`).
 			WithArgs(1, 1).
@@ -218,7 +220,7 @@ func TestPodcastUpdate(t *testing.T) {
 		slugCheckMock(mock, Data)
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["language"], Data["medium_id"], 1, 1).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["medium_id"], 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		SelectQuery(mock)
@@ -271,7 +273,7 @@ func TestPodcastUpdate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["language"], 1, 1).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		SelectQuery(mock)
@@ -324,7 +326,7 @@ func TestPodcastUpdate(t *testing.T) {
 		slugCheckMock(mock, Data)
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["language"], Data["medium_id"], 1, 1).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["medium_id"], 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		SelectQuery(mock)
@@ -341,5 +343,4 @@ func TestPodcastUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 
 	})
-
 }

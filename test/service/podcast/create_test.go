@@ -14,12 +14,14 @@ import (
 	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/test/service/podcast/episode"
 	"github.com/gavv/httpexpect"
+	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestRatingCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
+	viper.Set("templates_path", "../../../web/templates")
 
 	test.MockServer()
 	defer gock.DisableNetworking()
@@ -87,7 +89,7 @@ func TestRatingCreate(t *testing.T) {
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
 		mock.ExpectQuery(`INSERT INTO "podcasts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], Data["description"], Data["language"], Data["medium_id"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["medium_id"], 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"medium_id", "id", "primary_category_id"}).
 				AddRow(1, 1, 1))
@@ -125,7 +127,7 @@ func TestRatingCreate(t *testing.T) {
 		mock.ExpectBegin()
 		medium.SelectWithSpace(mock)
 		mock.ExpectQuery(`INSERT INTO "podcasts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], Data["description"], Data["language"], Data["medium_id"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["medium_id"], 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"medium_id", "id", "primary_category_id"}).
 				AddRow(1, 1, 1))

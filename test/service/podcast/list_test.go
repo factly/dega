@@ -59,8 +59,8 @@ func TestPodcastList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[0]["title"], podcastList[0]["slug"], podcastList[0]["description"], podcastList[0]["language"], podcastList[0]["primary_category_id"], podcastList[0]["medium_id"], 1).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[1]["title"], podcastList[1]["slug"], podcastList[1]["description"], podcastList[1]["language"], podcastList[1]["primary_category_id"], podcastList[1]["medium_id"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[0]["title"], podcastList[0]["slug"], podcastList[0]["description"], podcastList[0]["html_description"], podcastList[0]["language"], podcastList[0]["primary_category_id"], podcastList[0]["medium_id"], 1).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[1]["title"], podcastList[1]["slug"], podcastList[1]["description"], podcastList[1]["html_description"], podcastList[1]["language"], podcastList[1]["primary_category_id"], podcastList[1]["medium_id"], 1))
 
 		PodcastCategorySelect(mock)
 		PodcastEpisodeSelect(mock)
@@ -90,8 +90,8 @@ func TestPodcastList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[0]["title"], podcastList[0]["slug"], podcastList[0]["description"], podcastList[0]["language"], podcastList[0]["primary_category_id"], podcastList[0]["medium_id"], 1).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[1]["title"], podcastList[1]["slug"], podcastList[1]["description"], podcastList[1]["language"], podcastList[1]["primary_category_id"], podcastList[1]["medium_id"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[0]["title"], podcastList[0]["slug"], podcastList[0]["description"], podcastList[0]["html_description"], podcastList[0]["language"], podcastList[0]["primary_category_id"], podcastList[0]["medium_id"], 1).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[1]["title"], podcastList[1]["slug"], podcastList[1]["description"], podcastList[1]["html_description"], podcastList[1]["language"], podcastList[1]["primary_category_id"], podcastList[1]["medium_id"], 1))
 
 		PodcastCategorySelect(mock)
 		PodcastEpisodeSelect(mock)

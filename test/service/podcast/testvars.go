@@ -23,8 +23,9 @@ var Data = map[string]interface{}{
 	"title": "Test Podcast",
 	"slug":  "test-podcast",
 	"description": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"description"}`),
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
+	"html_description":    "<p>Test Description</p>",
 	"language":            "english",
 	"primary_category_id": 1,
 	"medium_id":           1,
@@ -36,8 +37,9 @@ var resData = map[string]interface{}{
 	"title": "Test Podcast",
 	"slug":  "test-podcast",
 	"description": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"description"}`),
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
+	"html_description":    "<p>Test Description</p>",
 	"language":            "english",
 	"primary_category_id": 1,
 	"medium_id":           1,
@@ -48,8 +50,9 @@ var podcastList = []map[string]interface{}{
 		"title": "Test Podcast 1",
 		"slug":  "test-podcast-1",
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"description1"}`),
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description 1"}}],"version":"2.19.0"}`),
 		},
+		"html_description":    "<p>Test Description 1</p>",
 		"language":            "english",
 		"primary_category_id": 1,
 		"medium_id":           1,
@@ -58,8 +61,9 @@ var podcastList = []map[string]interface{}{
 		"title": "Test Podcast 2",
 		"slug":  "test-podcast-2",
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"description2"}`),
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description 2"}}],"version":"2.19.0"}`),
 		},
+		"html_description":    "<p>Test Description 2</p>",
 		"language":            "english",
 		"primary_category_id": 1,
 		"medium_id":           1,
@@ -70,7 +74,7 @@ var invalidData = map[string]interface{}{
 	"title": "a",
 }
 
-var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "slug", "description", "language", "primary_category_id", "medium_id", "space_id"}
+var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "slug", "description", "html_description", "language", "primary_category_id", "medium_id", "space_id"}
 
 var selectQuery = `SELECT (.+) FROM "podcasts"`
 var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "podcasts"`)
@@ -82,7 +86,7 @@ func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["slug"], Data["description"], Data["language"], Data["primary_category_id"], Data["medium_id"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["primary_category_id"], Data["medium_id"], 1))
 }
 
 func PodcastCategorySelect(mock sqlmock.Sqlmock) {
@@ -110,7 +114,7 @@ func slugCheckMock(mock sqlmock.Sqlmock, rating map[string]interface{}) {
 func podcastEpisodesInsert(mock sqlmock.Sqlmock) {
 	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "episodes"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, episode.Data["title"], episode.Data["slug"], episode.Data["season"], episode.Data["episode"], episode.Data["audio_url"], episode.Data["description"], episode.Data["published_date"], 1, episode.Data["medium_id"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, episode.Data["title"], episode.Data["slug"], episode.Data["season"], episode.Data["episode"], episode.Data["audio_url"], episode.Data["description"], episode.Data["html_description"], episode.Data["published_date"], 1, episode.Data["medium_id"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"medium_id", "id"}).
 			AddRow(1, 1))
@@ -122,7 +126,7 @@ func podcastEpisodesInsert(mock sqlmock.Sqlmock) {
 func podcastCategoriesInsert(mock sqlmock.Sqlmock) {
 	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "categories"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["is_featured"], 1, category.Data["meta_fields"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["is_featured"], 1, category.Data["meta_fields"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"medium_id", "id", "parent_id"}).
 			AddRow(1, 1, 1))
