@@ -83,13 +83,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(claimant.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Claimant{
-		Name:        claimant.Name,
-		Slug:        slugx.Approve(&config.DB, claimantSlug, sID, tableName),
-		Description: claimant.Description,
-		MediumID:    mediumID,
-		SpaceID:     uint(sID),
-		TagLine:     claimant.TagLine,
+		Name:            claimant.Name,
+		Slug:            slugx.Approve(&config.DB, claimantSlug, sID, tableName),
+		Description:     claimant.Description,
+		HTMLDescription: description,
+		MediumID:        mediumID,
+		SpaceID:         uint(sID),
+		TagLine:         claimant.TagLine,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

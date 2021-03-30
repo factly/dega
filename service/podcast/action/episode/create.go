@@ -91,16 +91,25 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(episode.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse episode description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Episode{
-		Title:         episode.Title,
-		Description:   episode.Description,
-		Slug:          slugx.Approve(&config.DB, episodeSlug, sID, tableName),
-		Season:        episode.Season,
-		Episode:       episode.Episode,
-		AudioURL:      episode.AudioURL,
-		PublishedDate: episode.PublishedDate,
-		MediumID:      mediumID,
-		SpaceID:       uint(sID),
+		Title:           episode.Title,
+		Description:     episode.Description,
+		HTMLDescription: description,
+		Slug:            slugx.Approve(&config.DB, episodeSlug, sID, tableName),
+		Season:          episode.Season,
+		Episode:         episode.Episode,
+		AudioURL:        episode.AudioURL,
+		PublishedDate:   episode.PublishedDate,
+		MediumID:        mediumID,
+		SpaceID:         uint(sID),
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), episodeUser, uID)).Begin()
 	err = tx.Model(&model.Episode{}).Create(&result).Error

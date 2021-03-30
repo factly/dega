@@ -166,6 +166,12 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		featuredMediumID = nil
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(post.Description)
+	if err != nil {
+		return nil, errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)
+	}
+
 	result.Post = model.Post{
 		Title:            post.Title,
 		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
@@ -174,7 +180,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      post.Description,
-		IsFeatured:       post.IsFeatured,
+		HTMLDescription:  description,
 		IsHighlighted:    post.IsHighlighted,
 		IsSticky:         post.IsSticky,
 		FeaturedMediumID: featuredMediumID,

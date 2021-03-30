@@ -91,13 +91,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(podcast.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse podcast description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Podcast{
-		Title:       podcast.Title,
-		Description: podcast.Description,
-		Slug:        slugx.Approve(&config.DB, podcastSlug, sID, tableName),
-		Language:    podcast.Language,
-		MediumID:    mediumID,
-		SpaceID:     uint(sID),
+		Title:           podcast.Title,
+		Description:     podcast.Description,
+		HTMLDescription: description,
+		Slug:            slugx.Approve(&config.DB, podcastSlug, sID, tableName),
+		Language:        podcast.Language,
+		MediumID:        mediumID,
+		SpaceID:         uint(sID),
 	}
 
 	if len(podcast.EpisodeIDs) > 0 {

@@ -19,10 +19,11 @@ import (
 var updatedClaimant = map[string]interface{}{
 	"name": "TOI",
 	"description": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"description"}`),
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
-	"tag_line":  "sample tag line",
-	"medium_id": uint(1),
+	"html_description": "<p>Test Description</p>",
+	"tag_line":         "sample tag line",
+	"medium_id":        uint(1),
 }
 
 func TestClaimantUpdate(t *testing.T) {
@@ -107,6 +108,28 @@ func TestClaimantUpdate(t *testing.T) {
 			Expect().
 			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("update claimant", func(t *testing.T) {
+		updatedClaimant["slug"] = "toi"
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectWithSpace(mock)
+
+		updatedClaimant["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.PUT(path).
+			WithPath("claimant_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedClaimant).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		updatedClaimant["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
 	})
 
 	t.Run("update claimant by id with empty slug", func(t *testing.T) {

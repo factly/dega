@@ -22,15 +22,16 @@ var Data = map[string]interface{}{
 	"slug":        "elections",
 	"is_featured": true,
 	"description": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"description"}`),
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
+	"html_description": "<p>Test Description</p>",
 }
 
 var invalidData = map[string]interface{}{
 	"name": "a",
 }
 
-var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "is_featured", "space_id"}
+var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "is_featured", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "tags"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "tags" SET "deleted_at"=`)
@@ -48,7 +49,7 @@ func slugCheckMock(mock sqlmock.Sqlmock) {
 func tagInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	mock.ExpectQuery(`INSERT INTO "tags"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["is_featured"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["is_featured"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -71,7 +72,7 @@ func SelectMock(mock sqlmock.Sqlmock, tag map[string]interface{}, args ...driver
 	mock.ExpectQuery(selectQuery).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, tag["name"], tag["slug"], tag["description"], tag["is_featured"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, tag["name"], tag["slug"], tag["description"], tag["html_description"], tag["is_featured"], 1))
 }
 
 // check tag associated with any post before deleting
@@ -87,7 +88,7 @@ func tagUpdateMock(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 		WithArgs(test.AnyTime{}, Data["is_featured"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	mock.ExpectExec(`UPDATE \"tags\"`).
-		WithArgs(test.AnyTime{}, 1, tag["name"], tag["slug"], tag["description"], 1).
+		WithArgs(test.AnyTime{}, 1, tag["name"], tag["slug"], tag["description"], tag["html_description"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	SelectMock(mock, tag, 1, 1)
 }

@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -147,6 +148,27 @@ func TestRatingCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusUnprocessableEntity)
 		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("cannot parse rating description", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		sameNameCount(mock, 0, Data["name"])
+		ratingCountQuery(mock, 0)
+
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
 	})
 
 	t.Run("create rating when meili is down", func(t *testing.T) {

@@ -14,17 +14,21 @@ import (
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
 var updatePost = map[string]interface{}{
-	"title":              "Post",
-	"subtitle":           "post subtitle",
-	"status":             "draft",
-	"excerpt":            "post excerpt",
-	"page":               true,
-	"description":        test.NilJsonb(),
+	"title":    "Post",
+	"subtitle": "post subtitle",
+	"status":   "draft",
+	"excerpt":  "post excerpt",
+	"page":     true,
+	"description": postgres.Jsonb{
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+	},
+	"html_description":   "<p>Test Description</p>",
 	"is_featured":        false,
 	"is_sticky":          true,
 	"is_highlighted":     true,
@@ -114,6 +118,28 @@ func TestPostUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("cannot parse post description", func(t *testing.T) {
+		updatePost["slug"] = "post"
+		test.CheckSpaceMock(mock)
+
+		postSelectWithSpace(mock)
+
+		updatePost["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.PUT(path).
+			WithPath("post_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatePost).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		updatePost["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
+
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("updating post fails", func(t *testing.T) {
 		updatePost["slug"] = "post"
 		test.CheckSpaceMock(mock)
@@ -127,7 +153,7 @@ func TestPostUpdate(t *testing.T) {
 		format.SelectMock(mock, 1, 1)
 		mock.ExpectExec(`UPDATE \"posts\"`).
 			WithArgs(test.AnyTime{}, 1, Data["title"], Data["subtitle"], Data["slug"], Data["excerpt"],
-				Data["description"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], 1).
+				Data["description"], Data["html_description"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], 1).
 			WillReturnError(errors.New("cannot update post"))
 
 		mock.ExpectRollback()

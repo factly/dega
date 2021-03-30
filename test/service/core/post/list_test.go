@@ -80,7 +80,7 @@ func TestPostList(t *testing.T) {
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
 				AddRow(2, time.Now(), time.Now(), nil, 1, 1, postList[1]["title"], postList[1]["subtitle"], postList[1]["slug"], postList[1]["status"], postList[1]["page"], postList[1]["excerpt"],
-					postList[1]["description"], postList[1]["is_featured"], postList[1]["is_sticky"], postList[1]["is_highlighted"], postList[1]["featured_medium_id"], postList[1]["format_id"], postList[1]["published_date"], 1))
+					postList[1]["description"], postList[1]["html_description"], postList[1]["is_featured"], postList[1]["is_sticky"], postList[1]["is_highlighted"], postList[1]["featured_medium_id"], postList[1]["format_id"], postList[1]["published_date"], 1))
 
 		preloadMock(mock, sqlmock.AnyArg())
 

@@ -125,6 +125,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(rating.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse rating description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	mediumID := &rating.MediumID
@@ -148,6 +156,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		TextColour:       rating.TextColour,
 		MediumID:         mediumID,
 		Description:      rating.Description,
+		HTMLDescription:  description,
 		NumericValue:     rating.NumericValue,
 	}).Preload("Medium").First(&result).Error
 

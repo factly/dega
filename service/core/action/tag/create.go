@@ -85,12 +85,21 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(tag.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse tag description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Tag{
-		Name:        tag.Name,
-		Slug:        slugx.Approve(&config.DB, tagSlug, sID, tableName),
-		Description: tag.Description,
-		SpaceID:     uint(sID),
-		IsFeatured:  tag.IsFeatured,
+		Name:            tag.Name,
+		Slug:            slugx.Approve(&config.DB, tagSlug, sID, tableName),
+		Description:     tag.Description,
+		HTMLDescription: description,
+		SpaceID:         uint(sID),
+		IsFeatured:      tag.IsFeatured,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

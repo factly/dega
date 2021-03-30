@@ -112,6 +112,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(podcast.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse podcast description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	newEpisodes := make([]model.Episode, 0)
@@ -154,12 +162,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Model(&result).Omit("Episodes", "Categories").Updates(model.Podcast{
-		Base:        config.Base{UpdatedByID: uint(uID)},
-		Description: podcast.Description,
-		Slug:        slugx.Approve(&config.DB, podcastSlug, sID, tableName),
-		Language:    podcast.Language,
-		MediumID:    mediumID,
-		SpaceID:     uint(sID),
+		Base:            config.Base{UpdatedByID: uint(uID)},
+		HTMLDescription: description,
+		Description:     podcast.Description,
+		Slug:            slugx.Approve(&config.DB, podcastSlug, sID, tableName),
+		Language:        podcast.Language,
+		MediumID:        mediumID,
+		SpaceID:         uint(sID),
 	}).Preload("Episodes").Preload("Categories").First(&result)
 
 	// Update into meili index

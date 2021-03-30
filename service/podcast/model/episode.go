@@ -13,17 +13,18 @@ import (
 // Episode model
 type Episode struct {
 	config.Base
-	Title         string         `gorm:"column:title" json:"title"`
-	Slug          string         `gorm:"column:slug" json:"slug"`
-	Season        int            `gorm:"column:season" json:"season"`
-	Episode       int            `gorm:"column:episode" json:"episode"`
-	AudioURL      string         `gorm:"column:audio_url" json:"audio_url"`
-	Description   postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
-	PublishedDate time.Time      `gorm:"column:published_date" json:"published_date" sql:"DEFAULT:NULL"`
-	MediumID      *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
-	Medium        *model.Medium  `json:"medium"`
-	SpaceID       uint           `gorm:"column:space_id" json:"space_id"`
-	Space         *model.Space   `json:"space,omitempty"`
+	Title           string         `gorm:"column:title" json:"title"`
+	Slug            string         `gorm:"column:slug" json:"slug"`
+	Season          int            `gorm:"column:season" json:"season"`
+	Episode         int            `gorm:"column:episode" json:"episode"`
+	AudioURL        string         `gorm:"column:audio_url" json:"audio_url"`
+	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
+	HTMLDescription string         `gorm:"column:html_description" json:"html_description,omitempty"`
+	PublishedDate   time.Time      `gorm:"column:published_date" json:"published_date" sql:"DEFAULT:NULL"`
+	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
+	Medium          *model.Medium  `json:"medium"`
+	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
+	Space           *model.Space   `json:"space,omitempty"`
 }
 
 // EpisodeAuthor model

@@ -9,6 +9,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test/service/core/permissions/space"
+	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
@@ -83,6 +84,28 @@ func TestPostCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusCreated).JSON().Object().ContainsMap(postData)
 
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("cannot parse post description", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		space.SelectQuery(mock, 1)
+		postCountQuery(mock, 0)
+
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
 		test.ExpectationsMet(t, mock)
 	})
 

@@ -103,12 +103,21 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(rating.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse rating description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Rating{
 		Name:             rating.Name,
 		Slug:             slugx.Approve(&config.DB, ratingSlug, sID, tableName),
 		BackgroundColour: rating.BackgroundColour,
 		TextColour:       rating.TextColour,
 		Description:      rating.Description,
+		HTMLDescription:  description,
 		MediumID:         mediumID,
 		SpaceID:          uint(sID),
 		NumericValue:     rating.NumericValue,

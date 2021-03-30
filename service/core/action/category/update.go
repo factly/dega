@@ -131,6 +131,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(category.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse category description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	mediumID := &category.MediumID
@@ -160,13 +168,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Category{IsFeatured: category.IsFeatured})
 	err = tx.Model(&result).Updates(model.Category{
-		Base:        config.Base{UpdatedByID: uint(uID)},
-		Name:        category.Name,
-		Slug:        categorySlug,
-		Description: category.Description,
-		ParentID:    parentID,
-		MediumID:    mediumID,
-		MetaFields:  category.MetaFields,
+		Base:            config.Base{UpdatedByID: uint(uID)},
+		Name:            category.Name,
+		Slug:            categorySlug,
+		Description:     category.Description,
+		HTMLDescription: description,
+		ParentID:        parentID,
+		MediumID:        mediumID,
+		MetaFields:      category.MetaFields,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {

@@ -78,18 +78,27 @@ func create(w http.ResponseWriter, r *http.Request) {
 		claimSlug = slugx.Make(claim.Title)
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(claim.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Claim{
-		Title:         claim.Title,
-		Slug:          slugx.Approve(&config.DB, claimSlug, sID, tableName),
-		ClaimDate:     claim.ClaimDate,
-		CheckedDate:   claim.CheckedDate,
-		ClaimSources:  claim.ClaimSources,
-		Description:   claim.Description,
-		ClaimantID:    claim.ClaimantID,
-		RatingID:      claim.RatingID,
-		Review:        claim.Review,
-		ReviewSources: claim.ReviewSources,
-		SpaceID:       uint(sID),
+		Title:           claim.Title,
+		Slug:            slugx.Approve(&config.DB, claimSlug, sID, tableName),
+		ClaimDate:       claim.ClaimDate,
+		CheckedDate:     claim.CheckedDate,
+		ClaimSources:    claim.ClaimSources,
+		Description:     claim.Description,
+		HTMLDescription: description,
+		ClaimantID:      claim.ClaimantID,
+		RatingID:        claim.RatingID,
+		Review:          claim.Review,
+		ReviewSources:   claim.ReviewSources,
+		SpaceID:         uint(sID),
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

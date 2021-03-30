@@ -110,14 +110,23 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(tag.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse tag description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})
 	err = tx.Model(&result).Updates(model.Tag{
-		Base:        config.Base{UpdatedByID: uint(uID)},
-		Name:        tag.Name,
-		Slug:        tagSlug,
-		Description: tag.Description,
+		Base:            config.Base{UpdatedByID: uint(uID)},
+		Name:            tag.Name,
+		Slug:            tagSlug,
+		Description:     tag.Description,
+		HTMLDescription: description,
 	}).First(&result).Error
 
 	if err != nil {

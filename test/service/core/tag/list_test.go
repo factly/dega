@@ -31,11 +31,15 @@ func TestTagList(t *testing.T) {
 
 	taglist := []map[string]interface{}{
 		{"name": "Test Tag 1", "slug": "test-tag-1", "description": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"description1"}`),
-		}},
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description1"}}],"version":"2.19.0"}`),
+		},
+			"html_description": "<p>Test Description 1</p>",
+		},
 		{"name": "Test Tag 2", "slug": "test-tag-2", "description": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"description2"}`),
-		}},
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description2"}}],"version":"2.19.0"}`),
+		},
+			"html_description": "<p>Test Description 2</p>",
+		},
 	}
 
 	t.Run("get empty list of tags", func(t *testing.T) {
@@ -62,8 +66,8 @@ func TestTagList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, taglist[0]["name"], taglist[0]["slug"], taglist[0]["description"], taglist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, taglist[0]["name"], taglist[0]["slug"], taglist[0]["description"], taglist[0]["html_description"], taglist[0]["is_featured"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["html_description"], taglist[1]["is_featured"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -87,7 +91,7 @@ func TestTagList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["is_featured"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["html_description"], taglist[1]["is_featured"], 1))
 
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{
@@ -116,8 +120,8 @@ func TestTagList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, taglist[0]["name"], taglist[0]["slug"], taglist[0]["description"], taglist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, taglist[0]["name"], taglist[0]["slug"], taglist[0]["description"], taglist[0]["html_description"], taglist[0]["is_featured"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, taglist[1]["name"], taglist[1]["slug"], taglist[1]["description"], taglist[1]["html_description"], taglist[1]["is_featured"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).

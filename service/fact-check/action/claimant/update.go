@@ -104,6 +104,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		claimantSlug = slugx.Approve(&config.DB, slugx.Make(claimant.Name), sID, tableName)
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(claimant.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.Begin()
 
 	mediumID := &claimant.MediumID
@@ -120,12 +128,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = tx.Model(&result).Updates(model.Claimant{
-		Base:        config.Base{UpdatedByID: uint(uID)},
-		Name:        claimant.Name,
-		Slug:        claimantSlug,
-		MediumID:    mediumID,
-		TagLine:     claimant.TagLine,
-		Description: claimant.Description,
+		Base:            config.Base{UpdatedByID: uint(uID)},
+		Name:            claimant.Name,
+		Slug:            claimantSlug,
+		MediumID:        mediumID,
+		TagLine:         claimant.TagLine,
+		Description:     claimant.Description,
+		HTMLDescription: description,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {

@@ -109,15 +109,24 @@ func create(w http.ResponseWriter, r *http.Request) {
 		parentID = nil
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(category.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse category description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	result := &model.Category{
-		Name:        category.Name,
-		Description: category.Description,
-		Slug:        slugx.Approve(&config.DB, categorySlug, sID, tableName),
-		ParentID:    parentID,
-		MediumID:    mediumID,
-		SpaceID:     uint(sID),
-		IsFeatured:  category.IsFeatured,
-		MetaFields:  category.MetaFields,
+		Name:            category.Name,
+		Description:     category.Description,
+		HTMLDescription: description,
+		Slug:            slugx.Approve(&config.DB, categorySlug, sID, tableName),
+		ParentID:        parentID,
+		MediumID:        mediumID,
+		SpaceID:         uint(sID),
+		IsFeatured:      category.IsFeatured,
+		MetaFields:      category.MetaFields,
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Model(&model.Category{}).Create(&result).Error
