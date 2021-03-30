@@ -129,31 +129,15 @@ describe('Post create component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <CreatePost formats={formats} />
+            <Router>
+              <CreatePost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
       wrapper.find(PostCreateForm).props().onCreate({ title: 'test', status: 'draft' });
       setTimeout(() => {
         expect(actions.addPost).toHaveBeenCalledWith({ title: 'test', status: 'draft' });
-        expect(push).toHaveBeenCalledWith('/posts');
-        done();
-      }, 0);
-    });
-    it('should call publish', (done) => {
-      actions.publish.mockReset();
-      const push = jest.fn();
-      useHistory.mockReturnValueOnce({ push });
-      act(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <CreatePost formats={formats} />
-          </Provider>,
-        );
-      });
-      wrapper.find(PostCreateForm).props().onCreate({ title: 'test', status: 'publish' });
-      setTimeout(() => {
-        expect(actions.publish).toHaveBeenCalledWith({ title: 'test', status: 'publish' });
         expect(push).toHaveBeenCalledWith('/posts');
         done();
       }, 0);

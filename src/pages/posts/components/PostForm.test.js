@@ -1,10 +1,12 @@
 import React from 'react';
 import { Provider, useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { shallow, mount } from 'enzyme';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 import '../../../matchMedia.mock';
 import PostForm from './PostForm';
@@ -12,6 +14,7 @@ import PostForm from './PostForm';
 import { addTemplate } from '../../../actions/posts';
 import { setCollapse } from './../../../actions/sidebar';
 
+Date.now = jest.fn(() => 1487076708000);
 jest.mock('@editorjs/editorjs');
 jest.mock('../../../actions/tags', () => ({
   ...jest.requireActual('../../../actions/tags'),
@@ -148,7 +151,9 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']} />
+            <Router>
+              <PostForm actions={['publish']} />
+            </Router>
           </Provider>,
         );
       });
@@ -159,12 +164,14 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostForm
-              actions={['publish']}
-              onCreate={onCreate}
-              data={data}
-              format={{ id: 1, name: 'article', slug: 'article' }}
-            />
+            <Router>
+              <PostForm
+                actions={['publish']}
+                onCreate={onCreate}
+                data={data}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
           </Provider>,
         );
       });
@@ -175,17 +182,19 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostForm
-              actions={['publish']}
-              onCreate={onCreate}
-              data={data}
-              format={{ id: 1, name: 'article', slug: 'article' }}
-            />
+            <Router>
+              <PostForm
+                actions={['publish']}
+                onCreate={onCreate}
+                data={data}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
           </Provider>,
         );
       });
       act(() => {
-        const settingButton = tree.find('Button').at(2);
+        const settingButton = tree.find('Button').at(3);
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
         expect(tree.find('Drawer').length).toBe(1);
@@ -197,12 +206,14 @@ describe('Posts Create Form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <PostForm
-              actions={['create']}
-              data={data}
-              onCreate={onCreate}
-              format={{ id: 1, name: 'article', slug: 'article' }}
-            />
+            <Router>
+              <PostForm
+                actions={['create']}
+                data={data}
+                onCreate={onCreate}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
           </Provider>,
         );
       });
@@ -219,11 +230,13 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm
-              actions={['publish']}
-              {...props}
-              format={{ id: 1, name: 'article', slug: 'article' }}
-            />
+            <Router>
+              <PostForm
+                actions={['publish']}
+                {...props}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
           </Provider>,
         );
       });
@@ -235,7 +248,9 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm actions={['publish']} onCreate={props.onCreate} />
+            <Router>
+              <PostForm actions={['publish']} onCreate={props.onCreate} />
+            </Router>
           </Provider>,
         );
       });
@@ -255,7 +270,7 @@ describe('Posts Create Form component', () => {
     it('should submit form with given data', (done) => {
       act(() => {
         const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Submit');
+        expect(submitButtom.text()).toBe('Save as draft');
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -268,6 +283,7 @@ describe('Posts Create Form component', () => {
           slug: 'post-1',
           featured_medium_id: 1,
           status: 'draft',
+          published_date: null,
           format_id: 1,
           author_ids: [1],
           authors: [1],
@@ -303,11 +319,13 @@ describe('Posts Create Form component', () => {
       act(() => {
         const input = wrapper.find('FormItem').at(4).find('TextArea').at(0);
         input.simulate('change', { target: { value: 'Post test' } });
+      });
 
+      act(() => {
         const submitButtom = wrapper.find('Button').at(1);
-        submitButtom.simulate('submit');
-
+        expect(submitButtom.text()).toBe('Save as draft');
         submitButtom.simulate('click');
+        submitButtom.simulate('submit');
         wrapper.update();
       });
 
@@ -319,6 +337,7 @@ describe('Posts Create Form component', () => {
           slug: 'post-test',
           featured_medium_id: 1,
           status: 'draft',
+          published_date: null,
           format_id: 1,
           author_ids: [1],
           authors: [1],
@@ -357,11 +376,13 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm
-              actions={['publish']}
-              {...props}
-              format={{ id: 1, name: 'article', slug: 'article' }}
-            />
+            <Router>
+              <PostForm
+                actions={['publish']}
+                {...props}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
           </Provider>,
         );
       });
@@ -382,7 +403,7 @@ describe('Posts Create Form component', () => {
     });
     it('should open and close drawer for settings', () => {
       act(() => {
-        const settingButton = wrapper.find('Button').at(2);
+        const settingButton = wrapper.find('Button').at(3);
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
         expect(wrapper.find('Drawer').length).toBe(1);
@@ -399,6 +420,7 @@ describe('Posts Create Form component', () => {
         featured_medium_id: 1,
         status: 'draft',
         format: 1,
+        published_date: null,
         description: {
           time: 1595747741807,
           blocks: [
@@ -423,18 +445,21 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm
-              actions={['publish']}
-              data={data2}
-              onCreate={props.onCreate}
-              format={{ id: 1, name: 'article', slug: 'article' }}
-            />
+            <Router>
+              <PostForm
+                actions={['publish']}
+                data={data2}
+                onCreate={props.onCreate}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
           </Provider>,
         );
       });
       act(() => {
         const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Submit');
+        expect(submitButtom.text()).toBe('Save as draft');
+        submitButtom.simulate('click');
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -447,6 +472,7 @@ describe('Posts Create Form component', () => {
           slug: 'post-1',
           featured_medium_id: 1,
           status: 'draft',
+          published_date: null,
           format_id: 1,
           author_ids: [],
           category_ids: [],
@@ -484,6 +510,7 @@ describe('Posts Create Form component', () => {
         featured_medium_id: 1,
         status: 'publish',
         format: 1,
+        published_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
         categories: [1],
         tags: [1],
         authors: [1],
@@ -511,12 +538,14 @@ describe('Posts Create Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PostForm
-              actions={['publish']}
-              data={data2}
-              onCreate={props.onCreate}
-              format={{ id: 1, name: 'article', slug: 'article' }}
-            />
+            <Router>
+              <PostForm
+                actions={['publish']}
+                data={data2}
+                onCreate={props.onCreate}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
           </Provider>,
         );
       });
@@ -524,7 +553,8 @@ describe('Posts Create Form component', () => {
         const input = wrapper.find('FormItem').at(4).find('TextArea').at(0);
         input.simulate('change', { target: { value: 'Post test' } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(2);
+        expect(submitButtom.text()).toBe('Update');
         submitButtom.simulate('submit');
 
         submitButtom.simulate('click');
@@ -539,6 +569,7 @@ describe('Posts Create Form component', () => {
           slug: 'post-1',
           featured_medium_id: 1,
           status: 'publish',
+          published_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
           format_id: 1,
           author_ids: [1],
           authors: [1],
@@ -546,6 +577,68 @@ describe('Posts Create Form component', () => {
           category_ids: [1],
           tag_ids: [1],
           tags: [1],
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+        });
+        done();
+      }, 0);
+    });
+    it('should set status as publish on click and submit', (done) => {
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(2);
+        expect(submitButtom.text()).toBe('Publish');
+        submitButtom.simulate('click');
+        submitButtom.simulate('submit');
+      });
+
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'Post-1',
+          excerpt: 'excerpt of post',
+          slug: 'post-1',
+          featured_medium_id: 1,
+          status: 'publish',
+          published_date: moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ'),
+          format_id: 1,
+          categories: [1],
+          category_ids: [1],
+          tags: [1],
+          tag_ids: [1],
+          authors: [1],
+          author_ids: [1],
           description: {
             time: 1595747741807,
             blocks: [

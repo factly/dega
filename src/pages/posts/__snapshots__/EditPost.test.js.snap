@@ -13,85 +13,110 @@ exports[`Posts List component snapshot testing should match skeleton while loadi
     }
   }
 >
-  <EditPost
-    formats={
-      Object {
-        "article": Object {
-          "id": 1,
-          "name": "article",
-          "slug": "article",
-        },
-        "factcheck": Object {
-          "id": 2,
-          "name": "factcheck",
-          "slug": "fact-check",
-        },
-        "loading": false,
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
       }
-    }
-  >
-    <Skeleton
-      avatar={false}
-      paragraph={true}
-      title={true}
     >
-      <div
-        className="ant-skeleton"
+      <EditPost
+        formats={
+          Object {
+            "article": Object {
+              "id": 1,
+              "name": "article",
+              "slug": "article",
+            },
+            "factcheck": Object {
+              "id": 2,
+              "name": "factcheck",
+              "slug": "fact-check",
+            },
+            "loading": false,
+          }
+        }
       >
-        <div
-          className="ant-skeleton-content"
+        <Skeleton
+          avatar={false}
+          paragraph={true}
+          title={true}
         >
-          <Title
-            prefixCls="ant-skeleton-title"
-            width="38%"
+          <div
+            className="ant-skeleton"
           >
-            <h3
-              className="ant-skeleton-title"
-              style={
-                Object {
-                  "width": "38%",
-                }
-              }
-            />
-          </Title>
-          <Paragraph
-            prefixCls="ant-skeleton-paragraph"
-            rows={3}
-            width="61%"
-          >
-            <ul
-              className="ant-skeleton-paragraph"
+            <div
+              className="ant-skeleton-content"
             >
-              <li
-                key="0"
-                style={
-                  Object {
-                    "width": undefined,
+              <Title
+                prefixCls="ant-skeleton-title"
+                width="38%"
+              >
+                <h3
+                  className="ant-skeleton-title"
+                  style={
+                    Object {
+                      "width": "38%",
+                    }
                   }
-                }
-              />
-              <li
-                key="1"
-                style={
-                  Object {
-                    "width": undefined,
-                  }
-                }
-              />
-              <li
-                key="2"
-                style={
-                  Object {
-                    "width": "61%",
-                  }
-                }
-              />
-            </ul>
-          </Paragraph>
-        </div>
-      </div>
-    </Skeleton>
-  </EditPost>
+                />
+              </Title>
+              <Paragraph
+                prefixCls="ant-skeleton-paragraph"
+                rows={3}
+                width="61%"
+              >
+                <ul
+                  className="ant-skeleton-paragraph"
+                >
+                  <li
+                    key="0"
+                    style={
+                      Object {
+                        "width": undefined,
+                      }
+                    }
+                  />
+                  <li
+                    key="1"
+                    style={
+                      Object {
+                        "width": undefined,
+                      }
+                    }
+                  />
+                  <li
+                    key="2"
+                    style={
+                      Object {
+                        "width": "61%",
+                      }
+                    }
+                  />
+                </ul>
+              </Paragraph>
+            </div>
+          </div>
+        </Skeleton>
+      </EditPost>
+    </Router>
+  </BrowserRouter>
 </Provider>
 `;
 

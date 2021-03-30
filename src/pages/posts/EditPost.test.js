@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from 'react-dom/test-utils';
@@ -142,7 +143,9 @@ describe('Posts List component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <EditPost formats={formats} />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -176,7 +179,9 @@ describe('Posts List component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditPost formats={formats} />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -189,7 +194,9 @@ describe('Posts List component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditPost formats={formats} />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -203,9 +210,10 @@ describe('Posts List component', () => {
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 1,
+          published_date: null,
           status: 'draft',
         });
-        expect(push).toHaveBeenCalledWith('/posts');
+        expect(push).toHaveBeenCalledWith('/posts/1/edit');
         done();
       }, 0);
     });
@@ -216,23 +224,26 @@ describe('Posts List component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditPost formats={formats} />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
 
       wrapper.find(PostEditForm).props().onCreate({ status: 'publish' });
       setTimeout(() => {
-        expect(actions.publishPost).toHaveBeenCalledWith({
+        expect(actions.updatePost).toHaveBeenCalledWith({
           id: 1,
           title: 'Post-1',
           slug: 'post-1',
           tag_line: 'tag_line',
+          published_date: null,
           medium_id: 1,
           format_id: 1,
           status: 'publish',
         });
-        expect(push).toHaveBeenCalledWith('/posts');
+        expect(push).toHaveBeenCalledWith('/posts/1/edit');
         done();
       }, 0);
     });
@@ -255,7 +266,9 @@ describe('Posts List component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditPost formats={formats} />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
