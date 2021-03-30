@@ -41,7 +41,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
             "permission": Object {
               "id": 2,
               "organisation_id": 1,
-              "spaces": 2,
             },
             "title": "Org 1",
           },
@@ -61,7 +60,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
         Object {
           "current": 1,
           "onChange": [Function],
-          "pageSize": 5,
+          "pageSize": 20,
           "total": undefined,
         }
       }
@@ -134,7 +133,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                       "permission": Object {
                         "id": 2,
                         "organisation_id": 1,
-                        "spaces": 2,
                       },
                       "title": "Org 1",
                     },
@@ -156,7 +154,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                       "permission": Object {
                         "id": 2,
                         "organisation_id": 1,
-                        "spaces": 2,
                       },
                       "title": "Org 1",
                     },
@@ -228,7 +225,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  2
+                                  Unlimited
                                 </p>
                               </td>
                             </tr>
@@ -260,7 +257,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                   Object {
                     "current": 1,
                     "onChange": [Function],
-                    "pageSize": 5,
+                    "pageSize": 20,
                     "total": undefined,
                   }
                 }
@@ -301,7 +298,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                             "permission": Object {
                               "id": 2,
                               "organisation_id": 1,
-                              "spaces": 2,
                             },
                             "title": "Org 1",
                           },
@@ -321,7 +317,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                             "permission": Object {
                               "id": 2,
                               "organisation_id": 1,
-                              "spaces": 2,
                             },
                             "title": "Org 1",
                           },
@@ -388,7 +383,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        2
+                                        Unlimited
                                       </p>
                                     </td>
                                   </tr>
@@ -419,7 +414,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                         "pagination": Object {
                           "current": 1,
                           "onChange": [Function],
-                          "pageSize": 5,
+                          "pageSize": 20,
                           "total": undefined,
                         },
                         "prefixCls": "ant-table",
@@ -700,7 +695,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                   "permission": Object {
                                     "id": 2,
                                     "organisation_id": 1,
-                                    "spaces": 2,
                                   },
                                   "title": "Org 1",
                                 },
@@ -736,7 +730,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     "permission": Object {
                                       "id": 2,
                                       "organisation_id": 1,
-                                      "spaces": 2,
                                     },
                                     "title": "Org 1",
                                   }
@@ -767,7 +760,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                         "permission": Object {
                                           "id": 2,
                                           "organisation_id": 1,
-                                          "spaces": 2,
                                         },
                                         "title": "Org 1",
                                       }
@@ -803,7 +795,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                         "permission": Object {
                                           "id": 2,
                                           "organisation_id": 1,
-                                          "spaces": 2,
                                         },
                                         "title": "Org 1",
                                       }
@@ -817,7 +808,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                       style={Object {}}
                                     >
                                       <p>
-                                        2
+                                        Unlimited
                                       </p>
                                     </td>
                                   </Cell>
@@ -935,7 +926,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                 className="ant-table-pagination ant-table-pagination-right"
                 current={1}
                 onChange={[Function]}
-                pageSize={5}
+                pageSize={20}
                 total={2}
               >
                 <LocaleReceiver
@@ -1023,7 +1014,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                     }
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
-                    pageSize={5}
+                    pageSize={20}
                     prefixCls="ant-pagination"
                     prevIcon={
                       <button
@@ -1291,7 +1282,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                             "prev_page": "Previous Page",
                           }
                         }
-                        pageSize={5}
+                        pageSize={20}
                         pageSizeOptions={
                           Array [
                             "10",
@@ -1367,7 +1358,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
             "permission": Object {
               "id": 2,
               "organisation_id": 1,
-              "spaces": 2,
             },
             "title": "Org 1",
           },
@@ -1387,7 +1377,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
         Object {
           "current": 1,
           "onChange": [Function],
-          "pageSize": 5,
+          "pageSize": 20,
           "total": undefined,
         }
       }
@@ -1436,7 +1426,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                       "permission": Object {
                         "id": 2,
                         "organisation_id": 1,
-                        "spaces": 2,
                       },
                       "title": "Org 1",
                     },
@@ -1458,7 +1447,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                       "permission": Object {
                         "id": 2,
                         "organisation_id": 1,
-                        "spaces": 2,
                       },
                       "title": "Org 1",
                     },
@@ -1530,7 +1518,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  2
+                                  Unlimited
                                 </p>
                               </td>
                             </tr>
@@ -1562,7 +1550,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                   Object {
                     "current": 1,
                     "onChange": [Function],
-                    "pageSize": 5,
+                    "pageSize": 20,
                     "total": undefined,
                   }
                 }
@@ -1603,7 +1591,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                             "permission": Object {
                               "id": 2,
                               "organisation_id": 1,
-                              "spaces": 2,
                             },
                             "title": "Org 1",
                           },
@@ -1623,7 +1610,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                             "permission": Object {
                               "id": 2,
                               "organisation_id": 1,
-                              "spaces": 2,
                             },
                             "title": "Org 1",
                           },
@@ -1690,7 +1676,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        2
+                                        Unlimited
                                       </p>
                                     </td>
                                   </tr>
@@ -1721,7 +1707,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                         "pagination": Object {
                           "current": 1,
                           "onChange": [Function],
-                          "pageSize": 5,
+                          "pageSize": 20,
                           "total": undefined,
                         },
                         "prefixCls": "ant-table",
@@ -2002,7 +1988,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                   "permission": Object {
                                     "id": 2,
                                     "organisation_id": 1,
-                                    "spaces": 2,
                                   },
                                   "title": "Org 1",
                                 },
@@ -2038,7 +2023,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     "permission": Object {
                                       "id": 2,
                                       "organisation_id": 1,
-                                      "spaces": 2,
                                     },
                                     "title": "Org 1",
                                   }
@@ -2069,7 +2053,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                         "permission": Object {
                                           "id": 2,
                                           "organisation_id": 1,
-                                          "spaces": 2,
                                         },
                                         "title": "Org 1",
                                       }
@@ -2105,7 +2088,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                         "permission": Object {
                                           "id": 2,
                                           "organisation_id": 1,
-                                          "spaces": 2,
                                         },
                                         "title": "Org 1",
                                       }
@@ -2119,7 +2101,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                       style={Object {}}
                                     >
                                       <p>
-                                        2
+                                        Unlimited
                                       </p>
                                     </td>
                                   </Cell>
@@ -2237,7 +2219,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                 className="ant-table-pagination ant-table-pagination-right"
                 current={1}
                 onChange={[Function]}
-                pageSize={5}
+                pageSize={20}
                 total={2}
               >
                 <LocaleReceiver
@@ -2325,7 +2307,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                     }
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
-                    pageSize={5}
+                    pageSize={20}
                     prefixCls="ant-pagination"
                     prevIcon={
                       <button
@@ -2593,7 +2575,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                             "prev_page": "Previous Page",
                           }
                         }
-                        pageSize={5}
+                        pageSize={20}
                         pageSizeOptions={
                           Array [
                             "10",
@@ -2669,7 +2651,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
             "permission": Object {
               "id": 2,
               "organisation_id": 1,
-              "spaces": 2,
             },
             "title": "Org 1",
           },
@@ -2689,7 +2670,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
         Object {
           "current": 1,
           "onChange": [Function],
-          "pageSize": 5,
+          "pageSize": 20,
           "total": undefined,
         }
       }
@@ -2738,7 +2719,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                       "permission": Object {
                         "id": 2,
                         "organisation_id": 1,
-                        "spaces": 2,
                       },
                       "title": "Org 1",
                     },
@@ -2760,7 +2740,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                       "permission": Object {
                         "id": 2,
                         "organisation_id": 1,
-                        "spaces": 2,
                       },
                       "title": "Org 1",
                     },
@@ -2832,7 +2811,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  2
+                                  Unlimited
                                 </p>
                               </td>
                             </tr>
@@ -2864,7 +2843,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                   Object {
                     "current": 1,
                     "onChange": [Function],
-                    "pageSize": 5,
+                    "pageSize": 20,
                     "total": undefined,
                   }
                 }
@@ -2905,7 +2884,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                             "permission": Object {
                               "id": 2,
                               "organisation_id": 1,
-                              "spaces": 2,
                             },
                             "title": "Org 1",
                           },
@@ -2925,7 +2903,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                             "permission": Object {
                               "id": 2,
                               "organisation_id": 1,
-                              "spaces": 2,
                             },
                             "title": "Org 1",
                           },
@@ -2992,7 +2969,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        2
+                                        Unlimited
                                       </p>
                                     </td>
                                   </tr>
@@ -3023,7 +3000,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                         "pagination": Object {
                           "current": 1,
                           "onChange": [Function],
-                          "pageSize": 5,
+                          "pageSize": 20,
                           "total": undefined,
                         },
                         "prefixCls": "ant-table",
@@ -3304,7 +3281,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                   "permission": Object {
                                     "id": 2,
                                     "organisation_id": 1,
-                                    "spaces": 2,
                                   },
                                   "title": "Org 1",
                                 },
@@ -3340,7 +3316,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     "permission": Object {
                                       "id": 2,
                                       "organisation_id": 1,
-                                      "spaces": 2,
                                     },
                                     "title": "Org 1",
                                   }
@@ -3371,7 +3346,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                         "permission": Object {
                                           "id": 2,
                                           "organisation_id": 1,
-                                          "spaces": 2,
                                         },
                                         "title": "Org 1",
                                       }
@@ -3407,7 +3381,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                         "permission": Object {
                                           "id": 2,
                                           "organisation_id": 1,
-                                          "spaces": 2,
                                         },
                                         "title": "Org 1",
                                       }
@@ -3421,7 +3394,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                       style={Object {}}
                                     >
                                       <p>
-                                        2
+                                        Unlimited
                                       </p>
                                     </td>
                                   </Cell>
@@ -3539,7 +3512,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                 className="ant-table-pagination ant-table-pagination-right"
                 current={1}
                 onChange={[Function]}
-                pageSize={5}
+                pageSize={20}
                 total={2}
               >
                 <LocaleReceiver
@@ -3627,7 +3600,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                     }
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
-                    pageSize={5}
+                    pageSize={20}
                     prefixCls="ant-pagination"
                     prevIcon={
                       <button
@@ -3895,7 +3868,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                             "prev_page": "Previous Page",
                           }
                         }
-                        pageSize={5}
+                        pageSize={20}
                         pageSizeOptions={
                           Array [
                             "10",
@@ -3921,6 +3894,734 @@ exports[`Organisation Permission List component  snapshot testing should render 
                   </Pagination>
                 </LocaleReceiver>
               </Pagination>
+            </div>
+          </div>
+        </Spin>
+      </div>
+    </Table>
+  </PermissionList>
+</Provider>
+`;
+
+exports[`Organisation Permission List component  snapshot testing should render the component with no data 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <PermissionList>
+    <Table
+      bordered={true}
+      columns={
+        Array [
+          Object {
+            "dataIndex": "title",
+            "key": "title",
+            "title": "Title",
+            "width": "",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "spaces",
+            ],
+            "render": [Function],
+            "title": "Spaces",
+          },
+        ]
+      }
+      dataSource={Array []}
+      loading={false}
+      pagination={
+        Object {
+          "current": 1,
+          "onChange": [Function],
+          "pageSize": 20,
+          "total": 0,
+        }
+      }
+      rowKey="id"
+    >
+      <div
+        className="ant-table-wrapper"
+      >
+        <Spin
+          size="default"
+          spinning={false}
+          wrapperClassName=""
+        >
+          <div
+            className="ant-spin-nested-loading"
+          >
+            <div
+              className="ant-spin-container"
+              key="container"
+            >
+              <Table
+                bordered={true}
+                className="ant-table-bordered ant-table-empty"
+                columns={
+                  Array [
+                    Object {
+                      "dataIndex": "title",
+                      "key": "title",
+                      "title": "Title",
+                      "width": "",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "spaces",
+                      ],
+                      "render": [Function],
+                      "title": "Spaces",
+                    },
+                  ]
+                }
+                data={Array []}
+                dataSource={Array []}
+                emptyText={
+                  <Context.Consumer>
+                    [Function]
+                  </Context.Consumer>
+                }
+                expandable={
+                  Object {
+                    "__PARENT_RENDER_ICON__": undefined,
+                    "childrenColumnName": undefined,
+                    "expandIcon": [Function],
+                    "expandIconColumnIndex": undefined,
+                    "indentSize": 15,
+                  }
+                }
+                internalHooks="rc-table-internal-hook"
+                internalRefs={
+                  Object {
+                    "body": Object {
+                      "current": <div
+                        class="ant-table-content"
+                      >
+                        <table
+                          style="table-layout: auto;"
+                        >
+                          <colgroup />
+                          <thead
+                            class="ant-table-thead"
+                          >
+                            <tr>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Title
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Spaces
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody
+                            class="ant-table-tbody"
+                          >
+                            <tr
+                              class="ant-table-placeholder"
+                            >
+                              <td
+                                class="ant-table-cell"
+                                colspan="2"
+                              >
+                                <div
+                                  class="ant-empty ant-empty-normal"
+                                >
+                                  <div
+                                    class="ant-empty-image"
+                                  >
+                                    <svg
+                                      class="ant-empty-img-simple"
+                                      height="41"
+                                      viewBox="0 0 64 41"
+                                      width="64"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <g
+                                        fill="none"
+                                        fill-rule="evenodd"
+                                        transform="translate(0 1)"
+                                      >
+                                        <ellipse
+                                          class="ant-empty-img-simple-ellipse"
+                                          cx="32"
+                                          cy="33"
+                                          rx="32"
+                                          ry="7"
+                                        />
+                                        <g
+                                          class="ant-empty-img-simple-g"
+                                          fill-rule="nonzero"
+                                        >
+                                          <path
+                                            d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                                          />
+                                          <path
+                                            class="ant-empty-img-simple-path"
+                                            d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                          />
+                                        </g>
+                                      </g>
+                                    </svg>
+                                  </div>
+                                  <p
+                                    class="ant-empty-description"
+                                  >
+                                    No Data
+                                  </p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>,
+                    },
+                  }
+                }
+                loading={false}
+                pagination={
+                  Object {
+                    "current": 1,
+                    "onChange": [Function],
+                    "pageSize": 20,
+                    "total": 0,
+                  }
+                }
+                prefixCls="ant-table"
+                rowClassName={[Function]}
+                rowKey={[Function]}
+                transformColumns={[Function]}
+              >
+                <div
+                  className="ant-table ant-table-bordered ant-table-empty"
+                >
+                  <Component
+                    pingLeft={false}
+                    pingRight={false}
+                    props={
+                      Object {
+                        "bordered": true,
+                        "className": "ant-table-bordered ant-table-empty",
+                        "columns": Array [
+                          Object {
+                            "dataIndex": "title",
+                            "key": "title",
+                            "title": "Title",
+                            "width": "",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "spaces",
+                            ],
+                            "render": [Function],
+                            "title": "Spaces",
+                          },
+                        ],
+                        "data": Array [],
+                        "dataSource": Array [],
+                        "direction": undefined,
+                        "emptyText": <Context.Consumer>
+                          [Function]
+                        </Context.Consumer>,
+                        "expandable": Object {
+                          "__PARENT_RENDER_ICON__": undefined,
+                          "childrenColumnName": undefined,
+                          "expandIcon": [Function],
+                          "expandIconColumnIndex": undefined,
+                          "indentSize": 15,
+                        },
+                        "internalHooks": "rc-table-internal-hook",
+                        "internalRefs": Object {
+                          "body": Object {
+                            "current": <div
+                              class="ant-table-content"
+                            >
+                              <table
+                                style="table-layout: auto;"
+                              >
+                                <colgroup />
+                                <thead
+                                  class="ant-table-thead"
+                                >
+                                  <tr>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Title
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Spaces
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody
+                                  class="ant-table-tbody"
+                                >
+                                  <tr
+                                    class="ant-table-placeholder"
+                                  >
+                                    <td
+                                      class="ant-table-cell"
+                                      colspan="2"
+                                    >
+                                      <div
+                                        class="ant-empty ant-empty-normal"
+                                      >
+                                        <div
+                                          class="ant-empty-image"
+                                        >
+                                          <svg
+                                            class="ant-empty-img-simple"
+                                            height="41"
+                                            viewBox="0 0 64 41"
+                                            width="64"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <g
+                                              fill="none"
+                                              fill-rule="evenodd"
+                                              transform="translate(0 1)"
+                                            >
+                                              <ellipse
+                                                class="ant-empty-img-simple-ellipse"
+                                                cx="32"
+                                                cy="33"
+                                                rx="32"
+                                                ry="7"
+                                              />
+                                              <g
+                                                class="ant-empty-img-simple-g"
+                                                fill-rule="nonzero"
+                                              >
+                                                <path
+                                                  d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                                                />
+                                                <path
+                                                  class="ant-empty-img-simple-path"
+                                                  d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                />
+                                              </g>
+                                            </g>
+                                          </svg>
+                                        </div>
+                                        <p
+                                          class="ant-empty-description"
+                                        >
+                                          No Data
+                                        </p>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>,
+                          },
+                        },
+                        "loading": false,
+                        "mergedExpandedKeys": Set {},
+                        "pagination": Object {
+                          "current": 1,
+                          "onChange": [Function],
+                          "pageSize": 20,
+                          "total": 0,
+                        },
+                        "prefixCls": "ant-table",
+                        "rowClassName": [Function],
+                        "rowKey": [Function],
+                        "stickyOffsets": Object {
+                          "left": Array [
+                            0,
+                            0,
+                          ],
+                          "right": Array [
+                            0,
+                            0,
+                          ],
+                        },
+                        "transformColumns": [Function],
+                      }
+                    }
+                  >
+                    <div
+                      className="ant-table-container"
+                    >
+                      <div
+                        className="ant-table-content"
+                        onScroll={[Function]}
+                        style={Object {}}
+                      >
+                        <table
+                          style={
+                            Object {
+                              "tableLayout": "auto",
+                            }
+                          }
+                        >
+                          <ColGroup
+                            colWidths={
+                              Array [
+                                "",
+                                undefined,
+                              ]
+                            }
+                            columns={
+                              Array [
+                                Object {
+                                  "dataIndex": "title",
+                                  "fixed": undefined,
+                                  "key": "title",
+                                  "title": "Title",
+                                  "width": "",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "spaces",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Spaces",
+                                },
+                              ]
+                            }
+                          >
+                            <colgroup />
+                          </ColGroup>
+                          <Header
+                            colWidths={
+                              Array [
+                                undefined,
+                                undefined,
+                              ]
+                            }
+                            columCount={2}
+                            columns={
+                              Array [
+                                Object {
+                                  "dataIndex": "title",
+                                  "key": "title",
+                                  "title": "Title",
+                                  "width": "",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "spaces",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Spaces",
+                                },
+                              ]
+                            }
+                            flattenColumns={
+                              Array [
+                                Object {
+                                  "dataIndex": "title",
+                                  "fixed": undefined,
+                                  "key": "title",
+                                  "title": "Title",
+                                  "width": "",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "spaces",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Spaces",
+                                },
+                              ]
+                            }
+                            stickyOffsets={
+                              Object {
+                                "left": Array [
+                                  0,
+                                  0,
+                                ],
+                                "right": Array [
+                                  0,
+                                  0,
+                                ],
+                              }
+                            }
+                          >
+                            <thead
+                              className="ant-table-thead"
+                            >
+                              <HeaderRow
+                                cellComponent="th"
+                                cells={
+                                  Array [
+                                    Object {
+                                      "children": "Title",
+                                      "className": "",
+                                      "colEnd": 0,
+                                      "colSpan": 1,
+                                      "colStart": 0,
+                                      "column": Object {
+                                        "dataIndex": "title",
+                                        "key": "title",
+                                        "title": "Title",
+                                        "width": "",
+                                      },
+                                      "key": "title",
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Spaces",
+                                      "className": "",
+                                      "colEnd": 1,
+                                      "colSpan": 1,
+                                      "colStart": 1,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "spaces",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Spaces",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                  ]
+                                }
+                                flattenColumns={
+                                  Array [
+                                    Object {
+                                      "dataIndex": "title",
+                                      "fixed": undefined,
+                                      "key": "title",
+                                      "title": "Title",
+                                      "width": "",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "spaces",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Spaces",
+                                    },
+                                  ]
+                                }
+                                index={0}
+                                key="0"
+                                rowComponent="tr"
+                                stickyOffsets={
+                                  Object {
+                                    "left": Array [
+                                      0,
+                                      0,
+                                    ],
+                                    "right": Array [
+                                      0,
+                                      0,
+                                    ],
+                                  }
+                                }
+                              >
+                                <tr>
+                                  <Cell
+                                    className=""
+                                    colEnd={0}
+                                    colSpan={1}
+                                    colStart={0}
+                                    column={
+                                      Object {
+                                        "dataIndex": "title",
+                                        "key": "title",
+                                        "title": "Title",
+                                        "width": "",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="title"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Title
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={1}
+                                    colSpan={1}
+                                    colStart={1}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "spaces",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Spaces",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-spaces"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Spaces
+                                    </th>
+                                  </Cell>
+                                </tr>
+                              </HeaderRow>
+                            </thead>
+                          </Header>
+                          <Body
+                            childrenColumnName="children"
+                            data={Array []}
+                            emptyNode={
+                              <Context.Consumer>
+                                [Function]
+                              </Context.Consumer>
+                            }
+                            expandedKeys={Set {}}
+                            getRowKey={[Function]}
+                            measureColumnWidth={false}
+                          >
+                            <tbody
+                              className="ant-table-tbody"
+                            >
+                              <ExpandedRow
+                                cellComponent="td"
+                                className="ant-table-placeholder"
+                                colSpan={2}
+                                component="tr"
+                                componentWidth={0}
+                                expanded={true}
+                                prefixCls="ant-table"
+                              >
+                                <tr
+                                  className="ant-table-placeholder"
+                                  style={
+                                    Object {
+                                      "display": null,
+                                    }
+                                  }
+                                >
+                                  <Cell
+                                    colSpan={2}
+                                    component="td"
+                                    prefixCls="ant-table"
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={2}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <Empty
+                                        image={<Simple />}
+                                      >
+                                        <LocaleReceiver
+                                          componentName="Empty"
+                                        >
+                                          <div
+                                            className="ant-empty ant-empty-normal"
+                                          >
+                                            <div
+                                              className="ant-empty-image"
+                                            >
+                                              <Simple>
+                                                <svg
+                                                  className="ant-empty-img-simple"
+                                                  height="41"
+                                                  viewBox="0 0 64 41"
+                                                  width="64"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <g
+                                                    fill="none"
+                                                    fillRule="evenodd"
+                                                    transform="translate(0 1)"
+                                                  >
+                                                    <ellipse
+                                                      className="ant-empty-img-simple-ellipse"
+                                                      cx="32"
+                                                      cy="33"
+                                                      rx="32"
+                                                      ry="7"
+                                                    />
+                                                    <g
+                                                      className="ant-empty-img-simple-g"
+                                                      fillRule="nonzero"
+                                                    >
+                                                      <path
+                                                        d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                                                      />
+                                                      <path
+                                                        className="ant-empty-img-simple-path"
+                                                        d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                      />
+                                                    </g>
+                                                  </g>
+                                                </svg>
+                                              </Simple>
+                                            </div>
+                                            <p
+                                              className="ant-empty-description"
+                                            >
+                                              No Data
+                                            </p>
+                                          </div>
+                                        </LocaleReceiver>
+                                      </Empty>
+                                    </td>
+                                  </Cell>
+                                </tr>
+                              </ExpandedRow>
+                            </tbody>
+                          </Body>
+                        </table>
+                      </div>
+                    </div>
+                  </Component>
+                </div>
+              </Table>
             </div>
           </div>
         </Spin>

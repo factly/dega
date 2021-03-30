@@ -21,7 +21,7 @@ let state = {
         data: [1,2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },  
@@ -33,7 +33,6 @@ let state = {
         permission : {
           id: 2,
           organisation_id: 1,
-          spaces: 2,
         },
       },
       '2': {
@@ -44,6 +43,10 @@ let state = {
           organisation_id: 2,
           spaces: 4,
         },
+      },
+      '3': {
+        id: 1,
+        title: 'Org 3',
       },
     },
     loading: false,
@@ -75,6 +78,21 @@ describe('Organisation Permission List component ', () => {
       );
       expect(tree).toMatchSnapshot();
     });
+    it('should render the component with no data', () => {
+      store = mockStore({
+        organisations: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+      });
+      const tree = mount(
+        <Provider store={store}>
+            <PermissionList />
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
     it('should match component when loading', () => {
       state.organisations.loading = true;
       store = mockStore(state);
@@ -95,7 +113,7 @@ describe('Organisation Permission List component ', () => {
       );
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 5});
+      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20});
     });
   });
   describe('component testing', () => {
@@ -122,7 +140,7 @@ describe('Organisation Permission List component ', () => {
       expect(updatedTable.props().pagination.current).toEqual(3);
       setTimeout(() => {
         expect(mockedDispatch).toHaveBeenCalledTimes(1);
-        expect(getOrganisations).toHaveBeenCalledWith({ page: 3, limit: 5});
+        expect(getOrganisations).toHaveBeenCalledWith({ page: 3, limit: 20});
       }, 0);
     });
   })
