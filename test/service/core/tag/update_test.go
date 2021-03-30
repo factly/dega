@@ -82,8 +82,9 @@ func TestTagUpdate(t *testing.T) {
 			"slug":        "elections",
 			"is_featured": true,
 			"description": postgres.Jsonb{
-				RawMessage: []byte(`{"type":"description"}`),
+				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 			},
+			"html_description": "<p>Test Description</p>",
 		}
 
 		SelectMock(mock, Data, 1, 1)
@@ -107,15 +108,16 @@ func TestTagUpdate(t *testing.T) {
 			"slug":        "elections-1",
 			"is_featured": true,
 			"description": postgres.Jsonb{
-				RawMessage: []byte(`{"type":"description"}`),
+				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 			},
+			"html_description": "<p>Test Description</p>",
 		}
 		SelectMock(mock, Data, 1, 1)
 
 		mock.ExpectQuery(`SELECT slug, space_id FROM "tags"`).
 			WithArgs("elections%", 1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedTag["name"], "elections", "", false, 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedTag["name"], "elections", updatedTag["description"], updatedTag["html_description"], false, 1))
 
 		tagUpdateMock(mock, updatedTag)
 		mock.ExpectCommit()
@@ -137,8 +139,9 @@ func TestTagUpdate(t *testing.T) {
 			"slug":        "testing-slug",
 			"is_featured": true,
 			"description": postgres.Jsonb{
-				RawMessage: []byte(`{"type":"description"}`),
+				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 			},
+			"html_description": "<p>Test Description</p>",
 		}
 		SelectMock(mock, Data, 1, 1)
 
@@ -164,6 +167,10 @@ func TestTagUpdate(t *testing.T) {
 			"name":        "NewElections",
 			"slug":        "elections",
 			"is_featured": true,
+			"description": postgres.Jsonb{
+				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+			},
+			"html_description": "<p>Test Description</p>",
 		}
 
 		SelectMock(mock, Data, 1, 1)
@@ -178,6 +185,39 @@ func TestTagUpdate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
+	t.Run("cannot parse tag description", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+		updatedTag := map[string]interface{}{
+			"name":        "NewElections",
+			"slug":        "elections",
+			"is_featured": true,
+			"description": postgres.Jsonb{
+				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+			},
+			"html_description": "<p>Test Description</p>",
+		}
+
+		SelectMock(mock, Data, 1, 1)
+
+		sameNameCount(mock, 0, updatedTag["name"])
+
+		updatedTag["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.PUT(path).
+			WithPath("tag_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedTag).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		updatedTag["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
+
+		test.ExpectationsMet(t, mock)
+	})
+
 	t.Run("update tag when meili is down", func(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
@@ -186,8 +226,9 @@ func TestTagUpdate(t *testing.T) {
 			"slug":        "elections",
 			"is_featured": true,
 			"description": postgres.Jsonb{
-				RawMessage: []byte(`{"type":"description"}`),
+				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 			},
+			"html_description": "<p>Test Description</p>",
 		}
 
 		SelectMock(mock, Data, 1, 1)

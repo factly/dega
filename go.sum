@@ -97,10 +97,6 @@ github.com/envoyproxy/go-control-plane v0.6.9/go.mod h1:SBwIajubJHhxtWwsL9s8ss4s
 github.com/envoyproxy/go-control-plane v0.9.1-0.20191026205805-5f8ba28d4473/go.mod h1:YTl/9mNaCwkRvm6d1a2C3ymFceY/DCBVvsKhRF0iEA4=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5/go.mod h1:a2zkGnVExMxdzMo3M0Hi/3sEU+cWnZpSni0O6/Yb/P0=
-github.com/factly/x v0.0.43 h1:+p+5Blo2uTC46x/C+1Thw0rdrg9/5TdMOu5OjsH65qs=
-github.com/factly/x v0.0.43/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
-github.com/factly/x v0.0.44 h1:exxcTEDrVnJlGyyqS4cxF+heOWKoN/sBORqjn4gtw0s=
-github.com/factly/x v0.0.44/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
 github.com/factly/x v0.0.45 h1:SszLJSE1f34//SpvrOkYqiXYGtI1m1rnRVmMtmfbmAM=
 github.com/factly/x v0.0.45/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
 github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 h1:DddqAaWDpywytcG8w/qoQ5sAN8X12d3Z3koB0C3Rxsc=

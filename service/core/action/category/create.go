@@ -12,7 +12,6 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
@@ -111,14 +110,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	editorjsBlocks := make(map[string]interface{})
-	err = json.Unmarshal(category.Description.RawMessage, &editorjsBlocks)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	description, err := util.HTMLDescription(category.Description)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse category description", http.StatusUnprocessableEntity)))

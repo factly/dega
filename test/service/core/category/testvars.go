@@ -21,11 +21,12 @@ var Data map[string]interface{} = map[string]interface{}{
 	"name": "Test category",
 	"slug": "test-category",
 	"description": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"description"}`),
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
-	"parent_id":   0,
-	"medium_id":   1,
-	"is_featured": true,
+	"html_description": "<p>Test Description</p>",
+	"parent_id":        0,
+	"medium_id":        1,
+	"is_featured":      true,
 	"meta_fields": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"description"}`),
 	},
@@ -33,9 +34,10 @@ var Data map[string]interface{} = map[string]interface{}{
 var resData map[string]interface{} = map[string]interface{}{
 	"name": "Test category",
 	"slug": "test-category",
-	"description": map[string]interface{}{
-		"type": "description",
+	"description": postgres.Jsonb{
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
+	"html_description": "<p>Test Description</p>",
 	"meta_fields": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"description"}`),
 	},
@@ -52,10 +54,11 @@ var categorylist []map[string]interface{} = []map[string]interface{}{
 		"name": "Test category 1",
 		"slug": "test-category-1",
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"description1"}`),
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description 1"}}],"version":"2.19.0"}`),
 		},
-		"parent_id": 0,
-		"medium_id": 1,
+		"html_description": "<p>Test Description 1</p>",
+		"parent_id":        0,
+		"medium_id":        1,
 		"meta_fields": postgres.Jsonb{
 			RawMessage: []byte(`{"type":"description"}`),
 		},
@@ -65,10 +68,11 @@ var categorylist []map[string]interface{} = []map[string]interface{}{
 		"name": "Test category 2",
 		"slug": "test-category-2",
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"description2"}`),
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description 2"}}],"version":"2.19.0"}`),
 		},
-		"parent_id": 0,
-		"medium_id": 1,
+		"html_description": "<p>Test Description 2</p>",
+		"parent_id":        0,
+		"medium_id":        1,
 		"meta_fields": postgres.Jsonb{
 			RawMessage: []byte(`{"type":"description"}`),
 		},
@@ -76,7 +80,7 @@ var categorylist []map[string]interface{} = []map[string]interface{}{
 	},
 }
 
-var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "parent_id", "meta_fields", "medium_id", "is_featured", "space_id"}
+var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "parent_id", "meta_fields", "medium_id", "is_featured", "space_id"}
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "categories"`)
 var countQuery string = regexp.QuoteMeta(`SELECT count(1) FROM "categories"`)

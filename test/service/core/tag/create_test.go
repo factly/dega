@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -80,7 +81,7 @@ func TestTagCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "tags"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["is_featured"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["is_featured"], 1).
 			WillReturnError(errors.New("cannot create tag"))
 		mock.ExpectRollback()
 
@@ -126,6 +127,27 @@ func TestTagCreate(t *testing.T) {
 			Status(http.StatusCreated).JSON().Object()
 		Data["slug"] = "elections"
 		res.ContainsMap(Data)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("cannot parse tag description", func(t *testing.T) {
+
+		test.CheckSpaceMock(mock)
+
+		sameNameCount(mock, 0, Data["name"])
+
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
+
 		test.ExpectationsMet(t, mock)
 	})
 

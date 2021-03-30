@@ -13,7 +13,6 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/x/editorx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -168,12 +167,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	}
 
 	// Store HTML description
-	editorjsBlocks := make(map[string]interface{})
-	err = json.Unmarshal(post.Description.RawMessage, &editorjsBlocks)
-	if err != nil {
-		return nil, errorx.GetMessage(err.Error(), http.StatusInternalServerError)
-	}
-	description, err := editorx.EditorjsToHTML(editorjsBlocks)
+	description, err := util.HTMLDescription(post.Description)
 	if err != nil {
 		return nil, errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)
 	}
