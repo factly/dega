@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer, { act as rendererAct } from 'react-test-renderer';
 import { useDispatch, Provider, useSelector } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -19,7 +18,6 @@ jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -35,94 +33,163 @@ jest.mock('../../actions/tags', () => ({
 }));
 
 describe('Tags List component', () => {
-  const store = mockStore({
-    tags: {
-      req: [],
-      details: {
-        '1': {
-          id: 1,
-          name: 'Tag-1',
-          slug: 'tag-1',
-          description: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}
-        },
-        '2': {
-          id: 2,
-          name: 'Tag-2',
-          slug: 'tag-2',
-          description: {time: 1613561493781, blocks: [{type: "paragraph", data: {text: "Description 2"}}], version: "2.19.0"}
-        },
-      },
-      loading: true,
-    },
-  });
-  store.dispatch = jest.fn(() => ({}));
-
-  const mockedDispatch = jest.fn();
-  useDispatch.mockReturnValue(mockedDispatch);
+  let store;
+  let mockedDispatch;
 
   describe('snapshot testing', () => {
-    it('should render the component', () => {
-      useSelector.mockReturnValueOnce({
-        tag: {
-          id: 1,
-          name: 'tag',
-          slug: 'slug',
-          description: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}
+    beforeEach(() => {
+      store = mockStore({
+        tags: {
+          req: [],
+          details: {
+            1: {
+              id: 1,
+              name: 'Tag-1',
+              slug: 'tag-1',
+              description: {
+                time: 1613561493761,
+                blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+                version: '2.19.0',
+              },
+            },
+            2: {
+              id: 2,
+              name: 'Tag-2',
+              slug: 'tag-2',
+              description: {
+                time: 1613561493781,
+                blocks: [{ type: 'paragraph', data: { text: 'Description 2' } }],
+                version: '2.19.0',
+              },
+            },
+          },
+          loading: false,
         },
-        loading: false,
+        spaces: {
+          orgs: [],
+          details: {},
+          loading: true,
+          selected: false,
+        },
       });
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditTag />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      store.dispatch = jest.fn(() => ({}));
+
+      mockedDispatch = jest.fn();
+      useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should render the component', () => {
+      const tree = mount(
+        <Provider store={store}>
+          <EditTag />
+        </Provider>,
+      );
+
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      useSelector.mockReturnValueOnce({
-        tag: {},
-        loading: false,
+      store = mockStore({
+        tags: {
+          req: [],
+          details: {},
+          loading: false,
+        },
       });
-      let component;
-      store.details = {};
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditTag />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditTag />
+        </Provider>,
+      );
+
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
-      useSelector.mockReturnValueOnce({
-        tag: {},
-        loading: true,
+      store = mockStore({
+        tags: {
+          req: [],
+          details: {},
+          loading: true,
+        },
       });
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditTag />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditTag />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
     let wrapper;
+    beforeEach(() => {
+      store = mockStore({
+        tags: {
+          req: [],
+          details: {
+            1: {
+              id: 1,
+              name: 'Tag-1',
+              slug: 'tag-1',
+              description: {
+                time: 1613561493761,
+                blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+                version: '2.19.0',
+              },
+            },
+            2: {
+              id: 2,
+              name: 'Tag-2',
+              slug: 'tag-2',
+              description: {
+                time: 1613561493781,
+                blocks: [{ type: 'paragraph', data: { text: 'Description 2' } }],
+                version: '2.19.0',
+              },
+            },
+          },
+          loading: false,
+        },
+        spaces: {
+          orgs: [],
+          details: {},
+          loading: true,
+          selected: false,
+        },
+      });
+      store.dispatch = jest.fn(() => ({}));
+
+      mockedDispatch = jest.fn();
+      useDispatch.mockReturnValue(mockedDispatch);
+    });
     afterEach(() => {
       wrapper.unmount();
     });
     it('should display RecordNotFound when tag not found', () => {
-      useSelector.mockReturnValueOnce({ tag: null, loading: false });
+      store = mockStore({
+        tags: {
+          req: [
+            {
+              data: [1, 2],
+              query: {
+                page: 1,
+              },
+              total: 2,
+            },
+          ],
+          details: {
+            2: {
+              id: 2,
+              name: 'Tag-2',
+              slug: 'tag-2',
+              description: {
+                time: 1613561493781,
+                blocks: [{ type: 'paragraph', data: { text: 'Description 2' } }],
+                version: '2.19.0',
+              },
+            },
+          },
+          loading: false,
+        },
+      });
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -133,7 +200,6 @@ describe('Tags List component', () => {
       expect(wrapper.find('RecordNotFound').length).toBe(1);
     });
     it('should call get action', () => {
-      useSelector.mockReturnValueOnce({ tag: null, loading: true });
       actions.getTag.mockReset();
       act(() => {
         wrapper = mount(
@@ -145,7 +211,6 @@ describe('Tags List component', () => {
       expect(actions.getTag).toHaveBeenCalledWith('1');
     });
     it('should call updateTag', () => {
-      useSelector.mockReturnValueOnce({ tag: {}, loading: false });
       actions.updateTag.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
@@ -157,8 +222,18 @@ describe('Tags List component', () => {
         );
       });
       wrapper.find(TagEditForm).props().onCreate({ test: 'test' });
-      expect(actions.updateTag).toHaveBeenCalledWith({ test: 'test' });
-      expect(push).toHaveBeenCalledWith('/tags');
+      expect(actions.updateTag).toHaveBeenCalledWith({
+        id: 1,
+        name: 'Tag-1',
+        slug: 'tag-1',
+        description: {
+          time: 1613561493761,
+          blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+          version: '2.19.0',
+        },
+        test: 'test',
+      });
+      expect(push).toHaveBeenCalledWith('/tags/1/edit');
     });
   });
 });

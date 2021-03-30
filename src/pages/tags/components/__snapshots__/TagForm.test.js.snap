@@ -84,6 +84,7 @@ exports[`Tags Create Form component snapshot testing should match component with
       }
       name="create-tag"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -139,6 +140,7 @@ exports[`Tags Create Form component snapshot testing should match component with
           name="create-tag"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -1138,6 +1140,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -1146,6 +1149,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >
@@ -1314,6 +1318,7 @@ exports[`Tags Create Form component snapshot testing should match component with
       }
       name="create-tag"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -1352,6 +1357,7 @@ exports[`Tags Create Form component snapshot testing should match component with
           name="create-tag"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -2317,6 +2323,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -2325,6 +2332,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >
@@ -2491,6 +2499,7 @@ exports[`Tags Create Form component snapshot testing should render the component
       }
       name="create-tag"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -2529,6 +2538,7 @@ exports[`Tags Create Form component snapshot testing should render the component
           name="create-tag"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -3494,6 +3504,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -3502,6 +3513,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >

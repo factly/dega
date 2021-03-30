@@ -33,7 +33,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -159,7 +159,7 @@ describe('Tags List component', () => {
 
       expect(deleteTag).toHaveBeenCalled();
       expect(deleteTag).toHaveBeenCalledWith(1);
-      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit tag', () => {
       store = mockStore(state);
@@ -223,14 +223,14 @@ describe('Tags List component', () => {
           .props()
           .onChange({ target: { value: 'asc' } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
 
       setTimeout(() => {
         expect(getPosts).toHaveBeenCalledWith({
           page: 1,
-          limit: 5,
+          limit: 20,
           q: 'tag',
         });
       }, 0);
