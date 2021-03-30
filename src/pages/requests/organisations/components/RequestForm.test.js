@@ -13,6 +13,7 @@ const mockStore = configureMockStore(middlewares);
 
 let onCreate, store;
 const data = {
+  title: 'Request',
   organisation_id: 1,
   spaces: 4,
   description: 'Description',
@@ -73,6 +74,7 @@ describe('Organisation Request Form component', () => {
       props = {
         onCreate: jest.fn(),
         data: {
+          title: 'Request',
           organisation_id: 1,
           spaces: 4,
           description: 'Description',
@@ -123,19 +125,19 @@ describe('Organisation Request Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(3)
           .find('InputNumber')
           .props()
           .onChange({ target: { value : 5 }});
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(2)
           .find('Select')
           .props()
           .onChange({ target : { value: 2}});
         wrapper
           .find('FormItem')
-          .at(2)  
+          .at(1)  
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value : 'New Description'}});
@@ -146,6 +148,7 @@ describe('Organisation Request Form component', () => {
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'Request',
           organisation_id: 2,
           spaces: 5,
           description: 'New Description',

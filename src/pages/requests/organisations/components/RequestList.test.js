@@ -26,7 +26,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -35,7 +35,7 @@ let state = {
       '1' : {
         id: 1,
         title: 'Request',
-        spaces: 4,
+        spaces: -1,
         organisation_id: 10,
         status: 'pending',
       },
@@ -86,6 +86,53 @@ describe('Organisation Request List component', () => {
       );
       expect(tree).toMatchSnapshot();
     });
+    it('should render the component when not admin', () => {
+      store = mockStore({
+        organisationRequests: {
+          req: [
+            {
+              data: [1, 2],
+              query: {
+                page: 1,
+                limit: 20,
+              },
+              total: 2,
+            },
+          ],
+          details: {
+            1: {
+              id: 1,
+              title: 'Request',
+              spaces: -1,
+              organisation_id: 10,
+              status: 'pending',
+            },
+            2: {
+              id: 2,
+              title: 'Request 2',
+              spaces: 5,
+              organisation_id: 11,
+              status: 'pending',
+            },
+          },
+          loading: false,
+        },
+        admin: {
+          loading: false,
+          organisation: {
+            id: 1,
+          },
+        },
+      });
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <OrganisationRequestList />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
     it('should match the component when loading', () => {
       state.organisationRequests.loading = true;
       store = mockStore(state);
@@ -110,7 +157,7 @@ describe('Organisation Request List component', () => {
       );
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 5 }, true);
+      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20 }, true);
     });
   });
   describe('component testing', () => {
@@ -157,7 +204,7 @@ describe('Organisation Request List component', () => {
         .simulate('click');
       expect(approveOrganisationRequest).toHaveBeenCalled();
       expect(approveOrganisationRequest).toHaveBeenCalledWith(1,'approve');
-      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 5 }, true);
+      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20 }, true);
     });
     it('should reject request', () => {
       store = mockStore(state);
@@ -180,7 +227,7 @@ describe('Organisation Request List component', () => {
         .simulate('click');
       expect(approveOrganisationRequest).toHaveBeenCalled();
       expect(approveOrganisationRequest).toHaveBeenCalledWith(1,'reject');
-      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 5 }, true);
+      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20 }, true);
     });
   });
 })
