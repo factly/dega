@@ -18,7 +18,6 @@ const mockStore = configureMockStore(middlewares);
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -60,7 +59,7 @@ describe('Media edit component', () => {
               description: 'description',
             },
           },
-          loading: true,
+          loading: false,
         },
       });
       store.dispatch = jest.fn(() => ({}));
@@ -68,17 +67,6 @@ describe('Media edit component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockReturnValueOnce({
-        media: {
-          id: 1,
-          name: 'name',
-          url: 'some-url',
-          file_size: 'file_size',
-          caption: 'caption',
-          description: 'description',
-        },
-        loading: false,
-      });
       const tree = mount(
         <Provider store={store}>
           <Router>
@@ -89,9 +77,12 @@ describe('Media edit component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      useSelector.mockReturnValueOnce({
-        media: {},
-        loading: false,
+      store = mockStore({
+        media: {
+          req: [],
+          details: {},
+          loading: false,
+        },
       });
       const tree = mount(
         <Provider store={store}>
@@ -103,9 +94,12 @@ describe('Media edit component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
-      useSelector.mockReturnValueOnce({
-        media: {},
-        loading: true,
+      store = mockStore({
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
       });
       const tree = mount(
         <Provider store={store}>
@@ -117,23 +111,76 @@ describe('Media edit component', () => {
   });
   describe('component testing', () => {
     let wrapper;
+    beforeEach(() => {
+      store = mockStore({
+        media: {
+          req: [
+            {
+              data: [1],
+              query: {
+                page: 1,
+              },
+              total: 1,
+            },
+          ],
+          details: {
+            '1': {
+              id: 1,
+              name: 'name',
+              url: 'some-url',
+              file_size: 'file_size',
+              caption: 'caption',
+              description: 'description',
+            },
+          },
+          loading: false,
+        },
+      });
+      store.dispatch = jest.fn(() => ({}));
+      mockedDispatch = jest.fn();
+      useDispatch.mockReturnValue(mockedDispatch);
+    });
     afterEach(() => {
       wrapper.unmount();
     });
     it('should call get action', () => {
-      useSelector.mockReturnValueOnce({ media: null, loading: true });
       actions.getMedium.mockReset();
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditMedium />
+            <Router>
+              <EditMedium />
+            </Router>
           </Provider>,
         );
       });
       expect(actions.getMedium).toHaveBeenCalledWith('1');
     });
     it('should display RecordNotFound when media not found', () => {
-      useSelector.mockReturnValueOnce({ media: null, loading: false });
+      store = mockStore({
+        media: {
+          req: [
+            {
+              data: [2],
+              query: {
+                page: 1,
+              },
+              total: 1,
+            },
+          ],
+          details: {
+            '2': {
+              id: 2,
+              name: 'name',
+              url: 'some-url',
+              file_size: 'file_size',
+              caption: 'caption',
+              description: 'description',
+            },
+          },
+          loading: false,
+        },
+      });
       actions.getMedium.mockReset();
       act(() => {
         wrapper = mount(
@@ -146,7 +193,6 @@ describe('Media edit component', () => {
       expect(wrapper.find('RecordNotFound').length).toBe(1);
     });
     it('should call updateMedia', () => {
-      useSelector.mockReturnValueOnce({ media: {}, loading: false });
       actions.updateMedium.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
@@ -159,8 +205,27 @@ describe('Media edit component', () => {
           </Provider>,
         );
       });
+      act(() => {
+        wrapper
+          .find('FormItem')
+          .at(2)
+          .find('Input')
+          .simulate('change', { target: { value: 'caption ' } });
+        const submitButton = wrapper.find('Button').at(1);
+        expect(submitButton.text()).toBe('Update');
+        submitButton.simulate('submit');
+      });
+      wrapper.update();
       wrapper.find(Form).props().onFinish({ test: 'test' });
-      expect(actions.updateMedium).toHaveBeenCalledWith({ test: 'test' });
+      expect(actions.updateMedium).toHaveBeenCalledWith({
+        id: 1,
+        name: 'name',
+        url: 'some-url',
+        file_size: 'file_size',
+        caption: 'caption',
+        description: 'description',
+        test: 'test',
+      });
     });
   });
 });
