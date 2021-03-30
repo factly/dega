@@ -16,6 +16,7 @@ import (
 	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/factly/dega-server/test/service/podcast/episode"
 	"github.com/gavv/httpexpect"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
@@ -139,6 +140,27 @@ func TestPodcastUpdate(t *testing.T) {
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
+		test.ExpectationsMet(t, mock)
+	})
+
+	t.Run("cannot parse podcast description", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectQuery(mock)
+
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.PUT(path).
+			WithPath("podcast_id", "1").
+			WithJSON(Data).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
 		test.ExpectationsMet(t, mock)
 	})
 
