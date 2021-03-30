@@ -19,7 +19,6 @@ jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -63,29 +62,25 @@ describe('Ratings Edit component', () => {
               numeric_value: 5,
             },
           },
-          loading: true,
+          loading: false,
         },
         media: {
           req: [],
           details: {},
           loading: true,
         },
+        spaces: {
+          orgs: [],
+          details: {},
+          loading: true,
+          selected: 0,
+        }
       });
       store.dispatch = jest.fn(() => ({}));
       mockedDispatch = jest.fn();
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockReturnValueOnce({
-        rating: {
-          id: 1,
-          name: 'True',
-          slug: 'true',
-          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
-          numeric_value: 5,
-        },
-        loading: false,
-      });
       const tree = mount(
         <Provider store={store}>
           <EditRating />
@@ -94,9 +89,17 @@ describe('Ratings Edit component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      useSelector.mockReturnValueOnce({
-        rating: {},
-        loading: false,
+      store = mockStore({
+        ratings: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
       });
       const tree = mount(
         <Provider store={store}>
@@ -106,9 +109,17 @@ describe('Ratings Edit component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
-      useSelector.mockReturnValueOnce({
-        rating: {},
-        loading: true,
+      store = mockStore({
+        ratings: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
       });
       const tree = mount(
         <Provider store={store}>
@@ -120,11 +131,56 @@ describe('Ratings Edit component', () => {
   });
   describe('component testing', () => {
     let wrapper;
+    beforeEach(() => {
+      store = mockStore({
+        ratings: {
+          req: [],
+          details: {
+            1: {
+              id: 1,
+              name: 'True',
+              slug: 'true',
+              description: {
+                time: 1613559903378,
+                blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+                version: '2.19.0',
+              },
+              numeric_value: 5,
+            },
+            2: {
+              id: 2,
+              name: 'False',
+              slug: 'false',
+              description: {
+                time: 1613559903398,
+                blocks: [{ type: 'paragraph', data: { text: 'Description2' } }],
+                version: '2.19.0',
+              },
+              numeric_value: 5,
+            },
+          },
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+        spaces: {
+          orgs: [],
+          details: {},
+          loading: true,
+          selected: 0,
+        }
+      });
+      store.dispatch = jest.fn(() => ({}));
+      mockedDispatch = jest.fn();
+      useDispatch.mockReturnValue(mockedDispatch);
+    });
     afterEach(() => {
       wrapper.unmount();
     });
     it('should call get action', () => {
-      useSelector.mockReturnValueOnce({ rating: null, loading: true });
       actions.getRating.mockReset();
       act(() => {
         wrapper = mount(
@@ -136,7 +192,38 @@ describe('Ratings Edit component', () => {
       expect(actions.getRating).toHaveBeenCalledWith('1');
     });
     it('should display RecordNotFound when rating not found', () => {
-      useSelector.mockReturnValueOnce({ rating: null, loading: false });
+      store = mockStore({
+        ratings: {
+          req: [
+            {
+              data: [2],
+              query: {
+                page: 1,
+              },
+              total: 1,
+            },
+          ],
+          details: {
+            2: {
+              id: 2,
+              name: 'False',
+              slug: 'false',
+              description: {
+                time: 1613559903398,
+                blocks: [{ type: 'paragraph', data: { text: 'Description2' } }],
+                version: '2.19.0',
+              },
+              numeric_value: 5,
+            },
+          },
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      });
       actions.getRating.mockReset();
       act(() => {
         wrapper = mount(
@@ -152,7 +239,6 @@ describe('Ratings Edit component', () => {
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       useDispatch.mockReturnValueOnce(() => Promise.resolve({}));
-      useSelector.mockReturnValueOnce({ rating: {}, loading: false });
       actions.updateRating.mockReset();
       act(() => {
         wrapper = mount(
@@ -163,8 +249,19 @@ describe('Ratings Edit component', () => {
       });
       wrapper.find(RatingEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.updateRating).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/ratings');
+        expect(actions.updateRating).toHaveBeenCalledWith({
+          id: 1,
+          name: 'True',
+          slug: 'true',
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
+          numeric_value: 5,
+          test: 'test',
+        });
+        expect(push).toHaveBeenCalledWith('/ratings/1/edit');
         done();
       }, 0);
     });

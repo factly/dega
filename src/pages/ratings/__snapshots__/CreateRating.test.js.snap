@@ -50,6 +50,7 @@ exports[`Ratings create component snapshot component should render the component
         }
         name="creat-rating"
         onFinish={[Function]}
+        onValuesChange={[Function]}
         wrapperCol={
           Object {
             "span": 8,
@@ -88,6 +89,7 @@ exports[`Ratings create component snapshot component should render the component
             name="creat-rating"
             onFinish={[Function]}
             onFinishFailed={[Function]}
+            onValuesChange={[Function]}
           >
             <form
               className="ant-form ant-form-horizontal"
@@ -783,7 +785,6 @@ exports[`Ratings create component snapshot component should render the component
                                   >
                                     <ForwardRef
                                       id="creat-rating_numeric_value"
-                                      max={5}
                                       min={1}
                                       onChange={[Function]}
                                       step={1}
@@ -798,7 +799,7 @@ exports[`Ratings create component snapshot component should render the component
                                         }
                                         focusOnUpDown={true}
                                         id="creat-rating_numeric_value"
-                                        max={5}
+                                        max={9007199254740991}
                                         min={1}
                                         onBlur={[Function]}
                                         onChange={[Function]}
@@ -1003,12 +1004,12 @@ exports[`Ratings create component snapshot component should render the component
                                             className="ant-input-number-input-wrap"
                                           >
                                             <input
-                                              aria-valuemax={5}
+                                              aria-valuemax={9007199254740991}
                                               aria-valuemin={1}
                                               autoComplete="off"
                                               className="ant-input-number-input"
                                               id="creat-rating_numeric_value"
-                                              max={5}
+                                              max={9007199254740991}
                                               min={1}
                                               onBlur={[Function]}
                                               onChange={[Function]}
@@ -1439,17 +1440,17 @@ exports[`Ratings create component snapshot component should render the component
                 </WrapperField>
               </FormItem>
               <FormItem
-                label="Colour"
-                name="colour"
+                label="Background Colour"
+                name="background_colour"
               >
                 <WrapperField
-                  label="Colour"
+                  label="Background Colour"
                   messageVariables={
                     Object {
-                      "label": "Colour",
+                      "label": "Background Colour",
                     }
                   }
-                  name="colour"
+                  name="background_colour"
                   onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
@@ -1480,16 +1481,16 @@ exports[`Ratings create component snapshot component should render the component
                         "validateTrigger": "onChange",
                       }
                     }
-                    key="_colour"
-                    label="Colour"
+                    key="_background_colour"
+                    label="Background Colour"
                     messageVariables={
                       Object {
-                        "label": "Colour",
+                        "label": "Background Colour",
                       }
                     }
                     name={
                       Array [
-                        "colour",
+                        "background_colour",
                       ]
                     }
                     onReset={[Function]}
@@ -1506,9 +1507,9 @@ exports[`Ratings create component snapshot component should render the component
                         style={Object {}}
                       >
                         <FormItemLabel
-                          htmlFor="creat-rating_colour"
-                          label="Colour"
-                          name="colour"
+                          htmlFor="creat-rating_background_colour"
+                          label="Background Colour"
+                          name="background_colour"
                           prefixCls="ant-form"
                           required={false}
                           requiredMark={true}
@@ -1523,20 +1524,20 @@ exports[`Ratings create component snapshot component should render the component
                             >
                               <label
                                 className=""
-                                htmlFor="creat-rating_colour"
-                                title="Colour"
+                                htmlFor="creat-rating_background_colour"
+                                title="Background Colour"
                               >
-                                Colour
+                                Background Colour
                               </label>
                             </div>
                           </Col>
                         </FormItemLabel>
                         <FormItemInput
                           errors={Array []}
-                          label="Colour"
+                          label="Background Colour"
                           name={
                             Array [
-                              "colour",
+                              "background_colour",
                             ]
                           }
                           onDomErrorVisibleChange={[Function]}
@@ -1566,7 +1567,7 @@ exports[`Ratings create component snapshot component should render the component
                                     <ColorPicker
                                       color={false}
                                       disableAlpha={true}
-                                      id="creat-rating_colour"
+                                      id="creat-rating_background_colour"
                                       onChange={[Function]}
                                       styles={Object {}}
                                       width={225}
@@ -1591,7 +1592,7 @@ exports[`Ratings create component snapshot component should render the component
                                             "v": 0,
                                           }
                                         }
-                                        id="creat-rating_colour"
+                                        id="creat-rating_background_colour"
                                         oldHue={0}
                                         onChange={[Function]}
                                         rgb={
@@ -2480,6 +2481,1118 @@ exports[`Ratings create component snapshot component should render the component
                 </WrapperField>
               </FormItem>
               <FormItem
+                label="Text Colour"
+                name="text_colour"
+              >
+                <WrapperField
+                  label="Text Colour"
+                  messageVariables={
+                    Object {
+                      "label": "Text Colour",
+                    }
+                  }
+                  name="text_colour"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "creat-rating",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_text_colour"
+                    label="Text Colour"
+                    messageVariables={
+                      Object {
+                        "label": "Text Colour",
+                      }
+                    }
+                    name={
+                      Array [
+                        "text_colour",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="creat-rating_text_colour"
+                          label="Text Colour"
+                          name="text_colour"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="creat-rating_text_colour"
+                                title="Text Colour"
+                              >
+                                Text Colour
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Text Colour"
+                          name={
+                            Array [
+                              "text_colour",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                  >
+                                    <ColorPicker
+                                      color={false}
+                                      disableAlpha={true}
+                                      id="creat-rating_text_colour"
+                                      onChange={[Function]}
+                                      styles={Object {}}
+                                      width={225}
+                                    >
+                                      <Chrome
+                                        color={false}
+                                        disableAlpha={true}
+                                        hex="#000000"
+                                        hsl={
+                                          Object {
+                                            "a": 1,
+                                            "h": 0,
+                                            "l": 0,
+                                            "s": 0,
+                                          }
+                                        }
+                                        hsv={
+                                          Object {
+                                            "a": 1,
+                                            "h": 0,
+                                            "s": 0,
+                                            "v": 0,
+                                          }
+                                        }
+                                        id="creat-rating_text_colour"
+                                        oldHue={0}
+                                        onChange={[Function]}
+                                        rgb={
+                                          Object {
+                                            "a": 1,
+                                            "b": 0,
+                                            "g": 0,
+                                            "r": 0,
+                                          }
+                                        }
+                                        styles={Object {}}
+                                        width={225}
+                                      >
+                                        <div
+                                          className="chrome-picker "
+                                          style={
+                                            Object {
+                                              "MozBorderRadius": "2px",
+                                              "MozBoxShadow": "0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3)",
+                                              "OBorderRadius": "2px",
+                                              "OBoxShadow": "0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3)",
+                                              "WebkitBorderRadius": "2px",
+                                              "WebkitBoxShadow": "0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3)",
+                                              "background": "#fff",
+                                              "borderRadius": "2px",
+                                              "boxShadow": "0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3)",
+                                              "boxSizing": "initial",
+                                              "fontFamily": "Menlo",
+                                              "msBorderRadius": "2px",
+                                              "msBoxShadow": "0 0 2px rgba(0,0,0,.3), 0 4px 8px rgba(0,0,0,.3)",
+                                              "width": 225,
+                                            }
+                                          }
+                                        >
+                                          <div
+                                            style={
+                                              Object {
+                                                "MozBorderRadius": "2px 2px 0 0",
+                                                "OBorderRadius": "2px 2px 0 0",
+                                                "WebkitBorderRadius": "2px 2px 0 0",
+                                                "borderRadius": "2px 2px 0 0",
+                                                "msBorderRadius": "2px 2px 0 0",
+                                                "overflow": "hidden",
+                                                "paddingBottom": "55%",
+                                                "position": "relative",
+                                                "width": "100%",
+                                              }
+                                            }
+                                          >
+                                            <Saturation
+                                              hsl={
+                                                Object {
+                                                  "a": 1,
+                                                  "h": 0,
+                                                  "l": 0,
+                                                  "s": 0,
+                                                }
+                                              }
+                                              hsv={
+                                                Object {
+                                                  "a": 1,
+                                                  "h": 0,
+                                                  "s": 0,
+                                                  "v": 0,
+                                                }
+                                              }
+                                              onChange={[Function]}
+                                              pointer={[Function]}
+                                              style={
+                                                Object {
+                                                  "radius": "2px 2px 0 0",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                onMouseDown={[Function]}
+                                                onTouchMove={[Function]}
+                                                onTouchStart={[Function]}
+                                                style={
+                                                  Object {
+                                                    "MozBorderRadius": undefined,
+                                                    "OBorderRadius": undefined,
+                                                    "WebkitBorderRadius": undefined,
+                                                    "background": "hsl(0,100%, 50%)",
+                                                    "borderRadius": undefined,
+                                                    "bottom": "0px",
+                                                    "left": "0px",
+                                                    "msBorderRadius": undefined,
+                                                    "position": "absolute",
+                                                    "right": "0px",
+                                                    "top": "0px",
+                                                  }
+                                                }
+                                              >
+                                                <style>
+                                                  
+          .saturation-white {
+            background: -webkit-linear-gradient(to right, #fff, rgba(255,255,255,0));
+            background: linear-gradient(to right, #fff, rgba(255,255,255,0));
+          }
+          .saturation-black {
+            background: -webkit-linear-gradient(to top, #000, rgba(0,0,0,0));
+            background: linear-gradient(to top, #000, rgba(0,0,0,0));
+          }
+        
+                                                </style>
+                                                <div
+                                                  className="saturation-white"
+                                                  style={
+                                                    Object {
+                                                      "MozBorderRadius": undefined,
+                                                      "OBorderRadius": undefined,
+                                                      "WebkitBorderRadius": undefined,
+                                                      "borderRadius": undefined,
+                                                      "bottom": "0px",
+                                                      "left": "0px",
+                                                      "msBorderRadius": undefined,
+                                                      "position": "absolute",
+                                                      "right": "0px",
+                                                      "top": "0px",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    className="saturation-black"
+                                                    style={
+                                                      Object {
+                                                        "MozBorderRadius": undefined,
+                                                        "MozBoxShadow": undefined,
+                                                        "OBorderRadius": undefined,
+                                                        "OBoxShadow": undefined,
+                                                        "WebkitBorderRadius": undefined,
+                                                        "WebkitBoxShadow": undefined,
+                                                        "borderRadius": undefined,
+                                                        "bottom": "0px",
+                                                        "boxShadow": undefined,
+                                                        "left": "0px",
+                                                        "msBorderRadius": undefined,
+                                                        "msBoxShadow": undefined,
+                                                        "position": "absolute",
+                                                        "right": "0px",
+                                                        "top": "0px",
+                                                      }
+                                                    }
+                                                  />
+                                                  <div
+                                                    style={
+                                                      Object {
+                                                        "cursor": "default",
+                                                        "left": "0%",
+                                                        "position": "absolute",
+                                                        "top": "100%",
+                                                      }
+                                                    }
+                                                  >
+                                                    <ChromePointerCircle
+                                                      hsl={
+                                                        Object {
+                                                          "a": 1,
+                                                          "h": 0,
+                                                          "l": 0,
+                                                          "s": 0,
+                                                        }
+                                                      }
+                                                      hsv={
+                                                        Object {
+                                                          "a": 1,
+                                                          "h": 0,
+                                                          "s": 0,
+                                                          "v": 0,
+                                                        }
+                                                      }
+                                                      onChange={[Function]}
+                                                      pointer={[Function]}
+                                                      style={
+                                                        Object {
+                                                          "radius": "2px 2px 0 0",
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        style={
+                                                          Object {
+                                                            "MozBorderRadius": "6px",
+                                                            "MozBoxShadow": "inset 0 0 0 1px #fff",
+                                                            "MozTransform": "translate(-6px, -6px)",
+                                                            "OBorderRadius": "6px",
+                                                            "OBoxShadow": "inset 0 0 0 1px #fff",
+                                                            "OTransform": "translate(-6px, -6px)",
+                                                            "WebkitBorderRadius": "6px",
+                                                            "WebkitBoxShadow": "inset 0 0 0 1px #fff",
+                                                            "WebkitTransform": "translate(-6px, -6px)",
+                                                            "borderRadius": "6px",
+                                                            "boxShadow": "inset 0 0 0 1px #fff",
+                                                            "height": "12px",
+                                                            "msBorderRadius": "6px",
+                                                            "msBoxShadow": "inset 0 0 0 1px #fff",
+                                                            "msTransform": "translate(-6px, -6px)",
+                                                            "transform": "translate(-6px, -6px)",
+                                                            "width": "12px",
+                                                          }
+                                                        }
+                                                      />
+                                                    </ChromePointerCircle>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </Saturation>
+                                          </div>
+                                          <div
+                                            style={
+                                              Object {
+                                                "padding": "16px 16px 12px",
+                                              }
+                                            }
+                                          >
+                                            <div
+                                              className="flexbox-fix"
+                                              style={
+                                                Object {
+                                                  "display": "flex",
+                                                }
+                                              }
+                                            >
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "width": "22px",
+                                                  }
+                                                }
+                                              >
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "MozBorderRadius": "8px",
+                                                      "OBorderRadius": "8px",
+                                                      "WebkitBorderRadius": "8px",
+                                                      "borderRadius": "8px",
+                                                      "height": "10px",
+                                                      "marginTop": "0px",
+                                                      "msBorderRadius": "8px",
+                                                      "overflow": "hidden",
+                                                      "position": "relative",
+                                                      "width": "10px",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    style={
+                                                      Object {
+                                                        "MozBorderRadius": "8px",
+                                                        "MozBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.1)",
+                                                        "OBorderRadius": "8px",
+                                                        "OBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.1)",
+                                                        "WebkitBorderRadius": "8px",
+                                                        "WebkitBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.1)",
+                                                        "background": "rgba(0, 0, 0, 1)",
+                                                        "borderRadius": "8px",
+                                                        "bottom": "0px",
+                                                        "boxShadow": "inset 0 0 0 1px rgba(0,0,0,.1)",
+                                                        "left": "0px",
+                                                        "msBorderRadius": "8px",
+                                                        "msBoxShadow": "inset 0 0 0 1px rgba(0,0,0,.1)",
+                                                        "position": "absolute",
+                                                        "right": "0px",
+                                                        "top": "0px",
+                                                        "zIndex": "2",
+                                                      }
+                                                    }
+                                                  />
+                                                  <Checkboard
+                                                    grey="rgba(0,0,0,.08)"
+                                                    renderers={Object {}}
+                                                    size={8}
+                                                    white="transparent"
+                                                  >
+                                                    <div
+                                                      style={
+                                                        Object {
+                                                          "MozBorderRadius": undefined,
+                                                          "MozBoxShadow": undefined,
+                                                          "OBorderRadius": undefined,
+                                                          "OBoxShadow": undefined,
+                                                          "WebkitBorderRadius": undefined,
+                                                          "WebkitBoxShadow": undefined,
+                                                          "background": "url(null) center left",
+                                                          "borderRadius": undefined,
+                                                          "bottom": "0px",
+                                                          "boxShadow": undefined,
+                                                          "left": "0px",
+                                                          "msBorderRadius": undefined,
+                                                          "msBoxShadow": undefined,
+                                                          "position": "absolute",
+                                                          "right": "0px",
+                                                          "top": "0px",
+                                                        }
+                                                      }
+                                                    />
+                                                  </Checkboard>
+                                                </div>
+                                              </div>
+                                              <div
+                                                style={
+                                                  Object {
+                                                    "MozBoxFlex": "1",
+                                                    "WebkitBoxFlex": "1",
+                                                    "WebkitFlex": "1",
+                                                    "flex": "1",
+                                                    "msFlex": "1",
+                                                  }
+                                                }
+                                              >
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "height": "10px",
+                                                      "marginBottom": "0px",
+                                                      "position": "relative",
+                                                    }
+                                                  }
+                                                >
+                                                  <Hue
+                                                    hsl={
+                                                      Object {
+                                                        "a": 1,
+                                                        "h": 0,
+                                                        "l": 0,
+                                                        "s": 0,
+                                                      }
+                                                    }
+                                                    onChange={[Function]}
+                                                    pointer={[Function]}
+                                                    style={
+                                                      Object {
+                                                        "radius": "2px",
+                                                      }
+                                                    }
+                                                  >
+                                                    <div
+                                                      style={
+                                                        Object {
+                                                          "MozBorderRadius": undefined,
+                                                          "MozBoxShadow": undefined,
+                                                          "OBorderRadius": undefined,
+                                                          "OBoxShadow": undefined,
+                                                          "WebkitBorderRadius": undefined,
+                                                          "WebkitBoxShadow": undefined,
+                                                          "borderRadius": undefined,
+                                                          "bottom": "0px",
+                                                          "boxShadow": undefined,
+                                                          "left": "0px",
+                                                          "msBorderRadius": undefined,
+                                                          "msBoxShadow": undefined,
+                                                          "position": "absolute",
+                                                          "right": "0px",
+                                                          "top": "0px",
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        className="hue-horizontal"
+                                                        onMouseDown={[Function]}
+                                                        onTouchMove={[Function]}
+                                                        onTouchStart={[Function]}
+                                                        style={
+                                                          Object {
+                                                            "MozBorderRadius": undefined,
+                                                            "OBorderRadius": undefined,
+                                                            "WebkitBorderRadius": undefined,
+                                                            "borderRadius": undefined,
+                                                            "height": "100%",
+                                                            "msBorderRadius": undefined,
+                                                            "padding": "0 2px",
+                                                            "position": "relative",
+                                                          }
+                                                        }
+                                                      >
+                                                        <style>
+                                                          
+            .hue-horizontal {
+              background: linear-gradient(to right, #f00 0%, #ff0 17%, #0f0
+                33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+              background: -webkit-linear-gradient(to right, #f00 0%, #ff0
+                17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+            }
+
+            .hue-vertical {
+              background: linear-gradient(to top, #f00 0%, #ff0 17%, #0f0 33%,
+                #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+              background: -webkit-linear-gradient(to top, #f00 0%, #ff0 17%,
+                #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00 100%);
+            }
+          
+                                                        </style>
+                                                        <div
+                                                          style={
+                                                            Object {
+                                                              "left": "0%",
+                                                              "position": "absolute",
+                                                            }
+                                                          }
+                                                        >
+                                                          <ChromePointer
+                                                            hsl={
+                                                              Object {
+                                                                "a": 1,
+                                                                "h": 0,
+                                                                "l": 0,
+                                                                "s": 0,
+                                                              }
+                                                            }
+                                                            onChange={[Function]}
+                                                            pointer={[Function]}
+                                                            style={
+                                                              Object {
+                                                                "radius": "2px",
+                                                              }
+                                                            }
+                                                          >
+                                                            <div
+                                                              style={
+                                                                Object {
+                                                                  "MozBorderRadius": "6px",
+                                                                  "MozBoxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "MozTransform": "translate(-6px, -1px)",
+                                                                  "OBorderRadius": "6px",
+                                                                  "OBoxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "OTransform": "translate(-6px, -1px)",
+                                                                  "WebkitBorderRadius": "6px",
+                                                                  "WebkitBoxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "WebkitTransform": "translate(-6px, -1px)",
+                                                                  "backgroundColor": "rgb(248, 248, 248)",
+                                                                  "borderRadius": "6px",
+                                                                  "boxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "height": "12px",
+                                                                  "msBorderRadius": "6px",
+                                                                  "msBoxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "msTransform": "translate(-6px, -1px)",
+                                                                  "transform": "translate(-6px, -1px)",
+                                                                  "width": "12px",
+                                                                }
+                                                              }
+                                                            />
+                                                          </ChromePointer>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </Hue>
+                                                </div>
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "display": "none",
+                                                      "height": "10px",
+                                                      "position": "relative",
+                                                    }
+                                                  }
+                                                >
+                                                  <Alpha
+                                                    hsl={
+                                                      Object {
+                                                        "a": 1,
+                                                        "h": 0,
+                                                        "l": 0,
+                                                        "s": 0,
+                                                      }
+                                                    }
+                                                    onChange={[Function]}
+                                                    pointer={[Function]}
+                                                    rgb={
+                                                      Object {
+                                                        "a": 1,
+                                                        "b": 0,
+                                                        "g": 0,
+                                                        "r": 0,
+                                                      }
+                                                    }
+                                                    style={
+                                                      Object {
+                                                        "radius": "2px",
+                                                      }
+                                                    }
+                                                  >
+                                                    <div
+                                                      style={
+                                                        Object {
+                                                          "MozBorderRadius": undefined,
+                                                          "OBorderRadius": undefined,
+                                                          "WebkitBorderRadius": undefined,
+                                                          "borderRadius": undefined,
+                                                          "bottom": "0px",
+                                                          "left": "0px",
+                                                          "msBorderRadius": undefined,
+                                                          "position": "absolute",
+                                                          "right": "0px",
+                                                          "top": "0px",
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        style={
+                                                          Object {
+                                                            "MozBorderRadius": undefined,
+                                                            "OBorderRadius": undefined,
+                                                            "WebkitBorderRadius": undefined,
+                                                            "borderRadius": undefined,
+                                                            "bottom": "0px",
+                                                            "left": "0px",
+                                                            "msBorderRadius": undefined,
+                                                            "overflow": "hidden",
+                                                            "position": "absolute",
+                                                            "right": "0px",
+                                                            "top": "0px",
+                                                          }
+                                                        }
+                                                      >
+                                                        <Checkboard
+                                                          grey="rgba(0,0,0,.08)"
+                                                          renderers={Object {}}
+                                                          size={8}
+                                                          white="transparent"
+                                                        >
+                                                          <div
+                                                            style={
+                                                              Object {
+                                                                "MozBorderRadius": undefined,
+                                                                "MozBoxShadow": undefined,
+                                                                "OBorderRadius": undefined,
+                                                                "OBoxShadow": undefined,
+                                                                "WebkitBorderRadius": undefined,
+                                                                "WebkitBoxShadow": undefined,
+                                                                "background": "url(null) center left",
+                                                                "borderRadius": undefined,
+                                                                "bottom": "0px",
+                                                                "boxShadow": undefined,
+                                                                "left": "0px",
+                                                                "msBorderRadius": undefined,
+                                                                "msBoxShadow": undefined,
+                                                                "position": "absolute",
+                                                                "right": "0px",
+                                                                "top": "0px",
+                                                              }
+                                                            }
+                                                          />
+                                                        </Checkboard>
+                                                      </div>
+                                                      <div
+                                                        style={
+                                                          Object {
+                                                            "MozBorderRadius": undefined,
+                                                            "MozBoxShadow": undefined,
+                                                            "OBorderRadius": undefined,
+                                                            "OBoxShadow": undefined,
+                                                            "WebkitBorderRadius": undefined,
+                                                            "WebkitBoxShadow": undefined,
+                                                            "background": "linear-gradient(to right, rgba(0,0,0, 0) 0%,
+           rgba(0,0,0, 1) 100%)",
+                                                            "borderRadius": undefined,
+                                                            "bottom": "0px",
+                                                            "boxShadow": undefined,
+                                                            "left": "0px",
+                                                            "msBorderRadius": undefined,
+                                                            "msBoxShadow": undefined,
+                                                            "position": "absolute",
+                                                            "right": "0px",
+                                                            "top": "0px",
+                                                          }
+                                                        }
+                                                      />
+                                                      <div
+                                                        onMouseDown={[Function]}
+                                                        onTouchMove={[Function]}
+                                                        onTouchStart={[Function]}
+                                                        style={
+                                                          Object {
+                                                            "height": "100%",
+                                                            "margin": "0 3px",
+                                                            "position": "relative",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          style={
+                                                            Object {
+                                                              "left": "100%",
+                                                              "position": "absolute",
+                                                            }
+                                                          }
+                                                        >
+                                                          <ChromePointer
+                                                            hsl={
+                                                              Object {
+                                                                "a": 1,
+                                                                "h": 0,
+                                                                "l": 0,
+                                                                "s": 0,
+                                                              }
+                                                            }
+                                                            onChange={[Function]}
+                                                            pointer={[Function]}
+                                                            rgb={
+                                                              Object {
+                                                                "a": 1,
+                                                                "b": 0,
+                                                                "g": 0,
+                                                                "r": 0,
+                                                              }
+                                                            }
+                                                            style={
+                                                              Object {
+                                                                "radius": "2px",
+                                                              }
+                                                            }
+                                                          >
+                                                            <div
+                                                              style={
+                                                                Object {
+                                                                  "MozBorderRadius": "6px",
+                                                                  "MozBoxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "MozTransform": "translate(-6px, -1px)",
+                                                                  "OBorderRadius": "6px",
+                                                                  "OBoxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "OTransform": "translate(-6px, -1px)",
+                                                                  "WebkitBorderRadius": "6px",
+                                                                  "WebkitBoxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "WebkitTransform": "translate(-6px, -1px)",
+                                                                  "backgroundColor": "rgb(248, 248, 248)",
+                                                                  "borderRadius": "6px",
+                                                                  "boxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "height": "12px",
+                                                                  "msBorderRadius": "6px",
+                                                                  "msBoxShadow": "0 1px 4px 0 rgba(0, 0, 0, 0.37)",
+                                                                  "msTransform": "translate(-6px, -1px)",
+                                                                  "transform": "translate(-6px, -1px)",
+                                                                  "width": "12px",
+                                                                }
+                                                              }
+                                                            />
+                                                          </ChromePointer>
+                                                        </div>
+                                                      </div>
+                                                    </div>
+                                                  </Alpha>
+                                                </div>
+                                              </div>
+                                            </div>
+                                            <ChromeFields
+                                              disableAlpha={true}
+                                              hex="#000000"
+                                              hsl={
+                                                Object {
+                                                  "a": 1,
+                                                  "h": 0,
+                                                  "l": 0,
+                                                  "s": 0,
+                                                }
+                                              }
+                                              onChange={[Function]}
+                                              rgb={
+                                                Object {
+                                                  "a": 1,
+                                                  "b": 0,
+                                                  "g": 0,
+                                                  "r": 0,
+                                                }
+                                              }
+                                              view="hex"
+                                            >
+                                              <div
+                                                className="flexbox-fix"
+                                                style={
+                                                  Object {
+                                                    "display": "flex",
+                                                    "paddingTop": "16px",
+                                                  }
+                                                }
+                                              >
+                                                <div
+                                                  className="flexbox-fix"
+                                                  style={
+                                                    Object {
+                                                      "MozBoxFlex": "1",
+                                                      "WebkitBoxFlex": "1",
+                                                      "WebkitFlex": "1",
+                                                      "display": "flex",
+                                                      "flex": "1",
+                                                      "marginLeft": "-6px",
+                                                      "msFlex": "1",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    style={
+                                                      Object {
+                                                        "paddingLeft": "6px",
+                                                        "width": "100%",
+                                                      }
+                                                    }
+                                                  >
+                                                    <EditableInput
+                                                      label="hex"
+                                                      onChange={[Function]}
+                                                      style={
+                                                        Object {
+                                                          "input": Object {
+                                                            "MozBorderRadius": "2px",
+                                                            "MozBoxShadow": "inset 0 0 0 1px #dadada",
+                                                            "OBorderRadius": "2px",
+                                                            "OBoxShadow": "inset 0 0 0 1px #dadada",
+                                                            "WebkitBorderRadius": "2px",
+                                                            "WebkitBoxShadow": "inset 0 0 0 1px #dadada",
+                                                            "border": "none",
+                                                            "borderRadius": "2px",
+                                                            "boxShadow": "inset 0 0 0 1px #dadada",
+                                                            "color": "#333",
+                                                            "fontSize": "11px",
+                                                            "height": "21px",
+                                                            "msBorderRadius": "2px",
+                                                            "msBoxShadow": "inset 0 0 0 1px #dadada",
+                                                            "textAlign": "center",
+                                                            "width": "100%",
+                                                          },
+                                                          "label": Object {
+                                                            "color": "#969696",
+                                                            "display": "block",
+                                                            "fontSize": "11px",
+                                                            "lineHeight": "11px",
+                                                            "marginTop": "12px",
+                                                            "textAlign": "center",
+                                                            "textTransform": "uppercase",
+                                                          },
+                                                        }
+                                                      }
+                                                      value="#000000"
+                                                    >
+                                                      <div
+                                                        style={
+                                                          Object {
+                                                            "position": "relative",
+                                                          }
+                                                        }
+                                                      >
+                                                        <input
+                                                          id="rc-editable-input-2"
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onKeyDown={[Function]}
+                                                          spellCheck="false"
+                                                          style={
+                                                            Object {
+                                                              "MozBorderRadius": "2px",
+                                                              "MozBoxShadow": "inset 0 0 0 1px #dadada",
+                                                              "OBorderRadius": "2px",
+                                                              "OBoxShadow": "inset 0 0 0 1px #dadada",
+                                                              "WebkitBorderRadius": "2px",
+                                                              "WebkitBoxShadow": "inset 0 0 0 1px #dadada",
+                                                              "border": "none",
+                                                              "borderRadius": "2px",
+                                                              "boxShadow": "inset 0 0 0 1px #dadada",
+                                                              "color": "#333",
+                                                              "fontSize": "11px",
+                                                              "height": "21px",
+                                                              "msBorderRadius": "2px",
+                                                              "msBoxShadow": "inset 0 0 0 1px #dadada",
+                                                              "textAlign": "center",
+                                                              "width": "100%",
+                                                            }
+                                                          }
+                                                          value="#000000"
+                                                        />
+                                                        <label
+                                                          htmlFor="rc-editable-input-2"
+                                                          onMouseDown={[Function]}
+                                                          style={
+                                                            Object {
+                                                              "color": "#969696",
+                                                              "display": "block",
+                                                              "fontSize": "11px",
+                                                              "lineHeight": "11px",
+                                                              "marginTop": "12px",
+                                                              "textAlign": "center",
+                                                              "textTransform": "uppercase",
+                                                            }
+                                                          }
+                                                        >
+                                                          hex
+                                                        </label>
+                                                      </div>
+                                                    </EditableInput>
+                                                  </div>
+                                                </div>
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "position": "relative",
+                                                      "textAlign": "right",
+                                                      "width": "32px",
+                                                    }
+                                                  }
+                                                >
+                                                  <div
+                                                    onClick={[Function]}
+                                                    style={
+                                                      Object {
+                                                        "cursor": "pointer",
+                                                        "marginRight": "-4px",
+                                                        "marginTop": "12px",
+                                                        "position": "relative",
+                                                      }
+                                                    }
+                                                  >
+                                                    <Component
+                                                      onMouseEnter={[Function]}
+                                                      onMouseOut={[Function]}
+                                                      onMouseOver={[Function]}
+                                                      style={
+                                                        Object {
+                                                          "MozBorderRadius": "5px",
+                                                          "OBorderRadius": "5px",
+                                                          "WebkitBorderRadius": "5px",
+                                                          "border": "1px transparent solid",
+                                                          "borderRadius": "5px",
+                                                          "fill": "#333",
+                                                          "height": "24px",
+                                                          "msBorderRadius": "5px",
+                                                          "width": "24px",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        onMouseEnter={[Function]}
+                                                        onMouseOut={[Function]}
+                                                        onMouseOver={[Function]}
+                                                        style={
+                                                          Object {
+                                                            "MozBorderRadius": "5px",
+                                                            "OBorderRadius": "5px",
+                                                            "WebkitBorderRadius": "5px",
+                                                            "border": "1px transparent solid",
+                                                            "borderRadius": "5px",
+                                                            "fill": "#333",
+                                                            "height": "24px",
+                                                            "msBorderRadius": "5px",
+                                                            "width": "24px",
+                                                          }
+                                                        }
+                                                        viewBox="0 0 24 24"
+                                                      >
+                                                        <path
+                                                          d="M12,18.17L8.83,15L7.42,16.41L12,21L16.59,16.41L15.17,15M12,5.83L15.17,9L16.58,7.59L12,3L7.41,7.59L8.83,9L12,5.83Z"
+                                                        />
+                                                      </svg>
+                                                    </Component>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </ChromeFields>
+                                          </div>
+                                        </div>
+                                      </Chrome>
+                                    </ColorPicker>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <Row
+                className="preview-container"
+                gutter={16}
+                style={
+                  Object {
+                    "marginBottom": "1rem",
+                  }
+                }
+              >
+                <div
+                  className="ant-row preview-container"
+                  style={
+                    Object {
+                      "marginBottom": "1rem",
+                      "marginLeft": -8,
+                      "marginRight": -8,
+                    }
+                  }
+                >
+                  <Col
+                    span={10}
+                    style={
+                      Object {
+                        "textAlign": "right",
+                      }
+                    }
+                  >
+                    <div
+                      className="ant-col ant-col-10"
+                      style={
+                        Object {
+                          "paddingLeft": 8,
+                          "paddingRight": 8,
+                          "textAlign": "right",
+                        }
+                      }
+                    >
+                      Preview:
+                    </div>
+                  </Col>
+                  <Col
+                    span={8}
+                  >
+                    <div
+                      className="ant-col ant-col-8"
+                      style={
+                        Object {
+                          "paddingLeft": 8,
+                          "paddingRight": 8,
+                        }
+                      }
+                    >
+                      <div
+                        className="preview"
+                        style={
+                          Object {
+                            "background": undefined,
+                            "border": "1px solid black",
+                            "color": undefined,
+                            "padding": "0.5rem 1rem",
+                            "textAlign": "center",
+                            "width": "100px",
+                          }
+                        }
+                      >
+                        Preview
+                      </div>
+                    </div>
+                  </Col>
+                </div>
+              </Row>
+              <FormItem
                 label="Description"
                 name="description"
               >
@@ -2724,6 +3837,7 @@ exports[`Ratings create component snapshot component should render the component
                                     >
                                       <Button
                                         block={false}
+                                        disabled={true}
                                         ghost={false}
                                         htmlType="submit"
                                         loading={false}
@@ -2732,6 +3846,7 @@ exports[`Ratings create component snapshot component should render the component
                                         <Wave>
                                           <button
                                             className="ant-btn ant-btn-primary"
+                                            disabled={true}
                                             onClick={[Function]}
                                             type="submit"
                                           >

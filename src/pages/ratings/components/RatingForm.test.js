@@ -23,7 +23,7 @@ const data = {
   slug: 'slug',
   numeric_value: 3,
   medium_id: 1,
-  colour : {
+  background_colour : {
     hex : "#f9f9fa",
     hsl : { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
     hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
@@ -115,7 +115,7 @@ describe('Ratings Create Form component', () => {
       });
 
       act(() => {
-        const submitButtom = wrapper.find('Button').at(0);
+        const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -154,7 +154,7 @@ describe('Ratings Create Form component', () => {
           slug: 'new-name',
           numeric_value: 3,
           medium_id: 1,
-          colour : {
+          background_colour : {
             hex : "#f9f9fa",
             hsl : { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
             hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
@@ -181,7 +181,7 @@ describe('Ratings Create Form component', () => {
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(5)
+          .at(6)
           .find('Editor')
           .props()
           .onChange({ target: { value: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"} } });
@@ -204,9 +204,23 @@ describe('Ratings Create Form component', () => {
             oldHue: 240,
             rgb: { r: 240, g: 240, b: 250, a: 1 },
             source: "hsv"
+          }}});
+        wrapper
+          .find('FormItem')
+          .at(5)
+          .find('ColorPicker')
+          .at(0)
+          .props()
+          .onChange({ target: { value: {
+            hex : "#f0f1fa",
+            hsl : { h: 245, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+            hsv: { h: 245, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+            oldHue: 240,
+            rgb: { r: 240, g: 240, b: 250, a: 1 },
+            source: "hsv"
           }}})  
 
-        const submitButtom = wrapper.find('Button').at(0);
+        const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -218,15 +232,27 @@ describe('Ratings Create Form component', () => {
           slug: 'new-slug',
           numeric_value: 4,
           medium_id: 1,
-          colour : {
-            hex : "#f0f0fa",
-            hsl : { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+          background_colour: {
+            hex: '#f0f0fa',
+            hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
             hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
             oldHue: 240,
             rgb: { r: 240, g: 240, b: 250, a: 1 },
-            source: "hsv"
+            source: 'hsv',
           },
-          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
+          text_colour: {
+            hex: '#f0f1fa',
+            hsl: { h: 245, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+            hsv: { h: 245, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+            oldHue: 240,
+            rgb: { r: 240, g: 240, b: 250, a: 1 },
+            source: 'hsv',
+          },
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
+            version: '2.19.0',
+          },
         });
         done();
       }, 0);
