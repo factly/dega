@@ -1,10 +1,12 @@
 import React from 'react';
 import { Provider, useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { useHistory } from 'react-router-dom';
+import moment from 'moment';
 
 import '../../../matchMedia.mock';
 import FactCheckForm from './FactCheckForm';
@@ -12,6 +14,7 @@ import FactCheckForm from './FactCheckForm';
 import { addTemplate } from '../../../actions/posts';
 import { addClaim } from '../../../actions/claims';
 
+Date.now = jest.fn(() => 1487076708000);
 jest.mock('@editorjs/editorjs');
 
 jest.mock('./../../../actions/sidebar', () => ({
@@ -155,7 +158,9 @@ describe('Fact-check form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <FactCheckForm actions={['publish']} />
+            <Router>
+                <FactCheckForm actions={['publish']} />
+            </Router>
           </Provider>,
         );
       });
@@ -166,7 +171,9 @@ describe('Fact-check form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <FactCheckForm actions={['publish']} onCreate={onCreate} data={data} format={format} />
+            <Router>
+              <FactCheckForm actions={['publish']} onCreate={onCreate} data={data} format={format} />
+            </Router>
           </Provider>,
         );
       });
@@ -177,12 +184,14 @@ describe('Fact-check form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <FactCheckForm actions={['publish']} onCreate={onCreate} data={data} format={format} />
+            <Router>
+              <FactCheckForm actions={['publish']} onCreate={onCreate} data={data} format={format} />
+            </Router>  
           </Provider>,
         );
       });
       act(() => {
-        const settingButton = tree.find('Button').at(2);
+        const settingButton = tree.find('Button').at(3);
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
         expect(tree.find('Drawer').length).toBe(1);
@@ -194,7 +203,9 @@ describe('Fact-check form component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <FactCheckForm actions={['create']} data={data} onCreate={onCreate} format={format} />
+            <Router>
+              <FactCheckForm actions={['create']} data={data} onCreate={onCreate} format={format} />
+            </Router>
           </Provider>,
         );
       });
@@ -211,11 +222,13 @@ describe('Fact-check form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FactCheckForm
-              actions={['publish']}
-              {...props}
-              format={{ id: 1, name: 'article', slug: 'article' }}
-            />
+            <Router>
+              <FactCheckForm
+                actions={['publish']}
+                {...props}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
           </Provider>,
         );
       });
@@ -227,7 +240,9 @@ describe('Fact-check form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FactCheckForm actions={['publish']} onCreate={props.onCreate} />
+            <Router>
+              <FactCheckForm actions={['publish']} onCreate={props.onCreate} />
+            </Router>
           </Provider>,
         );
       });
@@ -247,7 +262,8 @@ describe('Fact-check form component', () => {
     it('should submit form with given data', (done) => {
       act(() => {
         const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Submit');
+        expect(submitButtom.text()).toBe('Save as draft');
+        submitButtom.simulate('click');
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -265,6 +281,7 @@ describe('Fact-check form component', () => {
           authors: [1],
           categories: [1],
           category_ids: [1],
+          published_date: null,
           tag_ids: [1],
           tags: [1],
           claims: [1],
@@ -293,7 +310,7 @@ describe('Fact-check form component', () => {
         done();
       }, 0);
     });
-    it('should submit form with given data', (done) => {
+    it('should submit form with title change', (done) => {
       act(() => {
         wrapper
           .find('FormItem')
@@ -304,7 +321,8 @@ describe('Fact-check form component', () => {
       });
       act(() => {
         const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Submit');
+        expect(submitButtom.text()).toBe('Save as draft');
+        submitButtom.simulate('click');
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -322,6 +340,7 @@ describe('Fact-check form component', () => {
           authors: [1],
           categories: [1],
           category_ids: [1],
+          published_date: null,
           tag_ids: [1],
           tags: [1],
           claims: [1],
@@ -357,7 +376,9 @@ describe('Fact-check form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FactCheckForm actions={['publish']} {...props} format={format} />
+            <Router>
+              <FactCheckForm actions={['publish']} {...props} format={format} />
+            </Router>
           </Provider>,
         );
       });
@@ -407,11 +428,7 @@ describe('Fact-check form component', () => {
           .onChange({ target: { value: 1 } });
 
         const nextButton = claimForm.find('Button').at(3);
-        expect(nextButton.text()).toBe('Next');
-        nextButton.simulate('click');
-        const submitBtn = claimForm.find('Button').at(1);
-        expect(submitBtn.text()).toBe('Submit');
-        submitBtn.simulate('submit');
+        nextButton.simulate('submit');
         wrapper.update();
       });
       setTimeout(() => {
@@ -460,7 +477,7 @@ describe('Fact-check form component', () => {
     });
     it('should open and close drawer for settings', () => {
       act(() => {
-        const settingButton = wrapper.find('Button').at(2);
+        const settingButton = wrapper.find('Button').at(3);
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
         expect(wrapper.find('Drawer').length).toBe(1);
@@ -477,6 +494,7 @@ describe('Fact-check form component', () => {
         featured_medium_id: 1,
         status: 'publish',
         format: 2,
+        published_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
         categories: [1],
         tags: [1],
         authors: [1],
@@ -505,12 +523,14 @@ describe('Fact-check form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FactCheckForm
-              actions={['publish']}
-              data={data2}
-              format={format}
-              onCreate={props.onCreate}
-            />
+            <Router>
+              <FactCheckForm
+                actions={['publish']}
+                data={data2}
+                format={format}
+                onCreate={props.onCreate}
+              />
+            </Router>
           </Provider>,
         );
       });
@@ -523,8 +543,9 @@ describe('Fact-check form component', () => {
           .simulate('change', { target: { value: 'New Title' } });
       });
       act(() => {
-        const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Submit');
+        const submitButtom = wrapper.find('Button').at(2);
+        expect(submitButtom.text()).toBe('Update');
+        submitButtom.simulate('click');
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -542,6 +563,7 @@ describe('Fact-check form component', () => {
           authors: [1],
           categories: [1],
           category_ids: [1],
+          published_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
           tag_ids: [1],
           tags: [1],
           claims: [1],
@@ -603,18 +625,20 @@ describe('Fact-check form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <FactCheckForm
-              actions={['publish']}
-              data={data2}
-              format={format}
-              onCreate={props.onCreate}
-            />
+            <Router>
+              <FactCheckForm
+                actions={['publish']}
+                data={data2}
+                format={format}
+                onCreate={props.onCreate}
+              />
+            </Router>
           </Provider>,
         );
       });
       act(() => {
         const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Submit');
+        expect(submitButtom.text()).toBe('Save as draft');
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -631,7 +655,72 @@ describe('Fact-check form component', () => {
           author_ids: [],
           category_ids: [],
           tag_ids: [],
+          published_date: null,
           claim_ids: [],
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+        });
+        done();
+      }, 0);
+    });
+    it('should set status as publish on click and submit', (done) => {
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <FactCheckForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data}
+                format={format}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(2);
+        expect(submitButtom.text()).toBe('Publish');
+        submitButtom.simulate('click');
+        submitButtom.simulate('submit');
+      });
+
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'FactCheck-1',
+          excerpt: 'excerpt of factcheck',
+          slug: 'factcheck-1',
+          featured_medium_id: 1,
+          status: 'publish',
+          format_id: 2,
+          author_ids: [1],
+          authors: [1],
+          published_date: moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ'),
+          categories: [1],
+          category_ids: [1],
+          tag_ids: [1],
+          tags: [1],
+          claims: [1],
+          claim_ids: [1],
           description: {
             time: 1595747741807,
             blocks: [

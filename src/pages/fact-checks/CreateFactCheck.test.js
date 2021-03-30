@@ -130,7 +130,9 @@ describe('Fact check create component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <CreateFactCheck formats={formats} />
+            <Router>
+              <CreateFactCheck formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -148,7 +150,9 @@ describe('Fact check create component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <CreateFactCheck formats={formats} />
+            <Router>
+              <CreateFactCheck formats={formats} />
+            </Router>
           </Provider>,
         );
       });

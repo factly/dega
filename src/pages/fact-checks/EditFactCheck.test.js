@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -113,7 +114,9 @@ describe('FactCheck edit component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <EditFactCheck formats={formats} />
+            <Router>
+              <EditFactCheck formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -142,7 +145,9 @@ describe('FactCheck edit component', () => {
       act(() => {
         tree = mount(
           <Provider store={store}>
-            <EditFactCheck formats={formats} />
+            <Router>
+              <EditFactCheck formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -176,7 +181,9 @@ describe('FactCheck edit component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditFactCheck formats={formats} />
+            <Router>
+              <EditFactCheck formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -189,7 +196,9 @@ describe('FactCheck edit component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditFactCheck formats={formats} />
+            <Router>
+              <EditFactCheck formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -204,35 +213,9 @@ describe('FactCheck edit component', () => {
           medium_id: 1,
           format_id: 2,
           status: 'draft',
+          published_date: null,
         });
-        expect(push).toHaveBeenCalledWith('/fact-checks');
-        done();
-      }, 0);
-    });
-    it('should call publishPost', (done) => {
-      const push = jest.fn();
-      useHistory.mockReturnValueOnce({ push });
-      actions.publishPost.mockReset();
-      act(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <EditFactCheck formats={formats} />
-          </Provider>,
-        );
-      });
-
-      wrapper.find(FactCheckEditForm).props().onCreate({ status: 'publish' });
-      setTimeout(() => {
-        expect(actions.publishPost).toHaveBeenCalledWith({
-          id: 1,
-          title: 'FactCheck-1',
-          slug: 'factcheck-1',
-          tag_line: 'tag_line',
-          medium_id: 1,
-          format_id: 2,
-          status: 'publish',
-        });
-        expect(push).toHaveBeenCalledWith('/fact-checks');
+        expect(push).toHaveBeenCalledWith('/fact-checks/1/edit');
         done();
       }, 0);
     });
@@ -255,7 +238,9 @@ describe('FactCheck edit component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditFactCheck formats={formats} />
+            <Router>
+              <EditFactCheck formats={formats} />
+            </Router>
           </Provider>,
         );
       });
