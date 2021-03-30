@@ -134,6 +134,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slugx.Approve(&config.DB, slugx.Make(post.Title), sID, tableName)
 	}
 
+	// Store HTML description
+	description, err := util.HTMLDescription(post.Description)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)))
+		return
+	}
+
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
 	newTags := make([]model.Tag, 0)
@@ -173,14 +181,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-	}
-
-	// Store HTML description
-	description, err := util.HTMLDescription(post.Description)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)))
-		return
 	}
 
 	updatedPost := model.Post{

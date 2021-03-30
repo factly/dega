@@ -12,6 +12,7 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/gavv/httpexpect"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -131,7 +132,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["parent_id"], Data["medium_id"], Data["meta_fields"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["parent_id"], Data["medium_id"], Data["meta_fields"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
 		medium.SelectWithOutSpace(mock)
@@ -203,7 +204,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["meta_fields"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["meta_fields"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
 
@@ -243,7 +244,7 @@ func TestCategoryUpdate(t *testing.T) {
 
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["medium_id"], Data["meta_fields"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["medium_id"], Data["meta_fields"], 1).
 			WillReturnError(errors.New(`updating category fails`))
 		mock.ExpectRollback()
 
@@ -272,6 +273,26 @@ func TestCategoryUpdate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 		test.ExpectationsMet(t, mock)
 		Data["name"] = "Test Category"
+	})
+
+	t.Run("cannot parse category description", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		selectWithSpace(mock)
+
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.PUT(path).
+			WithPath("category_id", 1).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
+		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("update category when meili is down", func(t *testing.T) {
