@@ -134,11 +134,10 @@ describe('Spaces Create Form component', () => {
         wrapper
           .find('FormItem')
           .at(7)
-          .find('Editor')
+          .find('TextArea')
           .at(0)
           .props()
-          .onChange({ target: { value: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
-        } });
+          .onChange({ target: { value: 'New Description' } });
         wrapper
           .find('FormItem')
           .at(6)
@@ -158,7 +157,7 @@ describe('Spaces Create Form component', () => {
           slug: 'slug',
           site_title: 'site title',
           tag_line: 'tag line',
-          description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
+          description: 'New Description',
           site_address: 'site address',
         });
         done();

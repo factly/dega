@@ -1992,15 +1992,66 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <Editor
+                                  <TextArea
                                     id="create-space_description"
                                     onChange={[Function]}
                                     placeholder="Enter Description..."
                                   >
-                                    <div
-                                      style={null}
-                                    />
-                                  </Editor>
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
+                                        <TextArea
+                                          className=""
+                                          id="create-space_description"
+                                          onChange={[Function]}
+                                          placeholder="Enter Description..."
+                                          prefixCls="ant-input"
+                                        />
+                                      }
+                                      handleReset={[Function]}
+                                      id="create-space_description"
+                                      inputType="text"
+                                      onChange={[Function]}
+                                      placeholder="Enter Description..."
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      value=""
+                                    >
+                                      <TextArea
+                                        className=""
+                                        id="create-space_description"
+                                        onChange={[Function]}
+                                        placeholder="Enter Description..."
+                                        prefixCls="ant-input"
+                                        value=""
+                                      >
+                                        <ResizableTextArea
+                                          className=""
+                                          id="create-space_description"
+                                          onChange={[Function]}
+                                          onKeyDown={[Function]}
+                                          placeholder="Enter Description..."
+                                          prefixCls="ant-input"
+                                          value=""
+                                        >
+                                          <ResizeObserver
+                                            disabled={true}
+                                            onResize={[Function]}
+                                          >
+                                            <textarea
+                                              className="ant-input"
+                                              id="create-space_description"
+                                              onChange={[Function]}
+                                              onKeyDown={[Function]}
+                                              placeholder="Enter Description..."
+                                              style={Object {}}
+                                              value=""
+                                            />
+                                          </ResizeObserver>
+                                        </ResizableTextArea>
+                                      </TextArea>
+                                    </ClearableLabeledInput>
+                                  </TextArea>
                                 </Component>
                               </div>
                             </div>
@@ -4146,15 +4197,66 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <Editor
+                                  <TextArea
                                     id="create-space_description"
                                     onChange={[Function]}
                                     placeholder="Enter Description..."
                                   >
-                                    <div
-                                      style={null}
-                                    />
-                                  </Editor>
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
+                                        <TextArea
+                                          className=""
+                                          id="create-space_description"
+                                          onChange={[Function]}
+                                          placeholder="Enter Description..."
+                                          prefixCls="ant-input"
+                                        />
+                                      }
+                                      handleReset={[Function]}
+                                      id="create-space_description"
+                                      inputType="text"
+                                      onChange={[Function]}
+                                      placeholder="Enter Description..."
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      value=""
+                                    >
+                                      <TextArea
+                                        className=""
+                                        id="create-space_description"
+                                        onChange={[Function]}
+                                        placeholder="Enter Description..."
+                                        prefixCls="ant-input"
+                                        value=""
+                                      >
+                                        <ResizableTextArea
+                                          className=""
+                                          id="create-space_description"
+                                          onChange={[Function]}
+                                          onKeyDown={[Function]}
+                                          placeholder="Enter Description..."
+                                          prefixCls="ant-input"
+                                          value=""
+                                        >
+                                          <ResizeObserver
+                                            disabled={true}
+                                            onResize={[Function]}
+                                          >
+                                            <textarea
+                                              className="ant-input"
+                                              id="create-space_description"
+                                              onChange={[Function]}
+                                              onKeyDown={[Function]}
+                                              placeholder="Enter Description..."
+                                              style={Object {}}
+                                              value=""
+                                            />
+                                          </ResizeObserver>
+                                        </ResizableTextArea>
+                                      </TextArea>
+                                    </ClearableLabeledInput>
+                                  </TextArea>
                                 </Component>
                               </div>
                             </div>

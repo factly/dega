@@ -362,6 +362,9 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
           }
           name="create-space"
           onFinish={[Function]}
+          onFinishFailed={[Function]}
+          onValuesChange={[Function]}
+          scrollToFirstError={true}
           style={
             Object {
               "paddingTop": "24px",
@@ -437,6 +440,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
               name="create-space"
               onFinish={[Function]}
               onFinishFailed={[Function]}
+              onValuesChange={[Function]}
               style={
                 Object {
                   "paddingTop": "24px",
@@ -2372,15 +2376,10 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                           }
                                         }
                                       >
-                                        <Editor
+                                        <TextArea
                                           id="create-space_description"
                                           onChange={[Function]}
                                           placeholder="Enter Description..."
-                                          style={
-                                            Object {
-                                              "width": "600px",
-                                            }
-                                          }
                                           value={
                                             Object {
                                               "blocks": Array [
@@ -2396,14 +2395,127 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                             }
                                           }
                                         >
-                                          <div
-                                            style={
+                                          <ClearableLabeledInput
+                                            bordered={true}
+                                            element={
+                                              <TextArea
+                                                className=""
+                                                id="create-space_description"
+                                                onChange={[Function]}
+                                                placeholder="Enter Description..."
+                                                prefixCls="ant-input"
+                                                value={
+                                                  Object {
+                                                    "blocks": Array [
+                                                      Object {
+                                                        "data": Object {
+                                                          "text": "Description",
+                                                        },
+                                                        "type": "paragraph",
+                                                      },
+                                                    ],
+                                                    "time": 1613559903378,
+                                                    "version": "2.19.0",
+                                                  }
+                                                }
+                                              />
+                                            }
+                                            handleReset={[Function]}
+                                            id="create-space_description"
+                                            inputType="text"
+                                            onChange={[Function]}
+                                            placeholder="Enter Description..."
+                                            prefixCls="ant-input"
+                                            triggerFocus={[Function]}
+                                            value={
                                               Object {
-                                                "width": "600px",
+                                                "blocks": Array [
+                                                  Object {
+                                                    "data": Object {
+                                                      "text": "Description",
+                                                    },
+                                                    "type": "paragraph",
+                                                  },
+                                                ],
+                                                "time": 1613559903378,
+                                                "version": "2.19.0",
                                               }
                                             }
-                                          />
-                                        </Editor>
+                                          >
+                                            <TextArea
+                                              className=""
+                                              id="create-space_description"
+                                              onChange={[Function]}
+                                              placeholder="Enter Description..."
+                                              prefixCls="ant-input"
+                                              value={
+                                                Object {
+                                                  "blocks": Array [
+                                                    Object {
+                                                      "data": Object {
+                                                        "text": "Description",
+                                                      },
+                                                      "type": "paragraph",
+                                                    },
+                                                  ],
+                                                  "time": 1613559903378,
+                                                  "version": "2.19.0",
+                                                }
+                                              }
+                                            >
+                                              <ResizableTextArea
+                                                className=""
+                                                id="create-space_description"
+                                                onChange={[Function]}
+                                                onKeyDown={[Function]}
+                                                placeholder="Enter Description..."
+                                                prefixCls="ant-input"
+                                                value={
+                                                  Object {
+                                                    "blocks": Array [
+                                                      Object {
+                                                        "data": Object {
+                                                          "text": "Description",
+                                                        },
+                                                        "type": "paragraph",
+                                                      },
+                                                    ],
+                                                    "time": 1613559903378,
+                                                    "version": "2.19.0",
+                                                  }
+                                                }
+                                              >
+                                                <ResizeObserver
+                                                  disabled={true}
+                                                  onResize={[Function]}
+                                                >
+                                                  <textarea
+                                                    className="ant-input"
+                                                    id="create-space_description"
+                                                    onChange={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    placeholder="Enter Description..."
+                                                    style={Object {}}
+                                                    value={
+                                                      Object {
+                                                        "blocks": Array [
+                                                          Object {
+                                                            "data": Object {
+                                                              "text": "Description",
+                                                            },
+                                                            "type": "paragraph",
+                                                          },
+                                                        ],
+                                                        "time": 1613559903378,
+                                                        "version": "2.19.0",
+                                                      }
+                                                    }
+                                                  />
+                                                </ResizeObserver>
+                                              </ResizableTextArea>
+                                            </TextArea>
+                                          </ClearableLabeledInput>
+                                        </TextArea>
                                       </Component>
                                     </div>
                                   </div>
@@ -4925,123 +5037,6 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                         </Row>
                       </Field>
                     </WrapperField>
-                  </FormItem>
-                  <FormItem
-                    wrapperCol={
-                      Object {
-                        "offset": 8,
-                        "span": 16,
-                      }
-                    }
-                  >
-                    <Row
-                      className="ant-form-item"
-                      key="row"
-                    >
-                      <div
-                        className="ant-row ant-form-item"
-                        style={Object {}}
-                      >
-                        <FormItemLabel
-                          prefixCls="ant-form"
-                          requiredMark={true}
-                          wrapperCol={
-                            Object {
-                              "offset": 8,
-                              "span": 16,
-                            }
-                          }
-                        />
-                        <FormItemInput
-                          errors={Array []}
-                          onDomErrorVisibleChange={[Function]}
-                          prefixCls="ant-form"
-                          status=""
-                          validateStatus=""
-                          wrapperCol={
-                            Object {
-                              "offset": 8,
-                              "span": 16,
-                            }
-                          }
-                        >
-                          <Col
-                            className="ant-form-item-control"
-                            offset={8}
-                            span={16}
-                          >
-                            <div
-                              className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
-                              style={Object {}}
-                            >
-                              <div
-                                className="ant-form-item-control-input"
-                              >
-                                <div
-                                  className="ant-form-item-control-input-content"
-                                >
-                                  <Button
-                                    block={false}
-                                    ghost={false}
-                                    htmlType="submit"
-                                    loading={false}
-                                    type="primary"
-                                  >
-                                    <Wave>
-                                      <button
-                                        className="ant-btn ant-btn-primary"
-                                        onClick={[Function]}
-                                        type="submit"
-                                      >
-                                        <LoadingIcon
-                                          existIcon={false}
-                                          loading={false}
-                                          prefixCls="ant-btn"
-                                        >
-                                          <CSSMotion
-                                            motionName="ant-btn-loading-icon-motion"
-                                            onAppearActive={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
-                                            onLeaveStart={[Function]}
-                                            removeOnLeave={true}
-                                            visible={false}
-                                          >
-                                            <DomWrapper />
-                                          </CSSMotion>
-                                        </LoadingIcon>
-                                        <span
-                                          key=".0"
-                                        >
-                                          Submit
-                                        </span>
-                                      </button>
-                                    </Wave>
-                                  </Button>
-                                </div>
-                              </div>
-                              <ErrorList
-                                errors={Array []}
-                                onDomErrorVisibleChange={[Function]}
-                              >
-                                <CSSMotion
-                                  motionAppear={true}
-                                  motionDeadline={500}
-                                  motionName="show-help"
-                                  onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                >
-                                  <DomWrapper />
-                                </CSSMotion>
-                              </ErrorList>
-                            </div>
-                          </Col>
-                        </FormItemInput>
-                      </div>
-                    </Row>
                   </FormItem>
                 </div>
                 <FormItem>

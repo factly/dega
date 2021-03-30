@@ -89,7 +89,7 @@ describe('Space Edit Form component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      const nextButton = tree.find('FormItem').at(17).find('Button').at(1);
+      const nextButton = tree.find('FormItem').at(16).find('Button').at(1);
       expect(nextButton.text()).toBe('Next');
       nextButton.simulate('click');
       expect(tree.find('Steps').at(0).props().current).toEqual(1); 
@@ -101,7 +101,7 @@ describe('Space Edit Form component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      const nextButton = tree.find('FormItem').at(17).find('Button').at(1);
+      const nextButton = tree.find('FormItem').at(16).find('Button').at(1);
       expect(nextButton.text()).toBe('Next');
       nextButton.simulate('click');
       expect(tree.find('Steps').at(0).props().current).toEqual(1); 
@@ -208,10 +208,9 @@ describe('Space Edit Form component', () => {
         wrapper
           .find('FormItem')
           .at(7)
-          .find('Editor')
-          .props()
-          .onChange({ target: { value: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
-        } });
+          .find('TextArea')
+          .at(0)
+          .simulate('change', { target: { value: 'New Description' } });
         wrapper
           .find('FormItem')
           .at(6)
@@ -279,7 +278,7 @@ describe('Space Edit Form component', () => {
           slug: 'new-slug',
           site_title: 'new site title',
           tag_line: 'new tag line',
-          description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
+          description: 'New Description',
           site_address: 'new site address',
           logo_id: 2,
           logo_mobile_id: 3,
@@ -297,18 +296,26 @@ describe('Space Edit Form component', () => {
     });
     it('should handle next and back buttons', () => {
       act(() => {
-        const nextButton = wrapper.find('Button').at(6);
+        const nextButton = wrapper.find('Button').at(5);
+        expect(nextButton.text()).toBe('Next');
         nextButton.simulate('click');
       });
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(1);
 
       act(() => {
-        const prevButton = wrapper.find('Button').at(5);
+        const prevButton = wrapper.find('Button').at(4);
         prevButton.simulate('click');
       });
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(0);
+    });
+    it('should handle steps change', () => {
+      act(() => {
+        wrapper.find('Steps').at(0).props().onChange(2);
+      });
+      wrapper.update();
+      expect(wrapper.find(Steps).props().current).toEqual(2);
     });
   });
 });

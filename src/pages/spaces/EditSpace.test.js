@@ -252,7 +252,7 @@ describe('Spaces Edit component', () => {
           },
           test: 'test'
         });
-        expect(push).toHaveBeenCalledWith('/spaces');
+        expect(push).toHaveBeenCalledWith('/spaces/11/edit');
         done();
       }, 0);
     });
