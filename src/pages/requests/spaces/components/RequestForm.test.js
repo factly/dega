@@ -22,6 +22,7 @@ jest.mock('../../../../selectors/spaces', () => ({
 
 let onCreate, store;
 const data = {
+  title: 'Request',
   space_id: 11,
   media: -1,
   posts: -1,
@@ -134,38 +135,38 @@ describe('Space Request Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(2)
           .find('Select')
           .props()
           .onChange({ target: { value: 12 } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(3)
           .find('InputNumber')
           .props()
           .onChange({ target: { value:  10} });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(4)
           .find('InputNumber')
           .props()
           .onChange({ target: { value:  15} });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(5)
           .find('InputNumber')
           .props()
           .onChange({ target: { value:  20} });
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(6)
           .find('Switch')
           .at(0)
           .props()
           .onChange({target: {checked: false} });  
         wrapper
           .find('FormItem')
-          .at(6)
+          .at(1)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'New description' } });
@@ -178,6 +179,7 @@ describe('Space Request Form component', () => {
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'Request',
           space_id: 12,
           posts: 10,
           media: 20,
