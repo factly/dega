@@ -56,6 +56,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
       layout="vertical"
       name="create-policy"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       style={
         Object {
           "maxWidth": "100%",
@@ -100,6 +101,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
           name="create-policy"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
           style={
             Object {
               "maxWidth": "100%",
@@ -766,6 +768,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                               bordered={true}
                                               defaultValue={Array []}
                                               filterOption={[Function]}
+                                              getPopupContainer={[Function]}
                                               listHeight={128}
                                               loading={false}
                                               mode="multiple"
@@ -782,6 +785,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                 defaultValue={Array []}
                                                 dropdownClassName=""
                                                 filterOption={[Function]}
+                                                getPopupContainer={[Function]}
                                                 inputIcon={[Function]}
                                                 listHeight={128}
                                                 listItemHeight={24}
@@ -804,6 +808,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                   defaultValue={Array []}
                                                   dropdownClassName=""
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   inputIcon={[Function]}
                                                   listHeight={128}
                                                   listItemHeight={24}
@@ -831,6 +836,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                       containerWidth={null}
                                                       dropdownClassName=""
                                                       empty={true}
+                                                      getPopupContainer={[Function]}
                                                       getTriggerDOMNode={[Function]}
                                                       popupElement={
                                                         <ForwardRef(OptionList)
@@ -928,6 +934,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                         focusDelay={0}
                                                         getDocument={[Function]}
                                                         getPopupClassNameFromAlign={[Function]}
+                                                        getPopupContainer={[Function]}
                                                         getTriggerDOMNode={[Function]}
                                                         hideAction={Array []}
                                                         mask={false}
@@ -1024,6 +1031,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                           }
                                                           dropdownClassName=""
                                                           filterOption={[Function]}
+                                                          getPopupContainer={[Function]}
                                                           inputElement={null}
                                                           inputIcon={[Function]}
                                                           key="trigger"
@@ -1104,6 +1112,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               inputElement={null}
                                                               inputIcon={[Function]}
                                                               inputRef={
@@ -5882,6 +5891,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
             </FormItem>
             <Button
               block={false}
+              disabled={true}
               ghost={false}
               htmlType="submit"
               loading={false}
@@ -5890,6 +5900,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
               <Wave>
                 <button
                   className="ant-btn ant-btn-primary"
+                  disabled={true}
                   onClick={[Function]}
                   type="submit"
                 >
@@ -5915,7 +5926,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                   <span
                     key=".0"
                   >
-                    Submit
+                    Update
                   </span>
                 </button>
               </Wave>
@@ -5971,6 +5982,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
       layout="vertical"
       name="create-policy"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       style={
         Object {
           "maxWidth": "100%",
@@ -6010,6 +6022,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
           name="create-policy"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
           style={
             Object {
               "maxWidth": "100%",
@@ -6673,6 +6686,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                               bordered={true}
                                               defaultValue={Array []}
                                               filterOption={[Function]}
+                                              getPopupContainer={[Function]}
                                               listHeight={128}
                                               loading={false}
                                               mode="multiple"
@@ -6689,6 +6703,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                 defaultValue={Array []}
                                                 dropdownClassName=""
                                                 filterOption={[Function]}
+                                                getPopupContainer={[Function]}
                                                 inputIcon={[Function]}
                                                 listHeight={128}
                                                 listItemHeight={24}
@@ -6711,6 +6726,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                   defaultValue={Array []}
                                                   dropdownClassName=""
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   inputIcon={[Function]}
                                                   listHeight={128}
                                                   listItemHeight={24}
@@ -6738,6 +6754,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                       containerWidth={null}
                                                       dropdownClassName=""
                                                       empty={true}
+                                                      getPopupContainer={[Function]}
                                                       getTriggerDOMNode={[Function]}
                                                       popupElement={
                                                         <ForwardRef(OptionList)
@@ -6835,6 +6852,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                         focusDelay={0}
                                                         getDocument={[Function]}
                                                         getPopupClassNameFromAlign={[Function]}
+                                                        getPopupContainer={[Function]}
                                                         getTriggerDOMNode={[Function]}
                                                         hideAction={Array []}
                                                         mask={false}
@@ -6931,6 +6949,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                           }
                                                           dropdownClassName=""
                                                           filterOption={[Function]}
+                                                          getPopupContainer={[Function]}
                                                           inputElement={null}
                                                           inputIcon={[Function]}
                                                           key="trigger"
@@ -7011,6 +7030,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               inputElement={null}
                                                               inputIcon={[Function]}
                                                               inputRef={
@@ -11789,6 +11809,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
             </FormItem>
             <Button
               block={false}
+              disabled={true}
               ghost={false}
               htmlType="submit"
               loading={false}
@@ -11797,6 +11818,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
               <Wave>
                 <button
                   className="ant-btn ant-btn-primary"
+                  disabled={true}
                   onClick={[Function]}
                   type="submit"
                 >

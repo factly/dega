@@ -176,7 +176,7 @@ exports[`Policies List component should render the component 1`] = `
                       Object {
                         "current": 1,
                         "onChange": [Function],
-                        "pageSize": 5,
+                        "pageSize": 20,
                         "total": 0,
                       }
                     }
@@ -362,7 +362,7 @@ exports[`Policies List component should render the component 1`] = `
                                 Object {
                                   "current": 1,
                                   "onChange": [Function],
-                                  "pageSize": 5,
+                                  "pageSize": 20,
                                   "total": 0,
                                 }
                               }
@@ -536,7 +536,7 @@ exports[`Policies List component should render the component 1`] = `
                                       "pagination": Object {
                                         "current": 1,
                                         "onChange": [Function],
-                                        "pageSize": 5,
+                                        "pageSize": 20,
                                         "total": 0,
                                       },
                                       "prefixCls": "ant-table",

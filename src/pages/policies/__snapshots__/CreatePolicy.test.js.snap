@@ -46,6 +46,7 @@ exports[`Policies create component snapshot testing should render the component 
         layout="vertical"
         name="create-policy"
         onFinish={[Function]}
+        onValuesChange={[Function]}
         style={
           Object {
             "maxWidth": "100%",
@@ -85,6 +86,7 @@ exports[`Policies create component snapshot testing should render the component 
             name="create-policy"
             onFinish={[Function]}
             onFinishFailed={[Function]}
+            onValuesChange={[Function]}
             style={
               Object {
                 "maxWidth": "100%",
@@ -748,6 +750,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                 bordered={true}
                                                 defaultValue={Array []}
                                                 filterOption={[Function]}
+                                                getPopupContainer={[Function]}
                                                 listHeight={128}
                                                 loading={false}
                                                 mode="multiple"
@@ -764,6 +767,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                   defaultValue={Array []}
                                                   dropdownClassName=""
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   inputIcon={[Function]}
                                                   listHeight={128}
                                                   listItemHeight={24}
@@ -786,6 +790,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                     defaultValue={Array []}
                                                     dropdownClassName=""
                                                     filterOption={[Function]}
+                                                    getPopupContainer={[Function]}
                                                     inputIcon={[Function]}
                                                     listHeight={128}
                                                     listItemHeight={24}
@@ -813,6 +818,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                         containerWidth={null}
                                                         dropdownClassName=""
                                                         empty={false}
+                                                        getPopupContainer={[Function]}
                                                         getTriggerDOMNode={[Function]}
                                                         popupElement={
                                                           <ForwardRef(OptionList)
@@ -930,6 +936,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                           focusDelay={0}
                                                           getDocument={[Function]}
                                                           getPopupClassNameFromAlign={[Function]}
+                                                          getPopupContainer={[Function]}
                                                           getTriggerDOMNode={[Function]}
                                                           hideAction={Array []}
                                                           mask={false}
@@ -1046,6 +1053,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                             }
                                                             dropdownClassName=""
                                                             filterOption={[Function]}
+                                                            getPopupContainer={[Function]}
                                                             id="rc_select_TEST_OR_SSR"
                                                             inputElement={null}
                                                             inputIcon={[Function]}
@@ -1127,6 +1135,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                                 }
                                                                 dropdownClassName=""
                                                                 filterOption={[Function]}
+                                                                getPopupContainer={[Function]}
                                                                 id="rc_select_TEST_OR_SSR"
                                                                 inputElement={null}
                                                                 inputIcon={[Function]}
@@ -5908,6 +5917,7 @@ exports[`Policies create component snapshot testing should render the component 
               </FormItem>
               <Button
                 block={false}
+                disabled={true}
                 ghost={false}
                 htmlType="submit"
                 loading={false}
@@ -5916,6 +5926,7 @@ exports[`Policies create component snapshot testing should render the component 
                 <Wave>
                   <button
                     className="ant-btn ant-btn-primary"
+                    disabled={true}
                     onClick={[Function]}
                     type="submit"
                   >
