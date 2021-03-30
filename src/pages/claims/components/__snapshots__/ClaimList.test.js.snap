@@ -93,7 +93,7 @@ exports[`Claims List component snapshot testing should match component when load
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -136,7 +136,7 @@ exports[`Claims List component snapshot testing should match component when load
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -1325,6 +1325,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                   bordered={true}
                                                   defaultValue={Array []}
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   listHeight={128}
                                                   loading={false}
                                                   mode="multiple"
@@ -1341,6 +1342,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                     defaultValue={Array []}
                                                     dropdownClassName=""
                                                     filterOption={[Function]}
+                                                    getPopupContainer={[Function]}
                                                     inputIcon={[Function]}
                                                     listHeight={128}
                                                     listItemHeight={24}
@@ -1363,6 +1365,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                       defaultValue={Array []}
                                                       dropdownClassName=""
                                                       filterOption={[Function]}
+                                                      getPopupContainer={[Function]}
                                                       inputIcon={[Function]}
                                                       listHeight={128}
                                                       listItemHeight={24}
@@ -1390,6 +1393,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                           containerWidth={null}
                                                           dropdownClassName=""
                                                           empty={false}
+                                                          getPopupContainer={[Function]}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
@@ -1507,6 +1511,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
+                                                            getPopupContainer={[Function]}
                                                             getTriggerDOMNode={[Function]}
                                                             hideAction={Array []}
                                                             mask={false}
@@ -1623,6 +1628,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               id="rc_select_TEST_OR_SSR"
                                                               inputElement={null}
                                                               inputIcon={[Function]}
@@ -1704,6 +1710,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                                   }
                                                                   dropdownClassName=""
                                                                   filterOption={[Function]}
+                                                                  getPopupContainer={[Function]}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   inputElement={null}
                                                                   inputIcon={[Function]}
@@ -2025,6 +2032,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                   bordered={true}
                                                   defaultValue={Array []}
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   listHeight={128}
                                                   loading={false}
                                                   mode="multiple"
@@ -2041,6 +2049,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                     defaultValue={Array []}
                                                     dropdownClassName=""
                                                     filterOption={[Function]}
+                                                    getPopupContainer={[Function]}
                                                     inputIcon={[Function]}
                                                     listHeight={128}
                                                     listItemHeight={24}
@@ -2063,6 +2072,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                       defaultValue={Array []}
                                                       dropdownClassName=""
                                                       filterOption={[Function]}
+                                                      getPopupContainer={[Function]}
                                                       inputIcon={[Function]}
                                                       listHeight={128}
                                                       listItemHeight={24}
@@ -2090,6 +2100,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                           containerWidth={null}
                                                           dropdownClassName=""
                                                           empty={false}
+                                                          getPopupContainer={[Function]}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
@@ -2207,6 +2218,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
+                                                            getPopupContainer={[Function]}
                                                             getTriggerDOMNode={[Function]}
                                                             hideAction={Array []}
                                                             mask={false}
@@ -2323,6 +2335,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               id="rc_select_TEST_OR_SSR"
                                                               inputElement={null}
                                                               inputIcon={[Function]}
@@ -2404,6 +2417,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                                   }
                                                                   dropdownClassName=""
                                                                   filterOption={[Function]}
+                                                                  getPopupContainer={[Function]}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   inputElement={null}
                                                                   inputIcon={[Function]}
@@ -2777,7 +2791,7 @@ exports[`Claims List component snapshot testing should match component when load
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -3195,7 +3209,7 @@ exports[`Claims List component snapshot testing should match component when load
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -3573,7 +3587,7 @@ exports[`Claims List component snapshot testing should match component when load
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -6326,7 +6340,7 @@ exports[`Claims List component snapshot testing should match component when load
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -6414,7 +6428,7 @@ exports[`Claims List component snapshot testing should match component when load
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -6682,7 +6696,7 @@ exports[`Claims List component snapshot testing should match component when load
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -6816,7 +6830,7 @@ exports[`Claims List component snapshot testing should match component with clai
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -6859,7 +6873,7 @@ exports[`Claims List component snapshot testing should match component with clai
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -8048,6 +8062,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                   bordered={true}
                                                   defaultValue={Array []}
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   listHeight={128}
                                                   loading={false}
                                                   mode="multiple"
@@ -8064,6 +8079,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                     defaultValue={Array []}
                                                     dropdownClassName=""
                                                     filterOption={[Function]}
+                                                    getPopupContainer={[Function]}
                                                     inputIcon={[Function]}
                                                     listHeight={128}
                                                     listItemHeight={24}
@@ -8086,6 +8102,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                       defaultValue={Array []}
                                                       dropdownClassName=""
                                                       filterOption={[Function]}
+                                                      getPopupContainer={[Function]}
                                                       inputIcon={[Function]}
                                                       listHeight={128}
                                                       listItemHeight={24}
@@ -8113,6 +8130,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                           containerWidth={null}
                                                           dropdownClassName=""
                                                           empty={false}
+                                                          getPopupContainer={[Function]}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
@@ -8230,6 +8248,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
+                                                            getPopupContainer={[Function]}
                                                             getTriggerDOMNode={[Function]}
                                                             hideAction={Array []}
                                                             mask={false}
@@ -8346,6 +8365,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               id="rc_select_TEST_OR_SSR"
                                                               inputElement={null}
                                                               inputIcon={[Function]}
@@ -8427,6 +8447,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                                   }
                                                                   dropdownClassName=""
                                                                   filterOption={[Function]}
+                                                                  getPopupContainer={[Function]}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   inputElement={null}
                                                                   inputIcon={[Function]}
@@ -8748,6 +8769,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                   bordered={true}
                                                   defaultValue={Array []}
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   listHeight={128}
                                                   loading={false}
                                                   mode="multiple"
@@ -8764,6 +8786,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                     defaultValue={Array []}
                                                     dropdownClassName=""
                                                     filterOption={[Function]}
+                                                    getPopupContainer={[Function]}
                                                     inputIcon={[Function]}
                                                     listHeight={128}
                                                     listItemHeight={24}
@@ -8786,6 +8809,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                       defaultValue={Array []}
                                                       dropdownClassName=""
                                                       filterOption={[Function]}
+                                                      getPopupContainer={[Function]}
                                                       inputIcon={[Function]}
                                                       listHeight={128}
                                                       listItemHeight={24}
@@ -8813,6 +8837,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                           containerWidth={null}
                                                           dropdownClassName=""
                                                           empty={false}
+                                                          getPopupContainer={[Function]}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
@@ -8930,6 +8955,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
+                                                            getPopupContainer={[Function]}
                                                             getTriggerDOMNode={[Function]}
                                                             hideAction={Array []}
                                                             mask={false}
@@ -9046,6 +9072,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               id="rc_select_TEST_OR_SSR"
                                                               inputElement={null}
                                                               inputIcon={[Function]}
@@ -9127,6 +9154,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                                   }
                                                                   dropdownClassName=""
                                                                   filterOption={[Function]}
+                                                                  getPopupContainer={[Function]}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   inputElement={null}
                                                                   inputIcon={[Function]}
@@ -9500,7 +9528,7 @@ exports[`Claims List component snapshot testing should match component with clai
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -9894,7 +9922,7 @@ exports[`Claims List component snapshot testing should match component with clai
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -10272,7 +10300,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -13025,7 +13053,7 @@ exports[`Claims List component snapshot testing should match component with clai
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -13113,7 +13141,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -13381,7 +13409,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -13515,7 +13543,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -13558,7 +13586,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -14747,6 +14775,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                   bordered={true}
                                                   defaultValue={Array []}
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   listHeight={128}
                                                   loading={false}
                                                   mode="multiple"
@@ -14763,6 +14792,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                     defaultValue={Array []}
                                                     dropdownClassName=""
                                                     filterOption={[Function]}
+                                                    getPopupContainer={[Function]}
                                                     inputIcon={[Function]}
                                                     listHeight={128}
                                                     listItemHeight={24}
@@ -14785,6 +14815,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                       defaultValue={Array []}
                                                       dropdownClassName=""
                                                       filterOption={[Function]}
+                                                      getPopupContainer={[Function]}
                                                       inputIcon={[Function]}
                                                       listHeight={128}
                                                       listItemHeight={24}
@@ -14812,6 +14843,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                           containerWidth={null}
                                                           dropdownClassName=""
                                                           empty={false}
+                                                          getPopupContainer={[Function]}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
@@ -14929,6 +14961,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
+                                                            getPopupContainer={[Function]}
                                                             getTriggerDOMNode={[Function]}
                                                             hideAction={Array []}
                                                             mask={false}
@@ -15045,6 +15078,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               id="rc_select_TEST_OR_SSR"
                                                               inputElement={null}
                                                               inputIcon={[Function]}
@@ -15126,6 +15160,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                   }
                                                                   dropdownClassName=""
                                                                   filterOption={[Function]}
+                                                                  getPopupContainer={[Function]}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   inputElement={null}
                                                                   inputIcon={[Function]}
@@ -15447,6 +15482,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                   bordered={true}
                                                   defaultValue={Array []}
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   listHeight={128}
                                                   loading={false}
                                                   mode="multiple"
@@ -15463,6 +15499,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                     defaultValue={Array []}
                                                     dropdownClassName=""
                                                     filterOption={[Function]}
+                                                    getPopupContainer={[Function]}
                                                     inputIcon={[Function]}
                                                     listHeight={128}
                                                     listItemHeight={24}
@@ -15485,6 +15522,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                       defaultValue={Array []}
                                                       dropdownClassName=""
                                                       filterOption={[Function]}
+                                                      getPopupContainer={[Function]}
                                                       inputIcon={[Function]}
                                                       listHeight={128}
                                                       listItemHeight={24}
@@ -15512,6 +15550,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                           containerWidth={null}
                                                           dropdownClassName=""
                                                           empty={false}
+                                                          getPopupContainer={[Function]}
                                                           getTriggerDOMNode={[Function]}
                                                           popupElement={
                                                             <ForwardRef(OptionList)
@@ -15629,6 +15668,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
+                                                            getPopupContainer={[Function]}
                                                             getTriggerDOMNode={[Function]}
                                                             hideAction={Array []}
                                                             mask={false}
@@ -15745,6 +15785,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               id="rc_select_TEST_OR_SSR"
                                                               inputElement={null}
                                                               inputIcon={[Function]}
@@ -15826,6 +15867,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                   }
                                                                   dropdownClassName=""
                                                                   filterOption={[Function]}
+                                                                  getPopupContainer={[Function]}
                                                                   id="rc_select_TEST_OR_SSR"
                                                                   inputElement={null}
                                                                   inputIcon={[Function]}
@@ -16199,7 +16241,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -16593,7 +16635,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -16971,7 +17013,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -19724,7 +19766,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -19812,7 +19854,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -20080,7 +20122,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",

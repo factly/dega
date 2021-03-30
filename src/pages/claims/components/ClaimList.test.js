@@ -30,7 +30,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -205,7 +205,7 @@ describe('Claims List component', () => {
 
       expect(mockedDispatch).toHaveBeenCalledTimes(3);
 
-      expect(getClaims).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getClaims).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -254,7 +254,7 @@ describe('Claims List component', () => {
         .simulate('click');
       expect(deleteClaim).toHaveBeenCalled();
       expect(deleteClaim).toHaveBeenCalledWith(1);
-      expect(getClaims).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getClaims).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit claim', () => {
       store = mockStore(state);

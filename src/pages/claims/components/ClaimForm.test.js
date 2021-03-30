@@ -171,7 +171,7 @@ describe('Claims Create Form component', () => {
       });
 
       act(() => {
-        const submitButtom = wrapper.find('Button').at(0);
+        const submitButtom = wrapper.find('Button').at(3);
         submitButtom.simulate('submit');
       });
       wrapper.update();
@@ -201,7 +201,6 @@ describe('Claims Create Form component', () => {
           checked_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
           claim_sources: 'claim_sources',
           review: 'review',
-          review_tag_line: 'review_tag_line',
           review_sources: 'review_sources',
           description: {
             time: 1595747741807,
@@ -249,7 +248,6 @@ describe('Claims Create Form component', () => {
           checked_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
           claim_sources: 'claim_sources',
           review: 'review',
-          review_tag_line: 'review_tag_line',
           review_sources: 'review_sources',
           description: {
             time: 1595747741807,
@@ -400,27 +398,20 @@ describe('Claims Create Form component', () => {
           .onChange({ target: { value: moment(new Date('2020-04-04')) } });
         wrapper
           .find('FormItem')
-          .at(8)
-          .find('Editor')
-          .at(0)
-          .props()
-          .onChange({ target: { value: newClaimSources } });
-        wrapper
-          .find('FormItem')
           .at(4)
           .find('Editor')
           .at(0)
           .props()
           .onChange({ target: { value: newReview } });
-        wrapper
-          .find('FormItem')
-          .at(9)
-          .find('Editor')
-          .at(0)
-          .props()
-          .onChange({ target: { value: newReviewTagLines } });
+        const submitButtom = wrapper.find('Button').at(3);
+        expect(submitButtom.text()).toBe('Next');
+        submitButtom.simulate('click');
+      });
+      wrapper.update();
 
-        const submitButtom = wrapper.find('Button').at(1);
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(3);
+        expect(submitButtom.text()).toBe('Submit');
         submitButtom.simulate('submit');
       });
 
@@ -435,9 +426,8 @@ describe('Claims Create Form component', () => {
           rating_id: 2,
           claim_date: moment(new Date('2020-01-01')).format('YYYY-MM-DDTHH:mm:ssZ'),
           checked_date: moment(new Date('2020-04-04')).format('YYYY-MM-DDTHH:mm:ssZ'),
-          claim_sources: newClaimSources,
+          claim_sources: 'claim_sources',
           review: newReview,
-          review_tag_line: newReviewTagLines,
           review_sources: 'review_sources',
           description: newDescription,
         });
@@ -463,7 +453,7 @@ describe('Claims Create Form component', () => {
       const formListInputCount = wrapper.find('FormList').find('Input').length;
       expect(formListInputCount).toBe(0);
       act(() => {
-        const button = wrapper.find('FormItem').at(10).find('Button');
+        const button = wrapper.find('FormItem').at(9).find('Button').at(0);
         expect(button.text()).toBe('Add Review sources');
         button.simulate('click');
       });
@@ -472,8 +462,33 @@ describe('Claims Create Form component', () => {
     });
     it('should remove review sources input field on button click', () => {
       act(() => {
-        const button = wrapper.find('FormItem').at(10).find('Button');
+        const button = wrapper.find('FormItem').at(9).find('Button');
         expect(button.text()).toBe('Add Review sources');
+        button.simulate('click');
+      });
+      wrapper.update();
+      const formInputFieldCount = wrapper.find('FormList').find(Input).length;
+      act(() => {
+        wrapper.find('FormList').find(MinusCircleOutlined).at(0).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find('FormList').find(Input).length).toBe(formInputFieldCount - 2);
+    });
+    it('should add claim sources input field on button click', () => {
+      const formListInputCount = wrapper.find('FormList').find('Input').length;
+      expect(formListInputCount).toBe(0);
+      act(() => {
+        const button = wrapper.find('FormItem').at(8).find('Button').at(0);
+        expect(button.text()).toBe('Add Claim sources');
+        button.simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find('FormList').find('Input').length).not.toBe(0);
+    });
+    it('should remove claim sources input field on button click', () => {
+      act(() => {
+        const button = wrapper.find('FormItem').at(8).find('Button');
+        expect(button.text()).toBe('Add Claim sources');
         button.simulate('click');
       });
       wrapper.update();
@@ -493,7 +508,6 @@ describe('Claims Create Form component', () => {
         rating: 1,
         claim_sources: 'claim_sources',
         review: 'review',
-        review_tag_line: 'review_tag_line',
         review_sources: 'review_sources',
         description: {
           time: 1595747741807,
@@ -542,7 +556,6 @@ describe('Claims Create Form component', () => {
           checked_date: null,
           claim_sources: 'claim_sources',
           review: 'review',
-          review_tag_line: 'review_tag_line',
           review_sources: 'review_sources',
           description: {
             time: 1595747741807,
@@ -574,6 +587,68 @@ describe('Claims Create Form component', () => {
       });
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(1);
+    });
+    it('should not submit with empty url for review sources', (done) => {
+      const data2 = {
+        id: 1,
+        title: 'title',
+        slug: 'slug',
+        claimant: 1,
+        rating: 1,
+        claim_sources: 'claim_sources',
+        review: 'review',
+        description: {
+          time: 1595747741807,
+          blocks: [
+            {
+              type: 'header',
+              data: {
+                text: 'Editor.js',
+                level: 2,
+              },
+            },
+            {
+              type: 'paragraph',
+              data: {
+                text:
+                  'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+              },
+            },
+          ],
+          version: '2.18.0',
+        },
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <ClaimCreateForm data={data2} onCreate={props.onCreate} />
+          </Provider>,
+        );
+      });
+      const formListInputCount = wrapper.find('FormList').find('Input').length;
+      expect(formListInputCount).toBe(0);
+      act(() => {
+        const button = wrapper.find('FormItem').at(9).find('Button').at(0);
+        expect(button.text()).toBe('Add Review sources');
+        button.simulate('click');
+      });
+      wrapper.update();
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(3);
+        submitButtom.simulate('click');
+      });
+      wrapper.update();
+
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(3);
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(0);
+        done();
+      }, 0);
     });
   });
 });

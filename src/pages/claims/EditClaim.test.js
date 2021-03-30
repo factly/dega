@@ -246,7 +246,7 @@ describe('Claims Edit component', () => {
           rating_id: 1,
           space_id: 1,
         });
-        expect(push).toHaveBeenCalledWith('/claims');
+        expect(push).toHaveBeenCalledWith('/claims/1/edit');
         done();
       }, 0);
     });
