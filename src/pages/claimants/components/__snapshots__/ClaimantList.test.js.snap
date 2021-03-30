@@ -93,7 +93,7 @@ exports[`Claimants List component snapshot testing should match component when l
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -136,7 +136,7 @@ exports[`Claimants List component snapshot testing should match component when l
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -1339,7 +1339,7 @@ exports[`Claimants List component snapshot testing should match component when l
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -1687,7 +1687,7 @@ exports[`Claimants List component snapshot testing should match component when l
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -1995,7 +1995,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -4644,7 +4644,7 @@ exports[`Claimants List component snapshot testing should match component when l
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -4732,7 +4732,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -5000,7 +5000,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -5134,7 +5134,7 @@ exports[`Claimants List component snapshot testing should match component with c
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -5177,7 +5177,7 @@ exports[`Claimants List component snapshot testing should match component with c
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -6380,7 +6380,7 @@ exports[`Claimants List component snapshot testing should match component with c
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -6704,7 +6704,7 @@ exports[`Claimants List component snapshot testing should match component with c
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -7012,7 +7012,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -9661,7 +9661,7 @@ exports[`Claimants List component snapshot testing should match component with c
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -9749,7 +9749,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -10017,7 +10017,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -10151,7 +10151,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -10194,7 +10194,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -11397,7 +11397,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -11721,7 +11721,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -12029,7 +12029,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -14678,7 +14678,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -14766,7 +14766,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -15034,7 +15034,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",

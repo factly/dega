@@ -18,7 +18,6 @@ jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -81,17 +80,6 @@ describe('Claimants edit component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockReturnValueOnce({
-        claimant: {
-          id: 1,
-          name: 'TOI',
-          slug: 'toi',
-          description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
-          tag_line: 'tag line',
-          claimant_date: '2017-12-12',
-        },
-        loading: false,
-      });
       const tree = mount(
         <Provider store={store}>
           <EditClaimant />
@@ -100,10 +88,18 @@ describe('Claimants edit component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      useSelector.mockReturnValueOnce({
-        claimant: {},
-        loading: false,
-      });
+      store = mockStore({
+        claimants: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      })
       const tree = mount(
         <Provider store={store}>
           <EditClaimant />
@@ -112,9 +108,12 @@ describe('Claimants edit component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
-      useSelector.mockReturnValueOnce({
-        claimant: {},
-        loading: true,
+      store = mockStore({
+        claimants: {
+          req: [],
+          details: {},
+          loading: true,
+        },
       });
       const tree = mount(
         <Provider store={store}>
@@ -129,8 +128,52 @@ describe('Claimants edit component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
+
+    beforeEach(() => {
+      store = mockStore({
+        claimants: {
+          req: [
+            {
+              data: [1, 2],
+              query: {
+                page: 1,
+              },
+              total: 2,
+            },
+          ],
+          details: {
+            '1': {
+              id: 1,
+              name: 'TOI',
+              slug: 'toi',
+              description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
+              tag_line: 'tag line',
+              claimant_date: '2017-12-12',
+            },
+            '2': {
+              id: 2,
+              name: 'CNN',
+              slug: 'cnn',
+              description: {"time":1613556798293,"blocks":[{"type":"header","data":{"text":"Description-2","level":2}}],"version":"2.19.0"},
+              tag_line: 'tag line',
+              claimant_date: '2017-12-12',
+            },
+          },
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+        spaces: {
+          orgs: [],
+          details: {},
+          loading: true,
+        }
+      });
+    });  
     it('should call get action', () => {
-      useSelector.mockReturnValueOnce({ rating: null, loading: true });
       actions.getClaimant.mockReset();
       act(() => {
         wrapper = mount(
@@ -142,9 +185,34 @@ describe('Claimants edit component', () => {
       expect(actions.getClaimant).toHaveBeenCalledWith('1');
     });
     it('should display RecordNotFound if not claimant found', () => {
-      useSelector.mockReturnValueOnce({
-        claimant: null,
-        loading: false,
+      store = mockStore({
+        claimants: {
+          req: [
+            {
+              data: [2],
+              query: {
+                page: 1,
+              },
+              total: 1,
+            },
+          ],
+          details: {
+            '2': {
+              id: 2,
+              name: 'CNN',
+              slug: 'cnn',
+              description: {"time":1613556798293,"blocks":[{"type":"header","data":{"text":"Description-2","level":2}}],"version":"2.19.0"},
+              tag_line: 'tag line',
+              claimant_date: '2017-12-12',
+            },
+          },
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
       });
       act(() => {
         wrapper = mount(
@@ -157,19 +225,10 @@ describe('Claimants edit component', () => {
       expect(wrapper.find('RecordNotFound').length).toBe(1);
     });
     it('should call updateClaimant', (done) => {
+      actions.updateClaimant.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       useDispatch.mockReturnValueOnce(() => Promise.resolve({}));
-      useSelector.mockReturnValueOnce({ claimant: {
-        id: 1,
-        name: 'TOI',
-        slug: 'toi',
-        description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
-        tag_line: 'tag line',
-        claimant_date: '2017-12-12',
-      },
-      loading: false, });
-      actions.updateClaimant.mockReset();
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -188,7 +247,7 @@ describe('Claimants edit component', () => {
           claimant_date: '2017-12-12',
           test: 'test',
          });
-        expect(push).toHaveBeenCalledWith('/claimants');
+        expect(push).toHaveBeenCalledWith('/claimants/1/edit');
         done();
       }, 0);
     });

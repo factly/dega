@@ -23,7 +23,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -111,7 +111,7 @@ describe('Claimants List component', () => {
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
 
-      expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -161,7 +161,7 @@ describe('Claimants List component', () => {
       setTimeout(() => {
         expect(deleteClaimant).toHaveBeenCalled();
         expect(deleteClaimant).toHaveBeenCalledWith(1);
-        expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 5 });
+        expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 20 });
       });
     });
     it('should edit claimant', () => {
@@ -224,7 +224,7 @@ describe('Claimants List component', () => {
           .props()
           .onChange({ target: { value: 'asc' } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
 
@@ -233,6 +233,7 @@ describe('Claimants List component', () => {
           page: 1,
           limit: 5,
           q: 'claimant',
+          sort_by: 'asc',
         });
       }, 0);
     });

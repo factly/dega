@@ -88,6 +88,7 @@ exports[`Claimants Create Form component snapshot testing should match component
       }
       name="creat-claimant"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -145,6 +146,7 @@ exports[`Claimants Create Form component snapshot testing should match component
           name="creat-claimant"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -1484,6 +1486,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -1492,6 +1495,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >
@@ -1660,6 +1664,7 @@ exports[`Claimants Create Form component snapshot testing should match component
       }
       name="creat-claimant"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -1698,6 +1703,7 @@ exports[`Claimants Create Form component snapshot testing should match component
           name="creat-claimant"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -2998,6 +3004,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -3006,6 +3013,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >
@@ -3174,6 +3182,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
       }
       name="creat-claimant"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -3212,6 +3221,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
           name="creat-claimant"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -4512,6 +4522,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -4520,6 +4531,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >

@@ -192,7 +192,7 @@ exports[`Claimants List component should render the component 1`] = `
                             }
                             initialValues={
                               Object {
-                                "limit": 5,
+                                "limit": 20,
                                 "page": 1,
                               }
                             }
@@ -235,7 +235,7 @@ exports[`Claimants List component should render the component 1`] = `
                                 id="filters"
                                 initialValues={
                                   Object {
-                                    "limit": 5,
+                                    "limit": 20,
                                     "page": 1,
                                   }
                                 }
@@ -1409,7 +1409,7 @@ exports[`Claimants List component should render the component 1`] = `
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": undefined,
                               }
                             }
@@ -1600,7 +1600,7 @@ exports[`Claimants List component should render the component 1`] = `
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
-                                          "pageSize": 5,
+                                          "pageSize": 20,
                                           "total": undefined,
                                         }
                                       }
@@ -1781,7 +1781,7 @@ exports[`Claimants List component should render the component 1`] = `
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
-                                                "pageSize": 5,
+                                                "pageSize": 20,
                                                 "total": undefined,
                                               },
                                               "prefixCls": "ant-table",
@@ -2641,7 +2641,7 @@ exports[`Claimants List component should render the component with data 1`] = `
                             }
                             initialValues={
                               Object {
-                                "limit": 5,
+                                "limit": 20,
                                 "page": 1,
                               }
                             }
@@ -2684,7 +2684,7 @@ exports[`Claimants List component should render the component with data 1`] = `
                                 id="filters"
                                 initialValues={
                                   Object {
-                                    "limit": 5,
+                                    "limit": 20,
                                     "page": 1,
                                   }
                                 }
@@ -3871,7 +3871,7 @@ exports[`Claimants List component should render the component with data 1`] = `
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 1,
                               }
                             }
@@ -4099,7 +4099,7 @@ exports[`Claimants List component should render the component with data 1`] = `
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
-                                          "pageSize": 5,
+                                          "pageSize": 20,
                                           "total": 1,
                                         }
                                       }
@@ -4311,7 +4311,7 @@ exports[`Claimants List component should render the component with data 1`] = `
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
-                                                "pageSize": 5,
+                                                "pageSize": 20,
                                                 "total": 1,
                                               },
                                               "prefixCls": "ant-table",
@@ -5893,7 +5893,7 @@ exports[`Claimants List component should render the component with data 1`] = `
                                       className="ant-table-pagination ant-table-pagination-right"
                                       current={1}
                                       onChange={[Function]}
-                                      pageSize={5}
+                                      pageSize={20}
                                       total={1}
                                     >
                                       <LocaleReceiver
@@ -5981,7 +5981,7 @@ exports[`Claimants List component should render the component with data 1`] = `
                                           }
                                           onChange={[Function]}
                                           onShowSizeChange={[Function]}
-                                          pageSize={5}
+                                          pageSize={20}
                                           prefixCls="ant-pagination"
                                           prevIcon={
                                             <button
@@ -6249,7 +6249,7 @@ exports[`Claimants List component should render the component with data 1`] = `
                                                   "prev_page": "Previous Page",
                                                 }
                                               }
-                                              pageSize={5}
+                                              pageSize={20}
                                               pageSizeOptions={
                                                 Array [
                                                   "10",
