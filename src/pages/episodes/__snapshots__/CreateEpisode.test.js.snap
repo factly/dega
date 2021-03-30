@@ -51,6 +51,7 @@ exports[`Episode create component snapshot testing should render the component 1
         layout="vertical"
         name="create-category"
         onFinish={[Function]}
+        onValuesChange={[Function]}
         wrapperCol={
           Object {
             "span": 24,
@@ -89,6 +90,7 @@ exports[`Episode create component snapshot testing should render the component 1
             name="create-category"
             onFinish={[Function]}
             onFinishFailed={[Function]}
+            onValuesChange={[Function]}
           >
             <form
               className="ant-form ant-form-vertical"
@@ -2062,6 +2064,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                         >
                                           <Button
                                             block={false}
+                                            disabled={true}
                                             ghost={false}
                                             htmlType="submit"
                                             loading={false}
@@ -2070,6 +2073,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             <Wave>
                                               <button
                                                 className="ant-btn ant-btn-primary"
+                                                disabled={true}
                                                 onClick={[Function]}
                                                 type="submit"
                                               >

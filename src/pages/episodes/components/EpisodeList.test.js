@@ -31,7 +31,7 @@ let state = {
         data: [1],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 1,
       },
@@ -155,7 +155,7 @@ describe('Episode List component', () => {
         .simulate('click');
       expect(deleteEpisode).toHaveBeenCalled();
       expect(deleteEpisode).toHaveBeenCalledWith(1);
-      expect(getEpisodes).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getEpisodes).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit episode', () => {
       store = mockStore(state);

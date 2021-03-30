@@ -235,7 +235,7 @@ describe('Episode Edit component', () => {
           medium_id: 1,
           test: 'test',
         });
-        expect(push).toHaveBeenCalledWith('/episodes');
+        expect(push).toHaveBeenCalledWith('/episodes/1/edit');
         done();
       }, 0);
     });

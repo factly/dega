@@ -92,7 +92,7 @@ exports[`Episode List component snapshot testing should match component when loa
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -135,7 +135,7 @@ exports[`Episode List component snapshot testing should match component when loa
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -1332,7 +1332,7 @@ exports[`Episode List component snapshot testing should match component when loa
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 1,
                     }
                   }
@@ -1589,7 +1589,7 @@ exports[`Episode List component snapshot testing should match component when loa
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 1,
                               }
                             }
@@ -1806,7 +1806,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 1,
                                     },
                                     "prefixCls": "ant-table",
@@ -3333,7 +3333,7 @@ exports[`Episode List component snapshot testing should match component when loa
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={1}
                           >
                             <LocaleReceiver
@@ -3421,7 +3421,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -3689,7 +3689,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -3822,7 +3822,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -3865,7 +3865,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -5062,7 +5062,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 1,
                     }
                   }
@@ -5295,7 +5295,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 1,
                               }
                             }
@@ -5512,7 +5512,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 1,
                                     },
                                     "prefixCls": "ant-table",
@@ -7039,7 +7039,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={1}
                           >
                             <LocaleReceiver
@@ -7127,7 +7127,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -7395,7 +7395,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
