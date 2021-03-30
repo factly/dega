@@ -19,6 +19,7 @@ const layout = {
 
 const ClaimForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
@@ -65,6 +66,15 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           onSave(values);
           onReset();
         }}
+        onFinishFailed={(errors) => {
+          if (errors.errorFields[0].name[0] !== 'review_sources') {
+            setCurrent(0);
+          }
+        }}
+        onValuesChange={() => {
+          setValueChange(true);
+        }}
+        scrollToFirstError={true}
         style={{
           paddingTop: '24px',
         }}
@@ -142,12 +152,41 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           <Form.Item name="checked_date" label="Checked Date">
             <DatePicker />
           </Form.Item>
-          <Form.Item name="claim_sources" label="Claim Sources" wrapperCol={24}>
-            <Editor placeholder="Enter Claim Sources..." />
-          </Form.Item>
-          <Form.Item name="review_tag_line" label="Review Tagline" wrapperCol={24}>
-            <Editor placeholder="Enter Taglines..." />
-          </Form.Item>
+          <Form.List name="claim_sources" label="Claim sources">
+            {(fields, { add, remove }) => (
+              <>
+                {fields.map((field) => (
+                  <Space key={field.key} style={{ marginBottom: 8 }} align="baseline">
+                    <Form.Item
+                      {...field}
+                      name={[field.name, 'url']}
+                      fieldKey={[field.fieldKey, 'url']}
+                      rules={[{ required: true, message: 'Url required' }]}
+                      wrapperCol={24}
+                    >
+                      <Input placeholder="Enter url" />
+                    </Form.Item>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, 'description']}
+                      fieldKey={[field.fieldKey, 'description']}
+                      rules={[{ required: true, message: 'Description required' }]}
+                      wrapperCol={24}
+                    >
+                      <Input placeholder="Enter description" />
+                    </Form.Item>
+                    <MinusCircleOutlined onClick={() => remove(field.name)} />
+                  </Space>
+                ))}
+                <Form.Item>
+                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                    Add Claim sources
+                  </Button>
+                </Form.Item>
+              </>
+            )}
+          </Form.List>
+
           <Form.List name="review_sources" label="Review sources">
             {(fields, { add, remove }) => (
               <>
@@ -182,19 +221,17 @@ const ClaimForm = ({ onCreate, data = {} }) => {
               </>
             )}
           </Form.List>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
         </div>
         <Form.Item>
           <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>
             Back
           </Button>
-          <Button disabled={current === 1} onClick={() => setCurrent(current + 1)}>
-            Next
-          </Button>
+          {current < 1 ? <Button onClick={() => setCurrent(current + 1)}>Next</Button> : null}
+          {current === 1 ? (
+            <Button disabled={!valueChange} type="primary" htmlType="submit">
+              {data && data.id ? 'Update' : 'Submit'}
+            </Button>
+          ) : null}
         </Form.Item>
       </Form>
     </div>

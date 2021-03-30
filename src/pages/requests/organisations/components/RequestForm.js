@@ -37,6 +37,23 @@ const RequestForm = ({ onCreate, data = {} }) => {
         onReset();
       }}
     >
+      <Form.Item
+        name="title"
+        label="Title"
+        rules={[
+          {
+            required: true,
+            message: 'Please enter title!',
+          },
+          { min: 3, message: 'Name must be minimum 3 characters.' },
+          { max: 50, message: 'Name must be maximum 50 characters.' },
+        ]}
+      >
+        <Input />
+      </Form.Item>
+      <Form.Item name="description" label="Description">
+        <Input.TextArea />
+      </Form.Item>
       <Form.Item name="organisation_id" label="Organisation">
         <Select
           allowClear

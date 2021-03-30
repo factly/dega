@@ -31,7 +31,7 @@ function EditTag() {
 
   const onUpdate = (values) => {
     dispatch(updateTag({ ...tag, ...values }));
-    history.push('/tags');
+    history.push(`/tags/${id}/edit`);
   };
   return <TagEditForm data={tag} onCreate={onUpdate} />;
 }

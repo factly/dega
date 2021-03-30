@@ -2,9 +2,9 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form, Input, Select } from 'antd';
 import { maker, checker } from './../../../utils/sluger';
-import Editor from '../../../components/Editor';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const layout = {
   labelCol: {
@@ -104,7 +104,7 @@ const SpaceCreateForm = ({ onCreate }) => {
         <Input />
       </Form.Item>
       <Form.Item name="description" label="Description">
-        <Editor placeholder="Enter Description..." />
+        <TextArea placeholder="Enter Description..." />
       </Form.Item>
 
       <Form.Item {...tailLayout}>

@@ -32,7 +32,7 @@ function EditFactCheck({ formats }) {
   }
   const onUpdate = (values) => {
     dispatch(updatePost({ ...post, ...values })).then(() => {
-      history.push('/fact-checks');
+      history.push(`/fact-checks/${id}/edit`);
     });
   };
   return (

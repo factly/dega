@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { Button, Form, Input, Steps, Select } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
 import { checker } from '../../../utils/sluger';
-import Editor from '../../../components/Editor';
 
 const { Option } = Select;
+const { TextArea } = Input;
 
 const layout = {
   labelCol: {
@@ -29,6 +29,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
   };
 
   const [current, setCurrent] = React.useState(0);
+  const [valueChange, setValueChange] = React.useState(false);
 
   return (
     <div>
@@ -45,6 +46,13 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         onFinish={(values) => {
           onCreate(values);
           onReset();
+        }}
+        scrollToFirstError={true}
+        onFinishFailed={(errors) => {
+          setCurrent(0);
+        }}
+        onValuesChange={() => {
+          setValueChange(true);
         }}
         style={{
           paddingTop: '24px',
@@ -105,7 +113,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             <Input />
           </Form.Item>
           <Form.Item name="description" label="Description">
-            <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
+            <TextArea placeholder="Enter Description..." />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>
@@ -135,19 +143,21 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           <Form.Item name={['social_media_urls', 'instagram']} label="Instagram">
             <Input style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item {...tailLayout}>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
         </div>
         <Form.Item>
           <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>
             Back
           </Button>
-          <Button disabled={current === 2} onClick={() => setCurrent(current + 1)}>
-            Next
-          </Button>
+          {current < 2 ? (
+            <Button disabled={current === 2} onClick={() => setCurrent(current + 1)}>
+              Next
+            </Button>
+          ) : null}
+          {current === 2 ? (
+            <Button disabled={!valueChange} type="primary" htmlType="submit">
+              Update
+            </Button>
+          ) : null}
         </Form.Item>
       </Form>
     </div>

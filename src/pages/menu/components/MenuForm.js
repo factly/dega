@@ -6,6 +6,8 @@ import Submenu from './Submenu';
 
 function MenuForm({ onCreate, data = {} }) {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
+
   const onReset = () => {
     form.resetFields();
   };
@@ -17,6 +19,9 @@ function MenuForm({ onCreate, data = {} }) {
         onFinish={(values) => {
           onCreate(values);
           onReset();
+        }}
+        onValuesChange={() => {
+          setValueChange(true);
         }}
       >
         <Form.Item
@@ -59,7 +64,9 @@ function MenuForm({ onCreate, data = {} }) {
                 >
                   <PlusOutlined /> Add menu
                 </Button>
-                <Button htmlType="submit">Submit</Button>
+                <Button disabled={!valueChange} htmlType="submit">
+                  {data && data.id ? 'Update' : 'Submit'}
+                </Button>
               </div>
             );
           }}

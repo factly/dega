@@ -32,7 +32,7 @@ function EditClaim() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updateClaim({ ...claim, ...values })).then(() => history.push('/claims'));
+    dispatch(updateClaim({ ...claim, ...values })).then(() => history.push(`/claims/${id}/edit`));
   };
   return <ClaimEditForm data={claim} onCreate={onUpdate} />;
 }

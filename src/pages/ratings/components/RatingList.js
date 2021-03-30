@@ -44,7 +44,9 @@ function RatingList({ actions }) {
       title: 'Colour',
       dataIndex: 'color',
       render: (_, record) => (
-        <Tag color={record.colour ? record.colour.hex : ''}>{record.name}</Tag>
+        <Tag color={record.background_colour ? record.background_colour.hex : ''}>
+          {record.name}
+        </Tag>
       ),
     },
     {

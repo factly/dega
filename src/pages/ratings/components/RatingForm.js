@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Space, InputNumber } from 'antd';
+import { Button, Form, Input, Space, InputNumber, Col, Row } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
@@ -22,11 +22,13 @@ const tailLayout = {
 
 const RatingForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
-  const [color, setColor] = useState(data.colour ? data.colour : null);
+  const [backgroundColour, setBackgroundColour] = useState(
+    data.background_colour ? data.background_colour : null,
+  );
+  const [textColour, setTextColour] = useState(data.text_colour ? data.text_colour : null);
+  const [valueChange, setValueChange] = React.useState(false);
 
-  const colorPicker = (e) => {
-    setColor(e);
-  };
+  const colorPicker = (e) => {};
 
   const onReset = () => {
     form.resetFields();
@@ -47,6 +49,9 @@ const RatingForm = ({ onCreate, data = {} }) => {
       onFinish={(values) => {
         onCreate(values);
         onReset();
+      }}
+      onValuesChange={() => {
+        setValueChange(true);
       }}
     >
       <Form.Item
@@ -89,25 +94,54 @@ const RatingForm = ({ onCreate, data = {} }) => {
           },
         ]}
       >
-        <InputNumber min={1} max={5} />
+        <InputNumber min={1} />
       </Form.Item>
       <Form.Item name="medium_id" label="Featured Image">
         <MediaSelector />
       </Form.Item>
-      <Form.Item name="colour" label="Colour">
+      <Form.Item name="background_colour" label="Background Colour">
         <ChromePicker
-          color={color !== null && color.hex}
-          onChange={(e) => colorPicker(e)}
+          color={backgroundColour !== null && backgroundColour.hex}
+          onChange={(e) => setBackgroundColour(e)}
           disableAlpha
         />
       </Form.Item>
+      <Form.Item name="text_colour" label="Text Colour">
+        <ChromePicker
+          color={textColour !== null && textColour.hex}
+          onChange={(e) => setTextColour(e)}
+          disableAlpha
+        />
+      </Form.Item>
+
+      <Row className="preview-container" gutter={16} style={{ marginBottom: '1rem' }}>
+        <Col span={10} style={{ textAlign: 'right' }}>
+          Preview:
+        </Col>
+        <Col span={8}>
+          <div
+            className="preview"
+            style={{
+              textAlign: 'center',
+              color: textColour?.hex,
+              background: backgroundColour?.hex,
+              width: '100px',
+              padding: '0.5rem 1rem',
+              border: '1px solid black',
+            }}
+          >
+            {console.log({ backgroundColour, textColour })}Preview
+          </div>
+        </Col>
+      </Row>
+
       <Form.Item name="description" label="Description">
         <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button disabled={!valueChange} type="primary" htmlType="submit">
+            {data && data.id ? 'Update' : 'Submit'}
           </Button>
           <Button htmlType="button" onClick={onReset}>
             Reset

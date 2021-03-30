@@ -24,6 +24,7 @@ const { Option } = Select;
 
 const PodcastForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
@@ -49,6 +50,9 @@ const PodcastForm = ({ onCreate, data = {} }) => {
           episode_ids: values.episodes || [],
         });
         onReset();
+      }}
+      onValuesChange={() => {
+        setValueChange(true);
       }}
     >
       <Row>
@@ -103,8 +107,8 @@ const PodcastForm = ({ onCreate, data = {} }) => {
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Space>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button disabled={!valueChange} type="primary" htmlType="submit">
+                {data && data.id ? 'Update' : 'Submit'}
               </Button>
               <Button htmlType="button" onClick={onReset}>
                 Reset
