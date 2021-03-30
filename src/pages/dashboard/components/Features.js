@@ -31,7 +31,7 @@ function Features() {
 
   return (
     <>
-      {ratings > 0 || formats > 0 || policies > 0 ? null : (
+      {ratings > 0 && formats > 0 && policies > 0 ? null : (
         <Typography.Title level={3}>Add default features</Typography.Title>
       )}
 
