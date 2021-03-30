@@ -46,6 +46,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
             }
             initialValues={Object {}}
             onFinish={[Function]}
+            onValuesChange={[Function]}
           >
             <SizeContextProvider>
               <ForwardRef(Form)
@@ -77,6 +78,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                 initialValues={Object {}}
                 onFinish={[Function]}
                 onFinishFailed={[Function]}
+                onValuesChange={[Function]}
               >
                 <form
                   className="ant-form ant-form-horizontal"
@@ -521,6 +523,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                             </Button>
                             <Button
                               block={false}
+                              disabled={true}
                               ghost={false}
                               htmlType="submit"
                               loading={false}
@@ -528,6 +531,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                               <Wave>
                                 <button
                                   className="ant-btn"
+                                  disabled={true}
                                   onClick={[Function]}
                                   type="submit"
                                 >

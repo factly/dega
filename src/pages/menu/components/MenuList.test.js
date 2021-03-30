@@ -24,7 +24,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -94,7 +94,7 @@ describe('Menu List component', () => {
       );
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(getMenus).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getMenus).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -141,7 +141,7 @@ describe('Menu List component', () => {
         .simulate('click');
       expect(deleteMenu).toHaveBeenCalled();
       expect(deleteMenu).toHaveBeenCalledWith(1);
-      expect(getMenus).toHaveBeenCalledWith({ page: 1, limit: 5 });  
+      expect(getMenus).toHaveBeenCalledWith({ page: 1, limit: 20 });  
     });
     it('should edit menu', () => {
       store = mockStore(state);

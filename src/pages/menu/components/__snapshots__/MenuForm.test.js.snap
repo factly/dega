@@ -45,6 +45,7 @@ exports[`Menu Create Form component snapshot testing should match component with
       }
     }
     onFinish={[Function]}
+    onValuesChange={[Function]}
   >
     <FormItem
       label="Name"
@@ -116,6 +117,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
         }
         initialValues={Object {}}
         onFinish={[Function]}
+        onValuesChange={[Function]}
       >
         <SizeContextProvider>
           <ForwardRef(Form)
@@ -147,6 +149,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
             initialValues={Object {}}
             onFinish={[Function]}
             onFinishFailed={[Function]}
+            onValuesChange={[Function]}
           >
             <form
               className="ant-form ant-form-horizontal"
@@ -591,6 +594,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                         </Button>
                         <Button
                           block={false}
+                          disabled={true}
                           ghost={false}
                           htmlType="submit"
                           loading={false}
@@ -598,6 +602,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                           <Wave>
                             <button
                               className="ant-btn"
+                              disabled={true}
                               onClick={[Function]}
                               type="submit"
                             >
@@ -684,6 +689,7 @@ exports[`Menu Create Form component snapshot testing should render the component
         }
         initialValues={Object {}}
         onFinish={[Function]}
+        onValuesChange={[Function]}
       >
         <SizeContextProvider>
           <ForwardRef(Form)
@@ -715,6 +721,7 @@ exports[`Menu Create Form component snapshot testing should render the component
             initialValues={Object {}}
             onFinish={[Function]}
             onFinishFailed={[Function]}
+            onValuesChange={[Function]}
           >
             <form
               className="ant-form ant-form-horizontal"
@@ -1159,6 +1166,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                         </Button>
                         <Button
                           block={false}
+                          disabled={true}
                           ghost={false}
                           htmlType="submit"
                           loading={false}
@@ -1166,6 +1174,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                           <Wave>
                             <button
                               className="ant-btn"
+                              disabled={true}
                               onClick={[Function]}
                               type="submit"
                             >

@@ -165,7 +165,7 @@ exports[`Menu component should render the component 1`] = `
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": undefined,
                               }
                             }
@@ -313,7 +313,7 @@ exports[`Menu component should render the component 1`] = `
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
-                                          "pageSize": 5,
+                                          "pageSize": 20,
                                           "total": undefined,
                                         }
                                       }
@@ -451,7 +451,7 @@ exports[`Menu component should render the component 1`] = `
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
-                                                "pageSize": 5,
+                                                "pageSize": 20,
                                                 "total": undefined,
                                               },
                                               "prefixCls": "ant-table",
@@ -995,7 +995,7 @@ exports[`Menu component should render the component with data 1`] = `
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": undefined,
                               }
                             }
@@ -1143,7 +1143,7 @@ exports[`Menu component should render the component with data 1`] = `
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
-                                          "pageSize": 5,
+                                          "pageSize": 20,
                                           "total": undefined,
                                         }
                                       }
@@ -1281,7 +1281,7 @@ exports[`Menu component should render the component with data 1`] = `
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
-                                                "pageSize": 5,
+                                                "pageSize": 20,
                                                 "total": undefined,
                                               },
                                               "prefixCls": "ant-table",

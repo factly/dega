@@ -474,6 +474,7 @@ exports[`Menu Edit component snapshot testing should render the component 1`] = 
             }
           }
           onFinish={[Function]}
+          onValuesChange={[Function]}
         >
           <SizeContextProvider>
             <ForwardRef(Form)
@@ -510,6 +511,7 @@ exports[`Menu Edit component snapshot testing should render the component 1`] = 
               }
               onFinish={[Function]}
               onFinishFailed={[Function]}
+              onValuesChange={[Function]}
             >
               <form
                 className="ant-form ant-form-horizontal"
@@ -957,6 +959,7 @@ exports[`Menu Edit component snapshot testing should render the component 1`] = 
                           </Button>
                           <Button
                             block={false}
+                            disabled={true}
                             ghost={false}
                             htmlType="submit"
                             loading={false}
@@ -964,6 +967,7 @@ exports[`Menu Edit component snapshot testing should render the component 1`] = 
                             <Wave>
                               <button
                                 className="ant-btn"
+                                disabled={true}
                                 onClick={[Function]}
                                 type="submit"
                               >
@@ -989,7 +993,7 @@ exports[`Menu Edit component snapshot testing should render the component 1`] = 
                                 <span
                                   key=".0"
                                 >
-                                  Submit
+                                  Update
                                 </span>
                               </button>
                             </Wave>

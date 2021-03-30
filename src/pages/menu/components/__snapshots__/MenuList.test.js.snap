@@ -88,7 +88,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -305,7 +305,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -482,7 +482,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -2348,7 +2348,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -2436,7 +2436,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -2704,7 +2704,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -2833,7 +2833,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -3026,7 +3026,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -3203,7 +3203,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -5069,7 +5069,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -5157,7 +5157,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -5425,7 +5425,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -5554,7 +5554,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -5747,7 +5747,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -5924,7 +5924,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -7790,7 +7790,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -7878,7 +7878,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -8146,7 +8146,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
