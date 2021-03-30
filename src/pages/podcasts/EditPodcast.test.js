@@ -224,7 +224,7 @@ describe('Podcast Edit component', () => {
           episodes: [1],
           test: 'test',
         });
-        expect(push).toHaveBeenCalledWith('/podcasts');
+        expect(push).toHaveBeenCalledWith('/podcasts/1/edit');
         done();
       }, 0);
     });

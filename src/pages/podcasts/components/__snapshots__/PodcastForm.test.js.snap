@@ -117,6 +117,7 @@ exports[`Podcast form component snapshot testing should match component with dat
       layout="vertical"
       name="create-category"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 24,
@@ -188,6 +189,7 @@ exports[`Podcast form component snapshot testing should match component with dat
           name="create-category"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-vertical"
@@ -1700,6 +1702,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                 ]
                                               }
                                               filterOption={[Function]}
+                                              getPopupContainer={[Function]}
                                               listHeight={128}
                                               loading={false}
                                               mode="multiple"
@@ -1725,6 +1728,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                 }
                                                 dropdownClassName=""
                                                 filterOption={[Function]}
+                                                getPopupContainer={[Function]}
                                                 inputIcon={[Function]}
                                                 listHeight={128}
                                                 listItemHeight={24}
@@ -1756,6 +1760,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                   }
                                                   dropdownClassName=""
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   inputIcon={[Function]}
                                                   listHeight={128}
                                                   listItemHeight={24}
@@ -1788,6 +1793,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                       containerWidth={null}
                                                       dropdownClassName=""
                                                       empty={true}
+                                                      getPopupContainer={[Function]}
                                                       getTriggerDOMNode={[Function]}
                                                       popupElement={
                                                         <ForwardRef(OptionList)
@@ -1893,6 +1899,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                         focusDelay={0}
                                                         getDocument={[Function]}
                                                         getPopupClassNameFromAlign={[Function]}
+                                                        getPopupContainer={[Function]}
                                                         getTriggerDOMNode={[Function]}
                                                         hideAction={Array []}
                                                         mask={false}
@@ -2032,6 +2039,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                           }
                                                           dropdownClassName=""
                                                           filterOption={[Function]}
+                                                          getPopupContainer={[Function]}
                                                           inputElement={null}
                                                           inputIcon={[Function]}
                                                           key="trigger"
@@ -2161,6 +2169,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               inputElement={null}
                                                               inputIcon={[Function]}
                                                               inputRef={
@@ -2694,6 +2703,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                 ]
                                               }
                                               filterOption={[Function]}
+                                              getPopupContainer={[Function]}
                                               listHeight={128}
                                               loading={false}
                                               mode="multiple"
@@ -2714,6 +2724,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                 }
                                                 dropdownClassName=""
                                                 filterOption={[Function]}
+                                                getPopupContainer={[Function]}
                                                 inputIcon={[Function]}
                                                 listHeight={128}
                                                 listItemHeight={24}
@@ -2740,6 +2751,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                   }
                                                   dropdownClassName=""
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   inputIcon={[Function]}
                                                   listHeight={128}
                                                   listItemHeight={24}
@@ -2767,6 +2779,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                       containerWidth={null}
                                                       dropdownClassName=""
                                                       empty={true}
+                                                      getPopupContainer={[Function]}
                                                       getTriggerDOMNode={[Function]}
                                                       popupElement={
                                                         <ForwardRef(OptionList)
@@ -2868,6 +2881,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                         focusDelay={0}
                                                         getDocument={[Function]}
                                                         getPopupClassNameFromAlign={[Function]}
+                                                        getPopupContainer={[Function]}
                                                         getTriggerDOMNode={[Function]}
                                                         hideAction={Array []}
                                                         mask={false}
@@ -3003,6 +3017,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                           }
                                                           dropdownClassName=""
                                                           filterOption={[Function]}
+                                                          getPopupContainer={[Function]}
                                                           inputElement={null}
                                                           inputIcon={[Function]}
                                                           key="trigger"
@@ -3127,6 +3142,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               inputElement={null}
                                                               inputIcon={[Function]}
                                                               inputRef={
@@ -3791,6 +3807,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                           >
                                             <Button
                                               block={false}
+                                              disabled={true}
                                               ghost={false}
                                               htmlType="submit"
                                               loading={false}
@@ -3799,6 +3816,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                               <Wave>
                                                 <button
                                                   className="ant-btn ant-btn-primary"
+                                                  disabled={true}
                                                   onClick={[Function]}
                                                   type="submit"
                                                 >
@@ -3824,7 +3842,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                   <span
                                                     key=".0"
                                                   >
-                                                    Submit
+                                                    Update
                                                   </span>
                                                 </button>
                                               </Wave>
@@ -4314,6 +4332,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
       layout="vertical"
       name="create-category"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 24,
@@ -4356,6 +4375,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
           name="create-category"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-vertical"
@@ -5848,6 +5868,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                               bordered={true}
                                               defaultValue={Array []}
                                               filterOption={[Function]}
+                                              getPopupContainer={[Function]}
                                               listHeight={128}
                                               loading={false}
                                               mode="multiple"
@@ -5869,6 +5890,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                 defaultValue={Array []}
                                                 dropdownClassName=""
                                                 filterOption={[Function]}
+                                                getPopupContainer={[Function]}
                                                 inputIcon={[Function]}
                                                 listHeight={128}
                                                 listItemHeight={24}
@@ -5896,6 +5918,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                   defaultValue={Array []}
                                                   dropdownClassName=""
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   inputIcon={[Function]}
                                                   listHeight={128}
                                                   listItemHeight={24}
@@ -5928,6 +5951,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                       containerWidth={null}
                                                       dropdownClassName=""
                                                       empty={true}
+                                                      getPopupContainer={[Function]}
                                                       getTriggerDOMNode={[Function]}
                                                       popupElement={
                                                         <ForwardRef(OptionList)
@@ -6029,6 +6053,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                         focusDelay={0}
                                                         getDocument={[Function]}
                                                         getPopupClassNameFromAlign={[Function]}
+                                                        getPopupContainer={[Function]}
                                                         getTriggerDOMNode={[Function]}
                                                         hideAction={Array []}
                                                         mask={false}
@@ -6129,6 +6154,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                           }
                                                           dropdownClassName=""
                                                           filterOption={[Function]}
+                                                          getPopupContainer={[Function]}
                                                           inputElement={null}
                                                           inputIcon={[Function]}
                                                           key="trigger"
@@ -6214,6 +6240,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               inputElement={null}
                                                               inputIcon={[Function]}
                                                               inputRef={
@@ -6506,6 +6533,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                               bordered={true}
                                               defaultValue={Array []}
                                               filterOption={[Function]}
+                                              getPopupContainer={[Function]}
                                               listHeight={128}
                                               loading={false}
                                               mode="multiple"
@@ -6522,6 +6550,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                 defaultValue={Array []}
                                                 dropdownClassName=""
                                                 filterOption={[Function]}
+                                                getPopupContainer={[Function]}
                                                 inputIcon={[Function]}
                                                 listHeight={128}
                                                 listItemHeight={24}
@@ -6544,6 +6573,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                   defaultValue={Array []}
                                                   dropdownClassName=""
                                                   filterOption={[Function]}
+                                                  getPopupContainer={[Function]}
                                                   inputIcon={[Function]}
                                                   listHeight={128}
                                                   listItemHeight={24}
@@ -6571,6 +6601,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                       containerWidth={null}
                                                       dropdownClassName=""
                                                       empty={true}
+                                                      getPopupContainer={[Function]}
                                                       getTriggerDOMNode={[Function]}
                                                       popupElement={
                                                         <ForwardRef(OptionList)
@@ -6668,6 +6699,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                         focusDelay={0}
                                                         getDocument={[Function]}
                                                         getPopupClassNameFromAlign={[Function]}
+                                                        getPopupContainer={[Function]}
                                                         getTriggerDOMNode={[Function]}
                                                         hideAction={Array []}
                                                         mask={false}
@@ -6764,6 +6796,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                           }
                                                           dropdownClassName=""
                                                           filterOption={[Function]}
+                                                          getPopupContainer={[Function]}
                                                           inputElement={null}
                                                           inputIcon={[Function]}
                                                           key="trigger"
@@ -6844,6 +6877,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                               }
                                                               dropdownClassName=""
                                                               filterOption={[Function]}
+                                                              getPopupContainer={[Function]}
                                                               inputElement={null}
                                                               inputIcon={[Function]}
                                                               inputRef={
@@ -7239,6 +7273,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                           >
                                             <Button
                                               block={false}
+                                              disabled={true}
                                               ghost={false}
                                               htmlType="submit"
                                               loading={false}
@@ -7247,6 +7282,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                               <Wave>
                                                 <button
                                                   className="ant-btn ant-btn-primary"
+                                                  disabled={true}
                                                   onClick={[Function]}
                                                   type="submit"
                                                 >

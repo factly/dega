@@ -204,9 +204,112 @@ describe('Podcast form component', () => {
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
-        expect(props.onCreate).toHaveBeenCalledWith(props.data);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'Podcast-1',
+          slug: 'podcast-1',
+          medium_id: 1,
+          language: 'english',
+          categories: [1],
+          category_ids: [1],
+          episodes: [1],
+          episode_ids: [1],
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+        });
         done();
       }, 0);
+    });
+    it('should submit form with no categories and no episodes', (done) => {
+      
+      const data2 = {
+        id: 1,
+        title: 'Podcast-1',
+        slug: 'podcast-1',
+        medium_id: 1,
+        language: 'english',
+        description: {
+          time: 1595747741807,
+          blocks: [
+            {
+              type: 'header',
+              data: {
+                text: 'Editor.js',
+                level: 2,
+              },
+            },
+            {
+              type: 'paragraph',
+              data: {
+                text:
+                  'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+              },
+            },
+          ],
+          version: '2.18.0',
+        },
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <PodcastForm onCreate={props.onCreate} data={data2}/>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(0);
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'Podcast-1',
+          slug: 'podcast-1',
+          medium_id: 1,
+          language: 'english',
+          category_ids: [],
+          episode_ids: [],
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+        });
+        done();
+      }, 0);  
     });
     it('should submit form with new title', (done) => {
       act(() => {
@@ -224,7 +327,9 @@ describe('Podcast form component', () => {
           slug: 'new-name',
           language: 'english',
           categories: [1],
+          category_ids: [1],
           episodes: [1],
+          episode_ids: [1],
           medium_id: 1,
           description: {
             time: 1595747741807,

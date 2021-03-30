@@ -22,7 +22,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -166,7 +166,7 @@ describe('Podcast List component', () => {
         .simulate('click');
       expect(deletePodcast).toHaveBeenCalled();
       expect(deletePodcast).toHaveBeenCalledWith(1);
-      expect(getPodcasts).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getPodcasts).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit podcast', () => {
       store = mockStore(state);
