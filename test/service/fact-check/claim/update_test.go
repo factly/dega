@@ -25,9 +25,12 @@ var updatedClaim = map[string]interface{}{
 	"claim_sources": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"claim sources"}`),
 	},
-	"description": test.NilJsonb(),
-	"claimant_id": uint(1),
-	"rating_id":   uint(1),
+	"description": postgres.Jsonb{
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+	},
+	"html_description": "<p>Test Description</p>",
+	"claimant_id":      uint(1),
+	"rating_id":        uint(1),
 	"review": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"review"}`),
 	},
@@ -124,6 +127,28 @@ func TestClaimUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
+	t.Run("cannot parse claim description", func(t *testing.T) {
+		updatedClaim["slug"] = "claim"
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectWithSpace(mock)
+
+		updatedClaim["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.PUT(path).
+			WithPath("claim_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedClaim).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+
+		updatedClaim["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
+		test.ExpectationsMet(t, mock)
+	})
 	t.Run("update claim by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)

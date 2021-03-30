@@ -19,8 +19,9 @@ import (
 var updatedRating = map[string]interface{}{
 	"name": "True",
 	"description": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"description"}`),
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
+	"html_description": "<p>Test Description</p>",
 	"background_colour": postgres.Jsonb{
 		RawMessage: []byte(`"green"`),
 	},
@@ -184,6 +185,32 @@ func TestRatingUpdate(t *testing.T) {
 			Status(http.StatusInternalServerError)
 		test.ExpectationsMet(t, mock)
 
+	})
+
+	t.Run("cannot parse rating description", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectWithSpace(mock)
+
+		mock.ExpectQuery(`SELECT slug, space_id FROM "ratings"`).
+			WithArgs(fmt.Sprint(updatedRating["slug"], "%"), 1).
+			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
+
+		updatedRating["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.PUT(path).
+			WithPath("rating_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedRating).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		updatedRating["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
+		updatedRating["name"] = "True"
 	})
 
 	t.Run("rating with same name exist", func(t *testing.T) {

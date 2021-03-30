@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/permissions/space"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -70,6 +71,24 @@ func TestClaimantCreate(t *testing.T) {
 			Status(http.StatusCreated).JSON().Object().ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
 
+	})
+
+	t.Run("cannot parse claimant description", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"block": "new"}`),
+		}
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		Data["description"] = postgres.Jsonb{
+			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+		}
 	})
 
 	t.Run("create claimant with slug is empty", func(t *testing.T) {
