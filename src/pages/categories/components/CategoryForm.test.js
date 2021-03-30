@@ -12,7 +12,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 jest.mock('@editorjs/editorjs');
-jest.mock('jsoneditor');
+// jest.mock('jsoneditor');
 jest.mock('../../../actions/categories', () => ({
   getCategories: jest.fn(),
   deleteCategory: jest.fn(),

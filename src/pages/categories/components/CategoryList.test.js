@@ -23,7 +23,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -113,7 +113,7 @@ describe('Categories List component', () => {
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
 
-      expect(getCategories).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getCategories).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -162,7 +162,7 @@ describe('Categories List component', () => {
         .simulate('click');
       expect(deleteCategory).toHaveBeenCalled();
       expect(deleteCategory).toHaveBeenCalledWith(1);
-      expect(getCategories).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getCategories).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit category', () => {
       store = mockStore(state);
@@ -225,7 +225,7 @@ describe('Categories List component', () => {
           .props()
           .onChange({ target: { value: 'asc' } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
 

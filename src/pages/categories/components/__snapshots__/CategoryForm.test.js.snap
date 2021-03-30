@@ -84,6 +84,7 @@ exports[`Categories Create Form component snapshot testing should match componen
       }
       name="create-category"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -139,6 +140,7 @@ exports[`Categories Create Form component snapshot testing should match componen
           name="create-category"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -1630,6 +1632,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -1638,6 +1641,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >
@@ -1806,6 +1810,7 @@ exports[`Categories Create Form component snapshot testing should match componen
       }
       name="create-category"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -1844,6 +1849,7 @@ exports[`Categories Create Form component snapshot testing should match componen
           name="create-category"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -3302,6 +3308,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -3310,6 +3317,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >
@@ -3476,6 +3484,7 @@ exports[`Categories Create Form component snapshot testing should render the com
       }
       name="create-category"
       onFinish={[Function]}
+      onValuesChange={[Function]}
       wrapperCol={
         Object {
           "span": 8,
@@ -3514,6 +3523,7 @@ exports[`Categories Create Form component snapshot testing should render the com
           name="create-category"
           onFinish={[Function]}
           onFinishFailed={[Function]}
+          onValuesChange={[Function]}
         >
           <form
             className="ant-form ant-form-horizontal"
@@ -4972,6 +4982,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                   >
                                     <Button
                                       block={false}
+                                      disabled={true}
                                       ghost={false}
                                       htmlType="submit"
                                       loading={false}
@@ -4980,6 +4991,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                       <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
+                                          disabled={true}
                                           onClick={[Function]}
                                           type="submit"
                                         >

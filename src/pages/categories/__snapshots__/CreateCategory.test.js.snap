@@ -50,6 +50,7 @@ exports[`Categories create component snapshot testing should render the componen
         }
         name="create-category"
         onFinish={[Function]}
+        onValuesChange={[Function]}
         wrapperCol={
           Object {
             "span": 8,
@@ -88,6 +89,7 @@ exports[`Categories create component snapshot testing should render the componen
             name="create-category"
             onFinish={[Function]}
             onFinishFailed={[Function]}
+            onValuesChange={[Function]}
           >
             <form
               className="ant-form ant-form-horizontal"
@@ -1611,6 +1613,7 @@ exports[`Categories create component snapshot testing should render the componen
                                     >
                                       <Button
                                         block={false}
+                                        disabled={true}
                                         ghost={false}
                                         htmlType="submit"
                                         loading={false}
@@ -1619,6 +1622,7 @@ exports[`Categories create component snapshot testing should render the componen
                                         <Wave>
                                           <button
                                             className="ant-btn ant-btn-primary"
+                                            disabled={true}
                                             onClick={[Function]}
                                             type="submit"
                                           >

@@ -228,7 +228,7 @@ describe('Categories Edit component', () => {
           space_id: 1,
           test: 'test',
         });
-        expect(push).toHaveBeenCalledWith('/categories');
+        expect(push).toHaveBeenCalledWith('/categories/1/edit');
         done();
       }, 0);
     });
