@@ -22,6 +22,7 @@ exports[`Categories List component Snapshot testing should render the component 
       bordered={true}
       defaultValue={Array []}
       filterOption={[Function]}
+      getPopupContainer={[Function]}
       listHeight={128}
       loading={false}
       mode="multiple"
@@ -38,6 +39,7 @@ exports[`Categories List component Snapshot testing should render the component 
         defaultValue={Array []}
         dropdownClassName=""
         filterOption={[Function]}
+        getPopupContainer={[Function]}
         inputIcon={[Function]}
         listHeight={128}
         listItemHeight={24}
@@ -60,6 +62,7 @@ exports[`Categories List component Snapshot testing should render the component 
           defaultValue={Array []}
           dropdownClassName=""
           filterOption={[Function]}
+          getPopupContainer={[Function]}
           inputIcon={[Function]}
           listHeight={128}
           listItemHeight={24}
@@ -87,6 +90,7 @@ exports[`Categories List component Snapshot testing should render the component 
               containerWidth={null}
               dropdownClassName=""
               empty={true}
+              getPopupContainer={[Function]}
               getTriggerDOMNode={[Function]}
               popupElement={
                 <ForwardRef(OptionList)
@@ -184,6 +188,7 @@ exports[`Categories List component Snapshot testing should render the component 
                 focusDelay={0}
                 getDocument={[Function]}
                 getPopupClassNameFromAlign={[Function]}
+                getPopupContainer={[Function]}
                 getTriggerDOMNode={[Function]}
                 hideAction={Array []}
                 mask={false}
@@ -280,6 +285,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   }
                   dropdownClassName=""
                   filterOption={[Function]}
+                  getPopupContainer={[Function]}
                   inputElement={null}
                   inputIcon={[Function]}
                   key="trigger"
@@ -360,6 +366,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       }
                       dropdownClassName=""
                       filterOption={[Function]}
+                      getPopupContainer={[Function]}
                       inputElement={null}
                       inputIcon={[Function]}
                       inputRef={
@@ -509,6 +516,7 @@ exports[`Categories List component Snapshot testing should render the component 
       bordered={true}
       defaultValue={Array []}
       filterOption={[Function]}
+      getPopupContainer={[Function]}
       listHeight={128}
       loading={false}
       mode="multiple"
@@ -525,6 +533,7 @@ exports[`Categories List component Snapshot testing should render the component 
         defaultValue={Array []}
         dropdownClassName=""
         filterOption={[Function]}
+        getPopupContainer={[Function]}
         inputIcon={[Function]}
         listHeight={128}
         listItemHeight={24}
@@ -547,6 +556,7 @@ exports[`Categories List component Snapshot testing should render the component 
           defaultValue={Array []}
           dropdownClassName=""
           filterOption={[Function]}
+          getPopupContainer={[Function]}
           inputIcon={[Function]}
           listHeight={128}
           listItemHeight={24}
@@ -574,6 +584,7 @@ exports[`Categories List component Snapshot testing should render the component 
               containerWidth={null}
               dropdownClassName=""
               empty={true}
+              getPopupContainer={[Function]}
               getTriggerDOMNode={[Function]}
               popupElement={
                 <ForwardRef(OptionList)
@@ -671,6 +682,7 @@ exports[`Categories List component Snapshot testing should render the component 
                 focusDelay={0}
                 getDocument={[Function]}
                 getPopupClassNameFromAlign={[Function]}
+                getPopupContainer={[Function]}
                 getTriggerDOMNode={[Function]}
                 hideAction={Array []}
                 mask={false}
@@ -767,6 +779,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   }
                   dropdownClassName=""
                   filterOption={[Function]}
+                  getPopupContainer={[Function]}
                   inputElement={null}
                   inputIcon={[Function]}
                   key="trigger"
@@ -847,6 +860,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       }
                       dropdownClassName=""
                       filterOption={[Function]}
+                      getPopupContainer={[Function]}
                       inputElement={null}
                       inputIcon={[Function]}
                       inputRef={
