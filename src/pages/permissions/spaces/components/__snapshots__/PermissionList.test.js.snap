@@ -89,9 +89,11 @@ exports[`Space Permission List component snapshot testing should match component
             "name": "Space 2",
             "organisation_id": 4,
             "permission": Object {
+              "episodes": 20,
               "fact_check": false,
               "id": 2,
               "media": 20,
+              "podcast": true,
               "posts": 20,
             },
           },
@@ -102,7 +104,7 @@ exports[`Space Permission List component snapshot testing should match component
         Object {
           "current": 1,
           "onChange": [Function],
-          "pageSize": 5,
+          "pageSize": 20,
           "total": undefined,
         }
       }
@@ -223,9 +225,11 @@ exports[`Space Permission List component snapshot testing should match component
                       "name": "Space 2",
                       "organisation_id": 4,
                       "permission": Object {
+                        "episodes": 20,
                         "fact_check": false,
                         "id": 2,
                         "media": 20,
+                        "podcast": true,
                         "posts": 20,
                       },
                     },
@@ -249,9 +253,11 @@ exports[`Space Permission List component snapshot testing should match component
                       "name": "Space 2",
                       "organisation_id": 4,
                       "permission": Object {
+                        "episodes": 20,
                         "fact_check": false,
                         "id": 2,
                         "media": 20,
+                        "podcast": true,
                         "posts": 20,
                       },
                     },
@@ -413,7 +419,7 @@ exports[`Space Permission List component snapshot testing should match component
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  Unlimited
+                                  20
                                 </p>
                               </td>
                               <td
@@ -427,7 +433,7 @@ exports[`Space Permission List component snapshot testing should match component
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  Disabled
+                                  Enabled
                                 </p>
                               </td>
                             </tr>
@@ -442,7 +448,7 @@ exports[`Space Permission List component snapshot testing should match component
                   Object {
                     "current": 1,
                     "onChange": [Function],
-                    "pageSize": 5,
+                    "pageSize": 20,
                     "total": undefined,
                   }
                 }
@@ -531,9 +537,11 @@ exports[`Space Permission List component snapshot testing should match component
                             "name": "Space 2",
                             "organisation_id": 4,
                             "permission": Object {
+                              "episodes": 20,
                               "fact_check": false,
                               "id": 2,
                               "media": 20,
+                              "podcast": true,
                               "posts": 20,
                             },
                           },
@@ -555,9 +563,11 @@ exports[`Space Permission List component snapshot testing should match component
                             "name": "Space 2",
                             "organisation_id": 4,
                             "permission": Object {
+                              "episodes": 20,
                               "fact_check": false,
                               "id": 2,
                               "media": 20,
+                              "podcast": true,
                               "posts": 20,
                             },
                           },
@@ -714,7 +724,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        Unlimited
+                                        20
                                       </p>
                                     </td>
                                     <td
@@ -728,7 +738,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        Disabled
+                                        Enabled
                                       </p>
                                     </td>
                                   </tr>
@@ -742,7 +752,7 @@ exports[`Space Permission List component snapshot testing should match component
                         "pagination": Object {
                           "current": 1,
                           "onChange": [Function],
-                          "pageSize": 5,
+                          "pageSize": 20,
                           "total": undefined,
                         },
                         "prefixCls": "ant-table",
@@ -1505,9 +1515,11 @@ exports[`Space Permission List component snapshot testing should match component
                                   "name": "Space 2",
                                   "organisation_id": 4,
                                   "permission": Object {
+                                    "episodes": 20,
                                     "fact_check": false,
                                     "id": 2,
                                     "media": 20,
+                                    "podcast": true,
                                     "posts": 20,
                                   },
                                 },
@@ -1837,9 +1849,11 @@ exports[`Space Permission List component snapshot testing should match component
                                     "name": "Space 2",
                                     "organisation_id": 4,
                                     "permission": Object {
+                                      "episodes": 20,
                                       "fact_check": false,
                                       "id": 2,
                                       "media": 20,
+                                      "podcast": true,
                                       "posts": 20,
                                     },
                                   }
@@ -1870,9 +1884,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -1903,9 +1919,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -1941,9 +1959,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -1982,9 +2002,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -2023,9 +2045,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -2039,7 +2063,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       style={Object {}}
                                     >
                                       <p>
-                                        Unlimited
+                                        20
                                       </p>
                                     </td>
                                   </Cell>
@@ -2064,9 +2088,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -2105,9 +2131,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -2121,7 +2149,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       style={Object {}}
                                     >
                                       <p>
-                                        Disabled
+                                        Enabled
                                       </p>
                                     </td>
                                   </Cell>
@@ -2139,7 +2167,7 @@ exports[`Space Permission List component snapshot testing should match component
                 className="ant-table-pagination ant-table-pagination-right"
                 current={1}
                 onChange={[Function]}
-                pageSize={5}
+                pageSize={20}
                 total={2}
               >
                 <LocaleReceiver
@@ -2227,7 +2255,7 @@ exports[`Space Permission List component snapshot testing should match component
                     }
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
-                    pageSize={5}
+                    pageSize={20}
                     prefixCls="ant-pagination"
                     prevIcon={
                       <button
@@ -2495,7 +2523,7 @@ exports[`Space Permission List component snapshot testing should match component
                             "prev_page": "Previous Page",
                           }
                         }
-                        pageSize={5}
+                        pageSize={20}
                         pageSizeOptions={
                           Array [
                             "10",
@@ -2619,9 +2647,11 @@ exports[`Space Permission List component snapshot testing should match component
             "name": "Space 2",
             "organisation_id": 4,
             "permission": Object {
+              "episodes": 20,
               "fact_check": false,
               "id": 2,
               "media": 20,
+              "podcast": true,
               "posts": 20,
             },
           },
@@ -2632,7 +2662,7 @@ exports[`Space Permission List component snapshot testing should match component
         Object {
           "current": 1,
           "onChange": [Function],
-          "pageSize": 5,
+          "pageSize": 20,
           "total": undefined,
         }
       }
@@ -2729,9 +2759,11 @@ exports[`Space Permission List component snapshot testing should match component
                       "name": "Space 2",
                       "organisation_id": 4,
                       "permission": Object {
+                        "episodes": 20,
                         "fact_check": false,
                         "id": 2,
                         "media": 20,
+                        "podcast": true,
                         "posts": 20,
                       },
                     },
@@ -2755,9 +2787,11 @@ exports[`Space Permission List component snapshot testing should match component
                       "name": "Space 2",
                       "organisation_id": 4,
                       "permission": Object {
+                        "episodes": 20,
                         "fact_check": false,
                         "id": 2,
                         "media": 20,
+                        "podcast": true,
                         "posts": 20,
                       },
                     },
@@ -2919,7 +2953,7 @@ exports[`Space Permission List component snapshot testing should match component
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  Unlimited
+                                  20
                                 </p>
                               </td>
                               <td
@@ -2933,7 +2967,7 @@ exports[`Space Permission List component snapshot testing should match component
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  Disabled
+                                  Enabled
                                 </p>
                               </td>
                             </tr>
@@ -2948,7 +2982,7 @@ exports[`Space Permission List component snapshot testing should match component
                   Object {
                     "current": 1,
                     "onChange": [Function],
-                    "pageSize": 5,
+                    "pageSize": 20,
                     "total": undefined,
                   }
                 }
@@ -3037,9 +3071,11 @@ exports[`Space Permission List component snapshot testing should match component
                             "name": "Space 2",
                             "organisation_id": 4,
                             "permission": Object {
+                              "episodes": 20,
                               "fact_check": false,
                               "id": 2,
                               "media": 20,
+                              "podcast": true,
                               "posts": 20,
                             },
                           },
@@ -3061,9 +3097,11 @@ exports[`Space Permission List component snapshot testing should match component
                             "name": "Space 2",
                             "organisation_id": 4,
                             "permission": Object {
+                              "episodes": 20,
                               "fact_check": false,
                               "id": 2,
                               "media": 20,
+                              "podcast": true,
                               "posts": 20,
                             },
                           },
@@ -3220,7 +3258,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        Unlimited
+                                        20
                                       </p>
                                     </td>
                                     <td
@@ -3234,7 +3272,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        Disabled
+                                        Enabled
                                       </p>
                                     </td>
                                   </tr>
@@ -3248,7 +3286,7 @@ exports[`Space Permission List component snapshot testing should match component
                         "pagination": Object {
                           "current": 1,
                           "onChange": [Function],
-                          "pageSize": 5,
+                          "pageSize": 20,
                           "total": undefined,
                         },
                         "prefixCls": "ant-table",
@@ -4011,9 +4049,11 @@ exports[`Space Permission List component snapshot testing should match component
                                   "name": "Space 2",
                                   "organisation_id": 4,
                                   "permission": Object {
+                                    "episodes": 20,
                                     "fact_check": false,
                                     "id": 2,
                                     "media": 20,
+                                    "podcast": true,
                                     "posts": 20,
                                   },
                                 },
@@ -4343,9 +4383,11 @@ exports[`Space Permission List component snapshot testing should match component
                                     "name": "Space 2",
                                     "organisation_id": 4,
                                     "permission": Object {
+                                      "episodes": 20,
                                       "fact_check": false,
                                       "id": 2,
                                       "media": 20,
+                                      "podcast": true,
                                       "posts": 20,
                                     },
                                   }
@@ -4376,9 +4418,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -4409,9 +4453,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -4447,9 +4493,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -4488,9 +4536,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -4529,9 +4579,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -4545,7 +4597,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       style={Object {}}
                                     >
                                       <p>
-                                        Unlimited
+                                        20
                                       </p>
                                     </td>
                                   </Cell>
@@ -4570,9 +4622,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -4611,9 +4665,11 @@ exports[`Space Permission List component snapshot testing should match component
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -4627,7 +4683,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       style={Object {}}
                                     >
                                       <p>
-                                        Disabled
+                                        Enabled
                                       </p>
                                     </td>
                                   </Cell>
@@ -4645,7 +4701,7 @@ exports[`Space Permission List component snapshot testing should match component
                 className="ant-table-pagination ant-table-pagination-right"
                 current={1}
                 onChange={[Function]}
-                pageSize={5}
+                pageSize={20}
                 total={2}
               >
                 <LocaleReceiver
@@ -4733,7 +4789,7 @@ exports[`Space Permission List component snapshot testing should match component
                     }
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
-                    pageSize={5}
+                    pageSize={20}
                     prefixCls="ant-pagination"
                     prevIcon={
                       <button
@@ -5001,7 +5057,7 @@ exports[`Space Permission List component snapshot testing should match component
                             "prev_page": "Previous Page",
                           }
                         }
-                        pageSize={5}
+                        pageSize={20}
                         pageSizeOptions={
                           Array [
                             "10",
@@ -5125,9 +5181,11 @@ exports[`Space Permission List component snapshot testing should render componen
             "name": "Space 2",
             "organisation_id": 4,
             "permission": Object {
+              "episodes": 20,
               "fact_check": false,
               "id": 2,
               "media": 20,
+              "podcast": true,
               "posts": 20,
             },
           },
@@ -5138,7 +5196,7 @@ exports[`Space Permission List component snapshot testing should render componen
         Object {
           "current": 1,
           "onChange": [Function],
-          "pageSize": 5,
+          "pageSize": 20,
           "total": undefined,
         }
       }
@@ -5235,9 +5293,11 @@ exports[`Space Permission List component snapshot testing should render componen
                       "name": "Space 2",
                       "organisation_id": 4,
                       "permission": Object {
+                        "episodes": 20,
                         "fact_check": false,
                         "id": 2,
                         "media": 20,
+                        "podcast": true,
                         "posts": 20,
                       },
                     },
@@ -5261,9 +5321,11 @@ exports[`Space Permission List component snapshot testing should render componen
                       "name": "Space 2",
                       "organisation_id": 4,
                       "permission": Object {
+                        "episodes": 20,
                         "fact_check": false,
                         "id": 2,
                         "media": 20,
+                        "podcast": true,
                         "posts": 20,
                       },
                     },
@@ -5425,7 +5487,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  Unlimited
+                                  20
                                 </p>
                               </td>
                               <td
@@ -5439,7 +5501,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                 class="ant-table-cell"
                               >
                                 <p>
-                                  Disabled
+                                  Enabled
                                 </p>
                               </td>
                             </tr>
@@ -5454,7 +5516,7 @@ exports[`Space Permission List component snapshot testing should render componen
                   Object {
                     "current": 1,
                     "onChange": [Function],
-                    "pageSize": 5,
+                    "pageSize": 20,
                     "total": undefined,
                   }
                 }
@@ -5543,9 +5605,11 @@ exports[`Space Permission List component snapshot testing should render componen
                             "name": "Space 2",
                             "organisation_id": 4,
                             "permission": Object {
+                              "episodes": 20,
                               "fact_check": false,
                               "id": 2,
                               "media": 20,
+                              "podcast": true,
                               "posts": 20,
                             },
                           },
@@ -5567,9 +5631,11 @@ exports[`Space Permission List component snapshot testing should render componen
                             "name": "Space 2",
                             "organisation_id": 4,
                             "permission": Object {
+                              "episodes": 20,
                               "fact_check": false,
                               "id": 2,
                               "media": 20,
+                              "podcast": true,
                               "posts": 20,
                             },
                           },
@@ -5726,7 +5792,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        Unlimited
+                                        20
                                       </p>
                                     </td>
                                     <td
@@ -5740,7 +5806,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                       class="ant-table-cell"
                                     >
                                       <p>
-                                        Disabled
+                                        Enabled
                                       </p>
                                     </td>
                                   </tr>
@@ -5754,7 +5820,7 @@ exports[`Space Permission List component snapshot testing should render componen
                         "pagination": Object {
                           "current": 1,
                           "onChange": [Function],
-                          "pageSize": 5,
+                          "pageSize": 20,
                           "total": undefined,
                         },
                         "prefixCls": "ant-table",
@@ -6517,9 +6583,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                   "name": "Space 2",
                                   "organisation_id": 4,
                                   "permission": Object {
+                                    "episodes": 20,
                                     "fact_check": false,
                                     "id": 2,
                                     "media": 20,
+                                    "podcast": true,
                                     "posts": 20,
                                   },
                                 },
@@ -6849,9 +6917,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                     "name": "Space 2",
                                     "organisation_id": 4,
                                     "permission": Object {
+                                      "episodes": 20,
                                       "fact_check": false,
                                       "id": 2,
                                       "media": 20,
+                                      "podcast": true,
                                       "posts": 20,
                                     },
                                   }
@@ -6882,9 +6952,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -6915,9 +6987,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -6953,9 +7027,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -6994,9 +7070,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -7035,9 +7113,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -7051,7 +7131,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                       style={Object {}}
                                     >
                                       <p>
-                                        Unlimited
+                                        20
                                       </p>
                                     </td>
                                   </Cell>
@@ -7076,9 +7156,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -7117,9 +7199,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                         "name": "Space 2",
                                         "organisation_id": 4,
                                         "permission": Object {
+                                          "episodes": 20,
                                           "fact_check": false,
                                           "id": 2,
                                           "media": 20,
+                                          "podcast": true,
                                           "posts": 20,
                                         },
                                       }
@@ -7133,7 +7217,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                       style={Object {}}
                                     >
                                       <p>
-                                        Disabled
+                                        Enabled
                                       </p>
                                     </td>
                                   </Cell>
@@ -7151,7 +7235,7 @@ exports[`Space Permission List component snapshot testing should render componen
                 className="ant-table-pagination ant-table-pagination-right"
                 current={1}
                 onChange={[Function]}
-                pageSize={5}
+                pageSize={20}
                 total={2}
               >
                 <LocaleReceiver
@@ -7239,7 +7323,7 @@ exports[`Space Permission List component snapshot testing should render componen
                     }
                     onChange={[Function]}
                     onShowSizeChange={[Function]}
-                    pageSize={5}
+                    pageSize={20}
                     prefixCls="ant-pagination"
                     prevIcon={
                       <button
@@ -7507,7 +7591,7 @@ exports[`Space Permission List component snapshot testing should render componen
                             "prev_page": "Previous Page",
                           }
                         }
-                        pageSize={5}
+                        pageSize={20}
                         pageSizeOptions={
                           Array [
                             "10",
@@ -7533,6 +7617,1376 @@ exports[`Space Permission List component snapshot testing should render componen
                   </Pagination>
                 </LocaleReceiver>
               </Pagination>
+            </div>
+          </div>
+        </Spin>
+      </div>
+    </Table>
+  </PermissionList>
+</Provider>
+`;
+
+exports[`Space Permission List component snapshot testing should render component with no data 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <PermissionList>
+    <Table
+      bordered={true}
+      columns={
+        Array [
+          Object {
+            "dataIndex": "name",
+            "key": "name",
+            "title": "Space",
+          },
+          Object {
+            "dataIndex": "organisation_id",
+            "key": "organisation_id",
+            "title": "Organisation ID",
+            "width": "10%",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "media",
+            ],
+            "render": [Function],
+            "title": "Media",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "posts",
+            ],
+            "render": [Function],
+            "title": "Posts",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "episodes",
+            ],
+            "render": [Function],
+            "title": "Episodes",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "fact_check",
+            ],
+            "render": [Function],
+            "title": "Fact Check",
+          },
+          Object {
+            "dataIndex": Array [
+              "permission",
+              "podcast",
+            ],
+            "render": [Function],
+            "title": "Podcast",
+          },
+        ]
+      }
+      dataSource={Array []}
+      loading={false}
+      pagination={
+        Object {
+          "current": 1,
+          "onChange": [Function],
+          "pageSize": 20,
+          "total": 0,
+        }
+      }
+      rowKey="id"
+    >
+      <div
+        className="ant-table-wrapper"
+      >
+        <Spin
+          size="default"
+          spinning={false}
+          wrapperClassName=""
+        >
+          <div
+            className="ant-spin-nested-loading"
+          >
+            <div
+              className="ant-spin-container"
+              key="container"
+            >
+              <Table
+                bordered={true}
+                className="ant-table-bordered ant-table-empty"
+                columns={
+                  Array [
+                    Object {
+                      "dataIndex": "name",
+                      "key": "name",
+                      "title": "Space",
+                    },
+                    Object {
+                      "dataIndex": "organisation_id",
+                      "key": "organisation_id",
+                      "title": "Organisation ID",
+                      "width": "10%",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "media",
+                      ],
+                      "render": [Function],
+                      "title": "Media",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "posts",
+                      ],
+                      "render": [Function],
+                      "title": "Posts",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "episodes",
+                      ],
+                      "render": [Function],
+                      "title": "Episodes",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "fact_check",
+                      ],
+                      "render": [Function],
+                      "title": "Fact Check",
+                    },
+                    Object {
+                      "dataIndex": Array [
+                        "permission",
+                        "podcast",
+                      ],
+                      "render": [Function],
+                      "title": "Podcast",
+                    },
+                  ]
+                }
+                data={Array []}
+                dataSource={Array []}
+                emptyText={
+                  <Context.Consumer>
+                    [Function]
+                  </Context.Consumer>
+                }
+                expandable={
+                  Object {
+                    "__PARENT_RENDER_ICON__": undefined,
+                    "childrenColumnName": undefined,
+                    "expandIcon": [Function],
+                    "expandIconColumnIndex": undefined,
+                    "indentSize": 15,
+                  }
+                }
+                internalHooks="rc-table-internal-hook"
+                internalRefs={
+                  Object {
+                    "body": Object {
+                      "current": <div
+                        class="ant-table-content"
+                      >
+                        <table
+                          style="table-layout: auto;"
+                        >
+                          <colgroup>
+                            <col />
+                            <col
+                              style="width: 10%; min-width: 10%;"
+                            />
+                          </colgroup>
+                          <thead
+                            class="ant-table-thead"
+                          >
+                            <tr>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Space
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Organisation ID
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Media
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Posts
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Episodes
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Fact Check
+                              </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Podcast
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody
+                            class="ant-table-tbody"
+                          >
+                            <tr
+                              class="ant-table-placeholder"
+                            >
+                              <td
+                                class="ant-table-cell"
+                                colspan="7"
+                              >
+                                <div
+                                  class="ant-empty ant-empty-normal"
+                                >
+                                  <div
+                                    class="ant-empty-image"
+                                  >
+                                    <svg
+                                      class="ant-empty-img-simple"
+                                      height="41"
+                                      viewBox="0 0 64 41"
+                                      width="64"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <g
+                                        fill="none"
+                                        fill-rule="evenodd"
+                                        transform="translate(0 1)"
+                                      >
+                                        <ellipse
+                                          class="ant-empty-img-simple-ellipse"
+                                          cx="32"
+                                          cy="33"
+                                          rx="32"
+                                          ry="7"
+                                        />
+                                        <g
+                                          class="ant-empty-img-simple-g"
+                                          fill-rule="nonzero"
+                                        >
+                                          <path
+                                            d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                                          />
+                                          <path
+                                            class="ant-empty-img-simple-path"
+                                            d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                          />
+                                        </g>
+                                      </g>
+                                    </svg>
+                                  </div>
+                                  <p
+                                    class="ant-empty-description"
+                                  >
+                                    No Data
+                                  </p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>,
+                    },
+                  }
+                }
+                loading={false}
+                pagination={
+                  Object {
+                    "current": 1,
+                    "onChange": [Function],
+                    "pageSize": 20,
+                    "total": 0,
+                  }
+                }
+                prefixCls="ant-table"
+                rowClassName={[Function]}
+                rowKey={[Function]}
+                transformColumns={[Function]}
+              >
+                <div
+                  className="ant-table ant-table-bordered ant-table-empty"
+                >
+                  <Component
+                    pingLeft={false}
+                    pingRight={false}
+                    props={
+                      Object {
+                        "bordered": true,
+                        "className": "ant-table-bordered ant-table-empty",
+                        "columns": Array [
+                          Object {
+                            "dataIndex": "name",
+                            "key": "name",
+                            "title": "Space",
+                          },
+                          Object {
+                            "dataIndex": "organisation_id",
+                            "key": "organisation_id",
+                            "title": "Organisation ID",
+                            "width": "10%",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "media",
+                            ],
+                            "render": [Function],
+                            "title": "Media",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "posts",
+                            ],
+                            "render": [Function],
+                            "title": "Posts",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "episodes",
+                            ],
+                            "render": [Function],
+                            "title": "Episodes",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "fact_check",
+                            ],
+                            "render": [Function],
+                            "title": "Fact Check",
+                          },
+                          Object {
+                            "dataIndex": Array [
+                              "permission",
+                              "podcast",
+                            ],
+                            "render": [Function],
+                            "title": "Podcast",
+                          },
+                        ],
+                        "data": Array [],
+                        "dataSource": Array [],
+                        "direction": undefined,
+                        "emptyText": <Context.Consumer>
+                          [Function]
+                        </Context.Consumer>,
+                        "expandable": Object {
+                          "__PARENT_RENDER_ICON__": undefined,
+                          "childrenColumnName": undefined,
+                          "expandIcon": [Function],
+                          "expandIconColumnIndex": undefined,
+                          "indentSize": 15,
+                        },
+                        "internalHooks": "rc-table-internal-hook",
+                        "internalRefs": Object {
+                          "body": Object {
+                            "current": <div
+                              class="ant-table-content"
+                            >
+                              <table
+                                style="table-layout: auto;"
+                              >
+                                <colgroup>
+                                  <col />
+                                  <col
+                                    style="width: 10%; min-width: 10%;"
+                                  />
+                                </colgroup>
+                                <thead
+                                  class="ant-table-thead"
+                                >
+                                  <tr>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Space
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Organisation ID
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Media
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Posts
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Episodes
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Fact Check
+                                    </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Podcast
+                                    </th>
+                                  </tr>
+                                </thead>
+                                <tbody
+                                  class="ant-table-tbody"
+                                >
+                                  <tr
+                                    class="ant-table-placeholder"
+                                  >
+                                    <td
+                                      class="ant-table-cell"
+                                      colspan="7"
+                                    >
+                                      <div
+                                        class="ant-empty ant-empty-normal"
+                                      >
+                                        <div
+                                          class="ant-empty-image"
+                                        >
+                                          <svg
+                                            class="ant-empty-img-simple"
+                                            height="41"
+                                            viewBox="0 0 64 41"
+                                            width="64"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <g
+                                              fill="none"
+                                              fill-rule="evenodd"
+                                              transform="translate(0 1)"
+                                            >
+                                              <ellipse
+                                                class="ant-empty-img-simple-ellipse"
+                                                cx="32"
+                                                cy="33"
+                                                rx="32"
+                                                ry="7"
+                                              />
+                                              <g
+                                                class="ant-empty-img-simple-g"
+                                                fill-rule="nonzero"
+                                              >
+                                                <path
+                                                  d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                                                />
+                                                <path
+                                                  class="ant-empty-img-simple-path"
+                                                  d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                />
+                                              </g>
+                                            </g>
+                                          </svg>
+                                        </div>
+                                        <p
+                                          class="ant-empty-description"
+                                        >
+                                          No Data
+                                        </p>
+                                      </div>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>,
+                          },
+                        },
+                        "loading": false,
+                        "mergedExpandedKeys": Set {},
+                        "pagination": Object {
+                          "current": 1,
+                          "onChange": [Function],
+                          "pageSize": 20,
+                          "total": 0,
+                        },
+                        "prefixCls": "ant-table",
+                        "rowClassName": [Function],
+                        "rowKey": [Function],
+                        "stickyOffsets": Object {
+                          "left": Array [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                          ],
+                          "right": Array [
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                          ],
+                        },
+                        "transformColumns": [Function],
+                      }
+                    }
+                  >
+                    <div
+                      className="ant-table-container"
+                    >
+                      <div
+                        className="ant-table-content"
+                        onScroll={[Function]}
+                        style={Object {}}
+                      >
+                        <table
+                          style={
+                            Object {
+                              "tableLayout": "auto",
+                            }
+                          }
+                        >
+                          <ColGroup
+                            colWidths={
+                              Array [
+                                undefined,
+                                "10%",
+                                undefined,
+                                undefined,
+                                undefined,
+                                undefined,
+                                undefined,
+                              ]
+                            }
+                            columns={
+                              Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "fixed": undefined,
+                                  "key": "name",
+                                  "title": "Space",
+                                },
+                                Object {
+                                  "dataIndex": "organisation_id",
+                                  "fixed": undefined,
+                                  "key": "organisation_id",
+                                  "title": "Organisation ID",
+                                  "width": "10%",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "media",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Media",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "posts",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Posts",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "episodes",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "fact_check",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Podcast",
+                                },
+                              ]
+                            }
+                          >
+                            <colgroup>
+                              <col
+                                key="0"
+                                style={
+                                  Object {
+                                    "minWidth": undefined,
+                                    "width": undefined,
+                                  }
+                                }
+                              />
+                              <col
+                                key="1"
+                                style={
+                                  Object {
+                                    "minWidth": "10%",
+                                    "width": "10%",
+                                  }
+                                }
+                              />
+                            </colgroup>
+                          </ColGroup>
+                          <Header
+                            colWidths={
+                              Array [
+                                undefined,
+                                undefined,
+                                undefined,
+                                undefined,
+                                undefined,
+                                undefined,
+                                undefined,
+                              ]
+                            }
+                            columCount={7}
+                            columns={
+                              Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "key": "name",
+                                  "title": "Space",
+                                },
+                                Object {
+                                  "dataIndex": "organisation_id",
+                                  "key": "organisation_id",
+                                  "title": "Organisation ID",
+                                  "width": "10%",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "media",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Media",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "posts",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Posts",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "episodes",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "fact_check",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "render": [Function],
+                                  "title": "Podcast",
+                                },
+                              ]
+                            }
+                            flattenColumns={
+                              Array [
+                                Object {
+                                  "dataIndex": "name",
+                                  "fixed": undefined,
+                                  "key": "name",
+                                  "title": "Space",
+                                },
+                                Object {
+                                  "dataIndex": "organisation_id",
+                                  "fixed": undefined,
+                                  "key": "organisation_id",
+                                  "title": "Organisation ID",
+                                  "width": "10%",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "media",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Media",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "posts",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Posts",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "episodes",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Episodes",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "fact_check",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Fact Check",
+                                },
+                                Object {
+                                  "dataIndex": Array [
+                                    "permission",
+                                    "podcast",
+                                  ],
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Podcast",
+                                },
+                              ]
+                            }
+                            stickyOffsets={
+                              Object {
+                                "left": Array [
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                ],
+                                "right": Array [
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                ],
+                              }
+                            }
+                          >
+                            <thead
+                              className="ant-table-thead"
+                            >
+                              <HeaderRow
+                                cellComponent="th"
+                                cells={
+                                  Array [
+                                    Object {
+                                      "children": "Space",
+                                      "className": "",
+                                      "colEnd": 0,
+                                      "colSpan": 1,
+                                      "colStart": 0,
+                                      "column": Object {
+                                        "dataIndex": "name",
+                                        "key": "name",
+                                        "title": "Space",
+                                      },
+                                      "key": "name",
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Organisation ID",
+                                      "className": "",
+                                      "colEnd": 1,
+                                      "colSpan": 1,
+                                      "colStart": 1,
+                                      "column": Object {
+                                        "dataIndex": "organisation_id",
+                                        "key": "organisation_id",
+                                        "title": "Organisation ID",
+                                        "width": "10%",
+                                      },
+                                      "key": "organisation_id",
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Media",
+                                      "className": "",
+                                      "colEnd": 2,
+                                      "colSpan": 1,
+                                      "colStart": 2,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "media",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Media",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Posts",
+                                      "className": "",
+                                      "colEnd": 3,
+                                      "colSpan": 1,
+                                      "colStart": 3,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "posts",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Posts",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Episodes",
+                                      "className": "",
+                                      "colEnd": 4,
+                                      "colSpan": 1,
+                                      "colStart": 4,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "episodes",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Episodes",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Fact Check",
+                                      "className": "",
+                                      "colEnd": 5,
+                                      "colSpan": 1,
+                                      "colStart": 5,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "fact_check",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Fact Check",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                    Object {
+                                      "children": "Podcast",
+                                      "className": "",
+                                      "colEnd": 6,
+                                      "colSpan": 1,
+                                      "colStart": 6,
+                                      "column": Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "podcast",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Podcast",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
+                                  ]
+                                }
+                                flattenColumns={
+                                  Array [
+                                    Object {
+                                      "dataIndex": "name",
+                                      "fixed": undefined,
+                                      "key": "name",
+                                      "title": "Space",
+                                    },
+                                    Object {
+                                      "dataIndex": "organisation_id",
+                                      "fixed": undefined,
+                                      "key": "organisation_id",
+                                      "title": "Organisation ID",
+                                      "width": "10%",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "media",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Media",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "posts",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Posts",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "episodes",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Episodes",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "fact_check",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Fact Check",
+                                    },
+                                    Object {
+                                      "dataIndex": Array [
+                                        "permission",
+                                        "podcast",
+                                      ],
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Podcast",
+                                    },
+                                  ]
+                                }
+                                index={0}
+                                key="0"
+                                rowComponent="tr"
+                                stickyOffsets={
+                                  Object {
+                                    "left": Array [
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "right": Array [
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                  }
+                                }
+                              >
+                                <tr>
+                                  <Cell
+                                    className=""
+                                    colEnd={0}
+                                    colSpan={1}
+                                    colStart={0}
+                                    column={
+                                      Object {
+                                        "dataIndex": "name",
+                                        "key": "name",
+                                        "title": "Space",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="name"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Space
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={1}
+                                    colSpan={1}
+                                    colStart={1}
+                                    column={
+                                      Object {
+                                        "dataIndex": "organisation_id",
+                                        "key": "organisation_id",
+                                        "title": "Organisation ID",
+                                        "width": "10%",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="organisation_id"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Organisation ID
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={2}
+                                    colSpan={1}
+                                    colStart={2}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "media",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Media",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-media"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Media
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={3}
+                                    colSpan={1}
+                                    colStart={3}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "posts",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Posts",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-posts"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Posts
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={4}
+                                    colSpan={1}
+                                    colStart={4}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "episodes",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Episodes",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-episodes"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Episodes
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={5}
+                                    colSpan={1}
+                                    colStart={5}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "fact_check",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Fact Check",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-fact_check"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Fact Check
+                                    </th>
+                                  </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={6}
+                                    colSpan={1}
+                                    colStart={6}
+                                    column={
+                                      Object {
+                                        "dataIndex": Array [
+                                          "permission",
+                                          "podcast",
+                                        ],
+                                        "render": [Function],
+                                        "title": "Podcast",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="permission-podcast"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Podcast
+                                    </th>
+                                  </Cell>
+                                </tr>
+                              </HeaderRow>
+                            </thead>
+                          </Header>
+                          <Body
+                            childrenColumnName="children"
+                            data={Array []}
+                            emptyNode={
+                              <Context.Consumer>
+                                [Function]
+                              </Context.Consumer>
+                            }
+                            expandedKeys={Set {}}
+                            getRowKey={[Function]}
+                            measureColumnWidth={false}
+                          >
+                            <tbody
+                              className="ant-table-tbody"
+                            >
+                              <ExpandedRow
+                                cellComponent="td"
+                                className="ant-table-placeholder"
+                                colSpan={7}
+                                component="tr"
+                                componentWidth={0}
+                                expanded={true}
+                                prefixCls="ant-table"
+                              >
+                                <tr
+                                  className="ant-table-placeholder"
+                                  style={
+                                    Object {
+                                      "display": null,
+                                    }
+                                  }
+                                >
+                                  <Cell
+                                    colSpan={7}
+                                    component="td"
+                                    prefixCls="ant-table"
+                                  >
+                                    <td
+                                      className="ant-table-cell"
+                                      colSpan={7}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      <Empty
+                                        image={<Simple />}
+                                      >
+                                        <LocaleReceiver
+                                          componentName="Empty"
+                                        >
+                                          <div
+                                            className="ant-empty ant-empty-normal"
+                                          >
+                                            <div
+                                              className="ant-empty-image"
+                                            >
+                                              <Simple>
+                                                <svg
+                                                  className="ant-empty-img-simple"
+                                                  height="41"
+                                                  viewBox="0 0 64 41"
+                                                  width="64"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <g
+                                                    fill="none"
+                                                    fillRule="evenodd"
+                                                    transform="translate(0 1)"
+                                                  >
+                                                    <ellipse
+                                                      className="ant-empty-img-simple-ellipse"
+                                                      cx="32"
+                                                      cy="33"
+                                                      rx="32"
+                                                      ry="7"
+                                                    />
+                                                    <g
+                                                      className="ant-empty-img-simple-g"
+                                                      fillRule="nonzero"
+                                                    >
+                                                      <path
+                                                        d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                                                      />
+                                                      <path
+                                                        className="ant-empty-img-simple-path"
+                                                        d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                      />
+                                                    </g>
+                                                  </g>
+                                                </svg>
+                                              </Simple>
+                                            </div>
+                                            <p
+                                              className="ant-empty-description"
+                                            >
+                                              No Data
+                                            </p>
+                                          </div>
+                                        </LocaleReceiver>
+                                      </Empty>
+                                    </td>
+                                  </Cell>
+                                </tr>
+                              </ExpandedRow>
+                            </tbody>
+                          </Body>
+                        </table>
+                      </div>
+                    </div>
+                  </Component>
+                </div>
+              </Table>
             </div>
           </div>
         </Spin>

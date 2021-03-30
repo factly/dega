@@ -18,10 +18,10 @@ let state = {
   spacePermissions: {
     req: [
       {
-        data: [1, 2],
+        data: [1, 2, 3],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -45,9 +45,16 @@ let state = {
         permission: {
           id: 2,
           fact_check: false,
+          episodes: 20,
+          podcast: true,
           media: 20,
           posts: 20,  
         }, 
+      },
+      '3': {
+        id: 1,
+        name: 'Space 3',
+        organisation_id: 9,
       },
     },
     loading: false,
@@ -79,6 +86,21 @@ describe('Space Permission List component', () => {
       );
       expect(tree).toMatchSnapshot();
     });
+    it('should render component with no data', () => {
+      store = mockStore({
+        spacePermissions: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+      });
+      const tree = mount(
+        <Provider store = {store}>
+          <PermissionList />
+        </Provider>
+      );
+      expect(tree).toMatchSnapshot();
+    });
     it('should match component when loading', () => {
       state.spacePermissions.loading = true;
       store = mockStore(state);
@@ -99,7 +121,7 @@ describe('Space Permission List component', () => {
       );
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 5});
+      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20});
     });
   });
   describe('component testing', () => {
