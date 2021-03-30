@@ -61,46 +61,49 @@ type ComplexityRoot struct {
 	}
 
 	Category struct {
-		CreatedAt   func(childComplexity int) int
-		Description func(childComplexity int) int
-		ID          func(childComplexity int) int
-		Medium      func(childComplexity int) int
-		MetaFields  func(childComplexity int) int
-		Name        func(childComplexity int) int
-		ParentID    func(childComplexity int) int
-		Slug        func(childComplexity int) int
-		SpaceID     func(childComplexity int) int
-		UpdatedAt   func(childComplexity int) int
+		CreatedAt       func(childComplexity int) int
+		Description     func(childComplexity int) int
+		HTMLDescription func(childComplexity int) int
+		ID              func(childComplexity int) int
+		Medium          func(childComplexity int) int
+		MetaFields      func(childComplexity int) int
+		Name            func(childComplexity int) int
+		ParentID        func(childComplexity int) int
+		Slug            func(childComplexity int) int
+		SpaceID         func(childComplexity int) int
+		UpdatedAt       func(childComplexity int) int
 	}
 
 	Claim struct {
-		CheckedDate   func(childComplexity int) int
-		ClaimDate     func(childComplexity int) int
-		ClaimSources  func(childComplexity int) int
-		Claimant      func(childComplexity int) int
-		CreatedAt     func(childComplexity int) int
-		Description   func(childComplexity int) int
-		ID            func(childComplexity int) int
-		Rating        func(childComplexity int) int
-		Review        func(childComplexity int) int
-		ReviewSources func(childComplexity int) int
-		ReviewTagLine func(childComplexity int) int
-		Slug          func(childComplexity int) int
-		SpaceID       func(childComplexity int) int
-		Title         func(childComplexity int) int
-		UpdatedAt     func(childComplexity int) int
+		CheckedDate     func(childComplexity int) int
+		ClaimDate       func(childComplexity int) int
+		ClaimSources    func(childComplexity int) int
+		Claimant        func(childComplexity int) int
+		CreatedAt       func(childComplexity int) int
+		Description     func(childComplexity int) int
+		HTMLDescription func(childComplexity int) int
+		ID              func(childComplexity int) int
+		Rating          func(childComplexity int) int
+		Review          func(childComplexity int) int
+		ReviewSources   func(childComplexity int) int
+		ReviewTagLine   func(childComplexity int) int
+		Slug            func(childComplexity int) int
+		SpaceID         func(childComplexity int) int
+		Title           func(childComplexity int) int
+		UpdatedAt       func(childComplexity int) int
 	}
 
 	Claimant struct {
-		CreatedAt   func(childComplexity int) int
-		Description func(childComplexity int) int
-		ID          func(childComplexity int) int
-		Medium      func(childComplexity int) int
-		Name        func(childComplexity int) int
-		Slug        func(childComplexity int) int
-		SpaceID     func(childComplexity int) int
-		TagLine     func(childComplexity int) int
-		UpdatedAt   func(childComplexity int) int
+		CreatedAt       func(childComplexity int) int
+		Description     func(childComplexity int) int
+		HTMLDescription func(childComplexity int) int
+		ID              func(childComplexity int) int
+		Medium          func(childComplexity int) int
+		Name            func(childComplexity int) int
+		Slug            func(childComplexity int) int
+		SpaceID         func(childComplexity int) int
+		TagLine         func(childComplexity int) int
+		UpdatedAt       func(childComplexity int) int
 	}
 
 	ClaimantsPaging struct {
@@ -161,27 +164,28 @@ type ComplexityRoot struct {
 	}
 
 	Post struct {
-		Categories    func(childComplexity int) int
-		Claims        func(childComplexity int) int
-		CreatedAt     func(childComplexity int) int
-		Description   func(childComplexity int) int
-		Excerpt       func(childComplexity int) int
-		Format        func(childComplexity int) int
-		ID            func(childComplexity int) int
-		IsFeatured    func(childComplexity int) int
-		IsHighlighted func(childComplexity int) int
-		IsSticky      func(childComplexity int) int
-		Medium        func(childComplexity int) int
-		PublishedDate func(childComplexity int) int
-		Schemas       func(childComplexity int) int
-		Slug          func(childComplexity int) int
-		SpaceID       func(childComplexity int) int
-		Status        func(childComplexity int) int
-		Subtitle      func(childComplexity int) int
-		Tags          func(childComplexity int) int
-		Title         func(childComplexity int) int
-		UpdatedAt     func(childComplexity int) int
-		Users         func(childComplexity int) int
+		Categories      func(childComplexity int) int
+		Claims          func(childComplexity int) int
+		CreatedAt       func(childComplexity int) int
+		Description     func(childComplexity int) int
+		Excerpt         func(childComplexity int) int
+		Format          func(childComplexity int) int
+		HTMLDescription func(childComplexity int) int
+		ID              func(childComplexity int) int
+		IsFeatured      func(childComplexity int) int
+		IsHighlighted   func(childComplexity int) int
+		IsSticky        func(childComplexity int) int
+		Medium          func(childComplexity int) int
+		PublishedDate   func(childComplexity int) int
+		Schemas         func(childComplexity int) int
+		Slug            func(childComplexity int) int
+		SpaceID         func(childComplexity int) int
+		Status          func(childComplexity int) int
+		Subtitle        func(childComplexity int) int
+		Tags            func(childComplexity int) int
+		Title           func(childComplexity int) int
+		UpdatedAt       func(childComplexity int) int
+		Users           func(childComplexity int) int
 	}
 
 	PostsPaging struct {
@@ -208,15 +212,16 @@ type ComplexityRoot struct {
 	}
 
 	Rating struct {
-		CreatedAt    func(childComplexity int) int
-		Description  func(childComplexity int) int
-		ID           func(childComplexity int) int
-		Medium       func(childComplexity int) int
-		Name         func(childComplexity int) int
-		NumericValue func(childComplexity int) int
-		Slug         func(childComplexity int) int
-		SpaceID      func(childComplexity int) int
-		UpdatedAt    func(childComplexity int) int
+		CreatedAt       func(childComplexity int) int
+		Description     func(childComplexity int) int
+		HTMLDescription func(childComplexity int) int
+		ID              func(childComplexity int) int
+		Medium          func(childComplexity int) int
+		Name            func(childComplexity int) int
+		NumericValue    func(childComplexity int) int
+		Slug            func(childComplexity int) int
+		SpaceID         func(childComplexity int) int
+		UpdatedAt       func(childComplexity int) int
 	}
 
 	RatingsPaging struct {
@@ -261,13 +266,14 @@ type ComplexityRoot struct {
 	}
 
 	Tag struct {
-		CreatedAt   func(childComplexity int) int
-		Description func(childComplexity int) int
-		ID          func(childComplexity int) int
-		Name        func(childComplexity int) int
-		Slug        func(childComplexity int) int
-		SpaceID     func(childComplexity int) int
-		UpdatedAt   func(childComplexity int) int
+		CreatedAt       func(childComplexity int) int
+		Description     func(childComplexity int) int
+		HTMLDescription func(childComplexity int) int
+		ID              func(childComplexity int) int
+		Name            func(childComplexity int) int
+		Slug            func(childComplexity int) int
+		SpaceID         func(childComplexity int) int
+		UpdatedAt       func(childComplexity int) int
 	}
 
 	TagsPaging struct {
@@ -301,6 +307,7 @@ type CategoryResolver interface {
 	ID(ctx context.Context, obj *models.Category) (string, error)
 
 	Description(ctx context.Context, obj *models.Category) (interface{}, error)
+	HTMLDescription(ctx context.Context, obj *models.Category) (*string, error)
 	MetaFields(ctx context.Context, obj *models.Category) (interface{}, error)
 	ParentID(ctx context.Context, obj *models.Category) (*int, error)
 	Medium(ctx context.Context, obj *models.Category) (*models.Medium, error)
@@ -311,6 +318,7 @@ type ClaimResolver interface {
 
 	ClaimSources(ctx context.Context, obj *models.Claim) (interface{}, error)
 	Description(ctx context.Context, obj *models.Claim) (interface{}, error)
+	HTMLDescription(ctx context.Context, obj *models.Claim) (*string, error)
 	Review(ctx context.Context, obj *models.Claim) (interface{}, error)
 	ReviewTagLine(ctx context.Context, obj *models.Claim) (interface{}, error)
 	ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error)
@@ -322,6 +330,7 @@ type ClaimantResolver interface {
 	ID(ctx context.Context, obj *models.Claimant) (string, error)
 
 	Description(ctx context.Context, obj *models.Claimant) (interface{}, error)
+	HTMLDescription(ctx context.Context, obj *models.Claimant) (*string, error)
 
 	Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Claimant) (int, error)
@@ -348,6 +357,7 @@ type PostResolver interface {
 	ID(ctx context.Context, obj *models.Post) (string, error)
 
 	Description(ctx context.Context, obj *models.Post) (interface{}, error)
+	HTMLDescription(ctx context.Context, obj *models.Post) (*string, error)
 
 	Format(ctx context.Context, obj *models.Post) (*models.Format, error)
 	Medium(ctx context.Context, obj *models.Post) (*models.Medium, error)
@@ -379,6 +389,7 @@ type RatingResolver interface {
 	ID(ctx context.Context, obj *models.Rating) (string, error)
 
 	Description(ctx context.Context, obj *models.Rating) (interface{}, error)
+	HTMLDescription(ctx context.Context, obj *models.Rating) (*string, error)
 
 	Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Rating) (int, error)
@@ -407,6 +418,7 @@ type SpaceResolver interface {
 type TagResolver interface {
 	ID(ctx context.Context, obj *models.Tag) (string, error)
 
+	HTMLDescription(ctx context.Context, obj *models.Tag) (*string, error)
 	SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 }
 type UserResolver interface {
@@ -457,6 +469,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Category.Description(childComplexity), true
+
+	case "Category.html_description":
+		if e.complexity.Category.HTMLDescription == nil {
+			break
+		}
+
+		return e.complexity.Category.HTMLDescription(childComplexity), true
 
 	case "Category.id":
 		if e.complexity.Category.ID == nil {
@@ -556,6 +575,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.Description(childComplexity), true
 
+	case "Claim.html_description":
+		if e.complexity.Claim.HTMLDescription == nil {
+			break
+		}
+
+		return e.complexity.Claim.HTMLDescription(childComplexity), true
+
 	case "Claim.id":
 		if e.complexity.Claim.ID == nil {
 			break
@@ -632,6 +658,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Claimant.Description(childComplexity), true
+
+	case "Claimant.html_description":
+		if e.complexity.Claimant.HTMLDescription == nil {
+			break
+		}
+
+		return e.complexity.Claimant.HTMLDescription(childComplexity), true
 
 	case "Claimant.id":
 		if e.complexity.Claimant.ID == nil {
@@ -976,6 +1009,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Post.Format(childComplexity), true
 
+	case "Post.html_description":
+		if e.complexity.Post.HTMLDescription == nil {
+			break
+		}
+
+		return e.complexity.Post.HTMLDescription(childComplexity), true
+
 	case "Post.id":
 		if e.complexity.Post.ID == nil {
 			break
@@ -1274,6 +1314,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Rating.Description(childComplexity), true
 
+	case "Rating.html_description":
+		if e.complexity.Rating.HTMLDescription == nil {
+			break
+		}
+
+		return e.complexity.Rating.HTMLDescription(childComplexity), true
+
 	case "Rating.id":
 		if e.complexity.Rating.ID == nil {
 			break
@@ -1540,6 +1587,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.Description(childComplexity), true
 
+	case "Tag.html_description":
+		if e.complexity.Tag.HTMLDescription == nil {
+			break
+		}
+
+		return e.complexity.Tag.HTMLDescription(childComplexity), true
+
 	case "Tag.id":
 		if e.complexity.Tag.ID == nil {
 			break
@@ -1770,6 +1824,7 @@ type Category {
   name: String!
   slug: String!
   description: Any
+  html_description: String
   meta_fields: Any
   parent_id: Int
   medium: Medium
@@ -1783,6 +1838,7 @@ type Tag {
   name: String!
   slug: String!
   description: String
+  html_description: String
   space_id: Int!
 }
 
@@ -1823,6 +1879,7 @@ type Post {
   status: String!
   excerpt: String
   description: Any
+  html_description: String
   is_featured: Boolean
   is_sticky: Boolean
   is_highlighted: Boolean
@@ -1860,6 +1917,7 @@ type Rating {
   name: String!
   slug: String!
   description: Any
+  html_description: String
   numeric_value: Int!
   medium: Medium
   space_id: Int!
@@ -1872,6 +1930,7 @@ type Claimant {
   name: String!
   slug: String!
   description: Any
+  html_description: String
   tag_line: String
   medium: Medium
   space_id: Int!
@@ -1887,6 +1946,7 @@ type Claim {
   checked_date: Time
   claim_sources: Any
   description: Any
+  html_description: String
   review: Any
   review_tag_line: Any
   review_sources: Any
@@ -2824,6 +2884,38 @@ func (ec *executionContext) _Category_description(ctx context.Context, field gra
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Category_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Category().HTMLDescription(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Category_meta_fields(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3252,6 +3344,38 @@ func (ec *executionContext) _Claim_description(ctx context.Context, field graphq
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Claim_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claim",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claim().HTMLDescription(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Claim_review(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3652,6 +3776,38 @@ func (ec *executionContext) _Claimant_description(ctx context.Context, field gra
 	res := resTmp.(interface{})
 	fc.Result = res
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claimant_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claimant",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claimant().HTMLDescription(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claimant_tag_line(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
@@ -5280,6 +5436,38 @@ func (ec *executionContext) _Post_description(ctx context.Context, field graphql
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Post_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Post",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Post().HTMLDescription(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Post_is_featured(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -6588,6 +6776,38 @@ func (ec *executionContext) _Rating_description(ctx context.Context, field graph
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Rating_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Rating",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Rating().HTMLDescription(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Rating_numeric_value(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -7838,6 +8058,38 @@ func (ec *executionContext) _Tag_description(ctx context.Context, field graphql.
 	res := resTmp.(string)
 	fc.Result = res
 	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Tag_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Tag().HTMLDescription(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Tag_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
@@ -9617,6 +9869,17 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				res = ec._Category_description(ctx, field, obj)
 				return res
 			})
+		case "html_description":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_html_description(ctx, field, obj)
+				return res
+			})
 		case "meta_fields":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -9738,6 +10001,17 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 					}
 				}()
 				res = ec._Claim_description(ctx, field, obj)
+				return res
+			})
+		case "html_description":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_html_description(ctx, field, obj)
 				return res
 			})
 		case "review":
@@ -9874,6 +10148,17 @@ func (ec *executionContext) _Claimant(ctx context.Context, sel ast.SelectionSet,
 					}
 				}()
 				res = ec._Claimant_description(ctx, field, obj)
+				return res
+			})
+		case "html_description":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claimant_html_description(ctx, field, obj)
 				return res
 			})
 		case "tag_line":
@@ -10346,6 +10631,17 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 				res = ec._Post_description(ctx, field, obj)
 				return res
 			})
+		case "html_description":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Post_html_description(ctx, field, obj)
+				return res
+			})
 		case "is_featured":
 			out.Values[i] = ec._Post_is_featured(ctx, field, obj)
 		case "is_sticky":
@@ -10748,6 +11044,17 @@ func (ec *executionContext) _Rating(ctx context.Context, sel ast.SelectionSet, o
 				res = ec._Rating_description(ctx, field, obj)
 				return res
 			})
+		case "html_description":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Rating_html_description(ctx, field, obj)
+				return res
+			})
 		case "numeric_value":
 			out.Values[i] = ec._Rating_numeric_value(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -11141,6 +11448,17 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 			}
 		case "description":
 			out.Values[i] = ec._Tag_description(ctx, field, obj)
+		case "html_description":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Tag_html_description(ctx, field, obj)
+				return res
+			})
 		case "space_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {

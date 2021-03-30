@@ -21,6 +21,9 @@ func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 	return int(obj.SpaceID), nil
 }
 
+func (r *tagResolver) HTMLDescription(ctx context.Context, obj *models.Tag) (*string, error) {
+	return &obj.HTMLDescription, nil
+}
 func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

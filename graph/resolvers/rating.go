@@ -23,6 +23,10 @@ func (r *ratingResolver) Description(ctx context.Context, obj *models.Rating) (i
 	return obj.Description, nil
 }
 
+func (r *ratingResolver) HTMLDescription(ctx context.Context, obj *models.Rating) (*string, error) {
+	return &obj.HTMLDescription, nil
+}
+
 func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
 	if obj.MediumID == 0 {
 		return nil, nil

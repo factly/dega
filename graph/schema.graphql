@@ -24,6 +24,7 @@ type Category {
   name: String!
   slug: String!
   description: Any
+  html_description: String
   meta_fields: Any
   parent_id: Int
   medium: Medium
@@ -37,6 +38,7 @@ type Tag {
   name: String!
   slug: String!
   description: String
+  html_description: String
   space_id: Int!
 }
 
@@ -77,6 +79,7 @@ type Post {
   status: String!
   excerpt: String
   description: Any
+  html_description: String
   is_featured: Boolean
   is_sticky: Boolean
   is_highlighted: Boolean
@@ -114,6 +117,7 @@ type Rating {
   name: String!
   slug: String!
   description: Any
+  html_description: String
   numeric_value: Int!
   medium: Medium
   space_id: Int!
@@ -126,6 +130,7 @@ type Claimant {
   name: String!
   slug: String!
   description: Any
+  html_description: String
   tag_line: String
   medium: Medium
   space_id: Int!
@@ -141,6 +146,7 @@ type Claim {
   checked_date: Time
   claim_sources: Any
   description: Any
+  html_description: String
   review: Any
   review_tag_line: Any
   review_sources: Any

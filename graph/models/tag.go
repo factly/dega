@@ -8,14 +8,15 @@ import (
 
 // Tag model
 type Tag struct {
-	ID          uint            `gorm:"primary_key" json:"id"`
-	CreatedAt   time.Time       `json:"created_at"`
-	UpdatedAt   time.Time       `json:"updated_at"`
-	DeletedAt   *gorm.DeletedAt `sql:"index" json:"deleted_at"`
-	Name        string          `gorm:"column:name" json:"name" validate:"required"`
-	Slug        string          `gorm:"column:slug" json:"slug" validate:"required"`
-	Description string          `gorm:"column:description" json:"description"`
-	SpaceID     uint            `gorm:"column:space_id" json:"space_id"`
+	ID              uint            `gorm:"primary_key" json:"id"`
+	CreatedAt       time.Time       `json:"created_at"`
+	UpdatedAt       time.Time       `json:"updated_at"`
+	DeletedAt       *gorm.DeletedAt `sql:"index" json:"deleted_at"`
+	Name            string          `gorm:"column:name" json:"name" validate:"required"`
+	Slug            string          `gorm:"column:slug" json:"slug" validate:"required"`
+	Description     string          `gorm:"column:description" json:"description"`
+	HTMLDescription string          `gorm:"column:html_description" json:"html_description"`
+	SpaceID         uint            `gorm:"column:space_id" json:"space_id"`
 }
 
 // TagsPaging model
