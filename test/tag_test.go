@@ -1,6 +1,7 @@
 package test
 
 import (
+	"database/sql/driver"
 	"net/http/httptest"
 	"regexp"
 	"testing"
@@ -10,6 +11,19 @@ import (
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
+
+// DATA
+var tagData = map[string]interface{}{
+	"name":        "Elections",
+	"slug":        "elections",
+	"is_featured": true,
+	"description": postgres.Jsonb{
+		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
+	},
+	"html_description": "<p>Test Description</p>",
+}
+
+var tagColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "is_featured", "space_id"}
 
 func TestTags(t *testing.T) {
 	// Setup Mock DB
@@ -22,27 +36,10 @@ func TestTags(t *testing.T) {
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
 
-	// DATA
-	var tagData = map[string]interface{}{
-		"name":        "Elections",
-		"slug":        "elections",
-		"is_featured": true,
-		"description": postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-		},
-		"html_description": "<p>Test Description</p>",
-	}
-
-	var tagColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "is_featured", "space_id"}
-
 	// tags testcases
 	t.Run("get list of tag ids", func(t *testing.T) {
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
-			WillReturnRows(sqlmock.NewRows(tagColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], 1))
+		TagCountMock(mock, 1)
+		TagSelectMock(mock)
 
 		resp := e.POST(path).
 			WithJSON(Query{
@@ -66,13 +63,8 @@ func TestTags(t *testing.T) {
 	})
 
 	t.Run("get tags with ids and space ids passed as parameter", func(t *testing.T) {
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
-			WithArgs(1, 2, 3, 1).
-			WillReturnRows(sqlmock.NewRows(tagColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], 1))
+		TagCountMock(mock, 1)
+		TagSelectMock(mock, 1, 2, 3, 1)
 
 		resp := e.POST(path).
 			WithJSON(Query{
@@ -98,8 +90,7 @@ func TestTags(t *testing.T) {
 	})
 
 	t.Run("get ascending sorted tags", func(t *testing.T) {
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
+		TagCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT \* FROM "tags" (.+) ORDER BY updated_at asc`).
 			WillReturnRows(sqlmock.NewRows(tagColumns).
@@ -130,10 +121,7 @@ func TestTags(t *testing.T) {
 
 	// tag testcases
 	t.Run("get tag by id", func(t *testing.T) {
-		mock.ExpectQuery(`SELECT \* FROM "tags"`).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows(tagColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], 1))
+		TagSelectMock(mock, 1)
 
 		resp := e.POST(path).
 			WithJSON(Query{
@@ -153,10 +141,7 @@ func TestTags(t *testing.T) {
 	})
 
 	t.Run("get tag from particular space", func(t *testing.T) {
-		mock.ExpectQuery(`SELECT \* FROM "tags"`).
-			WithArgs(1, 1).
-			WillReturnRows(sqlmock.NewRows(tagColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], 1))
+		TagSelectMock(mock, 1, 1)
 
 		resp := e.POST(path).
 			WithHeader("space", "1").
@@ -198,4 +183,16 @@ func TestTags(t *testing.T) {
 		CheckJSON(resp, nil, "tag")
 		ExpectationsMet(t, mock)
 	})
+}
+
+func TagSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
+		WithArgs(args...).
+		WillReturnRows(sqlmock.NewRows(tagColumns).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], 1))
+}
+
+func TagCountMock(mock sqlmock.Sqlmock, count int) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
+		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
