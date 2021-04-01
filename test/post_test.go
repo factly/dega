@@ -10,6 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gopkg.in/h2non/gock.v1"
 )
 
 // DATA
@@ -42,9 +43,15 @@ func TestPosts(t *testing.T) {
 	// Setup Mock DB
 	mock := SetupMockDB()
 
+	KavachMockServer()
+
 	// Start test server
 	testServer := httptest.NewServer(TestRouter())
 	defer testServer.Close()
+
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer gock.Off()
 
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
@@ -140,13 +147,13 @@ func TestPosts(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows(postColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).AddRow(1, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id", "tag_id"}).AddRow(1, 1, 1))
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).AddRow(1, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id", "tag_id"}).AddRow(1, 1, 1))
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
 			WithArgs(1).
@@ -200,6 +207,13 @@ func TestPosts(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows(postColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
 
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "author_id"}).AddRow(1, 1))
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "spaces"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "title"}).AddRow(1, "Test Space"))
+
 		resp := e.POST(path).
 			WithJSON(Query{
 				Query: `{
@@ -208,6 +222,9 @@ func TestPosts(t *testing.T) {
 							id
 							title
 							html_description
+							users {
+								id
+							}
 						}
 					}
 				}`,
@@ -217,9 +234,87 @@ func TestPosts(t *testing.T) {
 
 		CheckJSON(resp, map[string]interface{}{
 			"nodes": []map[string]interface{}{
-				{"id": "1", "title": postData["title"], "html_description": postData["html_description"]},
+				{"id": "1", "title": postData["title"], "html_description": postData["html_description"], "users": []map[string]interface{}{{"id": "1"}}},
 			},
 		}, "posts")
+		ExpectationsMet(t, mock)
+	})
+
+	// post testcases
+	t.Run("fetch a post by id from a space", func(t *testing.T) {
+		PostSelectMock(mock, 1, 1)
+
+		resp := e.POST(path).
+			WithHeader("space", "1").
+			WithJSON(Query{
+				Query: `{
+				post(id:1){
+						id
+						title
+						description
+					}
+				}`,
+			}).Expect().
+			JSON().
+			Object()
+
+		CheckJSON(resp, map[string]interface{}{"id": "1", "title": postData["title"], "description": postData["description"]}, "post")
+		ExpectationsMet(t, mock)
+	})
+
+	t.Run("fetch post with claim", func(t *testing.T) {
+		PostSelectMock(mock, 1, 1)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "claim_id"}).AddRow(1, 1))
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "claims"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "title"}).AddRow(1, "Test Claim"))
+
+		resp := e.POST(path).
+			WithHeader("space", "1").
+			WithJSON(Query{
+				Query: `{
+				post(id:1){
+						id
+						title
+						description
+						claims {
+							id
+							title
+						}
+					}
+				}`,
+			}).Expect().
+			JSON().
+			Object()
+
+		CheckJSON(resp, map[string]interface{}{"id": "1", "title": postData["title"], "description": postData["description"], "claims": []map[string]interface{}{{"id": "1", "title": "Test Claim"}}}, "post")
+		ExpectationsMet(t, mock)
+	})
+
+	t.Run("post record not found", func(t *testing.T) {
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "posts"`)).
+			WithArgs(1, 1).
+			WillReturnRows(sqlmock.NewRows(postColumns))
+
+		resp := e.POST(path).
+			WithHeader("space", "1").
+			WithJSON(Query{
+				Query: `{
+				post(id:1){
+						id
+						title
+						description
+					}
+				}`,
+			}).Expect().
+			JSON().
+			Object()
+
+		CheckJSON(resp, nil, "post")
 		ExpectationsMet(t, mock)
 	})
 

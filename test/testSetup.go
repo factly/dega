@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/DATA-DOG/go-sqlmock"
@@ -16,6 +17,8 @@ import (
 	"github.com/gavv/httpexpect/v2"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github.com/spf13/viper"
+	"gopkg.in/h2non/gock.v1"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -83,4 +86,61 @@ func ExpectationsMet(t *testing.T, mock sqlmock.Sqlmock) {
 	if err := mock.ExpectationsWereMet(); err != nil {
 		t.Errorf("there were unfulfilled expectations: %s", err)
 	}
+}
+
+var Dummy_AuthorList = []map[string]interface{}{
+	{
+		"id":         1,
+		"created_at": time.Now(),
+		"updated_at": time.Now(),
+		"deleted_at": nil,
+		"email":      "abc@abc.com",
+		"kid":        "",
+		"first_name": "abc",
+		"last_name":  "cba",
+		"birth_date": time.Now(),
+		"gender":     "male",
+		"permission": map[string]interface{}{
+			"id":              1,
+			"created_at":      time.Now(),
+			"updated_at":      time.Now(),
+			"deleted_at":      nil,
+			"user_id":         1,
+			"user":            nil,
+			"organisation_id": 1,
+			"organisation":    nil,
+			"role":            "owner",
+		},
+	},
+	{
+		"id":         2,
+		"created_at": time.Now(),
+		"updated_at": time.Now(),
+		"deleted_at": nil,
+		"email":      "def@def.com",
+		"kid":        "",
+		"first_name": "def",
+		"last_name":  "fed",
+		"birth_date": time.Now(),
+		"gender":     "male",
+		"permission": map[string]interface{}{
+			"id":              2,
+			"created_at":      time.Now(),
+			"updated_at":      time.Now(),
+			"deleted_at":      nil,
+			"user_id":         2,
+			"user":            nil,
+			"organisation_id": 1,
+			"organisation":    nil,
+			"role":            "member",
+		},
+	},
+}
+
+func KavachMockServer() {
+	viper.Set("kavach_url", "http://kavach:8000")
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/users").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(Dummy_AuthorList)
 }
