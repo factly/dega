@@ -23,6 +23,14 @@ func (r *ratingResolver) Description(ctx context.Context, obj *models.Rating) (i
 	return obj.Description, nil
 }
 
+func (r *ratingResolver) BackgroundColour(ctx context.Context, obj *models.Rating) (interface{}, error) {
+	return obj.BackgroundColour, nil
+}
+
+func (r *ratingResolver) TextColour(ctx context.Context, obj *models.Rating) (interface{}, error) {
+	return obj.TextColour, nil
+}
+
 func (r *ratingResolver) HTMLDescription(ctx context.Context, obj *models.Rating) (*string, error) {
 	return &obj.HTMLDescription, nil
 }

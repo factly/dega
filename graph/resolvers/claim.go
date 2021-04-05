@@ -36,10 +36,6 @@ func (r *claimResolver) Review(ctx context.Context, obj *models.Claim) (interfac
 	return obj.Review, nil
 }
 
-func (r *claimResolver) ReviewTagLine(ctx context.Context, obj *models.Claim) (interface{}, error) {
-	return obj.ReviewTagLine, nil
-}
-
 func (r *claimResolver) ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error) {
 	return obj.ReviewSources, nil
 }
@@ -82,11 +78,11 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 	filterStr := ""
 
 	if len(ratings) > 0 {
-		filterStr = filterStr + fmt.Sprint("claims.rating_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("claims.rating_id IN (", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	if len(claimants) > 0 {
-		filterStr = filterStr + fmt.Sprint("claims.claimant_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("claims.claimant_id IN (", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	filterStr = strings.Trim(filterStr, " AND ")

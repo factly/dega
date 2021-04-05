@@ -117,6 +117,8 @@ type Rating {
   name: String!
   slug: String!
   description: Any
+  background_colour: Any
+  text_colour: Any
   html_description: String
   numeric_value: Int!
   medium: Medium
@@ -148,7 +150,6 @@ type Claim {
   description: Any
   html_description: String
   review: Any
-  review_tag_line: Any
   review_sources: Any
   rating: Rating!
   claimant: Claimant!

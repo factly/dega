@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/factly/dega-api/config"
@@ -63,6 +64,10 @@ func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
+	}
+
+	if sID == 0 {
+		return nil, errors.New("invalid space header")
 	}
 
 	result := &models.Space{}
