@@ -29,7 +29,7 @@ func (r *userResolver) SocialMediaUrls(ctx context.Context, obj *models.User) (i
 	return obj.SocialMediaURLs, nil
 }
 
-func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error) {
+func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, nil
@@ -104,7 +104,7 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int, sortBy
 func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) {
 	sID, err := validator.GetSpace(ctx)
 
-	if err != nil {
+	if err != nil || sID == 0 {
 		return nil, nil
 	}
 

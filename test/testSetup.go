@@ -98,6 +98,9 @@ var Dummy_AuthorList = []map[string]interface{}{
 		"kid":        "",
 		"first_name": "abc",
 		"last_name":  "cba",
+		"medium": map[string]interface{}{
+			"id": 1,
+		},
 		"birth_date": time.Now(),
 		"gender":     "male",
 		"permission": map[string]interface{}{
@@ -122,7 +125,10 @@ var Dummy_AuthorList = []map[string]interface{}{
 		"first_name": "def",
 		"last_name":  "fed",
 		"birth_date": time.Now(),
-		"gender":     "male",
+		"medium": map[string]interface{}{
+			"id": 1,
+		},
+		"gender": "male",
 		"permission": map[string]interface{}{
 			"id":              2,
 			"created_at":      time.Now(),

@@ -240,7 +240,7 @@ type Query {
   formats(spaces:[Int!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int!): Post
-  users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
+  users(page: Int, limit: Int): UsersPaging
   user(id: Int!): User
   ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging

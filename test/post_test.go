@@ -318,6 +318,46 @@ func TestPosts(t *testing.T) {
 		ExpectationsMet(t, mock)
 	})
 
+	t.Run("fetch post with schemas", func(t *testing.T) {
+		PostSelectMock(mock, 1, 1)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"post_id", "claim_id"}).AddRow(1, 1))
+
+		ClaimSelectMock(mock)
+		ClaimantSelectMock(mock)
+		RatingSelectMock(mock)
+
+		RatingSelectMock(mock)
+		SpaceSelectQuery(mock)
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+			WillReturnRows(sqlmock.NewRows([]string{"id"}).
+				AddRow(1))
+
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id", "author_id"}).AddRow(1, 1).AddRow(1, 2))
+
+		SpaceSelectQuery(mock)
+
+		resp := e.POST(path).
+			WithHeader("space", "1").
+			WithJSON(Query{
+				Query: `{
+				post(id:1){
+						id
+						schemas
+					}
+				}`,
+			}).Expect().
+			JSON().
+			Object()
+
+		CheckJSON(resp, map[string]interface{}{"id": "1"}, "post")
+		ExpectationsMet(t, mock)
+	})
 }
 
 func PostSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
