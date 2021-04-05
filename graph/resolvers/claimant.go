@@ -37,7 +37,6 @@ func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*m
 
 func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -49,7 +48,7 @@ func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, 
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.ClaimantsPaging{}
 	result.Nodes = make([]*models.Claimant, 0)

@@ -182,7 +182,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 
 	if space.Logo != nil {
 		rawLogo, _ := space.Logo.URL.RawMessage.MarshalJSON()
-		json.Unmarshal(rawLogo, &jsonLogo)
+		_ = json.Unmarshal(rawLogo, &jsonLogo)
 	}
 
 	articleSchema := models.ArticleSchema{}
@@ -231,7 +231,6 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 
 func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -243,7 +242,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
@@ -282,7 +281,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	tx.Group("posts.id")
 
-	filterStr = strings.Trim(filterStr, " AND ")
+	filterStr = strings.Trim(filterStr, " AND")
 	var total int64
 	tx.Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 

@@ -45,7 +45,6 @@ func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*model
 
 func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -57,7 +56,7 @@ func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, li
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.RatingsPaging{}
 	result.Nodes = make([]*models.Rating, 0)

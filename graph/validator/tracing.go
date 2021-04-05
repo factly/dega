@@ -7,7 +7,9 @@ import (
 	"time"
 )
 
-const requestIDKey = "logging"
+type contextKey string
+
+const requestIDKey contextKey = "logging"
 
 // Tracing incoming req
 func Tracing() func(http.Handler) http.Handler {
