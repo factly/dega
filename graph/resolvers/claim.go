@@ -36,10 +36,6 @@ func (r *claimResolver) Review(ctx context.Context, obj *models.Claim) (interfac
 	return obj.Review, nil
 }
 
-func (r *claimResolver) ReviewTagLine(ctx context.Context, obj *models.Claim) (interface{}, error) {
-	return obj.ReviewTagLine, nil
-}
-
 func (r *claimResolver) ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error) {
 	return obj.ReviewSources, nil
 }
@@ -54,7 +50,6 @@ func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*model
 
 func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -66,7 +61,7 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.ClaimsPaging{}
 	result.Nodes = make([]*models.Claim, 0)
@@ -82,14 +77,14 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 	filterStr := ""
 
 	if len(ratings) > 0 {
-		filterStr = filterStr + fmt.Sprint("claims.rating_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("claims.rating_id IN (", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	if len(claimants) > 0 {
-		filterStr = filterStr + fmt.Sprint("claims.claimant_id IN ( ", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("claims.claimant_id IN (", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
 	}
 
-	filterStr = strings.Trim(filterStr, " AND ")
+	filterStr = strings.Trim(filterStr, " AND")
 
 	var total int64
 	tx.Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)

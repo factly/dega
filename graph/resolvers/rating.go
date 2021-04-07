@@ -23,6 +23,14 @@ func (r *ratingResolver) Description(ctx context.Context, obj *models.Rating) (i
 	return obj.Description, nil
 }
 
+func (r *ratingResolver) BackgroundColour(ctx context.Context, obj *models.Rating) (interface{}, error) {
+	return obj.BackgroundColour, nil
+}
+
+func (r *ratingResolver) TextColour(ctx context.Context, obj *models.Rating) (interface{}, error) {
+	return obj.TextColour, nil
+}
+
 func (r *ratingResolver) HTMLDescription(ctx context.Context, obj *models.Rating) (*string, error) {
 	return &obj.HTMLDescription, nil
 }
@@ -37,7 +45,6 @@ func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*model
 
 func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -49,7 +56,7 @@ func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, li
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.RatingsPaging{}
 	result.Nodes = make([]*models.Rating, 0)

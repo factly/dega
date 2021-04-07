@@ -117,6 +117,8 @@ type Rating {
   name: String!
   slug: String!
   description: Any
+  background_colour: Any
+  text_colour: Any
   html_description: String
   numeric_value: Int!
   medium: Medium
@@ -148,7 +150,6 @@ type Claim {
   description: Any
   html_description: String
   review: Any
-  review_tag_line: Any
   review_sources: Any
   rating: Rating!
   claimant: Claimant!
@@ -239,7 +240,7 @@ type Query {
   formats(spaces:[Int!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int!): Post
-  users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
+  users(page: Int, limit: Int): UsersPaging
   user(id: Int!): User
   ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging

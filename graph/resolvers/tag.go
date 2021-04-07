@@ -46,7 +46,6 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 
 func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -58,7 +57,7 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.TagsPaging{}
 	result.Nodes = make([]*models.Tag, 0)

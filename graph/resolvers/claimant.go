@@ -36,6 +36,20 @@ func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*m
 }
 
 func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
+	columns := []string{"created_at", "updated_at", "name", "slug"}
+	pageSortBy := "created_at"
+	pageSortOrder := "desc"
+
+	if sortOrder != nil && *sortOrder == "asc" {
+		pageSortOrder = "asc"
+	}
+
+	if sortBy != nil && util.ColumnValidator(*sortBy, columns) {
+		pageSortBy = *sortBy
+	}
+
+	order := pageSortBy + " " + pageSortOrder
+
 	result := &models.ClaimantsPaging{}
 	result.Nodes = make([]*models.Claimant, 0)
 
@@ -48,7 +62,7 @@ func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, 
 	}
 
 	var total int64
-	tx.Count(&total).Order("id desc").Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 

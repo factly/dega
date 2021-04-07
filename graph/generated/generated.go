@@ -86,7 +86,6 @@ type ComplexityRoot struct {
 		Rating          func(childComplexity int) int
 		Review          func(childComplexity int) int
 		ReviewSources   func(childComplexity int) int
-		ReviewTagLine   func(childComplexity int) int
 		Slug            func(childComplexity int) int
 		SpaceID         func(childComplexity int) int
 		Title           func(childComplexity int) int
@@ -208,20 +207,22 @@ type ComplexityRoot struct {
 		Tag        func(childComplexity int, id int) int
 		Tags       func(childComplexity int, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		User       func(childComplexity int, id int) int
-		Users      func(childComplexity int, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Users      func(childComplexity int, page *int, limit *int) int
 	}
 
 	Rating struct {
-		CreatedAt       func(childComplexity int) int
-		Description     func(childComplexity int) int
-		HTMLDescription func(childComplexity int) int
-		ID              func(childComplexity int) int
-		Medium          func(childComplexity int) int
-		Name            func(childComplexity int) int
-		NumericValue    func(childComplexity int) int
-		Slug            func(childComplexity int) int
-		SpaceID         func(childComplexity int) int
-		UpdatedAt       func(childComplexity int) int
+		BackgroundColour func(childComplexity int) int
+		CreatedAt        func(childComplexity int) int
+		Description      func(childComplexity int) int
+		HTMLDescription  func(childComplexity int) int
+		ID               func(childComplexity int) int
+		Medium           func(childComplexity int) int
+		Name             func(childComplexity int) int
+		NumericValue     func(childComplexity int) int
+		Slug             func(childComplexity int) int
+		SpaceID          func(childComplexity int) int
+		TextColour       func(childComplexity int) int
+		UpdatedAt        func(childComplexity int) int
 	}
 
 	RatingsPaging struct {
@@ -320,7 +321,6 @@ type ClaimResolver interface {
 	Description(ctx context.Context, obj *models.Claim) (interface{}, error)
 
 	Review(ctx context.Context, obj *models.Claim) (interface{}, error)
-	ReviewTagLine(ctx context.Context, obj *models.Claim) (interface{}, error)
 	ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error)
 	Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error)
 	Claimant(ctx context.Context, obj *models.Claim) (*models.Claimant, error)
@@ -376,7 +376,7 @@ type QueryResolver interface {
 	Formats(ctx context.Context, spaces []int) (*models.FormatsPaging, error)
 	Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Post(ctx context.Context, id int) (*models.Post, error)
-	Users(ctx context.Context, page *int, limit *int, sortBy *string, sortOrder *string) (*models.UsersPaging, error)
+	Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error)
 	User(ctx context.Context, id int) (*models.User, error)
 	Ratings(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error)
 	Claimants(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error)
@@ -387,6 +387,8 @@ type RatingResolver interface {
 	ID(ctx context.Context, obj *models.Rating) (string, error)
 
 	Description(ctx context.Context, obj *models.Rating) (interface{}, error)
+	BackgroundColour(ctx context.Context, obj *models.Rating) (interface{}, error)
+	TextColour(ctx context.Context, obj *models.Rating) (interface{}, error)
 
 	Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Rating) (int, error)
@@ -605,13 +607,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Claim.ReviewSources(childComplexity), true
-
-	case "Claim.review_tag_line":
-		if e.complexity.Claim.ReviewTagLine == nil {
-			break
-		}
-
-		return e.complexity.Claim.ReviewTagLine(childComplexity), true
 
 	case "Claim.slug":
 		if e.complexity.Claim.Slug == nil {
@@ -1294,7 +1289,14 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Users(childComplexity, args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
+		return e.complexity.Query.Users(childComplexity, args["page"].(*int), args["limit"].(*int)), true
+
+	case "Rating.background_colour":
+		if e.complexity.Rating.BackgroundColour == nil {
+			break
+		}
+
+		return e.complexity.Rating.BackgroundColour(childComplexity), true
 
 	case "Rating.created_at":
 		if e.complexity.Rating.CreatedAt == nil {
@@ -1358,6 +1360,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Rating.SpaceID(childComplexity), true
+
+	case "Rating.text_colour":
+		if e.complexity.Rating.TextColour == nil {
+			break
+		}
+
+		return e.complexity.Rating.TextColour(childComplexity), true
 
 	case "Rating.updated_at":
 		if e.complexity.Rating.UpdatedAt == nil {
@@ -1913,6 +1922,8 @@ type Rating {
   name: String!
   slug: String!
   description: Any
+  background_colour: Any
+  text_colour: Any
   html_description: String
   numeric_value: Int!
   medium: Medium
@@ -1944,7 +1955,6 @@ type Claim {
   description: Any
   html_description: String
   review: Any
-  review_tag_line: Any
   review_sources: Any
   rating: Rating!
   claimant: Claimant!
@@ -2035,7 +2045,7 @@ type Query {
   formats(spaces:[Int!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int!): Post
-  users(page: Int, limit: Int, sortBy: String, sortOrder: String): UsersPaging
+  users(page: Int, limit: Int): UsersPaging
   user(id: Int!): User
   ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
@@ -2550,24 +2560,6 @@ func (ec *executionContext) field_Query_users_args(ctx context.Context, rawArgs 
 		}
 	}
 	args["limit"] = arg1
-	var arg2 *string
-	if tmp, ok := rawArgs["sortBy"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sortBy"))
-		arg2, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["sortBy"] = arg2
-	var arg3 *string
-	if tmp, ok := rawArgs["sortOrder"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sortOrder"))
-		arg3, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["sortOrder"] = arg3
 	return args, nil
 }
 
@@ -3391,38 +3383,6 @@ func (ec *executionContext) _Claim_review(ctx context.Context, field graphql.Col
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Claim().Review(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(interface{})
-	fc.Result = res
-	return ec.marshalOAny2interface(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Claim_review_tag_line(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Claim",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Claim().ReviewTagLine(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6298,7 +6258,7 @@ func (ec *executionContext) _Query_users(ctx context.Context, field graphql.Coll
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Users(rctx, args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
+		return ec.resolvers.Query().Users(rctx, args["page"].(*int), args["limit"].(*int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6759,6 +6719,70 @@ func (ec *executionContext) _Rating_description(ctx context.Context, field graph
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Rating().Description(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Rating_background_colour(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Rating",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Rating().BackgroundColour(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Rating_text_colour(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Rating",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Rating().TextColour(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -10003,17 +10027,6 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				res = ec._Claim_review(ctx, field, obj)
 				return res
 			})
-		case "review_tag_line":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Claim_review_tag_line(ctx, field, obj)
-				return res
-			})
 		case "review_sources":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -11002,6 +11015,28 @@ func (ec *executionContext) _Rating(ctx context.Context, sel ast.SelectionSet, o
 					}
 				}()
 				res = ec._Rating_description(ctx, field, obj)
+				return res
+			})
+		case "background_colour":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Rating_background_colour(ctx, field, obj)
+				return res
+			})
+		case "text_colour":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Rating_text_colour(ctx, field, obj)
 				return res
 			})
 		case "html_description":
