@@ -258,6 +258,8 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	if status != nil {
 		tx.Where("status = ?", status)
+	} else {
+		tx.Where("status = ?", "publish")
 	}
 
 	filterStr := ""

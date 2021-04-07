@@ -307,7 +307,7 @@ type CategoryResolver interface {
 	ID(ctx context.Context, obj *models.Category) (string, error)
 
 	Description(ctx context.Context, obj *models.Category) (interface{}, error)
-	HTMLDescription(ctx context.Context, obj *models.Category) (*string, error)
+
 	MetaFields(ctx context.Context, obj *models.Category) (interface{}, error)
 	ParentID(ctx context.Context, obj *models.Category) (*int, error)
 	Medium(ctx context.Context, obj *models.Category) (*models.Medium, error)
@@ -318,7 +318,7 @@ type ClaimResolver interface {
 
 	ClaimSources(ctx context.Context, obj *models.Claim) (interface{}, error)
 	Description(ctx context.Context, obj *models.Claim) (interface{}, error)
-	HTMLDescription(ctx context.Context, obj *models.Claim) (*string, error)
+
 	Review(ctx context.Context, obj *models.Claim) (interface{}, error)
 	ReviewTagLine(ctx context.Context, obj *models.Claim) (interface{}, error)
 	ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error)
@@ -330,7 +330,6 @@ type ClaimantResolver interface {
 	ID(ctx context.Context, obj *models.Claimant) (string, error)
 
 	Description(ctx context.Context, obj *models.Claimant) (interface{}, error)
-	HTMLDescription(ctx context.Context, obj *models.Claimant) (*string, error)
 
 	Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Claimant) (int, error)
@@ -357,7 +356,6 @@ type PostResolver interface {
 	ID(ctx context.Context, obj *models.Post) (string, error)
 
 	Description(ctx context.Context, obj *models.Post) (interface{}, error)
-	HTMLDescription(ctx context.Context, obj *models.Post) (*string, error)
 
 	Format(ctx context.Context, obj *models.Post) (*models.Format, error)
 	Medium(ctx context.Context, obj *models.Post) (*models.Medium, error)
@@ -389,7 +387,6 @@ type RatingResolver interface {
 	ID(ctx context.Context, obj *models.Rating) (string, error)
 
 	Description(ctx context.Context, obj *models.Rating) (interface{}, error)
-	HTMLDescription(ctx context.Context, obj *models.Rating) (*string, error)
 
 	Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Rating) (int, error)
@@ -418,7 +415,6 @@ type SpaceResolver interface {
 type TagResolver interface {
 	ID(ctx context.Context, obj *models.Tag) (string, error)
 
-	HTMLDescription(ctx context.Context, obj *models.Tag) (*string, error)
 	SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 }
 type UserResolver interface {
@@ -2895,14 +2891,14 @@ func (ec *executionContext) _Category_html_description(ctx context.Context, fiel
 		Object:     "Category",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Category().HTMLDescription(rctx, obj)
+		return obj.HTMLDescription, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -2911,9 +2907,9 @@ func (ec *executionContext) _Category_html_description(ctx context.Context, fiel
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Category_meta_fields(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
@@ -3355,14 +3351,14 @@ func (ec *executionContext) _Claim_html_description(ctx context.Context, field g
 		Object:     "Claim",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Claim().HTMLDescription(rctx, obj)
+		return obj.HTMLDescription, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3371,9 +3367,9 @@ func (ec *executionContext) _Claim_html_description(ctx context.Context, field g
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_review(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -3789,14 +3785,14 @@ func (ec *executionContext) _Claimant_html_description(ctx context.Context, fiel
 		Object:     "Claimant",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Claimant().HTMLDescription(rctx, obj)
+		return obj.HTMLDescription, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3805,9 +3801,9 @@ func (ec *executionContext) _Claimant_html_description(ctx context.Context, fiel
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claimant_tag_line(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
@@ -5447,14 +5443,14 @@ func (ec *executionContext) _Post_html_description(ctx context.Context, field gr
 		Object:     "Post",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Post().HTMLDescription(rctx, obj)
+		return obj.HTMLDescription, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5463,9 +5459,9 @@ func (ec *executionContext) _Post_html_description(ctx context.Context, field gr
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post_is_featured(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
@@ -6787,14 +6783,14 @@ func (ec *executionContext) _Rating_html_description(ctx context.Context, field 
 		Object:     "Rating",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Rating().HTMLDescription(rctx, obj)
+		return obj.HTMLDescription, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6803,9 +6799,9 @@ func (ec *executionContext) _Rating_html_description(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Rating_numeric_value(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
@@ -8071,14 +8067,14 @@ func (ec *executionContext) _Tag_html_description(ctx context.Context, field gra
 		Object:     "Tag",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Tag().HTMLDescription(rctx, obj)
+		return obj.HTMLDescription, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8087,9 +8083,9 @@ func (ec *executionContext) _Tag_html_description(ctx context.Context, field gra
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Tag_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
@@ -9870,16 +9866,7 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				return res
 			})
 		case "html_description":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Category_html_description(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Category_html_description(ctx, field, obj)
 		case "meta_fields":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -10004,16 +9991,7 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				return res
 			})
 		case "html_description":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Claim_html_description(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Claim_html_description(ctx, field, obj)
 		case "review":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -10151,16 +10129,7 @@ func (ec *executionContext) _Claimant(ctx context.Context, sel ast.SelectionSet,
 				return res
 			})
 		case "html_description":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Claimant_html_description(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Claimant_html_description(ctx, field, obj)
 		case "tag_line":
 			out.Values[i] = ec._Claimant_tag_line(ctx, field, obj)
 		case "medium":
@@ -10632,16 +10601,7 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 				return res
 			})
 		case "html_description":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Post_html_description(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Post_html_description(ctx, field, obj)
 		case "is_featured":
 			out.Values[i] = ec._Post_is_featured(ctx, field, obj)
 		case "is_sticky":
@@ -11045,16 +11005,7 @@ func (ec *executionContext) _Rating(ctx context.Context, sel ast.SelectionSet, o
 				return res
 			})
 		case "html_description":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Rating_html_description(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Rating_html_description(ctx, field, obj)
 		case "numeric_value":
 			out.Values[i] = ec._Rating_numeric_value(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -11449,16 +11400,7 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 		case "description":
 			out.Values[i] = ec._Tag_description(ctx, field, obj)
 		case "html_description":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Tag_html_description(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Tag_html_description(ctx, field, obj)
 		case "space_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
