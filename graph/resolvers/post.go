@@ -30,6 +30,10 @@ func (r *postResolver) Description(ctx context.Context, obj *models.Post) (inter
 	return obj.Description, nil
 }
 
+func (r *postResolver) HTMLDescription(ctx context.Context, obj *models.Post) (*string, error) {
+	return &obj.HTMLDescription, nil
+}
+
 func (r *postResolver) Format(ctx context.Context, obj *models.Post) (*models.Format, error) {
 	return loaders.GetFormatLoader(ctx).Load(fmt.Sprint(obj.FormatID))
 }

@@ -39,6 +39,10 @@ func (r *categoryResolver) Description(ctx context.Context, obj *models.Category
 	return obj.Description, nil
 }
 
+func (r *categoryResolver) HTMLDescription(ctx context.Context, obj *models.Category) (*string, error) {
+	return &obj.HTMLDescription, nil
+}
+
 func (r *categoryResolver) MetaFields(ctx context.Context, obj *models.Category) (interface{}, error) {
 	return obj.MetaFields, nil
 }

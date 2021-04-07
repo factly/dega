@@ -23,6 +23,10 @@ func (r *claimantResolver) Description(ctx context.Context, obj *models.Claimant
 	return obj.Description, nil
 }
 
+func (r *claimantResolver) HTMLDescription(ctx context.Context, obj *models.Claimant) (*string, error) {
+	return &obj.HTMLDescription, nil
+}
+
 func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error) {
 	if obj.MediumID == 0 {
 		return nil, nil
