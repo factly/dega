@@ -165,6 +165,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FavIconID:         favIconID,
 		MobileIconID:      mobileIconID,
 		LogoMobileID:      logoMobileID,
+		Analytics:         space.Analytics,
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
 		ContactInfo:       space.ContactInfo,
@@ -188,6 +189,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"site_address":    result.SiteAddress,
 		"tag_line":        result.TagLine,
 		"organisation_id": result.OrganisationID,
+		"analytics":       result.Analytics,
 	}
 
 	err = meilisearchx.UpdateDocument("dega", meiliObj)
