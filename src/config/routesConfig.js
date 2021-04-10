@@ -7,6 +7,7 @@ import {
 
 //Pages
 import Dashboard from '../pages/dashboard';
+import Analytics from '../pages/analytics';
 
 //Spaces
 import Spaces from '../pages/spaces';
@@ -115,7 +116,7 @@ const routes = {
   },
   analytics: {
     path: '/analytics',
-    Component: Dashboard, // component is empty for now
+    Component: Analytics,
     title: 'Analytics',
   },
   spaces: {
