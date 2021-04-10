@@ -104,12 +104,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 		claimantSlug = slugx.Approve(&config.DB, slugx.Make(claimant.Name), sID, tableName)
 	}
 
-	// Store HTML description
-	description, err := util.HTMLDescription(claimant.Description)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+	// Check if claimant with same name exist
+	if claimant.Name != result.Name && util.CheckName(uint(sID), claimant.Name, tableName) {
+		loggerx.Error(errors.New(`claimant with same name exist`))
+		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
+	}
+
+	// Store HTML description
+	var description string
+	if len(claimant.Description.RawMessage) > 0 {
+		description, err = util.HTMLDescription(claimant.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+			return
+		}
 	}
 
 	tx := config.DB.Begin()

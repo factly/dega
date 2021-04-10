@@ -13,8 +13,8 @@ import (
 type claim struct {
 	Title         string         `json:"title" validate:"required,min=3,max=150"`
 	Slug          string         `json:"slug"`
-	ClaimDate     time.Time      `json:"claim_date" `
-	CheckedDate   time.Time      `json:"checked_date"`
+	ClaimDate     *time.Time     `json:"claim_date" `
+	CheckedDate   *time.Time     `json:"checked_date"`
 	ClaimSources  postgres.Jsonb `json:"claim_sources" swaggertype:"primitive,string"`
 	Description   postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	ClaimantID    uint           `json:"claimant_id" validate:"required"`

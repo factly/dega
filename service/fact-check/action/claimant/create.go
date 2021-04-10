@@ -83,12 +83,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
-	// Store HTML description
-	description, err := util.HTMLDescription(claimant.Description)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+	// Check if claimant with same name exist
+	if util.CheckName(uint(sID), claimant.Name, tableName) {
+		loggerx.Error(errors.New(`claimant with same name exist`))
+		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
 		return
+	}
+
+	var description string
+	// Store HTML description
+	if len(claimant.Description.RawMessage) > 0 {
+		description, err = util.HTMLDescription(claimant.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+			return
+		}
 	}
 
 	result := &model.Claimant{

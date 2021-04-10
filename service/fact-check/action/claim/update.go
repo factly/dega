@@ -3,11 +3,14 @@ package claim
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
+	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -105,20 +108,26 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	description, err := util.HTMLDescription(claim.Description)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
-		return
+	var description string
+	fmt.Println(claim.Description)
+	if len(claim.Description.RawMessage) > 0 && !reflect.DeepEqual(claim.Description, test.NilJsonb()) {
+		description, err = util.HTMLDescription(claim.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
+			return
+		}
 	}
 
 	tx := config.DB.Begin()
+	tx.Model(&result).Select("ClaimDate", "CheckedDate").Updates(model.Claim{
+		ClaimDate:   claim.ClaimDate,
+		CheckedDate: claim.CheckedDate,
+	})
 	err = tx.Model(&result).Updates(model.Claim{
 		Base:            config.Base{UpdatedByID: uint(uID)},
 		Title:           claim.Title,
 		Slug:            claimSlug,
-		ClaimDate:       claim.ClaimDate,
-		CheckedDate:     claim.CheckedDate,
 		ClaimSources:    claim.ClaimSources,
 		Description:     claim.Description,
 		HTMLDescription: description,
@@ -135,6 +144,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var claimMeiliDate int64 = 0
+	if result.ClaimDate != nil {
+		claimMeiliDate = result.ClaimDate.Unix()
+	}
+	var checkedMeiliDate int64 = 0
+	if result.CheckedDate != nil {
+		checkedMeiliDate = result.CheckedDate.Unix()
+	}
 	// Update into meili index
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
@@ -142,8 +159,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"title":          result.Title,
 		"slug":           result.Slug,
 		"description":    result.Description,
-		"claim_date":     result.ClaimDate.Unix(),
-		"checked_date":   result.CheckedDate.Unix(),
+		"claim_date":     claimMeiliDate,
+		"checked_date":   checkedMeiliDate,
 		"claim_sources":  result.ClaimSources,
 		"claimant_id":    result.ClaimantID,
 		"rating_id":      result.RatingID,
