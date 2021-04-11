@@ -21,6 +21,7 @@ type space struct {
 	VerificationCodes postgres.Jsonb `json:"verification_codes" swaggertype:"primitive,string"`
 	SocialMediaURLs   postgres.Jsonb `json:"social_media_urls" swaggertype:"primitive,string"`
 	ContactInfo       postgres.Jsonb `json:"contact_info" swaggertype:"primitive,string"`
+	Analytics         postgres.Jsonb `json:"analytics" swaggertype:"primitive,string"`
 	OrganisationID    int            `json:"organisation_id" validate:"required"`
 }
 

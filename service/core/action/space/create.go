@@ -118,6 +118,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Description:       space.Description,
 		TagLine:           space.TagLine,
 		SiteAddress:       space.SiteAddress,
+		Analytics:         space.Analytics,
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
 		OrganisationID:    space.OrganisationID,
@@ -177,6 +178,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"site_address":    result.SiteAddress,
 		"tag_line":        result.TagLine,
 		"organisation_id": result.OrganisationID,
+		"analytics":       result.Analytics,
 	}
 
 	err = meilisearchx.AddDocument("dega", meiliObj)
