@@ -37,6 +37,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         <Steps.Step title="Basic" />
         <Steps.Step title="Media" />
         <Steps.Step title="Contact" />
+        <Steps.Step title="Analytics" />
       </Steps>
       <Form
         {...layout}
@@ -48,7 +49,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           onReset();
         }}
         scrollToFirstError={true}
-        onFinishFailed={(errors) => {
+        onFinishFailed={() => {
           setCurrent(0);
         }}
         onValuesChange={() => {
@@ -144,16 +145,27 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             <Input style={{ width: '100%' }} />
           </Form.Item>
         </div>
+        <div style={current === 3 ? { display: 'block' } : { display: 'none' }}>
+          <Form.Item name={['analytics', 'plausible', 'server_url']} label="Server URL">
+            <Input style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item name={['analytics', 'plausible', 'domain']} label="Domain">
+            <Input style={{ width: '100%' }} />
+          </Form.Item>
+          <Form.Item name={['analytics', 'plausible', 'embed_code']} label="Embed Code">
+            <Input.TextArea style={{ width: '100%' }} />
+          </Form.Item>
+        </div>
         <Form.Item>
           <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>
             Back
           </Button>
-          {current < 2 ? (
-            <Button disabled={current === 2} onClick={() => setCurrent(current + 1)}>
+          {current < 3 ? (
+            <Button disabled={current === 3} onClick={() => setCurrent(current + 1)}>
               Next
             </Button>
           ) : null}
-          {current === 2 ? (
+          {current === 3 ? (
             <Button disabled={!valueChange} type="primary" htmlType="submit">
               Update
             </Button>
