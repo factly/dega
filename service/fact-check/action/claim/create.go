@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"reflect"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -80,7 +82,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Store HTML description
 	var description string
-	if len(claim.Description.RawMessage) > 0 {
+	if len(claim.Description.RawMessage) > 0 && !reflect.DeepEqual(claim.Description, test.NilJsonb()) {
 		description, err = util.HTMLDescription(claim.Description)
 		if err != nil {
 			loggerx.Error(err)

@@ -30,6 +30,7 @@ KETO_URL=http://keto:4466
 KRATOS_PUBLIC_URL=http://kratos:4433
 IFRAMELY_URL=http://iframely:8061
 GOOGLE_KEY=<google api key for google factchecks>
+TEMPLATES_PATH=web/templates
 
 MEILI_URL=http://meilisearch:7700
 MEILI_KEY=<meilisearch server key>

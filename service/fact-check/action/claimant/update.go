@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -113,7 +115,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Store HTML description
 	var description string
-	if len(claimant.Description.RawMessage) > 0 {
+	if len(claimant.Description.RawMessage) > 0 && !reflect.DeepEqual(claimant.Description, test.NilJsonb()) {
 		description, err = util.HTMLDescription(claimant.Description)
 		if err != nil {
 			loggerx.Error(err)

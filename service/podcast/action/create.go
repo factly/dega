@@ -5,10 +5,12 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"reflect"
 
 	"github.com/factly/dega-server/config"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -92,11 +94,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	description, err := util.HTMLDescription(podcast.Description)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse podcast description", http.StatusUnprocessableEntity)))
-		return
+	var description string
+	if len(podcast.Description.RawMessage) > 0 && !reflect.DeepEqual(podcast.Description, test.NilJsonb()) {
+		description, err = util.HTMLDescription(podcast.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse podcast description", http.StatusUnprocessableEntity)))
+			return
+		}
 	}
 
 	result := &model.Podcast{

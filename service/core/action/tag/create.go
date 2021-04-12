@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"reflect"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -86,11 +88,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	description, err := util.HTMLDescription(tag.Description)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse tag description", http.StatusUnprocessableEntity)))
-		return
+	var description string
+	if len(tag.Description.RawMessage) > 0 && !reflect.DeepEqual(tag.Description, test.NilJsonb()) {
+		description, err = util.HTMLDescription(tag.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse tag description", http.StatusUnprocessableEntity)))
+			return
+		}
 	}
 
 	result := &model.Tag{
