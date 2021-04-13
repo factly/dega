@@ -148,7 +148,13 @@ func claimUpdateMock(mock sqlmock.Sqlmock, claim map[string]interface{}, err err
 	claimant.SelectWithSpace(mock)
 	rating.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"claims\"`).
-		WithArgs(test.AnyTime{}, 1, claim["title"], claim["slug"], test.AnyTime{}, test.AnyTime{}, claim["claim_sources"], claim["description"], claim["html_description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_sources"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, test.AnyTime{}, 1).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	claimant.SelectWithSpace(mock)
+	rating.SelectWithSpace(mock)
+	mock.ExpectExec(`UPDATE \"claims\"`).
+		WithArgs(test.AnyTime{}, 1, claim["title"], claim["slug"], claim["claim_sources"], claim["description"], claim["html_description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_sources"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	SelectWithSpace(mock)
 	claimant.SelectWithOutSpace(mock, claimant.Data)
