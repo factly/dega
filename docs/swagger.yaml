@@ -55,8 +55,6 @@ definitions:
         type: string
       review_sources:
         type: string
-      review_tag_line:
-        type: string
       slug:
         type: string
       title:
@@ -183,6 +181,8 @@ definitions:
     type: object
   github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions:
     properties:
+      analytics:
+        type: string
       contact_info:
         type: string
       created_at:
@@ -254,6 +254,8 @@ definitions:
     type: object
   github.com_factly_dega-server_service_core_action_space.spaceWithPermissions:
     properties:
+      analytics:
+        type: string
       contact_info:
         type: string
       created_at:
@@ -420,6 +422,8 @@ definitions:
         type: string
       description:
         type: string
+      html_description:
+        type: string
       id:
         type: integer
       is_featured:
@@ -469,6 +473,8 @@ definitions:
         type: string
       description:
         type: string
+      html_description:
+        type: string
       id:
         type: integer
       rating:
@@ -478,8 +484,6 @@ definitions:
       review:
         type: string
       review_sources:
-        type: string
-      review_tag_line:
         type: string
       slug:
         type: string
@@ -503,6 +507,8 @@ definitions:
       deleted_at:
         type: string
       description:
+        type: string
+      html_description:
         type: string
       id:
         type: integer
@@ -539,6 +545,8 @@ definitions:
         type: string
       episode:
         type: integer
+      html_description:
+        type: string
       id:
         type: integer
       medium:
@@ -747,6 +755,8 @@ definitions:
         items:
           $ref: '#/definitions/model.Episode'
         type: array
+      html_description:
+        type: string
       id:
         type: integer
       language:
@@ -811,6 +821,8 @@ definitions:
         $ref: '#/definitions/model.Format'
       format_id:
         type: integer
+      html_description:
+        type: string
       id:
         type: integer
       is_featured:
@@ -848,7 +860,7 @@ definitions:
     type: object
   model.Rating:
     properties:
-      colour:
+      background_colour:
         type: string
       created_at:
         type: string
@@ -857,6 +869,8 @@ definitions:
       deleted_at:
         type: string
       description:
+        type: string
+      html_description:
         type: string
       id:
         type: integer
@@ -874,6 +888,8 @@ definitions:
         $ref: '#/definitions/model.Space'
       space_id:
         type: integer
+      text_colour:
+        type: string
       updated_at:
         type: string
       updated_by_id:
@@ -881,6 +897,8 @@ definitions:
     type: object
   model.Space:
     properties:
+      analytics:
+        type: string
       contact_info:
         type: string
       created_at:
@@ -1003,6 +1021,8 @@ definitions:
       deleted_at:
         type: string
       description:
+        type: string
+      html_description:
         type: string
       id:
         type: integer
@@ -1128,7 +1148,6 @@ definitions:
         type: string
     required:
     - organisation_id
-    - title
     type: object
   podcast.paging:
     properties:
@@ -1219,6 +1238,8 @@ definitions:
         type: boolean
       page:
         type: boolean
+      published_date:
+        type: string
       slug:
         type: string
       space_id:
@@ -1267,6 +1288,8 @@ definitions:
         $ref: '#/definitions/model.Format'
       format_id:
         type: integer
+      html_description:
+        type: string
       id:
         type: integer
       is_featured:
@@ -1320,7 +1343,7 @@ definitions:
     type: object
   rating.rating:
     properties:
-      colour:
+      background_colour:
         type: string
       description:
         type: string
@@ -1332,10 +1355,13 @@ definitions:
         type: integer
       slug:
         type: string
+      text_colour:
+        type: string
     required:
-    - colour
+    - background_colour
     - name
     - numeric_value
+    - text_colour
     type: object
   search.searchQuery:
     properties:
@@ -1425,6 +1451,8 @@ definitions:
     type: object
   space.space:
     properties:
+      analytics:
+        type: string
       contact_info:
         type: string
       description:
@@ -3265,67 +3293,6 @@ paths:
           schema:
             $ref: '#/definitions/post.postData'
       summary: Update a post by id
-      tags:
-      - Post
-  /core/posts/{post_id}/publish:
-    put:
-      description: Publish post by ID
-      operationId: publish-post-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Post ID
-        in: path
-        name: post_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Publish a post by id
-      tags:
-      - Post
-  /core/posts/publish:
-    post:
-      description: Create published post
-      operationId: add-published-post
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Post Object
-        in: body
-        name: Post
-        required: true
-        schema:
-          $ref: '#/definitions/post.post'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Create published post
       tags:
       - Post
   /core/posts/templates:

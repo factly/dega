@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -58,7 +59,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
-	filters := generateFilters(queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["format"], queryMap["status"])
+	filters := generateFilters(queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["status"])
 	filteredPostIDs := make([]uint, 0)
 
 	if filters != "" {
@@ -113,13 +114,20 @@ func list(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 	}
+
+	formatIDs := make([]uint, 0)
+	for _, fid := range queryMap["format"] {
+		fidStr, _ := strconv.Atoi(fid)
+		formatIDs = append(formatIDs, uint(fidStr))
+	}
+
 	if len(filteredPostIDs) > 0 {
 		if !statusTemplate {
 			tx.Where("status != ?", "template")
 		}
-		err = tx.Where(filteredPostIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+		err = tx.Where(filteredPostIDs).Where("format_id IN (?)", formatIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 	} else {
-		err = tx.Where("status != ?", "template").Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+		err = tx.Where("status != ?", "template").Where("format_id IN (?)", formatIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 	}
 
 	if err != nil {
@@ -191,7 +199,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusOK, result)
 }
 
-func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs, status []string) string {
+func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {
 	filters := ""
 	if len(tagIDs) > 0 {
 		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
@@ -203,10 +211,6 @@ func generateFilters(tagIDs, categoryIDs, authorIDs, formatIDs, status []string)
 
 	if len(authorIDs) > 0 {
 		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(authorIDs, "author_ids"), " AND ")
-	}
-
-	if len(formatIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(formatIDs, "format_id"), " AND ")
 	}
 
 	if len(status) > 0 {

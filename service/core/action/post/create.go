@@ -193,9 +193,13 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		SpaceID:          post.SpaceID,
 	}
 
-	currTime := time.Now()
 	if status == "publish" {
-		result.Post.PublishedDate = &currTime
+		if post.PublishedDate == nil {
+			currTime := time.Now()
+			result.Post.PublishedDate = &currTime
+		} else {
+			result.Post.PublishedDate = post.PublishedDate
+		}
 	} else {
 		result.Post.PublishedDate = nil
 	}
