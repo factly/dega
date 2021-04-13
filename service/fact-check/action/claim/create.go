@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"reflect"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -79,11 +81,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	description, err := util.HTMLDescription(claim.Description)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
-		return
+	var description string
+	if len(claim.Description.RawMessage) > 0 && !reflect.DeepEqual(claim.Description, test.NilJsonb()) {
+		description, err = util.HTMLDescription(claim.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
+			return
+		}
 	}
 
 	result := &model.Claim{
@@ -113,6 +118,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Find(&result)
 
+	var claimMeiliDate int64 = 0
+	if result.ClaimDate != nil {
+		claimMeiliDate = result.ClaimDate.Unix()
+	}
+	var checkedMeiliDate int64 = 0
+	if result.CheckedDate != nil {
+		checkedMeiliDate = result.CheckedDate.Unix()
+	}
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
@@ -120,8 +133,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"title":          result.Title,
 		"slug":           result.Slug,
 		"description":    result.Description,
-		"claim_date":     result.ClaimDate.Unix(),
-		"checked_date":   result.CheckedDate.Unix(),
+		"claim_date":     claimMeiliDate,
+		"checked_date":   checkedMeiliDate,
 		"claim_sources":  result.ClaimSources,
 		"claimant_id":    result.ClaimantID,
 		"rating_id":      result.RatingID,

@@ -2,7 +2,11 @@
     {
         "name": "True",
         "slug": "true",
-        "description": "True",
+        "description": {
+            "blocks": [
+                {"type":"paragraph", "data": {"text": "True"}}
+            ]
+        },
         "numeric_value": 5,
         "colour": {
             "hex": "#108040",
@@ -31,7 +35,11 @@
     {
         "name": "Partly True",
         "slug": "partly-true",
-        "description": "Partly True",
+        "description": {
+            "blocks": [
+                {"type":"paragraph", "data": {"text": "Partly True"}}
+            ]
+        },
         "numeric_value": 4,
         "colour": {
             "hex": "#a5c239",
@@ -60,7 +68,11 @@
     {
         "name": "Unverified",
         "slug": "unverified",
-        "description": "Unverified",
+        "description": {
+            "blocks": [
+                {"type":"paragraph", "data": {"text": "Unverified"}}
+            ]
+        },
         "numeric_value": 3,
         "colour": {
             "hex": "#eca124",
@@ -88,7 +100,11 @@
     {
         "name": "Misleading",
         "slug": "misleading",
-        "description": "Misleading",
+        "description": {
+            "blocks": [
+                {"type":"paragraph", "data": {"text": "Misleading"}}
+            ]
+        },
         "numeric_value": 2,
         "colour": {
             "hex": "#749990",
@@ -117,7 +133,11 @@
     {
         "name": "False",
         "slug": "false",
-        "description": "False",
+        "description": {
+            "blocks": [
+                {"type":"paragraph", "data": {"text": "False"}}
+            ]
+        },
         "numeric_value": 1,
         "colour": {
             "hex": "#e82728",
@@ -146,7 +166,11 @@
     {
         "name": "Not a Claim",
         "slug": "not-a-claim",
-        "description": "Not a Claim",
+        "description": {
+            "blocks": [
+                {"type":"paragraph", "data": {"text": "Not A Claim"}}
+            ]
+        },
         "numeric_value": 0,
         "colour": {
             "hex":"#f9f9fa",

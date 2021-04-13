@@ -9,6 +9,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -67,6 +68,12 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	for i := range ratings {
 		ratings[i].SpaceID = uint(sID)
+		ratings[i].HTMLDescription, err = util.HTMLDescription(ratings[i].Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse rating description", http.StatusUnprocessableEntity)))
+			return
+		}
 	}
 
 	tx.Model(&model.Rating{}).Create(&ratings)
