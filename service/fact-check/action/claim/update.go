@@ -133,7 +133,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		HTMLDescription: description,
 		ClaimantID:      claim.ClaimantID,
 		RatingID:        claim.RatingID,
-		Review:          claim.Review,
+		Fact:            claim.Fact,
 		ReviewSources:   claim.ReviewSources,
 	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").First(&result).Error
 
@@ -164,7 +164,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"claim_sources":  result.ClaimSources,
 		"claimant_id":    result.ClaimantID,
 		"rating_id":      result.RatingID,
-		"review":         result.Review,
+		"fact":           result.Fact,
 		"review_sources": result.ReviewSources,
 		"space_id":       result.SpaceID,
 	}

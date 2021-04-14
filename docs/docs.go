@@ -5436,16 +5436,13 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "fact": {
+                    "type": "string"
+                },
                 "rating_id": {
                     "type": "integer"
                 },
-                "review": {
-                    "type": "string"
-                },
                 "review_sources": {
-                    "type": "string"
-                },
-                "review_tag_line": {
                     "type": "string"
                 },
                 "slug": {
@@ -5635,6 +5632,9 @@ var doc = `{
         "github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions": {
             "type": "object",
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
@@ -5743,6 +5743,9 @@ var doc = `{
         "github.com_factly_dega-server_service_core_action_space.spaceWithPermissions": {
             "type": "object",
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
@@ -5994,6 +5997,9 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6068,6 +6074,12 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "fact": {
+                    "type": "string"
+                },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6077,13 +6089,7 @@ var doc = `{
                 "rating_id": {
                     "type": "integer"
                 },
-                "review": {
-                    "type": "string"
-                },
                 "review_sources": {
-                    "type": "string"
-                },
-                "review_tag_line": {
                     "type": "string"
                 },
                 "slug": {
@@ -6119,6 +6125,9 @@ var doc = `{
                     "type": "string"
                 },
                 "description": {
+                    "type": "string"
+                },
+                "html_description": {
                     "type": "string"
                 },
                 "id": {
@@ -6173,6 +6182,9 @@ var doc = `{
                 },
                 "episode": {
                     "type": "integer"
+                },
+                "html_description": {
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
@@ -6489,6 +6501,9 @@ var doc = `{
                         "$ref": "#/definitions/model.Episode"
                     }
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6586,6 +6601,9 @@ var doc = `{
                 "format_id": {
                     "type": "integer"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6642,7 +6660,7 @@ var doc = `{
         "model.Rating": {
             "type": "object",
             "properties": {
-                "colour": {
+                "background_colour": {
                     "type": "string"
                 },
                 "created_at": {
@@ -6655,6 +6673,9 @@ var doc = `{
                     "type": "string"
                 },
                 "description": {
+                    "type": "string"
+                },
+                "html_description": {
                     "type": "string"
                 },
                 "id": {
@@ -6681,6 +6702,9 @@ var doc = `{
                 "space_id": {
                     "type": "integer"
                 },
+                "text_colour": {
+                    "type": "string"
+                },
                 "updated_at": {
                     "type": "string"
                 },
@@ -6692,6 +6716,9 @@ var doc = `{
         "model.Space": {
             "type": "object",
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
@@ -6882,6 +6909,9 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -7051,8 +7081,7 @@ var doc = `{
         "organisation.organisationPermissionRequest": {
             "type": "object",
             "required": [
-                "organisation_id",
-                "title"
+                "organisation_id"
             ],
             "properties": {
                 "description": {
@@ -7276,6 +7305,9 @@ var doc = `{
                 "format_id": {
                     "type": "integer"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -7357,12 +7389,13 @@ var doc = `{
         "rating.rating": {
             "type": "object",
             "required": [
-                "colour",
+                "background_colour",
                 "name",
-                "numeric_value"
+                "numeric_value",
+                "text_colour"
             ],
             "properties": {
-                "colour": {
+                "background_colour": {
                     "type": "string"
                 },
                 "description": {
@@ -7378,6 +7411,9 @@ var doc = `{
                     "type": "integer"
                 },
                 "slug": {
+                    "type": "string"
+                },
+                "text_colour": {
                     "type": "string"
                 }
             }
@@ -7520,6 +7556,9 @@ var doc = `{
                 "organisation_id"
             ],
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },

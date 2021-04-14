@@ -101,7 +101,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		HTMLDescription: description,
 		ClaimantID:      claim.ClaimantID,
 		RatingID:        claim.RatingID,
-		Review:          claim.Review,
+		Fact:            claim.Fact,
 		ReviewSources:   claim.ReviewSources,
 		SpaceID:         uint(sID),
 	}
@@ -138,7 +138,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"claim_sources":  result.ClaimSources,
 		"claimant_id":    result.ClaimantID,
 		"rating_id":      result.RatingID,
-		"review":         result.Review,
+		"fact":           result.Fact,
 		"review_sources": result.ReviewSources,
 		"space_id":       result.SpaceID,
 	}

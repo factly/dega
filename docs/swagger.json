@@ -5421,16 +5421,13 @@
                 "description": {
                     "type": "string"
                 },
+                "fact": {
+                    "type": "string"
+                },
                 "rating_id": {
                     "type": "integer"
                 },
-                "review": {
-                    "type": "string"
-                },
                 "review_sources": {
-                    "type": "string"
-                },
-                "review_tag_line": {
                     "type": "string"
                 },
                 "slug": {
@@ -5620,6 +5617,9 @@
         "github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions": {
             "type": "object",
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
@@ -5728,6 +5728,9 @@
         "github.com_factly_dega-server_service_core_action_space.spaceWithPermissions": {
             "type": "object",
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
@@ -5979,6 +5982,9 @@
                 "description": {
                     "type": "string"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6053,6 +6059,12 @@
                 "description": {
                     "type": "string"
                 },
+                "fact": {
+                    "type": "string"
+                },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6062,13 +6074,7 @@
                 "rating_id": {
                     "type": "integer"
                 },
-                "review": {
-                    "type": "string"
-                },
                 "review_sources": {
-                    "type": "string"
-                },
-                "review_tag_line": {
                     "type": "string"
                 },
                 "slug": {
@@ -6104,6 +6110,9 @@
                     "type": "string"
                 },
                 "description": {
+                    "type": "string"
+                },
+                "html_description": {
                     "type": "string"
                 },
                 "id": {
@@ -6158,6 +6167,9 @@
                 },
                 "episode": {
                     "type": "integer"
+                },
+                "html_description": {
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
@@ -6474,6 +6486,9 @@
                         "$ref": "#/definitions/model.Episode"
                     }
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6571,6 +6586,9 @@
                 "format_id": {
                     "type": "integer"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6627,7 +6645,7 @@
         "model.Rating": {
             "type": "object",
             "properties": {
-                "colour": {
+                "background_colour": {
                     "type": "string"
                 },
                 "created_at": {
@@ -6640,6 +6658,9 @@
                     "type": "string"
                 },
                 "description": {
+                    "type": "string"
+                },
+                "html_description": {
                     "type": "string"
                 },
                 "id": {
@@ -6666,6 +6687,9 @@
                 "space_id": {
                     "type": "integer"
                 },
+                "text_colour": {
+                    "type": "string"
+                },
                 "updated_at": {
                     "type": "string"
                 },
@@ -6677,6 +6701,9 @@
         "model.Space": {
             "type": "object",
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
@@ -6867,6 +6894,9 @@
                 "description": {
                     "type": "string"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -7036,8 +7066,7 @@
         "organisation.organisationPermissionRequest": {
             "type": "object",
             "required": [
-                "organisation_id",
-                "title"
+                "organisation_id"
             ],
             "properties": {
                 "description": {
@@ -7261,6 +7290,9 @@
                 "format_id": {
                     "type": "integer"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -7342,12 +7374,13 @@
         "rating.rating": {
             "type": "object",
             "required": [
-                "colour",
+                "background_colour",
                 "name",
-                "numeric_value"
+                "numeric_value",
+                "text_colour"
             ],
             "properties": {
-                "colour": {
+                "background_colour": {
                     "type": "string"
                 },
                 "description": {
@@ -7363,6 +7396,9 @@
                     "type": "integer"
                 },
                 "slug": {
+                    "type": "string"
+                },
+                "text_colour": {
                     "type": "string"
                 }
             }
@@ -7505,6 +7541,9 @@
                 "organisation_id"
             ],
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
