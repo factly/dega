@@ -13,7 +13,7 @@ import (
 )
 
 var claimData = map[string]interface{}{
-	"title":        "Claim",
+	"claim":        "Claim",
 	"slug":         "claim",
 	"claim_date":   time.Now(),
 	"checked_date": time.Now(),
@@ -26,15 +26,13 @@ var claimData = map[string]interface{}{
 	"html_description": "<p>Test Description</p>",
 	"claimant_id":      uint(1),
 	"rating_id":        uint(1),
-	"review": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"review"}`),
-	},
+	"fact":             "Test Fact",
 	"review_sources": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"review sources"}`),
 	},
 }
 
-var claimColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "slug", "claim_date", "checked_date", "claim_sources", "description", "html_description", "claimant_id", "rating_id", "review", "review_sources", "space_id"}
+var claimColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "claim", "slug", "claim_date", "checked_date", "claim_sources", "description", "html_description", "claimant_id", "rating_id", "fact", "review_sources", "space_id"}
 
 func TestClaim(t *testing.T) {
 	// Setup Mock DB
@@ -69,7 +67,7 @@ func TestClaim(t *testing.T) {
 							description
 							html_description	
 							claim_sources
-							review
+							fact
 							review_sources
 							rating {
 								id
@@ -86,7 +84,7 @@ func TestClaim(t *testing.T) {
 
 		CheckJSON(resp, map[string]interface{}{
 			"nodes": []map[string]interface{}{
-				{"id": "1", "space_id": 1, "description": claimData["description"], "html_description": claimData["html_description"], "claim_sources": claimData["claim_sources"], "review": claimData["review"], "review_sources": claimData["review_sources"], "rating": map[string]interface{}{"id": "1"}, "claimant": map[string]interface{}{"id": "1"}},
+				{"id": "1", "space_id": 1, "description": claimData["description"], "html_description": claimData["html_description"], "claim_sources": claimData["claim_sources"], "fact": claimData["fact"], "review_sources": claimData["review_sources"], "rating": map[string]interface{}{"id": "1"}, "claimant": map[string]interface{}{"id": "1"}},
 			},
 		}, "claims")
 		ExpectationsMet(t, mock)
@@ -154,7 +152,7 @@ func ClaimSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "claims"`)).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(claimColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["claim"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["fact"], claimData["review_sources"], 1))
 }
 
 func ClaimCountMock(mock sqlmock.Sqlmock, count int) {

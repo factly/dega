@@ -271,7 +271,7 @@ func TestPosts(t *testing.T) {
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "claims"`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "title"}).AddRow(1, "Test Claim"))
+			WillReturnRows(sqlmock.NewRows([]string{"id", "claim", "fact"}).AddRow(1, "Test Claim", "Hard Fact"))
 
 		resp := e.POST(path).
 			WithHeader("space", "1").
@@ -283,7 +283,8 @@ func TestPosts(t *testing.T) {
 						description
 						claims {
 							id
-							title
+							claim
+							fact
 						}
 					}
 				}`,
@@ -291,7 +292,7 @@ func TestPosts(t *testing.T) {
 			JSON().
 			Object()
 
-		CheckJSON(resp, map[string]interface{}{"id": "1", "title": postData["title"], "description": postData["description"], "claims": []map[string]interface{}{{"id": "1", "title": "Test Claim"}}}, "post")
+		CheckJSON(resp, map[string]interface{}{"id": "1", "title": postData["title"], "description": postData["description"], "claims": []map[string]interface{}{{"id": "1", "claim": "Test Claim", "fact": "Hard Fact"}}}, "post")
 		ExpectationsMet(t, mock)
 	})
 
