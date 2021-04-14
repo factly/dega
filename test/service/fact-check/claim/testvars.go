@@ -34,9 +34,7 @@ var Data = map[string]interface{}{
 	"html_description": "<p>Test Description</p>",
 	"claimant_id":      uint(1),
 	"rating_id":        uint(1),
-	"review": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"review"}`),
-	},
+	"fact":             "test fact",
 	"review_sources": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"review sources"}`),
 	},
@@ -57,9 +55,7 @@ var claimList = []map[string]interface{}{
 		"html_description": "<p>Test Description 1</p>",
 		"claimant_id":      uint(1),
 		"rating_id":        uint(1),
-		"review": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"review 1"}`),
-		},
+		"fact":             "test fact 1",
 		"review_sources": postgres.Jsonb{
 			RawMessage: []byte(`{"type":"review sources1"}`),
 		},
@@ -78,9 +74,7 @@ var claimList = []map[string]interface{}{
 		"html_description": "<p>Test Description 2</p>",
 		"claimant_id":      uint(1),
 		"rating_id":        uint(1),
-		"review": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"review 2"}`),
-		},
+		"fact":             "test fact 2",
 		"review_sources": postgres.Jsonb{
 			RawMessage: []byte(`{"type":"review sources 2"}`),
 		},
@@ -91,7 +85,7 @@ var invalidData = map[string]interface{}{
 	"title": "a",
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "slug", "claim_date", "checked_date", "claim_sources", "description", "html_description", "claimant_id", "rating_id", "review", "review_sources", "space_id"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "slug", "claim_date", "checked_date", "claim_sources", "description", "html_description", "claimant_id", "rating_id", "fact", "review_sources", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "claims"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "claims" SET "deleted_at"=`)
@@ -111,7 +105,7 @@ func claimInsertMock(mock sqlmock.Sqlmock) {
 	claimant.SelectWithSpace(mock)
 	rating.SelectWithSpace(mock)
 	mock.ExpectQuery(`INSERT INTO "claims"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], test.AnyTime{}, test.AnyTime{}, Data["claim_sources"], Data["description"], Data["html_description"], Data["claimant_id"], Data["rating_id"], Data["review"], Data["review_sources"], 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], test.AnyTime{}, test.AnyTime{}, Data["claim_sources"], Data["description"], Data["html_description"], Data["claimant_id"], Data["rating_id"], Data["fact"], Data["review_sources"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -124,7 +118,7 @@ func claimListMock(mock sqlmock.Sqlmock) {
 
 	mock.ExpectQuery(selectQuery).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimList[0]["title"], claimList[0]["slug"], claimList[0]["claim_date"], claimList[0]["checked_date"], claimList[0]["claim_sources"], claimList[0]["description"], claimList[0]["html_description"], claimList[0]["claimant_id"], claimList[0]["rating_id"], claimList[0]["review"], claimList[0]["review_sources"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimList[0]["title"], claimList[0]["slug"], claimList[0]["claim_date"], claimList[0]["checked_date"], claimList[0]["claim_sources"], claimList[0]["description"], claimList[0]["html_description"], claimList[0]["claimant_id"], claimList[0]["rating_id"], claimList[0]["fact"], claimList[0]["review_sources"], 1))
 
 	claimant.SelectWithOutSpace(mock, claimant.Data)
 	rating.SelectWithOutSpace(mock, rating.Data)
@@ -154,7 +148,7 @@ func claimUpdateMock(mock sqlmock.Sqlmock, claim map[string]interface{}, err err
 	claimant.SelectWithSpace(mock)
 	rating.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"claims\"`).
-		WithArgs(test.AnyTime{}, 1, claim["title"], claim["slug"], claim["claim_sources"], claim["description"], claim["html_description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_sources"], 1).
+		WithArgs(test.AnyTime{}, 1, claim["title"], claim["slug"], claim["claim_sources"], claim["description"], claim["html_description"], claim["claimant_id"], claim["rating_id"], claim["fact"], claim["review_sources"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	SelectWithSpace(mock)
 	claimant.SelectWithOutSpace(mock, claimant.Data)
@@ -165,7 +159,7 @@ func SelectWithOutSpace(mock sqlmock.Sqlmock, claim map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claim["title"], claim["slug"], claim["claim_date"], claim["checked_date"], claim["claim_sources"], claim["description"], claim["html_description"], claim["claimant_id"], claim["rating_id"], claim["review"], claim["review_sources"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claim["title"], claim["slug"], claim["claim_date"], claim["checked_date"], claim["claim_sources"], claim["description"], claim["html_description"], claim["claimant_id"], claim["rating_id"], claim["fact"], claim["review_sources"], 1))
 
 	// Preload Claimant & Rating
 	claimant.SelectWithOutSpace(mock, claimant.Data)
@@ -176,7 +170,7 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["slug"], Data["claim_date"], Data["checked_date"], Data["claim_sources"], Data["description"], Data["html_description"], Data["claimant_id"], Data["rating_id"], Data["review"], Data["review_sources"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["slug"], Data["claim_date"], Data["checked_date"], Data["claim_sources"], Data["description"], Data["html_description"], Data["claimant_id"], Data["rating_id"], Data["fact"], Data["review_sources"], 1))
 }
 
 //check claim exits or not

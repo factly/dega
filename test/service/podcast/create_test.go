@@ -22,7 +22,7 @@ import (
 func TestRatingCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
-	viper.Set("templates_path", "../../../web/templates")
+	viper.Set("templates_path", "../../../web/templates/*")
 
 	test.MockServer()
 	defer gock.DisableNetworking()

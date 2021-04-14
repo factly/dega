@@ -5969,6 +5969,9 @@
                 "description": {
                     "type": "string"
                 },
+                "fact": {
+                    "type": "string"
+                },
                 "html_description": {
                     "type": "string"
                 },

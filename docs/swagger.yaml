@@ -473,6 +473,8 @@ definitions:
         type: string
       description:
         type: string
+      fact:
+        type: string
       html_description:
         type: string
       id:
