@@ -235,9 +235,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if status == http.StatusOK {
-			currTime := time.Now()
-			updatedPost.PublishedDate = &currTime
 			updatedPost.Status = "publish"
+			if post.PublishedDate == nil {
+				currTime := time.Now()
+				updatedPost.PublishedDate = &currTime
+			} else {
+				updatedPost.PublishedDate = post.PublishedDate
+			}
 		} else {
 			tx.Rollback()
 			w.WriteHeader(http.StatusUnauthorized)

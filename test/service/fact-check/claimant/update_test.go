@@ -110,7 +110,25 @@ func TestClaimantUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update claimant", func(t *testing.T) {
+	t.Run("claimant with same name exist", func(t *testing.T) {
+		updatedClaimant["name"] = "TOI NEW"
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		SelectWithSpace(mock)
+		claimantCountQuery(mock, 1)
+
+		e.PUT(path).
+			WithPath("claimant_id", 1).
+			WithHeaders(headers).
+			WithJSON(updatedClaimant).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
+		updatedClaimant["name"] = "TOI"
+	})
+
+	t.Run("cannot parse claimant description", func(t *testing.T) {
 		updatedClaimant["slug"] = "toi"
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)

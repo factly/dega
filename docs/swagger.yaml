@@ -473,8 +473,6 @@ definitions:
         type: string
       description:
         type: string
-      fact:
-        type: string
       html_description:
         type: string
       id:
@@ -1238,6 +1236,8 @@ definitions:
         type: boolean
       page:
         type: boolean
+      published_date:
+        type: string
       slug:
         type: string
       space_id:
@@ -3291,67 +3291,6 @@ paths:
           schema:
             $ref: '#/definitions/post.postData'
       summary: Update a post by id
-      tags:
-      - Post
-  /core/posts/{post_id}/publish:
-    put:
-      description: Publish post by ID
-      operationId: publish-post-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Post ID
-        in: path
-        name: post_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Publish a post by id
-      tags:
-      - Post
-  /core/posts/publish:
-    post:
-      description: Create published post
-      operationId: add-published-post
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Post Object
-        in: body
-        name: Post
-        required: true
-        schema:
-          $ref: '#/definitions/post.post'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Create published post
       tags:
       - Post
   /core/posts/templates:

@@ -52,7 +52,7 @@ func TestSpaceCreate(t *testing.T) {
 		slugCheckMock(mock)
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "spaces"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["analytics"], Data["organisation_id"]).
 			WillReturnError(errors.New("cannot create space"))
 		mock.ExpectRollback()
 
@@ -75,7 +75,7 @@ func TestSpaceCreate(t *testing.T) {
 		slugCheckMock(mock)
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "spaces"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["organisation_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["analytics"], Data["organisation_id"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"fav_icon_id", "mobile_icon_id", "logo_id", "logo_mobile_id", "id"}).
 				AddRow(1, 1, 1, 1, 1))

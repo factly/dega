@@ -101,10 +101,6 @@ var invalidData = map[string]interface{}{
 	"title": "a",
 }
 
-var publishData = map[string]interface{}{
-	"published_date": time.Now(),
-}
-
 var templateData = map[string]interface{}{
 	"post_id": 1,
 }
@@ -124,8 +120,6 @@ var paginationQuery = `SELECT \* FROM "posts" (.+) LIMIT 1 OFFSET 1`
 
 var basePath = "/core/posts"
 var path = "/core/posts/{post_id}"
-var publishBasePath = "/core/posts/publish"
-var publishPath = "/core/posts/{post_id}/publish"
 var templatePath = "/core/posts/templates"
 
 func slugCheckMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
@@ -532,34 +526,4 @@ func deleteMock(mock sqlmock.Sqlmock) {
 	mock.ExpectExec(regexp.QuoteMeta(`UPDATE "posts" SET "deleted_at"=`)).
 		WithArgs(test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
-}
-
-func prePublishMock(mock sqlmock.Sqlmock) {
-	test.CheckSpaceMock(mock)
-	postSelectWithSpace(mock)
-
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "post_authors"`)).
-		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
-
-	mock.ExpectBegin()
-}
-
-func publishMock(mock sqlmock.Sqlmock) {
-
-	medium.SelectWithSpace(mock)
-	format.SelectMock(mock, 1, 1)
-
-	mock.ExpectExec(`UPDATE \"posts\"`).
-		WithArgs(test.AnyTime{}, 1, "publish", test.AnyTime{}, 1).
-		WillReturnResult(sqlmock.NewResult(1, 1))
-
-	mock.ExpectQuery(selectQuery).
-		WithArgs(1, 1).
-		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["page"], Data["excerpt"], Data["description"], Data["html_description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["featured_medium_id"], Data["format_id"], Data["published_date"], 1))
-
-	preloadMock(mock)
-	postClaimSelectMock(mock)
-	postAuthorSelectMock(mock)
-
 }

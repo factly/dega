@@ -1,6 +1,8 @@
 package post
 
 import (
+	"time"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
@@ -22,6 +24,7 @@ type post struct {
 	IsSticky         bool           `json:"is_sticky"`
 	IsHighlighted    bool           `json:"is_highlighted"`
 	FeaturedMediumID uint           `json:"featured_medium_id"`
+	PublishedDate    *time.Time     `json:"published_date"`
 	FormatID         uint           `json:"format_id" validate:"required"`
 	SpaceID          uint           `json:"space_id"`
 	CategoryIDs      []uint         `json:"category_ids"`
@@ -47,13 +50,11 @@ func Router() chi.Router {
 	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
 	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
 	r.With(util.CheckKetoPolicy(entity, "update")).Post("/templates", createTemplate)
-	r.With(util.CheckKetoPolicy(entity, "publish")).Post("/publish", publishCreate)
 
 	r.Route("/{post_id}", func(r chi.Router) {
 		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
 		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
 		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
-		r.With(util.CheckKetoPolicy(entity, "publish")).Put("/publish", publish)
 	})
 
 	return r

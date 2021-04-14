@@ -3,7 +3,6 @@ package claim
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -109,7 +108,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Store HTML description
 	var description string
-	fmt.Println(claim.Description)
 	if len(claim.Description.RawMessage) > 0 && !reflect.DeepEqual(claim.Description, test.NilJsonb()) {
 		description, err = util.HTMLDescription(claim.Description)
 		if err != nil {

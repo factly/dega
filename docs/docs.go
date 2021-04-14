@@ -2365,52 +2365,6 @@ var doc = `{
                 }
             }
         },
-        "/core/posts/publish": {
-            "post": {
-                "description": "Create published post",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Create published post",
-                "operationId": "add-published-post",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Post Object",
-                        "name": "Post",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/post.post"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            }
-        },
         "/core/posts/templates": {
             "post": {
                 "description": "Create template",
@@ -2582,50 +2536,6 @@ var doc = `{
                 "responses": {
                     "200": {
                         "description": ""
-                    }
-                }
-            }
-        },
-        "/core/posts/{post_id}/publish": {
-            "put": {
-                "description": "Publish post by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Publish a post by id",
-                "operationId": "publish-post-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
                     }
                 }
             }
@@ -7236,6 +7146,9 @@ var doc = `{
                 },
                 "page": {
                     "type": "boolean"
+                },
+                "published_date": {
+                    "type": "string"
                 },
                 "slug": {
                     "type": "string"

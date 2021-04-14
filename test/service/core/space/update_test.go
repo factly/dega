@@ -90,7 +90,7 @@ func TestSpaceUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 		mock.ExpectBegin()
 		slugCheckMock(mock)
@@ -111,7 +111,7 @@ func TestSpaceUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 		mock.ExpectBegin()
 		slugCheckMock(mock)
@@ -133,7 +133,7 @@ func TestSpaceUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 		mock.ExpectBegin()
 		slugCheckMock(mock)
@@ -156,7 +156,7 @@ func TestSpaceUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, "name", "slug", "site_title", "tag_line", nilJsonb(), "site_address", 1, 1, 1, 1, nilJsonb(), nilJsonb(), nilJsonb(), nilJsonb(), 1))
 
 		mock.ExpectBegin()
 		slugCheckMock(mock)
@@ -177,7 +177,7 @@ func TestSpaceUpdate(t *testing.T) {
 	})
 
 	t.Run("update space when logo_id = 0", func(t *testing.T) {
-		oneMediaIDZeroMock(mock, test.AnyTime{}, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_mobile_id"], Data["fav_icon_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], 1)
+		oneMediaIDZeroMock(mock, test.AnyTime{}, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_mobile_id"], Data["fav_icon_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["analytics"], 1)
 
 		Data["logo_id"] = 0
 		e.PUT(path).
@@ -192,7 +192,7 @@ func TestSpaceUpdate(t *testing.T) {
 	})
 
 	t.Run("update space when logo_mobile_id = 0", func(t *testing.T) {
-		oneMediaIDZeroMock(mock, test.AnyTime{}, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["fav_icon_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], 1)
+		oneMediaIDZeroMock(mock, test.AnyTime{}, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["fav_icon_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["analytics"], 1)
 
 		Data["logo_mobile_id"] = 0
 		e.PUT(path).
@@ -207,7 +207,7 @@ func TestSpaceUpdate(t *testing.T) {
 	})
 
 	t.Run("update space when fav_icon_id = 0", func(t *testing.T) {
-		oneMediaIDZeroMock(mock, test.AnyTime{}, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["logo_mobile_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], 1)
+		oneMediaIDZeroMock(mock, test.AnyTime{}, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["logo_mobile_id"], Data["mobile_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["analytics"], 1)
 
 		Data["fav_icon_id"] = 0
 		e.PUT(path).
@@ -222,7 +222,7 @@ func TestSpaceUpdate(t *testing.T) {
 	})
 
 	t.Run("update space when mobile_icon_id = 0", func(t *testing.T) {
-		oneMediaIDZeroMock(mock, test.AnyTime{}, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["logo_mobile_id"], Data["fav_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], 1)
+		oneMediaIDZeroMock(mock, test.AnyTime{}, 1, Data["name"], Data["slug"], Data["site_title"], Data["tag_line"], Data["description"], Data["site_address"], Data["logo_id"], Data["logo_mobile_id"], Data["fav_icon_id"], Data["verification_codes"], Data["social_media_urls"], Data["contact_info"], Data["analytics"], 1)
 
 		Data["mobile_icon_id"] = 0
 		e.PUT(path).
