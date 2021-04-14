@@ -13,7 +13,7 @@ type Claim struct {
 	CreatedAt       time.Time       `json:"created_at"`
 	UpdatedAt       time.Time       `json:"updated_at"`
 	DeletedAt       *gorm.DeletedAt `sql:"index" json:"deleted_at"`
-	Title           string          `gorm:"column:title" json:"title"`
+	Claim           string          `gorm:"column:claim" json:"claim"`
 	Slug            string          `gorm:"column:slug" json:"slug"`
 	ClaimDate       time.Time       `gorm:"column:claim_date" json:"claim_date" sql:"DEFAULT:NULL"`
 	CheckedDate     time.Time       `gorm:"column:checked_date" json:"checked_date" sql:"DEFAULT:NULL"`

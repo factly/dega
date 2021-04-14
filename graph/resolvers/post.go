@@ -146,7 +146,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.Type = "ClaimReview"
 		claimSchema.DatePublished = obj.CreatedAt
 		claimSchema.URL = space.SiteAddress + "/" + obj.Slug
-		claimSchema.ClaimReviewed = each.Claim.Title
+		claimSchema.ClaimReviewed = each.Claim.Claim
 		claimSchema.Author.Type = "Organization"
 		claimSchema.Author.Name = space.Name
 		claimSchema.Author.URL = space.SiteAddress

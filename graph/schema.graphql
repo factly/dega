@@ -142,7 +142,7 @@ type Claim {
   id: ID!
   created_at: Time
   updated_at: Time
-  title: String!
+  claim: String!
   slug: String!
   claim_date: Time
   checked_date: Time
