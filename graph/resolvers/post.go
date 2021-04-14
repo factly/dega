@@ -154,6 +154,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
 		claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
 		claimSchema.ReviewRating.BestRating = bestRating
+		claimSchema.ReviewRating.RatingExplaination = each.Claim.Fact
 		claimSchema.ReviewRating.WorstRating = worstRating
 		claimSchema.ItemReviewed.Type = "Claim"
 		claimSchema.ItemReviewed.DatePublished = each.Claim.CheckedDate

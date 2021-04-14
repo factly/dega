@@ -149,7 +149,7 @@ type Claim {
   claim_sources: Any
   description: Any
   html_description: String
-  review: Any
+  fact: String
   review_sources: Any
   rating: Rating!
   claimant: Claimant!

@@ -24,7 +24,7 @@ type Claim struct {
 	Claimant        Claimant        `gorm:"foreignkey:claimant_id;association_foreignkey:id" json:"claimant"`
 	RatingID        uint            `gorm:"column:rating_id" json:"rating_id"`
 	Rating          Rating          `gorm:"foreignkey:rating_id;association_foreignkey:id" json:"rating"`
-	Review          postgres.Jsonb  `gorm:"column:review" json:"review"`
+	Fact            string          `gorm:"column:fact" json:"fact"`
 	ReviewSources   postgres.Jsonb  `gorm:"column:review_sources" json:"review_sources"`
 	SpaceID         uint            `gorm:"column:space_id" json:"space_id"`
 }
