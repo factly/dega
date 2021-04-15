@@ -103,7 +103,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	} else if claim.Slug != "" && slugx.Check(claim.Slug) {
 		claimSlug = slugx.Approve(&config.DB, claim.Slug, sID, tableName)
 	} else {
-		claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Title), sID, tableName)
+		claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim), sID, tableName)
 	}
 
 	// Store HTML description
@@ -124,7 +124,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	})
 	err = tx.Model(&result).Updates(model.Claim{
 		Base:            config.Base{UpdatedByID: uint(uID)},
-		Title:           claim.Title,
+		Claim:           claim.Claim,
 		Slug:            claimSlug,
 		ClaimSources:    claim.ClaimSources,
 		Description:     claim.Description,
@@ -154,7 +154,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
 		"kind":           "claim",
-		"title":          result.Title,
+		"claim":          result.Claim,
 		"slug":           result.Slug,
 		"description":    result.Description,
 		"claim_date":     claimMeiliDate,

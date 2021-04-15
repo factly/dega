@@ -77,7 +77,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if claim.Slug != "" && slugx.Check(claim.Slug) {
 		claimSlug = claim.Slug
 	} else {
-		claimSlug = slugx.Make(claim.Title)
+		claimSlug = slugx.Make(claim.Claim)
 	}
 
 	// Store HTML description
@@ -92,7 +92,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Claim{
-		Title:           claim.Title,
+		Claim:           claim.Claim,
 		Slug:            slugx.Approve(&config.DB, claimSlug, sID, tableName),
 		ClaimDate:       claim.ClaimDate,
 		CheckedDate:     claim.CheckedDate,
@@ -130,7 +130,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
 		"kind":           "claim",
-		"title":          result.Title,
+		"claim":          result.Claim,
 		"slug":           result.Slug,
 		"description":    result.Description,
 		"claim_date":     claimMeiliDate,
