@@ -32,8 +32,8 @@ func (r *claimResolver) ClaimSources(ctx context.Context, obj *models.Claim) (in
 	return obj.ClaimSources, nil
 }
 
-func (r *claimResolver) Review(ctx context.Context, obj *models.Claim) (interface{}, error) {
-	return obj.Review, nil
+func (r *claimResolver) Fact(ctx context.Context, obj *models.Claim) (string, error) {
+	return obj.Fact, nil
 }
 
 func (r *claimResolver) ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error) {

@@ -146,7 +146,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.Type = "ClaimReview"
 		claimSchema.DatePublished = obj.CreatedAt
 		claimSchema.URL = space.SiteAddress + "/" + obj.Slug
-		claimSchema.ClaimReviewed = each.Claim.Title
+		claimSchema.ClaimReviewed = each.Claim.Claim
 		claimSchema.Author.Type = "Organization"
 		claimSchema.Author.Name = space.Name
 		claimSchema.Author.URL = space.SiteAddress
@@ -154,10 +154,11 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
 		claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
 		claimSchema.ReviewRating.BestRating = bestRating
+		claimSchema.ReviewRating.RatingExplaination = each.Claim.Fact
 		claimSchema.ReviewRating.WorstRating = worstRating
 		claimSchema.ItemReviewed.Type = "Claim"
 		claimSchema.ItemReviewed.DatePublished = each.Claim.CheckedDate
-		// claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
+		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
 		claimSchema.ItemReviewed.Author.Type = "Organization"
 		claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
 

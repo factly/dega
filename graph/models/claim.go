@@ -13,7 +13,7 @@ type Claim struct {
 	CreatedAt       time.Time       `json:"created_at"`
 	UpdatedAt       time.Time       `json:"updated_at"`
 	DeletedAt       *gorm.DeletedAt `sql:"index" json:"deleted_at"`
-	Title           string          `gorm:"column:title" json:"title"`
+	Claim           string          `gorm:"column:claim" json:"claim"`
 	Slug            string          `gorm:"column:slug" json:"slug"`
 	ClaimDate       time.Time       `gorm:"column:claim_date" json:"claim_date" sql:"DEFAULT:NULL"`
 	CheckedDate     time.Time       `gorm:"column:checked_date" json:"checked_date" sql:"DEFAULT:NULL"`
@@ -24,7 +24,7 @@ type Claim struct {
 	Claimant        Claimant        `gorm:"foreignkey:claimant_id;association_foreignkey:id" json:"claimant"`
 	RatingID        uint            `gorm:"column:rating_id" json:"rating_id"`
 	Rating          Rating          `gorm:"foreignkey:rating_id;association_foreignkey:id" json:"rating"`
-	Review          postgres.Jsonb  `gorm:"column:review" json:"review"`
+	Fact            string          `gorm:"column:fact" json:"fact"`
 	ReviewSources   postgres.Jsonb  `gorm:"column:review_sources" json:"review_sources"`
 	SpaceID         uint            `gorm:"column:space_id" json:"space_id"`
 }

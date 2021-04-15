@@ -76,19 +76,19 @@ type ComplexityRoot struct {
 
 	Claim struct {
 		CheckedDate     func(childComplexity int) int
+		Claim           func(childComplexity int) int
 		ClaimDate       func(childComplexity int) int
 		ClaimSources    func(childComplexity int) int
 		Claimant        func(childComplexity int) int
 		CreatedAt       func(childComplexity int) int
 		Description     func(childComplexity int) int
+		Fact            func(childComplexity int) int
 		HTMLDescription func(childComplexity int) int
 		ID              func(childComplexity int) int
 		Rating          func(childComplexity int) int
-		Review          func(childComplexity int) int
 		ReviewSources   func(childComplexity int) int
 		Slug            func(childComplexity int) int
 		SpaceID         func(childComplexity int) int
-		Title           func(childComplexity int) int
 		UpdatedAt       func(childComplexity int) int
 	}
 
@@ -320,7 +320,6 @@ type ClaimResolver interface {
 	ClaimSources(ctx context.Context, obj *models.Claim) (interface{}, error)
 	Description(ctx context.Context, obj *models.Claim) (interface{}, error)
 
-	Review(ctx context.Context, obj *models.Claim) (interface{}, error)
 	ReviewSources(ctx context.Context, obj *models.Claim) (interface{}, error)
 	Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error)
 	Claimant(ctx context.Context, obj *models.Claim) (*models.Claimant, error)
@@ -538,6 +537,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.CheckedDate(childComplexity), true
 
+	case "Claim.claim":
+		if e.complexity.Claim.Claim == nil {
+			break
+		}
+
+		return e.complexity.Claim.Claim(childComplexity), true
+
 	case "Claim.claim_date":
 		if e.complexity.Claim.ClaimDate == nil {
 			break
@@ -573,6 +579,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.Description(childComplexity), true
 
+	case "Claim.fact":
+		if e.complexity.Claim.Fact == nil {
+			break
+		}
+
+		return e.complexity.Claim.Fact(childComplexity), true
+
 	case "Claim.html_description":
 		if e.complexity.Claim.HTMLDescription == nil {
 			break
@@ -594,13 +607,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.Rating(childComplexity), true
 
-	case "Claim.review":
-		if e.complexity.Claim.Review == nil {
-			break
-		}
-
-		return e.complexity.Claim.Review(childComplexity), true
-
 	case "Claim.review_sources":
 		if e.complexity.Claim.ReviewSources == nil {
 			break
@@ -621,13 +627,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Claim.SpaceID(childComplexity), true
-
-	case "Claim.title":
-		if e.complexity.Claim.Title == nil {
-			break
-		}
-
-		return e.complexity.Claim.Title(childComplexity), true
 
 	case "Claim.updated_at":
 		if e.complexity.Claim.UpdatedAt == nil {
@@ -1947,14 +1946,14 @@ type Claim {
   id: ID!
   created_at: Time
   updated_at: Time
-  title: String!
+  claim: String!
   slug: String!
   claim_date: Time
   checked_date: Time
   claim_sources: Any
   description: Any
   html_description: String
-  review: Any
+  fact: String
   review_sources: Any
   rating: Rating!
   claimant: Claimant!
@@ -3134,7 +3133,7 @@ func (ec *executionContext) _Claim_updated_at(ctx context.Context, field graphql
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Claim_title(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+func (ec *executionContext) _Claim_claim(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3152,7 +3151,7 @@ func (ec *executionContext) _Claim_title(ctx context.Context, field graphql.Coll
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Title, nil
+		return obj.Claim, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3364,7 +3363,7 @@ func (ec *executionContext) _Claim_html_description(ctx context.Context, field g
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Claim_review(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+func (ec *executionContext) _Claim_fact(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3375,14 +3374,14 @@ func (ec *executionContext) _Claim_review(ctx context.Context, field graphql.Col
 		Object:     "Claim",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Claim().Review(rctx, obj)
+		return obj.Fact, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3391,9 +3390,9 @@ func (ec *executionContext) _Claim_review(ctx context.Context, field graphql.Col
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(interface{})
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOAny2interface(ctx, field.Selections, res)
+	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_review_sources(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -9978,8 +9977,8 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 			out.Values[i] = ec._Claim_created_at(ctx, field, obj)
 		case "updated_at":
 			out.Values[i] = ec._Claim_updated_at(ctx, field, obj)
-		case "title":
-			out.Values[i] = ec._Claim_title(ctx, field, obj)
+		case "claim":
+			out.Values[i] = ec._Claim_claim(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
@@ -10016,17 +10015,8 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 			})
 		case "html_description":
 			out.Values[i] = ec._Claim_html_description(ctx, field, obj)
-		case "review":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Claim_review(ctx, field, obj)
-				return res
-			})
+		case "fact":
+			out.Values[i] = ec._Claim_fact(ctx, field, obj)
 		case "review_sources":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
