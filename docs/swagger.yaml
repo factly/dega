@@ -41,6 +41,8 @@ definitions:
     properties:
       checked_date:
         type: string
+      claim:
+        type: string
       claim_date:
         type: string
       claim_sources:
@@ -49,22 +51,18 @@ definitions:
         type: integer
       description:
         type: string
+      fact:
+        type: string
       rating_id:
         type: integer
-      review:
-        type: string
       review_sources:
-        type: string
-      review_tag_line:
         type: string
       slug:
         type: string
-      title:
-        type: string
     required:
+    - claim
     - claimant_id
     - rating_id
-    - title
     type: object
   claimant.claimant:
     properties:
@@ -163,150 +161,6 @@ definitions:
       total:
         type: integer
     type: object
-  github.com_factly_dega-server_service_core_action_permissions_organisation.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/organisation.orgWithPermissions'
-        type: array
-      total:
-        type: integer
-    type: object
-  github.com_factly_dega-server_service_core_action_permissions_space.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions'
-        type: array
-      total:
-        type: integer
-    type: object
-  github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions:
-    properties:
-      contact_info:
-        type: string
-      created_at:
-        type: string
-      created_by_id:
-        type: integer
-      deleted_at:
-        type: string
-      description:
-        type: string
-      fav_icon:
-        $ref: '#/definitions/model.Medium'
-      fav_icon_id:
-        type: integer
-      id:
-        type: integer
-      logo:
-        $ref: '#/definitions/model.Medium'
-      logo_id:
-        type: integer
-      logo_mobile:
-        $ref: '#/definitions/model.Medium'
-      logo_mobile_id:
-        type: integer
-      mobile_icon:
-        $ref: '#/definitions/model.Medium'
-      mobile_icon_id:
-        type: integer
-      name:
-        type: string
-      organisation_id:
-        type: integer
-      permission:
-        $ref: '#/definitions/model.SpacePermission'
-      site_address:
-        type: string
-      site_title:
-        type: string
-      slug:
-        type: string
-      social_media_urls:
-        type: string
-      tag_line:
-        type: string
-      updated_at:
-        type: string
-      updated_by_id:
-        type: integer
-      verification_codes:
-        type: string
-    type: object
-  github.com_factly_dega-server_service_core_action_request_organisation.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/model.OrganisationPermissionRequest'
-        type: array
-      total:
-        type: integer
-    type: object
-  github.com_factly_dega-server_service_core_action_request_space.paging:
-    properties:
-      nodes:
-        items:
-          $ref: '#/definitions/model.SpacePermissionRequest'
-        type: array
-      total:
-        type: integer
-    type: object
-  github.com_factly_dega-server_service_core_action_space.spaceWithPermissions:
-    properties:
-      contact_info:
-        type: string
-      created_at:
-        type: string
-      created_by_id:
-        type: integer
-      deleted_at:
-        type: string
-      description:
-        type: string
-      fav_icon:
-        $ref: '#/definitions/model.Medium'
-      fav_icon_id:
-        type: integer
-      id:
-        type: integer
-      logo:
-        $ref: '#/definitions/model.Medium'
-      logo_id:
-        type: integer
-      logo_mobile:
-        $ref: '#/definitions/model.Medium'
-      logo_mobile_id:
-        type: integer
-      mobile_icon:
-        $ref: '#/definitions/model.Medium'
-      mobile_icon_id:
-        type: integer
-      name:
-        type: string
-      organisation_id:
-        type: integer
-      permissions:
-        items:
-          $ref: '#/definitions/model.Permission'
-        type: array
-      site_address:
-        type: string
-      site_title:
-        type: string
-      slug:
-        type: string
-      social_media_urls:
-        type: string
-      tag_line:
-        type: string
-      updated_at:
-        type: string
-      updated_by_id:
-        type: integer
-      verification_codes:
-        type: string
-    type: object
   google.paging:
     properties:
       nextPage:
@@ -382,6 +236,7 @@ definitions:
     properties:
       meta:
         $ref: '#/definitions/meta.meta'
+        type: object
       success:
         type: integer
     type: object
@@ -420,12 +275,15 @@ definitions:
         type: string
       description:
         type: string
+      html_description:
+        type: string
       id:
         type: integer
       is_featured:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       medium_id:
         type: integer
       meta_fields:
@@ -442,6 +300,7 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       updated_at:
@@ -453,12 +312,15 @@ definitions:
     properties:
       checked_date:
         type: string
+      claim:
+        type: string
       claim_date:
         type: string
       claim_sources:
         type: string
       claimant:
         $ref: '#/definitions/model.Claimant'
+        type: object
       claimant_id:
         type: integer
       created_at:
@@ -469,26 +331,26 @@ definitions:
         type: string
       description:
         type: string
+      fact:
+        type: string
+      html_description:
+        type: string
       id:
         type: integer
       rating:
         $ref: '#/definitions/model.Rating'
+        type: object
       rating_id:
         type: integer
-      review:
-        type: string
       review_sources:
-        type: string
-      review_tag_line:
         type: string
       slug:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
-      title:
-        type: string
       updated_at:
         type: string
       updated_by_id:
@@ -504,10 +366,13 @@ definitions:
         type: string
       description:
         type: string
+      html_description:
+        type: string
       id:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       medium_id:
         type: integer
       name:
@@ -516,6 +381,7 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       tag_line:
@@ -539,10 +405,13 @@ definitions:
         type: string
       episode:
         type: integer
+      html_description:
+        type: string
       id:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       medium_id:
         type: integer
       published_date:
@@ -553,6 +422,7 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       title:
@@ -601,6 +471,7 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       updated_at:
@@ -666,6 +537,7 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       updated_at:
@@ -747,22 +619,27 @@ definitions:
         items:
           $ref: '#/definitions/model.Episode'
         type: array
+      html_description:
+        type: string
       id:
         type: integer
       language:
         type: string
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       medium_id:
         type: integer
       primary_category:
         $ref: '#/definitions/model.Category'
+        type: object
       primary_category_id:
         type: integer
       slug:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       title:
@@ -809,8 +686,11 @@ definitions:
         type: integer
       format:
         $ref: '#/definitions/model.Format'
+        type: object
       format_id:
         type: integer
+      html_description:
+        type: string
       id:
         type: integer
       is_featured:
@@ -821,6 +701,7 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       page:
         type: boolean
       published_date:
@@ -829,6 +710,7 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       status:
@@ -848,7 +730,7 @@ definitions:
     type: object
   model.Rating:
     properties:
-      colour:
+      background_colour:
         type: string
       created_at:
         type: string
@@ -858,10 +740,13 @@ definitions:
         type: string
       description:
         type: string
+      html_description:
+        type: string
       id:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       medium_id:
         type: integer
       name:
@@ -872,8 +757,11 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
+      text_colour:
+        type: string
       updated_at:
         type: string
       updated_by_id:
@@ -881,6 +769,8 @@ definitions:
     type: object
   model.Space:
     properties:
+      analytics:
+        type: string
       contact_info:
         type: string
       created_at:
@@ -893,20 +783,24 @@ definitions:
         type: string
       fav_icon:
         $ref: '#/definitions/model.Medium'
+        type: object
       fav_icon_id:
         type: integer
       id:
         type: integer
       logo:
         $ref: '#/definitions/model.Medium'
+        type: object
       logo_id:
         type: integer
       logo_mobile:
         $ref: '#/definitions/model.Medium'
+        type: object
       logo_mobile_id:
         type: integer
       mobile_icon:
         $ref: '#/definitions/model.Medium'
+        type: object
       mobile_icon_id:
         type: integer
       name:
@@ -952,6 +846,7 @@ definitions:
         type: integer
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       updated_at:
@@ -983,6 +878,7 @@ definitions:
         type: integer
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       status:
@@ -1004,6 +900,8 @@ definitions:
         type: string
       description:
         type: string
+      html_description:
+        type: string
       id:
         type: integer
       is_featured:
@@ -1018,6 +916,7 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       updated_at:
@@ -1096,8 +995,10 @@ definitions:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       permission:
         $ref: '#/definitions/model.OrganisationPermission'
+        type: object
       slug:
         type: string
       title:
@@ -1128,7 +1029,15 @@ definitions:
         type: string
     required:
     - organisation_id
-    - title
+    type: object
+  organisation.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/organisation.orgWithPermissions'
+        type: array
+      total:
+        type: integer
     type: object
   podcast.paging:
     properties:
@@ -1219,6 +1128,8 @@ definitions:
         type: boolean
       page:
         type: boolean
+      published_date:
+        type: string
       slug:
         type: string
       space_id:
@@ -1265,8 +1176,11 @@ definitions:
         type: integer
       format:
         $ref: '#/definitions/model.Format'
+        type: object
       format_id:
         type: integer
+      html_description:
+        type: string
       id:
         type: integer
       is_featured:
@@ -1277,6 +1191,7 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       page:
         type: boolean
       published_date:
@@ -1285,6 +1200,7 @@ definitions:
         type: string
       space:
         $ref: '#/definitions/model.Space'
+        type: object
       space_id:
         type: integer
       status:
@@ -1320,7 +1236,7 @@ definitions:
     type: object
   rating.rating:
     properties:
-      colour:
+      background_colour:
         type: string
       description:
         type: string
@@ -1332,10 +1248,13 @@ definitions:
         type: integer
       slug:
         type: string
+      text_colour:
+        type: string
     required:
-    - colour
+    - background_colour
     - name
     - numeric_value
+    - text_colour
     type: object
   search.searchQuery:
     properties:
@@ -1366,6 +1285,7 @@ definitions:
         type: integer
       medium:
         $ref: '#/definitions/model.Medium'
+        type: object
       medium_id:
         type: integer
       name:
@@ -1393,11 +1313,12 @@ definitions:
         type: integer
       permission:
         $ref: '#/definitions/space.organisationUser'
+        type: object
       slug:
         type: string
       spaces:
         items:
-          $ref: '#/definitions/github.com_factly_dega-server_service_core_action_space.spaceWithPermissions'
+          $ref: '#/definitions/space.spaceWithPermissions'
         type: array
       title:
         type: string
@@ -1423,8 +1344,19 @@ definitions:
       updated_by_id:
         type: integer
     type: object
+  space.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/space.spaceWithPermissions'
+        type: array
+      total:
+        type: integer
+    type: object
   space.space:
     properties:
+      analytics:
+        type: string
       contact_info:
         type: string
       description:
@@ -1494,6 +1426,67 @@ definitions:
         type: string
     required:
     - space_id
+    type: object
+  space.spaceWithPermissions:
+    properties:
+      analytics:
+        type: string
+      contact_info:
+        type: string
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      fav_icon:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      fav_icon_id:
+        type: integer
+      id:
+        type: integer
+      logo:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      logo_id:
+        type: integer
+      logo_mobile:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      logo_mobile_id:
+        type: integer
+      mobile_icon:
+        $ref: '#/definitions/model.Medium'
+        type: object
+      mobile_icon_id:
+        type: integer
+      name:
+        type: string
+      organisation_id:
+        type: integer
+      permissions:
+        items:
+          $ref: '#/definitions/model.Permission'
+        type: array
+      site_address:
+        type: string
+      site_title:
+        type: string
+      slug:
+        type: string
+      social_media_urls:
+        type: string
+      tag_line:
+        type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+      verification_codes:
+        type: string
     type: object
   tag.tag:
     properties:
@@ -1724,8 +1717,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -1860,8 +1852,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -1961,8 +1952,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -2125,8 +2115,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Delete a format
       tags:
       - Format
@@ -2328,8 +2317,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Delete a medium
       tags:
       - Medium
@@ -2486,8 +2474,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -2586,7 +2573,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_permissions_organisation.paging'
+              $ref: '#/definitions/organisation.paging'
             type: array
       summary: Show all organisation permissions
       tags:
@@ -2648,8 +2635,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -2744,7 +2730,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_permissions_space.paging'
+              $ref: '#/definitions/space.paging'
             type: array
       summary: Show all Space permissions
       tags:
@@ -2806,8 +2792,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -3199,8 +3184,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Delete a post
       tags:
       - Post
@@ -3267,67 +3251,6 @@ paths:
       summary: Update a post by id
       tags:
       - Post
-  /core/posts/{post_id}/publish:
-    put:
-      description: Publish post by ID
-      operationId: publish-post-by-id
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Post ID
-        in: path
-        name: post_id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Publish a post by id
-      tags:
-      - Post
-  /core/posts/publish:
-    post:
-      description: Create published post
-      operationId: add-published-post
-      parameters:
-      - description: User ID
-        in: header
-        name: X-User
-        required: true
-        type: string
-      - description: Space ID
-        in: header
-        name: X-Space
-        required: true
-        type: string
-      - description: Post Object
-        in: body
-        name: Post
-        required: true
-        schema:
-          $ref: '#/definitions/post.post'
-      produces:
-      - application/json
-      responses:
-        "201":
-          description: Created
-          schema:
-            $ref: '#/definitions/post.postData'
-      summary: Create published post
-      tags:
-      - Post
   /core/posts/templates:
     post:
       description: Create template
@@ -3384,7 +3307,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_organisation.paging'
+              $ref: '#/definitions/organisation.paging'
             type: array
       summary: Show all organisation permissions requests
       tags:
@@ -3446,8 +3369,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -3545,8 +3467,7 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -3578,7 +3499,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_organisation.paging'
+              $ref: '#/definitions/organisation.paging'
             type: array
       summary: Show all my organisation permissions requests
       tags:
@@ -3609,7 +3530,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_space.paging'
+              $ref: '#/definitions/space.paging'
             type: array
       summary: Show all space permissions requests
       tags:
@@ -3671,8 +3592,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -3770,8 +3690,7 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -3803,7 +3722,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/github.com_factly_dega-server_service_core_action_request_space.paging'
+              $ref: '#/definitions/space.paging'
             type: array
       summary: Show all my space permissions requests
       tags:
@@ -3831,8 +3750,7 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Global search for all entities
       tags:
       - Search
@@ -3906,8 +3824,7 @@ paths:
       produces:
       - application/json
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Delete space
       tags:
       - Space
@@ -4041,8 +3958,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -4262,8 +4178,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
         "400":
           description: Bad Request
           schema:
@@ -4467,8 +4382,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Delete a claimant
       tags:
       - Claimant
@@ -4641,8 +4555,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Delete a claim
       tags:
       - Claim
@@ -4815,8 +4728,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Delete a rating
       tags:
       - Rating
@@ -5202,8 +5114,7 @@ paths:
         required: true
         type: string
       responses:
-        "200":
-          description: ""
+        "200": {}
       summary: Delete a podcast
       tags:
       - Podcast

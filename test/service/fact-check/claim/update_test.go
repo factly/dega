@@ -19,7 +19,7 @@ import (
 )
 
 var updatedClaim = map[string]interface{}{
-	"title":        "Claim",
+	"claim":        "Claim",
 	"claim_date":   time.Now(),
 	"checked_date": time.Now(),
 	"claim_sources": postgres.Jsonb{
@@ -31,9 +31,7 @@ var updatedClaim = map[string]interface{}{
 	"html_description": "<p>Test Description</p>",
 	"claimant_id":      uint(1),
 	"rating_id":        uint(1),
-	"review": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"review"}`),
-	},
+	"fact":             "test fact",
 	"review_tag_line": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"review tag line"}`),
 	},

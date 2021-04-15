@@ -3,7 +3,6 @@ package claim
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"net/http"
 	"reflect"
 	"strconv"
@@ -104,12 +103,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	} else if claim.Slug != "" && slugx.Check(claim.Slug) {
 		claimSlug = slugx.Approve(&config.DB, claim.Slug, sID, tableName)
 	} else {
-		claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Title), sID, tableName)
+		claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim), sID, tableName)
 	}
 
 	// Store HTML description
 	var description string
-	fmt.Println(claim.Description)
 	if len(claim.Description.RawMessage) > 0 && !reflect.DeepEqual(claim.Description, test.NilJsonb()) {
 		description, err = util.HTMLDescription(claim.Description)
 		if err != nil {
@@ -126,14 +124,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	})
 	err = tx.Model(&result).Updates(model.Claim{
 		Base:            config.Base{UpdatedByID: uint(uID)},
-		Title:           claim.Title,
+		Claim:           claim.Claim,
 		Slug:            claimSlug,
 		ClaimSources:    claim.ClaimSources,
 		Description:     claim.Description,
 		HTMLDescription: description,
 		ClaimantID:      claim.ClaimantID,
 		RatingID:        claim.RatingID,
-		Review:          claim.Review,
+		Fact:            claim.Fact,
 		ReviewSources:   claim.ReviewSources,
 	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").First(&result).Error
 
@@ -156,7 +154,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	meiliObj := map[string]interface{}{
 		"id":             result.ID,
 		"kind":           "claim",
-		"title":          result.Title,
+		"claim":          result.Claim,
 		"slug":           result.Slug,
 		"description":    result.Description,
 		"claim_date":     claimMeiliDate,
@@ -164,7 +162,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"claim_sources":  result.ClaimSources,
 		"claimant_id":    result.ClaimantID,
 		"rating_id":      result.RatingID,
-		"review":         result.Review,
+		"fact":           result.Fact,
 		"review_sources": result.ReviewSources,
 		"space_id":       result.SpaceID,
 	}

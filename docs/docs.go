@@ -319,9 +319,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -427,9 +425,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -668,9 +664,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -955,9 +949,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
+                    "200": {}
                 }
             }
         },
@@ -1208,9 +1200,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
+                    "200": {}
                 }
             }
         },
@@ -1440,9 +1430,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -1494,7 +1482,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_organisation.paging"
+                                "$ref": "#/definitions/organisation.paging"
                             }
                         }
                     }
@@ -1673,9 +1661,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -1727,7 +1713,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_space.paging"
+                                "$ref": "#/definitions/space.paging"
                             }
                         }
                     }
@@ -1948,9 +1934,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2365,52 +2349,6 @@ var doc = `{
                 }
             }
         },
-        "/core/posts/publish": {
-            "post": {
-                "description": "Create published post",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Create published post",
-                "operationId": "add-published-post",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "description": "Post Object",
-                        "name": "Post",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/post.post"
-                        }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
-                }
-            }
-        },
         "/core/posts/templates": {
             "post": {
                 "description": "Create template",
@@ -2580,53 +2518,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
-                }
-            }
-        },
-        "/core/posts/{post_id}/publish": {
-            "put": {
-                "description": "Publish post by ID",
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Post"
-                ],
-                "summary": "Publish a post by id",
-                "operationId": "publish-post-by-id",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "User ID",
-                        "name": "X-User",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Space ID",
-                        "name": "X-Space",
-                        "in": "header",
-                        "required": true
-                    },
-                    {
-                        "type": "string",
-                        "description": "Post ID",
-                        "name": "post_id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/post.postData"
-                        }
-                    }
+                    "200": {}
                 }
             }
         },
@@ -2669,7 +2561,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisation.paging"
+                                "$ref": "#/definitions/organisation.paging"
                             }
                         }
                     }
@@ -2762,7 +2654,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_organisation.paging"
+                                "$ref": "#/definitions/organisation.paging"
                             }
                         }
                     }
@@ -2843,9 +2735,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -2946,9 +2836,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -3000,7 +2888,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_space.paging"
+                                "$ref": "#/definitions/space.paging"
                             }
                         }
                     }
@@ -3093,7 +2981,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_request_space.paging"
+                                "$ref": "#/definitions/space.paging"
                             }
                         }
                     }
@@ -3174,9 +3062,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -3277,9 +3163,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -3328,9 +3212,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
+                    "200": {}
                 }
             }
         },
@@ -3483,9 +3365,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
+                    "200": {}
                 }
             }
         },
@@ -3730,9 +3610,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -4104,9 +3982,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    },
+                    "200": {},
                     "400": {
                         "description": "Bad Request",
                         "schema": {
@@ -4357,9 +4233,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
+                    "200": {}
                 }
             }
         },
@@ -4571,9 +4445,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
+                    "200": {}
                 }
             }
         },
@@ -4916,9 +4788,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
+                    "200": {}
                 }
             }
         },
@@ -5348,9 +5218,7 @@ var doc = `{
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": ""
-                    }
+                    "200": {}
                 }
             }
         }
@@ -5416,12 +5284,15 @@ var doc = `{
         "claim.claim": {
             "type": "object",
             "required": [
+                "claim",
                 "claimant_id",
-                "rating_id",
-                "title"
+                "rating_id"
             ],
             "properties": {
                 "checked_date": {
+                    "type": "string"
+                },
+                "claim": {
                     "type": "string"
                 },
                 "claim_date": {
@@ -5436,22 +5307,16 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "fact": {
+                    "type": "string"
+                },
                 "rating_id": {
                     "type": "integer"
-                },
-                "review": {
-                    "type": "string"
                 },
                 "review_sources": {
                     "type": "string"
                 },
-                "review_tag_line": {
-                    "type": "string"
-                },
                 "slug": {
-                    "type": "string"
-                },
-                "title": {
                     "type": "string"
                 }
             }
@@ -5604,225 +5469,6 @@ var doc = `{
                 }
             }
         },
-        "github.com_factly_dega-server_service_core_action_permissions_organisation.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/organisation.orgWithPermissions"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "github.com_factly_dega-server_service_core_action_permissions_space.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "github.com_factly_dega-server_service_core_action_permissions_space.spaceWithPermissions": {
-            "type": "object",
-            "properties": {
-                "contact_info": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "created_by_id": {
-                    "type": "integer"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "fav_icon": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "fav_icon_id": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "logo": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "logo_id": {
-                    "type": "integer"
-                },
-                "logo_mobile": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "logo_mobile_id": {
-                    "type": "integer"
-                },
-                "mobile_icon": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "mobile_icon_id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "organisation_id": {
-                    "type": "integer"
-                },
-                "permission": {
-                    "$ref": "#/definitions/model.SpacePermission"
-                },
-                "site_address": {
-                    "type": "string"
-                },
-                "site_title": {
-                    "type": "string"
-                },
-                "slug": {
-                    "type": "string"
-                },
-                "social_media_urls": {
-                    "type": "string"
-                },
-                "tag_line": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "updated_by_id": {
-                    "type": "integer"
-                },
-                "verification_codes": {
-                    "type": "string"
-                }
-            }
-        },
-        "github.com_factly_dega-server_service_core_action_request_organisation.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.OrganisationPermissionRequest"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "github.com_factly_dega-server_service_core_action_request_space.paging": {
-            "type": "object",
-            "properties": {
-                "nodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.SpacePermissionRequest"
-                    }
-                },
-                "total": {
-                    "type": "integer"
-                }
-            }
-        },
-        "github.com_factly_dega-server_service_core_action_space.spaceWithPermissions": {
-            "type": "object",
-            "properties": {
-                "contact_info": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "created_by_id": {
-                    "type": "integer"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "fav_icon": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "fav_icon_id": {
-                    "type": "integer"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "logo": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "logo_id": {
-                    "type": "integer"
-                },
-                "logo_mobile": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "logo_mobile_id": {
-                    "type": "integer"
-                },
-                "mobile_icon": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "mobile_icon_id": {
-                    "type": "integer"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "organisation_id": {
-                    "type": "integer"
-                },
-                "permissions": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Permission"
-                    }
-                },
-                "site_address": {
-                    "type": "string"
-                },
-                "site_title": {
-                    "type": "string"
-                },
-                "slug": {
-                    "type": "string"
-                },
-                "social_media_urls": {
-                    "type": "string"
-                },
-                "tag_line": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "updated_by_id": {
-                    "type": "integer"
-                },
-                "verification_codes": {
-                    "type": "string"
-                }
-            }
-        },
         "google.paging": {
             "type": "object",
             "properties": {
@@ -5934,6 +5580,7 @@ var doc = `{
             "type": "object",
             "properties": {
                 "meta": {
+                    "type": "object",
                     "$ref": "#/definitions/meta.meta"
                 },
                 "success": {
@@ -5994,6 +5641,9 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6001,6 +5651,7 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -6025,6 +5676,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6044,6 +5696,9 @@ var doc = `{
                 "checked_date": {
                     "type": "string"
                 },
+                "claim": {
+                    "type": "string"
+                },
                 "claim_date": {
                     "type": "string"
                 },
@@ -6051,6 +5706,7 @@ var doc = `{
                     "type": "string"
                 },
                 "claimant": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Claimant"
                 },
                 "claimant_id": {
@@ -6068,35 +5724,34 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "fact": {
+                    "type": "string"
+                },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
                 "rating": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Rating"
                 },
                 "rating_id": {
                     "type": "integer"
                 },
-                "review": {
-                    "type": "string"
-                },
                 "review_sources": {
-                    "type": "string"
-                },
-                "review_tag_line": {
                     "type": "string"
                 },
                 "slug": {
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
-                },
-                "title": {
-                    "type": "string"
                 },
                 "updated_at": {
                     "type": "string"
@@ -6121,10 +5776,14 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -6137,6 +5796,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6174,10 +5834,14 @@ var doc = `{
                 "episode": {
                     "type": "integer"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -6193,6 +5857,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6270,6 +5935,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6368,6 +6034,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6489,6 +6156,9 @@ var doc = `{
                         "$ref": "#/definitions/model.Episode"
                     }
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6496,12 +6166,14 @@ var doc = `{
                     "type": "string"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
                     "type": "integer"
                 },
                 "primary_category": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Category"
                 },
                 "primary_category_id": {
@@ -6511,6 +6183,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6581,10 +6254,14 @@ var doc = `{
                     "type": "integer"
                 },
                 "format": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
                     "type": "integer"
+                },
+                "html_description": {
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
@@ -6599,6 +6276,7 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "page": {
@@ -6611,6 +6289,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6642,7 +6321,7 @@ var doc = `{
         "model.Rating": {
             "type": "object",
             "properties": {
-                "colour": {
+                "background_colour": {
                     "type": "string"
                 },
                 "created_at": {
@@ -6657,10 +6336,14 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -6676,10 +6359,14 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
                     "type": "integer"
+                },
+                "text_colour": {
+                    "type": "string"
                 },
                 "updated_at": {
                     "type": "string"
@@ -6692,6 +6379,9 @@ var doc = `{
         "model.Space": {
             "type": "object",
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
@@ -6708,6 +6398,7 @@ var doc = `{
                     "type": "string"
                 },
                 "fav_icon": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "fav_icon_id": {
@@ -6717,18 +6408,21 @@ var doc = `{
                     "type": "integer"
                 },
                 "logo": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
                 },
                 "mobile_icon": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "mobile_icon_id": {
@@ -6797,6 +6491,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6844,6 +6539,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -6882,6 +6578,9 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "html_description": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6901,6 +6600,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -7015,9 +6715,11 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "permission": {
+                    "type": "object",
                     "$ref": "#/definitions/model.OrganisationPermission"
                 },
                 "slug": {
@@ -7051,8 +6753,7 @@ var doc = `{
         "organisation.organisationPermissionRequest": {
             "type": "object",
             "required": [
-                "organisation_id",
-                "title"
+                "organisation_id"
             ],
             "properties": {
                 "description": {
@@ -7066,6 +6767,20 @@ var doc = `{
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "organisation.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/organisation.orgWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },
@@ -7208,6 +6923,9 @@ var doc = `{
                 "page": {
                     "type": "boolean"
                 },
+                "published_date": {
+                    "type": "string"
+                },
                 "slug": {
                     "type": "string"
                 },
@@ -7271,10 +6989,14 @@ var doc = `{
                     "type": "integer"
                 },
                 "format": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
                     "type": "integer"
+                },
+                "html_description": {
+                    "type": "string"
                 },
                 "id": {
                     "type": "integer"
@@ -7289,6 +7011,7 @@ var doc = `{
                     "type": "boolean"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "page": {
@@ -7301,6 +7024,7 @@ var doc = `{
                     "type": "string"
                 },
                 "space": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Space"
                 },
                 "space_id": {
@@ -7357,12 +7081,13 @@ var doc = `{
         "rating.rating": {
             "type": "object",
             "required": [
-                "colour",
+                "background_colour",
                 "name",
-                "numeric_value"
+                "numeric_value",
+                "text_colour"
             ],
             "properties": {
-                "colour": {
+                "background_colour": {
                     "type": "string"
                 },
                 "description": {
@@ -7378,6 +7103,9 @@ var doc = `{
                     "type": "integer"
                 },
                 "slug": {
+                    "type": "string"
+                },
+                "text_colour": {
                     "type": "string"
                 }
             }
@@ -7424,6 +7152,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "medium": {
+                    "type": "object",
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
@@ -7465,6 +7194,7 @@ var doc = `{
                     "type": "integer"
                 },
                 "permission": {
+                    "type": "object",
                     "$ref": "#/definitions/space.organisationUser"
                 },
                 "slug": {
@@ -7473,7 +7203,7 @@ var doc = `{
                 "spaces": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/github.com_factly_dega-server_service_core_action_space.spaceWithPermissions"
+                        "$ref": "#/definitions/space.spaceWithPermissions"
                     }
                 },
                 "title": {
@@ -7513,6 +7243,20 @@ var doc = `{
                 }
             }
         },
+        "space.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/space.spaceWithPermissions"
+                    }
+                },
+                "total": {
+                    "type": "integer"
+                }
+            }
+        },
         "space.space": {
             "type": "object",
             "required": [
@@ -7520,6 +7264,9 @@ var doc = `{
                 "organisation_id"
             ],
             "properties": {
+                "analytics": {
+                    "type": "string"
+                },
                 "contact_info": {
                     "type": "string"
                 },
@@ -7618,6 +7365,96 @@ var doc = `{
                     "type": "integer"
                 },
                 "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "space.spaceWithPermissions": {
+            "type": "object",
+            "properties": {
+                "analytics": {
+                    "type": "string"
+                },
+                "contact_info": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "fav_icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "fav_icon_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "logo": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_id": {
+                    "type": "integer"
+                },
+                "logo_mobile": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "logo_mobile_id": {
+                    "type": "integer"
+                },
+                "mobile_icon": {
+                    "type": "object",
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "mobile_icon_id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "organisation_id": {
+                    "type": "integer"
+                },
+                "permissions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Permission"
+                    }
+                },
+                "site_address": {
+                    "type": "string"
+                },
+                "site_title": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "social_media_urls": {
+                    "type": "string"
+                },
+                "tag_line": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
+                },
+                "verification_codes": {
                     "type": "string"
                 }
             }

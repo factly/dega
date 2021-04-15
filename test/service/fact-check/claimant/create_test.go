@@ -58,6 +58,8 @@ func TestClaimantCreate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
 
+		claimantCountQuery(mock, 0)
+
 		slugCheckMock(mock, Data)
 
 		claimantInsertMock(mock)
@@ -70,12 +72,26 @@ func TestClaimantCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusCreated).JSON().Object().ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
+	})
 
+	t.Run("create claimant when claimant with same name exist", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
+
+		claimantCountQuery(mock, 1)
+
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("cannot parse claimant description", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
+		claimantCountQuery(mock, 0)
 
 		Data["description"] = postgres.Jsonb{
 			RawMessage: []byte(`{"block": "new"}`),
@@ -95,6 +111,7 @@ func TestClaimantCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
+		claimantCountQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
 
@@ -119,6 +136,7 @@ func TestClaimantCreate(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
+		claimantCountQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
 
@@ -137,6 +155,7 @@ func TestClaimantCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
+		claimantCountQuery(mock, 0)
 
 		slugCheckMock(mock, Data)
 

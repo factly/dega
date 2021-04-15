@@ -54,9 +54,10 @@ var defaultData = []map[string]interface{}{
 			RawMessage: []byte(`"green"`),
 		},
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`"True"`),
+			RawMessage: []byte(`{"blocks":[{"type":"paragraph","data":{"text":"True"}}]}`),
 		},
-		"numeric_value": 5,
+		"html_description": "<p>True</p>",
+		"numeric_value":    5,
 	},
 	{
 		"name": "Partly True",
@@ -65,9 +66,10 @@ var defaultData = []map[string]interface{}{
 		},
 		"slug": "partly-true",
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`"Partly True"`),
+			RawMessage: []byte(`{"blocks":[{"type":"paragraph","data":{"text":"Partly True"}}]}`),
 		},
-		"numeric_value": 4,
+		"html_description": "<p>Partly True</p>",
+		"numeric_value":    4,
 	},
 	{
 		"name": "Unverified",
@@ -76,9 +78,10 @@ var defaultData = []map[string]interface{}{
 		},
 		"slug": "unverified",
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`"Unverified"`),
+			RawMessage: []byte(`{"blocks":[{"type":"paragraph","data":{"text":"Unverified"}}]}`),
 		},
-		"numeric_value": 3,
+		"html_description": "<p>Unverified</p>",
+		"numeric_value":    3,
 	},
 	{
 		"name": "Misleading",
@@ -87,9 +90,10 @@ var defaultData = []map[string]interface{}{
 			RawMessage: []byte(`"orange"`),
 		},
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`"Misleading"`),
+			RawMessage: []byte(`{"blocks":[{"type":"paragraph","data":{"text":"Misleading"}}]}`),
 		},
-		"numeric_value": 2,
+		"html_description": "<p>Misleading</p>",
+		"numeric_value":    2,
 	},
 	{
 		"name": "False",
@@ -98,9 +102,10 @@ var defaultData = []map[string]interface{}{
 			RawMessage: []byte(`"red"`),
 		},
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`"False"`),
+			RawMessage: []byte(`{"blocks":[{"type":"paragraph","data":{"text":"False"}}]}`),
 		},
-		"numeric_value": 1,
+		"html_description": "<p>False</p>",
+		"numeric_value":    1,
 	},
 	{
 		"name": "Not a Claim",
@@ -109,9 +114,10 @@ var defaultData = []map[string]interface{}{
 			RawMessage: []byte(`"grey"`),
 		},
 		"description": postgres.Jsonb{
-			RawMessage: []byte(`"Not a Claim"`),
+			RawMessage: []byte(`{"blocks":[{"type":"paragraph","data":{"text":"Not a Claim"}}]}`),
 		},
-		"numeric_value": 0,
+		"html_description": "<p>Not a Claim</p>",
+		"numeric_value":    0,
 	},
 }
 
