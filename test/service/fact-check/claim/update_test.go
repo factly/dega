@@ -19,7 +19,7 @@ import (
 )
 
 var updatedClaim = map[string]interface{}{
-	"title":        "Claim",
+	"claim":        "Claim",
 	"claim_date":   time.Now(),
 	"checked_date": time.Now(),
 	"claim_sources": postgres.Jsonb{
