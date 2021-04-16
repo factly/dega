@@ -13,6 +13,7 @@ require (
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-openapi/spec v0.19.9 // indirect
 	github.com/go-openapi/swag v0.19.11 // indirect
+	github.com/gorilla/feeds v1.1.1
 	github.com/jinzhu/gorm v1.9.16
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/meilisearch/meilisearch-go v0.12.0
