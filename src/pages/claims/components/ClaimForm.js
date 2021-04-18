@@ -6,8 +6,6 @@ import { maker, checker } from '../../../utils/sluger';
 import moment from 'moment';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-const { TextArea } = Input;
-
 const layout = {
   labelCol: {
     span: 8,
@@ -82,7 +80,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
       >
         <div style={current === 0 ? { display: 'block' } : { display: 'none' }}>
           <Form.Item
-            name="title"
+            name="claim"
             label="Claim"
             rules={[
               {
@@ -93,7 +91,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
               { max: 150, message: 'Title must be maximum 150 characters.' },
             ]}
           >
-            <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
+            <Input placeholder="claim" onChange={(e) => onTitleChange(e.target.value)} />
+          </Form.Item>
+          <Form.Item name="fact" label="Fact">
+            <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
           </Form.Item>
           <Form.Item
             name="slug"
@@ -135,10 +136,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             ]}
           >
             <Selector action="Ratings" />
-          </Form.Item>
-
-          <Form.Item name="review" label="Fact" wrapperCol={24}>
-            <Editor placeholder="Enter Review..." />
           </Form.Item>
 
           <Form.Item name="description" label="Description" wrapperCol={24}>
