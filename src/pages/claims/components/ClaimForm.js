@@ -9,9 +9,11 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 const layout = {
   labelCol: {
     span: 8,
+    offset: 2,
   },
   wrapperCol: {
-    span: 6,
+    span: 20,
+    offset: 2,
   },
 };
 
@@ -88,13 +90,14 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 message: 'Please input the title!',
               },
               { min: 3, message: 'Title must be minimum 3 characters.' },
-              { max: 150, message: 'Title must be maximum 150 characters.' },
+              { max: 5000, message: 'Title must be maximum 150 characters.' },
             ]}
           >
-            <Input placeholder="claim" onChange={(e) => onTitleChange(e.target.value)} />
-          </Form.Item>
-          <Form.Item name="fact" label="Fact">
-            <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
+            <Input.TextArea
+              rows={6}
+              placeholder="Enter claim...."
+              onChange={(e) => onTitleChange(e.target.value)}
+            />
           </Form.Item>
           <Form.Item
             name="slug"
@@ -111,6 +114,9 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             ]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item name="fact" label="Fact">
+            <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
           </Form.Item>
           <Form.Item
             name="claimant"
@@ -138,7 +144,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             <Selector action="Ratings" />
           </Form.Item>
 
-          <Form.Item name="description" label="Description" wrapperCol={24}>
+          <Form.Item name="description" label="Description">
             <Editor placeholder="Enter Description..." />
           </Form.Item>
         </div>
