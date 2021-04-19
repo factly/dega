@@ -37,6 +37,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {}, [details]);
+
   const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {
     setDrawerVisible(true);
@@ -127,13 +129,15 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         when={shouldBlockNavigation}
         message="You have unsaved changes, are you sure you want to leave?"
       />
-      <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <ClaimCreateForm
-          data={claimID > 0 ? details[claimID] : {}}
-          onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
-          width={560}
-        />
-      </Modal>
+      {visible && (
+        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
+          <ClaimCreateForm
+            data={details[claimID]}
+            onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
+            width={560}
+          />
+        </Modal>
+      )}
       <Form
         form={form}
         initialValues={{ ...data }}
