@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Select, Drawer, DatePicker } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Drawer, DatePicker } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -7,12 +7,13 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
-import { addClaim } from '../../../actions/claims';
+import { addClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
+import ClaimList from './ClaimList';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -21,7 +22,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
-  const [valueChange, setValueChange] = React.useState(false);
+  const [valueChange, setValueChange] = useState(false);
+  const [claimID, setClaimID] = useState(0);
+  const details = useSelector(({ claims: { details } }) => details);
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -34,7 +37,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { Option } = Select;
+  useEffect(() => {}, [details]);
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {
@@ -95,6 +98,12 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const onClaimCreate = (values) => {
     dispatch(addClaim(values)).then(() => setVisible(false));
   };
+  const onClaimEdit = (values) => {
+    dispatch(updateClaim({ ...details[claimID], ...values })).then(() => {
+      setVisible(false);
+      setClaimID(0);
+    });
+  };
 
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/fact-checks'));
@@ -120,9 +129,15 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         when={shouldBlockNavigation}
         message="You have unsaved changes, are you sure you want to leave?"
       />
-      <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <ClaimCreateForm onCreate={onClaimCreate} width={560} />
-      </Modal>
+      {visible && (
+        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
+          <ClaimCreateForm
+            data={details[claimID]}
+            onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
+            width={560}
+          />
+        </Modal>
+      )}
       <Form
         form={form}
         initialValues={{ ...data }}
@@ -189,6 +204,15 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 />
               </Form.Item>
 
+              {form.getFieldValue('claims') && form.getFieldValue('claims').length > 0 ? (
+                <ClaimList
+                  ids={form.getFieldValue('claims')}
+                  setClaimID={setClaimID}
+                  showModal={showModal}
+                  details={details}
+                />
+              ) : null}
+
               <Form.Item name="description" className="post-description">
                 <Editor />
               </Form.Item>
@@ -206,7 +230,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   <MediaSelector />
                 </Form.Item>
                 <Form.Item name="claims" label="Claims" key={!visible}>
-                  <Selector mode="multiple" display={'title'} action="Claims" />
+                  <Selector mode="multiple" display={'claim'} action="Claims" />
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" onClick={showModal}>
