@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/service/core/action/event"
+	"github.com/factly/dega-server/service/core/action/info"
 	"github.com/factly/dega-server/service/core/action/menu"
 	"github.com/factly/dega-server/service/core/action/permissions"
 	"github.com/factly/dega-server/service/core/action/request"
@@ -41,6 +42,7 @@ func Router() http.Handler {
 	r.Mount("/users", user.Router())
 	r.Mount("/permissions", permissions.Router())
 	r.Mount("/requests", request.Router())
+	r.Mount("/info", info.Router())
 	if util.CheckNats() {
 		r.Mount("/webhooks", webhook.Router())
 		r.Mount("/events", event.Router())
