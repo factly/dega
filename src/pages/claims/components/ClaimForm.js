@@ -48,7 +48,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
 
   if (data && data.id) {
     data.claim_date = data.claim_date ? moment(data.claim_date) : null;
-    data.checked_date = data.checked_date ? moment(data.claim_date) : null;
+    data.checked_date = data.checked_date ? moment(data.checked_date) : null;
   }
 
   return (
