@@ -130,7 +130,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         message="You have unsaved changes, are you sure you want to leave?"
       />
       {visible && (
-        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
+        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel} maskClosable={false}>
           <ClaimCreateForm
             data={details[claimID]}
             onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
