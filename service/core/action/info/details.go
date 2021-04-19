@@ -91,5 +91,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	err = config.DB.Raw(fmt.Sprint("SELECT  formats.slug, posts.status, COUNT (*) FROM posts JOIN formats ON posts.format_id = formats.id where posts.space_id = ", sID, "group by posts.status, formats.slug")).Scan(&result.Posts).Error
 
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	renderx.JSON(w, http.StatusOK, result)
 }
