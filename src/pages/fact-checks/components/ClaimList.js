@@ -16,7 +16,15 @@ function ClaimList({ ids, setClaimID, details, showModal }) {
           <Card
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <p>{details[id].claim}</p>
+                <p
+                  style={{
+                    width: '90%',
+                    textOverflow: 'ellipsis',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {details[id].claim}
+                </p>
                 <Button
                   onClick={() => {
                     setClaimID(id);
