@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { updatePost } from '../../actions/posts';
 
-function QuickEdit({ data, setID }) {
+function QuickEdit({ data, setID, slug }) {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const dispatch = useDispatch();
@@ -45,6 +45,7 @@ function QuickEdit({ data, setID }) {
         values.category_ids = values.categories || [];
         values.tag_ids = values.tags || [];
         values.author_ids = values.authors || [];
+        values.claim_ids = values.claims || [];
         values.status === 'publish'
           ? (values.published_date = values.published_date
               ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
@@ -100,6 +101,11 @@ function QuickEdit({ data, setID }) {
       <Form.Item name="published_date" label="Published Date">
         <DatePicker />
       </Form.Item>
+      {slug === 'fact-check' ? (
+        <Form.Item name="claims" label="Claims">
+          <Selector mode="multiple" display={'claim'} action="Claims" />
+        </Form.Item>
+      ) : null}
       <Form.Item name="categories" label="Categories">
         <Selector mode="multiple" action="Categories" createEntity="Category" />
       </Form.Item>
