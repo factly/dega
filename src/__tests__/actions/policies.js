@@ -9,6 +9,7 @@ import { ADD_NOTIFICATION } from '../../constants/notifications';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -119,7 +120,12 @@ describe('policies actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -147,7 +153,12 @@ describe('policies actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -203,6 +214,7 @@ describe('policies actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Policy added',
+          time: Date.now(),
         },
       },
     ];
@@ -229,6 +241,7 @@ describe('policies actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -254,16 +267,17 @@ describe('policies actions', () => {
         payload: { id: 1, name: 'Policy' },
       },
       {
-        type: types.SET_POLICIES_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Policy updated',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -289,7 +303,12 @@ describe('policies actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
       },
     ];
 
@@ -316,6 +335,7 @@ describe('policies actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Policy deleted',
+          time: Date.now(),
         },
       },
     ];
@@ -341,6 +361,7 @@ describe('policies actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -384,5 +405,68 @@ describe('policies actions', () => {
     const store = mockStore({ initialState });
     store.dispatch(actions.addPolicies(policies));
     expect(store.getActions()).toEqual(expectedActions);
+  });
+  it('should create actions to add default policies success', () => {
+    const policies = [{ id: 1, name: 'Policy' }];
+    const resp = { data: { nodes: policies, total: 1 } };
+    axios.post.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: true,
+      },
+      {
+        type: types.ADD_POLICIES,
+        payload: [{ id: 1, name: 'Policy' }],
+      },
+      {
+        type: types.ADD_POLICIES_REQUEST,
+        payload: {
+          data: [1],
+          total: 1,
+        },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addDefaultPolicies())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.POLICIES_API + '/default');
+  });
+  it('should create actions to add default policies failure', () => {
+    const errorMessage = 'Failed to add default policy';
+    axios.post.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_POLICIES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addDefaultPolicies())
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.POLICIES_API + '/default');
   });
 });

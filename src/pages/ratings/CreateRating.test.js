@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -15,6 +14,7 @@ import RatingForm from './components/RatingForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -45,20 +45,27 @@ describe('Ratings create component', () => {
       details: {},
       loading: true,
     },
+    spaces: {
+      orgs: [],
+      details: {},
+      loading: true,
+    }
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
   useDispatch.mockReturnValue(mockedDispatch);
 
   describe('snapshot component', () => {
+    window.HTMLCanvasElement.prototype.getContext = () => { 
+      return;
+      // return whatever getContext has to return
+    };
     it('should render the component', () => {
-      const tree = renderer
-        .create(
-          <Provider store={store}>
-            <CreateRating />
-          </Provider>,
-        )
-        .toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <CreateRating />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });

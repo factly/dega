@@ -33,7 +33,7 @@ let state = {
         data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -46,7 +46,7 @@ let state = {
         deleted_at: null,
         name: 'Election',
         slug: 'election',
-        description: '',
+        description: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
         medium_id: 0,
         space_id: 1,
         posts: null,
@@ -58,7 +58,7 @@ let state = {
         deleted_at: null,
         name: 'Politics',
         slug: 'politics',
-        description: '',
+        description: {time: 1613561493781, blocks: [{type: "paragraph", data: {text: "Description 2"}}], version: "2.19.0"},
         medium_id: 0,
         space_id: 1,
         posts: null,
@@ -159,7 +159,7 @@ describe('Tags List component', () => {
 
       expect(deleteTag).toHaveBeenCalled();
       expect(deleteTag).toHaveBeenCalledWith(1);
-      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit tag', () => {
       store = mockStore(state);
@@ -223,14 +223,14 @@ describe('Tags List component', () => {
           .props()
           .onChange({ target: { value: 'asc' } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
 
       setTimeout(() => {
         expect(getPosts).toHaveBeenCalledWith({
           page: 1,
-          limit: 5,
+          limit: 20,
           q: 'tag',
         });
       }, 0);

@@ -17,6 +17,7 @@ import { ADD_CLAIMS } from '../../constants/claims';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -68,7 +69,28 @@ const post2 = {
   format: { id: 42, name: 'Format 2' },
   medium: { id: 52, name: 'Medium 2' },
 };
-
+const post_without_media = {
+  id: 123,
+  name: 'Post 1',
+  authors: [{ id: 11, name: 'Author 1' }],
+  tags: [
+    { id: 21, name: 'Tag 21' },
+    { id: 22, name: 'Tag 22' },
+  ],
+  categories: [
+    { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' } },
+    { id: 32, name: 'category 32' },
+  ],
+  format: { id: 41, name: 'Format 1' },
+  claims: [
+    {
+      id: 61,
+      name: 'Claim 1',
+      claimant: { id: 601, name: 'Claimant 1', medium: { id: 621, name: 'Medium-Claimant 1' } },
+      rating: { id: 602, name: 'Rating 1', medium: { id: 622, name: 'Medium-Rating 1' } },
+    },
+  ],
+}
 describe('posts actions', () => {
   it('should create an action to set loading to true', () => {
     const startLoadingAction = {
@@ -124,6 +146,7 @@ describe('posts actions', () => {
       tag: [21],
       category: [33],
       format: [42],
+      status: 'draft',
     };
     const posts = [post];
     const resp = { data: { nodes: posts, total: 1 } };
@@ -214,7 +237,116 @@ describe('posts actions', () => {
     ];
 
     const params = new URLSearchParams(
-      'category=33&tag=21&format=42&page=1&limit=5&sort=asc&q=post',
+      'category=33&tag=21&format=42&page=1&limit=5&sort=asc&q=post&status=draft',
+    );
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getPosts(query))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.POSTS_API, {
+      params: params,
+    });
+  });
+  it('should create actions to fetch posts success without page and limit ', () => {
+    const query = {
+      q: 'post',
+      sort: 'asc',
+      tag: [21],
+      category: [33],
+      format: [42],
+      status: 'draft',
+    };
+    const posts = [post];
+    const resp = { data: { nodes: posts, total: 1 } };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311 },
+          { id: 32, name: 'category 32', medium: undefined },
+        ],
+      },
+      {
+        type: ADD_FORMATS,
+        payload: [{ id: 41, name: 'Format 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{ id: 601, name: 'Claimant 1', medium: 621 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 622, name: 'Medium-Rating 1' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{ id: 602, name: 'Rating 1', medium: 622 }],
+      },
+      {
+        type: ADD_CLAIMS,
+        payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_POSTS,
+        payload: [
+          {
+            id: 1,
+            name: 'Post 1',
+            authors: [11],
+            tags: [21, 22],
+            categories: [31, 32],
+            format: 41,
+            medium: 51,
+            claims: [61],
+          },
+        ],
+      },
+      {
+        type: types.ADD_POSTS_REQUEST,
+        payload: {
+          data: [1],
+          query: query,
+          total: 1,
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const params = new URLSearchParams(
+      'category=33&tag=21&format=42&sort=asc&q=post&status=draft',
     );
 
     const store = mockStore({ initialState });
@@ -356,7 +488,12 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
     const params = new URLSearchParams('page=1&limit=5');
@@ -564,7 +701,12 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -642,6 +784,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post added',
+          time: Date.now(),
         },
       },
     ];
@@ -717,6 +860,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post added',
+          time: Date.now(),
         },
       },
     ];
@@ -755,6 +899,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -838,16 +983,17 @@ describe('posts actions', () => {
         },
       },
       {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Post updated',
+          message: 'Draft Saved',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -930,16 +1076,17 @@ describe('posts actions', () => {
         },
       },
       {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Post published',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -948,6 +1095,94 @@ describe('posts actions', () => {
       .dispatch(actions.publishPost(post))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1' + '/publish', post);
+  });
+  it('should create actions to publish post success without medium', () => {
+    const resp = { data: post_without_media };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311 },
+          { id: 32, name: 'category 32', medium: undefined },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{ id: 601, name: 'Claimant 1', medium: 621 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 622, name: 'Medium-Rating 1' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{ id: 602, name: 'Rating 1', medium: 622 }],
+      },
+      {
+        type: ADD_CLAIMS,
+        payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+      },
+      {
+        type: ADD_FORMATS,
+        payload: [{ id: 41, name: 'Format 1' }],
+      },
+      {
+        type: types.ADD_POST,
+        payload: {
+          id: 123,
+          name: 'Post 1',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: 41,
+          claims: [61],
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Post published',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.publishPost(post_without_media))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/123' + '/publish', post_without_media);
   });
   it('should create actions to publish success', () => {
     const resp = { data: post };
@@ -1022,8 +1257,92 @@ describe('posts actions', () => {
         },
       },
       {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Post published',
+          time: Date.now(),
+        },
+      },
+      {
         type: types.SET_POSTS_LOADING,
         payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.publish(post))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/publish', post);
+  });
+  it('should create actions to publish success without medium', () => {
+    const resp = { data: post_without_media };
+    axios.post.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311 },
+          { id: 32, name: 'category 32', medium: undefined },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{ id: 601, name: 'Claimant 1', medium: 621 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 622, name: 'Medium-Rating 1' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{ id: 602, name: 'Rating 1', medium: 622 }],
+      },
+      {
+        type: ADD_CLAIMS,
+        payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+      },
+      {
+        type: ADD_FORMATS,
+        payload: [{ id: 41, name: 'Format 1' }],
+      },
+      {
+        type: types.ADD_POST,
+        payload: {
+          id: 123,
+          name: 'Post 1',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: 41,
+          claims: [61],
+        },
       },
       {
         type: ADD_NOTIFICATION,
@@ -1031,7 +1350,43 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post published',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.publish(post_without_media))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/publish', post_without_media);
+  });
+  
+  it('should create actions to publish failure', () => {
+    const errorMessage = 'Failed to publish post';
+    axios.post.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -1115,16 +1470,17 @@ describe('posts actions', () => {
         },
       },
       {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Template created',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -1134,6 +1490,127 @@ describe('posts actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post);
   });
+
+  it('should create actions to template success without medium', () => {
+    const resp = { data: post_without_media };
+    axios.post.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311 },
+          { id: 32, name: 'category 32', medium: undefined },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{ id: 601, name: 'Claimant 1', medium: 621 }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 622, name: 'Medium-Rating 1' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{ id: 602, name: 'Rating 1', medium: 622 }],
+      },
+      {
+        type: ADD_CLAIMS,
+        payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+      },
+      {
+        type: ADD_FORMATS,
+        payload: [{ id: 41, name: 'Format 1' }],
+      },
+      {
+        type: types.ADD_POST,
+        payload: {
+          id: 123,
+          name: 'Post 1',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: 41,
+          claims: [61],
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Template created',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addTemplate(post_without_media))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post_without_media);
+  });
+
+  it('should create actions to template failure', () => {
+    const errorMessage = 'Failed to publish post';
+    axios.post.mockRejectedValue(new Error(errorMessage));
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addTemplate(post))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post);
+  });
+
   it('should create actions to update success without any optional fields', () => {
     const post_without_fields = { ...post };
     post_without_fields.categories = [];
@@ -1141,6 +1618,7 @@ describe('posts actions', () => {
     post_without_fields.tags = [];
     post_without_fields.claims = [];
     post_without_fields.medium = undefined;
+    post_without_fields.status = 'publish';
 
     const resp = { data: post_without_fields };
     axios.put.mockResolvedValue(resp);
@@ -1201,19 +1679,21 @@ describe('posts actions', () => {
           format: 41,
           medium: undefined,
           claims: [],
+          status: 'publish',
         },
-      },
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
       },
       {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Post updated',
+          message: 'Format 1 Published',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -1250,7 +1730,12 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -1275,7 +1760,12 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -1302,6 +1792,7 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Post deleted',
+          time: Date.now(),
         },
       },
     ];
@@ -1327,6 +1818,7 @@ describe('posts actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];

@@ -23,7 +23,7 @@ let state = {
         data: [2, 1],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -40,6 +40,7 @@ let state = {
         numeric_value: 5,
         medium_id: 0,
         space_id: 1,
+        background_colour: { hex : '#108040'}
       },
       '2': {
         id: 2,
@@ -156,7 +157,7 @@ describe('Ratings List component', () => {
 
       expect(deleteRating).toHaveBeenCalled();
       expect(deleteRating).toHaveBeenCalledWith(2);
-      expect(getRatings).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getRatings).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit rating', () => {
       store = mockStore(state);

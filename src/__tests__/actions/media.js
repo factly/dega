@@ -9,6 +9,7 @@ import { ADD_NOTIFICATION } from '../../constants/notifications';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -156,7 +157,12 @@ describe('media actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
       },
     ];
 
@@ -184,7 +190,12 @@ describe('media actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
       },
     ];
 
@@ -267,6 +278,7 @@ describe('media actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Medium added',
+          time: Date.now(),
         },
       },
     ];
@@ -293,6 +305,7 @@ describe('media actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -318,16 +331,17 @@ describe('media actions', () => {
         payload: { id: 1, name: 'Medium' },
       },
       {
-        type: types.SET_MEDIA_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Medium updated',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
       },
     ];
 
@@ -353,7 +367,12 @@ describe('media actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
       },
     ];
 
@@ -380,6 +399,7 @@ describe('media actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Medium deleted',
+          time: Date.now(),
         },
       },
     ];
@@ -405,6 +425,7 @@ describe('media actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, Provider } from 'react-redux';
+import { useDispatch, Provider, useSelector } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount, shallow } from 'enzyme';
@@ -14,6 +14,7 @@ import SpaceEditForm from './components/SpaceEditForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -22,7 +23,7 @@ jest.mock('react-redux', () => ({
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn(),
-  useParams: jest.fn().mockReturnValue({ id: '1' }),
+  useParams: jest.fn().mockReturnValue({ id: '11' }),
 }));
 
 jest.mock('../../actions/spaces', () => ({
@@ -37,8 +38,29 @@ describe('Spaces Edit component', () => {
   store = mockStore({
     spaces: {
       orgs: [],
-      details: {},
-      loading: true,
+      details: {
+        11 : {
+          id: 11,
+          organisation_id: 1,
+          name: 'name',
+          slug: 'slug',
+          site_title: 'site_title',
+          tag_line: 'tag_line',
+          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}, 
+          site_address: 'site_address',
+          logo_id: 1,
+          logo_mobile_id: 1,
+          fav_icon_id: 1,
+          mobile_icon_id: 1,
+          social_media_urls: {
+            facebook: 'fb.com',
+            twitter: 'twitter.com',
+            pintrest: 'pinterest.com',
+            instagram: 'instagram.com',
+          },
+        } 
+      },
+      loading: false,
       selected: 0,
     },
     claims: {
@@ -66,24 +88,17 @@ describe('Spaces Edit component', () => {
   const mockedDispatch = jest.fn(() => Promise.resolve({}));
   useDispatch.mockReturnValue(mockedDispatch);
   describe('snapshot testing', () => {
-    it('should match skeleton while loading', () => {
-      let tree;
-      store = mockStore({
-        spaces: {
-          orgs: [],
-          details: {},
-          loading: true,
-          selected: 0,
-        },
-      });
+    it('should render the component', () => {
+      let component;
       act(() => {
-        tree = shallow(
+        component = mount(
           <Provider store={store}>
             <EditSpace />
-          </Provider>,
+          </Provider>
         );
       });
-      expect(tree).toMatchSnapshot();
+      expect(component).toMatchSnapshot();
+      act(() => component.unmount());  
     });
     it('should match skeleton while loading', () => {
       let tree;
@@ -116,12 +131,13 @@ describe('Spaces Edit component', () => {
           ],
           details: {
             11: {
+              id: 11,
               organisation_id: 1,
               name: 'name',
               slug: 'slug',
               site_title: 'site_title',
               tag_line: 'tag_line',
-              description: 'description',
+              description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}, 
               site_address: 'site_address',
               logo_id: 1,
               logo_mobile_id: 1,
@@ -163,10 +179,49 @@ describe('Spaces Edit component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
+    it('should display RecordNotFound when no space found', () => {
+      store=mockStore({
+        spaces: {
+          orgs: [],
+          details: {},
+          loading: false,
+          selected: 0,
+        },
+      });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditSpace />
+          </Provider>,
+        );
+      });
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
+      expect(wrapper.find(SpaceEditForm).length).toBe(0);
+    });
+    it('should display Skeleton when loading', () => {
+      store=mockStore({
+        spaces: {
+          orgs: [],
+          details: {},
+          loading: true,
+          selected: 0,
+        },
+      });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditSpace />
+          </Provider>,
+        );
+      });
+      expect(wrapper.find('Skeleton').length).toBe(1);
+      expect(wrapper.find(SpaceEditForm).length).toBe(0);
+    });
     it('should call updateSpace', (done) => {
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       actions.updateSpace.mockReset();
+      useDispatch.mockReturnValueOnce(() => Promise.resolve({}));
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -176,8 +231,28 @@ describe('Spaces Edit component', () => {
       });
       wrapper.find(SpaceEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.updateSpace).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/spaces');
+        expect(actions.updateSpace).toHaveBeenCalledWith({ 
+          id: 11,
+          organisation_id: 1,
+          name: 'name',
+          slug: 'slug',
+          site_title: 'site_title',
+          tag_line: 'tag_line',
+          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}, 
+          site_address: 'site_address',
+          logo_id: 1,
+          logo_mobile_id: 1,
+          fav_icon_id: 1,
+          mobile_icon_id: 1,
+          social_media_urls: {
+            facebook: 'fb.com',
+            twitter: 'twitter.com',
+            pintrest: 'pinterest.com',
+            instagram: 'instagram.com',
+          },
+          test: 'test'
+        });
+        expect(push).toHaveBeenCalledWith('/spaces/11/edit');
         done();
       }, 0);
     });

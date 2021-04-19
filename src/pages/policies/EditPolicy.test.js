@@ -153,6 +153,87 @@ describe('Policies edit component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
+    it('should display RecordNotFound when no Policy found', ()  => {
+      store = mockStore({
+        policies: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+        authors: {
+          req: [{ query: { page: 1 }, total: 1, data: [1] }],
+          details: { 1: { id: 1, name: 'Author', email: 'author@aut.co' } },
+          loading: false,
+        },
+      });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditPolicy />
+          </Provider>
+        );
+      });
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
+    });
+    it('should display Skeleton when loading', ()  => {
+      store = mockStore({
+        policies: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+        authors: {
+          req: [{ query: { page: 1 }, total: 1, data: [1] }],
+          details: { 1: { id: 1, name: 'Author', email: 'author@aut.co' } },
+          loading: false,
+        },
+      });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditPolicy />
+          </Provider>
+        );
+      });
+      expect(wrapper.find('Skeleton').length).toBe(1);
+    });
+    it('should call getAction and display policies with non empty users', () => {
+      store = mockStore({
+        policies: {
+          req: [],
+          details: {
+            '1': {
+              id: 1,
+              name: 'policy',
+              description: 'description',
+              permissions: [
+                {
+                  resource: 'policy',
+                  actions: ['create'],
+                },
+              ],
+              users: [{ id: 10, email: 'abc@gmail.com'}],
+            },
+          },
+          
+          loading: false,
+        },
+        authors: {
+          req: [{ query: { page: 1 }, total: 1, data: [1] }],
+          details: { 1: { id: 1, name: 'Author', email: 'author@aut.co' } },
+          loading: false,
+        },
+      });
+      actions.getPolicy.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditPolicy />
+          </Provider>,
+        );
+      });
+      expect(actions.getPolicy).toHaveBeenCalledWith('1');
+    });
     it('should call get action', () => {
       actions.getPolicy.mockReset();
       act(() => {
@@ -187,7 +268,7 @@ describe('Policies edit component', () => {
           users: [],
           test: 'test',
         });
-        expect(push).toHaveBeenCalledWith('/policies');
+        expect(push).toHaveBeenCalledWith('/policies/1/edit');
         done();
       }, 0);
     });
