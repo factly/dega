@@ -37,7 +37,7 @@ let state = {
       '2': {
         id: 2,
         name: 'Menu 2',
-      }
+      },
     },
     loading: false,
   },
@@ -62,7 +62,7 @@ describe('Menu List component', () => {
     it('should render the component', () => {
       store = mockStore(state);
       const tree = mount(
-        <Provider store = {store}>
+        <Provider store={store}>
           <Router>
             <MenuList />
           </Router>
@@ -141,7 +141,7 @@ describe('Menu List component', () => {
         .simulate('click');
       expect(deleteMenu).toHaveBeenCalled();
       expect(deleteMenu).toHaveBeenCalledWith(1);
-      expect(getMenus).toHaveBeenCalledWith({ page: 1, limit: 20 });  
+      expect(getMenus).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit menu', () => {
       store = mockStore(state);
@@ -160,10 +160,10 @@ describe('Menu List component', () => {
       expect(button.text(0)).toEqual('Edit');
       expect(link.prop('to')).toEqual('/menu/1/edit');
     });
-    it('should have no delete and edit buttons',() => {
+    it('should have no delete and edit buttons', () => {
       store = mockStore({
         menu: {
-          req:[],
+          req: [],
           details: {},
           loading: false,
         },

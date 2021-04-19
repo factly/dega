@@ -13,11 +13,11 @@ describe('admin reducer', () => {
   it('should return the state for default case', () => {
     expect(
       reducer({
-        organisation: { id: 1, organisation_id: 9, spaces: 2},
+        organisation: { id: 1, organisation_id: 9, spaces: 2 },
         loading: false,
       }),
     ).toEqual({
-      organisation: { id: 1, organisation_id: 9, spaces: 2},
+      organisation: { id: 1, organisation_id: 9, spaces: 2 },
       loading: false,
     });
   });
@@ -45,10 +45,10 @@ describe('admin reducer', () => {
     expect(
       reducer(initialState, {
         type: types.ADD_SUPER_ORGANISATION,
-        payload: { id: 1, organisation_id: 9, spaces: 2},
+        payload: { id: 1, organisation_id: 9, spaces: 2 },
       }),
     ).toEqual({
-      organisation: { id: 1, organisation_id: 9, spaces: 2},
+      organisation: { id: 1, organisation_id: 9, spaces: 2 },
       loading: true,
     });
   });

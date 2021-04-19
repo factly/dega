@@ -33,7 +33,7 @@ describe('admin actions', () => {
     expect(actions.stopOrganisationPermissionsLoading()).toEqual(stopLoadingAction);
   });
   it('should create an action to getSuperOrganisation permission success', () => {
-    const orgPermission = { id: 2, is_admin: true, organisation_id: 9};
+    const orgPermission = { id: 2, is_admin: true, organisation_id: 9 };
     const resp = { data: orgPermission };
     axios.get.mockResolvedValue(resp);
     const expectedActions = [
@@ -82,6 +82,6 @@ describe('admin actions', () => {
     store
       .dispatch(actions.getSuperOrganisation())
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.get).toHaveBeenCalledWith(ORGANISATION_PERMISSIONS_API+'/my');  
+    expect(axios.get).toHaveBeenCalledWith(ORGANISATION_PERMISSIONS_API + '/my');
   });
-})
+});

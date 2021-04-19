@@ -35,8 +35,8 @@ let state = {
           id: 1,
           fact_check: true,
           media: -1,
-          posts: -1,  
-        }, 
+          posts: -1,
+        },
       },
       '2': {
         id: 2,
@@ -48,8 +48,8 @@ let state = {
           episodes: 20,
           podcast: true,
           media: 20,
-          posts: 20,  
-        }, 
+          posts: 20,
+        },
       },
       '3': {
         id: 1,
@@ -80,9 +80,9 @@ describe('Space Permission List component', () => {
     it('should render component', () => {
       store = mockStore(state);
       const tree = mount(
-        <Provider store = {store}>
+        <Provider store={store}>
           <PermissionList />
-        </Provider>
+        </Provider>,
       );
       expect(tree).toMatchSnapshot();
     });
@@ -95,9 +95,9 @@ describe('Space Permission List component', () => {
         },
       });
       const tree = mount(
-        <Provider store = {store}>
+        <Provider store={store}>
           <PermissionList />
-        </Provider>
+        </Provider>,
       );
       expect(tree).toMatchSnapshot();
     });
@@ -107,7 +107,7 @@ describe('Space Permission List component', () => {
       const tree = mount(
         <Provider store={store}>
           <PermissionList />
-        </Provider>
+        </Provider>,
       );
       expect(tree).toMatchSnapshot();
     });
@@ -115,13 +115,13 @@ describe('Space Permission List component', () => {
       state.spacePermissions.loading = false;
       store = mockStore(state);
       const tree = mount(
-        <Provider store = {store}>
+        <Provider store={store}>
           <PermissionList />
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20});
+      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {

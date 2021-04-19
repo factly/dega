@@ -38,7 +38,7 @@ describe('Ratings Edit component', () => {
   let mockedDispatch;
 
   describe('snapshot testing', () => {
-    window.HTMLCanvasElement.prototype.getContext = () => { 
+    window.HTMLCanvasElement.prototype.getContext = () => {
       return;
       // return whatever getContext has to return
     };
@@ -51,14 +51,22 @@ describe('Ratings Edit component', () => {
               id: 1,
               name: 'True',
               slug: 'true',
-              description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+              description: {
+                time: 1613559903378,
+                blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+                version: '2.19.0',
+              },
               numeric_value: 5,
             },
             '2': {
               id: 2,
               name: 'False',
               slug: 'false',
-              description: {time: 1613559903398, blocks: [{type: "paragraph", data: {text: "Description2"}}], version: "2.19.0"},
+              description: {
+                time: 1613559903398,
+                blocks: [{ type: 'paragraph', data: { text: 'Description2' } }],
+                version: '2.19.0',
+              },
               numeric_value: 5,
             },
           },
@@ -74,7 +82,7 @@ describe('Ratings Edit component', () => {
           details: {},
           loading: true,
           selected: 0,
-        }
+        },
       });
       store.dispatch = jest.fn(() => ({}));
       mockedDispatch = jest.fn();
@@ -171,7 +179,7 @@ describe('Ratings Edit component', () => {
           details: {},
           loading: true,
           selected: 0,
-        }
+        },
       });
       store.dispatch = jest.fn(() => ({}));
       mockedDispatch = jest.fn();

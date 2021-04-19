@@ -50,7 +50,7 @@ describe('Categories create component', () => {
       orgs: [],
       details: {},
       loading: true,
-    }
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -60,8 +60,8 @@ describe('Categories create component', () => {
     it('should render the component', () => {
       const tree = mount(
         <Provider store={store}>
-            <CreateCategory />
-          </Provider>,
+          <CreateCategory />
+        </Provider>,
       );
       expect(tree).toMatchSnapshot();
     });

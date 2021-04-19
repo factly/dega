@@ -15,7 +15,11 @@ const data = {
   slug: 'slug',
   site_title: 'site_title',
   tag_line: 'tag_line',
-  description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+  description: {
+    time: 1613715908408,
+    blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+    version: '2.19.0',
+  },
   site_address: 'site_address',
   logo_id: 1,
   logo_mobile_id: 1,
@@ -92,7 +96,7 @@ describe('Space Edit Form component', () => {
       const nextButton = tree.find('FormItem').at(16).find('Button').at(1);
       expect(nextButton.text()).toBe('Next');
       nextButton.simulate('click');
-      expect(tree.find('Steps').at(0).props().current).toEqual(1); 
+      expect(tree.find('Steps').at(0).props().current).toEqual(1);
     });
     it('should match component with data', () => {
       const tree = mount(
@@ -104,7 +108,7 @@ describe('Space Edit Form component', () => {
       const nextButton = tree.find('FormItem').at(16).find('Button').at(1);
       expect(nextButton.text()).toBe('Next');
       nextButton.simulate('click');
-      expect(tree.find('Steps').at(0).props().current).toEqual(1); 
+      expect(tree.find('Steps').at(0).props().current).toEqual(1);
     });
   });
   describe('component testing', () => {
@@ -160,7 +164,11 @@ describe('Space Edit Form component', () => {
           slug: 'slug',
           site_title: 'site_title',
           tag_line: 'tag_line',
-          description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+          description: {
+            time: 1613715908408,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
           site_address: 'site_address',
           logo_id: 1,
           logo_mobile_id: 1,

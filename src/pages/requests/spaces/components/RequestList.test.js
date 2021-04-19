@@ -39,7 +39,7 @@ let state = {
         fact_check: true,
         space_id: 1,
         episodes: -1,
-        podcast: true
+        podcast: true,
       },
       '2': {
         id: 2,
@@ -51,7 +51,7 @@ let state = {
         fact_check: false,
         space_id: 2,
         episodes: 10,
-        podcast: true
+        podcast: true,
       },
       '3': {
         id: 3,
@@ -170,7 +170,7 @@ describe('Space Request List component', () => {
       );
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20}, true);
+      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20 }, true);
     });
   });
   describe('component testing', () => {
@@ -216,8 +216,8 @@ describe('Space Request List component', () => {
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
       expect(approveSpaceRequest).toHaveBeenCalled();
-      expect(approveSpaceRequest).toHaveBeenCalledWith(1,'approve');
-      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20}, true);
+      expect(approveSpaceRequest).toHaveBeenCalledWith(1, 'approve');
+      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20 }, true);
     });
     it('should reject request', () => {
       store = mockStore(state);
@@ -239,8 +239,8 @@ describe('Space Request List component', () => {
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
       expect(approveSpaceRequest).toHaveBeenCalled();
-      expect(approveSpaceRequest).toHaveBeenCalledWith(1,'reject');
-      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20}, true);
+      expect(approveSpaceRequest).toHaveBeenCalledWith(1, 'reject');
+      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20 }, true);
     });
   });
-})
+});

@@ -49,7 +49,7 @@ describe('Claimants create component', () => {
       orgs: [],
       details: {},
       loading: true,
-    }
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));

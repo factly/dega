@@ -90,9 +90,18 @@ describe('Policies create component', () => {
           </Provider>,
         );
       });
-      wrapper.find(PolicyCreateForm).props().onCreate({ users: [], permissions: [{resource: "posts", actions: ["create", "update"]}] });
+      wrapper
+        .find(PolicyCreateForm)
+        .props()
+        .onCreate({
+          users: [],
+          permissions: [{ resource: 'posts', actions: ['create', 'update'] }],
+        });
       setTimeout(() => {
-        expect(actions.addPolicy).toHaveBeenCalledWith({ permissions: [{resource: "posts", actions: ["create", "update"]}], users: [] });
+        expect(actions.addPolicy).toHaveBeenCalledWith({
+          permissions: [{ resource: 'posts', actions: ['create', 'update'] }],
+          users: [],
+        });
         expect(push).toHaveBeenCalledWith('/policies');
         done();
       }, 0);

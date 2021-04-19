@@ -31,7 +31,9 @@ function EditClaimant() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updateClaimant({ ...claimant, ...values })).then(() => history.push(`/claimants/${id}/edit`));
+    dispatch(updateClaimant({ ...claimant, ...values })).then(() =>
+      history.push(`/claimants/${id}/edit`),
+    );
   };
 
   return <ClaimantEditForm data={claimant} onCreate={onUpdate} />;

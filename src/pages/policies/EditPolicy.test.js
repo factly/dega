@@ -153,7 +153,7 @@ describe('Policies edit component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should display RecordNotFound when no Policy found', ()  => {
+    it('should display RecordNotFound when no Policy found', () => {
       store = mockStore({
         policies: {
           req: [],
@@ -170,12 +170,12 @@ describe('Policies edit component', () => {
         wrapper = mount(
           <Provider store={store}>
             <EditPolicy />
-          </Provider>
+          </Provider>,
         );
       });
       expect(wrapper.find('RecordNotFound').length).toBe(1);
     });
-    it('should display Skeleton when loading', ()  => {
+    it('should display Skeleton when loading', () => {
       store = mockStore({
         policies: {
           req: [],
@@ -192,7 +192,7 @@ describe('Policies edit component', () => {
         wrapper = mount(
           <Provider store={store}>
             <EditPolicy />
-          </Provider>
+          </Provider>,
         );
       });
       expect(wrapper.find('Skeleton').length).toBe(1);
@@ -212,10 +212,10 @@ describe('Policies edit component', () => {
                   actions: ['create'],
                 },
               ],
-              users: [{ id: 10, email: 'abc@gmail.com'}],
+              users: [{ id: 10, email: 'abc@gmail.com' }],
             },
           },
-          
+
           loading: false,
         },
         authors: {

@@ -155,11 +155,11 @@ describe('claims actions', () => {
     });
   });
   it('should create actions to fetch claims list without page and limit', () => {
-    const query = { q: 'New'};
+    const query = { q: 'New' };
     const claims = [claim3];
     const resp = { data: { nodes: claims, total: 1 } };
     axios.get.mockResolvedValue(resp);
-    
+
     const expectedActions = [
       {
         type: types.SET_CLAIMS_LOADING,

@@ -1,5 +1,5 @@
 import reducer from '../../reducers/sidebarReducer';
-import  * as types from '../../constants/sidebar';
+import * as types from '../../constants/sidebar';
 
 const initialState = {
   collapsed: false,

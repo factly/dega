@@ -15,7 +15,11 @@ let onCreate, store;
 const data = {
   name: 'name',
   slug: 'slug',
-  description: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+  description: {
+    time: 1613561493761,
+    blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+    version: '2.19.0',
+  },
 };
 
 describe('Tags Create Form component', () => {
@@ -29,7 +33,7 @@ describe('Tags Create Form component', () => {
       orgs: [],
       details: {},
       loading: true,
-    }
+    },
   });
 
   describe('snapshot testing', () => {
@@ -57,10 +61,10 @@ describe('Tags Create Form component', () => {
     });
     it('should match component with data', () => {
       const tree = mount(
-          <Provider store={store}>
-            <TagForm onCreate={onCreate} data={data} />
-          </Provider>,
-        );
+        <Provider store={store}>
+          <TagForm onCreate={onCreate} data={data} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -130,7 +134,11 @@ describe('Tags Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
           slug: 'new-name',
-          description: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}
+          description: {
+            time: 1613561493761,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
         });
         done();
       }, 0);
@@ -152,7 +160,15 @@ describe('Tags Create Form component', () => {
           .at(3)
           .find('Editor')
           .props()
-          .onChange({ target: { value: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"} } });
+          .onChange({
+            target: {
+              value: {
+                time: 1613561493761,
+                blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
+                version: '2.19.0',
+              },
+            },
+          });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -164,7 +180,11 @@ describe('Tags Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
           slug: 'new-slug',
-          description: {time: 1613561493761, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
+          description: {
+            time: 1613561493761,
+            blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
+            version: '2.19.0',
+          },
         });
         done();
       }, 0);

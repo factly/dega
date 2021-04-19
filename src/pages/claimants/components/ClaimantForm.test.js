@@ -11,7 +11,11 @@ import ClaimantCreateForm from './ClaimantForm';
 const data = {
   name: 'name',
   slug: 'slug',
-  description: {time: 1613544901542, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+  description: {
+    time: 1613544901542,
+    blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+    version: '2.19.0',
+  },
   tag_line: 'tag_line',
   medium_id: 1,
 };
@@ -141,7 +145,11 @@ describe('Claimants Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
           slug: 'new-name',
-          description: {time: 1613544901542, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+          description: {
+            time: 1613544901542,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
           tag_line: 'tag_line',
           medium_id: 1,
         });
@@ -155,7 +163,15 @@ describe('Claimants Create Form component', () => {
           .at(4)
           .find('Editor')
           .props()
-          .onChange({ target: { value: {time: 1613544901542, blocks: [{type: "paragraph", data: {text: "New-Description"}}], version: "2.19.0"} } });
+          .onChange({
+            target: {
+              value: {
+                time: 1613544901542,
+                blocks: [{ type: 'paragraph', data: { text: 'New-Description' } }],
+                version: '2.19.0',
+              },
+            },
+          });
         wrapper
           .find('FormItem')
           .at(0)
@@ -181,7 +197,11 @@ describe('Claimants Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          description: {time: 1613544901542, blocks: [{type: "paragraph", data: {text: "New-Description"}}], version: "2.19.0"},
+          description: {
+            time: 1613544901542,
+            blocks: [{ type: 'paragraph', data: { text: 'New-Description' } }],
+            version: '2.19.0',
+          },
           slug: 'new-slug',
           medium_id: 1,
           tag_line: 'new tag line',

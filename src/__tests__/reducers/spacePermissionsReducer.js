@@ -15,12 +15,26 @@ describe('space permission reducer', () => {
     expect(
       reducer({
         req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-        details: { 1: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } } },
+        details: {
+          1: {
+            id: 1,
+            name: 'Space 1',
+            organisation_id: 11,
+            permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+          },
+        },
         loading: false,
       }),
     ).toEqual({
       req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-      details: { 1: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } } },
+      details: {
+        1: {
+          id: 1,
+          name: 'Space 1',
+          organisation_id: 11,
+          permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+        },
+      },
       loading: false,
     });
   });
@@ -29,7 +43,14 @@ describe('space permission reducer', () => {
       reducer(
         {
           req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-          details: [{ id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } }],
+          details: [
+            {
+              id: 1,
+              name: 'Space 1',
+              organisation_id: 11,
+              permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+            },
+          ],
           loading: false,
         },
         {
@@ -105,16 +126,35 @@ describe('space permission reducer', () => {
       reducer(initialState, {
         type: types.ADD_SPACE_PERMISSIONS,
         payload: [
-          { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } },
-          { id: 2, name: 'Space 2', organisation_id: 12, permission: { id: 8, space_id: 4, posts: 15, media: 30 } },
+          {
+            id: 1,
+            name: 'Space 1',
+            organisation_id: 11,
+            permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+          },
+          {
+            id: 2,
+            name: 'Space 2',
+            organisation_id: 12,
+            permission: { id: 8, space_id: 4, posts: 15, media: 30 },
+          },
         ],
       }),
     ).toEqual({
       req: [],
-      details: { 
-        1: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } },
-        2: { id: 2, name: 'Space 2', organisation_id: 12, permission: { id: 8, space_id: 4, posts: 15, media: 30 } },
-
+      details: {
+        1: {
+          id: 1,
+          name: 'Space 1',
+          organisation_id: 11,
+          permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+        },
+        2: {
+          id: 2,
+          name: 'Space 2',
+          organisation_id: 12,
+          permission: { id: 8, space_id: 4, posts: 15, media: 30 },
+        },
       },
       loading: true,
     });
@@ -135,12 +175,23 @@ describe('space permission reducer', () => {
     expect(
       reducer(initialState, {
         type: types.ADD_SPACE_PERMISSION,
-        payload: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } },
+        payload: {
+          id: 1,
+          name: 'Space 1',
+          organisation_id: 11,
+          permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+        },
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } },
-    },
+      details: {
+        1: {
+          id: 1,
+          name: 'Space 1',
+          organisation_id: 11,
+          permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+        },
+      },
       loading: true,
     });
   });
@@ -149,19 +200,41 @@ describe('space permission reducer', () => {
       reducer(
         {
           req: [],
-          details: { 1: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } } },
+          details: {
+            1: {
+              id: 1,
+              name: 'Space 1',
+              organisation_id: 11,
+              permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+            },
+          },
           loading: false,
         },
         {
           type: types.ADD_SPACE_PERMISSION,
-          payload: { id: 2, name: 'Space 2', organisation_id: 12, permission: { id: 8, space_id: 4, posts: 15, media: 30 } },
+          payload: {
+            id: 2,
+            name: 'Space 2',
+            organisation_id: 12,
+            permission: { id: 8, space_id: 4, posts: 15, media: 30 },
+          },
         },
       ),
     ).toEqual({
       req: [],
       details: {
-        1: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } },
-        2: { id: 2, name: 'Space 2', organisation_id: 12, permission: { id: 8, space_id: 4, posts: 15, media: 30 } },
+        1: {
+          id: 1,
+          name: 'Space 1',
+          organisation_id: 11,
+          permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+        },
+        2: {
+          id: 2,
+          name: 'Space 2',
+          organisation_id: 12,
+          permission: { id: 8, space_id: 4, posts: 15, media: 30 },
+        },
       },
       loading: false,
     });
@@ -172,21 +245,46 @@ describe('space permission reducer', () => {
         {
           req: [],
           details: {
-            1: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } },
-            2: { id: 2, name: 'Space 2', organisation_id: 12, permission: { id: 8, space_id: 4, posts: 15, media: 30 } },    
+            1: {
+              id: 1,
+              name: 'Space 1',
+              organisation_id: 11,
+              permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+            },
+            2: {
+              id: 2,
+              name: 'Space 2',
+              organisation_id: 12,
+              permission: { id: 8, space_id: 4, posts: 15, media: 30 },
+            },
           },
           loading: false,
         },
         {
           type: types.ADD_SPACE_PERMISSION,
-          payload:{ id: 2, name: 'Space 3', organisation_id: 12, permission: { id: 9, space_id: 5, posts: 15, media: 30 } },
+          payload: {
+            id: 2,
+            name: 'Space 3',
+            organisation_id: 12,
+            permission: { id: 9, space_id: 5, posts: 15, media: 30 },
+          },
         },
       ),
     ).toEqual({
       req: [],
       details: {
-        1: { id: 1, name: 'Space 1', organisation_id: 11, permission: { id: 7, space_id: 3, posts: 10, media: 20 } },
-        2: { id: 2, name: 'Space 3', organisation_id: 12, permission: { id: 9, space_id: 5, posts: 15, media: 30 } },
+        1: {
+          id: 1,
+          name: 'Space 1',
+          organisation_id: 11,
+          permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+        },
+        2: {
+          id: 2,
+          name: 'Space 3',
+          organisation_id: 12,
+          permission: { id: 9, space_id: 5, posts: 15, media: 30 },
+        },
       },
       loading: false,
     });

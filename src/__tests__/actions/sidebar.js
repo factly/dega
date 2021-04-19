@@ -12,28 +12,28 @@ const initialState = {
 };
 
 describe('sidebar reducer', () => {
-  it('should create an action to SET_COLLAPSE to true',() => {
-    const collapsed  =  true;
+  it('should create an action to SET_COLLAPSE to true', () => {
+    const collapsed = true;
     const setCollapseAction = [
       {
-      type: types.SET_COLLAPSE,
-      payload: true,
-      }
+        type: types.SET_COLLAPSE,
+        payload: true,
+      },
     ];
     const store = mockStore({ initialState });
-    store.dispatch(actions.setCollapse(collapsed))
+    store.dispatch(actions.setCollapse(collapsed));
     expect(store.getActions()).toEqual(setCollapseAction);
   });
-  it('should create an action to SET_COLLAPSE to false',() => {
-    const collapsed  =  false;
+  it('should create an action to SET_COLLAPSE to false', () => {
+    const collapsed = false;
     const setCollapseAction = [
       {
-      type: types.SET_COLLAPSE,
-      payload: false,
-      }
+        type: types.SET_COLLAPSE,
+        payload: false,
+      },
     ];
     const store = mockStore({ initialState });
-    store.dispatch(actions.setCollapse(collapsed))
+    store.dispatch(actions.setCollapse(collapsed));
     expect(store.getActions()).toEqual(setCollapseAction);
   });
-})
+});

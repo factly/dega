@@ -1,5 +1,5 @@
 import reducer from '../../reducers/organisationRequestsReducer';
-import * as types from '../../constants/organisationRequests'
+import * as types from '../../constants/organisationRequests';
 
 const initialState = {
   req: [],
@@ -111,7 +111,10 @@ describe('organisation requests reducer', () => {
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, spaces: 4, organisation_id: 2 }, 2: { id: 2, spaces: 2, organisation_id: 5 } },
+      details: {
+        1: { id: 1, spaces: 4, organisation_id: 2 },
+        2: { id: 2, spaces: 2, organisation_id: 5 },
+      },
       loading: true,
     });
   });
@@ -186,5 +189,4 @@ describe('organisation requests reducer', () => {
       loading: false,
     });
   });
-
-})
+});

@@ -47,7 +47,7 @@ describe('Menu Edit component', () => {
         '1': {
           id: 1,
           name: 'Menu 1',
-        }
+        },
       },
       loading: false,
     },
@@ -73,10 +73,10 @@ describe('Menu Edit component', () => {
           loading: false,
         },
       });
-      const tree = mount (
-          <Provider store={store}>
-            <EditMenu />
-          </Provider>,
+      const tree = mount(
+        <Provider store={store}>
+          <EditMenu />
+        </Provider>,
       );
       expect(tree).toMatchSnapshot();
     });
@@ -115,7 +115,7 @@ describe('Menu Edit component', () => {
             '1': {
               id: 1,
               name: 'Menu 1',
-            }
+            },
           },
           loading: false,
         },

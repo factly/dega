@@ -35,9 +35,9 @@ describe('Organisation Permission component', () => {
     const tree = mount(
       <Provider store={store}>
         <OrganisationPermission />
-      </Provider>
+      </Provider>,
     );
-    expect(tree).toMatchSnapshot();  
+    expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
     useSelector.mockImplementationOnce(() => ({
@@ -46,12 +46,12 @@ describe('Organisation Permission component', () => {
           id: 1,
           title: 'Super Org',
           slug: 'super-org',
-          permission : {
-            id : 2,
+          permission: {
+            id: 2,
             organisation_id: 1,
             spaces: 2,
-          }
-        }
+          },
+        },
       ],
       total: 1,
       loading: false,
@@ -59,8 +59,8 @@ describe('Organisation Permission component', () => {
     const tree = mount(
       <Provider store={store}>
         <OrganisationPermission />
-      </Provider>
+      </Provider>,
     );
-    expect(tree).toMatchSnapshot();  
-  })
+    expect(tree).toMatchSnapshot();
+  });
 });

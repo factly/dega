@@ -208,7 +208,7 @@ describe('Policy Create Form component', () => {
           .at(7)
           .find(Checkbox.Group)
           .props()
-          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });  
+          .onChange({ target: { value: ['get', 'create', 'update', 'delete'] } });
         wrapper
           .find('FormItem')
           .at(8)

@@ -23,16 +23,19 @@ const data = {
   slug: 'slug',
   numeric_value: 3,
   medium_id: 1,
-  background_colour : {
-    hex : "#f9f9fa",
-    hsl : { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+  background_colour: {
+    hex: '#f9f9fa',
+    hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
     hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
     oldHue: 240,
     rgb: { r: 249, g: 249, b: 250, a: 1 },
-    source: "hsv"
+    source: 'hsv',
   },
-  description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
-
+  description: {
+    time: 1613559903378,
+    blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+    version: '2.19.0',
+  },
 };
 
 describe('Ratings Create Form component', () => {
@@ -53,7 +56,7 @@ describe('Ratings Create Form component', () => {
 
   describe('snapshot testing', () => {
     beforeEach(() => {
-      window.HTMLCanvasElement.prototype.getContext = () => { 
+      window.HTMLCanvasElement.prototype.getContext = () => {
         return;
         // return whatever getContext has to return
       };
@@ -154,15 +157,19 @@ describe('Ratings Create Form component', () => {
           slug: 'new-name',
           numeric_value: 3,
           medium_id: 1,
-          background_colour : {
-            hex : "#f9f9fa",
-            hsl : { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+          background_colour: {
+            hex: '#f9f9fa',
+            hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
             hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
             oldHue: 240,
             rgb: { r: 249, g: 249, b: 250, a: 1 },
-            source: "hsv"
+            source: 'hsv',
           },
-          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
         });
         done();
       }, 0);
@@ -184,7 +191,15 @@ describe('Ratings Create Form component', () => {
           .at(6)
           .find('Editor')
           .props()
-          .onChange({ target: { value: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"} } });
+          .onChange({
+            target: {
+              value: {
+                time: 1613559903378,
+                blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
+                version: '2.19.0',
+              },
+            },
+          });
         wrapper
           .find('FormItem')
           .at(2)
@@ -197,28 +212,36 @@ describe('Ratings Create Form component', () => {
           .find('ColorPicker')
           .at(0)
           .props()
-          .onChange({ target: { value: {
-            hex : "#f0f0fa",
-            hsl : { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
-            hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
-            oldHue: 240,
-            rgb: { r: 240, g: 240, b: 250, a: 1 },
-            source: "hsv"
-          }}});
+          .onChange({
+            target: {
+              value: {
+                hex: '#f0f0fa',
+                hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+                hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+                oldHue: 240,
+                rgb: { r: 240, g: 240, b: 250, a: 1 },
+                source: 'hsv',
+              },
+            },
+          });
         wrapper
           .find('FormItem')
           .at(5)
           .find('ColorPicker')
           .at(0)
           .props()
-          .onChange({ target: { value: {
-            hex : "#f0f1fa",
-            hsl : { h: 245, s: 0.0945170115208253, l: 0.9792376, a: 1 },
-            hsv: { h: 245, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
-            oldHue: 240,
-            rgb: { r: 240, g: 240, b: 250, a: 1 },
-            source: "hsv"
-          }}})  
+          .onChange({
+            target: {
+              value: {
+                hex: '#f0f1fa',
+                hsl: { h: 245, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+                hsv: { h: 245, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+                oldHue: 240,
+                rgb: { r: 240, g: 240, b: 250, a: 1 },
+                source: 'hsv',
+              },
+            },
+          });
 
         const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');

@@ -88,7 +88,7 @@ describe('Space Request create component', () => {
       const tree = mount(
         <Provider store={store}>
           <CreateSpaceRequest />
-        </Provider>
+        </Provider>,
       );
       expect(tree).toMatchSnapshot();
     });
@@ -117,4 +117,4 @@ describe('Space Request create component', () => {
       }, 0);
     });
   });
-})
+});

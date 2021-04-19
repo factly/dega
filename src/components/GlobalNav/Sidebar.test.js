@@ -47,7 +47,7 @@ describe('Sidebar component', () => {
       collapsed: true,
     },
     spaces: {
-      orgs: [{ id: 1, spaces: [1]}],
+      orgs: [{ id: 1, spaces: [1] }],
       details: {
         '1': {
           id: 1,
@@ -71,8 +71,8 @@ describe('Sidebar component', () => {
       organisation: {
         id: 1,
         is_admin: true,
-      }
-    }
+      },
+    },
   };
   store = mockStore(() => state);
   store.dispatch = jest.fn(() => ({}));
@@ -81,31 +81,35 @@ describe('Sidebar component', () => {
   describe('snapshot testing', () => {
     it('should render the component', () => {
       const tree = shallow(
-          <Provider store={store}>
-            <Router>
-              <Sidebar 
-              permission= {[ {resource: 'posts', actions: ['create']} ]}
-              orgs= {[{ id: 1, spaces: [1], permission: { role: 'owner'} }]}
-              superOrg= { {id: 1, is_admin: true,} }
-              />
-           </Router>
-          </Provider>,
-        );
+        <Provider store={store}>
+          <Router>
+            <Sidebar
+              permission={[{ resource: 'posts', actions: ['create'] }]}
+              orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
+              superOrg={{ id: 1, is_admin: true }}
+            />
+          </Router>
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should not render the component when no space', () => {
-      store = mockStore({ settings: state.settings,sidebar: {collapsed: true}, spaces: { selected: 0 } });
+      store = mockStore({
+        settings: state.settings,
+        sidebar: { collapsed: true },
+        spaces: { selected: 0 },
+      });
       const tree = shallow(
-          <Provider store={store}>
-            <Router>
-              <Sidebar 
-              permission= {[ {resource: 'posts', actions: ['create']} ]}
-              orgs= {[{ id: 1, spaces: [], permission: { role: 'owner'} }]}
-              superOrg= { {id: 1, is_admin: true,} }
-              />
-            </Router>
-          </Provider>,
-        );
+        <Provider store={store}>
+          <Router>
+            <Sidebar
+              permission={[{ resource: 'posts', actions: ['create'] }]}
+              orgs={[{ id: 1, spaces: [], permission: { role: 'owner' } }]}
+              superOrg={{ id: 1, is_admin: true }}
+            />
+          </Router>
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -120,10 +124,10 @@ describe('Sidebar component', () => {
       wrapper = mount(
         <Provider store={store}>
           <Router>
-            <Sidebar 
-            permission= {[ {resource: 'posts', actions: ['create']} ]}
-            orgs= {[{ id: 1, spaces: [1], permission: { role: 'owner'} }]}
-            superOrg= { {id: 1, is_admin: true,} }
+            <Sidebar
+              permission={[{ resource: 'posts', actions: ['create'] }]}
+              orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
+              superOrg={{ id: 1, is_admin: true }}
             />
           </Router>
         </Provider>,
@@ -144,10 +148,10 @@ describe('Sidebar component', () => {
       wrapper = mount(
         <Provider store={store}>
           <Router>
-            <Sidebar 
-            permission= {[ {resource: 'admin'} ]}
-            orgs= {[{ id: 1, spaces: [1], permission: { role: 'owner'} }]}
-            superOrg= { {id: 1, is_admin: true,} }
+            <Sidebar
+              permission={[{ resource: 'admin' }]}
+              orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
+              superOrg={{ id: 1, is_admin: true }}
             />
           </Router>
         </Provider>,
@@ -168,11 +172,11 @@ describe('Sidebar component', () => {
       wrapper = mount(
         <Provider store={store}>
           <Router>
-            <Sidebar 
-            loading = {true}
-            permission= {[ {resource: 'admin'} ]}
-            orgs= {[{ id: 1, spaces: [1], permission: { role: 'owner'} }]}
-            superOrg= { {id: 1, is_admin: true,} }
+            <Sidebar
+              loading={true}
+              permission={[{ resource: 'admin' }]}
+              orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
+              superOrg={{ id: 1, is_admin: true }}
             />
           </Router>
         </Provider>,

@@ -3,22 +3,22 @@ import { SET_SELECTED_SPACE } from '../../constants/spaces';
 
 const initialState = {
   admin: {
-    organisation : {},
+    organisation: {},
     loading: true,
   },
   settings: {
     navTheme: 'dark',
-    primaryColor:'#1890ff',
-    layout : 'sidemenu',
+    primaryColor: '#1890ff',
+    layout: 'sidemenu',
     contentWidth: 'Fluid',
-    fixedHeader : false,
-    fixSiderbar : false,
+    fixedHeader: false,
+    fixSiderbar: false,
   },
   spaces: {
     orgs: [],
     details: {},
     loading: false,
-    selected: 0
+    selected: 0,
   },
   organisations: {
     req: [],
@@ -87,7 +87,7 @@ const initialState = {
     details: {},
     loading: true,
   },
-  ratings : {
+  ratings: {
     req: [],
     details: {},
     loading: true,
@@ -101,7 +101,7 @@ const initialState = {
     req: [],
     details: {},
     loading: true,
-  }, 
+  },
   notifications: {
     type: null,
     message: null,
@@ -127,15 +127,15 @@ const initialState = {
     loading: true,
   },
   sidebar: {
-    collapsed: false, 
+    collapsed: false,
   },
-}
+};
 describe('root reducer', () => {
-  it('should return combined state with selected space',() => {
+  it('should return combined state with selected space', () => {
     expect(
-      rootReducer(initialState,{
-      type: SET_SELECTED_SPACE,
-      payload: 1,
+      rootReducer(initialState, {
+        type: SET_SELECTED_SPACE,
+        payload: 1,
       }),
     ).toEqual({
       ...initialState,
@@ -143,18 +143,16 @@ describe('root reducer', () => {
         orgs: [],
         details: {},
         loading: false,
-        selected: 1
-      }
+        selected: 1,
+      },
     });
   });
-  it('should return combined state',() => {
+  it('should return combined state', () => {
     expect(
-      rootReducer(initialState,{
-      type: 'INCORRECT_ACTION_TYPE',
-      payload: {},
+      rootReducer(initialState, {
+        type: 'INCORRECT_ACTION_TYPE',
+        payload: {},
       }),
-    ).toEqual(
-      initialState
-    );
-  });  
+    ).toEqual(initialState);
+  });
 });

@@ -6,7 +6,7 @@ import { Form } from 'antd';
 import '../../../matchMedia.mock';
 import Submenu from './Submenu';
 import MenuField from './MenuField';
-import { MinusCircleOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined } from '@ant-design/icons';
 
 describe('Submenu component', () => {
   describe('snapshot testing', () => {
@@ -15,8 +15,8 @@ describe('Submenu component', () => {
       act(() => {
         component = mount(
           <Form>
-            <Submenu fieldKey='1' />
-          </Form>
+            <Submenu fieldKey="1" />
+          </Form>,
         );
       });
       expect(component).toMatchSnapshot();
@@ -28,23 +28,22 @@ describe('Submenu component', () => {
       act(() => {
         component = mount(
           <Form>
-            <Submenu fieldKey='1' />
-          </Form>
+            <Submenu fieldKey="1" />
+          </Form>,
         );
       });
       const total_menuFields = component.find(MenuField).length;
       const addButton = component.find('Button');
       addButton.simulate('click');
       expect(component.find(MenuField).length).toBe(total_menuFields + 1);
-
     });
     it('should remove field on click of button', () => {
       let component;
       act(() => {
         component = mount(
           <Form>
-            <Submenu fieldKey='1' />
-          </Form>
+            <Submenu fieldKey="1" />
+          </Form>,
         );
       });
       component.find('Button').simulate('click');
@@ -54,4 +53,4 @@ describe('Submenu component', () => {
       expect(component.find(MenuField).length).toBe(total_menuFields - 1);
     });
   });
-})
+});

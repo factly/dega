@@ -39,7 +39,7 @@ describe('Categories component', () => {
   });
   it('should render the component', () => {
     useSelector.mockImplementationOnce(() => ({}));
-    const tree  = mount(
+    const tree = mount(
       <Provider store={store}>
         <Router>
           <Categories
@@ -51,7 +51,6 @@ describe('Categories component', () => {
       </Provider>,
     );
     expect(tree).toMatchSnapshot();
-
   });
   it('should render the component with data', () => {
     useSelector.mockImplementationOnce(() => ({
@@ -68,7 +67,7 @@ describe('Categories component', () => {
       total: 1,
       loading: false,
     }));
-    const tree  = mount(
+    const tree = mount(
       <Provider store={store}>
         <Router>
           <Categories

@@ -639,7 +639,7 @@ describe('ratings actions', () => {
   });
   it('should create actions to add default ratings failure', () => {
     const errorMessage = 'Failed to add default rating';
-    axios.post.mockRejectedValue( new Error(errorMessage) );
+    axios.post.mockRejectedValue(new Error(errorMessage));
 
     const expectedActions = [
       {

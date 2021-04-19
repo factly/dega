@@ -115,7 +115,6 @@ describe('Categories Edit component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
-    
       store = mockStore({
         categories: {
           req: [],

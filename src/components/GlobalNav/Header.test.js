@@ -41,20 +41,26 @@ describe('Header component', () => {
       },
     },
     spaces: {
-      orgs: [{ id: 1, applications: [{ id: 1, name: 'App1', url: 'http://1233434/1323'}], spaces: [11]}],
+      orgs: [
+        {
+          id: 1,
+          applications: [{ id: 1, name: 'App1', url: 'http://1233434/1323' }],
+          spaces: [11],
+        },
+      ],
       details: {
         11: {
           id: 11,
           organisation_id: 1,
           name: 'Space 11',
-        }
+        },
       },
       loading: true,
       selected: 11,
     },
     sidebar: {
       collapsed: true,
-    }
+    },
   };
   store = mockStore(() => state);
   store.dispatch = jest.fn(() => ({}));
@@ -65,7 +71,7 @@ describe('Header component', () => {
       const tree = renderer
         .create(
           <Provider store={store}>
-            <Header applications={[{ id: 1, name: 'App1', url: 'http://1233434/1323'}]}/>
+            <Header applications={[{ id: 1, name: 'App1', url: 'http://1233434/1323' }]} />
           </Provider>,
         )
         .toJSON();
@@ -75,7 +81,7 @@ describe('Header component', () => {
       const tree = renderer
         .create(
           <Provider store={store}>
-            <Header applications={[ ]}/>
+            <Header applications={[]} />
           </Provider>,
         )
         .toJSON();

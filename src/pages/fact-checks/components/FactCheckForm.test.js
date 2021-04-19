@@ -159,7 +159,7 @@ describe('Fact-check form component', () => {
         tree = mount(
           <Provider store={store}>
             <Router>
-                <FactCheckForm actions={['publish']} />
+              <FactCheckForm actions={['publish']} />
             </Router>
           </Provider>,
         );
@@ -172,7 +172,12 @@ describe('Fact-check form component', () => {
         tree = mount(
           <Provider store={store}>
             <Router>
-              <FactCheckForm actions={['publish']} onCreate={onCreate} data={data} format={format} />
+              <FactCheckForm
+                actions={['publish']}
+                onCreate={onCreate}
+                data={data}
+                format={format}
+              />
             </Router>
           </Provider>,
         );
@@ -185,8 +190,13 @@ describe('Fact-check form component', () => {
         tree = mount(
           <Provider store={store}>
             <Router>
-              <FactCheckForm actions={['publish']} onCreate={onCreate} data={data} format={format} />
-            </Router>  
+              <FactCheckForm
+                actions={['publish']}
+                onCreate={onCreate}
+                data={data}
+                format={format}
+              />
+            </Router>
           </Provider>,
         );
       });

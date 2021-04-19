@@ -39,14 +39,18 @@ describe('Spaces Edit component', () => {
     spaces: {
       orgs: [],
       details: {
-        11 : {
+        11: {
           id: 11,
           organisation_id: 1,
           name: 'name',
           slug: 'slug',
           site_title: 'site_title',
           tag_line: 'tag_line',
-          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}, 
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
           site_address: 'site_address',
           logo_id: 1,
           logo_mobile_id: 1,
@@ -58,7 +62,7 @@ describe('Spaces Edit component', () => {
             pintrest: 'pinterest.com',
             instagram: 'instagram.com',
           },
-        } 
+        },
       },
       loading: false,
       selected: 0,
@@ -94,11 +98,11 @@ describe('Spaces Edit component', () => {
         component = mount(
           <Provider store={store}>
             <EditSpace />
-          </Provider>
+          </Provider>,
         );
       });
       expect(component).toMatchSnapshot();
-      act(() => component.unmount());  
+      act(() => component.unmount());
     });
     it('should match skeleton while loading', () => {
       let tree;
@@ -137,7 +141,11 @@ describe('Spaces Edit component', () => {
               slug: 'slug',
               site_title: 'site_title',
               tag_line: 'tag_line',
-              description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}, 
+              description: {
+                time: 1613559903378,
+                blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+                version: '2.19.0',
+              },
               site_address: 'site_address',
               logo_id: 1,
               logo_mobile_id: 1,
@@ -180,7 +188,7 @@ describe('Spaces Edit component', () => {
       wrapper.unmount();
     });
     it('should display RecordNotFound when no space found', () => {
-      store=mockStore({
+      store = mockStore({
         spaces: {
           orgs: [],
           details: {},
@@ -199,7 +207,7 @@ describe('Spaces Edit component', () => {
       expect(wrapper.find(SpaceEditForm).length).toBe(0);
     });
     it('should display Skeleton when loading', () => {
-      store=mockStore({
+      store = mockStore({
         spaces: {
           orgs: [],
           details: {},
@@ -231,14 +239,18 @@ describe('Spaces Edit component', () => {
       });
       wrapper.find(SpaceEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.updateSpace).toHaveBeenCalledWith({ 
+        expect(actions.updateSpace).toHaveBeenCalledWith({
           id: 11,
           organisation_id: 1,
           name: 'name',
           slug: 'slug',
           site_title: 'site_title',
           tag_line: 'tag_line',
-          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}, 
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
           site_address: 'site_address',
           logo_id: 1,
           logo_mobile_id: 1,
@@ -250,7 +262,7 @@ describe('Spaces Edit component', () => {
             pintrest: 'pinterest.com',
             instagram: 'instagram.com',
           },
-          test: 'test'
+          test: 'test',
         });
         expect(push).toHaveBeenCalledWith('/spaces/11/edit');
         done();

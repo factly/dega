@@ -8,7 +8,7 @@ import { act } from '@testing-library/react';
 import '../../../matchMedia.mock';
 import MenuForm from './MenuForm';
 import MenuField from './MenuField';
-import { MinusCircleOutlined } from "@ant-design/icons";
+import { MinusCircleOutlined } from '@ant-design/icons';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -39,7 +39,7 @@ describe('Menu Create Form component', () => {
       loading: true,
     },
   });
-  describe('snapshot testing',() => {
+  describe('snapshot testing', () => {
     beforeEach(() => {
       onCreate = jest.fn();
       onCreate.mockImplementationOnce(
@@ -60,12 +60,10 @@ describe('Menu Create Form component', () => {
           <MenuForm data={[]} />
         </Provider>,
       );
-      expect(tree).toMatchSnapshot(); 
+      expect(tree).toMatchSnapshot();
     });
-    it('should match component with data',() => {
-      const tree = shallow(
-          <MenuForm onCreate={onCreate} data={data} />
-      );
+    it('should match component with data', () => {
+      const tree = shallow(<MenuForm onCreate={onCreate} data={data} />);
       expect(tree).toMatchSnapshot();
     });
   });
@@ -97,7 +95,7 @@ describe('Menu Create Form component', () => {
             <MenuForm {...props} />
           </Provider>,
         );
-      }); 
+      });
     });
     afterEach(() => {
       wrapper.unmount();
@@ -136,7 +134,7 @@ describe('Menu Create Form component', () => {
     it('should submit form with new title', (done) => {
       act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');
-        input.simulate('change', { target: { value: 'New menu name'} });
+        input.simulate('change', { target: { value: 'New menu name' } });
         const submitButton = wrapper.find('Button').at(0);
         submitButton.simulate('submit');
       });
@@ -199,7 +197,7 @@ describe('Menu Create Form component', () => {
       });
       const total_menuFields = wrapper.find(MenuField).length;
       wrapper.find(MinusCircleOutlined).at(0).simulate('click');
-      expect(wrapper.find(MenuField).length).toBe(total_menuFields-1);
+      expect(wrapper.find(MenuField).length).toBe(total_menuFields - 1);
     });
-  })
+  });
 });

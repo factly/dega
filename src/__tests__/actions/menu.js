@@ -34,8 +34,8 @@ describe('menu actions', () => {
   });
   it('should create an action to add menus', () => {
     const data = [
-      { id: 1, name: 'menu1'},
-      { id: 2, name: 'menu2'},
+      { id: 1, name: 'menu1' },
+      { id: 2, name: 'menu2' },
     ];
     const addMenusAction = {
       type: types.ADD_MENUS,
@@ -44,7 +44,7 @@ describe('menu actions', () => {
     expect(actions.addMenus(data)).toEqual(addMenusAction);
   });
   it('should create an action to add menus request', () => {
-    const data = [{ query: 'query'}];
+    const data = [{ query: 'query' }];
     const addMenusRequestAction = {
       type: types.ADD_MENUS_REQUEST,
       payload: data,
@@ -78,7 +78,7 @@ describe('menu actions', () => {
       },
       {
         type: types.ADD_MENUS,
-        payload: [ { id: 1, name: 'menu1' } ],
+        payload: [{ id: 1, name: 'menu1' }],
       },
       {
         type: types.ADD_MENUS_REQUEST,
@@ -214,7 +214,7 @@ describe('menu actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.addMenu(menu))
-      .then(()=> expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.MENUS_API, menu);
   });
   it('should create actions to create menu failure', () => {
@@ -239,7 +239,7 @@ describe('menu actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.addMenu(menu))
-      .then(()=> expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.MENUS_API, menu);
   });
   it('should create actions to update menu success', () => {
@@ -253,7 +253,7 @@ describe('menu actions', () => {
       },
       {
         type: types.ADD_MENU,
-        payload: { id: 1, name: 'new menu1'},
+        payload: { id: 1, name: 'new menu1' },
       },
       {
         type: ADD_NOTIFICATION,
@@ -272,7 +272,7 @@ describe('menu actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.updateMenu(menu))
-      .then(()=> expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.MENUS_API + '/1', menu);
   });
   it('should create actions to update menu failue', () => {
@@ -301,7 +301,7 @@ describe('menu actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.updateMenu(menu))
-      .then(()=> expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.MENUS_API + '/1', menu);
   });
   it('should create actions to delete menu success', () => {
@@ -327,7 +327,7 @@ describe('menu actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.deleteMenu(1))
-      .then(()=> expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.MENUS_API + '/1');
   });
   it('should create actions to delete menu failure', () => {
@@ -351,7 +351,7 @@ describe('menu actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.deleteMenu(1))
-      .then(()=> expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.MENUS_API + '/1');
   });
-})
+});

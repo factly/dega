@@ -38,7 +38,7 @@ describe('Space Request Form component', () => {
       details: {},
       loading: true,
     },
-    spaces:  {
+    spaces: {
       orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
       details: {
         11: { id: 11, name: 'Space 11' },
@@ -48,7 +48,10 @@ describe('Space Request Form component', () => {
     },
   });
   useDispatch.mockReturnValue(jest.fn());
-  useSelector.mockImplementation((state) => ({ spaces: [{ id: 11, name: 'Space 11' }] , loading: false }));
+  useSelector.mockImplementation((state) => ({
+    spaces: [{ id: 11, name: 'Space 11' }],
+    loading: false,
+  }));
 
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -62,7 +65,7 @@ describe('Space Request Form component', () => {
         <Provider store={store}>
           <SpaceRequestForm />
         </Provider>,
-        );
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
@@ -75,10 +78,10 @@ describe('Space Request Form component', () => {
     });
     it('should match component with data', () => {
       const tree = mount(
-          <Provider store={store}>
-            <SpaceRequestForm onCreate={onCreate} data={data} />
-          </Provider>,
-        );
+        <Provider store={store}>
+          <SpaceRequestForm onCreate={onCreate} data={data} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -144,26 +147,26 @@ describe('Space Request Form component', () => {
           .at(3)
           .find('InputNumber')
           .props()
-          .onChange({ target: { value:  10} });
+          .onChange({ target: { value: 10 } });
         wrapper
           .find('FormItem')
           .at(4)
           .find('InputNumber')
           .props()
-          .onChange({ target: { value:  15} });
+          .onChange({ target: { value: 15 } });
         wrapper
           .find('FormItem')
           .at(5)
           .find('InputNumber')
           .props()
-          .onChange({ target: { value:  20} });
+          .onChange({ target: { value: 20 } });
         wrapper
           .find('FormItem')
           .at(6)
           .find('Switch')
           .at(0)
           .props()
-          .onChange({target: {checked: false} });  
+          .onChange({ target: { checked: false } });
         wrapper
           .find('FormItem')
           .at(1)
@@ -191,5 +194,4 @@ describe('Space Request Form component', () => {
       }, 0);
     });
   });
-})
-
+});
