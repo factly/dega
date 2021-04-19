@@ -20,6 +20,7 @@ export const getGoogleFactChecks = (query) => {
             data: response.data.nodes,
             query: query,
             total: response.data.total,
+            nextPage: response.data.nextPage,
           }),
         );
       })
