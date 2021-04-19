@@ -24,7 +24,10 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const [valueChange, setValueChange] = useState(false);
   const [claimID, setClaimID] = useState(0);
-  const details = useSelector(({ claims: { details } }) => details);
+  const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
+    details,
+    loading,
+  }));
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -89,14 +92,19 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   const handleOk = () => {
     setVisible(false);
+    setClaimID(0);
   };
 
   const handleCancel = () => {
     setVisible(false);
+    setClaimID(0);
   };
 
   const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then(() => setVisible(false));
+    dispatch(addClaim(values)).then(() => {
+      setVisible(false);
+      setClaimID(0);
+    });
   };
   const onClaimEdit = (values) => {
     dispatch(updateClaim({ ...details[claimID], ...values })).then(() => {
@@ -205,7 +213,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 />
               </Form.Item>
 
-              {form.getFieldValue('claims') && form.getFieldValue('claims').length > 0 ? (
+              {form.getFieldValue('claims') &&
+              form.getFieldValue('claims').length > 0 &&
+              !loading ? (
                 <ClaimList
                   ids={form.getFieldValue('claims')}
                   setClaimID={setClaimID}
