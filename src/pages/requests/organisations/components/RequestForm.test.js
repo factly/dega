@@ -26,7 +26,7 @@ describe('Organisation Request Form component', () => {
       details: {},
       loading: false,
     },
-    spaces:  {
+    spaces: {
       orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
       details: {
         11: { id: 11, name: 'Space 11' },
@@ -35,7 +35,7 @@ describe('Organisation Request Form component', () => {
       selected: 11,
     },
   });
-  
+
   describe('snapshot testing', () => {
     beforeEach(() => {
       onCreate = jest.fn();
@@ -44,7 +44,7 @@ describe('Organisation Request Form component', () => {
       );
     });
     it('should render the component', () => {
-      const tree = mount (
+      const tree = mount(
         <Provider store={store}>
           <CreateOrganisationRequestForm />
         </Provider>,
@@ -52,19 +52,19 @@ describe('Organisation Request Form component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      const tree  = mount(
-          <Provider store={store}>
-            <CreateOrganisationRequestForm data={[]} />
-          </Provider>,
-        );
+      const tree = mount(
+        <Provider store={store}>
+          <CreateOrganisationRequestForm data={[]} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with data', () => {
-      const tree =  mount(
-          <Provider store={store}>
-            <CreateOrganisationRequestForm onCreate={onCreate} data={data} />
-          </Provider>,
-        );
+      const tree = mount(
+        <Provider store={store}>
+          <CreateOrganisationRequestForm onCreate={onCreate} data={data} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -128,20 +128,20 @@ describe('Organisation Request Form component', () => {
           .at(3)
           .find('InputNumber')
           .props()
-          .onChange({ target: { value : 5 }});
+          .onChange({ target: { value: 5 } });
         wrapper
           .find('FormItem')
           .at(2)
           .find('Select')
           .props()
-          .onChange({ target : { value: 2}});
+          .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
-          .at(1)  
+          .at(1)
           .find('TextArea')
           .at(0)
-          .simulate('change', { target: { value : 'New Description'}});
-        
+          .simulate('change', { target: { value: 'New Description' } });
+
         const submitButton = wrapper.find('Button').at(0);
         submitButton.simulate('submit');
       });
@@ -156,6 +156,5 @@ describe('Organisation Request Form component', () => {
         done();
       }, 0);
     });
-
   });
 });

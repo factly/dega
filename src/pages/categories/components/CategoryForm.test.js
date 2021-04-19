@@ -25,10 +25,14 @@ jest.mock('react-redux', () => ({
 }));
 
 let onCreate, store;
-const data = { 
-  name: 'Name', 
-  description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"}, 
-  medium_id: 2 
+const data = {
+  name: 'Name',
+  description: {
+    time: 1613559903378,
+    blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+    version: '2.19.0',
+  },
+  medium_id: 2,
 };
 
 describe('Categories Create Form component', () => {
@@ -65,7 +69,7 @@ describe('Categories Create Form component', () => {
     it('should match component with empty data', () => {
       const tree = mount(
         <Provider store={store}>
-          <CategoryCreateForm data={[]}/>
+          <CategoryCreateForm data={[]} />
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -73,7 +77,7 @@ describe('Categories Create Form component', () => {
     it('should match component with data', () => {
       const tree = mount(
         <Provider store={store}>
-          <CategoryCreateForm onCreate={onCreate} data={data}/>
+          <CategoryCreateForm onCreate={onCreate} data={data} />
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -84,15 +88,19 @@ describe('Categories Create Form component', () => {
     beforeEach(() => {
       props = {
         onCreate: jest.fn(),
-        data: { 
+        data: {
           name: 'Name',
-          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
           slug: 'slug',
-          is_featured : false,
+          is_featured: false,
           medium_id: 2,
-          meta_fields : {
-            sample: "testing",
-          } 
+          meta_fields: {
+            sample: 'testing',
+          },
         },
       };
       act(() => {
@@ -152,13 +160,17 @@ describe('Categories Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
           slug: 'new-name',
-          is_featured : false,
+          is_featured: false,
           medium_id: 2,
-          meta_fields : {
-            sample: "testing",
-          }
+          meta_fields: {
+            sample: 'testing',
+          },
         });
         done();
       }, 0);
@@ -170,8 +182,15 @@ describe('Categories Create Form component', () => {
           .at(4)
           .find('Editor')
           .props()
-          .onChange({ target: { value: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
-        } });
+          .onChange({
+            target: {
+              value: {
+                time: 1613559903378,
+                blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
+                version: '2.19.0',
+              },
+            },
+          });
         wrapper
           .find('FormItem')
           .at(0)
@@ -191,13 +210,17 @@ describe('Categories Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          description: {time: 1613559903378, blocks: [{type: "paragraph", data: {text: "New Description"}}], version: "2.19.0"},
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
+            version: '2.19.0',
+          },
           slug: 'new-slug',
-          is_featured : false,
+          is_featured: false,
           medium_id: 2,
-          meta_fields : {
-            sample: "testing",
-          }
+          meta_fields: {
+            sample: 'testing',
+          },
         });
         done();
       }, 0);

@@ -62,12 +62,12 @@ describe('Space Request component', () => {
   });
   it('should render the component', () => {
     const tree = mount(
-        <Provider store={store}>
-          <Router>
-            <SpaceRequests />
-          </Router>
-        </Provider>,
-      );
+      <Provider store={store}>
+        <Router>
+          <SpaceRequests />
+        </Router>
+      </Provider>,
+    );
     expect(tree).toMatchSnapshot();
   });
   it('should render the with no spaceRequests', () => {
@@ -76,7 +76,7 @@ describe('Space Request component', () => {
         req: [],
         details: {},
         loading: false,
-      },  
+      },
       admin: {
         loading: false,
         organisation: {
@@ -84,14 +84,14 @@ describe('Space Request component', () => {
           is_admin: true,
         },
       },
-    })
+    });
     const tree = mount(
-        <Provider store={store}>
-          <Router>
-            <SpaceRequests />
-          </Router>
-        </Provider>,
-      );
+      <Provider store={store}>
+        <Router>
+          <SpaceRequests />
+        </Router>
+      </Provider>,
+    );
     expect(tree).toMatchSnapshot();
   });
-})
+});

@@ -36,13 +36,13 @@ describe('Menu component', () => {
     const tree = mount(
       <Provider store={store}>
         <Router>
-          <Menu/>
+          <Menu />
         </Router>
       </Provider>,
     );
     expect(tree).toMatchSnapshot();
   });
-  it('should render the component with data',() => {
+  it('should render the component with data', () => {
     useSelector.mockImplementationOnce(() => ({
       menu: {
         req: [
@@ -59,7 +59,7 @@ describe('Menu component', () => {
           '1': {
             id: 1,
             name: 'Menu 1',
-          }
+          },
         },
         loading: false,
       },

@@ -26,7 +26,8 @@ const factCheck = {
   ],
 };
 const existingFactCheck = {
-  text: 'Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel',
+  text:
+    'Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel',
   claimant: 'social media users',
   claimDate: '2021-02-21T00:00:00Z',
   claimReview: [
@@ -43,7 +44,7 @@ const existingFactCheck = {
       languageCode: 'en',
     },
   ],
-}
+};
 
 describe('google fact check reducer', () => {
   it('should return the initial state', () => {
@@ -106,12 +107,12 @@ describe('google fact check reducer', () => {
       req: [
         {
           data: [existingFactCheck],
-          query: { page: 1, limit: 5},
+          query: { page: 1, limit: 5 },
           total: 1,
-        }
+        },
       ],
       loading: true,
-    }
+    };
     expect(
       reducer(state_, {
         type: types.ADD_GOOGLE_FACT_CHECKS_REQUEST,

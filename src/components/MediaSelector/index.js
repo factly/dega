@@ -18,8 +18,8 @@ function MediaSelector({ value = null, onChange }) {
   const medium = useSelector((state) => {
     return state.media.details[value] || null;
   });
-  const {media, loading} = useSelector((state) => {
-    return {media : state.media, loading: state.media.loading };
+  const { media, loading } = useSelector((state) => {
+    return { media: state.media, loading: state.media.loading };
   });
   const setValue = () => {
     value = null;

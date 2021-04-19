@@ -17,7 +17,7 @@ const mockStore = configureMockStore(middlewares);
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-}));  
+}));
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn(),
@@ -31,7 +31,7 @@ describe('Menus create component', () => {
   let mockedDispatch;
   store = mockStore({
     menu: [],
-    details:{},
+    details: {},
     loading: false,
   });
   store.dispatch = jest.fn(() => ({}));
@@ -71,5 +71,5 @@ describe('Menus create component', () => {
         done();
       }, 0);
     });
-  })
+  });
 });

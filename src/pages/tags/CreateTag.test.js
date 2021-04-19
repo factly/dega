@@ -44,7 +44,7 @@ describe('Tags create component', () => {
       orgs: [],
       details: {},
       loading: true,
-    }
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -52,10 +52,10 @@ describe('Tags create component', () => {
   describe('snapshot testing', () => {
     it('should render the component', () => {
       const tree = mount(
-          <Provider store={store}>
-            <CreateTag />
-          </Provider>,
-        );
+        <Provider store={store}>
+          <CreateTag />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });

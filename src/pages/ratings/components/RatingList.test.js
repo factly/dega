@@ -40,7 +40,7 @@ let state = {
         numeric_value: 5,
         medium_id: 0,
         space_id: 1,
-        background_colour: { hex : '#108040'}
+        background_colour: { hex: '#108040' },
       },
       '2': {
         id: 2,

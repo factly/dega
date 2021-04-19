@@ -15,12 +15,12 @@ describe('organisation reducer', () => {
     expect(
       reducer({
         req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-        details: { 1: { id: 1, organisation_id: 18, spaces: 3} },
+        details: { 1: { id: 1, organisation_id: 18, spaces: 3 } },
         loading: false,
       }),
     ).toEqual({
       req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-      details: { 1: { id: 1, organisation_id: 18, spaces: 3} },
+      details: { 1: { id: 1, organisation_id: 18, spaces: 3 } },
       loading: false,
     });
   });
@@ -29,7 +29,7 @@ describe('organisation reducer', () => {
       reducer(
         {
           req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-          details: [{ id: 1, organisation_id: 18, spaces: 3}],
+          details: [{ id: 1, organisation_id: 18, spaces: 3 }],
           loading: false,
         },
         {
@@ -105,13 +105,16 @@ describe('organisation reducer', () => {
       reducer(initialState, {
         type: types.ADD_ORGANISATION_PERMISSIONS,
         payload: [
-          { id: 1, organisation_id: 18, spaces: 3},
-          { id: 2, organisation_id: 20, spaces: 2},
+          { id: 1, organisation_id: 18, spaces: 3 },
+          { id: 2, organisation_id: 20, spaces: 2 },
         ],
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, organisation_id: 18, spaces: 3}, 2: { id: 2, organisation_id: 20, spaces: 2} },
+      details: {
+        1: { id: 1, organisation_id: 18, spaces: 3 },
+        2: { id: 2, organisation_id: 20, spaces: 2 },
+      },
       loading: true,
     });
   });
@@ -131,11 +134,11 @@ describe('organisation reducer', () => {
     expect(
       reducer(initialState, {
         type: types.ADD_ORGANISATION_PERMISSION,
-        payload: { id: 1, organisation_id: 18, spaces: 3},
+        payload: { id: 1, organisation_id: 18, spaces: 3 },
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, organisation_id: 18, spaces: 3} },
+      details: { 1: { id: 1, organisation_id: 18, spaces: 3 } },
       loading: true,
     });
   });
@@ -144,19 +147,19 @@ describe('organisation reducer', () => {
       reducer(
         {
           req: [],
-          details: { 1: { id: 1, organisation_id: 18, spaces: 3} },
+          details: { 1: { id: 1, organisation_id: 18, spaces: 3 } },
           loading: false,
         },
         {
           type: types.ADD_ORGANISATION_PERMISSION,
-          payload: { id: 2, organisation_id: 20, spaces: 2},
+          payload: { id: 2, organisation_id: 20, spaces: 2 },
         },
       ),
     ).toEqual({
       req: [],
       details: {
-        1: { id: 1, organisation_id: 18, spaces: 3},
-        2: { id: 2, organisation_id: 20, spaces: 2},
+        1: { id: 1, organisation_id: 18, spaces: 3 },
+        2: { id: 2, organisation_id: 20, spaces: 2 },
       },
       loading: false,
     });
@@ -167,21 +170,21 @@ describe('organisation reducer', () => {
         {
           req: [],
           details: {
-            1: { id: 1, organisation_id: 18, spaces: 3},
-            2: { id: 2, organisation_id: 20, spaces: 2},
+            1: { id: 1, organisation_id: 18, spaces: 3 },
+            2: { id: 2, organisation_id: 20, spaces: 2 },
           },
           loading: false,
         },
         {
           type: types.ADD_ORGANISATION_PERMISSION,
-          payload: { id: 2, organisation_id: 20, spaces: 4},
+          payload: { id: 2, organisation_id: 20, spaces: 4 },
         },
       ),
     ).toEqual({
       req: [],
       details: {
-        1: { id: 1, organisation_id: 18, spaces: 3},
-        2: { id: 2, organisation_id: 20, spaces: 4},
+        1: { id: 1, organisation_id: 18, spaces: 3 },
+        2: { id: 2, organisation_id: 20, spaces: 4 },
       },
       loading: false,
     });

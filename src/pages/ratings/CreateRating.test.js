@@ -49,14 +49,14 @@ describe('Ratings create component', () => {
       orgs: [],
       details: {},
       loading: true,
-    }
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
   useDispatch.mockReturnValue(mockedDispatch);
 
   describe('snapshot component', () => {
-    window.HTMLCanvasElement.prototype.getContext = () => { 
+    window.HTMLCanvasElement.prototype.getContext = () => {
       return;
       // return whatever getContext has to return
     };

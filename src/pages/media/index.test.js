@@ -45,7 +45,7 @@ describe('Media List component', () => {
           <Media permission={{ actions: ['create'] }} />
         </Router>
       </Provider>,
-    )
+    );
     expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
@@ -69,7 +69,7 @@ describe('Media List component', () => {
           <Media permission={{ actions: ['create'] }} />
         </Router>
       </Provider>,
-    )
+    );
     expect(tree).toMatchSnapshot();
   });
 });

@@ -34,9 +34,9 @@ describe('Organisation Requests actions', () => {
   });
   it('should create an action to Add Organisation Requests list', () => {
     const data = [
-      { id: 1, spaces: 4},
-      { id: 2, spaces: 3},
-    ]
+      { id: 1, spaces: 4 },
+      { id: 2, spaces: 3 },
+    ];
     const addOrganisationnRequestsAction = {
       type: types.ADD_ORGANISATION_REQUESTS,
       payload: data,
@@ -44,12 +44,14 @@ describe('Organisation Requests actions', () => {
     expect(actions.addOrganisationRequestsList(data)).toEqual(addOrganisationnRequestsAction);
   });
   it('should create an action to Add Organisation Requests request', () => {
-    const data = [{ query: 'query' }]
+    const data = [{ query: 'query' }];
     const addOrganisationnRequestsRequestAction = {
       type: types.ADD_ORGANISATION_REQUESTS_REQUEST,
       payload: data,
     };
-    expect(actions.addOrganisationRequestsRequest(data)).toEqual(addOrganisationnRequestsRequestAction);
+    expect(actions.addOrganisationRequestsRequest(data)).toEqual(
+      addOrganisationnRequestsRequestAction,
+    );
   });
   it('should create an action to reset organisation requests', () => {
     const resetOrganisationRequestsAction = {
@@ -62,13 +64,13 @@ describe('Organisation Requests actions', () => {
     const addorganisationRequestAction = {
       type: types.ADD_ORGANISATION_REQUEST,
       payload: data,
-    }
+    };
     expect(actions.getOrganisationRequestByID(data)).toEqual(addorganisationRequestAction);
   });
   it('should create actions to getOrganisations requests and isAdmin success ', () => {
     const query = { page: 1, limit: 5 };
     const isAdmin = true;
-    const organisationRequests = [ { id: 1, spaces: 4 }];
+    const organisationRequests = [{ id: 1, spaces: 4 }];
     const resp = { data: { nodes: organisationRequests, total: 1 } };
     axios.get.mockResolvedValue(resp);
     const expectedActions = [
@@ -95,11 +97,11 @@ describe('Organisation Requests actions', () => {
     ];
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.getOrganisations(query,isAdmin))
+      .dispatch(actions.getOrganisations(query, isAdmin))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_API, {
       params: query,
-    });  
+    });
   });
   it('should create actions to getOrganisations requests and isAdmin failure ', () => {
     const query = { page: 1, limit: 5 };
@@ -127,15 +129,15 @@ describe('Organisation Requests actions', () => {
     ];
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.getOrganisations(query,isAdmin))
+      .dispatch(actions.getOrganisations(query, isAdmin))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_API, {
       params: query,
-    });  
+    });
   });
   it('should create actions to getOrganisations requests and is not Admin success ', () => {
     const query = { page: 1, limit: 5 };
-    const organisationRequests = [ { id: 1, spaces: 4 }];
+    const organisationRequests = [{ id: 1, spaces: 4 }];
     const resp = { data: { nodes: organisationRequests, total: 1 } };
     axios.get.mockResolvedValue(resp);
     const expectedActions = [
@@ -166,7 +168,7 @@ describe('Organisation Requests actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_API + '/my', {
       params: query,
-    });  
+    });
   });
   it('should create actions to getOrganisations requests and is not Admin failure ', () => {
     const query = { page: 1, limit: 5 };
@@ -197,7 +199,7 @@ describe('Organisation Requests actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_API + '/my', {
       params: query,
-    });  
+    });
   });
   it('should create actions to addOrganisationRequest success', () => {
     const organisationRequest = { spaces: 4 };
@@ -224,8 +226,11 @@ describe('Organisation Requests actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.addOrganisationRequest(organisationRequest))
-      .then(()=> expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_CREATE_API,organisationRequest);
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(
+      types.ORGANISATION_REQUESTS_CREATE_API,
+      organisationRequest,
+    );
   });
   it('should create actions to addOrganisationRequest failure', () => {
     const organisationRequest = { spaces: 4 };
@@ -249,8 +254,11 @@ describe('Organisation Requests actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.addOrganisationRequest(organisationRequest))
-      .then(()=> expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_CREATE_API,organisationRequest);
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(
+      types.ORGANISATION_REQUESTS_CREATE_API,
+      organisationRequest,
+    );
   });
   it('should create actions to approveOrganisationRequest `approve` success', () => {
     const request_id = '1';
@@ -276,9 +284,11 @@ describe('Organisation Requests actions', () => {
     ];
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.approveOrganisationRequest(request_id,action))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_API + '/' + request_id + '/' + action);
+      .dispatch(actions.approveOrganisationRequest(request_id, action))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(
+      types.ORGANISATION_REQUESTS_API + '/' + request_id + '/' + action,
+    );
   });
   it('should create actions to approveOrganisationRequest `approve` failure', () => {
     const request_id = '1';
@@ -302,9 +312,11 @@ describe('Organisation Requests actions', () => {
     ];
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.approveOrganisationRequest(request_id,action))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_API + '/' + request_id + '/' + action);
+      .dispatch(actions.approveOrganisationRequest(request_id, action))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(
+      types.ORGANISATION_REQUESTS_API + '/' + request_id + '/' + action,
+    );
   });
   it('should create actions to approveOrganisationRequest `reject` success', () => {
     const request_id = '1';
@@ -330,9 +342,11 @@ describe('Organisation Requests actions', () => {
     ];
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.approveOrganisationRequest(request_id,action))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_API + '/' + request_id + '/' + action);
+      .dispatch(actions.approveOrganisationRequest(request_id, action))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(
+      types.ORGANISATION_REQUESTS_API + '/' + request_id + '/' + action,
+    );
   });
   it('should create actions to approveOrganisationRequest `reject` failure', () => {
     const request_id = '1';
@@ -356,9 +370,11 @@ describe('Organisation Requests actions', () => {
     ];
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.approveOrganisationRequest(request_id,action))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.ORGANISATION_REQUESTS_API + '/' + request_id + '/' + action);
+      .dispatch(actions.approveOrganisationRequest(request_id, action))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(
+      types.ORGANISATION_REQUESTS_API + '/' + request_id + '/' + action,
+    );
   });
   it('should create an action to addOrganisationRequests', () => {
     const organisationRequest = [{ id: 1, spaces: 4 }];
@@ -369,7 +385,7 @@ describe('Organisation Requests actions', () => {
       },
     ];
     const store = mockStore({ initialState });
-    store.dispatch(actions.addOrganisationRequests(organisationRequest))
+    store.dispatch(actions.addOrganisationRequests(organisationRequest));
     expect(store.getActions()).toEqual(addOrganisationRequestsAction);
   });
-})
+});

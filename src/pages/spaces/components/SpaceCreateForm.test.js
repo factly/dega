@@ -25,7 +25,11 @@ const data = {
   slug: 'slug',
   site_title: 'site_title',
   tag_line: 'tag_line',
-  description: {time: 1613715908408, blocks: [{type: "paragraph", data: {text: "Description"}}], version: "2.19.0"},
+  description: {
+    time: 1613715908408,
+    blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+    version: '2.19.0',
+  },
   site_address: 'site_address',
 };
 
@@ -39,7 +43,7 @@ describe('Spaces Create Form component', () => {
     },
   });
   useDispatch.mockReturnValue(jest.fn());
-  useSelector.mockImplementation((state) => ([{ id: 2, title: 'Organization 2', spaces: []}] ));
+  useSelector.mockImplementation((state) => [{ id: 2, title: 'Organization 2', spaces: [] }]);
 
   describe('snapshot testing', () => {
     beforeEach(() => {

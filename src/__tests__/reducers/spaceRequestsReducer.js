@@ -111,9 +111,9 @@ describe('Space request reducer', () => {
       }),
     ).toEqual({
       req: [],
-      details: { 
+      details: {
         1: { id: 1, space_id: 3, posts: 20, media: 40 },
-        2: { id: 2, space_id: 4, posts: 20, media: 40 }
+        2: { id: 2, space_id: 4, posts: 20, media: 40 },
       },
       loading: true,
     });

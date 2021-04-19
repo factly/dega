@@ -238,7 +238,7 @@ describe('List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ListComponent actions={['update', 'delete']} format={ {id: 1, name: 'article'} } />
+            <ListComponent actions={['update', 'delete']} format={{ id: 1, name: 'article' }} />
           </Router>
         </Provider>,
       );
@@ -250,7 +250,7 @@ describe('List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ListComponent actions={['update', 'delete']} format={ {id: 1, name: 'article'} } />
+            <ListComponent actions={['update', 'delete']} format={{ id: 1, name: 'article' }} />
           </Router>
         </Provider>,
       );
@@ -262,7 +262,7 @@ describe('List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ListComponent actions={['update', 'delete']} format={ {id: 1, name: 'article'} } />
+            <ListComponent actions={['update', 'delete']} format={{ id: 1, name: 'article' }} />
           </Router>
         </Provider>,
       );
@@ -273,7 +273,7 @@ describe('List component', () => {
   describe('component testing', () => {
     beforeEach(() => {
       jest.clearAllMocks();
-      mockedDispatch = jest.fn(() => new Promise((resolve)=> resolve(true)));
+      mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should change the page', () => {
@@ -283,7 +283,7 @@ describe('List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ListComponent actions={['update', 'delete']} format={ {id: 1, name: 'article'} } />
+              <ListComponent actions={['update', 'delete']} format={{ id: 1, name: 'article' }} />
             </Router>
           </Provider>,
         );
@@ -301,7 +301,7 @@ describe('List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ListComponent actions={['update', 'delete']} format={ {id: 1, name: 'article'} } />
+              <ListComponent actions={['update', 'delete']} format={{ id: 1, name: 'article' }} />
             </Router>
           </Provider>,
         );
@@ -325,7 +325,10 @@ describe('List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ListComponent actions={['update', 'delete']} format={ {id: 1, name: 'article', slug: 'article'} } />
+              <ListComponent
+                actions={['update', 'delete']}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
             </Router>
           </Provider>,
         );
@@ -342,7 +345,10 @@ describe('List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ListComponent actions={['update', 'delete']} format={ {id: 1, name: 'article', slug: 'article'} } />
+              <ListComponent
+                actions={['update', 'delete']}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
             </Router>
           </Provider>,
         );
@@ -371,7 +377,7 @@ describe('List component', () => {
           .at(0)
           .props()
           .onChange({ target: { value: [2] } });
-  
+
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
@@ -404,15 +410,16 @@ describe('List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ListComponent actions={['update', 'delete']} format={ {id: 1, name: 'article', slug: 'article'} } />
+              <ListComponent
+                actions={['update', 'delete']}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
             </Router>
           </Provider>,
         );
       });
       const button = wrapper.find(Button);
       expect(button.length).toEqual(1);
-    })
+    });
   });
 });
-
-

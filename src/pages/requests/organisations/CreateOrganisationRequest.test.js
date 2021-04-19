@@ -8,7 +8,7 @@ import { act } from '@testing-library/react';
 
 import '../../../matchMedia.mock';
 import CreateOrganisationRequest from './CreateOrganisationRequest';
-import * as actions from '../../../actions/organisationRequests'
+import * as actions from '../../../actions/organisationRequests';
 import CreateOrganisationRequestForm from './components/RequestForm';
 
 const middlewares = [thunk];
@@ -32,7 +32,7 @@ describe('Organisation Request create component', () => {
 
   store = mockStore({
     organisationRequests: {
-      req : [
+      req: [
         {
           data: [1],
           query: {
@@ -42,7 +42,7 @@ describe('Organisation Request create component', () => {
         },
       ],
       details: {
-        '1' : {
+        '1': {
           id: 1,
           title: 'Request',
           spaces: 4,
@@ -56,7 +56,7 @@ describe('Organisation Request create component', () => {
       orgs: [],
       details: {},
       loading: true,
-    }
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -67,9 +67,9 @@ describe('Organisation Request create component', () => {
       const tree = mount(
         <Provider store={store}>
           <CreateOrganisationRequest />
-        </Provider>
+        </Provider>,
       );
-      expect(tree).toMatchSnapshot();  
+      expect(tree).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
@@ -96,5 +96,4 @@ describe('Organisation Request create component', () => {
       }, 0);
     });
   });
-})
-
+});

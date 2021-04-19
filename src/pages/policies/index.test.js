@@ -39,42 +39,44 @@ describe('Policies List component', () => {
           1: {
             sid: 1,
             name: 'Space 1',
-          }
+          },
         },
         loading: false,
         selected: 1,
       },
       policies: {
-        req: [{
-          data: ['Editor'],
-          query: {
-            page: 1,
-            limit: 5,
+        req: [
+          {
+            data: ['Editor'],
+            query: {
+              page: 1,
+              limit: 5,
+            },
+            total: 1,
           },
-          total: 1,
-        }],
+        ],
         details: {
-          'Editor' : {
+          Editor: {
             id: 'Editor',
             users: [],
-          }
+          },
         },
         loading: false,
-      }
+      },
     });
     store.dispatch = jest.fn(() => ({}));
     mockedDispatch = jest.fn();
     useDispatch.mockReturnValue(mockedDispatch);
   });
   it('should render the component', () => {
-    store=mockStore({
+    store = mockStore({
       spaces: {
         orgs: [{ id: 1, title: 'Org 1', spaces: [1] }],
         details: {
           1: {
             sid: 1,
             name: 'Space 1',
-          }
+          },
         },
         loading: false,
         selected: 1,
@@ -83,8 +85,8 @@ describe('Policies List component', () => {
         req: [],
         details: {},
         loading: false,
-      }
-    })
+      },
+    });
     const tree = mount(
       <Provider store={store}>
         <Router>

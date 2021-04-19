@@ -13,7 +13,7 @@ const mockStore = configureMockStore(middlewares);
 
 let state = {
   organisationRequests: {
-    req : [
+    req: [
       {
         data: [1],
         query: {
@@ -23,7 +23,7 @@ let state = {
       },
     ],
     details: {
-      '1' : {
+      '1': {
         id: 1,
         title: 'Request',
         spaces: 4,
@@ -47,7 +47,7 @@ describe('Organisation Request list', () => {
   beforeEach(() => {
     store = mockStore({
       organisationRequests: {
-        req : [
+        req: [
           {
             data: [1],
             query: {
@@ -57,7 +57,7 @@ describe('Organisation Request list', () => {
           },
         ],
         details: {
-          '1' : {
+          '1': {
             id: 1,
             title: 'Request',
             spaces: 4,
@@ -78,9 +78,9 @@ describe('Organisation Request list', () => {
     store.dispatch = jest.fn(() => ({}));
   });
   it('should render the component', () => {
-    store=mockStore({
+    store = mockStore({
       organisationRequests: {
-        req : [],
+        req: [],
         details: {},
         loading: false,
       },
@@ -91,7 +91,7 @@ describe('Organisation Request list', () => {
           is_admin: true,
         },
       },
-    })
+    });
     const tree = mount(
       <Provider store={store}>
         <Router>
@@ -101,7 +101,7 @@ describe('Organisation Request list', () => {
     );
     expect(tree).toMatchSnapshot();
   });
-  it('should render the component with data',() => {
+  it('should render the component with data', () => {
     const tree = mount(
       <Provider store={store}>
         <Router>
@@ -111,4 +111,4 @@ describe('Organisation Request list', () => {
     );
     expect(tree).toMatchSnapshot();
   });
-}); 
+});

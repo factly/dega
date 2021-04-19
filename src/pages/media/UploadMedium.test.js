@@ -26,11 +26,10 @@ jest.mock('../../actions/media', () => ({
   addMedium: jest.fn(),
 }));
 
-describe('Media upload component',() => {
+describe('Media upload component', () => {
   let store;
   let mockedDispatch;
   store = mockStore({
-
     spaces: {
       orgs: [{ id: 1, title: 'Org 1', spaces: [10] }],
       details: {
@@ -38,11 +37,11 @@ describe('Media upload component',() => {
           id: 10,
           name: 'Space 10',
           organisation_id: 1,
-        }
+        },
       },
       loading: true,
       selected: 10,
-    }
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -50,14 +49,12 @@ describe('Media upload component',() => {
 
   describe('snapshot testing', () => {
     it('should render the component', () => {
-      const component = shallow(
-          <UploadMedium />
-      )
+      const component = shallow(<UploadMedium />);
       expect(component).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
-    let wrapper ;
+    let wrapper;
     afterEach(() => {
       wrapper.unmount();
     });
@@ -66,9 +63,7 @@ describe('Media upload component',() => {
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
-        wrapper = shallow(
-            <UploadMedium />
-        );
+        wrapper = shallow(<UploadMedium />);
       });
       wrapper.find(UppyUploader).props().onUpload({ test: 'test' });
       setTimeout(() => {

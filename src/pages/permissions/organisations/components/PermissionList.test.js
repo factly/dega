@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { Table } from 'antd';
- 
+
 import '../../../../matchMedia.mock';
 import PermissionList from './PermissionList';
 import { getOrganisations } from '../../../../actions/organisations';
@@ -17,20 +17,20 @@ let mockedDispatch, store;
 let state = {
   organisations: {
     req: [
-      { 
-        data: [1,2],
+      {
+        data: [1, 2],
         query: {
           page: 1,
           limit: 20,
         },
         total: 2,
-      },  
+      },
     ],
     details: {
       '1': {
         id: 1,
         title: 'Org 1',
-        permission : {
+        permission: {
           id: 2,
           organisation_id: 1,
         },
@@ -38,7 +38,7 @@ let state = {
       '2': {
         id: 2,
         title: 'Org 2',
-        permission : {
+        permission: {
           id: 3,
           organisation_id: 2,
           spaces: 4,
@@ -73,7 +73,7 @@ describe('Organisation Permission List component ', () => {
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
-            <PermissionList />
+          <PermissionList />
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -88,7 +88,7 @@ describe('Organisation Permission List component ', () => {
       });
       const tree = mount(
         <Provider store={store}>
-            <PermissionList />
+          <PermissionList />
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -99,7 +99,7 @@ describe('Organisation Permission List component ', () => {
       const tree = mount(
         <Provider store={store}>
           <PermissionList />
-        </Provider>
+        </Provider>,
       );
       expect(tree).toMatchSnapshot();
     });
@@ -107,13 +107,13 @@ describe('Organisation Permission List component ', () => {
       state.organisations.loading = false;
       store = mockStore(state);
       const tree = mount(
-        <Provider store = {store}>
+        <Provider store={store}>
           <PermissionList />
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20});
+      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -132,7 +132,7 @@ describe('Organisation Permission List component ', () => {
           </Provider>,
         );
       });
-  
+
       const table = wrapper.find(Table);
       table.props().pagination.onChange(3);
       wrapper.update();
@@ -140,8 +140,8 @@ describe('Organisation Permission List component ', () => {
       expect(updatedTable.props().pagination.current).toEqual(3);
       setTimeout(() => {
         expect(mockedDispatch).toHaveBeenCalledTimes(1);
-        expect(getOrganisations).toHaveBeenCalledWith({ page: 3, limit: 20});
+        expect(getOrganisations).toHaveBeenCalledWith({ page: 3, limit: 20 });
       }, 0);
     });
-  })
+  });
 });

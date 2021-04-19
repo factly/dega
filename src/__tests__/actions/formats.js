@@ -397,7 +397,7 @@ describe('formats actions', () => {
         type: types.SET_FORMATS_LOADING,
         payload: false,
       },
-    ]  
+    ];
     const store = mockStore({ initialState });
     store
       .dispatch(actions.addDefaultFormats())
@@ -425,7 +425,7 @@ describe('formats actions', () => {
         type: types.SET_FORMATS_LOADING,
         payload: false,
       },
-    ]  
+    ];
     const store = mockStore({ initialState });
     store
       .dispatch(actions.addDefaultFormats())

@@ -90,7 +90,7 @@ const post_without_media = {
       rating: { id: 602, name: 'Rating 1', medium: { id: 622, name: 'Medium-Rating 1' } },
     },
   ],
-}
+};
 describe('posts actions', () => {
   it('should create an action to set loading to true', () => {
     const startLoadingAction = {
@@ -345,9 +345,7 @@ describe('posts actions', () => {
       },
     ];
 
-    const params = new URLSearchParams(
-      'category=33&tag=21&format=42&sort=asc&q=post&status=draft',
-    );
+    const params = new URLSearchParams('category=33&tag=21&format=42&sort=asc&q=post&status=draft');
 
     const store = mockStore({ initialState });
     store
@@ -1182,7 +1180,10 @@ describe('posts actions', () => {
     store
       .dispatch(actions.publishPost(post_without_media))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/123' + '/publish', post_without_media);
+    expect(axios.put).toHaveBeenCalledWith(
+      types.POSTS_API + '/123' + '/publish',
+      post_without_media,
+    );
   });
   it('should create actions to publish success', () => {
     const resp = { data: post };
@@ -1365,7 +1366,7 @@ describe('posts actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/publish', post_without_media);
   });
-  
+
   it('should create actions to publish failure', () => {
     const errorMessage = 'Failed to publish post';
     axios.post.mockRejectedValue(new Error(errorMessage));

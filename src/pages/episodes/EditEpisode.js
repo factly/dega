@@ -31,7 +31,9 @@ function EditEpisode() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updateEpisode({ ...episode, ...values })).then(() => history.push(`/episodes/${id}/edit`));
+    dispatch(updateEpisode({ ...episode, ...values })).then(() =>
+      history.push(`/episodes/${id}/edit`),
+    );
   };
 
   return <EpisodeEditForm data={episode} onCreate={onUpdate} />;

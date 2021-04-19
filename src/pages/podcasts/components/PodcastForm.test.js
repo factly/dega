@@ -238,7 +238,6 @@ describe('Podcast form component', () => {
       }, 0);
     });
     it('should submit form with no categories and no episodes', (done) => {
-      
       const data2 = {
         id: 1,
         title: 'Podcast-1',
@@ -269,7 +268,7 @@ describe('Podcast form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PodcastForm onCreate={props.onCreate} data={data2}/>
+            <PodcastForm onCreate={props.onCreate} data={data2} />
           </Provider>,
         );
       });
@@ -309,7 +308,7 @@ describe('Podcast form component', () => {
           },
         });
         done();
-      }, 0);  
+      }, 0);
     });
     it('should submit form with new title', (done) => {
       act(() => {

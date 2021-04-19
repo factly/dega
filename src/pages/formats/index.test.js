@@ -45,7 +45,7 @@ describe('Formats List component', () => {
           <Formats permission={{ actions: ['create'] }} />
         </Router>
       </Provider>,
-    )
+    );
     expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
@@ -67,7 +67,7 @@ describe('Formats List component', () => {
           <Formats permission={{ actions: ['create'] }} />
         </Router>
       </Provider>,
-    )
+    );
     expect(tree).toMatchSnapshot();
   });
 });

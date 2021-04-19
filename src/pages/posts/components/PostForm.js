@@ -121,7 +121,12 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
-                <Button disabled={!valueChange} type="secondary" htmlType="submit" onClick={() => setStatus('draft')}>
+                <Button
+                  disabled={!valueChange}
+                  type="secondary"
+                  htmlType="submit"
+                  onClick={() => setStatus('draft')}
+                >
                   Save as draft
                 </Button>
               </Form.Item>

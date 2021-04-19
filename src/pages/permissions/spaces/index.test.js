@@ -60,8 +60,8 @@ describe('Space Permission component', () => {
               id: 1,
               fact_check: true,
               media: -1,
-              posts: -1,  
-            }, 
+              posts: -1,
+            },
           },
           '2': {
             id: 2,
@@ -71,8 +71,8 @@ describe('Space Permission component', () => {
               id: 2,
               fact_check: false,
               media: 20,
-              posts: 20,  
-            }, 
+              posts: 20,
+            },
           },
         },
         loading: false,
@@ -84,5 +84,5 @@ describe('Space Permission component', () => {
       </Provider>,
     );
     expect(tree).toMatchSnapshot();
-  })
+  });
 });

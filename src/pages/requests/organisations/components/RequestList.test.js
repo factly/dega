@@ -21,7 +21,7 @@ let mockedDispatch, store;
 
 let state = {
   organisationRequests: {
-    req : [
+    req: [
       {
         data: [1, 2],
         query: {
@@ -32,14 +32,14 @@ let state = {
       },
     ],
     details: {
-      '1' : {
+      '1': {
         id: 1,
         title: 'Request',
         spaces: -1,
         organisation_id: 10,
         status: 'pending',
       },
-      '2' : {
+      '2': {
         id: 2,
         title: 'Request 2',
         spaces: 5,
@@ -203,7 +203,7 @@ describe('Organisation Request List component', () => {
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
       expect(approveOrganisationRequest).toHaveBeenCalled();
-      expect(approveOrganisationRequest).toHaveBeenCalledWith(1,'approve');
+      expect(approveOrganisationRequest).toHaveBeenCalledWith(1, 'approve');
       expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20 }, true);
     });
     it('should reject request', () => {
@@ -226,8 +226,8 @@ describe('Organisation Request List component', () => {
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
       expect(approveOrganisationRequest).toHaveBeenCalled();
-      expect(approveOrganisationRequest).toHaveBeenCalledWith(1,'reject');
+      expect(approveOrganisationRequest).toHaveBeenCalledWith(1, 'reject');
       expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20 }, true);
     });
   });
-})
+});

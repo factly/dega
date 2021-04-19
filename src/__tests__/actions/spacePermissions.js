@@ -65,7 +65,7 @@ describe('spacePermission actions', () => {
   });
   it('should create an action to add space permission requests', () => {
     const data = {
-      data: [1,2],
+      data: [1, 2],
       query: 'query',
       total: 2,
     };
@@ -100,21 +100,23 @@ describe('spacePermission actions', () => {
     expect(actions.resetSpacePermissions()).toEqual(resetSpacePermissionAction);
   });
   it('should create actions to fetch space permission success', () => {
-    const query = { page: 1, limit: 5} ;
-    const spacePermission = [{
-      id: 2, 
-      organisation_id: 11,
-      name: 'Space 2',
-      permission: {
-        id: 7,
-        space_id: 3,
-        posts: 10,
-        media: 20,
+    const query = { page: 1, limit: 5 };
+    const spacePermission = [
+      {
+        id: 2,
+        organisation_id: 11,
+        name: 'Space 2',
+        permission: {
+          id: 7,
+          space_id: 3,
+          posts: 10,
+          media: 20,
+        },
       },
-    }];
-    const resp = { data: { nodes: spacePermission, total: 1}};
+    ];
+    const resp = { data: { nodes: spacePermission, total: 1 } };
     axios.get.mockResolvedValue(resp);
-    
+
     const expectedActions = [
       {
         type: types.SET_SPACE_PERMISSIONS_LOADING,
@@ -122,7 +124,14 @@ describe('spacePermission actions', () => {
       },
       {
         type: types.ADD_SPACE_PERMISSIONS,
-        payload: [ { id: 2, organisation_id: 11, name: 'Space 2', permission: { id: 7, space_id: 3, posts: 10, media: 20 } } ],
+        payload: [
+          {
+            id: 2,
+            organisation_id: 11,
+            name: 'Space 2',
+            permission: { id: 7, space_id: 3, posts: 10, media: 20 },
+          },
+        ],
       },
       {
         type: types.ADD_SPACE_PERMISSIONS_REQUEST,
@@ -140,16 +149,16 @@ describe('spacePermission actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getSpaces(query))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API, {
       params: query,
     });
   });
   it('should create actions to fetch space permission failure', () => {
-    const query = { page: 1, limit: 5} ;
-    const errorMessage = 'Unable to fetch';    
+    const query = { page: 1, limit: 5 };
+    const errorMessage = 'Unable to fetch';
     axios.get.mockRejectedValue(new Error(errorMessage));
-    
+
     const expectedActions = [
       {
         type: types.SET_SPACE_PERMISSIONS_LOADING,
@@ -172,14 +181,14 @@ describe('spacePermission actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getSpaces(query))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API, {
       params: query,
     });
   });
   it('should create actions to create Space permission success', () => {
     const spacePermission = { space_id: 3, posts: 10, media: 20 };
-    const resp = { data: spacePermission};
+    const resp = { data: spacePermission };
     axios.post.mockResolvedValue(resp);
     const expectedActions = [
       {
@@ -187,7 +196,7 @@ describe('spacePermission actions', () => {
         payload: true,
       },
       {
-        type: types.RESET_SPACE_PERMISSIONS
+        type: types.RESET_SPACE_PERMISSIONS,
       },
       {
         type: ADD_NOTIFICATION,
@@ -202,8 +211,8 @@ describe('spacePermission actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.addSpacePermission(spacePermission))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API,spacePermission);
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API, spacePermission);
   });
   it('should create actions to create Space permission failure', () => {
     const spacePermission = { space_id: 3, posts: 10, media: 20 };
@@ -227,12 +236,12 @@ describe('spacePermission actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.addSpacePermission(spacePermission))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API,spacePermission);
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API, spacePermission);
   });
   it('should create actions to update space  permission success', () => {
-    const spacePermission = { id: 2, space_id: 2, posts: 10, media: 20};
-    const resp = { data: spacePermission};
+    const spacePermission = { id: 2, space_id: 2, posts: 10, media: 20 };
+    const resp = { data: spacePermission };
     axios.put.mockResolvedValue(resp);
     const expectedActions = [
       {
@@ -241,7 +250,7 @@ describe('spacePermission actions', () => {
       },
       {
         type: types.ADD_SPACE_PERMISSION,
-        payload: { id: 2, space_id: 2, posts: 10, media: 20},
+        payload: { id: 2, space_id: 2, posts: 10, media: 20 },
       },
       {
         type: ADD_NOTIFICATION,
@@ -260,11 +269,11 @@ describe('spacePermission actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.updateSpacePermission(spacePermission))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.put).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API + '/2',spacePermission);
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API + '/2', spacePermission);
   });
   it('should create actions to update space  permission failure', () => {
-    const spacePermission = { id: 2, space_id: 2, posts: 10, media: 20};
+    const spacePermission = { id: 2, space_id: 2, posts: 10, media: 20 };
     const errorMessage = 'Failed to update space Permission ';
     axios.put.mockRejectedValue(new Error(errorMessage));
     const expectedActions = [
@@ -289,8 +298,8 @@ describe('spacePermission actions', () => {
     const store = mockStore({ initialState });
     store
       .dispatch(actions.updateSpacePermission(spacePermission))
-      .then(() =>  expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.put).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API + '/2',spacePermission);
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API + '/2', spacePermission);
   });
   it('should create actions to delete space permission success', () => {
     axios.delete.mockResolvedValue();
@@ -316,7 +325,7 @@ describe('spacePermission actions', () => {
     store
       .dispatch(actions.deleteSpacePermission(1))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.delete).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API + '/1');  
+    expect(axios.delete).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API + '/1');
   });
   it('should create actions to delete space permission failure', () => {
     const errorMessage = 'Failed to delete space Permission';
@@ -340,19 +349,18 @@ describe('spacePermission actions', () => {
     store
       .dispatch(actions.deleteSpacePermission(1))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.delete).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API + '/1');  
+    expect(axios.delete).toHaveBeenCalledWith(types.SPACE_PERMISSIONS_API + '/1');
   });
   it('should create action to addSpacePermissions', () => {
-    const spacePermission = [{ id: 2, space_id: 2, posts: 10, media: 20}];
+    const spacePermission = [{ id: 2, space_id: 2, posts: 10, media: 20 }];
     const addSpacePermissionsAction = [
       {
-      type: types.ADD_SPACE_PERMISSIONS,
-      payload : spacePermission,
-      }
+        type: types.ADD_SPACE_PERMISSIONS,
+        payload: spacePermission,
+      },
     ];
     const store = mockStore({ initialState });
-    store
-      .dispatch(actions.addSpacePermissions(spacePermission))
+    store.dispatch(actions.addSpacePermissions(spacePermission));
     expect(store.getActions()).toEqual(addSpacePermissionsAction);
   });
-})
+});

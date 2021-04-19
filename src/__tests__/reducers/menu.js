@@ -186,4 +186,4 @@ describe('Menu reducer', () => {
       loading: false,
     });
   });
-})
+});

@@ -185,12 +185,13 @@ describe('Formats edit component', () => {
         );
       });
       wrapper.find(FormatEditForm).props().onCreate({ test: 'test' });
-      expect(actions.updateFormat).toHaveBeenCalledWith({ 
+      expect(actions.updateFormat).toHaveBeenCalledWith({
         id: 1,
         name: 'Article',
         slug: 'article',
         description: 'description',
-        test: 'test' });
+        test: 'test',
+      });
       expect(push).toHaveBeenCalledWith('/formats/1/edit');
     });
   });

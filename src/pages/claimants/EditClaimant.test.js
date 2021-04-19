@@ -54,7 +54,11 @@ describe('Claimants edit component', () => {
               id: 1,
               name: 'TOI',
               slug: 'toi',
-              description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
+              description: {
+                time: 1613556798273,
+                blocks: [{ type: 'header', data: { text: 'Description', level: 2 } }],
+                version: '2.19.0',
+              },
               tag_line: 'tag line',
               claimant_date: '2017-12-12',
             },
@@ -62,7 +66,11 @@ describe('Claimants edit component', () => {
               id: 2,
               name: 'CNN',
               slug: 'cnn',
-              description: {"time":1613556798293,"blocks":[{"type":"header","data":{"text":"Description-2","level":2}}],"version":"2.19.0"},
+              description: {
+                time: 1613556798293,
+                blocks: [{ type: 'header', data: { text: 'Description-2', level: 2 } }],
+                version: '2.19.0',
+              },
               tag_line: 'tag line',
               claimant_date: '2017-12-12',
             },
@@ -99,7 +107,7 @@ describe('Claimants edit component', () => {
           details: {},
           loading: true,
         },
-      })
+      });
       const tree = mount(
         <Provider store={store}>
           <EditClaimant />
@@ -146,7 +154,11 @@ describe('Claimants edit component', () => {
               id: 1,
               name: 'TOI',
               slug: 'toi',
-              description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
+              description: {
+                time: 1613556798273,
+                blocks: [{ type: 'header', data: { text: 'Description', level: 2 } }],
+                version: '2.19.0',
+              },
               tag_line: 'tag line',
               claimant_date: '2017-12-12',
             },
@@ -154,7 +166,11 @@ describe('Claimants edit component', () => {
               id: 2,
               name: 'CNN',
               slug: 'cnn',
-              description: {"time":1613556798293,"blocks":[{"type":"header","data":{"text":"Description-2","level":2}}],"version":"2.19.0"},
+              description: {
+                time: 1613556798293,
+                blocks: [{ type: 'header', data: { text: 'Description-2', level: 2 } }],
+                version: '2.19.0',
+              },
               tag_line: 'tag line',
               claimant_date: '2017-12-12',
             },
@@ -170,9 +186,9 @@ describe('Claimants edit component', () => {
           orgs: [],
           details: {},
           loading: true,
-        }
+        },
       });
-    });  
+    });
     it('should call get action', () => {
       actions.getClaimant.mockReset();
       act(() => {
@@ -201,7 +217,11 @@ describe('Claimants edit component', () => {
               id: 2,
               name: 'CNN',
               slug: 'cnn',
-              description: {"time":1613556798293,"blocks":[{"type":"header","data":{"text":"Description-2","level":2}}],"version":"2.19.0"},
+              description: {
+                time: 1613556798293,
+                blocks: [{ type: 'header', data: { text: 'Description-2', level: 2 } }],
+                version: '2.19.0',
+              },
               tag_line: 'tag line',
               claimant_date: '2017-12-12',
             },
@@ -238,15 +258,19 @@ describe('Claimants edit component', () => {
       });
       wrapper.find(ClaimantEditForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.updateClaimant).toHaveBeenCalledWith({ 
+        expect(actions.updateClaimant).toHaveBeenCalledWith({
           id: 1,
           name: 'TOI',
           slug: 'toi',
-          description: {"time":1613556798273,"blocks":[{"type":"header","data":{"text":"Description","level":2}}],"version":"2.19.0"},
+          description: {
+            time: 1613556798273,
+            blocks: [{ type: 'header', data: { text: 'Description', level: 2 } }],
+            version: '2.19.0',
+          },
           tag_line: 'tag line',
           claimant_date: '2017-12-12',
           test: 'test',
-         });
+        });
         expect(push).toHaveBeenCalledWith('/claimants/1/edit');
         done();
       }, 0);
