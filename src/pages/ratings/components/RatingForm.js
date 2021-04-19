@@ -130,7 +130,7 @@ const RatingForm = ({ onCreate, data = {} }) => {
               border: '1px solid black',
             }}
           >
-            {console.log({ backgroundColour, textColour })}Preview
+            Preview
           </div>
         </Col>
       </Row>

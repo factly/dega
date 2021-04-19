@@ -24,7 +24,10 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const [valueChange, setValueChange] = useState(false);
   const [claimID, setClaimID] = useState(0);
-  const details = useSelector(({ claims: { details } }) => details);
+  const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
+    details,
+    loading,
+  }));
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -89,14 +92,19 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   const handleOk = () => {
     setVisible(false);
+    setClaimID(0);
   };
 
   const handleCancel = () => {
     setVisible(false);
+    setClaimID(0);
   };
 
   const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then(() => setVisible(false));
+    dispatch(addClaim(values)).then(() => {
+      setVisible(false);
+      setClaimID(0);
+    });
   };
   const onClaimEdit = (values) => {
     dispatch(updateClaim({ ...details[claimID], ...values })).then(() => {
@@ -130,7 +138,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         message="You have unsaved changes, are you sure you want to leave?"
       />
       {visible && (
-        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
+        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel} maskClosable={false}>
           <ClaimCreateForm
             data={details[claimID]}
             onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
@@ -200,11 +208,14 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   bordered={false}
                   placeholder="Add title for the fact-check"
                   onChange={(e) => onTitleChange(e.target.value)}
+                  autoSize={{ minRows: 2, maxRows: 6 }}
                   style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
 
-              {form.getFieldValue('claims') && form.getFieldValue('claims').length > 0 ? (
+              {form.getFieldValue('claims') &&
+              form.getFieldValue('claims').length > 0 &&
+              !loading ? (
                 <ClaimList
                   ids={form.getFieldValue('claims')}
                   setClaimID={setClaimID}

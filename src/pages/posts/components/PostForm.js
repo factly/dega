@@ -168,6 +168,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                     textAlign: 'center',
                     resize: 'none',
                   }}
+                  autoSize={{ minRows: 2, maxRows: 6 }}
                 />
               </Form.Item>
 

@@ -194,7 +194,7 @@ function PostList({ actions, format }) {
                 description={item.excerpt}
               />
             ) : null}
-            {item.id === id ? <QuickEdit data={item} setID={setID} /> : null}
+            {item.id === id ? <QuickEdit data={item} setID={setID} slug={format.slug} /> : null}
           </List.Item>
         )}
       />

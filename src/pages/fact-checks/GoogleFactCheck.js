@@ -14,7 +14,7 @@ function GoogleFactCheck() {
     page: 1,
     query: 'factcheck',
   });
-  const [currPageToken, setCurrPageToken] = React.useState("");
+  const [currPageToken, setCurrPageToken] = React.useState('');
   const [paginationStack, setPaginationStack] = React.useState([]);
   const [indexPointer, setIndexPointer] = React.useState(null);
 

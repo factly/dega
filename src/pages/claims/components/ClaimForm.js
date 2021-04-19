@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Steps, DatePicker, Space } from 'antd';
+import { Button, Form, Input, Steps, DatePicker, Row, Col } from 'antd';
 import Selector from '../../../components/Selector';
 import Editor from '../../../components/Editor';
 import { maker, checker } from '../../../utils/sluger';
@@ -9,9 +9,11 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 const layout = {
   labelCol: {
     span: 8,
+    offset: 2,
   },
   wrapperCol: {
-    span: 6,
+    span: 20,
+    offset: 2,
   },
 };
 
@@ -46,7 +48,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
 
   if (data && data.id) {
     data.claim_date = data.claim_date ? moment(data.claim_date) : null;
-    data.checked_date = data.checked_date ? moment(data.claim_date) : null;
+    data.checked_date = data.checked_date ? moment(data.checked_date) : null;
   }
 
   return (
@@ -88,13 +90,14 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 message: 'Please input the title!',
               },
               { min: 3, message: 'Title must be minimum 3 characters.' },
-              { max: 150, message: 'Title must be maximum 150 characters.' },
+              { max: 5000, message: 'Title must be maximum 150 characters.' },
             ]}
           >
-            <Input placeholder="claim" onChange={(e) => onTitleChange(e.target.value)} />
-          </Form.Item>
-          <Form.Item name="fact" label="Fact">
-            <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
+            <Input.TextArea
+              rows={6}
+              placeholder="Enter claim...."
+              onChange={(e) => onTitleChange(e.target.value)}
+            />
           </Form.Item>
           <Form.Item
             name="slug"
@@ -111,6 +114,9 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             ]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item name="fact" label="Fact">
+            <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
           </Form.Item>
           <Form.Item
             name="claimant"
@@ -138,7 +144,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             <Selector action="Ratings" />
           </Form.Item>
 
-          <Form.Item name="description" label="Description" wrapperCol={24}>
+          <Form.Item name="description" label="Description">
             <Editor placeholder="Enter Description..." />
           </Form.Item>
         </div>
@@ -153,27 +159,31 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             {(fields, { add, remove }) => (
               <>
                 {fields.map((field) => (
-                  <Space key={field.key} style={{ marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...field}
-                      name={[field.name, 'url']}
-                      fieldKey={[field.fieldKey, 'url']}
-                      rules={[{ required: true, message: 'Url required' }]}
-                      wrapperCol={24}
-                    >
-                      <Input placeholder="Enter url" />
-                    </Form.Item>
-                    <Form.Item
-                      {...field}
-                      name={[field.name, 'description']}
-                      fieldKey={[field.fieldKey, 'description']}
-                      rules={[{ required: true, message: 'Description required' }]}
-                      wrapperCol={24}
-                    >
-                      <Input placeholder="Enter description" />
-                    </Form.Item>
+                  <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
+                    <Col span={10}>
+                      <Form.Item
+                        {...field}
+                        name={[field.name, 'url']}
+                        fieldKey={[field.fieldKey, 'url']}
+                        rules={[{ required: true, message: 'Url required' }]}
+                        wrapperCol={24}
+                      >
+                        <Input placeholder="Enter url" />
+                      </Form.Item>
+                    </Col>
+                    <Col span={10}>
+                      <Form.Item
+                        {...field}
+                        name={[field.name, 'description']}
+                        fieldKey={[field.fieldKey, 'description']}
+                        rules={[{ required: true, message: 'Description required' }]}
+                        wrapperCol={24}
+                      >
+                        <Input placeholder="Enter description" />
+                      </Form.Item>
+                    </Col>
                     <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </Space>
+                  </Row>
                 ))}
                 <Form.Item>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
@@ -188,27 +198,31 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             {(fields, { add, remove }) => (
               <>
                 {fields.map((field) => (
-                  <Space key={field.key} style={{ marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...field}
-                      name={[field.name, 'url']}
-                      fieldKey={[field.fieldKey, 'url']}
-                      rules={[{ required: true, message: 'Url required' }]}
-                      wrapperCol={24}
-                    >
-                      <Input placeholder="Enter url" />
-                    </Form.Item>
-                    <Form.Item
-                      {...field}
-                      name={[field.name, 'description']}
-                      fieldKey={[field.fieldKey, 'description']}
-                      rules={[{ required: true, message: 'Description required' }]}
-                      wrapperCol={24}
-                    >
-                      <Input placeholder="Enter description" />
-                    </Form.Item>
+                  <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
+                    <Col span={10}>
+                      <Form.Item
+                        {...field}
+                        name={[field.name, 'url']}
+                        fieldKey={[field.fieldKey, 'url']}
+                        rules={[{ required: true, message: 'Url required' }]}
+                        wrapperCol={24}
+                      >
+                        <Input placeholder="Enter url" />
+                      </Form.Item>
+                    </Col>
+                    <Col span={10}>
+                      <Form.Item
+                        {...field}
+                        name={[field.name, 'description']}
+                        fieldKey={[field.fieldKey, 'description']}
+                        rules={[{ required: true, message: 'Description required' }]}
+                        wrapperCol={24}
+                      >
+                        <Input placeholder="Enter description" />
+                      </Form.Item>
+                    </Col>
                     <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </Space>
+                  </Row>
                 ))}
                 <Form.Item>
                   <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
