@@ -1,9 +1,24 @@
 import React from 'react';
-import { Popconfirm, Avatar, Button, Table, Space, Form, Input, Select, Tooltip } from 'antd';
+import {
+  Popconfirm as Confirm,
+  Avatar,
+  Button,
+  Table,
+  Space,
+  Form,
+  Input,
+  Select,
+  Tooltip,
+  List,
+  Card,
+  Modal,
+  Descriptions,
+} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia, deleteMedium } from '../../../actions/media';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import { DeleteFilled, InfoCircleFilled, EditFilled } from '@ant-design/icons';
 
 function MediumList({ actions }) {
   const dispatch = useDispatch();
@@ -13,6 +28,7 @@ function MediumList({ actions }) {
   });
   const [form] = Form.useForm();
   const { Option } = Select;
+  // const { Meta } = Card;
 
   const { media, total, loading } = useSelector((state) => {
     const node = state.media.req.find((item) => {
@@ -37,78 +53,93 @@ function MediumList({ actions }) {
     dispatch(getMedia(filters));
   };
 
-  const columns = [
-    {
-      title: 'Display',
-      key: 'display',
-      render: (_, record) => (
-        <Avatar
-          shape="square"
-          style={{ width: '100%', height: '100%' }}
-          src={record.url?.proxy ? `${record.url.proxy}?resize:fill:200:150/gravity:sm` : ''}
-        />
-      ),
-      width: '15%',
-    },
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      ellipsis: {
-        showTitle: false,
-      },
-      render: (name) => (
-        <Tooltip placement="topLeft" title={name}>
-          {name}
-        </Tooltip>
-      ),
-    },
-    {
-      title: 'File size',
-      dataIndex: 'file_size',
-      key: 'file_size',
-      render: (_, record) => Math.round((parseInt(record.file_size) / 1024) * 100) / 100 + ' KB',
-    },
-    {
-      title: 'Caption',
-      dataIndex: 'caption',
-      key: 'caption',
-    },
-    {
-      title: 'Description',
-      dataIndex: 'description',
-      key: 'description',
-    },
-    {
-      title: 'Action',
-      key: 'operation',
-      width: '15%',
-      render: (_, record) => {
-        return (
-          <span>
-            <Link
-              style={{
-                marginRight: 8,
-              }}
-              to={`/media/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
-              </Button>
-            </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteMedium(record.id)).then(() => fetchMedia())}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
-                Delete
-              </Button>
-            </Popconfirm>
-          </span>
-        );
-      },
-    },
-  ];
+  // const info = (item) =>
+  //   Modal.info({
+  //     title: 'Image Info',
+  //     content: (
+  //       <Descriptions>
+  //         <Descriptions.Item label="Name">{item.name}</Descriptions.Item>
+  //         <Descriptions.Item label="Alt Text">{item.alt_text}</Descriptions.Item>
+  //         <Descriptions.Item label="Caption">{item.caption}</Descriptions.Item>
+  //         <Descriptions.Item label="Dimensions">{item.dimensions}</Descriptions.Item>
+  //         <Descriptions.Item label="Size">{`${item.file_size}Kb`}</Descriptions.Item>
+  //         <Descriptions.Item label="Id">{item.id}</Descriptions.Item>
+  //         <Descriptions.Item label="Url">{item.url?.proxy}</Descriptions.Item>
+  //       </Descriptions>
+  //     ),
+  //   });
+  // const columns = [
+  //   {
+  //     title: 'Display',
+  //     key: 'display',
+  //     render: (_, record) => (
+  //       <Avatar
+  //         shape="square"
+  //         style={{ width: '100%', height: '100%' }}
+  //         src={record.url?.proxy ? `${record.url.proxy}?resize:fill:200:150/gravity:sm` : ''}
+  //       />
+  //     ),
+  //     width: '15%',
+  //   },
+  //   {
+  //     title: 'Name',
+  //     dataIndex: 'name',
+  //     key: 'name',
+  //     ellipsis: {
+  //       showTitle: false,
+  //     },
+  //     render: (name) => (
+  //       <Tooltip placement="topLeft" title={name}>
+  //         {name}
+  //       </Tooltip>
+  //     ),
+  //   },
+  //   {
+  //     title: 'File size',
+  //     dataIndex: 'file_size',
+  //     key: 'file_size',
+  //     render: (_, record) => Math.round((parseInt(record.file_size) / 1024) * 100) / 100 + ' KB',
+  //   },
+  //   {
+  //     title: 'Caption',
+  //     dataIndex: 'caption',
+  //     key: 'caption',
+  //   },
+  //   {
+  //     title: 'Description',
+  //     dataIndex: 'description',
+  //     key: 'description',
+  //   },
+  //   {
+  //     title: 'Action',
+  //     key: 'operation',
+  //     width: '15%',
+  //     render: (_, record) => {
+  //       return (
+  //         <span>
+  //           <Link
+  //             style={{
+  //               marginRight: 8,
+  //             }}
+  //             to={`/media/${record.id}/edit`}
+  //           >
+  //             <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
+  //               Edit
+  //             </Button>
+  //           </Link>
+  //           <Confirm
+  //             title="Sure to Delete?"
+  //             onConfirm={() => dispatch(deleteMedium(record.id)).then(() => fetchMedia())}
+  //           >
+  //             <Button danger disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+  //               Delete
+  //             </Button>
+  //           </Confirm>
+  //         </span>
+  //       );
+  //     },
+  //   },
+  // ];
 
   return (
     <Space direction={'vertical'}>
@@ -140,7 +171,7 @@ function MediumList({ actions }) {
           </Button>
         </Form.Item>
       </Form>
-      <Table
+      { /* <Table
         bordered
         dataSource={media}
         columns={columns}
@@ -153,6 +184,93 @@ function MediumList({ actions }) {
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}
+      /> */
+      }
+      <List
+        grid={{
+          gutter: 16,
+          column: 5,
+        }}
+        pagination={{
+          total: total,
+          current: filters.page,
+          pageSize: filters.limit,
+          onChange: (pageNumber, pageSize) =>
+            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+        }}
+        dataSource={media}
+        renderItem={(item) => (
+          <List.Item>
+            <Link
+              style={{
+                marginRight: 8,
+              }}
+              to={{ pathname: `/media/${item.id}/edit`, state: {actions}  }}
+            >
+              <Card
+                size="default"
+                key={item.url}
+                // title={item.name}
+                hoverable
+                bodyStyle={{ padding: 0 }}
+                cover={
+                  <img
+                    alt="ALT"
+                    src={item.url?.proxy ? `${item.url.proxy}` : ''}
+                    style={{ width: '100%', objectFit: 'cover', height: '220px' }}
+                    title={item.name}
+                  />
+                }
+                // actions={[
+                //   <Link
+                //     style={{
+                //       marginRight: 8,
+                //     }}
+                //     to={`/media/${item.id}/edit`}
+                //   >
+                //     <EditFilled disabled={!(actions.includes('admin') || actions.includes('update'))}>
+                //       Edit
+                //     </EditFilled>
+                //   </Link>,
+                //   <Confirm
+                //     title="Sure to Delete?"
+                //     onConfirm={() => dispatch(deleteMedium(item.id)).then(() => fetchMedia())}
+                //   >
+                //     <DeleteFilled
+                //       disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                //     >
+                //       Delete
+                //     </DeleteFilled>
+                //   </Confirm>,
+                //   <InfoCircleFilled onClick={() => info(item)} />,
+                //   // {
+                //   //   /* <span>
+                //   //   <Link
+                //   //     style={{
+                //   //       marginRight: 8,
+                //   //     }}
+                //   //     to={`/media/${item.id}/edit`}
+                //   //   >
+                //   //     <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
+                //   //       Edit
+                //   //     </Button>
+                //   //   </Link>
+                //   //   <Popconfirm
+                //   //     title="Sure to cancel?"
+                //   //     onConfirm={() => dispatch(deleteMedium(item.id)).then(() => fetchMedia())}
+                //   //   >
+                //   //     <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                //   //       Delete
+                //   //     </Button>
+                //   //   </Popconfirm>
+                //   // </span>,*/}
+                // ]}
+              >
+                {/* <Meta title={item.name} /> */}
+              </Card>
+            </Link>
+          </List.Item>
+        )}
       />
     </Space>
   );
