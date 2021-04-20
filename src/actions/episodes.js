@@ -18,7 +18,13 @@ export const getEpisodes = (query) => {
         params: query,
       })
       .then((response) => {
-        dispatch(addEpisodesList(response.data.nodes));
+        dispatch(
+          addEpisodesList(
+            response.data.nodes.map((episode) => {
+              return { ...episode, podcast: episode.podcast.id };
+            }),
+          ),
+        );
         dispatch(
           addEpisodesRequest({
             data: response.data.nodes.map((item) => item.id),
@@ -40,7 +46,8 @@ export const getEpisode = (id) => {
     return axios
       .get(EPISODES_API + '/' + id)
       .then((response) => {
-        dispatch(getEpisodeByID(response.data));
+        let episode = response.data;
+        dispatch(getEpisodeByID({ ...episode, podcast: episode.podcast.id }));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -70,7 +77,8 @@ export const updateEpisode = (data) => {
     return axios
       .put(EPISODES_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getEpisodeByID(response.data));
+        let episode = response.data;
+        dispatch(getEpisodeByID({ ...episode, podcast: episode.podcast.id }));
         dispatch(addSuccessNotification('Episode updated'));
       })
       .catch((error) => {
