@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Popconfirm, Button, List, Input, Select, Form, Space } from 'antd';
+import { Popconfirm, Button, List, Input, Select, Form, Space, Tag } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, deletePost } from '../../actions/posts';
@@ -157,6 +157,11 @@ function PostList({ actions, format }) {
                     >
                       Quick Edit
                     </Button>,
+                    item.status === 'publish' ? (
+                      <Tag color="success">Published</Tag>
+                    ) : (
+                      <Tag color="error">Draft</Tag>
+                    ),
                   ]
                 : []
             }
