@@ -9,14 +9,15 @@ import (
 
 // podcast model
 type podcast struct {
-	Title       string         `json:"title"  validate:"required,min=3,max=50"`
-	Slug        string         `json:"slug"`
-	Language    string         `json:"language"  validate:"required"`
-	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	MediumID    uint           `json:"medium_id"`
-	SpaceID     uint           `json:"space_id"`
-	CategoryIDs []uint         `json:"category_ids"`
-	EpisodeIDs  []uint         `json:"episode_ids"`
+	Title             string         `json:"title"  validate:"required,min=3,max=50"`
+	Slug              string         `json:"slug"`
+	Language          string         `json:"language"  validate:"required"`
+	Description       postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
+	MediumID          uint           `json:"medium_id"`
+	PrimaryCategoryID uint           `json:"primary_category_id"`
+	SpaceID           uint           `json:"space_id"`
+	CategoryIDs       []uint         `json:"category_ids"`
+	EpisodeIDs        []uint         `json:"episode_ids"`
 }
 
 var podcastUser config.ContextKey = "podcast_user"
