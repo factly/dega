@@ -9,6 +9,7 @@ import deepEqual from 'deep-equal';
 import Template from '../../components/Template';
 import ImagePlaceholder from '../../components/ErrorsAndImage/PlaceholderImage';
 import QuickEdit from './QuickEdit';
+import moment from 'moment';
 
 function PostList({ actions, format }) {
   const dispatch = useDispatch();
@@ -22,7 +23,7 @@ function PostList({ actions, format }) {
   });
   const [id, setID] = useState(0);
 
-  const { posts, total, loading } = useSelector((state) => {
+  const { posts, total, loading, tags, categories } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       return deepEqual(item.query, filters);
     });
@@ -37,8 +38,10 @@ function PostList({ actions, format }) {
         }),
         total: node.total,
         loading: state.posts.loading,
+        tags: state.tags.details,
+        categories: state.categories.details,
       };
-    return { posts: [], total: 0, loading: state.posts.loading };
+    return { posts: [], total: 0, loading: state.posts.loading, tags: {}, categories: {} };
   });
 
   React.useEffect(() => {
@@ -59,6 +62,13 @@ function PostList({ actions, format }) {
     };
 
     setFilters({ ...filters, ...filterValue });
+  };
+
+  const getTagList = (tagids) => {
+    return tagids.map((id) => <Tag>{tags[id].name}</Tag>);
+  };
+  const getCategoryList = (catIds) => {
+    return catIds.map((id) => <Tag>{categories[id].name}</Tag>);
   };
 
   return (
@@ -158,9 +168,13 @@ function PostList({ actions, format }) {
                       Quick Edit
                     </Button>,
                     item.status === 'publish' ? (
-                      <Tag color="success">Published</Tag>
+                      <Tag style={{ width: '100px', padding: '5px' }} color="success">
+                        Published
+                      </Tag>
                     ) : (
-                      <Tag color="error">Draft</Tag>
+                      <Tag style={{ width: '100px', padding: '5px' }} color="error">
+                        Draft
+                      </Tag>
                     ),
                   ]
                 : []
@@ -200,6 +214,20 @@ function PostList({ actions, format }) {
               />
             ) : null}
             {item.id === id ? <QuickEdit data={item} setID={setID} slug={format.slug} /> : null}
+            {item.id !== id ? (
+              <Space direction="vertical">
+                {item.published_date ? (
+                  <div>Published Date: {moment(item.published_date).format('MMMM Do YYYY')}</div>
+                ) : null}
+                {item.tags && item.tags.length > 0 ? (
+                  <div>Tags: {getTagList(item.tags)}</div>
+                ) : null}
+
+                {item.categories && item.categories.length > 0 ? (
+                  <div>Categories: {getCategoryList(item.categories)}</div>
+                ) : null}
+              </Space>
+            ) : null}
           </List.Item>
         )}
       />
