@@ -120,7 +120,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           </Form.Item>
           <Form.Item
             name="claimant"
-            label="Claimants"
+            label="Claimant"
             rules={[
               {
                 required: true,
@@ -133,7 +133,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
 
           <Form.Item
             name="rating"
-            label="Ratings"
+            label="Rating"
             rules={[
               {
                 required: true,
