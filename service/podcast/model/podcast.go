@@ -42,6 +42,19 @@ func (podcast *Podcast) BeforeSave(tx *gorm.DB) (e error) {
 		}
 	}
 
+	if podcast.PrimaryCategoryID != nil && *podcast.PrimaryCategoryID > 0 {
+		category := model.Category{}
+		category.ID = *podcast.PrimaryCategoryID
+
+		err := tx.Model(&model.Category{}).Where(model.Category{
+			SpaceID: podcast.SpaceID,
+		}).First(&category).Error
+
+		if err != nil {
+			return errors.New("primary category do not belong to same space")
+		}
+	}
+
 	for _, category := range podcast.Categories {
 		if category.SpaceID != podcast.SpaceID {
 			return errors.New("some categories do not belong to same space")

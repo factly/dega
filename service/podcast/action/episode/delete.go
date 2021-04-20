@@ -25,7 +25,7 @@ import (
 // @Param X-Space header string true "Space ID"
 // @Success 200
 // @Failure 400 {array} string
-// @Router  /core/episodes/{episode_id} [delete]
+// @Router  /podcast/episodes/{episode_id} [delete]
 func delete(w http.ResponseWriter, r *http.Request) {
 
 	episodeID := chi.URLParam(r, "episode_id")
@@ -62,6 +62,10 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 	tx.Delete(&result)
 
+	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
+		EpisodeID: uint(id),
+	}).Delete(&model.EpisodeAuthor{})
+
 	err = meilisearchx.DeleteDocument("dega", result.ID, "episode")
 	if err != nil {
 		tx.Rollback()
@@ -72,10 +76,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	if err = util.NC.Publish("episode.deleted", result); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if util.CheckNats() {
+		if err = util.NC.Publish("episode.deleted", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 	renderx.JSON(w, http.StatusOK, nil)
 }

@@ -4,10 +4,12 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"reflect"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
@@ -32,7 +34,7 @@ import (
 // @Param X-User header string true "User ID"
 // @Param X-Space header string true "Space ID"
 // @Param Episode body episode true "Episode Object"
-// @Success 201 {object} model.Episode
+// @Success 201 {object} episodeData
 // @Failure 400 {array} string
 // @Router /podcast/episodes [post]
 func create(w http.ResponseWriter, r *http.Request) {
@@ -81,13 +83,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	_ = stmt.Parse(&model.Episode{})
 	tableName := stmt.Schema.Table
 
-	// Check if episode with same name exist
-	if util.CheckName(uint(sID), episode.Title, tableName) {
-		loggerx.Error(errors.New(`episode with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
-		return
-	}
-
 	mediumID := &episode.MediumID
 	if episode.MediumID == 0 {
 		mediumID = nil
@@ -103,8 +98,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
-	result := &model.Episode{
+	result := &episodeData{}
+	result.Episode = model.Episode{
 		Title:           episode.Title,
 		Description:     episode.Description,
 		HTMLDescription: description,
@@ -117,7 +112,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:         uint(sID),
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), episodeUser, uID)).Begin()
-	err = tx.Model(&model.Episode{}).Create(&result).Error
+	err = tx.Model(&model.Episode{}).Create(&result.Episode).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -126,21 +121,56 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Model(&model.Episode{}).Preload("Medium").First(&result)
+	if len(episode.AuthorIDs) > 0 {
+		authorMap, err := author.All(r.Context())
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+
+		episodeAuthors := make([]model.EpisodeAuthor, 0)
+		for _, each := range episode.AuthorIDs {
+			if _, found := authorMap[fmt.Sprint(each)]; found {
+				ea := model.EpisodeAuthor{
+					EpisodeID: result.ID,
+					AuthorID:  each,
+				}
+				episodeAuthors = append(episodeAuthors, ea)
+				result.Authors = append(result.Authors, authorMap[fmt.Sprint(each)])
+			}
+		}
+
+		if err = tx.Model(&model.EpisodeAuthor{}).Create(&episodeAuthors).Error; err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
+	tx.Model(&model.Episode{}).Preload("Medium").First(&result.Episode)
 
 	// Insert into meili index
+	var publishedDate int64
+	if result.PublishedDate == nil {
+		publishedDate = 0
+	} else {
+		publishedDate = result.PublishedDate.Unix()
+	}
 	meiliObj := map[string]interface{}{
-		"id":             result.ID,
+		"id":             result.Episode.ID,
 		"kind":           "episode",
-		"title":          result.Title,
-		"slug":           result.Slug,
-		"season":         result.Season,
-		"episode":        result.Episode,
-		"audio_url":      result.AudioURL,
-		"description":    result.Description,
-		"published_date": result.PublishedDate,
-		"space_id":       result.SpaceID,
-		"medium_id":      result.MediumID,
+		"title":          result.Episode.Title,
+		"slug":           result.Episode.Slug,
+		"season":         result.Episode.Season,
+		"episode":        result.Episode.Episode,
+		"audio_url":      result.Episode.AudioURL,
+		"description":    result.Episode.Description,
+		"published_date": publishedDate,
+		"space_id":       result.Episode.SpaceID,
+		"medium_id":      result.Episode.MediumID,
 	}
 
 	err = meilisearchx.AddDocument("dega", meiliObj)
@@ -153,10 +183,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
-	if err = util.NC.Publish("episode.created", result); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if util.CheckNats() {
+		if err = util.NC.Publish("episode.created", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 	renderx.JSON(w, http.StatusCreated, result)
 }
