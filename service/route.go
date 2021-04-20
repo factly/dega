@@ -15,6 +15,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/request/space"
 	factCheck "github.com/factly/dega-server/service/fact-check"
 	"github.com/factly/dega-server/service/podcast"
+	podcastAction "github.com/factly/dega-server/service/podcast/action"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -39,7 +40,8 @@ func RegisterRoutes() http.Handler {
 		fmt.Println("Swagger @ http://localhost:7789/swagger/index.html")
 	}
 
-	r.With(middlewarex.CheckSpace(1)).Get("/feeds/rss", post.Feeds)
+	r.With(middlewarex.CheckSpace(1)).Get("/posts/rss", post.Feeds)
+	r.With(middlewarex.CheckSpace(1)).Get("/podcasts/{podcast_id}/rss", podcastAction.Feeds)
 
 	if viper.IsSet("iframely_url") {
 		r.Mount("/meta", meta.Router())
