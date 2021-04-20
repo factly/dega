@@ -7,5 +7,6 @@ func Migration() {
 	_ = config.DB.AutoMigrate(
 		&Episode{},
 		&Podcast{},
+		&EpisodeAuthor{},
 	)
 }
