@@ -40,7 +40,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {}, [details]);
+  useEffect(() => {}, [details, loading]);
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {

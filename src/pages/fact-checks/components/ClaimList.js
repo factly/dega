@@ -14,6 +14,7 @@ function ClaimList({ ids, setClaimID, details, showModal }) {
       <Panel header="Claims" key="1" className="site-collapse-custom-panel">
         {ids.map((id) => (
           <Card
+            key={id}
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <p
