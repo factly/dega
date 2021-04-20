@@ -112,6 +112,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Season:          episode.Season,
 		Episode:         episode.Episode,
 		AudioURL:        episode.AudioURL,
+		PodcastID:       episode.PodcastID,
 		PublishedDate:   episode.PublishedDate,
 		MediumID:        mediumID,
 		SpaceID:         uint(sID),
@@ -126,7 +127,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Model(&model.Episode{}).Preload("Medium").First(&result)
+	tx.Model(&model.Episode{}).Preload("Medium").Preload("Podcast").Preload("Podcast.Medium").First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
@@ -137,6 +138,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"season":         result.Season,
 		"episode":        result.Episode,
 		"audio_url":      result.AudioURL,
+		"podcast_id":     result.PodcastID,
 		"description":    result.Description,
 		"published_date": result.PublishedDate,
 		"space_id":       result.SpaceID,
@@ -152,11 +154,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
-
-	if err = util.NC.Publish("episode.created", result); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if util.CheckNats() {
+		if err = util.NC.Publish("episode.created", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 	renderx.JSON(w, http.StatusCreated, result)
 }
