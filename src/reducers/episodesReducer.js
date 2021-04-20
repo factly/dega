@@ -19,7 +19,6 @@ export default function episodesReducer(state = initialState, action = {}) {
       return {
         ...state,
         req: [],
-        details: {},
         loading: true,
       };
     case SET_EPISODES_LOADING:
