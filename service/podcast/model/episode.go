@@ -18,7 +18,7 @@ type Episode struct {
 	Season          int            `gorm:"column:season" json:"season"`
 	Episode         int            `gorm:"column:episode" json:"episode"`
 	AudioURL        string         `gorm:"column:audio_url" json:"audio_url"`
-	PodcastID       uint           `gorm:"column:podcast_id" json:"podcast_id"`
+	PodcastID       *uint          `gorm:"column:podcast_id" json:"podcast_id"`
 	Podcast         Podcast        `json:"podcast"`
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	HTMLDescription string         `gorm:"column:html_description" json:"html_description,omitempty"`
@@ -50,9 +50,9 @@ func (episode *Episode) BeforeSave(tx *gorm.DB) (e error) {
 			return errors.New("medium do not belong to same space")
 		}
 	}
-	if episode.PodcastID > 0 {
+	if episode.PodcastID != nil && *episode.PodcastID > 0 {
 		podcast := Podcast{}
-		podcast.ID = episode.PodcastID
+		podcast.ID = *episode.PodcastID
 
 		err := tx.Model(&Podcast{}).Where(Podcast{
 			SpaceID: episode.SpaceID,

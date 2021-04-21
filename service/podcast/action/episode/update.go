@@ -138,6 +138,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	podcastID := &episode.PodcastID
+	result.PodcastID = &episode.PodcastID
+	if episode.PodcastID == 0 {
+		err = tx.Model(&result).Updates(map[string]interface{}{"podcast_id": nil}).Error
+		podcastID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
 	tx.Model(&result).Updates(model.Episode{
 		Base:            config.Base{UpdatedByID: uint(uID)},
 		Title:           episode.Title,
@@ -147,7 +160,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Season:          episode.Season,
 		Episode:         episode.Episode,
 		AudioURL:        episode.AudioURL,
-		PodcastID:       episode.PodcastID,
+		PodcastID:       podcastID,
 		PublishedDate:   episode.PublishedDate,
 		MediumID:        mediumID,
 		SpaceID:         uint(sID),

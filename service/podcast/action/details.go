@@ -48,7 +48,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	err = config.DB.Model(&model.Podcast{}).Where(&model.Podcast{
 		SpaceID: uint(sID),
-	}).Preload("Episodes").Preload("Categories").Preload("Medium").Preload("PrimaryCategory").First(&result).Error
+	}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)

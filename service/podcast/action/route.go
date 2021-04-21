@@ -16,7 +16,6 @@ type podcast struct {
 	MediumID    uint           `json:"medium_id"`
 	SpaceID     uint           `json:"space_id"`
 	CategoryIDs []uint         `json:"category_ids"`
-	EpisodeIDs  []uint         `json:"episode_ids"`
 }
 
 var podcastUser config.ContextKey = "podcast_user"

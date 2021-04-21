@@ -92,6 +92,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if episode.MediumID == 0 {
 		mediumID = nil
 	}
+	podcastID := &episode.PodcastID
+	if episode.PodcastID == 0 {
+		podcastID = nil
+	}
 
 	// Store HTML description
 	var description string
@@ -112,7 +116,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Season:          episode.Season,
 		Episode:         episode.Episode,
 		AudioURL:        episode.AudioURL,
-		PodcastID:       episode.PodcastID,
+		PodcastID:       podcastID,
 		PublishedDate:   episode.PublishedDate,
 		MediumID:        mediumID,
 		SpaceID:         uint(sID),

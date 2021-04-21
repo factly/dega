@@ -114,9 +114,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:         uint(sID),
 	}
 
-	if len(podcast.EpisodeIDs) > 0 {
-		config.DB.Model(&model.Episode{}).Where(podcast.EpisodeIDs).Find(&result.Episodes)
-	}
 	if len(podcast.CategoryIDs) > 0 {
 		config.DB.Model(&coreModel.Category{}).Where(podcast.CategoryIDs).Find(&result.Categories)
 	}
@@ -131,7 +128,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Model(&model.Podcast{}).Preload("Medium").Preload("Episodes").Preload("Categories").First(&result)
+	tx.Model(&model.Podcast{}).Preload("Medium").Preload("Categories").First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
@@ -141,7 +138,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"slug":                result.Slug,
 		"description":         result.Description,
 		"language":            result.Language,
-		"episode_ids":         podcast.EpisodeIDs,
 		"category_ids":        podcast.CategoryIDs,
 		"space_id":            result.SpaceID,
 		"primary_category_id": result.PrimaryCategoryID,

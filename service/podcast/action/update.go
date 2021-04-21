@@ -127,19 +127,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	newEpisodes := make([]model.Episode, 0)
-	if len(podcast.EpisodeIDs) > 0 {
-		config.DB.Model(&model.Episode{}).Where(podcast.EpisodeIDs).Find(&newEpisodes)
-		if err = tx.Model(&result).Association("Episodes").Replace(&newEpisodes); err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	} else {
-		_ = config.DB.Model(&result).Association("Episodes").Clear()
-	}
-
 	newCategories := make([]coreModel.Category, 0)
 	if len(podcast.CategoryIDs) > 0 {
 		config.DB.Model(&coreModel.Category{}).Where(podcast.CategoryIDs).Find(&newCategories)
@@ -174,7 +161,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Language:        podcast.Language,
 		MediumID:        mediumID,
 		SpaceID:         uint(sID),
-	}).Preload("Episodes").Preload("Categories").First(&result)
+	}).Preload("Categories").First(&result)
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
@@ -184,7 +171,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"slug":         result.Slug,
 		"description":  result.Description,
 		"language":     result.Language,
-		"episode_ids":  podcast.EpisodeIDs,
 		"category_ids": podcast.CategoryIDs,
 		"space_id":     result.SpaceID,
 		"medium_id":    result.MediumID,
