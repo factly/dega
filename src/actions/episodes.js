@@ -9,6 +9,7 @@ import {
 } from '../constants/episodes';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
+import { addPodcasts } from './podcasts';
 
 export const getEpisodes = (query) => {
   return (dispatch) => {
@@ -18,6 +19,16 @@ export const getEpisodes = (query) => {
         params: query,
       })
       .then((response) => {
+        dispatch(
+          addPodcasts(
+            response.data.nodes
+              .filter((episode) => episode.podcast.id > 0)
+              .map((episode) => {
+                return episode.podcast;
+              })
+              .flat(1),
+          ),
+        );
         dispatch(
           addEpisodesList(
             response.data.nodes.map((episode) => {
@@ -47,6 +58,7 @@ export const getEpisode = (id) => {
       .get(EPISODES_API + '/' + id)
       .then((response) => {
         let episode = response.data;
+        if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
         dispatch(getEpisodeByID({ ...episode, podcast: episode.podcast.id }));
       })
       .catch((error) => {
@@ -78,6 +90,7 @@ export const updateEpisode = (data) => {
       .put(EPISODES_API + '/' + data.id, data)
       .then((response) => {
         let episode = response.data;
+        if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
         dispatch(getEpisodeByID({ ...episode, podcast: episode.podcast.id }));
         dispatch(addSuccessNotification('Episode updated'));
       })
