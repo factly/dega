@@ -30,7 +30,9 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
   };
 
   const onSave = (values) => {
-    values.podcast_id = values.podcast || [];
+    if (values.podcast) {
+      values.podcast_id = values.podcast;
+    }
     onCreate(values);
   };
 
@@ -89,16 +91,7 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
           >
             <Input />
           </Form.Item>
-          <Form.Item
-            name="podcast"
-            label="Podcasts"
-            rules={[
-              {
-                required: true,
-                message: 'Please add podcast!',
-              },
-            ]}
-          >
+          <Form.Item name="podcast" label="Podcasts">
             <Selector action="Podcasts" display="title" />
           </Form.Item>
           <Form.Item>
