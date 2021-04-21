@@ -22,7 +22,7 @@ type Episode struct {
 	Podcast         Podcast        `json:"podcast"`
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	HTMLDescription string         `gorm:"column:html_description" json:"html_description,omitempty"`
-	PublishedDate   time.Time      `gorm:"column:published_date" json:"published_date" sql:"DEFAULT:NULL"`
+	PublishedDate   *time.Time     `gorm:"column:published_date" json:"published_date" sql:"DEFAULT:NULL"`
 	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
 	Medium          *model.Medium  `json:"medium"`
 	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`

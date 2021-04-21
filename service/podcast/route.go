@@ -12,7 +12,7 @@ import (
 func Router() http.Handler {
 	r := chi.NewRouter()
 
-	r.Mount("/podcasts", podcast.Router())
+	r.Mount("/", podcast.Router())
 	r.Mount("/episodes", episode.Router())
 
 	return r

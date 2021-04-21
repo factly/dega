@@ -33,7 +33,7 @@ import (
 // @Param episode_id path string true "Episode ID"
 // @Param X-Space header string true "Space ID"
 // @Param Episode body episode false "Episode"
-// @Success 200 {object} model.Episode
+// @Success 200 {object} episodeData
 // @Router /podcast/episodes/{episode_id} [put]
 func update(w http.ResponseWriter, r *http.Request) {
 
@@ -60,13 +60,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Episode{}
-	result.ID = uint(id)
+	result := &episodeData{}
+	result.Episode.ID = uint(id)
 
 	// check record exists or not
 	err = config.DB.Where(&model.Episode{
 		SpaceID: uint(sID),
-	}).First(&result).Error
+	}).First(&result.Episode).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -106,13 +106,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		episodeSlug = slugx.Approve(&config.DB, slugx.Make(episode.Title), sID, tableName)
 	}
 
-	// Check if episode with same title exist
-	if episode.Title != result.Title && util.CheckName(uint(sID), episode.Title, tableName) {
-		loggerx.Error(errors.New(`episode with same title exist`))
-		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
-		return
-	}
-
 	// Store HTML description
 	var description string
 	if len(episode.Description.RawMessage) > 0 && !reflect.DeepEqual(episode.Description, test.NilJsonb()) {
@@ -128,7 +121,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	mediumID := &episode.MediumID
 	result.MediumID = &episode.MediumID
 	if episode.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
+		err = tx.Model(&result.Episode).Updates(map[string]interface{}{"medium_id": nil}).Error
 		mediumID = nil
 		if err != nil {
 			tx.Rollback()
@@ -141,7 +134,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	podcastID := &episode.PodcastID
 	result.PodcastID = &episode.PodcastID
 	if episode.PodcastID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"podcast_id": nil}).Error
+		err = tx.Model(&result.Episode).Updates(map[string]interface{}{"podcast_id": nil}).Error
 		podcastID = nil
 		if err != nil {
 			tx.Rollback()
@@ -151,6 +144,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	tx.Model(&result.Episode).Select("PublishedDate").Updates(model.Episode{PublishedDate: episode.PublishedDate})
 	tx.Model(&result).Updates(model.Episode{
 		Base:            config.Base{UpdatedByID: uint(uID)},
 		Title:           episode.Title,
@@ -161,14 +155,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Episode:         episode.Episode,
 		AudioURL:        episode.AudioURL,
 		PodcastID:       podcastID,
-		PublishedDate:   episode.PublishedDate,
 		MediumID:        mediumID,
 		SpaceID:         uint(sID),
 	}).Preload("Podcast").Preload("Podcast.Medium").First(&result)
 
 	// Update into meili index
+	var publishedDate int64
+	if result.PublishedDate == nil {
+		publishedDate = 0
+	} else {
+		publishedDate = result.PublishedDate.Unix()
+	}
 	meiliObj := map[string]interface{}{
-		"id":             result.ID,
+		"id":             result.Episode.ID,
 		"kind":           "episode",
 		"title":          result.Title,
 		"slug":           result.Slug,
@@ -177,7 +176,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"audio_url":      result.AudioURL,
 		"podcast_id":     result.PodcastID,
 		"description":    result.Description,
-		"published_date": result.PublishedDate,
+		"published_date": publishedDate,
 		"space_id":       result.SpaceID,
 		"medium_id":      result.MediumID,
 	}

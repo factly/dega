@@ -93,6 +93,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
+	primaryCategoryID := &podcast.PrimaryCategoryID
+	if podcast.PrimaryCategoryID == 0 {
+		primaryCategoryID = nil
+	}
+
 	// Store HTML description
 	var description string
 	if len(podcast.Description.RawMessage) > 0 && !reflect.DeepEqual(podcast.Description, test.NilJsonb()) {
@@ -105,13 +110,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Podcast{
-		Title:           podcast.Title,
-		Description:     podcast.Description,
-		HTMLDescription: description,
-		Slug:            slugx.Approve(&config.DB, podcastSlug, sID, tableName),
-		Language:        podcast.Language,
-		MediumID:        mediumID,
-		SpaceID:         uint(sID),
+		Title:             podcast.Title,
+		Description:       podcast.Description,
+		HTMLDescription:   description,
+		Slug:              slugx.Approve(&config.DB, podcastSlug, sID, tableName),
+		Language:          podcast.Language,
+		MediumID:          mediumID,
+		PrimaryCategoryID: primaryCategoryID,
+		SpaceID:           uint(sID),
 	}
 
 	if len(podcast.CategoryIDs) > 0 {
@@ -128,7 +134,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Model(&model.Podcast{}).Preload("Medium").Preload("Categories").First(&result)
+	tx.Model(&model.Podcast{}).Preload("Medium").Preload("Categories").Preload("PrimaryCategory").First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{

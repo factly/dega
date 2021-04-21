@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/author"
+	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -16,8 +18,8 @@ import (
 
 // list response
 type paging struct {
-	Total int64           `json:"total"`
-	Nodes []model.Episode `json:"nodes"`
+	Total int64         `json:"total"`
+	Nodes []episodeData `json:"nodes"`
 }
 
 // list - Get all episodes
@@ -33,7 +35,7 @@ type paging struct {
 // @Param q query string false "Query"
 // @Param sort query string false "Sort"
 // @Success 200 {object} paging
-// @Router /core/episodes [get]
+// @Router /podcast/episodes [get]
 func list(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := middlewarex.GetSpace(r.Context())
@@ -49,7 +51,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	filteredEpisodeIDs := make([]uint, 0)
 
 	result := paging{}
-	result.Nodes = make([]model.Episode, 0)
+	result.Nodes = make([]episodeData, 0)
 
 	if searchQuery != "" {
 
@@ -81,15 +83,47 @@ func list(w http.ResponseWriter, r *http.Request) {
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
+	episodes := make([]model.Episode, 0)
 	if len(filteredEpisodeIDs) > 0 {
-		err = tx.Where(filteredEpisodeIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+		err = tx.Where(filteredEpisodeIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
 	} else {
-		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
 	}
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
+	}
+
+	episodeIDs := make([]uint, 0)
+	for _, each := range episodes {
+		episodeIDs = append(episodeIDs, each.ID)
+	}
+
+	// Adding authors in response
+	authorMap, err := author.All(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+
+	authorEpisodes := make([]model.EpisodeAuthor, 0)
+	config.DB.Model(&model.EpisodeAuthor{}).Where("episode_id IN (?)", episodeIDs).Find(&authorEpisodes)
+
+	episodeAuthorMap := make(map[uint][]coreModel.Author)
+	for _, authEpi := range authorEpisodes {
+		if _, found := episodeAuthorMap[authEpi.EpisodeID]; !found {
+			episodeAuthorMap[authEpi.EpisodeID] = make([]coreModel.Author, 0)
+		}
+		episodeAuthorMap[authEpi.EpisodeID] = append(episodeAuthorMap[authEpi.EpisodeID], authorMap[fmt.Sprint(authEpi.AuthorID)])
+	}
+
+	for _, each := range episodes {
+		data := episodeData{}
+		data.Episode = each
+		data.Authors = episodeAuthorMap[each.ID]
+		result.Nodes = append(result.Nodes, data)
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

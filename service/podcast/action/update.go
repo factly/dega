@@ -143,7 +143,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	mediumID := &podcast.MediumID
 	result.MediumID = &podcast.MediumID
 	if podcast.MediumID == 0 {
-		err = tx.Model(&result).Omit("Episodes", "Categories").Updates(map[string]interface{}{"medium_id": nil}).Error
+		err = tx.Model(&result).Omit("Categories").Updates(map[string]interface{}{"medium_id": nil}).Error
 		mediumID = nil
 		if err != nil {
 			tx.Rollback()
@@ -153,14 +153,28 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx.Model(&result).Omit("Episodes", "Categories").Updates(model.Podcast{
-		Base:            config.Base{UpdatedByID: uint(uID)},
-		HTMLDescription: description,
-		Description:     podcast.Description,
-		Slug:            slugx.Approve(&config.DB, podcastSlug, sID, tableName),
-		Language:        podcast.Language,
-		MediumID:        mediumID,
-		SpaceID:         uint(sID),
+	primaryCategoryID := &podcast.PrimaryCategoryID
+	result.PrimaryCategoryID = &podcast.PrimaryCategoryID
+	if podcast.PrimaryCategoryID == 0 {
+		err = tx.Model(&result).Omit("Categories").Updates(map[string]interface{}{"primary_category_id": nil}).Error
+		primaryCategoryID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
+	tx.Model(&result).Omit("Categories").Updates(model.Podcast{
+		Base:              config.Base{UpdatedByID: uint(uID)},
+		HTMLDescription:   description,
+		Description:       podcast.Description,
+		Slug:              slugx.Approve(&config.DB, podcastSlug, sID, tableName),
+		Language:          podcast.Language,
+		MediumID:          mediumID,
+		PrimaryCategoryID: primaryCategoryID,
+		SpaceID:           uint(sID),
 	}).Preload("Categories").First(&result)
 
 	// Update into meili index
