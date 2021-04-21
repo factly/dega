@@ -41,7 +41,7 @@ function EditMedium() {
   }
 
   return (
-    <Row>
+    <Row gutter={['20', '20']}>
       <Col span={'24'}>
         <Link to="/media">
           <Button>
