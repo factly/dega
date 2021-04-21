@@ -50,7 +50,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Podcast{
 		SpaceID: uint(sID),
-	}).Preload("Episodes").Preload("Categories").First(&result).Error
+	}).Preload("Categories").First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -61,9 +61,6 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 
 	// delete all associations
-	if len(result.Episodes) > 0 {
-		_ = tx.Model(&result).Association("Episodes").Delete(result.Episodes)
-	}
 	if len(result.Categories) > 0 {
 		_ = tx.Model(&result).Association("Categories").Delete(result.Categories)
 	}

@@ -93,6 +93,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
+	primaryCategoryID := &podcast.PrimaryCategoryID
+	if podcast.PrimaryCategoryID == 0 {
+		primaryCategoryID = nil
+	}
+
 	// Store HTML description
 	var description string
 	if len(podcast.Description.RawMessage) > 0 && !reflect.DeepEqual(podcast.Description, test.NilJsonb()) {
@@ -105,18 +110,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Podcast{
-		Title:           podcast.Title,
-		Description:     podcast.Description,
-		HTMLDescription: description,
-		Slug:            slugx.Approve(&config.DB, podcastSlug, sID, tableName),
-		Language:        podcast.Language,
-		MediumID:        mediumID,
-		SpaceID:         uint(sID),
+		Title:             podcast.Title,
+		Description:       podcast.Description,
+		HTMLDescription:   description,
+		Slug:              slugx.Approve(&config.DB, podcastSlug, sID, tableName),
+		Language:          podcast.Language,
+		MediumID:          mediumID,
+		PrimaryCategoryID: primaryCategoryID,
+		SpaceID:           uint(sID),
 	}
 
-	if len(podcast.EpisodeIDs) > 0 {
-		config.DB.Model(&model.Episode{}).Where(podcast.EpisodeIDs).Find(&result.Episodes)
-	}
 	if len(podcast.CategoryIDs) > 0 {
 		config.DB.Model(&coreModel.Category{}).Where(podcast.CategoryIDs).Find(&result.Categories)
 	}
@@ -131,7 +134,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Model(&model.Podcast{}).Preload("Medium").Preload("Episodes").Preload("Categories").First(&result)
+	tx.Model(&model.Podcast{}).Preload("Medium").Preload("Categories").Preload("PrimaryCategory").First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
@@ -141,7 +144,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"slug":                result.Slug,
 		"description":         result.Description,
 		"language":            result.Language,
-		"episode_ids":         podcast.EpisodeIDs,
 		"category_ids":        podcast.CategoryIDs,
 		"space_id":            result.SpaceID,
 		"primary_category_id": result.PrimaryCategoryID,

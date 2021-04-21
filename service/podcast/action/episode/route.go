@@ -4,6 +4,8 @@ import (
 	"time"
 
 	"github.com/factly/dega-server/config"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -16,10 +18,17 @@ type episode struct {
 	Season        int            `json:"season"  validate:"required"`
 	Episode       int            `json:"episode"  validate:"required"`
 	AudioURL      string         `json:"audio_url" validate:"required"`
+	PodcastID     uint           `json:"podcast_id"`
 	Description   postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	PublishedDate time.Time      `json:"published_date" sql:"DEFAULT:NULL"`
+	PublishedDate *time.Time     `json:"published_date" sql:"DEFAULT:NULL"`
 	MediumID      uint           `json:"medium_id"`
 	SpaceID       uint           `json:"space_id"`
+	AuthorIDs     []uint         `json:"author_ids"`
+}
+
+type episodeData struct {
+	model.Episode
+	Authors []coreModel.Author `json:"authors"`
 }
 
 var episodeUser config.ContextKey = "episode_user"
