@@ -19,7 +19,7 @@ type Episode struct {
 	Episode         int            `gorm:"column:episode" json:"episode"`
 	AudioURL        string         `gorm:"column:audio_url" json:"audio_url"`
 	PodcastID       *uint          `gorm:"column:podcast_id" json:"podcast_id"`
-	Podcast         Podcast        `json:"podcast"`
+	Podcast         *Podcast       `json:"podcast"`
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	HTMLDescription string         `gorm:"column:html_description" json:"html_description,omitempty"`
 	PublishedDate   *time.Time     `gorm:"column:published_date" json:"published_date" sql:"DEFAULT:NULL"`

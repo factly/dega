@@ -7136,6 +7136,9 @@ var doc = `{
                 "medium_id": {
                     "type": "integer"
                 },
+                "primary_category_id": {
+                    "type": "integer"
+                },
                 "slug": {
                     "type": "string"
                 },
