@@ -76,9 +76,15 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   const onTitleChange = (string) => {
     if (status !== 'publish') {
-      form.setFieldsValue({
-        slug: maker(string),
-      });
+      if (string.length > 150) {
+        form.setFieldsValue({
+          slug: maker(string.substring(0, 150)),
+        });
+      } else {
+        form.setFieldsValue({
+          slug: maker(string),
+        });
+      }
     }
   };
 
@@ -201,7 +207,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     message: 'Please input the title!',
                   },
                   { min: 3, message: 'Title must be minimum 3 characters.' },
-                  { max: 150, message: 'Title must be maximum 150 characters.' },
+                  { max: 5000, message: 'Title must be maximum 5000 characters.' },
                 ]}
               >
                 <Input.TextArea
@@ -270,6 +276,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                       pattern: checker,
                       message: 'Please enter valid slug!',
                     },
+                    { max: 150, message: 'Title must be maximum 150 characters.' },
                   ]}
                 >
                   <Input />
