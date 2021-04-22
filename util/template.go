@@ -2,11 +2,13 @@ package util
 
 import (
 	"encoding/json"
+	"fmt"
 	"html/template"
 	"time"
 
 	"github.com/factly/dega-vito/util/editorjs"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/spf13/viper"
 )
 
 // Template template object
@@ -15,11 +17,12 @@ var Template *template.Template
 // SetupTemplates setups the templates
 func SetupTemplates() {
 	Template = template.Must(template.New("").Funcs(template.FuncMap{
-		"unmar":   unmarshal,
-		"bmap":    editorjs.BlockMap,
-		"dateFmt": formatDate,
-		"dateVal": validateDate,
-		"noesc":   noescape,
+		"unmar":     unmarshal,
+		"bmap":      editorjs.BlockMap,
+		"dateFmt":   formatDate,
+		"dateVal":   validateDate,
+		"noesc":     noescape,
+		"publicURL": publicURL,
 	}).ParseGlob("web/themes/default/*"))
 }
 
@@ -39,4 +42,11 @@ func validateDate(date time.Time) bool {
 
 func noescape(str string) template.HTML {
 	return template.HTML(str)
+}
+
+func publicURL(str string) string {
+	if viper.IsSet("public_prefix") {
+		return fmt.Sprint(viper.GetString("public_prefix") + str)
+	}
+	return str
 }
