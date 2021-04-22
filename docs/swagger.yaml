@@ -102,6 +102,8 @@ definitions:
         type: integer
       medium_id:
         type: integer
+      podcast_id:
+        type: integer
       published_date:
         type: string
       season:
@@ -143,6 +145,10 @@ definitions:
       medium:
         $ref: '#/definitions/model.Medium'
       medium_id:
+        type: integer
+      podcast:
+        $ref: '#/definitions/model.Podcast'
+      podcast_id:
         type: integer
       published_date:
         type: string
@@ -578,45 +584,6 @@ definitions:
       updated_by_id:
         type: integer
     type: object
-  model.Episode:
-    properties:
-      audio_url:
-        type: string
-      created_at:
-        type: string
-      created_by_id:
-        type: integer
-      deleted_at:
-        type: string
-      description:
-        type: string
-      episode:
-        type: integer
-      html_description:
-        type: string
-      id:
-        type: integer
-      medium:
-        $ref: '#/definitions/model.Medium'
-      medium_id:
-        type: integer
-      published_date:
-        type: string
-      season:
-        type: integer
-      slug:
-        type: string
-      space:
-        $ref: '#/definitions/model.Space'
-      space_id:
-        type: integer
-      title:
-        type: string
-      updated_at:
-        type: string
-      updated_by_id:
-        type: integer
-    type: object
   model.Event:
     properties:
       created_at:
@@ -813,10 +780,6 @@ definitions:
         type: string
       description:
         type: string
-      episodes:
-        items:
-          $ref: '#/definitions/model.Episode'
-        type: array
       html_description:
         type: string
       id:
@@ -1237,13 +1200,11 @@ definitions:
         type: array
       description:
         type: string
-      episode_ids:
-        items:
-          type: integer
-        type: array
       language:
         type: string
       medium_id:
+        type: integer
+      primary_category_id:
         type: integer
       slug:
         type: string

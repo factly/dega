@@ -87,6 +87,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if episode.MediumID == 0 {
 		mediumID = nil
 	}
+	podcastID := &episode.PodcastID
+	if episode.PodcastID == 0 {
+		podcastID = nil
+	}
 
 	// Store HTML description
 	var description string
@@ -107,6 +111,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Season:          episode.Season,
 		Episode:         episode.Episode,
 		AudioURL:        episode.AudioURL,
+		PodcastID:       podcastID,
 		PublishedDate:   episode.PublishedDate,
 		MediumID:        mediumID,
 		SpaceID:         uint(sID),
@@ -150,7 +155,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx.Model(&model.Episode{}).Preload("Medium").First(&result.Episode)
+	tx.Model(&model.Episode{}).Preload("Medium").Preload("Podcast").First(&result.Episode)
 
 	// Insert into meili index
 	var publishedDate int64
@@ -162,15 +167,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 	meiliObj := map[string]interface{}{
 		"id":             result.Episode.ID,
 		"kind":           "episode",
-		"title":          result.Episode.Title,
-		"slug":           result.Episode.Slug,
-		"season":         result.Episode.Season,
-		"episode":        result.Episode.Episode,
-		"audio_url":      result.Episode.AudioURL,
-		"description":    result.Episode.Description,
+		"title":          result.Title,
+		"slug":           result.Slug,
+		"season":         result.Season,
+		"episode":        result.Episode,
+		"audio_url":      result.AudioURL,
+		"podcast_id":     result.PodcastID,
+		"description":    result.Description,
 		"published_date": publishedDate,
-		"space_id":       result.Episode.SpaceID,
-		"medium_id":      result.Episode.MediumID,
+		"space_id":       result.SpaceID,
+		"medium_id":      result.MediumID,
 	}
 
 	err = meilisearchx.AddDocument("dega", meiliObj)
@@ -182,7 +188,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
-
 	if util.CheckNats() {
 		if err = util.NC.Publish("episode.created", result); err != nil {
 			loggerx.Error(err)

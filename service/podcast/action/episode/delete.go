@@ -75,7 +75,6 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
-
 	if util.CheckNats() {
 		if err = util.NC.Publish("episode.deleted", result); err != nil {
 			loggerx.Error(err)

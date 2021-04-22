@@ -134,6 +134,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	podcastID := &episode.PodcastID
+	result.PodcastID = &episode.PodcastID
+	if episode.PodcastID == 0 {
+		err = tx.Model(&result.Episode).Updates(map[string]interface{}{"podcast_id": nil}).Error
+		podcastID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
 	tx.Model(&result.Episode).Select("PublishedDate").Updates(model.Episode{PublishedDate: episode.PublishedDate})
 	tx.Model(&result.Episode).Updates(model.Episode{
 		Base:            config.Base{UpdatedByID: uint(uID)},
@@ -144,9 +157,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Season:          episode.Season,
 		Episode:         episode.Episode,
 		AudioURL:        episode.AudioURL,
+		PodcastID:       podcastID,
 		MediumID:        mediumID,
 		SpaceID:         uint(sID),
-	}).First(&result.Episode)
+	}).Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
 
 	// fetch old authors
 	prevEpisodeAuthors := make([]model.EpisodeAuthor, 0)
@@ -210,15 +224,16 @@ func update(w http.ResponseWriter, r *http.Request) {
 	meiliObj := map[string]interface{}{
 		"id":             result.Episode.ID,
 		"kind":           "episode",
-		"title":          result.Episode.Title,
-		"slug":           result.Episode.Slug,
-		"season":         result.Episode.Season,
-		"episode":        result.Episode.Episode,
-		"audio_url":      result.Episode.AudioURL,
-		"description":    result.Episode.Description,
+		"title":          result.Title,
+		"slug":           result.Slug,
+		"season":         result.Season,
+		"episode":        result.Episode,
+		"audio_url":      result.AudioURL,
+		"podcast_id":     result.PodcastID,
+		"description":    result.Description,
 		"published_date": publishedDate,
-		"space_id":       result.Episode.SpaceID,
-		"medium_id":      result.Episode.MediumID,
+		"space_id":       result.SpaceID,
+		"medium_id":      result.MediumID,
 	}
 
 	err = meilisearchx.UpdateDocument("dega", meiliObj)
@@ -230,11 +245,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
-
-	if err = util.NC.Publish("episode.updated", result); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if util.CheckNats() {
+		if err = util.NC.Publish("episode.updated", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -5467,6 +5467,9 @@ var doc = `{
                 "medium_id": {
                     "type": "integer"
                 },
+                "podcast_id": {
+                    "type": "integer"
+                },
                 "published_date": {
                     "type": "string"
                 },
@@ -5521,6 +5524,12 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "medium_id": {
+                    "type": "integer"
+                },
+                "podcast": {
+                    "$ref": "#/definitions/model.Podcast"
+                },
+                "podcast_id": {
                     "type": "integer"
                 },
                 "published_date": {
@@ -6183,65 +6192,6 @@ var doc = `{
                 }
             }
         },
-        "model.Episode": {
-            "type": "object",
-            "properties": {
-                "audio_url": {
-                    "type": "string"
-                },
-                "created_at": {
-                    "type": "string"
-                },
-                "created_by_id": {
-                    "type": "integer"
-                },
-                "deleted_at": {
-                    "type": "string"
-                },
-                "description": {
-                    "type": "string"
-                },
-                "episode": {
-                    "type": "integer"
-                },
-                "html_description": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "integer"
-                },
-                "medium": {
-                    "$ref": "#/definitions/model.Medium"
-                },
-                "medium_id": {
-                    "type": "integer"
-                },
-                "published_date": {
-                    "type": "string"
-                },
-                "season": {
-                    "type": "integer"
-                },
-                "slug": {
-                    "type": "string"
-                },
-                "space": {
-                    "$ref": "#/definitions/model.Space"
-                },
-                "space_id": {
-                    "type": "integer"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "updated_at": {
-                    "type": "string"
-                },
-                "updated_by_id": {
-                    "type": "integer"
-                }
-            }
-        },
         "model.Event": {
             "type": "object",
             "properties": {
@@ -6538,12 +6488,6 @@ var doc = `{
                 },
                 "description": {
                     "type": "string"
-                },
-                "episodes": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/model.Episode"
-                    }
                 },
                 "html_description": {
                     "type": "string"
@@ -7186,16 +7130,13 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
-                "episode_ids": {
-                    "type": "array",
-                    "items": {
-                        "type": "integer"
-                    }
-                },
                 "language": {
                     "type": "string"
                 },
                 "medium_id": {
+                    "type": "integer"
+                },
+                "primary_category_id": {
                     "type": "integer"
                 },
                 "slug": {
