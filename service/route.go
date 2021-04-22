@@ -40,9 +40,6 @@ func RegisterRoutes() http.Handler {
 		fmt.Println("Swagger @ http://localhost:7789/swagger/index.html")
 	}
 
-	r.With(middlewarex.CheckSpace(1)).Get("/posts/rss", post.Feeds)
-	r.With(middlewarex.CheckSpace(1)).Get("/podcasts/{podcast_id}/rss", podcastAction.Feeds)
-
 	if viper.IsSet("iframely_url") {
 		r.Mount("/meta", meta.Router())
 	}
@@ -67,6 +64,21 @@ func RegisterRoutes() http.Handler {
 		r.Post("/core/requests/organisations", organisation.Create)
 		r.With(middlewarex.CheckSpace(1)).Post("/core/requests/spaces", space.Create)
 	})
+
+	return r
+}
+
+func RegisterFeedsRoutes() http.Handler {
+	r := chi.NewRouter()
+
+	r.Use(middleware.RequestID)
+	r.Use(loggerx.Init())
+	r.Use(middleware.RealIP)
+	r.Use(middleware.Recoverer)
+	r.Use(middleware.Heartbeat("/ping"))
+
+	r.With(middlewarex.CheckSpace(1)).Get("/posts/feeds", post.Feeds)
+	r.With(middlewarex.CheckSpace(1)).Get("/podcasts/{podcast_id}/feeds", podcastAction.Feeds)
 
 	return r
 }

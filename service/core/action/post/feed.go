@@ -1,6 +1,7 @@
 package post
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -22,13 +23,34 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	space := &model.Space{}
+	space.ID = uint(sID)
+	if err = config.DB.Preload("Logo").First(&space).Error; err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	now := time.Now()
 	feed := &feeds.Feed{
-		Title:       "Factly.in",
-		Link:        &feeds.Link{Href: "https://factly.in"},
-		Description: "Making public data meaningful.",
+		Id:          fmt.Sprint(space.ID),
+		Title:       space.Name,
+		Subtitle:    space.TagLine,
+		Link:        &feeds.Link{Href: space.SiteAddress},
+		Description: space.Description,
 		Created:     now,
-		Image:       &feeds.Image{Title: "Factly", Url: "https://factly.in/wp-content/uploads//2021/01/factly-logo-200-11.png"},
+	}
+
+	if space.Logo != nil {
+		spaceLogo := map[string]interface{}{}
+		_ = json.Unmarshal(space.Logo.URL.RawMessage, &spaceLogo)
+		if rawURL, found := spaceLogo["raw"]; found {
+			feed.Image = &feeds.Image{
+				Title: space.Logo.Name,
+				Url:   rawURL.(string),
+				Link:  rawURL.(string),
+			}
+		}
 	}
 
 	postList := make([]model.Post, 0)
@@ -50,10 +72,6 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		userID = int(postAuthors[0].AuthorID)
 	}
 
-	space := model.Space{}
-	space.ID = uint(sID)
-	config.DB.Model(&model.Space{}).First(&space)
-
 	authorMap := author.Mapper(space.OrganisationID, userID)
 
 	// generate post author map
@@ -69,13 +87,13 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		author := authorMap[fmt.Sprint(postAuthorMap[post.ID][0])]
 
 		item := feeds.Item{
+			Id:          fmt.Sprint(post.ID),
 			Title:       post.Title,
 			Link:        &feeds.Link{Href: fmt.Sprint("https://factly.org/", post.Slug)},
+			Created:     *post.PublishedDate,
+			Updated:     post.UpdatedAt,
 			Description: post.Excerpt,
 			Content:     post.HTMLDescription,
-			Id:          fmt.Sprint(post.ID),
-			Created:     post.CreatedAt,
-			Updated:     post.UpdatedAt,
 		}
 		authorName := fmt.Sprint(author.FirstName, " ", author.LastName)
 		if authorName != " " {
