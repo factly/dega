@@ -168,13 +168,13 @@ function PostList({ actions, format }) {
                       Quick Edit
                     </Button>,
                     item.status === 'publish' ? (
-                      <Tag style={{ width: '100px', padding: '5px' }} color="success">
+                      <Button style={{ border: 'solid 1px', color: 'green', width: '100px' }}>
                         Published
-                      </Tag>
+                      </Button>
                     ) : (
-                      <Tag style={{ width: '100px', padding: '5px' }} color="error">
+                      <Button style={{ border: 'solid 1px', color: 'red', width: '100px' }}>
                         Draft
-                      </Tag>
+                      </Button>
                     ),
                   ]
                 : []
