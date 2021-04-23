@@ -47,7 +47,6 @@ const PodcastForm = ({ onCreate, data = {} }) => {
         onCreate({
           ...values,
           category_ids: values.categories || [],
-          episode_ids: values.episodes || [],
         });
         onReset();
       }}
@@ -96,10 +95,6 @@ const PodcastForm = ({ onCreate, data = {} }) => {
 
           <Form.Item name="categories" label="Categories">
             <Selector mode="multiple" action="Categories" createEntity="Category" />
-          </Form.Item>
-
-          <Form.Item name="episodes" label="Episodes">
-            <Selector mode="multiple" action="Episodes" display="title" />
           </Form.Item>
 
           <Form.Item name="description" label="Description">
