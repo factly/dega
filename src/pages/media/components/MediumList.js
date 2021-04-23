@@ -50,7 +50,7 @@ function MediumList({ actions }) {
             ...values,
           })
         }
-        style={{ maxWidth: '100%' }}
+        style={{ maxWidth: '100%', marginBottom: '1rem' }}
       >
         <Form.Item name="q" label="Search" style={{ width: '25%' }}>
           <Input placeholder="search media" />
@@ -70,7 +70,12 @@ function MediumList({ actions }) {
       <List
         grid={{
           gutter: 16,
-          column: 5,
+          xs: 1,
+          sm: 2,
+          md: 3,
+          lg: 3,
+          xl: 4,
+          xxl: 5,
         }}
         pagination={{
           total: total,
@@ -97,8 +102,14 @@ function MediumList({ actions }) {
                 cover={
                   <img
                     alt="ALT"
-                    src={item.url?.proxy ? `${item.url.proxy}` : ''}
-                    style={{ width: '100%', objectFit: 'cover', height: '220px' }}
+                    src={item.url?.proxy ? `${item.url.proxy}?gravity:sm/resize:fit:220:220` : ''}
+                    style={{
+                      maxWidth: '100%',
+                      width: '100%',
+                      objectFit: 'contain',
+                      height: '220px',
+                      objectPosition: 'center center',
+                    }}
                     title={item.name}
                   />
                 }
