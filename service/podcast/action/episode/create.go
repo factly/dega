@@ -155,7 +155,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx.Model(&model.Episode{}).Preload("Medium").Preload("Podcast").First(&result.Episode)
+	tx.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").First(&result.Episode)
 
 	// Insert into meili index
 	var publishedDate int64

@@ -48,6 +48,15 @@ var serveCmd = &cobra.Command{
 			log.Fatal(http.ListenAndServe(":8001", promRouter))
 		}()
 
+		if viper.IsSet("enable_feeds") && viper.GetBool("enable_feeds") {
+			go func() {
+				r := service.RegisterFeedsRoutes()
+				if err := http.ListenAndServe(":8002", r); err != nil {
+					log.Fatal(err)
+				}
+			}()
+		}
+
 		if err := http.ListenAndServe(":8000", r); err != nil {
 			log.Fatal(err)
 		}

@@ -13,12 +13,6 @@ import (
 	"github.com/factly/x/renderx"
 )
 
-type article struct {
-	Status string `json:"status"`
-	Slug   string `json:"slug"`
-	Count  int64  `json:"count"`
-}
-
 // details - Get info by id
 // @Summary Show a info by id
 // @Description Get info by ID

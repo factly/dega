@@ -1,4 +1,4 @@
-package podcast
+package episode
 
 import (
 	"database/sql/driver"
@@ -14,7 +14,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestPodcastDelete(t *testing.T) {
+func TestEpisodeDelete(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	test.MockServer()
@@ -27,82 +27,49 @@ func TestPodcastDelete(t *testing.T) {
 
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
-	t.Run("invalid podcast id", func(t *testing.T) {
+	t.Run("invalid episode id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
 		e.DELETE(path).
-			WithPath("podcast_id", "invalid_id").
+			WithPath("episode_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("podcast record not found", func(t *testing.T) {
+	t.Run("episode record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
-
 		mock.ExpectQuery(selectQuery).
+			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(Columns))
 
 		e.DELETE(path).
-			WithPath("podcast_id", "1").
+			WithPath("episode_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("delete podcast", func(t *testing.T) {
+	t.Run("delete episode", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
-
 		SelectQuery(mock)
-		PodcastCategorySelect(mock)
-
 		mock.ExpectBegin()
-		mock.ExpectExec(`DELETE FROM "podcast_categories"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
+		mock.ExpectExec(`UPDATE "episodes" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
 
-		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-
+		mock.ExpectExec(`UPDATE "episode_authors" SET`).
+			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
 		mock.ExpectCommit()
+
 		e.DELETE(path).
-			WithPath("podcast_id", "1").
+			WithPath("episode_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK)
 		test.ExpectationsMet(t, mock)
 	})
-
-	t.Run("delete podcast when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectQuery(mock)
-		PodcastCategorySelect(mock)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(`DELETE FROM "podcast_categories"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
-
-		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-
-		mock.ExpectRollback()
-		e.DELETE(path).
-			WithPath("podcast_id", "1").
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
-
 }

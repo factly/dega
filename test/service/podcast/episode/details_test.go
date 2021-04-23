@@ -1,4 +1,4 @@
-package podcast
+package episode
 
 import (
 	"net/http"
@@ -11,11 +11,12 @@ import (
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/core/permissions/space"
+	"github.com/factly/dega-server/test/service/podcast"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestPodcastDetails(t *testing.T) {
+func TestEpisodeDetail(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	test.MockServer()
@@ -28,49 +29,51 @@ func TestPodcastDetails(t *testing.T) {
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("invalid podcast id", func(t *testing.T) {
+	t.Run("invalid episode id", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
+		space.SelectQuery(mock)
 		e.GET(path).
-			WithPath("podcast_id", "invalid_id").
+			WithPath("episode_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("podcast record not found", func(t *testing.T) {
+	t.Run("episode record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+		space.SelectQuery(mock)
 		mock.ExpectQuery(selectQuery).
+			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(Columns))
 
 		e.GET(path).
-			WithPath("podcast_id", "1").
+			WithPath("episode_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("fetch podcast by id", func(t *testing.T) {
+	t.Run("get episode details", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+		space.SelectQuery(mock)
 		SelectQuery(mock, 1, 1)
-
-		PodcastCategorySelect(mock)
+		medium.SelectWithOutSpace(mock)
+		podcast.SelectQuery(mock)
+		podcast.PodcastCategorySelect(mock)
 		medium.SelectWithOutSpace(mock)
 		category.SelectWithOutSpace(mock)
 
+		EpisodeAuthorSelect(mock)
+
 		e.GET(path).
-			WithPath("podcast_id", "1").
+			WithPath("episode_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
-			JSON().
-			Object().ContainsMap(resData)
+			JSON().Object().
+			ContainsMap(resData)
 		test.ExpectationsMet(t, mock)
 	})
 }

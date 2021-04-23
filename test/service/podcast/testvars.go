@@ -10,7 +10,6 @@ import (
 	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/factly/dega-server/test/service/podcast/episode"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -30,7 +29,6 @@ var Data = map[string]interface{}{
 	"primary_category_id": 1,
 	"medium_id":           1,
 	"category_ids":        []uint{1},
-	"episode_ids":         []uint{1},
 }
 
 var resData = map[string]interface{}{
@@ -79,8 +77,8 @@ var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_
 var selectQuery = `SELECT (.+) FROM "podcasts"`
 var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "podcasts"`)
 
-var basePath = "/podcast/podcasts"
-var path = "/podcast/podcasts/{podcast_id}"
+var basePath = "/podcast"
+var path = "/podcast/{podcast_id}"
 
 func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
@@ -97,30 +95,10 @@ func PodcastCategorySelect(mock sqlmock.Sqlmock) {
 	category.SelectWithOutSpace(mock)
 }
 
-func PodcastEpisodeSelect(mock sqlmock.Sqlmock) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "podcast_episodes"`)).
-		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"podcast_id", "episode_id"}).AddRow(1, 1))
-
-	episode.SelectQuery(mock)
-}
-
-func slugCheckMock(mock sqlmock.Sqlmock, rating map[string]interface{}) {
+func slugCheckMock(mock sqlmock.Sqlmock, podcast map[string]interface{}) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "podcasts"`)).
-		WithArgs(fmt.Sprint(rating["slug"], "%"), 1).
+		WithArgs(fmt.Sprint(podcast["slug"], "%"), 1).
 		WillReturnRows(sqlmock.NewRows(Columns))
-}
-
-func podcastEpisodesInsert(mock sqlmock.Sqlmock) {
-	medium.SelectWithSpace(mock)
-	mock.ExpectQuery(`INSERT INTO "episodes"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, episode.Data["title"], episode.Data["slug"], episode.Data["season"], episode.Data["episode"], episode.Data["audio_url"], episode.Data["description"], episode.Data["html_description"], episode.Data["published_date"], 1, episode.Data["medium_id"], 1).
-		WillReturnRows(sqlmock.
-			NewRows([]string{"medium_id", "id"}).
-			AddRow(1, 1))
-	mock.ExpectExec(`INSERT INTO "podcast_episodes"`).
-		WithArgs(1, 1).
-		WillReturnResult(driver.ResultNoRows)
 }
 
 func podcastCategoriesInsert(mock sqlmock.Sqlmock) {
