@@ -14,19 +14,24 @@ function GoogleFactCheck() {
     page: 1,
     query: 'factcheck',
   });
+  const [currPageToken, setCurrPageToken] = React.useState('');
+  const [paginationStack, setPaginationStack] = React.useState([]);
+  const [indexPointer, setIndexPointer] = React.useState(null);
 
-  const { factChecks, total, loading } = useSelector(({ googleFactChecks }) => {
+  const { factChecks, total, loading, nextPage } = useSelector(({ googleFactChecks }) => {
     const node = googleFactChecks.req.find((item) => {
       return deepEqual(item.query, filters);
     });
 
-    if (node)
+    if (node) {
       return {
         factChecks: node.data,
         total: node.total,
         loading: googleFactChecks.loading,
+        nextPage: node.nextPage,
       };
-    return { factChecks: [], total: 0, loading: googleFactChecks.loading };
+    }
+    return { factChecks: [], total: 0, loading: googleFactChecks.loading, nextPage: '' };
   });
 
   const fetchFactChecks = (values) => {
@@ -37,13 +42,52 @@ function GoogleFactCheck() {
     if (values.language === 'all') {
       delete values.language;
     }
-    setQuery({ ...filters, ...values });
+    setCurrPageToken('');
+    setIndexPointer(null);
+    setPaginationStack([]);
+    setQuery({ ...{ page: 1 }, ...values });
   };
 
   React.useEffect(() => {
     if (filters.query) fetchFactChecks(filters);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
+
+  React.useEffect(() => {
+    if (!paginationStack.includes(currPageToken))
+      setPaginationStack((paginationStack) => [...paginationStack, currPageToken]);
+  }, [currPageToken]);
+
+  const onLoadMore = () => {
+    indexPointer + 1 === paginationStack.length
+      ? setIndexPointer(paginationStack.length)
+      : setIndexPointer(indexPointer + 1);
+    setCurrPageToken(nextPage);
+    setQuery({ ...filters, pageToken: nextPage });
+  };
+  const loadPrevious = () => {
+    const prev = paginationStack[indexPointer - 1];
+    setIndexPointer(indexPointer - 1);
+    setQuery({ ...filters, pageToken: prev });
+  };
+
+  const loadMore = !loading ? (
+    <div
+      style={{
+        float: 'right',
+        paddingBlock: '10px',
+      }}
+    >
+      <Space direction="horizontal">
+        <Button disabled={indexPointer === null || indexPointer === 0} onClick={loadPrevious}>
+          Back
+        </Button>
+        <Button disabled={!nextPage || nextPage === ''} onClick={onLoadMore}>
+          Next
+        </Button>
+      </Space>
+    </div>
+  ) : null;
 
   return (
     <Space direction={'vertical'}>
@@ -92,12 +136,7 @@ function GoogleFactCheck() {
         loading={loading}
         itemLayout="vertical"
         dataSource={factChecks}
-        pagination={{
-          total: total,
-          current: filters.page,
-          pageSize: 10,
-          onChange: (pageNumber, pageSize) => setQuery({ ...filters, page: pageNumber }),
-        }}
+        loadMore={loadMore}
         renderItem={(item) => (
           <List.Item key={item.text}>
             <Typography.Title level={5}>{`Claim by ${item.claimant}:`}</Typography.Title>

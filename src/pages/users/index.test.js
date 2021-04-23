@@ -96,7 +96,11 @@ describe('Tags List component', () => {
   });
   it('should render the component with data', () => {
     store = mockStore({
-      users,
+      users: {
+        req: [],
+        details: users,
+        loading: false,
+      },
     });
     const tree = mount(
       <Provider store={store}>

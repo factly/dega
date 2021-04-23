@@ -4,6 +4,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import JsonEditor from '../../../components/JsonEditor';
+import Selector from '../../../components/Selector';
 
 const layout = {
   labelCol: {
@@ -22,6 +23,7 @@ const tailLayout = {
 
 const CategoryForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const [json, setJson] = useState(
     data.meta_fields && Object.keys(data.meta_fields).length > 0
@@ -51,10 +53,13 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         onCreate({ ...values, meta_fields: json });
         onReset();
       }}
+      onValuesChange={() => {
+        setValueChange(true);
+      }}
     >
-      {/* <Form.Item name="parent_id" label="Parent Category">
+      <Form.Item name="parent_id" label="Parent Category">
         <Selector action="Categories" />
-      </Form.Item> */}
+      </Form.Item>
       <Form.Item
         name="name"
         label="Category"
@@ -99,8 +104,8 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
-          <Button type="primary" htmlType="submit">
-            Submit
+          <Button disabled={!valueChange} type="primary" htmlType="submit">
+            {data && data.id ? 'Update' : 'Submit'}
           </Button>
           <Button htmlType="button" onClick={onReset}>
             Reset

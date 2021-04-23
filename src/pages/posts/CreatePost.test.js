@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -10,10 +11,12 @@ import '../../matchMedia.mock';
 import CreatePost from './CreatePost';
 import * as actions from '../../actions/posts';
 import PostCreateForm from './components/PostForm';
+import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -29,7 +32,11 @@ jest.mock('../../actions/posts', () => ({
   addPost: jest.fn(),
   publish: jest.fn(),
 }));
-
+const formats = {
+  article: { id: 1, name: 'article', slug: 'article' },
+  factcheck: { id: 2, name: 'factcheck', slug: 'fact-check' },
+  loading: false,
+};
 describe('Post create component', () => {
   let store;
   let mockedDispatch;
@@ -89,6 +96,9 @@ describe('Post create component', () => {
       loading: false,
       selected: 11,
     },
+    sidebar: {
+      collapsed: false,
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
@@ -99,7 +109,7 @@ describe('Post create component', () => {
       act(() => {
         tree = shallow(
           <Provider store={store}>
-            <CreatePost />
+            <CreatePost formats={formats} />
           </Provider>,
         );
       });
@@ -119,7 +129,9 @@ describe('Post create component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <CreatePost />
+            <Router>
+              <CreatePost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -130,23 +142,25 @@ describe('Post create component', () => {
         done();
       }, 0);
     });
-    it('should call publish', (done) => {
+    it('should not display Post form if no article format found', () => {
+      const format = {
+        loading: false,
+        factcheck: { id: 2, name: 'factcheck', slug: 'fact-check' },
+      };
       actions.publish.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <CreatePost />
+            <Router>
+              <CreatePost formats={format} />
+            </Router>
           </Provider>,
         );
       });
-      wrapper.find(PostCreateForm).props().onCreate({ title: 'test', status: 'publish' });
-      setTimeout(() => {
-        expect(actions.publish).toHaveBeenCalledWith({ title: 'test', status: 'publish' });
-        expect(push).toHaveBeenCalledWith('/posts');
-        done();
-      }, 0);
+      expect(wrapper.find(PostCreateForm).length).toBe(0);
+      expect(wrapper.find(FormatNotFound).length).toBe(1);
     });
   });
 });

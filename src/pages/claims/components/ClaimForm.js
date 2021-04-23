@@ -1,24 +1,25 @@
 import React from 'react';
-import { Button, Form, Input, Steps, DatePicker, Space } from 'antd';
+import { Button, Form, Input, Steps, DatePicker, Row, Col, Divider } from 'antd';
 import Selector from '../../../components/Selector';
 import Editor from '../../../components/Editor';
 import { maker, checker } from '../../../utils/sluger';
 import moment from 'moment';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 
-const { TextArea } = Input;
-
 const layout = {
   labelCol: {
     span: 8,
+    offset: 2,
   },
   wrapperCol: {
-    span: 6,
+    span: 20,
+    offset: 2,
   },
 };
 
 const ClaimForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
@@ -39,15 +40,21 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     onCreate(values);
   };
 
-  const onTitleChange = (string) => {
-    form.setFieldsValue({
-      slug: maker(string),
-    });
+  const onClaimChange = (string) => {
+    if (string.length > 150) {
+      form.setFieldsValue({
+        slug: maker(string.substring(0, 150)),
+      });
+    } else {
+      form.setFieldsValue({
+        slug: maker(string),
+      });
+    }
   };
 
   if (data && data.id) {
     data.claim_date = data.claim_date ? moment(data.claim_date) : null;
-    data.checked_date = data.checked_date ? moment(data.claim_date) : null;
+    data.checked_date = data.checked_date ? moment(data.checked_date) : null;
   }
 
   return (
@@ -65,6 +72,15 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           onSave(values);
           onReset();
         }}
+        onFinishFailed={(errors) => {
+          if (errors.errorFields[0].name[0] !== 'review_sources') {
+            setCurrent(0);
+          }
+        }}
+        onValuesChange={() => {
+          setValueChange(true);
+        }}
+        scrollToFirstError={true}
         style={{
           paddingTop: '24px',
         }}
@@ -72,18 +88,22 @@ const ClaimForm = ({ onCreate, data = {} }) => {
       >
         <div style={current === 0 ? { display: 'block' } : { display: 'none' }}>
           <Form.Item
-            name="title"
+            name="claim"
             label="Claim"
             rules={[
               {
                 required: true,
-                message: 'Please input the title!',
+                message: 'Please input the Claim!',
               },
-              { min: 3, message: 'Title must be minimum 3 characters.' },
-              { max: 150, message: 'Title must be maximum 150 characters.' },
+              { min: 3, message: 'Claim must be minimum 3 characters.' },
+              { max: 5000, message: 'Claim must be maximum 5000 characters.' },
             ]}
           >
-            <Input placeholder="title" onChange={(e) => onTitleChange(e.target.value)} />
+            <Input.TextArea
+              rows={6}
+              placeholder="Enter claim...."
+              onChange={(e) => onClaimChange(e.target.value)}
+            />
           </Form.Item>
           <Form.Item
             name="slug"
@@ -97,13 +117,17 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 pattern: checker,
                 message: 'Please enter valid slug!',
               },
+              { max: 150, message: 'Slug must be maximum 150 characters.' },
             ]}
           >
             <Input />
           </Form.Item>
+          <Form.Item name="fact" label="Fact">
+            <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
+          </Form.Item>
           <Form.Item
             name="claimant"
-            label="Claimants"
+            label="Claimant"
             rules={[
               {
                 required: true,
@@ -116,7 +140,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
 
           <Form.Item
             name="rating"
-            label="Ratings"
+            label="Rating"
             rules={[
               {
                 required: true,
@@ -127,11 +151,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             <Selector action="Ratings" />
           </Form.Item>
 
-          <Form.Item name="review" label="Fact" wrapperCol={24}>
-            <Editor placeholder="Enter Review..." />
-          </Form.Item>
-
-          <Form.Item name="description" label="Description" wrapperCol={24}>
+          <Form.Item name="description" label="Description">
             <Editor placeholder="Enter Description..." />
           </Form.Item>
         </div>
@@ -142,59 +162,97 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           <Form.Item name="checked_date" label="Checked Date">
             <DatePicker />
           </Form.Item>
-          <Form.Item name="claim_sources" label="Claim Sources" wrapperCol={24}>
-            <Editor placeholder="Enter Claim Sources..." />
+          <Form.Item label="Claim Sources">
+            <Form.List name="claim_sources" label="Claim sources">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field) => (
+                    <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
+                      <Col span={11}>
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'url']}
+                          fieldKey={[field.fieldKey, 'url']}
+                          rules={[{ required: true, message: 'Url required' }]}
+                          wrapperCol={24}
+                        >
+                          <Input placeholder="Enter url" />
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'description']}
+                          fieldKey={[field.fieldKey, 'description']}
+                          rules={[{ required: true, message: 'Description required' }]}
+                          wrapperCol={24}
+                        >
+                          <Input placeholder="Enter description" />
+                        </Form.Item>
+                      </Col>
+                      <MinusCircleOutlined onClick={() => remove(field.name)} />
+                    </Row>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Claim sources
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
           </Form.Item>
-          <Form.Item name="review_tag_line" label="Review Tagline" wrapperCol={24}>
-            <Editor placeholder="Enter Taglines..." />
-          </Form.Item>
-          <Form.List name="review_sources" label="Review sources">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map((field) => (
-                  <Space key={field.key} style={{ marginBottom: 8 }} align="baseline">
-                    <Form.Item
-                      {...field}
-                      name={[field.name, 'url']}
-                      fieldKey={[field.fieldKey, 'url']}
-                      rules={[{ required: true, message: 'Url required' }]}
-                      wrapperCol={24}
-                    >
-                      <Input placeholder="Enter url" />
-                    </Form.Item>
-                    <Form.Item
-                      {...field}
-                      name={[field.name, 'description']}
-                      fieldKey={[field.fieldKey, 'description']}
-                      rules={[{ required: true, message: 'Description required' }]}
-                      wrapperCol={24}
-                    >
-                      <Input placeholder="Enter description" />
-                    </Form.Item>
-                    <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </Space>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                    Add Review sources
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
+          <Form.Item label="Review Sources">
+            <Form.List name="review_sources" label="Review sources">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field) => (
+                    <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
+                      <Col span={11}>
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'url']}
+                          fieldKey={[field.fieldKey, 'url']}
+                          rules={[{ required: true, message: 'Url required' }]}
+                          wrapperCol={24}
+                        >
+                          <Input placeholder="Enter url" />
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'description']}
+                          fieldKey={[field.fieldKey, 'description']}
+                          rules={[{ required: true, message: 'Description required' }]}
+                          wrapperCol={24}
+                        >
+                          <Input placeholder="Enter description" />
+                        </Form.Item>
+                      </Col>
+                      <MinusCircleOutlined onClick={() => remove(field.name)} />
+                    </Row>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Review sources
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
           </Form.Item>
         </div>
         <Form.Item>
           <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>
             Back
           </Button>
-          <Button disabled={current === 1} onClick={() => setCurrent(current + 1)}>
-            Next
-          </Button>
+          {current < 1 ? <Button onClick={() => setCurrent(current + 1)}>Next</Button> : null}
+          {current === 1 ? (
+            <Button disabled={!valueChange} type="primary" htmlType="submit">
+              {data && data.id ? 'Update' : 'Submit'}
+            </Button>
+          ) : null}
         </Form.Item>
       </Form>
     </div>

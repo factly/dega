@@ -19,7 +19,7 @@ function EditSpace() {
   });
 
   const onCreate = (values) => {
-    dispatch(updateSpace({ ...space, ...values })).then(() => history.push('/spaces'));
+    dispatch(updateSpace({ ...space, ...values })).then(() => history.push(`/spaces/${id}/edit`));
   };
 
   if (loading) return <Skeleton />;

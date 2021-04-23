@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import { useDispatch, useSelector, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { mount } from 'enzyme';
 
 import '../../matchMedia.mock';
 import Claimants from './index';
@@ -39,15 +39,13 @@ describe('Claimants List component', () => {
   });
   it('should render the component', () => {
     useSelector.mockImplementationOnce(() => ({}));
-    const tree = renderer
-      .create(
-        <Provider store={store}>
-          <Router>
-            <Claimants permission={{ actions: ['create'] }} />
-          </Router>
-        </Provider>,
-      )
-      .toJSON();
+    const tree = mount(
+      <Provider store={store}>
+        <Router>
+          <Claimants permission={{ actions: ['create'] }} />
+        </Router>
+      </Provider>,
+    );
     expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
@@ -65,15 +63,13 @@ describe('Claimants List component', () => {
       total: 1,
       loading: false,
     }));
-    const tree = renderer
-      .create(
-        <Provider store={store}>
-          <Router>
-            <Claimants permission={{ actions: ['create'] }} />
-          </Router>
-        </Provider>,
-      )
-      .toJSON();
+    const tree = mount(
+      <Provider store={store}>
+        <Router>
+          <Claimants permission={{ actions: ['create'] }} />
+        </Router>
+      </Provider>,
+    );
     expect(tree).toMatchSnapshot();
   });
 });

@@ -23,7 +23,7 @@ let state = {
         data: ['1'],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -158,7 +158,7 @@ describe('Policies List component', () => {
         .simulate('click');
       expect(deletePolicy).toHaveBeenCalled();
       expect(deletePolicy).toHaveBeenCalledWith('1');
-      expect(getPolicies).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getPolicies).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit policy', () => {
       store = mockStore(state);

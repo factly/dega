@@ -24,7 +24,7 @@ let state = {
         data: [2, 1],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
         total: 2,
       },
@@ -108,7 +108,7 @@ describe('Formats List component', () => {
       expect(tree).toMatchSnapshot();
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
 
-      expect(getFormats).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(getFormats).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {

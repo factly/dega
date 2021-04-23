@@ -19,7 +19,6 @@ export default function claimsReducer(state = initialState, action = {}) {
       return {
         ...state,
         req: [],
-        details: {},
         loading: true,
       };
     case SET_CLAIMS_LOADING:

@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer, { act as RendererAct } from 'react-test-renderer';
 import { Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -11,18 +10,27 @@ import TagForm from './TagForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
+jest.mock('@editorjs/editorjs');
 let onCreate, store;
 const data = {
   name: 'name',
   slug: 'slug',
-  description: 'description',
+  description: {
+    time: 1613561493761,
+    blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+    version: '2.19.0',
+  },
 };
 
 describe('Tags Create Form component', () => {
   store = mockStore({
     tags: {
       req: [],
+      details: {},
+      loading: true,
+    },
+    spaces: {
+      orgs: [],
       details: {},
       loading: true,
     },
@@ -36,39 +44,27 @@ describe('Tags Create Form component', () => {
       );
     });
     it('should render the component', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <TagForm />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <TagForm />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <TagForm data={[]} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <TagForm data={[]} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with data', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <TagForm onCreate={onCreate} data={data} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <TagForm onCreate={onCreate} data={data} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -138,7 +134,11 @@ describe('Tags Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
           slug: 'new-name',
-          description: 'description',
+          description: {
+            time: 1613561493761,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
         });
         done();
       }, 0);
@@ -157,10 +157,18 @@ describe('Tags Create Form component', () => {
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(2)
-          .find('TextArea')
-          .at(0)
-          .simulate('change', { target: { value: 'new description' } });
+          .at(3)
+          .find('Editor')
+          .props()
+          .onChange({
+            target: {
+              value: {
+                time: 1613561493761,
+                blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
+                version: '2.19.0',
+              },
+            },
+          });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -172,7 +180,11 @@ describe('Tags Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
           slug: 'new-slug',
-          description: 'new description',
+          description: {
+            time: 1613561493761,
+            blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
+            version: '2.19.0',
+          },
         });
         done();
       }, 0);

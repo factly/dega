@@ -54,8 +54,16 @@ exports[`Spaces List component snapshot testing should match component when load
                 <col
                   style={
                     Object {
-                      "minWidth": "20%",
-                      "width": "20%",
+                      "minWidth": "8%",
+                      "width": "8%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
+                      "minWidth": "12%",
+                      "width": "12%",
                     }
                   }
                 />
@@ -88,6 +96,14 @@ exports[`Spaces List component snapshot testing should match component when load
                 className="ant-table-thead"
               >
                 <tr>
+                  <th
+                    className="ant-table-cell"
+                    colSpan={null}
+                    rowSpan={null}
+                    style={Object {}}
+                  >
+                    Id
+                  </th>
                   <th
                     className="ant-table-cell"
                     colSpan={null}
@@ -143,7 +159,7 @@ exports[`Spaces List component snapshot testing should match component when load
                 >
                   <td
                     className="ant-table-cell"
-                    colSpan={5}
+                    colSpan={6}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -237,8 +253,16 @@ exports[`Spaces List component snapshot testing should match component with spac
                 <col
                   style={
                     Object {
-                      "minWidth": "20%",
-                      "width": "20%",
+                      "minWidth": "8%",
+                      "width": "8%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
+                      "minWidth": "12%",
+                      "width": "12%",
                     }
                   }
                 />
@@ -271,6 +295,14 @@ exports[`Spaces List component snapshot testing should match component with spac
                 className="ant-table-thead"
               >
                 <tr>
+                  <th
+                    className="ant-table-cell"
+                    colSpan={null}
+                    rowSpan={null}
+                    style={Object {}}
+                  >
+                    Id
+                  </th>
                   <th
                     className="ant-table-cell"
                     colSpan={null}
@@ -322,6 +354,14 @@ exports[`Spaces List component snapshot testing should match component with spac
                   onClick={[Function]}
                   style={Object {}}
                 >
+                  <td
+                    className="ant-table-cell"
+                    colSpan={null}
+                    rowSpan={null}
+                    style={Object {}}
+                  >
+                    1
+                  </td>
                   <td
                     className="ant-table-cell"
                     colSpan={null}
@@ -528,8 +568,16 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                 <col
                   style={
                     Object {
-                      "minWidth": "20%",
-                      "width": "20%",
+                      "minWidth": "8%",
+                      "width": "8%",
+                    }
+                  }
+                />
+                <col
+                  style={
+                    Object {
+                      "minWidth": "12%",
+                      "width": "12%",
                     }
                   }
                 />
@@ -562,6 +610,14 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                 className="ant-table-thead"
               >
                 <tr>
+                  <th
+                    className="ant-table-cell"
+                    colSpan={null}
+                    rowSpan={null}
+                    style={Object {}}
+                  >
+                    Id
+                  </th>
                   <th
                     className="ant-table-cell"
                     colSpan={null}
@@ -617,7 +673,7 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                 >
                   <td
                     className="ant-table-cell"
-                    colSpan={5}
+                    colSpan={6}
                     rowSpan={null}
                     style={Object {}}
                   >

@@ -1,22 +1,17 @@
 import React from 'react';
 import FactCheckForm from './components/FactCheckForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost, publish } from '../../actions/posts';
-import { useHistory } from 'react-router-dom';
+import { addPost } from '../../actions/posts';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function CreateFactCheck({ formats }) {
-  const history = useHistory();
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    if (values.status === 'draft')
-      dispatch(addPost(values)).then(() => history.push('/fact-checks'));
-    if (values.status === 'publish')
-      dispatch(publish(values)).then(() => history.push('/fact-checks'));
+    dispatch(addPost(values));
   };
 
   if (!formats.loading && formats.factcheck) {

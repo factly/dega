@@ -1,0 +1,1220 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu Create Form component snapshot testing should match component with data 1`] = `
+<div>
+  <ForwardRef(InternalForm)
+    form={
+      Object {
+        "__INTERNAL__": Object {
+          "itemRef": [Function],
+        },
+        "getFieldError": [Function],
+        "getFieldInstance": [Function],
+        "getFieldValue": [Function],
+        "getFieldsError": [Function],
+        "getFieldsValue": [Function],
+        "getInternalHooks": [Function],
+        "isFieldTouched": [Function],
+        "isFieldValidating": [Function],
+        "isFieldsTouched": [Function],
+        "isFieldsValidating": [Function],
+        "resetFields": [Function],
+        "scrollToField": [Function],
+        "setFields": [Function],
+        "setFieldsValue": [Function],
+        "submit": [Function],
+        "validateFields": [Function],
+      }
+    }
+    initialValues={
+      Object {
+        "menu": Array [
+          Object {
+            "menu": Array [
+              Object {
+                "name": "Submenu 1",
+              },
+            ],
+            "name": "Menu 1",
+          },
+          Object {
+            "name": "Menu 2",
+          },
+        ],
+        "name": "Menu",
+      }
+    }
+    onFinish={[Function]}
+    onValuesChange={[Function]}
+  >
+    <FormItem
+      label="Name"
+      name="name"
+      rules={
+        Array [
+          Object {
+            "message": "Please input the name!",
+            "required": true,
+          },
+        ]
+      }
+    >
+      <Input
+        placeholder="Enter name"
+        type="text"
+      />
+    </FormItem>
+    <FormList
+      name="menu"
+    >
+      <Component />
+    </FormList>
+  </ForwardRef(InternalForm)>
+</div>
+`;
+
+exports[`Menu Create Form component snapshot testing should match with empty data 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <MenuForm
+    data={Array []}
+  >
+    <div>
+      <ForwardRef(InternalForm)
+        form={
+          Object {
+            "__INTERNAL__": Object {
+              "itemRef": [Function],
+              "name": undefined,
+            },
+            "getFieldError": [Function],
+            "getFieldInstance": [Function],
+            "getFieldValue": [Function],
+            "getFieldsError": [Function],
+            "getFieldsValue": [Function],
+            "getInternalHooks": [Function],
+            "isFieldTouched": [Function],
+            "isFieldValidating": [Function],
+            "isFieldsTouched": [Function],
+            "isFieldsValidating": [Function],
+            "resetFields": [Function],
+            "scrollToField": [Function],
+            "setFields": [Function],
+            "setFieldsValue": [Function],
+            "submit": [Function],
+            "validateFields": [Function],
+          }
+        }
+        initialValues={Object {}}
+        onFinish={[Function]}
+        onValuesChange={[Function]}
+      >
+        <SizeContextProvider>
+          <ForwardRef(Form)
+            className="ant-form ant-form-horizontal"
+            form={
+              Object {
+                "__INTERNAL__": Object {
+                  "itemRef": [Function],
+                  "name": undefined,
+                },
+                "getFieldError": [Function],
+                "getFieldInstance": [Function],
+                "getFieldValue": [Function],
+                "getFieldsError": [Function],
+                "getFieldsValue": [Function],
+                "getInternalHooks": [Function],
+                "isFieldTouched": [Function],
+                "isFieldValidating": [Function],
+                "isFieldsTouched": [Function],
+                "isFieldsValidating": [Function],
+                "resetFields": [Function],
+                "scrollToField": [Function],
+                "setFields": [Function],
+                "setFieldsValue": [Function],
+                "submit": [Function],
+                "validateFields": [Function],
+              }
+            }
+            initialValues={Object {}}
+            onFinish={[Function]}
+            onFinishFailed={[Function]}
+            onValuesChange={[Function]}
+          >
+            <form
+              className="ant-form ant-form-horizontal"
+              onSubmit={[Function]}
+            >
+              <FormItem
+                label="Name"
+                name="name"
+                rules={
+                  Array [
+                    Object {
+                      "message": "Please input the name!",
+                      "required": true,
+                    },
+                  ]
+                }
+              >
+                <WrapperField
+                  label="Name"
+                  messageVariables={
+                    Object {
+                      "label": "Name",
+                    }
+                  }
+                  name="name"
+                  onReset={[Function]}
+                  rules={
+                    Array [
+                      Object {
+                        "message": "Please input the name!",
+                        "required": true,
+                      },
+                    ]
+                  }
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": undefined,
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_name"
+                    label="Name"
+                    messageVariables={
+                      Object {
+                        "label": "Name",
+                      }
+                    }
+                    name={
+                      Array [
+                        "name",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please input the name!",
+                          "required": true,
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="name"
+                          label="Name"
+                          name="name"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please input the name!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                          >
+                            <div
+                              className="ant-col ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="name"
+                                title="Name"
+                              >
+                                Name
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Name"
+                          name={
+                            Array [
+                              "name",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please input the name!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                          >
+                            <div
+                              className="ant-col ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                  >
+                                    <Input
+                                      id="name"
+                                      onChange={[Function]}
+                                      placeholder="Enter name"
+                                      type="text"
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <input
+                                            className="ant-input"
+                                            id="name"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            placeholder="Enter name"
+                                            type="text"
+                                          />
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="name"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        placeholder="Enter name"
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value=""
+                                      >
+                                        <input
+                                          className="ant-input"
+                                          id="name"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          onKeyDown={[Function]}
+                                          placeholder="Enter name"
+                                          type="text"
+                                          value=""
+                                        />
+                                      </ClearableLabeledInput>
+                                    </Input>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormList
+                name="menu"
+              >
+                <List
+                  name="menu"
+                >
+                  <WrapperField
+                    name={Array []}
+                    shouldUpdate={[Function]}
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": undefined,
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "prefixName": Array [
+                            "menu",
+                          ],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_"
+                      name={Array []}
+                      shouldUpdate={[Function]}
+                      trigger="onChange"
+                      valuePropName="value"
+                    >
+                      <div>
+                        <Button
+                          block={false}
+                          ghost={false}
+                          htmlType="button"
+                          loading={false}
+                          onClick={[Function]}
+                        >
+                          <Wave>
+                            <button
+                              className="ant-btn"
+                              onClick={[Function]}
+                              type="button"
+                            >
+                              <LoadingIcon
+                                existIcon={false}
+                                loading={false}
+                                prefixCls="ant-btn"
+                              >
+                                <CSSMotion
+                                  motionName="ant-btn-loading-icon-motion"
+                                  onAppearActive={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </LoadingIcon>
+                              <ForwardRef(PlusOutlined)
+                                key=".0"
+                              >
+                                <AntdIcon
+                                  icon={
+                                    Object {
+                                      "icon": Object {
+                                        "attrs": Object {
+                                          "focusable": "false",
+                                          "viewBox": "64 64 896 896",
+                                        },
+                                        "children": Array [
+                                          Object {
+                                            "attrs": Object {},
+                                            "children": Array [
+                                              Object {
+                                                "attrs": Object {},
+                                                "tag": "style",
+                                              },
+                                            ],
+                                            "tag": "defs",
+                                          },
+                                          Object {
+                                            "attrs": Object {
+                                              "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                            },
+                                            "tag": "path",
+                                          },
+                                          Object {
+                                            "attrs": Object {
+                                              "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                            },
+                                            "tag": "path",
+                                          },
+                                        ],
+                                        "tag": "svg",
+                                      },
+                                      "name": "plus",
+                                      "theme": "outlined",
+                                    }
+                                  }
+                                >
+                                  <span
+                                    aria-label="plus"
+                                    className="anticon anticon-plus"
+                                    role="img"
+                                  >
+                                    <IconReact
+                                      className=""
+                                      icon={
+                                        Object {
+                                          "icon": Object {
+                                            "attrs": Object {
+                                              "focusable": "false",
+                                              "viewBox": "64 64 896 896",
+                                            },
+                                            "children": Array [
+                                              Object {
+                                                "attrs": Object {},
+                                                "children": Array [
+                                                  Object {
+                                                    "attrs": Object {},
+                                                    "tag": "style",
+                                                  },
+                                                ],
+                                                "tag": "defs",
+                                              },
+                                              Object {
+                                                "attrs": Object {
+                                                  "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                                },
+                                                "tag": "path",
+                                              },
+                                              Object {
+                                                "attrs": Object {
+                                                  "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                                },
+                                                "tag": "path",
+                                              },
+                                            ],
+                                            "tag": "svg",
+                                          },
+                                          "name": "plus",
+                                          "theme": "outlined",
+                                        }
+                                      }
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        className=""
+                                        data-icon="plus"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="1em"
+                                        key="svg-plus"
+                                        viewBox="64 64 896 896"
+                                        width="1em"
+                                      >
+                                        <defs
+                                          key="svg-plus-svg-0"
+                                        >
+                                          <style
+                                            key="svg-plus-svg-0-defs-0"
+                                          />
+                                        </defs>
+                                        <path
+                                          d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                                          key="svg-plus-svg-1"
+                                        />
+                                        <path
+                                          d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+                                          key="svg-plus-svg-2"
+                                        />
+                                      </svg>
+                                    </IconReact>
+                                  </span>
+                                </AntdIcon>
+                              </ForwardRef(PlusOutlined)>
+                              <span
+                                key=".1"
+                              >
+                                 Add menu
+                              </span>
+                            </button>
+                          </Wave>
+                        </Button>
+                        <Button
+                          block={false}
+                          disabled={true}
+                          ghost={false}
+                          htmlType="submit"
+                          loading={false}
+                        >
+                          <Wave>
+                            <button
+                              className="ant-btn"
+                              disabled={true}
+                              onClick={[Function]}
+                              type="submit"
+                            >
+                              <LoadingIcon
+                                existIcon={false}
+                                loading={false}
+                                prefixCls="ant-btn"
+                              >
+                                <CSSMotion
+                                  motionName="ant-btn-loading-icon-motion"
+                                  onAppearActive={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </LoadingIcon>
+                              <span
+                                key=".0"
+                              >
+                                Submit
+                              </span>
+                            </button>
+                          </Wave>
+                        </Button>
+                      </div>
+                    </Field>
+                  </WrapperField>
+                </List>
+              </FormList>
+            </form>
+          </ForwardRef(Form)>
+        </SizeContextProvider>
+      </ForwardRef(InternalForm)>
+    </div>
+  </MenuForm>
+</Provider>
+`;
+
+exports[`Menu Create Form component snapshot testing should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <MenuForm>
+    <div>
+      <ForwardRef(InternalForm)
+        form={
+          Object {
+            "__INTERNAL__": Object {
+              "itemRef": [Function],
+              "name": undefined,
+            },
+            "getFieldError": [Function],
+            "getFieldInstance": [Function],
+            "getFieldValue": [Function],
+            "getFieldsError": [Function],
+            "getFieldsValue": [Function],
+            "getInternalHooks": [Function],
+            "isFieldTouched": [Function],
+            "isFieldValidating": [Function],
+            "isFieldsTouched": [Function],
+            "isFieldsValidating": [Function],
+            "resetFields": [Function],
+            "scrollToField": [Function],
+            "setFields": [Function],
+            "setFieldsValue": [Function],
+            "submit": [Function],
+            "validateFields": [Function],
+          }
+        }
+        initialValues={Object {}}
+        onFinish={[Function]}
+        onValuesChange={[Function]}
+      >
+        <SizeContextProvider>
+          <ForwardRef(Form)
+            className="ant-form ant-form-horizontal"
+            form={
+              Object {
+                "__INTERNAL__": Object {
+                  "itemRef": [Function],
+                  "name": undefined,
+                },
+                "getFieldError": [Function],
+                "getFieldInstance": [Function],
+                "getFieldValue": [Function],
+                "getFieldsError": [Function],
+                "getFieldsValue": [Function],
+                "getInternalHooks": [Function],
+                "isFieldTouched": [Function],
+                "isFieldValidating": [Function],
+                "isFieldsTouched": [Function],
+                "isFieldsValidating": [Function],
+                "resetFields": [Function],
+                "scrollToField": [Function],
+                "setFields": [Function],
+                "setFieldsValue": [Function],
+                "submit": [Function],
+                "validateFields": [Function],
+              }
+            }
+            initialValues={Object {}}
+            onFinish={[Function]}
+            onFinishFailed={[Function]}
+            onValuesChange={[Function]}
+          >
+            <form
+              className="ant-form ant-form-horizontal"
+              onSubmit={[Function]}
+            >
+              <FormItem
+                label="Name"
+                name="name"
+                rules={
+                  Array [
+                    Object {
+                      "message": "Please input the name!",
+                      "required": true,
+                    },
+                  ]
+                }
+              >
+                <WrapperField
+                  label="Name"
+                  messageVariables={
+                    Object {
+                      "label": "Name",
+                    }
+                  }
+                  name="name"
+                  onReset={[Function]}
+                  rules={
+                    Array [
+                      Object {
+                        "message": "Please input the name!",
+                        "required": true,
+                      },
+                    ]
+                  }
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": undefined,
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_name"
+                    label="Name"
+                    messageVariables={
+                      Object {
+                        "label": "Name",
+                      }
+                    }
+                    name={
+                      Array [
+                        "name",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please input the name!",
+                          "required": true,
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="name"
+                          label="Name"
+                          name="name"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please input the name!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                          >
+                            <div
+                              className="ant-col ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="name"
+                                title="Name"
+                              >
+                                Name
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Name"
+                          name={
+                            Array [
+                              "name",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please input the name!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                          >
+                            <div
+                              className="ant-col ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                  >
+                                    <Input
+                                      id="name"
+                                      onChange={[Function]}
+                                      placeholder="Enter name"
+                                      type="text"
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <input
+                                            className="ant-input"
+                                            id="name"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            placeholder="Enter name"
+                                            type="text"
+                                          />
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="name"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        placeholder="Enter name"
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value=""
+                                      >
+                                        <input
+                                          className="ant-input"
+                                          id="name"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          onKeyDown={[Function]}
+                                          placeholder="Enter name"
+                                          type="text"
+                                          value=""
+                                        />
+                                      </ClearableLabeledInput>
+                                    </Input>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormList
+                name="menu"
+              >
+                <List
+                  name="menu"
+                >
+                  <WrapperField
+                    name={Array []}
+                    shouldUpdate={[Function]}
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": undefined,
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "prefixName": Array [
+                            "menu",
+                          ],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_"
+                      name={Array []}
+                      shouldUpdate={[Function]}
+                      trigger="onChange"
+                      valuePropName="value"
+                    >
+                      <div>
+                        <Button
+                          block={false}
+                          ghost={false}
+                          htmlType="button"
+                          loading={false}
+                          onClick={[Function]}
+                        >
+                          <Wave>
+                            <button
+                              className="ant-btn"
+                              onClick={[Function]}
+                              type="button"
+                            >
+                              <LoadingIcon
+                                existIcon={false}
+                                loading={false}
+                                prefixCls="ant-btn"
+                              >
+                                <CSSMotion
+                                  motionName="ant-btn-loading-icon-motion"
+                                  onAppearActive={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </LoadingIcon>
+                              <ForwardRef(PlusOutlined)
+                                key=".0"
+                              >
+                                <AntdIcon
+                                  icon={
+                                    Object {
+                                      "icon": Object {
+                                        "attrs": Object {
+                                          "focusable": "false",
+                                          "viewBox": "64 64 896 896",
+                                        },
+                                        "children": Array [
+                                          Object {
+                                            "attrs": Object {},
+                                            "children": Array [
+                                              Object {
+                                                "attrs": Object {},
+                                                "tag": "style",
+                                              },
+                                            ],
+                                            "tag": "defs",
+                                          },
+                                          Object {
+                                            "attrs": Object {
+                                              "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                            },
+                                            "tag": "path",
+                                          },
+                                          Object {
+                                            "attrs": Object {
+                                              "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                            },
+                                            "tag": "path",
+                                          },
+                                        ],
+                                        "tag": "svg",
+                                      },
+                                      "name": "plus",
+                                      "theme": "outlined",
+                                    }
+                                  }
+                                >
+                                  <span
+                                    aria-label="plus"
+                                    className="anticon anticon-plus"
+                                    role="img"
+                                  >
+                                    <IconReact
+                                      className=""
+                                      icon={
+                                        Object {
+                                          "icon": Object {
+                                            "attrs": Object {
+                                              "focusable": "false",
+                                              "viewBox": "64 64 896 896",
+                                            },
+                                            "children": Array [
+                                              Object {
+                                                "attrs": Object {},
+                                                "children": Array [
+                                                  Object {
+                                                    "attrs": Object {},
+                                                    "tag": "style",
+                                                  },
+                                                ],
+                                                "tag": "defs",
+                                              },
+                                              Object {
+                                                "attrs": Object {
+                                                  "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                                },
+                                                "tag": "path",
+                                              },
+                                              Object {
+                                                "attrs": Object {
+                                                  "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                                },
+                                                "tag": "path",
+                                              },
+                                            ],
+                                            "tag": "svg",
+                                          },
+                                          "name": "plus",
+                                          "theme": "outlined",
+                                        }
+                                      }
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        className=""
+                                        data-icon="plus"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="1em"
+                                        key="svg-plus"
+                                        viewBox="64 64 896 896"
+                                        width="1em"
+                                      >
+                                        <defs
+                                          key="svg-plus-svg-0"
+                                        >
+                                          <style
+                                            key="svg-plus-svg-0-defs-0"
+                                          />
+                                        </defs>
+                                        <path
+                                          d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                                          key="svg-plus-svg-1"
+                                        />
+                                        <path
+                                          d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+                                          key="svg-plus-svg-2"
+                                        />
+                                      </svg>
+                                    </IconReact>
+                                  </span>
+                                </AntdIcon>
+                              </ForwardRef(PlusOutlined)>
+                              <span
+                                key=".1"
+                              >
+                                 Add menu
+                              </span>
+                            </button>
+                          </Wave>
+                        </Button>
+                        <Button
+                          block={false}
+                          disabled={true}
+                          ghost={false}
+                          htmlType="submit"
+                          loading={false}
+                        >
+                          <Wave>
+                            <button
+                              className="ant-btn"
+                              disabled={true}
+                              onClick={[Function]}
+                              type="submit"
+                            >
+                              <LoadingIcon
+                                existIcon={false}
+                                loading={false}
+                                prefixCls="ant-btn"
+                              >
+                                <CSSMotion
+                                  motionName="ant-btn-loading-icon-motion"
+                                  onAppearActive={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </LoadingIcon>
+                              <span
+                                key=".0"
+                              >
+                                Submit
+                              </span>
+                            </button>
+                          </Wave>
+                        </Button>
+                      </div>
+                    </Field>
+                  </WrapperField>
+                </List>
+              </FormList>
+            </form>
+          </ForwardRef(Form)>
+        </SizeContextProvider>
+      </ForwardRef(InternalForm)>
+    </div>
+  </MenuForm>
+</Provider>
+`;

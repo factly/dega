@@ -29,16 +29,16 @@ let state = {
   media: {
     req: [
       {
-        data: [1],
+        data: [1, 2],
         query: {
           page: 1,
-          limit: 5,
+          limit: 20,
         },
-        total: 1,
+        total: 2,
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         created_at: '2020-09-23T09:21:29.245873Z',
         updated_at: '2020-09-23T09:21:29.245873Z',
@@ -52,6 +52,23 @@ let state = {
         alt_text: 'png',
         file_size: 3974,
         url: 'http://storage.googleapis.com/sample.png',
+        dimensions: '100x100',
+        space_id: 1,
+      },
+      2: {
+        id: 2,
+        created_at: '2020-09-23T09:21:29.245873Z',
+        updated_at: '2020-09-23T09:21:29.245873Z',
+        deleted_at: null,
+        name: 'uppy/english/2020/8/1600852886756_pnggrad16rgb.png',
+        slug: 'uppy-english-2020-8-1600852886756-pnggrad16rgb-png',
+        type: 'image/png',
+        title: 'png',
+        description: 'png',
+        caption: 'png',
+        alt_text: 'png',
+        file_size: 3974,
+        url: { proxy: 'http://storage.googleapis.com/sample.png' },
         dimensions: '100x100',
         space_id: 1,
       },
@@ -104,7 +121,7 @@ describe('Media List component', () => {
       expect(tree).toMatchSnapshot();
 
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -153,7 +170,7 @@ describe('Media List component', () => {
         .simulate('click');
       expect(actions.deleteMedium).toHaveBeenCalled();
       expect(actions.deleteMedium).toHaveBeenCalledWith(1);
-      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 5 });
+      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit medium', () => {
       store = mockStore(state);
@@ -216,7 +233,7 @@ describe('Media List component', () => {
           .props()
           .onChange({ target: { value: 'asc' } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
 

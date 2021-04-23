@@ -24,17 +24,18 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  //if (loading) return <Skeleton />;
 
   if (!category) {
     return <RecordNotFound />;
   }
 
   const onUpdate = (values) => {
-    dispatch(updateCategory({ ...category, ...values })).then(() => history.push('/categories'));
+    dispatch(updateCategory({ ...category, ...values })).then(() =>
+      history.push(`/categories/${id}/edit`),
+    );
   };
-
-  return <CategoryEditForm data={category} onCreate={onUpdate} />;
+  if (category) return <CategoryEditForm data={category} onCreate={onUpdate} />;
 }
 
 export default EditCategory;

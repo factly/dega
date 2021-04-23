@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Media upload component snapshot testing should render the component 1`] = `
+<UppyUploader
+  onUpload={[Function]}
+/>
+`;
