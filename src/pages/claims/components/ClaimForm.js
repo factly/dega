@@ -40,10 +40,16 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     onCreate(values);
   };
 
-  const onTitleChange = (string) => {
-    form.setFieldsValue({
-      slug: maker(string),
-    });
+  const onClaimChange = (string) => {
+    if (string.length > 150) {
+      form.setFieldsValue({
+        slug: maker(string.substring(0, 150)),
+      });
+    } else {
+      form.setFieldsValue({
+        slug: maker(string),
+      });
+    }
   };
 
   if (data && data.id) {
@@ -87,16 +93,16 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             rules={[
               {
                 required: true,
-                message: 'Please input the title!',
+                message: 'Please input the Claim!',
               },
-              { min: 3, message: 'Title must be minimum 3 characters.' },
-              { max: 5000, message: 'Title must be maximum 150 characters.' },
+              { min: 3, message: 'Claim must be minimum 3 characters.' },
+              { max: 5000, message: 'Claim must be maximum 5000 characters.' },
             ]}
           >
             <Input.TextArea
               rows={6}
               placeholder="Enter claim...."
-              onChange={(e) => onTitleChange(e.target.value)}
+              onChange={(e) => onClaimChange(e.target.value)}
             />
           </Form.Item>
           <Form.Item
@@ -111,6 +117,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 pattern: checker,
                 message: 'Please enter valid slug!',
               },
+              { max: 150, message: 'Claim must be maximum 150 characters.' },
             ]}
           >
             <Input />
