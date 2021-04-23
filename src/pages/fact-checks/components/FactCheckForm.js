@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Select, Drawer } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Drawer, DatePicker } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -7,11 +7,13 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
-import { addClaim, getClaims } from '../../../actions/claims';
+import { addClaim, getClaims, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
+import moment from 'moment';
+import ClaimList from './ClaimList';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -22,6 +24,12 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const [claimCreatedFlag, setClaimCreatedFlag] = React.useState(false);
   const [newClaim, setNewClaim] = React.useState(null);
+  const [valueChange, setValueChange] = useState(false);
+  const [claimID, setClaimID] = useState(0);
+  const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
+    details,
+    loading,
+  }));
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -60,6 +68,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   }, [newClaim]);
 
   const { Option } = Select;
+  useEffect(() => {}, [details, loading]);
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {
@@ -73,6 +82,10 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   const [shouldBlockNavigation, setShouldBlockNavigation] = useState(false);
 
+  const getCurrentDate = () => {
+    return moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
+  };
+
   const onSave = (values) => {
     setShouldBlockNavigation(false);
     values.category_ids = values.categories || [];
@@ -81,6 +94,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims || [];
     values.status = status;
+    values.status === 'publish'
+      ? (values.published_date = values.published_date
+          ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+          : getCurrentDate())
+      : (values.published_date = null);
     onCreate(values);
   };
 
@@ -91,24 +109,38 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       });
     }
   };
+
+  if (data && data.id) {
+    data.published_date = data.published_date ? moment(data.published_date) : null;
+  }
+
   const showModal = () => {
     setVisible(true);
   };
 
   const handleOk = () => {
     setVisible(false);
+    setClaimID(0);
   };
 
   const handleCancel = () => {
     setVisible(false);
+    setClaimID(0);
   };
 
   const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then(
-      () => setVisible(false),
-      setClaimCreatedFlag(true),
-      setNewClaim(values),
-    );
+    dispatch(addClaim(values)).then(() => {
+      setVisible(false);
+      setClaimCreatedFlag(true);
+      setNewClaim(values);
+      setClaimID(0);
+    });
+  };
+  const onClaimEdit = (values) => {
+    dispatch(updateClaim({ ...details[claimID], ...values })).then(() => {
+      setVisible(false);
+      setClaimID(0);
+    });
   };
 
   const createTemplate = () => {
@@ -135,15 +167,24 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         when={shouldBlockNavigation}
         message="You have unsaved changes, are you sure you want to leave?"
       />
-      <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <ClaimCreateForm onCreate={onClaimCreate} width={560} />
-      </Modal>
+      {visible && (
+        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel} maskClosable={false}>
+          <ClaimCreateForm
+            data={details[claimID]}
+            onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
+            width={560}
+          />
+        </Modal>
+      )}
       <Form
         form={form}
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
-        onValuesChange={() => setShouldBlockNavigation(true)}
+        onValuesChange={() => {
+          setShouldBlockNavigation(true);
+          setValueChange(true);
+        }}
         layout="vertical"
       >
         <Space direction="vertical">
@@ -157,7 +198,12 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
-                <Button type="secondary" htmlType="submit" onClick={() => setStatus('draft')}>
+                <Button
+                  disabled={!valueChange}
+                  type="secondary"
+                  htmlType="submit"
+                  onClick={() => setStatus('draft')}
+                >
                   Save as draft
                 </Button>
               </Form.Item>
@@ -192,9 +238,21 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   bordered={false}
                   placeholder="Add title for the fact-check"
                   onChange={(e) => onTitleChange(e.target.value)}
+                  autoSize={{ minRows: 2, maxRows: 6 }}
                   style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
+
+              {form.getFieldValue('claims') &&
+              form.getFieldValue('claims').length > 0 &&
+              !loading ? (
+                <ClaimList
+                  ids={form.getFieldValue('claims')}
+                  setClaimID={setClaimID}
+                  showModal={showModal}
+                  details={details}
+                />
+              ) : null}
 
               <Form.Item name="description" className="post-description">
                 <Editor />
@@ -213,7 +271,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   <MediaSelector />
                 </Form.Item>
                 <Form.Item name="claims" label="Claims" key={!visible}>
-                  <Selector mode="multiple" display={'title'} action="Claims" />
+                  <Selector mode="multiple" display={'claim'} action="Claims" />
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" onClick={showModal}>
@@ -245,6 +303,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   ]}
                 >
                   <Input />
+                </Form.Item>
+                <Form.Item name="published_date" label="Published Date">
+                  <DatePicker />
                 </Form.Item>
                 <Form.Item name="categories" label="Categories">
                   <Selector mode="multiple" action="Categories" createEntity="Category" />

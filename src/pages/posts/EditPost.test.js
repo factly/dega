@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from 'react-dom/test-utils';
@@ -14,6 +15,7 @@ import PostEditForm from './components/PostForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -33,7 +35,11 @@ jest.mock('../../actions/posts', () => ({
   publishPost: jest.fn(),
   addTemplate: jest.fn(),
 }));
-
+const formats = {
+  article: { id: 1, name: 'article', slug: 'article' },
+  factcheck: { id: 2, name: 'factcheck', slug: 'fact-check' },
+  loading: false,
+};
 let state = {
   posts: {
     req: [],
@@ -89,6 +95,9 @@ let state = {
     loading: false,
     selected: 11,
   },
+  sidebar: {
+    collapsed: false,
+  },
 };
 
 describe('Posts List component', () => {
@@ -105,7 +114,7 @@ describe('Posts List component', () => {
       act(() => {
         tree = shallow(
           <Provider store={store}>
-            <EditPost />
+            <EditPost formats={formats} />
           </Provider>,
         );
       });
@@ -117,13 +126,26 @@ describe('Posts List component', () => {
         posts: {
           req: [],
           details: {},
+          loading: true,
+        },
+        spaces: {
+          orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
+          details: {
+            11: { id: 11, name: 'Space 11' },
+          },
           loading: false,
+          selected: 11,
+        },
+        sidebar: {
+          collapsed: false,
         },
       });
       act(() => {
-        tree = shallow(
+        tree = mount(
           <Provider store={store}>
-            <EditPost />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -157,7 +179,9 @@ describe('Posts List component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditPost />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -170,7 +194,9 @@ describe('Posts List component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditPost />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
@@ -184,9 +210,10 @@ describe('Posts List component', () => {
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 1,
+          published_date: null,
           status: 'draft',
         });
-        expect(push).toHaveBeenCalledWith('/posts');
+        expect(push).toHaveBeenCalledWith('/posts/1/edit');
         done();
       }, 0);
     });
@@ -197,46 +224,56 @@ describe('Posts List component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditPost />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
 
       wrapper.find(PostEditForm).props().onCreate({ status: 'publish' });
       setTimeout(() => {
-        expect(actions.publishPost).toHaveBeenCalledWith({
+        expect(actions.updatePost).toHaveBeenCalledWith({
           id: 1,
           title: 'Post-1',
           slug: 'post-1',
           tag_line: 'tag_line',
+          published_date: null,
           medium_id: 1,
           format_id: 1,
           status: 'publish',
         });
-        expect(push).toHaveBeenCalledWith('/posts');
+        expect(push).toHaveBeenCalledWith('/posts/1/edit');
         done();
       }, 0);
     });
-    it('should call addTemplate', (done) => {
-      const push = jest.fn();
-      useHistory.mockReturnValueOnce({ push });
-      actions.addTemplate.mockReset();
+    it('should display RecordNotFound if post not found', () => {
+      state.posts = {
+        req: [],
+        details: {
+          2: {
+            id: 2,
+            title: 'Post-2',
+            slug: 'post-2',
+            tag_line: 'tag_line',
+            medium_id: 1,
+            format_id: 1,
+          },
+        },
+        loading: false,
+      };
+      store = mockStore(state);
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EditPost />
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
           </Provider>,
         );
       });
-
-      wrapper.find(PostEditForm).props().onCreate({ status: 'template' });
-      setTimeout(() => {
-        expect(actions.addTemplate).toHaveBeenCalledWith({
-          post_id: 1,
-        });
-        expect(push).toHaveBeenCalledWith('/posts');
-        done();
-      }, 0);
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
+      expect(wrapper.find(PostEditForm).length).toBe(0);
     });
   });
 });

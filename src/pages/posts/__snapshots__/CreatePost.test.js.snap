@@ -32,6 +32,22 @@ exports[`Post create component snapshot testing should render the component 1`] 
     }
   }
 >
-  <CreatePost />
+  <CreatePost
+    formats={
+      Object {
+        "article": Object {
+          "id": 1,
+          "name": "article",
+          "slug": "article",
+        },
+        "factcheck": Object {
+          "id": 2,
+          "name": "factcheck",
+          "slug": "fact-check",
+        },
+        "loading": false,
+      }
+    }
+  />
 </ContextProvider>
 `;

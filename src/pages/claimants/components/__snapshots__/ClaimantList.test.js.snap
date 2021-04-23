@@ -93,7 +93,7 @@ exports[`Claimants List component snapshot testing should match component when l
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -136,7 +136,7 @@ exports[`Claimants List component snapshot testing should match component when l
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -186,6 +186,31 @@ exports[`Claimants List component snapshot testing should match component when l
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_q"
                               label="Query"
                               messageVariables={
@@ -265,6 +290,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "25%",
@@ -337,16 +363,21 @@ exports[`Claimants List component snapshot testing should match component when l
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -382,6 +413,31 @@ exports[`Claimants List component snapshot testing should match component when l
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_sort"
                               label="sort"
                               messageVariables={
@@ -461,6 +517,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "15%",
@@ -486,15 +543,11 @@ exports[`Claimants List component snapshot testing should match component when l
                                             <Component
                                               update={2}
                                             >
-                                              <Select
-                                                bordered={true}
-                                                choiceTransitionName=""
+                                              <ForwardRef(InternalSelect)
                                                 id="filters_sort"
                                                 onChange={[Function]}
-                                                transitionName="slide-up"
                                               >
                                                 <Select
-                                                  choiceTransitionName=""
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   dropdownClassName=""
@@ -514,7 +567,6 @@ exports[`Claimants List component snapshot testing should match component when l
                                                   transitionName="slide-up"
                                                 >
                                                   <ForwardRef(Select)
-                                                    choiceTransitionName=""
                                                     className=""
                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                     dropdownClassName=""
@@ -765,7 +817,6 @@ exports[`Claimants List component snapshot testing should match component when l
                                                           <Selector
                                                             accessibilityIndex={0}
                                                             activeValue={null}
-                                                            choiceTransitionName=""
                                                             className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             domRef={
@@ -834,7 +885,6 @@ exports[`Claimants List component snapshot testing should match component when l
                                                               <SingleSelector
                                                                 accessibilityIndex={0}
                                                                 activeValue={null}
-                                                                choiceTransitionName=""
                                                                 className=""
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 domRef={
@@ -1080,20 +1130,25 @@ exports[`Claimants List component snapshot testing should match component when l
                                                     </div>
                                                   </ForwardRef(Select)>
                                                 </Select>
-                                              </Select>
+                                              </ForwardRef(InternalSelect)>
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -1119,6 +1174,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                 errors={Array []}
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 validateStatus=""
                               >
                                 <Col
@@ -1176,16 +1232,21 @@ exports[`Claimants List component snapshot testing should match component when l
                                         </Button>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -1278,7 +1339,7 @@ exports[`Claimants List component snapshot testing should match component when l
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -1626,7 +1687,7 @@ exports[`Claimants List component snapshot testing should match component when l
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -1934,7 +1995,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -2876,7 +2937,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -2906,7 +2967,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -3174,7 +3235,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -3459,7 +3520,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -3907,7 +3968,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -3937,7 +3998,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -4205,7 +4266,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -4490,7 +4551,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -4583,7 +4644,7 @@ exports[`Claimants List component snapshot testing should match component when l
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -4671,7 +4732,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -4682,7 +4743,15 @@ exports[`Claimants List component snapshot testing should match component when l
                                     <ForwardRef(LeftOutlined) />
                                   </button>
                                 }
-                                selectComponentClass={[Function]}
+                                selectComponentClass={
+                                  Object {
+                                    "$$typeof": Symbol(react.forward_ref),
+                                    "OptGroup": [Function],
+                                    "Option": [Function],
+                                    "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                    "render": [Function],
+                                  }
+                                }
                                 selectPrefixCls="ant-select"
                                 showLessItems={false}
                                 showPrevNextJumpers={true}
@@ -4931,7 +5000,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -4942,7 +5011,15 @@ exports[`Claimants List component snapshot testing should match component when l
                                     }
                                     quickGo={null}
                                     rootPrefixCls="ant-pagination"
-                                    selectComponentClass={[Function]}
+                                    selectComponentClass={
+                                      Object {
+                                        "$$typeof": Symbol(react.forward_ref),
+                                        "OptGroup": [Function],
+                                        "Option": [Function],
+                                        "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                        "render": [Function],
+                                      }
+                                    }
                                     selectPrefixCls="ant-select"
                                   />
                                 </ul>
@@ -5057,7 +5134,7 @@ exports[`Claimants List component snapshot testing should match component with c
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -5100,7 +5177,7 @@ exports[`Claimants List component snapshot testing should match component with c
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -5150,6 +5227,31 @@ exports[`Claimants List component snapshot testing should match component with c
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_q"
                               label="Query"
                               messageVariables={
@@ -5229,6 +5331,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "25%",
@@ -5301,16 +5404,21 @@ exports[`Claimants List component snapshot testing should match component with c
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -5346,6 +5454,31 @@ exports[`Claimants List component snapshot testing should match component with c
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_sort"
                               label="sort"
                               messageVariables={
@@ -5425,6 +5558,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "15%",
@@ -5450,15 +5584,11 @@ exports[`Claimants List component snapshot testing should match component with c
                                             <Component
                                               update={2}
                                             >
-                                              <Select
-                                                bordered={true}
-                                                choiceTransitionName=""
+                                              <ForwardRef(InternalSelect)
                                                 id="filters_sort"
                                                 onChange={[Function]}
-                                                transitionName="slide-up"
                                               >
                                                 <Select
-                                                  choiceTransitionName=""
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   dropdownClassName=""
@@ -5478,7 +5608,6 @@ exports[`Claimants List component snapshot testing should match component with c
                                                   transitionName="slide-up"
                                                 >
                                                   <ForwardRef(Select)
-                                                    choiceTransitionName=""
                                                     className=""
                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                     dropdownClassName=""
@@ -5729,7 +5858,6 @@ exports[`Claimants List component snapshot testing should match component with c
                                                           <Selector
                                                             accessibilityIndex={0}
                                                             activeValue={null}
-                                                            choiceTransitionName=""
                                                             className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             domRef={
@@ -5798,7 +5926,6 @@ exports[`Claimants List component snapshot testing should match component with c
                                                               <SingleSelector
                                                                 accessibilityIndex={0}
                                                                 activeValue={null}
-                                                                choiceTransitionName=""
                                                                 className=""
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 domRef={
@@ -6044,20 +6171,25 @@ exports[`Claimants List component snapshot testing should match component with c
                                                     </div>
                                                   </ForwardRef(Select)>
                                                 </Select>
-                                              </Select>
+                                              </ForwardRef(InternalSelect)>
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -6083,6 +6215,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                 errors={Array []}
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 validateStatus=""
                               >
                                 <Col
@@ -6140,16 +6273,21 @@ exports[`Claimants List component snapshot testing should match component with c
                                         </Button>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -6242,7 +6380,7 @@ exports[`Claimants List component snapshot testing should match component with c
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -6566,7 +6704,7 @@ exports[`Claimants List component snapshot testing should match component with c
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -6874,7 +7012,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -7816,7 +7954,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -7846,7 +7984,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -8114,7 +8252,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -8399,7 +8537,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -8847,7 +8985,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -8877,7 +9015,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -9145,7 +9283,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -9430,7 +9568,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -9523,7 +9661,7 @@ exports[`Claimants List component snapshot testing should match component with c
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -9611,7 +9749,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -9622,7 +9760,15 @@ exports[`Claimants List component snapshot testing should match component with c
                                     <ForwardRef(LeftOutlined) />
                                   </button>
                                 }
-                                selectComponentClass={[Function]}
+                                selectComponentClass={
+                                  Object {
+                                    "$$typeof": Symbol(react.forward_ref),
+                                    "OptGroup": [Function],
+                                    "Option": [Function],
+                                    "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                    "render": [Function],
+                                  }
+                                }
                                 selectPrefixCls="ant-select"
                                 showLessItems={false}
                                 showPrevNextJumpers={true}
@@ -9871,7 +10017,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -9882,7 +10028,15 @@ exports[`Claimants List component snapshot testing should match component with c
                                     }
                                     quickGo={null}
                                     rootPrefixCls="ant-pagination"
-                                    selectComponentClass={[Function]}
+                                    selectComponentClass={
+                                      Object {
+                                        "$$typeof": Symbol(react.forward_ref),
+                                        "OptGroup": [Function],
+                                        "Option": [Function],
+                                        "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                        "render": [Function],
+                                      }
+                                    }
                                     selectPrefixCls="ant-select"
                                   />
                                 </ul>
@@ -9997,7 +10151,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -10040,7 +10194,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -10090,6 +10244,31 @@ exports[`Claimants List component snapshot testing should render the component 1
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_q"
                               label="Query"
                               messageVariables={
@@ -10169,6 +10348,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "25%",
@@ -10241,16 +10421,21 @@ exports[`Claimants List component snapshot testing should render the component 1
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -10286,6 +10471,31 @@ exports[`Claimants List component snapshot testing should render the component 1
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_sort"
                               label="sort"
                               messageVariables={
@@ -10365,6 +10575,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "15%",
@@ -10390,15 +10601,11 @@ exports[`Claimants List component snapshot testing should render the component 1
                                             <Component
                                               update={2}
                                             >
-                                              <Select
-                                                bordered={true}
-                                                choiceTransitionName=""
+                                              <ForwardRef(InternalSelect)
                                                 id="filters_sort"
                                                 onChange={[Function]}
-                                                transitionName="slide-up"
                                               >
                                                 <Select
-                                                  choiceTransitionName=""
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   dropdownClassName=""
@@ -10418,7 +10625,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                   transitionName="slide-up"
                                                 >
                                                   <ForwardRef(Select)
-                                                    choiceTransitionName=""
                                                     className=""
                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                     dropdownClassName=""
@@ -10669,7 +10875,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                           <Selector
                                                             accessibilityIndex={0}
                                                             activeValue={null}
-                                                            choiceTransitionName=""
                                                             className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             domRef={
@@ -10738,7 +10943,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                               <SingleSelector
                                                                 accessibilityIndex={0}
                                                                 activeValue={null}
-                                                                choiceTransitionName=""
                                                                 className=""
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 domRef={
@@ -10984,20 +11188,25 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                     </div>
                                                   </ForwardRef(Select)>
                                                 </Select>
-                                              </Select>
+                                              </ForwardRef(InternalSelect)>
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -11023,6 +11232,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                 errors={Array []}
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 validateStatus=""
                               >
                                 <Col
@@ -11080,16 +11290,21 @@ exports[`Claimants List component snapshot testing should render the component 1
                                         </Button>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -11182,7 +11397,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -11506,7 +11721,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -11814,7 +12029,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -12756,7 +12971,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -12786,7 +13001,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -13054,7 +13269,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -13339,7 +13554,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -13787,7 +14002,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -13817,7 +14032,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -14085,7 +14300,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -14370,7 +14585,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -14463,7 +14678,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -14551,7 +14766,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -14562,7 +14777,15 @@ exports[`Claimants List component snapshot testing should render the component 1
                                     <ForwardRef(LeftOutlined) />
                                   </button>
                                 }
-                                selectComponentClass={[Function]}
+                                selectComponentClass={
+                                  Object {
+                                    "$$typeof": Symbol(react.forward_ref),
+                                    "OptGroup": [Function],
+                                    "Option": [Function],
+                                    "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                    "render": [Function],
+                                  }
+                                }
                                 selectPrefixCls="ant-select"
                                 showLessItems={false}
                                 showPrevNextJumpers={true}
@@ -14811,7 +15034,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -14822,7 +15045,15 @@ exports[`Claimants List component snapshot testing should render the component 1
                                     }
                                     quickGo={null}
                                     rootPrefixCls="ant-pagination"
-                                    selectComponentClass={[Function]}
+                                    selectComponentClass={
+                                      Object {
+                                        "$$typeof": Symbol(react.forward_ref),
+                                        "OptGroup": [Function],
+                                        "Option": [Function],
+                                        "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                        "render": [Function],
+                                      }
+                                    }
                                     selectPrefixCls="ant-select"
                                   />
                                 </ul>

@@ -19,7 +19,6 @@ export default function mediaReducer(state = initialState, action = {}) {
       return {
         ...state,
         req: [],
-        details: {},
         loading: true,
       };
     case SET_MEDIA_LOADING:

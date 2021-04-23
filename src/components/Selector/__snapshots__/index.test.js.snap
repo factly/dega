@@ -17,38 +17,36 @@ exports[`Categories List component Snapshot testing should render the component 
     action="Categories"
     mode="multiple"
   >
-    <Select
+    <ForwardRef(InternalSelect)
+      allowClear={true}
       bordered={true}
-      choiceTransitionName=""
       defaultValue={Array []}
       filterOption={[Function]}
+      getPopupContainer={[Function]}
       listHeight={128}
       loading={false}
       mode="multiple"
+      notFoundContent={null}
       onChange={[Function]}
       onPopupScroll={[Function]}
       onSearch={[Function]}
       placeholder="Select categories"
-      transitionName="slide-up"
     >
       <Select
-        choiceTransitionName=""
+        allowClear={true}
         className=""
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         defaultValue={Array []}
         dropdownClassName=""
         filterOption={[Function]}
+        getPopupContainer={[Function]}
         inputIcon={[Function]}
         listHeight={128}
         listItemHeight={24}
         loading={false}
         menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
         mode="multiple"
-        notFoundContent={
-          <Context.Consumer>
-            [Function]
-          </Context.Consumer>
-        }
+        notFoundContent={null}
         onChange={[Function]}
         onPopupScroll={[Function]}
         onSearch={[Function]}
@@ -58,23 +56,20 @@ exports[`Categories List component Snapshot testing should render the component 
         transitionName="slide-up"
       >
         <ForwardRef(Select)
-          choiceTransitionName=""
+          allowClear={true}
           className=""
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           defaultValue={Array []}
           dropdownClassName=""
           filterOption={[Function]}
+          getPopupContainer={[Function]}
           inputIcon={[Function]}
           listHeight={128}
           listItemHeight={24}
           loading={false}
           menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
           mode="multiple"
-          notFoundContent={
-            <Context.Consumer>
-              [Function]
-            </Context.Consumer>
-          }
+          notFoundContent={null}
           onChange={[Function]}
           onPopupScroll={[Function]}
           onSearch={[Function]}
@@ -84,7 +79,7 @@ exports[`Categories List component Snapshot testing should render the component 
           transitionName="slide-up"
         >
           <div
-            className="ant-select ant-select-multiple ant-select-show-search"
+            className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
             onBlur={[Function]}
             onFocus={[Function]}
             onKeyDown={[Function]}
@@ -94,48 +89,25 @@ exports[`Categories List component Snapshot testing should render the component 
             <SelectTrigger
               containerWidth={null}
               dropdownClassName=""
-              empty={false}
+              empty={true}
+              getPopupContainer={[Function]}
               getTriggerDOMNode={[Function]}
               popupElement={
                 <ForwardRef(OptionList)
                   childrenAsData={true}
                   defaultActiveFirstOption={true}
-                  flattenOptions={
-                    Array [
-                      Object {
-                        "data": Object {
-                          "children": "category-1",
-                          "key": "categories1",
-                          "value": 1,
-                        },
-                        "groupOption": false,
-                        "key": "categories1",
-                      },
-                    ]
-                  }
+                  flattenOptions={Array []}
                   height={128}
                   itemHeight={24}
                   menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                   multiple={true}
-                  notFoundContent={
-                    <Context.Consumer>
-                      [Function]
-                    </Context.Consumer>
-                  }
+                  notFoundContent={null}
                   onActiveValue={[Function]}
                   onMouseEnter={[Function]}
                   onScroll={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
-                  options={
-                    Array [
-                      Object {
-                        "children": "category-1",
-                        "key": "categories1",
-                        "value": 1,
-                      },
-                    ]
-                  }
+                  options={Array []}
                   prefixCls="ant-select"
                   searchValue=""
                   values={Set {}}
@@ -144,6 +116,7 @@ exports[`Categories List component Snapshot testing should render the component 
               }
               prefixCls="ant-select"
               transitionName="slide-up"
+              visible={false}
             >
               <Trigger
                 action={Array []}
@@ -215,6 +188,7 @@ exports[`Categories List component Snapshot testing should render the component 
                 focusDelay={0}
                 getDocument={[Function]}
                 getPopupClassNameFromAlign={[Function]}
+                getPopupContainer={[Function]}
                 getTriggerDOMNode={[Function]}
                 hideAction={Array []}
                 mask={false}
@@ -228,42 +202,18 @@ exports[`Categories List component Snapshot testing should render the component 
                     <ForwardRef(OptionList)
                       childrenAsData={true}
                       defaultActiveFirstOption={true}
-                      flattenOptions={
-                        Array [
-                          Object {
-                            "data": Object {
-                              "children": "category-1",
-                              "key": "categories1",
-                              "value": 1,
-                            },
-                            "groupOption": false,
-                            "key": "categories1",
-                          },
-                        ]
-                      }
+                      flattenOptions={Array []}
                       height={128}
                       itemHeight={24}
                       menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                       multiple={true}
-                      notFoundContent={
-                        <Context.Consumer>
-                          [Function]
-                        </Context.Consumer>
-                      }
+                      notFoundContent={null}
                       onActiveValue={[Function]}
                       onMouseEnter={[Function]}
                       onScroll={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
-                      options={
-                        Array [
-                          Object {
-                            "children": "category-1",
-                            "key": "categories1",
-                            "value": 1,
-                          },
-                        ]
-                      }
+                      options={Array []}
                       prefixCls="ant-select"
                       searchValue=""
                       values={Set {}}
@@ -272,7 +222,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   </div>
                 }
                 popupAlign={Object {}}
-                popupClassName=""
+                popupClassName="ant-select-dropdown-empty"
                 popupPlacement="bottomLeft"
                 popupStyle={
                   Object {
@@ -281,13 +231,14 @@ exports[`Categories List component Snapshot testing should render the component 
                   }
                 }
                 popupTransitionName="slide-up"
+                popupVisible={false}
                 prefixCls="ant-select-dropdown"
                 showAction={Array []}
               >
                 <Selector
                   accessibilityIndex={0}
                   activeValue={null}
-                  choiceTransitionName=""
+                  allowClear={true}
                   className=""
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                   defaultValue={Array []}
@@ -334,6 +285,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   }
                   dropdownClassName=""
                   filterOption={[Function]}
+                  getPopupContainer={[Function]}
                   inputElement={null}
                   inputIcon={[Function]}
                   key="trigger"
@@ -343,11 +295,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                   mode="multiple"
                   multiple={true}
-                  notFoundContent={
-                    <Context.Consumer>
-                      [Function]
-                    </Context.Consumer>
-                  }
+                  notFoundContent={null}
                   onChange={[Function]}
                   onPopupScroll={[Function]}
                   onSearch={[Function]}
@@ -371,7 +319,7 @@ exports[`Categories List component Snapshot testing should render the component 
                     <SelectSelector
                       accessibilityIndex={0}
                       activeValue={null}
-                      choiceTransitionName=""
+                      allowClear={true}
                       className=""
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       defaultValue={Array []}
@@ -418,6 +366,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       }
                       dropdownClassName=""
                       filterOption={[Function]}
+                      getPopupContainer={[Function]}
                       inputElement={null}
                       inputIcon={[Function]}
                       inputRef={
@@ -446,11 +395,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                       mode="multiple"
                       multiple={true}
-                      notFoundContent={
-                        <Context.Consumer>
-                          [Function]
-                        </Context.Consumer>
-                      }
+                      notFoundContent={null}
                       onChange={[Function]}
                       onInputChange={[Function]}
                       onInputCompositionEnd={[Function]}
@@ -476,7 +421,6 @@ exports[`Categories List component Snapshot testing should render the component 
                         component={false}
                         keys={Array []}
                         motionAppear={false}
-                        motionName=""
                       />
                       <span
                         className="ant-select-selection-search"
@@ -545,7 +489,7 @@ exports[`Categories List component Snapshot testing should render the component 
           </div>
         </ForwardRef(Select)>
       </Select>
-    </Select>
+    </ForwardRef(InternalSelect)>
   </Selector>
 </Provider>
 `;
@@ -567,38 +511,36 @@ exports[`Categories List component Snapshot testing should render the component 
     action="Categories"
     mode="multiple"
   >
-    <Select
+    <ForwardRef(InternalSelect)
+      allowClear={true}
       bordered={true}
-      choiceTransitionName=""
       defaultValue={Array []}
       filterOption={[Function]}
+      getPopupContainer={[Function]}
       listHeight={128}
       loading={false}
       mode="multiple"
+      notFoundContent={null}
       onChange={[Function]}
       onPopupScroll={[Function]}
       onSearch={[Function]}
       placeholder="Select categories"
-      transitionName="slide-up"
     >
       <Select
-        choiceTransitionName=""
+        allowClear={true}
         className=""
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         defaultValue={Array []}
         dropdownClassName=""
         filterOption={[Function]}
+        getPopupContainer={[Function]}
         inputIcon={[Function]}
         listHeight={128}
         listItemHeight={24}
         loading={false}
         menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
         mode="multiple"
-        notFoundContent={
-          <Context.Consumer>
-            [Function]
-          </Context.Consumer>
-        }
+        notFoundContent={null}
         onChange={[Function]}
         onPopupScroll={[Function]}
         onSearch={[Function]}
@@ -608,23 +550,20 @@ exports[`Categories List component Snapshot testing should render the component 
         transitionName="slide-up"
       >
         <ForwardRef(Select)
-          choiceTransitionName=""
+          allowClear={true}
           className=""
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           defaultValue={Array []}
           dropdownClassName=""
           filterOption={[Function]}
+          getPopupContainer={[Function]}
           inputIcon={[Function]}
           listHeight={128}
           listItemHeight={24}
           loading={false}
           menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
           mode="multiple"
-          notFoundContent={
-            <Context.Consumer>
-              [Function]
-            </Context.Consumer>
-          }
+          notFoundContent={null}
           onChange={[Function]}
           onPopupScroll={[Function]}
           onSearch={[Function]}
@@ -634,7 +573,7 @@ exports[`Categories List component Snapshot testing should render the component 
           transitionName="slide-up"
         >
           <div
-            className="ant-select ant-select-multiple ant-select-show-search"
+            className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
             onBlur={[Function]}
             onFocus={[Function]}
             onKeyDown={[Function]}
@@ -644,48 +583,25 @@ exports[`Categories List component Snapshot testing should render the component 
             <SelectTrigger
               containerWidth={null}
               dropdownClassName=""
-              empty={false}
+              empty={true}
+              getPopupContainer={[Function]}
               getTriggerDOMNode={[Function]}
               popupElement={
                 <ForwardRef(OptionList)
                   childrenAsData={true}
                   defaultActiveFirstOption={true}
-                  flattenOptions={
-                    Array [
-                      Object {
-                        "data": Object {
-                          "children": "category-1",
-                          "key": "categories1",
-                          "value": 1,
-                        },
-                        "groupOption": false,
-                        "key": "categories1",
-                      },
-                    ]
-                  }
+                  flattenOptions={Array []}
                   height={128}
                   itemHeight={24}
                   menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                   multiple={true}
-                  notFoundContent={
-                    <Context.Consumer>
-                      [Function]
-                    </Context.Consumer>
-                  }
+                  notFoundContent={null}
                   onActiveValue={[Function]}
                   onMouseEnter={[Function]}
                   onScroll={[Function]}
                   onSelect={[Function]}
                   onToggleOpen={[Function]}
-                  options={
-                    Array [
-                      Object {
-                        "children": "category-1",
-                        "key": "categories1",
-                        "value": 1,
-                      },
-                    ]
-                  }
+                  options={Array []}
                   prefixCls="ant-select"
                   searchValue=""
                   values={Set {}}
@@ -694,6 +610,7 @@ exports[`Categories List component Snapshot testing should render the component 
               }
               prefixCls="ant-select"
               transitionName="slide-up"
+              visible={false}
             >
               <Trigger
                 action={Array []}
@@ -765,6 +682,7 @@ exports[`Categories List component Snapshot testing should render the component 
                 focusDelay={0}
                 getDocument={[Function]}
                 getPopupClassNameFromAlign={[Function]}
+                getPopupContainer={[Function]}
                 getTriggerDOMNode={[Function]}
                 hideAction={Array []}
                 mask={false}
@@ -778,42 +696,18 @@ exports[`Categories List component Snapshot testing should render the component 
                     <ForwardRef(OptionList)
                       childrenAsData={true}
                       defaultActiveFirstOption={true}
-                      flattenOptions={
-                        Array [
-                          Object {
-                            "data": Object {
-                              "children": "category-1",
-                              "key": "categories1",
-                              "value": 1,
-                            },
-                            "groupOption": false,
-                            "key": "categories1",
-                          },
-                        ]
-                      }
+                      flattenOptions={Array []}
                       height={128}
                       itemHeight={24}
                       menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                       multiple={true}
-                      notFoundContent={
-                        <Context.Consumer>
-                          [Function]
-                        </Context.Consumer>
-                      }
+                      notFoundContent={null}
                       onActiveValue={[Function]}
                       onMouseEnter={[Function]}
                       onScroll={[Function]}
                       onSelect={[Function]}
                       onToggleOpen={[Function]}
-                      options={
-                        Array [
-                          Object {
-                            "children": "category-1",
-                            "key": "categories1",
-                            "value": 1,
-                          },
-                        ]
-                      }
+                      options={Array []}
                       prefixCls="ant-select"
                       searchValue=""
                       values={Set {}}
@@ -822,7 +716,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   </div>
                 }
                 popupAlign={Object {}}
-                popupClassName=""
+                popupClassName="ant-select-dropdown-empty"
                 popupPlacement="bottomLeft"
                 popupStyle={
                   Object {
@@ -831,13 +725,14 @@ exports[`Categories List component Snapshot testing should render the component 
                   }
                 }
                 popupTransitionName="slide-up"
+                popupVisible={false}
                 prefixCls="ant-select-dropdown"
                 showAction={Array []}
               >
                 <Selector
                   accessibilityIndex={0}
                   activeValue={null}
-                  choiceTransitionName=""
+                  allowClear={true}
                   className=""
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                   defaultValue={Array []}
@@ -884,6 +779,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   }
                   dropdownClassName=""
                   filterOption={[Function]}
+                  getPopupContainer={[Function]}
                   inputElement={null}
                   inputIcon={[Function]}
                   key="trigger"
@@ -893,11 +789,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                   mode="multiple"
                   multiple={true}
-                  notFoundContent={
-                    <Context.Consumer>
-                      [Function]
-                    </Context.Consumer>
-                  }
+                  notFoundContent={null}
                   onChange={[Function]}
                   onPopupScroll={[Function]}
                   onSearch={[Function]}
@@ -921,7 +813,7 @@ exports[`Categories List component Snapshot testing should render the component 
                     <SelectSelector
                       accessibilityIndex={0}
                       activeValue={null}
-                      choiceTransitionName=""
+                      allowClear={true}
                       className=""
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       defaultValue={Array []}
@@ -968,6 +860,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       }
                       dropdownClassName=""
                       filterOption={[Function]}
+                      getPopupContainer={[Function]}
                       inputElement={null}
                       inputIcon={[Function]}
                       inputRef={
@@ -996,11 +889,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                       mode="multiple"
                       multiple={true}
-                      notFoundContent={
-                        <Context.Consumer>
-                          [Function]
-                        </Context.Consumer>
-                      }
+                      notFoundContent={null}
                       onChange={[Function]}
                       onInputChange={[Function]}
                       onInputCompositionEnd={[Function]}
@@ -1026,7 +915,6 @@ exports[`Categories List component Snapshot testing should render the component 
                         component={false}
                         keys={Array []}
                         motionAppear={false}
-                        motionName=""
                       />
                       <span
                         className="ant-select-selection-search"
@@ -1095,7 +983,7 @@ exports[`Categories List component Snapshot testing should render the component 
           </div>
         </ForwardRef(Select)>
       </Select>
-    </Select>
+    </ForwardRef(InternalSelect)>
   </Selector>
 </Provider>
 `;

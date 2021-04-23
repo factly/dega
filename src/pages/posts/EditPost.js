@@ -36,7 +36,7 @@ function EditPost({ formats }) {
 
   const onUpdate = (values) => {
     dispatch(updatePost({ ...post, ...values })).then(() => {
-      history.push('/posts');
+      history.push(`/posts/${id}/edit`);
     });
   };
   return (

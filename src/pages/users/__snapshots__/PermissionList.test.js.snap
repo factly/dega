@@ -113,7 +113,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                     </article>
                   </Typography>
                   <br />
-                  <CheckboxGroup
+                  <Memo(CheckboxGroup)
                     key="categories"
                     options={
                       Array [
@@ -332,7 +332,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                         </label>
                       </Checkbox>
                     </div>
-                  </CheckboxGroup>
+                  </Memo(CheckboxGroup)>
                   <br />
                   <br />
                 </div>
@@ -362,7 +362,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                     </article>
                   </Typography>
                   <br />
-                  <CheckboxGroup
+                  <Memo(CheckboxGroup)
                     key="tags"
                     options={
                       Array [
@@ -579,7 +579,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                         </label>
                       </Checkbox>
                     </div>
-                  </CheckboxGroup>
+                  </Memo(CheckboxGroup)>
                   <br />
                   <br />
                 </div>
@@ -587,6 +587,52 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
             </Item>
           </div>
         </Space>
+      </PermissionList>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;
+
+exports[`Tags List component snapshot testing should render without data 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <PermissionList>
+        <Space
+          direction="vertical"
+        />
       </PermissionList>
     </Router>
   </BrowserRouter>

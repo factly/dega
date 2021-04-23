@@ -4,6 +4,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import Audio from './Audio';
+import Selector from '../../../components/Selector';
 
 const layout = {
   labelCol: {
@@ -22,9 +23,17 @@ const tailLayout = {
 
 const EpisodeForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
+  };
+
+  const onSave = (values) => {
+    if (values.podcast) {
+      values.podcast_id = values.podcast;
+    }
+    onCreate(values);
   };
 
   const [url, setURL] = useState(data?.audio_url);
@@ -43,8 +52,11 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
-        onCreate(values);
+        onSave(values);
         onReset();
+      }}
+      onValuesChange={() => {
+        setValueChange(true);
       }}
     >
       <div style={{ display: 'flex' }}>
@@ -79,6 +91,9 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
           >
             <Input />
           </Form.Item>
+          <Form.Item name="podcast" label="Podcasts">
+            <Selector action="Podcasts" display="title" />
+          </Form.Item>
           <Form.Item>
             <Input.Group compact>
               <Form.Item label="Season" name={'season'}>
@@ -102,8 +117,8 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Space>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button disabled={!valueChange} type="primary" htmlType="submit">
+                {data && data.id ? 'Update' : 'Submit'}
               </Button>
               <Button htmlType="button" onClick={onReset}>
                 Reset

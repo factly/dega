@@ -1,9 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import { useDispatch, useSelector, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import { mount } from 'enzyme';
 
 import '../../matchMedia.mock';
 import Policies from './index';
@@ -15,7 +15,6 @@ const mockStore = configureMockStore(middlewares);
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -33,14 +32,62 @@ describe('Policies List component', () => {
   let mockedDispatch;
 
   beforeEach(() => {
-    store = mockStore({});
+    store = mockStore({
+      spaces: {
+        orgs: [{ id: 1, title: 'Org 1', spaces: [1] }],
+        details: {
+          1: {
+            sid: 1,
+            name: 'Space 1',
+          },
+        },
+        loading: false,
+        selected: 1,
+      },
+      policies: {
+        req: [
+          {
+            data: ['Editor'],
+            query: {
+              page: 1,
+              limit: 5,
+            },
+            total: 1,
+          },
+        ],
+        details: {
+          Editor: {
+            id: 'Editor',
+            users: [],
+          },
+        },
+        loading: false,
+      },
+    });
     store.dispatch = jest.fn(() => ({}));
     mockedDispatch = jest.fn();
     useDispatch.mockReturnValue(mockedDispatch);
   });
   it('should render the component', () => {
-    useSelector.mockImplementationOnce(() => ({}));
-    const tree = shallow(
+    store = mockStore({
+      spaces: {
+        orgs: [{ id: 1, title: 'Org 1', spaces: [1] }],
+        details: {
+          1: {
+            sid: 1,
+            name: 'Space 1',
+          },
+        },
+        loading: false,
+        selected: 1,
+      },
+      policies: {
+        req: [],
+        details: {},
+        loading: false,
+      },
+    });
+    const tree = mount(
       <Provider store={store}>
         <Router>
           <Policies permission={{ actions: ['create'] }} />
@@ -50,25 +97,6 @@ describe('Policies List component', () => {
     expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
-    useSelector.mockImplementationOnce(() => ({
-      policies: [
-        {
-          id: 1,
-          name: 'policy',
-          description: 'description',
-          users: [
-            {
-              id: 7,
-              email: 'ross.geller@gmail.com',
-              first_name: 'ross',
-              last_name: 'geller',
-            },
-          ],
-        },
-      ],
-      total: 1,
-      loading: false,
-    }));
     const tree = shallow(
       <Provider store={store}>
         <Router>
