@@ -35,8 +35,7 @@ function EditCategory() {
       history.push(`/categories/${id}/edit`),
     );
   };
-
-  return <CategoryEditForm data={category} onCreate={onUpdate} />;
+  if (category) return <CategoryEditForm data={category} onCreate={onUpdate} />;
 }
 
 export default EditCategory;
