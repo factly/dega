@@ -14,6 +14,7 @@ import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
 import ClaimList from './ClaimList';
+import DraggableClaimList from './DraggableClaimList';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -29,6 +30,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     loading,
   }));
 
+  const [claimOrder, setClaimOrder] = useState(data.claimOrder ? data.claimOrder : []);
   useEffect(() => {
     const prev = sidebar.collapsed;
     if (!sidebar.collapsed) {
@@ -66,6 +68,10 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.author_ids = values.authors || [];
     values.claim_ids = values.claims || [];
     values.status = status;
+    if (values.claim_ids.length > 0) {
+      values.claimOrder = claimOrder;
+      console.log('FInal order', claimOrder);
+    }
     values.status === 'publish'
       ? (values.published_date = values.published_date
           ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
@@ -212,7 +218,22 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
+              {form.getFieldValue('claims') &&
+              form.getFieldValue('claims').length > 0 &&
+              !loading ? (
+                <Form.Item name="claimOrder">
+                  <DraggableClaimList
+                    ids={form.getFieldValue('claims')}
+                    setClaimID={setClaimID}
+                    showModal={showModal}
+                    details={details}
+                    claimOrder={claimOrder}
+                    setClaimOrder={setClaimOrder}
+                  />
+                </Form.Item>
+              ) : null}
 
+              {/* 
               {form.getFieldValue('claims') &&
               form.getFieldValue('claims').length > 0 &&
               !loading ? (
@@ -222,7 +243,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   showModal={showModal}
                   details={details}
                 />
-              ) : null}
+              ) : null} */}
 
               <Form.Item name="description" className="post-description">
                 <Editor />
