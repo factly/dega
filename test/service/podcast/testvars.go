@@ -95,9 +95,9 @@ func PodcastCategorySelect(mock sqlmock.Sqlmock) {
 	category.SelectWithOutSpace(mock)
 }
 
-func slugCheckMock(mock sqlmock.Sqlmock, rating map[string]interface{}) {
+func slugCheckMock(mock sqlmock.Sqlmock, podcast map[string]interface{}) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "podcasts"`)).
-		WithArgs(fmt.Sprint(rating["slug"], "%"), 1).
+		WithArgs(fmt.Sprint(podcast["slug"], "%"), 1).
 		WillReturnRows(sqlmock.NewRows(Columns))
 }
 
