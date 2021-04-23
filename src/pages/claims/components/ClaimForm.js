@@ -117,7 +117,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 pattern: checker,
                 message: 'Please enter valid slug!',
               },
-              { max: 150, message: 'Claim must be maximum 150 characters.' },
+              { max: 150, message: 'Slug must be maximum 150 characters.' },
             ]}
           >
             <Input />
