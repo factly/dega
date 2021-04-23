@@ -61,7 +61,6 @@ func TestPodcastDetails(t *testing.T) {
 		SelectQuery(mock, 1, 1)
 
 		PodcastCategorySelect(mock)
-		PodcastEpisodeSelect(mock)
 		medium.SelectWithOutSpace(mock)
 		category.SelectWithOutSpace(mock)
 

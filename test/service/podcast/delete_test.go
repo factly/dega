@@ -60,13 +60,8 @@ func TestPodcastDelete(t *testing.T) {
 
 		SelectQuery(mock)
 		PodcastCategorySelect(mock)
-		PodcastEpisodeSelect(mock)
 
 		mock.ExpectBegin()
-		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
-
 		mock.ExpectExec(`DELETE FROM "podcast_categories"`).
 			WithArgs(1, 1).
 			WillReturnResult(driver.ResultNoRows)
@@ -91,13 +86,8 @@ func TestPodcastDelete(t *testing.T) {
 
 		SelectQuery(mock)
 		PodcastCategorySelect(mock)
-		PodcastEpisodeSelect(mock)
 
 		mock.ExpectBegin()
-		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
-
 		mock.ExpectExec(`DELETE FROM "podcast_categories"`).
 			WithArgs(1, 1).
 			WillReturnResult(driver.ResultNoRows)

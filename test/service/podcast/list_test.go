@@ -63,7 +63,6 @@ func TestPodcastList(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[1]["title"], podcastList[1]["slug"], podcastList[1]["description"], podcastList[1]["html_description"], podcastList[1]["language"], podcastList[1]["primary_category_id"], podcastList[1]["medium_id"], 1))
 
 		PodcastCategorySelect(mock)
-		PodcastEpisodeSelect(mock)
 		medium.SelectWithOutSpace(mock)
 		category.SelectWithOutSpace(mock)
 
@@ -94,7 +93,6 @@ func TestPodcastList(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, podcastList[1]["title"], podcastList[1]["slug"], podcastList[1]["description"], podcastList[1]["html_description"], podcastList[1]["language"], podcastList[1]["primary_category_id"], podcastList[1]["medium_id"], 1))
 
 		PodcastCategorySelect(mock)
-		PodcastEpisodeSelect(mock)
 		medium.SelectWithOutSpace(mock)
 		category.SelectWithOutSpace(mock)
 

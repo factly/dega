@@ -5,8 +5,10 @@ import (
 	"errors"
 	"net/http"
 	"net/http/httptest"
+	"regexp"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -14,7 +16,6 @@ import (
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/medium"
 	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/factly/dega-server/test/service/podcast/episode"
 	"github.com/gavv/httpexpect"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
@@ -109,40 +110,6 @@ func TestPodcastUpdate(t *testing.T) {
 		Data["title"] = "Test Podcast"
 	})
 
-	t.Run("updating episodes fails", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectQuery(mock)
-
-		mock.ExpectBegin()
-		episode.SelectQuery(mock)
-		medium.SelectWithSpace(mock)
-
-		mock.ExpectExec(`UPDATE "podcasts" SET`).
-			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
-
-		medium.SelectWithSpace(mock)
-
-		mock.ExpectQuery(`INSERT INTO "episodes"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, episode.Data["title"], episode.Data["slug"], episode.Data["season"], episode.Data["episode"], episode.Data["audio_url"], episode.Data["description"], episode.Data["html_description"], episode.Data["published_date"], 1, episode.Data["medium_id"], 1).
-			WillReturnError(errors.New("cannot update episodes"))
-
-		mock.ExpectExec(`INSERT INTO "podcast_episodes"`).
-			WithArgs(1, 1).
-			WillReturnError(errors.New("cannot update episodes"))
-
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("podcast_id", "1").
-			WithJSON(Data).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
-
 	t.Run("cannot parse podcast description", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		space.SelectQuery(mock, 1)
@@ -171,26 +138,18 @@ func TestPodcastUpdate(t *testing.T) {
 		SelectQuery(mock)
 
 		mock.ExpectBegin()
-		episode.SelectQuery(mock)
-		medium.SelectWithSpace(mock)
-
-		mock.ExpectExec(`UPDATE "podcasts" SET`).
-			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
-
-		podcastEpisodesInsert(mock)
-
-		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
 
 		category.SelectWithOutSpace(mock)
 		medium.SelectWithSpace(mock)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(category.Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["parent_id"], category.Data["meta_fields"], category.Data["medium_id"], category.Data["is_featured"], 1))
 
 		mock.ExpectExec(`UPDATE "podcasts" SET`).
 			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
 
 		medium.SelectWithSpace(mock)
-
 		mock.ExpectQuery(`INSERT INTO "categories"`).
 			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["is_featured"], 1, category.Data["meta_fields"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnError(errors.New("cannot update categories"))
@@ -216,20 +175,12 @@ func TestPodcastUpdate(t *testing.T) {
 		SelectQuery(mock)
 
 		mock.ExpectBegin()
-		episode.SelectQuery(mock)
-		medium.SelectWithSpace(mock)
-
-		mock.ExpectExec(`UPDATE "podcasts" SET`).
-			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
-
-		podcastEpisodesInsert(mock)
-
-		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
-
 		category.SelectWithOutSpace(mock)
 		medium.SelectWithSpace(mock)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(category.Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["parent_id"], category.Data["meta_fields"], category.Data["medium_id"], category.Data["is_featured"], 1))
 
 		mock.ExpectExec(`UPDATE "podcasts" SET`).
 			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
@@ -241,13 +192,17 @@ func TestPodcastUpdate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 		medium.SelectWithSpace(mock)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(category.Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["parent_id"], category.Data["meta_fields"], category.Data["medium_id"], category.Data["is_featured"], 1))
+
 		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["medium_id"], 1, 1).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["primary_category_id"], Data["medium_id"], 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		SelectQuery(mock)
 		PodcastCategorySelect(mock)
-		PodcastEpisodeSelect(mock)
 
 		mock.ExpectCommit()
 		e.PUT(path).
@@ -266,20 +221,12 @@ func TestPodcastUpdate(t *testing.T) {
 		SelectQuery(mock)
 
 		mock.ExpectBegin()
-		episode.SelectQuery(mock)
-		medium.SelectWithSpace(mock)
-
-		mock.ExpectExec(`UPDATE "podcasts" SET`).
-			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
-
-		podcastEpisodesInsert(mock)
-
-		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
-
 		category.SelectWithOutSpace(mock)
 		medium.SelectWithSpace(mock)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(category.Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["parent_id"], category.Data["meta_fields"], category.Data["medium_id"], category.Data["is_featured"], 1))
 
 		mock.ExpectExec(`UPDATE "podcasts" SET`).
 			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
@@ -289,20 +236,29 @@ func TestPodcastUpdate(t *testing.T) {
 			WithArgs(1, 1).
 			WillReturnResult(driver.ResultNoRows)
 
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(category.Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["parent_id"], category.Data["meta_fields"], category.Data["medium_id"], category.Data["is_featured"], 1))
 		mock.ExpectExec(`UPDATE \"podcasts\"`).
 			WithArgs(nil, test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		slugCheckMock(mock, Data)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(category.Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["parent_id"], category.Data["meta_fields"], category.Data["medium_id"], category.Data["is_featured"], 1))
+
 		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], 1, 1).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["primary_category_id"], 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		SelectQuery(mock)
 		PodcastCategorySelect(mock)
-		PodcastEpisodeSelect(mock)
 
 		mock.ExpectCommit()
+
 		Data["medium_id"] = 0
 		e.PUT(path).
 			WithPath("podcast_id", "1").
@@ -322,20 +278,12 @@ func TestPodcastUpdate(t *testing.T) {
 		SelectQuery(mock)
 
 		mock.ExpectBegin()
-		episode.SelectQuery(mock)
-		medium.SelectWithSpace(mock)
-
-		mock.ExpectExec(`UPDATE "podcasts" SET`).
-			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
-
-		podcastEpisodesInsert(mock)
-
-		mock.ExpectExec(`DELETE FROM "podcast_episodes"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
-
 		category.SelectWithOutSpace(mock)
 		medium.SelectWithSpace(mock)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(category.Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["parent_id"], category.Data["meta_fields"], category.Data["medium_id"], category.Data["is_featured"], 1))
 
 		mock.ExpectExec(`UPDATE "podcasts" SET`).
 			WithArgs(test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
@@ -347,13 +295,17 @@ func TestPodcastUpdate(t *testing.T) {
 
 		slugCheckMock(mock, Data)
 		medium.SelectWithSpace(mock)
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(category.Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["parent_id"], category.Data["meta_fields"], category.Data["medium_id"], category.Data["is_featured"], 1))
+
 		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["medium_id"], 1, 1).
+			WithArgs(test.AnyTime{}, 1, Data["slug"], Data["description"], Data["html_description"], Data["language"], Data["primary_category_id"], Data["medium_id"], 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		SelectQuery(mock)
 		PodcastCategorySelect(mock)
-		PodcastEpisodeSelect(mock)
 
 		mock.ExpectRollback()
 		e.PUT(path).
