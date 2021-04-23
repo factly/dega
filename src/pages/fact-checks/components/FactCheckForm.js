@@ -42,8 +42,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { claims, loading } = useSelector((state) => {
-    return { claims: state.claims, loading: state.claims.loading };
+  const { claims, claimLoading } = useSelector((state) => {
+    return { claims: state.claims, claimLoading: state.claims.loading };
   });
   const updateClaims = (fetchedClaimId) => {
     const claimList = form.getFieldValue('claims');
@@ -52,11 +52,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     });
     setClaimCreatedFlag(false);
   };
-  if (!loading && claimCreatedFlag) {
+  if (!claimLoading && claimCreatedFlag) {
     const fetchedClaimId = claims.req[0].data[0];
     const fetchedClaim = claims.details[fetchedClaimId];
     if (newClaim.title === fetchedClaim.title) {
-      updateClaims(fetchedClaimId);
+      updateClaims(fetchedClaimId); 
     }
   }
 
@@ -67,7 +67,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     fetchAddedClaim();
   }, [newClaim]);
 
-  const { Option } = Select;
   useEffect(() => {}, [details, loading]);
 
   const [drawerVisible, setDrawerVisible] = useState(false);
