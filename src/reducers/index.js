@@ -26,9 +26,11 @@ import sidebar from './sidebarReducer';
 import episodes from './episodesReducer';
 import podcasts from './podcastReducer';
 import redirect from './redirectReducer';
+import info from './infoReducer';
 
 const appReducer = combineReducers({
   admin,
+  info,
   settings,
   spaces,
   organisations,

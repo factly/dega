@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer, { act as rendererAct } from 'react-test-renderer';
 import { useDispatch, Provider, useSelector } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -18,7 +17,6 @@ const mockStore = configureMockStore(middlewares);
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -56,7 +54,7 @@ describe('Formats edit component', () => {
               description: 'description',
             },
           },
-          loading: true,
+          loading: false,
         },
       });
       store.dispatch = jest.fn(() => ({}));
@@ -64,64 +62,72 @@ describe('Formats edit component', () => {
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
-      useSelector.mockReturnValueOnce({
-        format: {
-          id: 1,
-          name: 'Article',
-          slug: 'article',
-          description: 'description',
-        },
-        loading: true,
-      });
-      const tree = renderer
-        .create(
-          <Provider store={store}>
-            <EditFormat />
-          </Provider>,
-        )
-        .toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditFormat />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      useSelector.mockReturnValueOnce({
-        format: {},
-        loading: false,
+      store = mockStore({
+        formats: {
+          req: [],
+          details: {},
+          loading: false,
+        },
       });
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditFormat />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditFormat />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
-      useSelector.mockReturnValueOnce({
-        format: {},
-        loading: true,
+      store = mockStore({
+        formats: {
+          req: [],
+          details: {},
+          loading: true,
+        },
       });
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditFormat />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditFormat />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
     let wrapper;
+    beforeEach(() => {
+      store = mockStore({
+        formats: {
+          req: [],
+          details: {
+            '1': {
+              id: 1,
+              name: 'Article',
+              slug: 'article',
+              description: 'description',
+            },
+            '2': {
+              id: 2,
+              name: 'Factcheck',
+              slug: 'factcheck',
+              description: 'description',
+            },
+          },
+          loading: false,
+        },
+      });
+    });
     afterEach(() => {
       wrapper.unmount();
     });
     it('should call get action', () => {
-      useSelector.mockReturnValueOnce({ rating: null, loading: true });
       actions.getFormat.mockReset();
       act(() => {
         wrapper = mount(
@@ -132,11 +138,44 @@ describe('Formats edit component', () => {
       });
       expect(actions.getFormat).toHaveBeenCalledWith('1');
     });
+    it('should display RecordNotFound when format not found', () => {
+      store = mockStore({
+        formats: {
+          req: [
+            {
+              data: [2],
+              query: {
+                page: 1,
+              },
+              total: 1,
+            },
+          ],
+          details: {
+            '2': {
+              id: 2,
+              name: 'Factcheck',
+              slug: 'factcheck',
+              description: 'description',
+            },
+          },
+          loading: false,
+        },
+      });
+      actions.getFormat.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <EditFormat />
+          </Provider>,
+        );
+      });
+      expect(actions.getFormat).toHaveBeenCalledWith('1');
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
+    });
     it('should call updateFormat', () => {
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       useDispatch.mockReturnValueOnce(() => Promise.resolve({}));
-      useSelector.mockReturnValueOnce({ rating: {}, loading: false });
       actions.updateFormat.mockReset();
       act(() => {
         wrapper = mount(
@@ -146,8 +185,14 @@ describe('Formats edit component', () => {
         );
       });
       wrapper.find(FormatEditForm).props().onCreate({ test: 'test' });
-      expect(actions.updateFormat).toHaveBeenCalledWith({ test: 'test' });
-      expect(push).toHaveBeenCalledWith('/formats');
+      expect(actions.updateFormat).toHaveBeenCalledWith({
+        id: 1,
+        name: 'Article',
+        slug: 'article',
+        description: 'description',
+        test: 'test',
+      });
+      expect(push).toHaveBeenCalledWith('/formats/1/edit');
     });
   });
 });

@@ -30,7 +30,6 @@ const Audio = ({ url, onUpload }) => {
           <UppyUploader
             onUpload={(values) => {
               onUpload(values[0]?.url?.raw);
-              console.log({ val: values[0] });
               setShow(false);
             }}
             allowedFileTypes={['audio/*']}

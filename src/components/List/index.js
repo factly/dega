@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Popconfirm, Button, List, Input, Select, Form, Space } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,6 +8,7 @@ import Selector from '../../components/Selector';
 import deepEqual from 'deep-equal';
 import Template from '../../components/Template';
 import ImagePlaceholder from '../../components/ErrorsAndImage/PlaceholderImage';
+import QuickEdit from './QuickEdit';
 
 function PostList({ actions, format }) {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function PostList({ actions, format }) {
     limit: 20,
     format: [format.id],
   });
+  const [id, setID] = useState(0);
 
   const { posts, total, loading } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
@@ -116,67 +118,83 @@ function PostList({ actions, format }) {
         }}
         renderItem={(item) => (
           <List.Item
-            actions={[
-              <Link
-                style={{
-                  marginRight: 8,
-                }}
-                to={
-                  format.slug === 'article'
-                    ? `/posts/${item.id}/edit`
-                    : `/fact-checks/${item.id}/edit`
-                }
-              >
-                <Button
-                  icon={<EditOutlined />}
-                  disabled={!(actions.includes('admin') || actions.includes('update'))}
-                >
-                  Edit
-                </Button>
-              </Link>,
-              <Popconfirm
-                title="Sure to Delete?"
-                onConfirm={() => dispatch(deletePost(item.id)).then(() => fetchPosts())}
-                disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              >
-                <Button
-                  icon={<DeleteOutlined />}
-                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                >
-                  Delete
-                </Button>
-              </Popconfirm>,
-            ]}
+            actions={
+              item.id !== id
+                ? [
+                    <Link
+                      style={{
+                        marginRight: 8,
+                      }}
+                      to={
+                        format.slug === 'article'
+                          ? `/posts/${item.id}/edit`
+                          : `/fact-checks/${item.id}/edit`
+                      }
+                    >
+                      <Button
+                        icon={<EditOutlined />}
+                        disabled={!(actions.includes('admin') || actions.includes('update'))}
+                      >
+                        Edit
+                      </Button>
+                    </Link>,
+                    <Popconfirm
+                      title="Sure to Delete?"
+                      onConfirm={() => dispatch(deletePost(item.id)).then(() => fetchPosts())}
+                      disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                    >
+                      <Button
+                        icon={<DeleteOutlined />}
+                        disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                      >
+                        Delete
+                      </Button>
+                    </Popconfirm>,
+                    <Button
+                      icon={<EditOutlined />}
+                      disabled={!(actions.includes('admin') || actions.includes('update'))}
+                      onClick={() => setID(item.id)}
+                    >
+                      Quick Edit
+                    </Button>,
+                  ]
+                : []
+            }
             extra={
-              item.medium ? (
-                <img
-                  style={{ width: '100%', height: '100%' }}
-                  alt={item.medium.alt_text}
-                  src={
-                    item.medium.url?.proxy
-                      ? `${item.medium.url.proxy}?resize:fill:150:150/gravity:sm`
-                      : ''
-                  }
-                />
-              ) : (
-                <ImagePlaceholder height={150} width={150} />
-              )
+              item.id !== id ? (
+                item.medium ? (
+                  <img
+                    style={{ width: '100%', height: '100%' }}
+                    alt={item.medium.alt_text}
+                    src={
+                      item.medium.url?.proxy
+                        ? `${item.medium.url.proxy}?resize:fill:150:150/gravity:sm`
+                        : ''
+                    }
+                  />
+                ) : (
+                  <ImagePlaceholder height={150} width={150} />
+                )
+              ) : null
             }
           >
-            <List.Item.Meta
-              title={
-                <Link
-                  to={
-                    format.slug === 'article'
-                      ? `/posts/${item.id}/edit`
-                      : `/fact-checks/${item.id}/edit`
-                  }
-                >
-                  {item.title}
-                </Link>
-              }
-              description={item.excerpt}
-            />
+            {item.id !== id ? (
+              <List.Item.Meta
+                title={
+                  <Link
+                    to={
+                      format.slug === 'article'
+                        ? `/posts/${item.id}/edit`
+                        : `/fact-checks/${item.id}/edit`
+                    }
+                  >
+                    {item.title}
+                  </Link>
+                }
+                description={item.excerpt}
+              />
+            ) : null}
+            {item.id === id ? <QuickEdit data={item} setID={setID} slug={format.slug} /> : null}
           </List.Item>
         )}
       />

@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer, { act as RendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -45,39 +44,27 @@ describe('Formats Create Form component', () => {
       );
     });
     it('should render the component', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <FormatsCreateForm />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <FormatsCreateForm />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <FormatsCreateForm data={[]} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <FormatsCreateForm data={[]} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with data', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <FormatsCreateForm onCreate={onCreate} data={data} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <FormatsCreateForm onCreate={onCreate} data={data} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });

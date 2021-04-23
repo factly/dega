@@ -1,5 +1,4 @@
 import React from 'react';
-import renderer, { act as RendererAct } from 'react-test-renderer';
 import { Provider, useSelector, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -12,11 +11,16 @@ import ClaimantCreateForm from './ClaimantForm';
 const data = {
   name: 'name',
   slug: 'slug',
-  description: 'description',
+  description: {
+    time: 1613544901542,
+    blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+    version: '2.19.0',
+  },
   tag_line: 'tag_line',
   medium_id: 1,
 };
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
@@ -52,39 +56,27 @@ describe('Claimants Create Form component', () => {
       );
     });
     it('should render the component', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <ClaimantCreateForm data={[]} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <ClaimantCreateForm data={[]} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <ClaimantCreateForm data={[]} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <ClaimantCreateForm data={[]} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with data', () => {
-      let component;
-      RendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <ClaimantCreateForm onCreate={onCreate} data={data} />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <ClaimantCreateForm onCreate={onCreate} data={data} />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -153,7 +145,11 @@ describe('Claimants Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
           slug: 'new-name',
-          description: 'description',
+          description: {
+            time: 1613544901542,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
           tag_line: 'tag_line',
           medium_id: 1,
         });
@@ -164,10 +160,18 @@ describe('Claimants Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(2)
-          .find('TextArea')
-          .at(0)
-          .simulate('change', { target: { value: 'new description' } });
+          .at(4)
+          .find('Editor')
+          .props()
+          .onChange({
+            target: {
+              value: {
+                time: 1613544901542,
+                blocks: [{ type: 'paragraph', data: { text: 'New-Description' } }],
+                version: '2.19.0',
+              },
+            },
+          });
         wrapper
           .find('FormItem')
           .at(0)
@@ -180,7 +184,7 @@ describe('Claimants Create Form component', () => {
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(2)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new tag line' } });
@@ -193,7 +197,11 @@ describe('Claimants Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
-          description: 'new description',
+          description: {
+            time: 1613544901542,
+            blocks: [{ type: 'paragraph', data: { text: 'New-Description' } }],
+            version: '2.19.0',
+          },
           slug: 'new-slug',
           medium_id: 1,
           tag_line: 'new tag line',

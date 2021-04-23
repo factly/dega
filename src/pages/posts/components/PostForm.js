@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Select, Drawer, Modal } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Select, Drawer, DatePicker } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -9,6 +9,7 @@ import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
+import moment from 'moment';
 
 function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -16,6 +17,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const sidebar = useSelector((state) => state.sidebar);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
+  const [valueChange, setValueChange] = React.useState(false);
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -42,6 +44,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
 
   const [shouldBlockNavigation, setShouldBlockNavigation] = useState(false);
 
+  const getCurrentDate = () => {
+    return moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
+  };
+
   const onSave = (values) => {
     setShouldBlockNavigation(false);
     values.category_ids = values.categories || [];
@@ -49,6 +55,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
     values.format_id = format.id;
     values.author_ids = values.authors || [];
     values.status = status;
+    values.status === 'publish'
+      ? (values.published_date = values.published_date
+          ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+          : getCurrentDate())
+      : (values.published_date = null);
     onCreate(values);
   };
 
@@ -59,6 +70,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
       });
     }
   };
+
+  if (data && data.id) {
+    data.published_date = data.published_date ? moment(data.published_date) : null;
+  }
 
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
@@ -89,7 +104,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
-        onValuesChange={() => setShouldBlockNavigation(true)}
+        onValuesChange={() => {
+          setShouldBlockNavigation(true);
+          setValueChange(true);
+        }}
         layout="vertical"
       >
         <Space direction="vertical">
@@ -103,7 +121,12 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
-                <Button type="secondary" htmlType="submit" onClick={() => setStatus('draft')}>
+                <Button
+                  disabled={!valueChange}
+                  type="secondary"
+                  htmlType="submit"
+                  onClick={() => setStatus('draft')}
+                >
                   Save as draft
                 </Button>
               </Form.Item>
@@ -145,6 +168,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                     textAlign: 'center',
                     resize: 'none',
                   }}
+                  autoSize={{ minRows: 2, maxRows: 6 }}
                 />
               </Form.Item>
 
@@ -193,6 +217,9 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                   ]}
                 >
                   <Input />
+                </Form.Item>
+                <Form.Item name="published_date" label="Published Date">
+                  <DatePicker />
                 </Form.Item>
                 <Form.Item name="categories" label="Categories">
                   <Selector mode="multiple" action="Categories" createEntity="Category" />

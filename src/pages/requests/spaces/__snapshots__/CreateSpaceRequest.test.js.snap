@@ -1,0 +1,3379 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Space Request create component snapshot testing should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [MockFunction],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <CreateSpaceRequest>
+    <RequestForm
+      onCreate={[Function]}
+    >
+      <ForwardRef(InternalForm)
+        form={
+          Object {
+            "__INTERNAL__": Object {
+              "itemRef": [Function],
+              "name": "create-category",
+            },
+            "getFieldError": [Function],
+            "getFieldInstance": [Function],
+            "getFieldValue": [Function],
+            "getFieldsError": [Function],
+            "getFieldsValue": [Function],
+            "getInternalHooks": [Function],
+            "isFieldTouched": [Function],
+            "isFieldValidating": [Function],
+            "isFieldsTouched": [Function],
+            "isFieldsValidating": [Function],
+            "resetFields": [Function],
+            "scrollToField": [Function],
+            "setFields": [Function],
+            "setFieldsValue": [Function],
+            "submit": [Function],
+            "validateFields": [Function],
+          }
+        }
+        initialValues={Object {}}
+        labelCol={
+          Object {
+            "span": 10,
+          }
+        }
+        name="create-category"
+        onFinish={[Function]}
+        wrapperCol={
+          Object {
+            "span": 8,
+          }
+        }
+      >
+        <SizeContextProvider>
+          <ForwardRef(Form)
+            className="ant-form ant-form-horizontal"
+            form={
+              Object {
+                "__INTERNAL__": Object {
+                  "itemRef": [Function],
+                  "name": "create-category",
+                },
+                "getFieldError": [Function],
+                "getFieldInstance": [Function],
+                "getFieldValue": [Function],
+                "getFieldsError": [Function],
+                "getFieldsValue": [Function],
+                "getInternalHooks": [Function],
+                "isFieldTouched": [Function],
+                "isFieldValidating": [Function],
+                "isFieldsTouched": [Function],
+                "isFieldsValidating": [Function],
+                "resetFields": [Function],
+                "scrollToField": [Function],
+                "setFields": [Function],
+                "setFieldsValue": [Function],
+                "submit": [Function],
+                "validateFields": [Function],
+              }
+            }
+            id="create-category"
+            initialValues={Object {}}
+            name="create-category"
+            onFinish={[Function]}
+            onFinishFailed={[Function]}
+          >
+            <form
+              className="ant-form ant-form-horizontal"
+              id="create-category"
+              onSubmit={[Function]}
+            >
+              <FormItem
+                label="Title"
+                name="title"
+                rules={
+                  Array [
+                    Object {
+                      "message": "Please enter title!",
+                      "required": true,
+                    },
+                    Object {
+                      "message": "Name must be minimum 3 characters.",
+                      "min": 3,
+                    },
+                    Object {
+                      "max": 50,
+                      "message": "Name must be maximum 50 characters.",
+                    },
+                  ]
+                }
+              >
+                <WrapperField
+                  label="Title"
+                  messageVariables={
+                    Object {
+                      "label": "Title",
+                    }
+                  }
+                  name="title"
+                  onReset={[Function]}
+                  rules={
+                    Array [
+                      Object {
+                        "message": "Please enter title!",
+                        "required": true,
+                      },
+                      Object {
+                        "message": "Name must be minimum 3 characters.",
+                        "min": 3,
+                      },
+                      Object {
+                        "max": 50,
+                        "message": "Name must be maximum 50 characters.",
+                      },
+                    ]
+                  }
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_title"
+                    label="Title"
+                    messageVariables={
+                      Object {
+                        "label": "Title",
+                      }
+                    }
+                    name={
+                      Array [
+                        "title",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please enter title!",
+                          "required": true,
+                        },
+                        Object {
+                          "message": "Name must be minimum 3 characters.",
+                          "min": 3,
+                        },
+                        Object {
+                          "max": 50,
+                          "message": "Name must be maximum 50 characters.",
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_title"
+                          label="Title"
+                          name="title"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "message": "Name must be minimum 3 characters.",
+                                "min": 3,
+                              },
+                              Object {
+                                "max": 50,
+                                "message": "Name must be maximum 50 characters.",
+                              },
+                            ]
+                          }
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="create-category_title"
+                                title="Title"
+                              >
+                                Title
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Title"
+                          name={
+                            Array [
+                              "title",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "message": "Name must be minimum 3 characters.",
+                                "min": 3,
+                              },
+                              Object {
+                                "max": 50,
+                                "message": "Name must be maximum 50 characters.",
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <Input
+                                      id="create-category_title"
+                                      onChange={[Function]}
+                                      type="text"
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <input
+                                            className="ant-input"
+                                            id="create-category_title"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            type="text"
+                                          />
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="create-category_title"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value=""
+                                      >
+                                        <input
+                                          className="ant-input"
+                                          id="create-category_title"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          onKeyDown={[Function]}
+                                          type="text"
+                                          value=""
+                                        />
+                                      </ClearableLabeledInput>
+                                    </Input>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Description"
+                name="description"
+              >
+                <WrapperField
+                  label="Description"
+                  messageVariables={
+                    Object {
+                      "label": "Description",
+                    }
+                  }
+                  name="description"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_description"
+                    label="Description"
+                    messageVariables={
+                      Object {
+                        "label": "Description",
+                      }
+                    }
+                    name={
+                      Array [
+                        "description",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_description"
+                          label="Description"
+                          name="description"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-category_description"
+                                title="Description"
+                              >
+                                Description
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Description"
+                          name={
+                            Array [
+                              "description",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <TextArea
+                                      id="create-category_description"
+                                      onChange={[Function]}
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <TextArea
+                                            className=""
+                                            id="create-category_description"
+                                            onChange={[Function]}
+                                            prefixCls="ant-input"
+                                          />
+                                        }
+                                        handleReset={[Function]}
+                                        id="create-category_description"
+                                        inputType="text"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        value=""
+                                      >
+                                        <TextArea
+                                          className=""
+                                          id="create-category_description"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          value=""
+                                        >
+                                          <ResizableTextArea
+                                            className=""
+                                            id="create-category_description"
+                                            onChange={[Function]}
+                                            onKeyDown={[Function]}
+                                            prefixCls="ant-input"
+                                            value=""
+                                          >
+                                            <ResizeObserver
+                                              disabled={true}
+                                              onResize={[Function]}
+                                            >
+                                              <textarea
+                                                className="ant-input"
+                                                id="create-category_description"
+                                                onChange={[Function]}
+                                                onKeyDown={[Function]}
+                                                style={Object {}}
+                                                value=""
+                                              />
+                                            </ResizeObserver>
+                                          </ResizableTextArea>
+                                        </TextArea>
+                                      </ClearableLabeledInput>
+                                    </TextArea>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Space"
+                name="space_id"
+              >
+                <WrapperField
+                  label="Space"
+                  messageVariables={
+                    Object {
+                      "label": "Space",
+                    }
+                  }
+                  name="space_id"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_space_id"
+                    label="Space"
+                    messageVariables={
+                      Object {
+                        "label": "Space",
+                      }
+                    }
+                    name={
+                      Array [
+                        "space_id",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_space_id"
+                          label="Space"
+                          name="space_id"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-category_space_id"
+                                title="Space"
+                              >
+                                Space
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Space"
+                          name={
+                            Array [
+                              "space_id",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <ForwardRef(InternalSelect)
+                                      allowClear={true}
+                                      bordered={true}
+                                      defaultValue={Array []}
+                                      filterOption={[Function]}
+                                      id="create-category_space_id"
+                                      listHeight={128}
+                                      loading={true}
+                                      onChange={[Function]}
+                                    >
+                                      <Select
+                                        allowClear={true}
+                                        className=""
+                                        clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                        defaultValue={Array []}
+                                        dropdownClassName=""
+                                        filterOption={[Function]}
+                                        id="create-category_space_id"
+                                        inputIcon={
+                                          <ForwardRef(LoadingOutlined)
+                                            spin={true}
+                                          />
+                                        }
+                                        listHeight={128}
+                                        listItemHeight={24}
+                                        loading={true}
+                                        menuItemSelectedIcon={null}
+                                        notFoundContent={
+                                          <Context.Consumer>
+                                            [Function]
+                                          </Context.Consumer>
+                                        }
+                                        onChange={[Function]}
+                                        prefixCls="ant-select"
+                                        removeIcon={<ForwardRef(CloseOutlined) />}
+                                        transitionName="slide-up"
+                                      >
+                                        <ForwardRef(Select)
+                                          allowClear={true}
+                                          className=""
+                                          clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                          defaultValue={Array []}
+                                          dropdownClassName=""
+                                          filterOption={[Function]}
+                                          id="create-category_space_id"
+                                          inputIcon={
+                                            <ForwardRef(LoadingOutlined)
+                                              spin={true}
+                                            />
+                                          }
+                                          listHeight={128}
+                                          listItemHeight={24}
+                                          loading={true}
+                                          menuItemSelectedIcon={null}
+                                          notFoundContent={
+                                            <Context.Consumer>
+                                              [Function]
+                                            </Context.Consumer>
+                                          }
+                                          onChange={[Function]}
+                                          prefixCls="ant-select"
+                                          removeIcon={<ForwardRef(CloseOutlined) />}
+                                          transitionName="slide-up"
+                                        >
+                                          <div
+                                            className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-loading"
+                                            onBlur={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            onKeyUp={[Function]}
+                                            onMouseDown={[Function]}
+                                          >
+                                            <SelectTrigger
+                                              containerWidth={null}
+                                              dropdownClassName=""
+                                              empty={true}
+                                              getTriggerDOMNode={[Function]}
+                                              popupElement={
+                                                <ForwardRef(OptionList)
+                                                  childrenAsData={true}
+                                                  defaultActiveFirstOption={true}
+                                                  flattenOptions={Array []}
+                                                  height={128}
+                                                  id="create-category_space_id"
+                                                  itemHeight={24}
+                                                  menuItemSelectedIcon={null}
+                                                  multiple={false}
+                                                  notFoundContent={
+                                                    <Context.Consumer>
+                                                      [Function]
+                                                    </Context.Consumer>
+                                                  }
+                                                  onActiveValue={[Function]}
+                                                  onMouseEnter={[Function]}
+                                                  onSelect={[Function]}
+                                                  onToggleOpen={[Function]}
+                                                  options={Array []}
+                                                  prefixCls="ant-select"
+                                                  searchValue=""
+                                                  values={Set {}}
+                                                  virtual={true}
+                                                />
+                                              }
+                                              prefixCls="ant-select"
+                                              transitionName="slide-up"
+                                            >
+                                              <Trigger
+                                                action={Array []}
+                                                afterPopupVisibleChange={[Function]}
+                                                autoDestroy={false}
+                                                blurDelay={0.15}
+                                                builtinPlacements={
+                                                  Object {
+                                                    "bottomLeft": Object {
+                                                      "offset": Array [
+                                                        0,
+                                                        4,
+                                                      ],
+                                                      "overflow": Object {
+                                                        "adjustX": 0,
+                                                        "adjustY": 1,
+                                                      },
+                                                      "points": Array [
+                                                        "tl",
+                                                        "bl",
+                                                      ],
+                                                    },
+                                                    "bottomRight": Object {
+                                                      "offset": Array [
+                                                        0,
+                                                        4,
+                                                      ],
+                                                      "overflow": Object {
+                                                        "adjustX": 0,
+                                                        "adjustY": 1,
+                                                      },
+                                                      "points": Array [
+                                                        "tr",
+                                                        "br",
+                                                      ],
+                                                    },
+                                                    "topLeft": Object {
+                                                      "offset": Array [
+                                                        0,
+                                                        -4,
+                                                      ],
+                                                      "overflow": Object {
+                                                        "adjustX": 0,
+                                                        "adjustY": 1,
+                                                      },
+                                                      "points": Array [
+                                                        "bl",
+                                                        "tl",
+                                                      ],
+                                                    },
+                                                    "topRight": Object {
+                                                      "offset": Array [
+                                                        0,
+                                                        -4,
+                                                      ],
+                                                      "overflow": Object {
+                                                        "adjustX": 0,
+                                                        "adjustY": 1,
+                                                      },
+                                                      "points": Array [
+                                                        "br",
+                                                        "tr",
+                                                      ],
+                                                    },
+                                                  }
+                                                }
+                                                defaultPopupVisible={false}
+                                                destroyPopupOnHide={false}
+                                                focusDelay={0}
+                                                getDocument={[Function]}
+                                                getPopupClassNameFromAlign={[Function]}
+                                                getTriggerDOMNode={[Function]}
+                                                hideAction={Array []}
+                                                mask={false}
+                                                maskClosable={true}
+                                                mouseEnterDelay={0}
+                                                mouseLeaveDelay={0.1}
+                                                onPopupAlign={[Function]}
+                                                onPopupVisibleChange={[Function]}
+                                                popup={
+                                                  <div>
+                                                    <ForwardRef(OptionList)
+                                                      childrenAsData={true}
+                                                      defaultActiveFirstOption={true}
+                                                      flattenOptions={Array []}
+                                                      height={128}
+                                                      id="create-category_space_id"
+                                                      itemHeight={24}
+                                                      menuItemSelectedIcon={null}
+                                                      multiple={false}
+                                                      notFoundContent={
+                                                        <Context.Consumer>
+                                                          [Function]
+                                                        </Context.Consumer>
+                                                      }
+                                                      onActiveValue={[Function]}
+                                                      onMouseEnter={[Function]}
+                                                      onSelect={[Function]}
+                                                      onToggleOpen={[Function]}
+                                                      options={Array []}
+                                                      prefixCls="ant-select"
+                                                      searchValue=""
+                                                      values={Set {}}
+                                                      virtual={true}
+                                                    />
+                                                  </div>
+                                                }
+                                                popupAlign={Object {}}
+                                                popupClassName="ant-select-dropdown-empty"
+                                                popupPlacement="bottomLeft"
+                                                popupStyle={
+                                                  Object {
+                                                    "minWidth": null,
+                                                    "width": null,
+                                                  }
+                                                }
+                                                popupTransitionName="slide-up"
+                                                prefixCls="ant-select-dropdown"
+                                                showAction={Array []}
+                                              >
+                                                <Selector
+                                                  accessibilityIndex={0}
+                                                  activeValue={null}
+                                                  allowClear={true}
+                                                  className=""
+                                                  clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                  defaultValue={Array []}
+                                                  domRef={
+                                                    Object {
+                                                      "current": <div
+                                                        class="ant-select-selector"
+                                                      >
+                                                        <span
+                                                          class="ant-select-selection-search"
+                                                        >
+                                                          <input
+                                                            aria-activedescendant="create-category_space_id_list_0"
+                                                            aria-autocomplete="list"
+                                                            aria-controls="create-category_space_id_list"
+                                                            aria-haspopup="listbox"
+                                                            aria-owns="create-category_space_id_list"
+                                                            autocomplete="off"
+                                                            class="ant-select-selection-search-input"
+                                                            id="create-category_space_id"
+                                                            readonly=""
+                                                            role="combobox"
+                                                            style="opacity: 0;"
+                                                            type="search"
+                                                            unselectable="on"
+                                                            value=""
+                                                          />
+                                                        </span>
+                                                        <span
+                                                          class="ant-select-selection-placeholder"
+                                                        />
+                                                      </div>,
+                                                    }
+                                                  }
+                                                  dropdownClassName=""
+                                                  filterOption={[Function]}
+                                                  id="create-category_space_id"
+                                                  inputElement={null}
+                                                  inputIcon={
+                                                    <ForwardRef(LoadingOutlined)
+                                                      spin={true}
+                                                    />
+                                                  }
+                                                  key="trigger"
+                                                  listHeight={128}
+                                                  listItemHeight={24}
+                                                  loading={true}
+                                                  menuItemSelectedIcon={null}
+                                                  multiple={false}
+                                                  notFoundContent={
+                                                    <Context.Consumer>
+                                                      [Function]
+                                                    </Context.Consumer>
+                                                  }
+                                                  onChange={[Function]}
+                                                  onSearch={[Function]}
+                                                  onSearchSubmit={[Function]}
+                                                  onSelect={[Function]}
+                                                  onToggleOpen={[Function]}
+                                                  prefixCls="ant-select"
+                                                  removeIcon={<ForwardRef(CloseOutlined) />}
+                                                  searchValue=""
+                                                  showSearch={false}
+                                                  tokenWithEnter={false}
+                                                  transitionName="slide-up"
+                                                  values={Array []}
+                                                >
+                                                  <div
+                                                    className="ant-select-selector"
+                                                    onClick={[Function]}
+                                                    onMouseDown={[Function]}
+                                                  >
+                                                    <SingleSelector
+                                                      accessibilityIndex={0}
+                                                      activeValue={null}
+                                                      allowClear={true}
+                                                      className=""
+                                                      clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                      defaultValue={Array []}
+                                                      domRef={
+                                                        Object {
+                                                          "current": <div
+                                                            class="ant-select-selector"
+                                                          >
+                                                            <span
+                                                              class="ant-select-selection-search"
+                                                            >
+                                                              <input
+                                                                aria-activedescendant="create-category_space_id_list_0"
+                                                                aria-autocomplete="list"
+                                                                aria-controls="create-category_space_id_list"
+                                                                aria-haspopup="listbox"
+                                                                aria-owns="create-category_space_id_list"
+                                                                autocomplete="off"
+                                                                class="ant-select-selection-search-input"
+                                                                id="create-category_space_id"
+                                                                readonly=""
+                                                                role="combobox"
+                                                                style="opacity: 0;"
+                                                                type="search"
+                                                                unselectable="on"
+                                                                value=""
+                                                              />
+                                                            </span>
+                                                            <span
+                                                              class="ant-select-selection-placeholder"
+                                                            />
+                                                          </div>,
+                                                        }
+                                                      }
+                                                      dropdownClassName=""
+                                                      filterOption={[Function]}
+                                                      id="create-category_space_id"
+                                                      inputElement={null}
+                                                      inputIcon={
+                                                        <ForwardRef(LoadingOutlined)
+                                                          spin={true}
+                                                        />
+                                                      }
+                                                      inputRef={
+                                                        Object {
+                                                          "current": <input
+                                                            aria-activedescendant="create-category_space_id_list_0"
+                                                            aria-autocomplete="list"
+                                                            aria-controls="create-category_space_id_list"
+                                                            aria-haspopup="listbox"
+                                                            aria-owns="create-category_space_id_list"
+                                                            autocomplete="off"
+                                                            class="ant-select-selection-search-input"
+                                                            id="create-category_space_id"
+                                                            readonly=""
+                                                            role="combobox"
+                                                            style="opacity: 0;"
+                                                            type="search"
+                                                            unselectable="on"
+                                                            value=""
+                                                          />,
+                                                        }
+                                                      }
+                                                      listHeight={128}
+                                                      listItemHeight={24}
+                                                      loading={true}
+                                                      menuItemSelectedIcon={null}
+                                                      multiple={false}
+                                                      notFoundContent={
+                                                        <Context.Consumer>
+                                                          [Function]
+                                                        </Context.Consumer>
+                                                      }
+                                                      onChange={[Function]}
+                                                      onInputChange={[Function]}
+                                                      onInputCompositionEnd={[Function]}
+                                                      onInputCompositionStart={[Function]}
+                                                      onInputKeyDown={[Function]}
+                                                      onInputMouseDown={[Function]}
+                                                      onInputPaste={[Function]}
+                                                      onSearch={[Function]}
+                                                      onSearchSubmit={[Function]}
+                                                      onSelect={[Function]}
+                                                      onToggleOpen={[Function]}
+                                                      prefixCls="ant-select"
+                                                      removeIcon={<ForwardRef(CloseOutlined) />}
+                                                      searchValue=""
+                                                      showSearch={false}
+                                                      tokenWithEnter={false}
+                                                      transitionName="slide-up"
+                                                      values={Array []}
+                                                    >
+                                                      <span
+                                                        className="ant-select-selection-search"
+                                                      >
+                                                        <Input
+                                                          accessibilityIndex={0}
+                                                          attrs={Object {}}
+                                                          editable={false}
+                                                          id="create-category_space_id"
+                                                          inputElement={null}
+                                                          onChange={[Function]}
+                                                          onCompositionEnd={[Function]}
+                                                          onCompositionStart={[Function]}
+                                                          onKeyDown={[Function]}
+                                                          onMouseDown={[Function]}
+                                                          onPaste={[Function]}
+                                                          prefixCls="ant-select"
+                                                          value=""
+                                                        >
+                                                          <input
+                                                            aria-activedescendant="create-category_space_id_list_0"
+                                                            aria-autocomplete="list"
+                                                            aria-controls="create-category_space_id_list"
+                                                            aria-haspopup="listbox"
+                                                            aria-owns="create-category_space_id_list"
+                                                            autoComplete="off"
+                                                            className="ant-select-selection-search-input"
+                                                            id="create-category_space_id"
+                                                            onChange={[Function]}
+                                                            onCompositionEnd={[Function]}
+                                                            onCompositionStart={[Function]}
+                                                            onKeyDown={[Function]}
+                                                            onMouseDown={[Function]}
+                                                            onPaste={[Function]}
+                                                            readOnly={true}
+                                                            role="combobox"
+                                                            style={
+                                                              Object {
+                                                                "opacity": 0,
+                                                              }
+                                                            }
+                                                            type="search"
+                                                            unselectable="on"
+                                                            value=""
+                                                          />
+                                                        </Input>
+                                                      </span>
+                                                      <span
+                                                        className="ant-select-selection-placeholder"
+                                                      />
+                                                    </SingleSelector>
+                                                  </div>
+                                                </Selector>
+                                              </Trigger>
+                                            </SelectTrigger>
+                                            <TransBtn
+                                              className="ant-select-arrow ant-select-arrow-loading"
+                                              customizeIcon={
+                                                <ForwardRef(LoadingOutlined)
+                                                  spin={true}
+                                                />
+                                              }
+                                              customizeIconProps={
+                                                Object {
+                                                  "focused": false,
+                                                  "loading": true,
+                                                  "open": undefined,
+                                                  "searchValue": "",
+                                                  "showSearch": false,
+                                                }
+                                              }
+                                            >
+                                              <span
+                                                aria-hidden={true}
+                                                className="ant-select-arrow ant-select-arrow-loading"
+                                                onMouseDown={[Function]}
+                                                style={
+                                                  Object {
+                                                    "WebkitUserSelect": "none",
+                                                    "userSelect": "none",
+                                                  }
+                                                }
+                                                unselectable="on"
+                                              >
+                                                <ForwardRef(LoadingOutlined)
+                                                  spin={true}
+                                                >
+                                                  <AntdIcon
+                                                    icon={
+                                                      Object {
+                                                        "icon": Object {
+                                                          "attrs": Object {
+                                                            "focusable": "false",
+                                                            "viewBox": "0 0 1024 1024",
+                                                          },
+                                                          "children": Array [
+                                                            Object {
+                                                              "attrs": Object {
+                                                                "d": "M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z",
+                                                              },
+                                                              "tag": "path",
+                                                            },
+                                                          ],
+                                                          "tag": "svg",
+                                                        },
+                                                        "name": "loading",
+                                                        "theme": "outlined",
+                                                      }
+                                                    }
+                                                    spin={true}
+                                                  >
+                                                    <span
+                                                      aria-label="loading"
+                                                      className="anticon anticon-loading"
+                                                      role="img"
+                                                    >
+                                                      <IconReact
+                                                        className="anticon-spin"
+                                                        icon={
+                                                          Object {
+                                                            "icon": Object {
+                                                              "attrs": Object {
+                                                                "focusable": "false",
+                                                                "viewBox": "0 0 1024 1024",
+                                                              },
+                                                              "children": Array [
+                                                                Object {
+                                                                  "attrs": Object {
+                                                                    "d": "M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z",
+                                                                  },
+                                                                  "tag": "path",
+                                                                },
+                                                              ],
+                                                              "tag": "svg",
+                                                            },
+                                                            "name": "loading",
+                                                            "theme": "outlined",
+                                                          }
+                                                        }
+                                                      >
+                                                        <svg
+                                                          aria-hidden="true"
+                                                          className="anticon-spin"
+                                                          data-icon="loading"
+                                                          fill="currentColor"
+                                                          focusable="false"
+                                                          height="1em"
+                                                          key="svg-loading"
+                                                          viewBox="0 0 1024 1024"
+                                                          width="1em"
+                                                        >
+                                                          <path
+                                                            d="M988 548c-19.9 0-36-16.1-36-36 0-59.4-11.6-117-34.6-171.3a440.45 440.45 0 00-94.3-139.9 437.71 437.71 0 00-139.9-94.3C629 83.6 571.4 72 512 72c-19.9 0-36-16.1-36-36s16.1-36 36-36c69.1 0 136.2 13.5 199.3 40.3C772.3 66 827 103 874 150c47 47 83.9 101.8 109.7 162.7 26.7 63.1 40.2 130.2 40.2 199.3.1 19.9-16 36-35.9 36z"
+                                                            key="svg-loading-svg-0"
+                                                          />
+                                                        </svg>
+                                                      </IconReact>
+                                                    </span>
+                                                  </AntdIcon>
+                                                </ForwardRef(LoadingOutlined)>
+                                              </span>
+                                            </TransBtn>
+                                          </div>
+                                        </ForwardRef(Select)>
+                                      </Select>
+                                    </ForwardRef(InternalSelect)>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Posts"
+                name="posts"
+                rules={
+                  Array [
+                    Object {
+                      "message": "Please enter the numeric value!",
+                      "required": true,
+                    },
+                  ]
+                }
+              >
+                <WrapperField
+                  label="Posts"
+                  messageVariables={
+                    Object {
+                      "label": "Posts",
+                    }
+                  }
+                  name="posts"
+                  onReset={[Function]}
+                  rules={
+                    Array [
+                      Object {
+                        "message": "Please enter the numeric value!",
+                        "required": true,
+                      },
+                    ]
+                  }
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_posts"
+                    label="Posts"
+                    messageVariables={
+                      Object {
+                        "label": "Posts",
+                      }
+                    }
+                    name={
+                      Array [
+                        "posts",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please enter the numeric value!",
+                          "required": true,
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_posts"
+                          label="Posts"
+                          name="posts"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter the numeric value!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="create-category_posts"
+                                title="Posts"
+                              >
+                                Posts
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Posts"
+                          name={
+                            Array [
+                              "posts",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter the numeric value!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <ForwardRef
+                                      id="create-category_posts"
+                                      min={-1}
+                                      onChange={[Function]}
+                                      step={1}
+                                    >
+                                      <InputNumber
+                                        autoComplete="off"
+                                        className=""
+                                        downHandler={
+                                          <ForwardRef(DownOutlined)
+                                            className="ant-input-number-handler-down-inner"
+                                          />
+                                        }
+                                        focusOnUpDown={true}
+                                        id="create-category_posts"
+                                        max={9007199254740991}
+                                        min={-1}
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        onPressEnter={[Function]}
+                                        parser={[Function]}
+                                        prefixCls="ant-input-number"
+                                        required={false}
+                                        step={1}
+                                        style={Object {}}
+                                        upHandler={
+                                          <ForwardRef(UpOutlined)
+                                            className="ant-input-number-handler-up-inner"
+                                          />
+                                        }
+                                        useTouch={false}
+                                      >
+                                        <div
+                                          className="ant-input-number"
+                                          onBlur={[Function]}
+                                          onFocus={[Function]}
+                                          style={Object {}}
+                                        >
+                                          <div
+                                            className="ant-input-number-handler-wrap"
+                                          >
+                                            <span
+                                              aria-label="Increase Value"
+                                              className="ant-input-number-handler ant-input-number-handler-up"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(UpOutlined)
+                                                className="ant-input-number-handler-up-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-up-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "up",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="up"
+                                                    className="anticon anticon-up ant-input-number-handler-up-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      className=""
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "up",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        className=""
+                                                        data-icon="up"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-up"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                                                          key="svg-up-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(UpOutlined)>
+                                            </span>
+                                            <span
+                                              aria-label="Decrease Value"
+                                              className="ant-input-number-handler ant-input-number-handler-down"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(DownOutlined)
+                                                className="ant-input-number-handler-down-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-down-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "down",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="down"
+                                                    className="anticon anticon-down ant-input-number-handler-down-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      className=""
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "down",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        className=""
+                                                        data-icon="down"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-down"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                                                          key="svg-down-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(DownOutlined)>
+                                            </span>
+                                          </div>
+                                          <div
+                                            className="ant-input-number-input-wrap"
+                                          >
+                                            <input
+                                              aria-valuemax={9007199254740991}
+                                              aria-valuemin={-1}
+                                              autoComplete="off"
+                                              className="ant-input-number-input"
+                                              id="create-category_posts"
+                                              max={9007199254740991}
+                                              min={-1}
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyUp={[Function]}
+                                              onMouseUp={[Function]}
+                                              required={false}
+                                              role="spinbutton"
+                                              step={1}
+                                              value=""
+                                            />
+                                          </div>
+                                        </div>
+                                      </InputNumber>
+                                    </ForwardRef>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Episodes"
+                name="episodes"
+                rules={
+                  Array [
+                    Object {
+                      "message": "Please enter the numeric value!",
+                      "required": true,
+                    },
+                  ]
+                }
+              >
+                <WrapperField
+                  label="Episodes"
+                  messageVariables={
+                    Object {
+                      "label": "Episodes",
+                    }
+                  }
+                  name="episodes"
+                  onReset={[Function]}
+                  rules={
+                    Array [
+                      Object {
+                        "message": "Please enter the numeric value!",
+                        "required": true,
+                      },
+                    ]
+                  }
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_episodes"
+                    label="Episodes"
+                    messageVariables={
+                      Object {
+                        "label": "Episodes",
+                      }
+                    }
+                    name={
+                      Array [
+                        "episodes",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please enter the numeric value!",
+                          "required": true,
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_episodes"
+                          label="Episodes"
+                          name="episodes"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter the numeric value!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="create-category_episodes"
+                                title="Episodes"
+                              >
+                                Episodes
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Episodes"
+                          name={
+                            Array [
+                              "episodes",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter the numeric value!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <ForwardRef
+                                      id="create-category_episodes"
+                                      min={-1}
+                                      onChange={[Function]}
+                                      step={1}
+                                    >
+                                      <InputNumber
+                                        autoComplete="off"
+                                        className=""
+                                        downHandler={
+                                          <ForwardRef(DownOutlined)
+                                            className="ant-input-number-handler-down-inner"
+                                          />
+                                        }
+                                        focusOnUpDown={true}
+                                        id="create-category_episodes"
+                                        max={9007199254740991}
+                                        min={-1}
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        onPressEnter={[Function]}
+                                        parser={[Function]}
+                                        prefixCls="ant-input-number"
+                                        required={false}
+                                        step={1}
+                                        style={Object {}}
+                                        upHandler={
+                                          <ForwardRef(UpOutlined)
+                                            className="ant-input-number-handler-up-inner"
+                                          />
+                                        }
+                                        useTouch={false}
+                                      >
+                                        <div
+                                          className="ant-input-number"
+                                          onBlur={[Function]}
+                                          onFocus={[Function]}
+                                          style={Object {}}
+                                        >
+                                          <div
+                                            className="ant-input-number-handler-wrap"
+                                          >
+                                            <span
+                                              aria-label="Increase Value"
+                                              className="ant-input-number-handler ant-input-number-handler-up"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(UpOutlined)
+                                                className="ant-input-number-handler-up-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-up-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "up",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="up"
+                                                    className="anticon anticon-up ant-input-number-handler-up-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      className=""
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "up",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        className=""
+                                                        data-icon="up"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-up"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                                                          key="svg-up-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(UpOutlined)>
+                                            </span>
+                                            <span
+                                              aria-label="Decrease Value"
+                                              className="ant-input-number-handler ant-input-number-handler-down"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(DownOutlined)
+                                                className="ant-input-number-handler-down-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-down-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "down",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="down"
+                                                    className="anticon anticon-down ant-input-number-handler-down-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      className=""
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "down",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        className=""
+                                                        data-icon="down"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-down"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                                                          key="svg-down-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(DownOutlined)>
+                                            </span>
+                                          </div>
+                                          <div
+                                            className="ant-input-number-input-wrap"
+                                          >
+                                            <input
+                                              aria-valuemax={9007199254740991}
+                                              aria-valuemin={-1}
+                                              autoComplete="off"
+                                              className="ant-input-number-input"
+                                              id="create-category_episodes"
+                                              max={9007199254740991}
+                                              min={-1}
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyUp={[Function]}
+                                              onMouseUp={[Function]}
+                                              required={false}
+                                              role="spinbutton"
+                                              step={1}
+                                              value=""
+                                            />
+                                          </div>
+                                        </div>
+                                      </InputNumber>
+                                    </ForwardRef>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Media"
+                name="media"
+                rules={
+                  Array [
+                    Object {
+                      "message": "Please enter the numeric value!",
+                      "required": true,
+                    },
+                  ]
+                }
+              >
+                <WrapperField
+                  label="Media"
+                  messageVariables={
+                    Object {
+                      "label": "Media",
+                    }
+                  }
+                  name="media"
+                  onReset={[Function]}
+                  rules={
+                    Array [
+                      Object {
+                        "message": "Please enter the numeric value!",
+                        "required": true,
+                      },
+                    ]
+                  }
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_media"
+                    label="Media"
+                    messageVariables={
+                      Object {
+                        "label": "Media",
+                      }
+                    }
+                    name={
+                      Array [
+                        "media",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please enter the numeric value!",
+                          "required": true,
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_media"
+                          label="Media"
+                          name="media"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter the numeric value!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="create-category_media"
+                                title="Media"
+                              >
+                                Media
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Media"
+                          name={
+                            Array [
+                              "media",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter the numeric value!",
+                                "required": true,
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <ForwardRef
+                                      id="create-category_media"
+                                      min={-1}
+                                      onChange={[Function]}
+                                      step={1}
+                                    >
+                                      <InputNumber
+                                        autoComplete="off"
+                                        className=""
+                                        downHandler={
+                                          <ForwardRef(DownOutlined)
+                                            className="ant-input-number-handler-down-inner"
+                                          />
+                                        }
+                                        focusOnUpDown={true}
+                                        id="create-category_media"
+                                        max={9007199254740991}
+                                        min={-1}
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        onPressEnter={[Function]}
+                                        parser={[Function]}
+                                        prefixCls="ant-input-number"
+                                        required={false}
+                                        step={1}
+                                        style={Object {}}
+                                        upHandler={
+                                          <ForwardRef(UpOutlined)
+                                            className="ant-input-number-handler-up-inner"
+                                          />
+                                        }
+                                        useTouch={false}
+                                      >
+                                        <div
+                                          className="ant-input-number"
+                                          onBlur={[Function]}
+                                          onFocus={[Function]}
+                                          style={Object {}}
+                                        >
+                                          <div
+                                            className="ant-input-number-handler-wrap"
+                                          >
+                                            <span
+                                              aria-label="Increase Value"
+                                              className="ant-input-number-handler ant-input-number-handler-up"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(UpOutlined)
+                                                className="ant-input-number-handler-up-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-up-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "up",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="up"
+                                                    className="anticon anticon-up ant-input-number-handler-up-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      className=""
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "up",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        className=""
+                                                        data-icon="up"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-up"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                                                          key="svg-up-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(UpOutlined)>
+                                            </span>
+                                            <span
+                                              aria-label="Decrease Value"
+                                              className="ant-input-number-handler ant-input-number-handler-down"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(DownOutlined)
+                                                className="ant-input-number-handler-down-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-down-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "down",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="down"
+                                                    className="anticon anticon-down ant-input-number-handler-down-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      className=""
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "down",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        className=""
+                                                        data-icon="down"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-down"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                                                          key="svg-down-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(DownOutlined)>
+                                            </span>
+                                          </div>
+                                          <div
+                                            className="ant-input-number-input-wrap"
+                                          >
+                                            <input
+                                              aria-valuemax={9007199254740991}
+                                              aria-valuemin={-1}
+                                              autoComplete="off"
+                                              className="ant-input-number-input"
+                                              id="create-category_media"
+                                              max={9007199254740991}
+                                              min={-1}
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyUp={[Function]}
+                                              onMouseUp={[Function]}
+                                              required={false}
+                                              role="spinbutton"
+                                              step={1}
+                                              value=""
+                                            />
+                                          </div>
+                                        </div>
+                                      </InputNumber>
+                                    </ForwardRef>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Fact Check"
+                name="fact_check"
+                valuePropName="checked"
+              >
+                <WrapperField
+                  label="Fact Check"
+                  messageVariables={
+                    Object {
+                      "label": "Fact Check",
+                    }
+                  }
+                  name="fact_check"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="checked"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_fact_check"
+                    label="Fact Check"
+                    messageVariables={
+                      Object {
+                        "label": "Fact Check",
+                      }
+                    }
+                    name={
+                      Array [
+                        "fact_check",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="checked"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_fact_check"
+                          label="Fact Check"
+                          name="fact_check"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                          valuePropName="checked"
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-category_fact_check"
+                                title="Fact Check"
+                              >
+                                Fact Check
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Fact Check"
+                          name={
+                            Array [
+                              "fact_check",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                          valuePropName="checked"
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <Switch
+                                      id="create-category_fact_check"
+                                      onChange={[Function]}
+                                    >
+                                      <Wave
+                                        insertExtraNode={true}
+                                      >
+                                        <Switch
+                                          className=""
+                                          id="create-category_fact_check"
+                                          loadingIcon={
+                                            <div
+                                              className="ant-switch-handle"
+                                            />
+                                          }
+                                          onChange={[Function]}
+                                          prefixCls="ant-switch"
+                                        >
+                                          <button
+                                            aria-checked={false}
+                                            className="ant-switch"
+                                            id="create-category_fact_check"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            role="switch"
+                                            type="button"
+                                          >
+                                            <div
+                                              className="ant-switch-handle"
+                                            />
+                                            <span
+                                              className="ant-switch-inner"
+                                            />
+                                          </button>
+                                        </Switch>
+                                      </Wave>
+                                    </Switch>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Podcast"
+                name="podcast"
+                valuePropName="checked"
+              >
+                <WrapperField
+                  label="Podcast"
+                  messageVariables={
+                    Object {
+                      "label": "Podcast",
+                    }
+                  }
+                  name="podcast"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="checked"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_podcast"
+                    label="Podcast"
+                    messageVariables={
+                      Object {
+                        "label": "Podcast",
+                      }
+                    }
+                    name={
+                      Array [
+                        "podcast",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="checked"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_podcast"
+                          label="Podcast"
+                          name="podcast"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                          valuePropName="checked"
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-category_podcast"
+                                title="Podcast"
+                              >
+                                Podcast
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Podcast"
+                          name={
+                            Array [
+                              "podcast",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                          valuePropName="checked"
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <Switch
+                                      id="create-category_podcast"
+                                      onChange={[Function]}
+                                    >
+                                      <Wave
+                                        insertExtraNode={true}
+                                      >
+                                        <Switch
+                                          className=""
+                                          id="create-category_podcast"
+                                          loadingIcon={
+                                            <div
+                                              className="ant-switch-handle"
+                                            />
+                                          }
+                                          onChange={[Function]}
+                                          prefixCls="ant-switch"
+                                        >
+                                          <button
+                                            aria-checked={false}
+                                            className="ant-switch"
+                                            id="create-category_podcast"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            role="switch"
+                                            type="button"
+                                          >
+                                            <div
+                                              className="ant-switch-handle"
+                                            />
+                                            <span
+                                              className="ant-switch-inner"
+                                            />
+                                          </button>
+                                        </Switch>
+                                      </Wave>
+                                    </Switch>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Description"
+                name="description"
+              >
+                <WrapperField
+                  label="Description"
+                  messageVariables={
+                    Object {
+                      "label": "Description",
+                    }
+                  }
+                  name="description"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_description"
+                    label="Description"
+                    messageVariables={
+                      Object {
+                        "label": "Description",
+                      }
+                    }
+                    name={
+                      Array [
+                        "description",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-category_description"
+                          label="Description"
+                          name="description"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-category_description"
+                                title="Description"
+                              >
+                                Description
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Description"
+                          name={
+                            Array [
+                              "description",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <TextArea
+                                      id="create-category_description"
+                                      onChange={[Function]}
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <TextArea
+                                            className=""
+                                            id="create-category_description"
+                                            onChange={[Function]}
+                                            prefixCls="ant-input"
+                                          />
+                                        }
+                                        handleReset={[Function]}
+                                        id="create-category_description"
+                                        inputType="text"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        value=""
+                                      >
+                                        <TextArea
+                                          className=""
+                                          id="create-category_description"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          value=""
+                                        >
+                                          <ResizableTextArea
+                                            className=""
+                                            id="create-category_description"
+                                            onChange={[Function]}
+                                            onKeyDown={[Function]}
+                                            prefixCls="ant-input"
+                                            value=""
+                                          >
+                                            <ResizeObserver
+                                              disabled={true}
+                                              onResize={[Function]}
+                                            >
+                                              <textarea
+                                                className="ant-input"
+                                                id="create-category_description"
+                                                onChange={[Function]}
+                                                onKeyDown={[Function]}
+                                                style={Object {}}
+                                                value=""
+                                              />
+                                            </ResizeObserver>
+                                          </ResizableTextArea>
+                                        </TextArea>
+                                      </ClearableLabeledInput>
+                                    </TextArea>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                wrapperCol={
+                  Object {
+                    "offset": 10,
+                    "span": 14,
+                  }
+                }
+              >
+                <Row
+                  className="ant-form-item"
+                  key="row"
+                >
+                  <div
+                    className="ant-row ant-form-item"
+                    style={Object {}}
+                  >
+                    <FormItemLabel
+                      prefixCls="ant-form"
+                      requiredMark={true}
+                      wrapperCol={
+                        Object {
+                          "offset": 10,
+                          "span": 14,
+                        }
+                      }
+                    />
+                    <FormItemInput
+                      errors={Array []}
+                      onDomErrorVisibleChange={[Function]}
+                      prefixCls="ant-form"
+                      status=""
+                      validateStatus=""
+                      wrapperCol={
+                        Object {
+                          "offset": 10,
+                          "span": 14,
+                        }
+                      }
+                    >
+                      <Col
+                        className="ant-form-item-control"
+                        offset={10}
+                        span={14}
+                      >
+                        <div
+                          className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-form-item-control-input"
+                          >
+                            <div
+                              className="ant-form-item-control-input-content"
+                            >
+                              <Space>
+                                <div
+                                  className="ant-space ant-space-horizontal ant-space-align-center"
+                                >
+                                  <Item
+                                    className="ant-space-item"
+                                    direction="horizontal"
+                                    index={0}
+                                    key="ant-space-item-0"
+                                    marginDirection="marginRight"
+                                    size="small"
+                                  >
+                                    <div
+                                      className="ant-space-item"
+                                      style={
+                                        Object {
+                                          "marginRight": 8,
+                                        }
+                                      }
+                                    >
+                                      <Button
+                                        block={false}
+                                        ghost={false}
+                                        htmlType="submit"
+                                        loading={false}
+                                        type="primary"
+                                      >
+                                        <Wave>
+                                          <button
+                                            className="ant-btn ant-btn-primary"
+                                            onClick={[Function]}
+                                            type="submit"
+                                          >
+                                            <LoadingIcon
+                                              existIcon={false}
+                                              loading={false}
+                                              prefixCls="ant-btn"
+                                            >
+                                              <CSSMotion
+                                                motionName="ant-btn-loading-icon-motion"
+                                                onAppearActive={[Function]}
+                                                onAppearStart={[Function]}
+                                                onEnterActive={[Function]}
+                                                onEnterStart={[Function]}
+                                                onLeaveActive={[Function]}
+                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
+                                                visible={false}
+                                              >
+                                                <DomWrapper />
+                                              </CSSMotion>
+                                            </LoadingIcon>
+                                            <span
+                                              key=".0"
+                                            >
+                                              Submit
+                                            </span>
+                                          </button>
+                                        </Wave>
+                                      </Button>
+                                    </div>
+                                  </Item>
+                                  <Item
+                                    className="ant-space-item"
+                                    direction="horizontal"
+                                    index={1}
+                                    key="ant-space-item-1"
+                                    marginDirection="marginRight"
+                                    size="small"
+                                  >
+                                    <div
+                                      className="ant-space-item"
+                                      style={Object {}}
+                                    >
+                                      <Button
+                                        block={false}
+                                        ghost={false}
+                                        htmlType="button"
+                                        loading={false}
+                                        onClick={[Function]}
+                                      >
+                                        <Wave>
+                                          <button
+                                            className="ant-btn"
+                                            onClick={[Function]}
+                                            type="button"
+                                          >
+                                            <LoadingIcon
+                                              existIcon={false}
+                                              loading={false}
+                                              prefixCls="ant-btn"
+                                            >
+                                              <CSSMotion
+                                                motionName="ant-btn-loading-icon-motion"
+                                                onAppearActive={[Function]}
+                                                onAppearStart={[Function]}
+                                                onEnterActive={[Function]}
+                                                onEnterStart={[Function]}
+                                                onLeaveActive={[Function]}
+                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
+                                                visible={false}
+                                              >
+                                                <DomWrapper />
+                                              </CSSMotion>
+                                            </LoadingIcon>
+                                            <span
+                                              key=".0"
+                                            >
+                                              Reset
+                                            </span>
+                                          </button>
+                                        </Wave>
+                                      </Button>
+                                    </div>
+                                  </Item>
+                                </div>
+                              </Space>
+                            </div>
+                          </div>
+                          <ErrorList
+                            errors={Array []}
+                            onDomErrorVisibleChange={[Function]}
+                          >
+                            <CSSMotion
+                              motionAppear={true}
+                              motionDeadline={500}
+                              motionName="show-help"
+                              onLeaveEnd={[Function]}
+                              removeOnLeave={true}
+                              visible={false}
+                            >
+                              <DomWrapper />
+                            </CSSMotion>
+                          </ErrorList>
+                        </div>
+                      </Col>
+                    </FormItemInput>
+                  </div>
+                </Row>
+              </FormItem>
+            </form>
+          </ForwardRef(Form)>
+        </SizeContextProvider>
+      </ForwardRef(InternalForm)>
+    </RequestForm>
+  </CreateSpaceRequest>
+</Provider>
+`;
