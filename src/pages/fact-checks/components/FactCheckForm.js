@@ -47,9 +47,14 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   });
   const updateClaims = (fetchedClaimId) => {
     const claimList = form.getFieldValue('claims');
-    form.setFieldsValue({
-      claims: [...claimList, fetchedClaimId],
-    });
+    if (claimList.length === data.claims.length) {
+      data.claims.push(fetchedClaimId);
+    } else {
+      form.setFieldsValue({
+        claims: [...claimList, fetchedClaimId],
+      });
+      data.claims = form.getFieldValue('claims');
+    }
     setClaimCreatedFlag(false);
   };
   if (!claimLoading && claimCreatedFlag) {
