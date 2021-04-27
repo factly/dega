@@ -4,13 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"net/http"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/x/requestx"
 	"github.com/spf13/viper"
 )
 
@@ -64,17 +64,13 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 		return nil, nil
 	}
 
-	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/users/application?application=dega")
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return nil, nil
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-User", fmt.Sprint(postAuthor.AuthorID))
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	resp, err := requestx.Request("GET", url, nil, map[string]string{
+		"Content-Type":   "application/json",
+		"X-User":         fmt.Sprint(postAuthor.AuthorID),
+		"X-Organisation": fmt.Sprint(space.OrganisationID),
+	})
 
 	if err != nil {
 		return nil, nil
@@ -82,12 +78,13 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 
 	defer resp.Body.Close()
 
-	users := []*models.User{}
-	err = json.NewDecoder(resp.Body).Decode(&users)
-
+	usersResp := models.UsersPaging{}
+	err = json.NewDecoder(resp.Body).Decode(&usersResp)
 	if err != nil {
 		return nil, nil
 	}
+
+	users := usersResp.Nodes
 
 	offset, pageLimit := util.Parse(page, limit)
 	upperLimit := offset + pageLimit
@@ -114,17 +111,13 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	config.DB.First(space)
 
 	userMap := make(map[uint]models.User)
-	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/users/application?application=dega")
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return nil, nil
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("X-User", fmt.Sprint(id))
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	resp, err := requestx.Request("GET", url, nil, map[string]string{
+		"Content-Type":   "application/json",
+		"X-User":         fmt.Sprint(id),
+		"X-Organisation": fmt.Sprint(space.OrganisationID),
+	})
 
 	if err != nil {
 		return nil, nil
@@ -132,15 +125,14 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 
 	defer resp.Body.Close()
 
-	users := []models.User{}
-	err = json.NewDecoder(resp.Body).Decode(&users)
-
+	usersResp := models.UsersPaging{}
+	err = json.NewDecoder(resp.Body).Decode(&usersResp)
 	if err != nil {
 		return nil, nil
 	}
 
-	for _, u := range users {
-		userMap[u.ID] = u
+	for _, u := range usersResp.Nodes {
+		userMap[u.ID] = *u
 	}
 
 	if user, found := userMap[uint(id)]; found {
