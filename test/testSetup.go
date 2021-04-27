@@ -143,10 +143,20 @@ var Dummy_AuthorList = []map[string]interface{}{
 	},
 }
 
+var AuthorPaging = map[string]interface{}{
+	"nodes": Dummy_AuthorList,
+	"total": len(Dummy_AuthorList),
+}
+
 func KavachMockServer() {
 	viper.Set("kavach_url", "http://kavach:8000")
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/users").
 		Persist().
 		Reply(http.StatusOK).
 		JSON(Dummy_AuthorList)
+
+	gock.New(viper.GetString("kavach_url") + "/users/application?application=dega").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(AuthorPaging)
 }
