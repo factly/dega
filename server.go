@@ -40,10 +40,7 @@ func main() {
 
 	router.Use(middleware.RequestID)
 	router.Use(loggerx.Init())
-	router.Use(validator.CheckSpace())
 	router.Use(middleware.RealIP)
-	router.Use(middlewarex.ValidateAPIToken("dega"))
-	// router.Use(util.GormRequestID)
 
 	config.SetupVars()
 	config.SetupDB()
@@ -62,7 +59,7 @@ func main() {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.Handle("/query", loaders.DataloaderMiddleware(srv))
+	router.With(validator.CheckSpace(), middlewarex.ValidateAPIToken("dega")).Handle("/query", loaders.DataloaderMiddleware(srv))
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 
