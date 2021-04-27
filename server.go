@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -39,9 +40,7 @@ func main() {
 
 	router.Use(middleware.RequestID)
 	router.Use(loggerx.Init())
-	router.Use(validator.CheckSpace())
 	router.Use(middleware.RealIP)
-	// router.Use(util.GormRequestID)
 
 	config.SetupVars()
 	config.SetupDB()
@@ -60,7 +59,7 @@ func main() {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.Handle("/query", loaders.DataloaderMiddleware(srv))
+	router.With(validator.CheckSpace(), middlewarex.ValidateAPIToken("dega")).Handle("/query", loaders.DataloaderMiddleware(srv))
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 

@@ -68,6 +68,11 @@ func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category,
 }
 
 func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
+
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
@@ -95,12 +100,10 @@ func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int,
 		tx = config.DB.Model(&models.Category{})
 	}
 
-	if len(spaces) > 0 {
-		tx.Where("space_id IN (?)", spaces)
-	}
-
 	var total int64
-	tx.Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Where(&models.Category{
+		SpaceID: uint(sID),
+	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 

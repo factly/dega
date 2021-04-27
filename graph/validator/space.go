@@ -16,17 +16,18 @@ const SpaceIDKey ctxKeySpaceID = 0
 func CheckSpace() func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			space := r.Header.Get("space")
-			// if space == "" {
-			// 	w.WriteHeader(http.StatusUnauthorized)
-			// 	return
-			// }
+			space := r.Header.Get("X-Space")
 
-			uid, _ := strconv.Atoi(space)
-			// if err != nil {
-			// 	w.WriteHeader(http.StatusUnauthorized)
-			// 	return
-			// }
+			if space == "" {
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
+
+			uid, err := strconv.Atoi(space)
+			if err != nil {
+				w.WriteHeader(http.StatusUnauthorized)
+				return
+			}
 			ctx := r.Context()
 
 			ctx = context.WithValue(ctx, SpaceIDKey, uid)
