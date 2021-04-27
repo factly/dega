@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
+	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 )
 
@@ -44,6 +45,10 @@ func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*model
 }
 
 func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
@@ -65,12 +70,10 @@ func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, li
 
 	tx := config.DB.Model(&models.Rating{})
 
-	if len(spaces) > 0 {
-		tx.Where("space_id IN (?)", spaces)
-	}
-
 	var total int64
-	tx.Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Where(&models.Rating{
+		SpaceID: uint(sID),
+	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 

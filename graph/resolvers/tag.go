@@ -45,6 +45,10 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 }
 
 func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
@@ -72,12 +76,10 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 		tx = config.DB.Model(&models.Tag{})
 	}
 
-	if len(spaces) > 0 {
-		tx.Where("space_id IN (?)", spaces)
-	}
-
 	var total int64
-	tx.Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Where(&models.Tag{
+		SpaceID: uint(sID),
+	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 

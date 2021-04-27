@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
+	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 )
 
@@ -49,6 +50,10 @@ func (r *claimResolver) Claimant(ctx context.Context, obj *models.Claim) (*model
 }
 
 func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
@@ -70,10 +75,6 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 
 	tx := config.DB.Model(&models.Claim{})
 
-	if len(spaces) > 0 {
-		tx.Where("space_id IN (?)", spaces)
-	}
-
 	filterStr := ""
 
 	if len(ratings) > 0 {
@@ -87,7 +88,9 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 	filterStr = strings.Trim(filterStr, " AND")
 
 	var total int64
-	tx.Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Where(&models.Claim{
+		SpaceID: uint(sID),
+	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 

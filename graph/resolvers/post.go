@@ -231,6 +231,10 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 }
 
 func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
@@ -251,10 +255,6 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 	offset, pageLimit := util.Parse(page, limit)
 
 	tx := config.DB.Model(&models.Post{})
-
-	if len(spaces) > 0 {
-		tx.Where("space_id IN (?)", spaces)
-	}
 
 	if status != nil {
 		tx.Where("status = ?", status)
@@ -284,7 +284,9 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	filterStr = strings.Trim(filterStr, " AND")
 	var total int64
-	tx.Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	tx.Where(&models.Post{
+		SpaceID: uint(sID),
+	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 
