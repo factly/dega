@@ -39,6 +39,10 @@ func (r *categoryResolver) Description(ctx context.Context, obj *models.Category
 	return obj.Description, nil
 }
 
+func (r *categoryResolver) HTMLDescription(ctx context.Context, obj *models.Category) (*string, error) {
+	return &obj.HTMLDescription, nil
+}
+
 func (r *categoryResolver) MetaFields(ctx context.Context, obj *models.Category) (interface{}, error) {
 	return obj.MetaFields, nil
 }
@@ -65,7 +69,6 @@ func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category,
 
 func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -77,7 +80,7 @@ func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int,
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.CategoriesPaging{}
 	result.Nodes = make([]*models.Category, 0)

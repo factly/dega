@@ -21,6 +21,9 @@ func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 	return int(obj.SpaceID), nil
 }
 
+func (r *tagResolver) HTMLDescription(ctx context.Context, obj *models.Tag) (*string, error) {
+	return &obj.HTMLDescription, nil
+}
 func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
@@ -43,7 +46,6 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 
 func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -55,7 +57,7 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.TagsPaging{}
 	result.Nodes = make([]*models.Tag, 0)

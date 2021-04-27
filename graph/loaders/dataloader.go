@@ -15,7 +15,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-const loadersKey = "loaders"
+type contextKey string
+
+const loadersKey contextKey = "loaders"
 
 const ratingLoaderKey = "ratingloader"
 const claimantLoaderKey = "claimantloader"
@@ -33,8 +35,6 @@ type values struct {
 func (v values) Get(key string) interface{} {
 	return v.m[key]
 }
-
-var ctx = context.Background()
 
 // DataloaderMiddleware to add middleware in main
 func DataloaderMiddleware(next http.Handler) http.Handler {

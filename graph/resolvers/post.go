@@ -30,6 +30,10 @@ func (r *postResolver) Description(ctx context.Context, obj *models.Post) (inter
 	return obj.Description, nil
 }
 
+func (r *postResolver) HTMLDescription(ctx context.Context, obj *models.Post) (*string, error) {
+	return &obj.HTMLDescription, nil
+}
+
 func (r *postResolver) Format(ctx context.Context, obj *models.Post) (*models.Format, error) {
 	return loaders.GetFormatLoader(ctx).Load(fmt.Sprint(obj.FormatID))
 }
@@ -142,7 +146,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.Type = "ClaimReview"
 		claimSchema.DatePublished = obj.CreatedAt
 		claimSchema.URL = space.SiteAddress + "/" + obj.Slug
-		claimSchema.ClaimReviewed = each.Claim.Title
+		claimSchema.ClaimReviewed = each.Claim.Claim
 		claimSchema.Author.Type = "Organization"
 		claimSchema.Author.Name = space.Name
 		claimSchema.Author.URL = space.SiteAddress
@@ -150,6 +154,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
 		claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
 		claimSchema.ReviewRating.BestRating = bestRating
+		claimSchema.ReviewRating.RatingExplaination = each.Claim.Fact
 		claimSchema.ReviewRating.WorstRating = worstRating
 		claimSchema.ItemReviewed.Type = "Claim"
 		claimSchema.ItemReviewed.DatePublished = each.Claim.CheckedDate
@@ -178,7 +183,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 
 	if space.Logo != nil {
 		rawLogo, _ := space.Logo.URL.RawMessage.MarshalJSON()
-		json.Unmarshal(rawLogo, &jsonLogo)
+		_ = json.Unmarshal(rawLogo, &jsonLogo)
 	}
 
 	articleSchema := models.ArticleSchema{}
@@ -227,7 +232,6 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 
 func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	columns := []string{"created_at", "updated_at", "name", "slug"}
-	order := "created_at desc"
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
 
@@ -239,7 +243,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 		pageSortBy = *sortBy
 	}
 
-	order = pageSortBy + " " + pageSortOrder
+	order := pageSortBy + " " + pageSortOrder
 
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
@@ -254,6 +258,8 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	if status != nil {
 		tx.Where("status = ?", status)
+	} else {
+		tx.Where("status = ?", "publish")
 	}
 
 	filterStr := ""
@@ -276,7 +282,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	tx.Group("posts.id")
 
-	filterStr = strings.Trim(filterStr, " AND ")
+	filterStr = strings.Trim(filterStr, " AND")
 	var total int64
 	tx.Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
