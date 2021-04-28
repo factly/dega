@@ -1,20 +1,32 @@
 import { CaretRightOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Card, Collapse, Tree } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setClaimOrder, resetClaimOrder } from '../../../actions/claimOrder';
 
-function DraggableClaimList({ ids, setClaimID, details, showModal, claimOrder, setClaimOrder }) {
+function DraggableClaimList({ ids, setClaimID, details, showModal }) {
+  const dispatch = useDispatch();
+  const { claimOrder } = useSelector((state) => {
+    const order = state.claimOrder.order;
+    return { claimOrder: order };
+  });
+  const setClaimListOrder = (order) => {
+    dispatch(setClaimOrder(order));
+  };
+
+  useEffect(() => {}, [claimOrder, dispatch]);
   const { Panel } = Collapse;
   let key;
   let treeNode;
-  const dig = (ids, claims) => {
+  const dig = (claimOrder, claims) => {
     const list = [];
-    if (claims.length > ids.length) {
-      let newClaims = claims.filter((x) => !ids.includes(x));
+    if (claims.length > claimOrder.length) {
+      let newClaims = claims.filter((x) => !claimOrder.includes(x));
       newClaims.forEach((element) => {
-        ids.push(element);
+        claimOrder.push(element);
       });
     }
-    ids.map(
+    claimOrder.map(
       (id) => (
         (key = id),
         (treeNode = {
@@ -103,7 +115,7 @@ function DraggableClaimList({ ids, setClaimID, details, showModal, claimOrder, s
       }
     }
     setTreeData(data);
-    setClaimOrder(claimListOrder);
+    setClaimListOrder(claimListOrder);
   };
 
   return (

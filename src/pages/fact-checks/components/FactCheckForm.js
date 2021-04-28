@@ -15,6 +15,7 @@ import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
 import ClaimList from './ClaimList';
 import DraggableClaimList from './DraggableClaimList';
+import { setClaimOrder, resetClaimOrder } from '../../../actions/claimOrder';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -30,7 +31,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     loading,
   }));
 
-  const [claimOrder, setClaimOrder] = useState(data.claimOrder ? data.claimOrder : []);
+  // const [claimOrder, setClaimOrder] = useState(data.claimOrder ? data.claimOrder : []);
   useEffect(() => {
     const prev = sidebar.collapsed;
     if (!sidebar.collapsed) {
@@ -41,6 +42,22 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const setClaimListOrder = (order) => {
+    //dispatch(setClaimOrder(order));
+  };
+  const { claimOrder } = useSelector((state) => {
+    const order = state.claimOrder.order;
+    return { claimOrder: order };
+  });
+  useEffect(() => {
+    if (data && data.id && data.claims.length > 0) {
+      if (data.claimOrder) dispatch(setClaimOrder(data.claimOrder));
+      else {
+        dispatch(setClaimOrder(data.claims));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   useEffect(() => {}, [details, loading]);
 
@@ -77,6 +94,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
           ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
           : getCurrentDate())
       : (values.published_date = null);
+    dispatch(resetClaimOrder());
     onCreate(values);
   };
 
@@ -220,7 +238,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
               </Form.Item>
               {form.getFieldValue('claims') &&
               form.getFieldValue('claims').length > 0 &&
-              !loading ? (
+              !loading &&
+              claimOrder &&
+              claimOrder.length > 0 ? (
                 <Form.Item name="claimOrder">
                   <DraggableClaimList
                     ids={form.getFieldValue('claims')}
@@ -228,7 +248,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     showModal={showModal}
                     details={details}
                     claimOrder={claimOrder}
-                    setClaimOrder={setClaimOrder}
+                    setClaimOrder={setClaimListOrder}
                   />
                 </Form.Item>
               ) : null}
