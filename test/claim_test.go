@@ -10,6 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gopkg.in/h2non/gock.v1"
 )
 
 var claimData = map[string]interface{}{
@@ -37,16 +38,22 @@ var claimColumns = []string{"id", "created_at", "updated_at", "deleted_at", "cre
 func TestClaim(t *testing.T) {
 	// Setup Mock DB
 	mock := SetupMockDB()
+	KavachMockServer()
 
 	// Start test server
 	testServer := httptest.NewServer(TestRouter())
 	defer testServer.Close()
+
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer gock.Off()
 
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
 
 	// claim testcases
 	t.Run("get list of claims", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		ClaimCountMock(mock, 1)
 		ClaimSelectMock(mock)
 
@@ -58,6 +65,7 @@ func TestClaim(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					claims {
@@ -91,17 +99,19 @@ func TestClaim(t *testing.T) {
 	})
 
 	t.Run("get claim ids sorted by updated_by in ascending order from spaces given as paramter", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		ClaimCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT \* FROM "claims" (.+) ORDER BY updated_at asc`).
-			WithArgs(2, 3).
+			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(claimColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], 1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
-					claims(sortBy:"updated_at", sortOrder:"asc", spaces:[2,3]) {
+					claims(sortBy:"updated_at", sortOrder:"asc") {
 						nodes {
 							id
 						}
@@ -120,6 +130,7 @@ func TestClaim(t *testing.T) {
 	})
 
 	t.Run("get claims filtered by ratings and claims", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		ClaimCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT \* FROM "claims" (.+)claims.rating_id IN \(2,3\) AND claims.claimant_id IN \(4,5\)`).
@@ -127,6 +138,7 @@ func TestClaim(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], 1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					claims(ratings:[2,3], claimants:[4,5]) {

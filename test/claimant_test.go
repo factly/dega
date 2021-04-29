@@ -10,6 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gopkg.in/h2non/gock.v1"
 )
 
 var claimantData = map[string]interface{}{
@@ -28,16 +29,22 @@ var claimantColumns = []string{"id", "created_at", "updated_at", "deleted_at", "
 func TestClaimants(t *testing.T) {
 	// Setup Mock DB
 	mock := SetupMockDB()
+	KavachMockServer()
 
 	// Start test server
 	testServer := httptest.NewServer(TestRouter())
 	defer testServer.Close()
+
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer gock.Off()
 
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
 
 	// claimant testcases
 	t.Run("get list of claimants", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		ClaimantCountMock(mock, 1)
 		ClaimantSelectMock(mock)
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
@@ -45,6 +52,7 @@ func TestClaimants(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					claimants {
@@ -72,17 +80,19 @@ func TestClaimants(t *testing.T) {
 	})
 
 	t.Run("get claimant ids sorted by updated_by in ascending order from spaces given as paramter", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		ClaimantCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT \* FROM "claimants" (.+) ORDER BY updated_at asc`).
-			WithArgs(3, 4).
+			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(claimantColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantData["name"], claimantData["slug"], claimantData["medium_id"], claimantData["description"], claimantData["html_description"], claimantData["tag_line"], 1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
-					claimants (sortBy:"updated_at", sortOrder:"asc", spaces:[3,4]){
+					claimants (sortBy:"updated_at", sortOrder:"asc"){
 						nodes {
 							id
 						}

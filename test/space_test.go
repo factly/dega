@@ -2,6 +2,7 @@ package test
 
 import (
 	"database/sql/driver"
+	"net/http"
 	"net/http/httptest"
 	"regexp"
 	"testing"
@@ -9,6 +10,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
+	"gopkg.in/h2non/gock.v1"
 )
 
 var spaceData map[string]interface{} = map[string]interface{}{
@@ -30,15 +32,21 @@ var spaceColumns = []string{"id", "created_at", "updated_at", "deleted_at", "cre
 func TestSpaces(t *testing.T) {
 	// Setup Mock DB
 	mock := SetupMockDB()
+	KavachMockServer()
 
 	// Start test server
 	testServer := httptest.NewServer(TestRouter())
 	defer testServer.Close()
 
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer gock.Off()
+
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("get space", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		SpaceSelectQuery(mock, 1)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
@@ -46,7 +54,7 @@ func TestSpaces(t *testing.T) {
 				AddRow(1))
 
 		resp := e.POST(path).
-			WithHeader("space", "1").
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					space {
@@ -76,7 +84,7 @@ func TestSpaces(t *testing.T) {
 	})
 
 	t.Run("space header not passed", func(t *testing.T) {
-		resp := e.POST(path).
+		e.POST(path).
 			WithJSON(Query{
 				Query: `{
 					space {
@@ -87,11 +95,7 @@ func TestSpaces(t *testing.T) {
 					}
 				}`,
 			}).Expect().
-			JSON().
-			Object()
-
-		CheckJSON(resp, nil, "space")
-		ExpectationsMet(t, mock)
+			Status(http.StatusUnauthorized)
 	})
 
 }

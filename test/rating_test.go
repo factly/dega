@@ -10,6 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gopkg.in/h2non/gock.v1"
 )
 
 var ratingData = map[string]interface{}{
@@ -34,16 +35,22 @@ var ratingColumns = []string{"id", "created_at", "updated_at", "deleted_at", "cr
 func TestRatings(t *testing.T) {
 	// Setup Mock DB
 	mock := SetupMockDB()
+	KavachMockServer()
 
 	// Start test server
 	testServer := httptest.NewServer(TestRouter())
 	defer testServer.Close()
+
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer gock.Off()
 
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
 
 	// ratings testcases
 	t.Run("get list of ratings", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		RatingCountMock(mock, 1)
 		RatingSelectMock(mock)
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
@@ -51,6 +58,7 @@ func TestRatings(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					ratings {
@@ -80,17 +88,19 @@ func TestRatings(t *testing.T) {
 	})
 
 	t.Run("get rating ids sorted by created_by in ascending order from spaces given as paramter", func(t *testing.T) {
+		CheckSpaceMock(mock)
 
 		RatingCountMock(mock, 1)
 		mock.ExpectQuery(`SELECT \* FROM "ratings" (.+) ORDER BY created_at asc`).
-			WithArgs(5, 6).
+			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(ratingColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratingData["name"], ratingData["slug"], ratingData["background_colour"], ratingData["text_colour"], ratingData["medium_id"], ratingData["description"], ratingData["html_description"], ratingData["numeric_value"], 1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
-					ratings(sortBy:"created_at", sortOrder:"asc", spaces:[5,6]) {
+					ratings(sortBy:"created_at", sortOrder:"asc") {
 						nodes {
 							id
 						}

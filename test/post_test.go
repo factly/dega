@@ -58,10 +58,12 @@ func TestPosts(t *testing.T) {
 
 	// posts testcases
 	t.Run("get list of post ids", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
 		PostSelectMock(mock)
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					posts {
@@ -83,6 +85,7 @@ func TestPosts(t *testing.T) {
 	})
 
 	t.Run("get list of posts in ascending order of slug", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT \* FROM "posts" (.+) ORDER BY slug asc`).
@@ -90,6 +93,7 @@ func TestPosts(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 				posts(sortBy: "slug", sortOrder: "asc") {
@@ -113,13 +117,15 @@ func TestPosts(t *testing.T) {
 	})
 
 	t.Run("get list of draft posts from some spaces", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
-		PostSelectMock(mock, 1, 2, "draft")
+		PostSelectMock(mock, "draft", 1)
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
-				posts(status:"draft", spaces:[1,2]) {
+				posts(status:"draft") {
 						nodes {
 							id
 							title
@@ -140,10 +146,11 @@ func TestPosts(t *testing.T) {
 	})
 
 	t.Run("filter posts based on categories and tags and formats", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT (.+) FROM "posts" INNER JOIN post_categories (.+) INNER JOIN post_tags (.+)category_id IN \(2,3\) (.+)tag_id IN \(1,2\) (.+)format_id IN \(1\)\)`).
-			WithArgs("publish").
+			WithArgs("publish", 1).
 			WillReturnRows(sqlmock.NewRows(postColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
 
@@ -168,6 +175,7 @@ func TestPosts(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 				posts(categories:[2,3], tags:[1,2], formats:[1]) {
@@ -200,10 +208,11 @@ func TestPosts(t *testing.T) {
 	})
 
 	t.Run("filter posts based on authors", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT (.+) FROM "posts" INNER JOIN post_authors (.+)author_id IN \(5,6\)`).
-			WithArgs("publish").
+			WithArgs("publish", 1).
 			WillReturnRows(sqlmock.NewRows(postColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
 
@@ -215,6 +224,7 @@ func TestPosts(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"id", "title"}).AddRow(1, "Test Space"))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 				posts(users:[5,6]) {
@@ -242,10 +252,11 @@ func TestPosts(t *testing.T) {
 
 	// post testcases
 	t.Run("fetch a post by id from a space", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		PostSelectMock(mock, 1, 1)
 
 		resp := e.POST(path).
-			WithHeader("space", "1").
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 				post(id:1){
@@ -263,6 +274,7 @@ func TestPosts(t *testing.T) {
 	})
 
 	t.Run("fetch post with claim", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		PostSelectMock(mock, 1, 1)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
@@ -274,7 +286,7 @@ func TestPosts(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows([]string{"id", "claim", "fact"}).AddRow(1, "Test Claim", "Hard Fact"))
 
 		resp := e.POST(path).
-			WithHeader("space", "1").
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 				post(id:1){
@@ -297,12 +309,13 @@ func TestPosts(t *testing.T) {
 	})
 
 	t.Run("post record not found", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "posts"`)).
 			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(postColumns))
 
 		resp := e.POST(path).
-			WithHeader("space", "1").
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 				post(id:1){
@@ -320,6 +333,7 @@ func TestPosts(t *testing.T) {
 	})
 
 	t.Run("fetch post with schemas", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		PostSelectMock(mock, 1, 1)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
@@ -344,7 +358,7 @@ func TestPosts(t *testing.T) {
 		SpaceSelectQuery(mock)
 
 		resp := e.POST(path).
-			WithHeader("space", "1").
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 				post(id:1){
