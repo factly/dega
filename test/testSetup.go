@@ -27,7 +27,7 @@ import (
 )
 
 var path string = "/query"
-var headers = map[string]string{
+var headers map[string]string = map[string]string{
 	"X-Space":       "1",
 	"Authorization": "Basic MjQzMDlkMGY0NmNmMjlmODFkOTgzMzYzMGVlZGZlYTNlOTIzYmQyNjYwMmY0Y2NmNGRmOTcwNDZiYjEzODA0YTokMmEkMTAkdS5vVGRVWHA3OElrZnRqaXp6enIxZWpRU2E2TDJxaWpXSy9Nd2k1LlBzTVhWclFaVnNoSEc=",
 }
