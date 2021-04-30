@@ -3,6 +3,7 @@ package test
 import (
 	"log"
 	"net/http"
+	"regexp"
 	"testing"
 	"time"
 
@@ -14,6 +15,7 @@ import (
 	"github.com/factly/dega-api/graph/resolvers"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -25,6 +27,10 @@ import (
 )
 
 var path string = "/query"
+var headers map[string]string = map[string]string{
+	"X-Space":       "1",
+	"Authorization": "Basic MjQzMDlkMGY0NmNmMjlmODFkOTgzMzYzMGVlZGZlYTNlOTIzYmQyNjYwMmY0Y2NmNGRmOTcwNDZiYjEzODA0YTokMmEkMTAkdS5vVGRVWHA3OElrZnRqaXp6enIxZWpRU2E2TDJxaWpXSy9Nd2k1LlBzTVhWclFaVnNoSEc=",
+}
 
 type Query struct {
 	Query         string                 `json:"query"`
@@ -52,7 +58,7 @@ func TestRouter() http.Handler {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.Handle("/query", loaders.DataloaderMiddleware(srv))
+	router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation)).Handle("/query", loaders.DataloaderMiddleware(srv))
 
 	return router
 }
@@ -86,6 +92,12 @@ func ExpectationsMet(t *testing.T, mock sqlmock.Sqlmock) {
 	if err := mock.ExpectationsWereMet(); err != nil {
 		t.Errorf("there were unfulfilled expectations: %s", err)
 	}
+}
+
+func CheckSpaceMock(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "spaces"`)).
+		WithArgs(1).
+		WillReturnRows(sqlmock.NewRows([]string{"organisation_id", "slug", "space_id"}).AddRow(1, "test-space", "1"))
 }
 
 var Dummy_AuthorList = []map[string]interface{}{
@@ -159,4 +171,8 @@ func KavachMockServer() {
 		Persist().
 		Reply(http.StatusOK).
 		JSON(AuthorPaging)
+
+	gock.New(viper.GetString("kavach_url") + "/applications/dega/validateToken").
+		Persist().
+		Reply(http.StatusOK)
 }

@@ -9,6 +9,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
+	"gopkg.in/h2non/gock.v1"
 )
 
 var formatData = map[string]interface{}{
@@ -21,20 +22,27 @@ var formatColumns = []string{"id", "created_at", "updated_at", "deleted_at", "cr
 func TestFormats(t *testing.T) {
 	// Setup Mock DB
 	mock := SetupMockDB()
+	KavachMockServer()
 
 	// Start test server
 	testServer := httptest.NewServer(TestRouter())
 	defer testServer.Close()
+
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer gock.Off()
 
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
 
 	// formats testcases
 	t.Run("get list of tag ids", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		FormatCountMock(mock, 1)
 		FormatSelectMock(mock)
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: ` {
 				formats{
@@ -56,13 +64,15 @@ func TestFormats(t *testing.T) {
 	})
 
 	t.Run("get list of tag ids with space ids passed as parameter", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		FormatCountMock(mock, 1)
-		FormatSelectMock(mock, 7, 8)
+		FormatSelectMock(mock, 1)
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: ` {
-				formats(spaces:[7,8]){
+				formats{
 					nodes {
 						id
 					}

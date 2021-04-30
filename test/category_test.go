@@ -10,6 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gopkg.in/h2non/gock.v1"
 )
 
 var categoryData map[string]interface{} = map[string]interface{}{
@@ -32,20 +33,27 @@ var categoryColumns []string = []string{"id", "created_at", "updated_at", "delet
 func TestCategory(t *testing.T) {
 	// Setup Mock DB
 	mock := SetupMockDB()
+	KavachMockServer()
 
 	// Start test server
 	testServer := httptest.NewServer(TestRouter())
 	defer testServer.Close()
+
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer gock.Off()
 
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
 
 	// categories testcases
 	t.Run("get list of category ids", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		CategoryCountMock(mock, 1)
 		CategorySelectMock(mock)
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					categories {
@@ -70,10 +78,12 @@ func TestCategory(t *testing.T) {
 	})
 
 	t.Run("get categories with ids and space ids passed as parameter", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		CategoryCountMock(mock, 1)
-		CategorySelectMock(mock, 1, 2, 4, 5)
+		CategorySelectMock(mock, 1, 2, 1)
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					categories (ids:[1,2], spaces:[4,5]) {
@@ -96,12 +106,14 @@ func TestCategory(t *testing.T) {
 	})
 
 	t.Run("get categories sorted by updated_at", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		CategoryCountMock(mock, 1)
 		mock.ExpectQuery(`SELECT \* FROM "categories" (.+) ORDER BY updated_at asc`).
 			WillReturnRows(sqlmock.NewRows(categoryColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categoryData["name"], categoryData["slug"], categoryData["description"], categoryData["html_description"], categoryData["parent_id"], categoryData["meta_fields"], categoryData["medium_id"], categoryData["is_featured"], 1))
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					categories (sortBy:"updated_at", sortOrder:"asc") {
@@ -125,6 +137,7 @@ func TestCategory(t *testing.T) {
 
 	// category testcases
 	t.Run("get category by id", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		CategorySelectMock(mock, 1, 1)
 
 		mock.ExpectQuery(`SELECT \* FROM "media"`).
@@ -133,7 +146,7 @@ func TestCategory(t *testing.T) {
 				AddRow(1))
 
 		resp := e.POST(path).
-			WithHeader("space", "1").
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					category (id:1) {
@@ -154,12 +167,13 @@ func TestCategory(t *testing.T) {
 	})
 
 	t.Run("category record not found", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "categories"`)).
 			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(categoryColumns))
 
 		resp := e.POST(path).
-			WithHeader("space", "1").
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					category (id:1) {

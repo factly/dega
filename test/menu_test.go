@@ -10,6 +10,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gopkg.in/h2non/gock.v1"
 )
 
 var menuData = map[string]interface{}{
@@ -25,20 +26,27 @@ var menuColumns = []string{"id", "created_at", "updated_at", "deleted_at", "crea
 func TestMenu(t *testing.T) {
 	// Setup Mock DB
 	mock := SetupMockDB()
+	KavachMockServer()
 
 	// Start test server
 	testServer := httptest.NewServer(TestRouter())
 	defer testServer.Close()
+
+	gock.New(testServer.URL).EnableNetworking().Persist()
+	defer gock.DisableNetworking()
+	defer gock.Off()
 
 	// Setup httpexpect
 	e := httpexpect.New(t, testServer.URL)
 
 	// menu testcases
 	t.Run("get menu list", func(t *testing.T) {
+		CheckSpaceMock(mock)
 		MenuCountMock(mock, 1)
 		MenuSelectMenu(mock)
 
 		resp := e.POST(path).
+			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
 					menu {

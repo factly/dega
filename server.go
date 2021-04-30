@@ -59,7 +59,7 @@ func main() {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.With(validator.CheckSpace(), middlewarex.ValidateAPIToken("dega")).Handle("/query", loaders.DataloaderMiddleware(srv))
+	router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation)).Handle("/query", loaders.DataloaderMiddleware(srv))
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 
