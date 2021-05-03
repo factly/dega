@@ -79,7 +79,7 @@ function EditMedium() {
             <Input disabled={disabled} />
           </Form.Item>
           <Form.Item name="description" label="Description">
-            <Input disabled={disabled} />
+            <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} disabled={disabled} />
           </Form.Item>
           <Form.Item>
             <Space>

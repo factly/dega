@@ -187,7 +187,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                           rules={[{ required: true, message: 'Description required' }]}
                           wrapperCol={24}
                         >
-                          <Input placeholder="Enter description" />
+                          <Input.TextArea
+                            autoSize={{ minRows: 3, maxRows: 6 }}
+                            placeholder="Enter description"
+                          />
                         </Form.Item>
                       </Col>
                       <MinusCircleOutlined onClick={() => remove(field.name)} />
@@ -227,7 +230,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                           rules={[{ required: true, message: 'Description required' }]}
                           wrapperCol={24}
                         >
-                          <Input placeholder="Enter description" />
+                          <Input.TextArea
+                            autoSize={{ minRows: 3, maxRows: 6 }}
+                            placeholder="Enter description"
+                          />
                         </Form.Item>
                       </Col>
                       <MinusCircleOutlined onClick={() => remove(field.name)} />
