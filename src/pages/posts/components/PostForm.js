@@ -130,6 +130,13 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                   Save as draft
                 </Button>
               </Form.Item>
+              {data && data.id ? (
+                <Form.Item>
+                  <Button htmlType="submit" onClick={() => setStatus('ready')}>
+                    Ready to Publish
+                  </Button>
+                </Form.Item>
+              ) : null}
               {actions.includes('admin') || actions.includes('publish') ? (
                 <Form.Item name="submit">
                   <Button type="secondary" htmlType="submit" onClick={() => setStatus('publish')}>
