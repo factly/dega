@@ -198,6 +198,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		articleSchema.Author = append(articleSchema.Author, models.Author{
 			Type: "Person",
 			Name: eachAuthor.FirstName + " " + eachAuthor.LastName,
+			URL:  fmt.Sprint(space.SiteAddress, "/", eachAuthor.Slug),
 		})
 	}
 	articleSchema.Publisher.Type = "Organization"
