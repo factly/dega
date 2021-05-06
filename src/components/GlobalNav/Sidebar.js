@@ -59,7 +59,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     'claimants',
     'ratings',
     'organisations',
-    'menu',
+    'menus',
     'fact-checks',
     'episodes',
     'podcasts',
