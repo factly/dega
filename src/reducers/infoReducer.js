@@ -27,11 +27,13 @@ export default function infoReducer(state = initialState, action = {}) {
         draft: 0,
         template: 0,
         publish: 0,
+        ready: 0,
       };
       let factCheck = {
         draft: 0,
         template: 0,
         publish: 0,
+        ready: 0,
       };
 
       posts.forEach((each) => {
