@@ -190,7 +190,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		IsSticky:         post.IsSticky,
 		FeaturedMediumID: featuredMediumID,
 		FormatID:         post.FormatID,
-		SpaceID:          post.SpaceID,
+		SpaceID:          uint(sID),
 	}
 
 	if status == "publish" {

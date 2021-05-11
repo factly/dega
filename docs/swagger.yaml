@@ -1183,6 +1183,113 @@ definitions:
     required:
     - organisation_id
     type: object
+  page.page:
+    properties:
+      author_ids:
+        items:
+          type: integer
+        type: array
+      category_ids:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      excerpt:
+        type: string
+      featured_medium_id:
+        type: integer
+      format_id:
+        type: integer
+      is_featured:
+        type: boolean
+      is_highlighted:
+        type: boolean
+      is_sticky:
+        type: boolean
+      published_date:
+        type: string
+      slug:
+        type: string
+      space_id:
+        type: integer
+      status:
+        type: string
+      subtitle:
+        type: string
+      tag_ids:
+        items:
+          type: integer
+        type: array
+      title:
+        type: string
+    required:
+    - format_id
+    - title
+    type: object
+  page.pageData:
+    properties:
+      authors:
+        items:
+          $ref: '#/definitions/model.Author'
+        type: array
+      categories:
+        items:
+          $ref: '#/definitions/model.Category'
+        type: array
+      created_at:
+        type: string
+      created_by_id:
+        type: integer
+      deleted_at:
+        type: string
+      description:
+        type: string
+      excerpt:
+        type: string
+      featured_medium_id:
+        type: integer
+      format:
+        $ref: '#/definitions/model.Format'
+      format_id:
+        type: integer
+      html_description:
+        type: string
+      id:
+        type: integer
+      is_featured:
+        type: boolean
+      is_highlighted:
+        type: boolean
+      is_sticky:
+        type: boolean
+      medium:
+        $ref: '#/definitions/model.Medium'
+      page:
+        type: boolean
+      published_date:
+        type: string
+      slug:
+        type: string
+      space:
+        $ref: '#/definitions/model.Space'
+      space_id:
+        type: integer
+      status:
+        type: string
+      subtitle:
+        type: string
+      tags:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
+      title:
+        type: string
+      updated_at:
+        type: string
+      updated_by_id:
+        type: integer
+    type: object
   podcast.paging:
     properties:
       nodes:
@@ -2577,6 +2684,164 @@ paths:
       summary: Update a menu by id
       tags:
       - Menu
+  /core/pages:
+    get:
+      description: Get all pages
+      operationId: get-all-pages
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: limit per page
+        in: query
+        name: limit
+        type: string
+      - description: page number
+        in: query
+        name: page
+        type: string
+      - description: sort
+        in: query
+        name: sort
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/page.pageData'
+            type: array
+      summary: Show all pages
+      tags:
+      - Page
+    post:
+      description: Create page
+      operationId: add-page
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Page Object
+        in: body
+        name: Page
+        required: true
+        schema:
+          $ref: '#/definitions/page.page'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/page.pageData'
+      summary: Create page
+      tags:
+      - Page
+  /core/pages/{page_id}:
+    delete:
+      description: Delete page by ID
+      operationId: delete-page-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Page ID
+        in: path
+        name: page_id
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+      summary: Delete a page
+      tags:
+      - Page
+    get:
+      description: Get page by ID
+      operationId: get-page-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Page ID
+        in: path
+        name: page_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/page.pageData'
+      summary: Show a page by id
+      tags:
+      - Page
+    put:
+      description: Update page by ID
+      operationId: update-page-by-id
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      - description: Page ID
+        in: path
+        name: page_id
+        required: true
+        type: string
+      - description: Page
+        in: body
+        name: Page
+        schema:
+          $ref: '#/definitions/page.page'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/page.pageData'
+      summary: Update a page by id
+      tags:
+      - Page
   /core/permissions/organisations:
     get:
       description: Get all organisation permissions
