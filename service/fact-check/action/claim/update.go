@@ -93,6 +93,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	var claimSlug string
 
+	slug := claim.Slug
+	if len(slug) > 150 {
+		slug = claim.Slug[:150]
+	}
+
 	// Get table name
 	stmt := &gorm.Statement{DB: config.DB}
 	_ = stmt.Parse(&model.Claim{})
@@ -100,10 +105,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Slug == claim.Slug {
 		claimSlug = result.Slug
-	} else if claim.Slug != "" && slugx.Check(claim.Slug) {
-		claimSlug = slugx.Approve(&config.DB, claim.Slug, sID, tableName)
+	} else if claim.Slug != "" && slugx.Check(slug) {
+		claimSlug = slugx.Approve(&config.DB, slug, sID, tableName)
 	} else {
-		claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim), sID, tableName)
+		if len(claim.Claim) > 150 {
+			claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim[:150]), sID, tableName)
+		} else {
+			claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim), sID, tableName)
+		}
 	}
 
 	// Store HTML description
