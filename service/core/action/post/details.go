@@ -55,7 +55,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).First(&result.Post).Error
+	}).Where("page = ?", false).First(&result.Post).Error
 
 	if err != nil {
 		loggerx.Error(err)
