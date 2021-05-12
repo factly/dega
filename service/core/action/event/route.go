@@ -20,6 +20,7 @@ func Router() chi.Router {
 
 	r.Get("/", list)
 	r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Post("/", create)
+	r.With(middlewarex.CheckSuperOrganisation(app, util.GetOrganisation)).Post("/default", defaults)
 
 	r.Route("/{event_id}", func(r chi.Router) {
 		r.Get("/", details)

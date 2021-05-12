@@ -314,6 +314,12 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		if err = util.NC.Publish("post.created", result); err != nil {
 			return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
 		}
+
+		if result.Post.Status == "publish" {
+			if err = util.NC.Publish("post.published", result); err != nil {
+				return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
+			}
+		}
 	}
 
 	return result, errorx.Message{}

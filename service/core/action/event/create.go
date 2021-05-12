@@ -61,22 +61,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append app and space tag even if not provided
-	tags := make(map[string]string)
-	if len(event.Tags.RawMessage) > 0 && !reflect.DeepEqual(event.Tags, test.NilJsonb()) {
-		err = json.Unmarshal(event.Tags.RawMessage, &tags)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	tags["app"] = "dega"
-	tags["space"] = fmt.Sprint(sID)
-
-	if event.Tags.RawMessage, err = json.Marshal(tags); err != nil {
+	if err = AddTags(event, sID); err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
@@ -92,6 +79,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if resp.StatusCode == http.StatusUnprocessableEntity {
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	if resp.StatusCode != http.StatusCreated {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
@@ -104,4 +96,24 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusCreated, eventRes)
+}
+
+func AddTags(event *event, sID int) error {
+	tags := make(map[string]string)
+	if len(event.Tags.RawMessage) > 0 && !reflect.DeepEqual(event.Tags, test.NilJsonb()) {
+		err := json.Unmarshal(event.Tags.RawMessage, &tags)
+		if err != nil {
+			return err
+		}
+	}
+
+	tags["app"] = "dega"
+	tags["space"] = fmt.Sprint(sID)
+
+	bytesArr, err := json.Marshal(tags)
+	if err != nil {
+		return err
+	}
+	event.Tags.RawMessage = bytesArr
+	return nil
 }

@@ -2022,6 +2022,37 @@ paths:
       summary: Update a event by id
       tags:
       - Events
+  /core/events/default:
+    post:
+      description: Create default Events
+      operationId: add-default-events
+      parameters:
+      - description: User ID
+        in: header
+        name: X-User
+        required: true
+        type: string
+      - description: Space ID
+        in: header
+        name: X-Space
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/model.Event'
+        "400":
+          description: Bad Request
+          schema:
+            items:
+              type: string
+            type: array
+      summary: Create default Events
+      tags:
+      - Events
   /core/formats:
     get:
       description: Get all formats

@@ -5,11 +5,9 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -72,22 +70,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append app and space tag even if not provided
-	tags := make(map[string]string)
-	if len(event.Tags.RawMessage) > 0 && !reflect.DeepEqual(event.Tags, test.NilJsonb()) {
-		err = json.Unmarshal(event.Tags.RawMessage, &tags)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	tags["app"] = "dega"
-	tags["space"] = fmt.Sprint(sID)
-
-	if event.Tags.RawMessage, err = json.Marshal(tags); err != nil {
+	if err = AddTags(event, sID); err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 

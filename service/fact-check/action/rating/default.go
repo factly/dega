@@ -66,19 +66,18 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+
 	for i := range ratings {
 		ratings[i].SpaceID = uint(sID)
 		ratings[i].HTMLDescription, err = util.HTMLDescription(ratings[i].Description)
 		if err != nil {
+			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse rating description", http.StatusUnprocessableEntity)))
 			return
 		}
-	}
 
-	tx.Model(&model.Rating{}).Create(&ratings)
-
-	for i := range ratings {
+		tx.Model(&model.Rating{}).FirstOrCreate(&ratings[i], &ratings[i])
 		err = insertIntoMeili(ratings[i])
 		if err != nil {
 			tx.Rollback()

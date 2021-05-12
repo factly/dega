@@ -61,22 +61,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append app and space tag even if not provided
-	tags := make(map[string]string)
-	if len(webhook.Tags.RawMessage) > 0 && !reflect.DeepEqual(webhook.Tags, test.NilJsonb()) {
-		err = json.Unmarshal(webhook.Tags.RawMessage, &tags)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	tags["app"] = "dega"
-	tags["space"] = fmt.Sprint(sID)
-
-	if webhook.Tags.RawMessage, err = json.Marshal(tags); err != nil {
+	if err = AddTags(webhook, sID); err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
@@ -105,4 +92,24 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusCreated, webhookRes)
+}
+
+func AddTags(webhook *webhook, sID int) error {
+	tags := make(map[string]string)
+	if len(webhook.Tags.RawMessage) > 0 && !reflect.DeepEqual(webhook.Tags, test.NilJsonb()) {
+		err := json.Unmarshal(webhook.Tags.RawMessage, &tags)
+		if err != nil {
+			return err
+		}
+	}
+
+	tags["app"] = "dega"
+	tags["space"] = fmt.Sprint(sID)
+
+	bytesArr, err := json.Marshal(tags)
+	if err != nil {
+		return err
+	}
+	webhook.Tags.RawMessage = bytesArr
+	return nil
 }

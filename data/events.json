@@ -1,0 +1,116 @@
+[
+    {
+        "name": "category.created"
+    },
+    {
+        "name": "category.updated"
+    },
+    {
+        "name": "category.deleted"
+    },
+    {
+        "name": "format.created"
+    },
+    {
+        "name": "format.updated"
+    },
+    {
+        "name": "format.deleted"
+    },
+    {
+        "name": "media.created"
+    },
+    {
+        "name": "media.updated"
+    },
+    {
+        "name": "media.deleted"
+    },
+    {
+        "name": "menu.created"
+    },
+    {
+        "name": "menu.updated"
+    },
+    {
+        "name": "menu.deleted"
+    },
+    {
+        "name": "post.created"
+    },
+    {
+        "name": "post.updated"
+    },
+    {
+        "name": "post.deleted"
+    },
+    {
+        "name": "post.template.created"
+    },
+    {
+        "name": "post.published"
+    },
+    {
+        "name": "space.created"
+    },
+    {
+        "name": "space.updated"
+    },
+    {
+        "name": "space.deleted"
+    },
+    {
+        "name": "tag.created"
+    },
+    {
+        "name": "tag.updated"
+    },
+    {
+        "name": "tag.deleted"
+    },
+    {
+        "name": "claim.created"
+    },
+    {
+        "name": "claim.updated"
+    },
+    {
+        "name": "claim.deleted"
+    },
+    {
+        "name": "claimant.created"
+    },
+    {
+        "name": "claimant.updated"
+    },
+    {
+        "name": "claimant.deleted"
+    },
+    {
+        "name": "rating.created"
+    },
+    {
+        "name": "rating.updated"
+    },
+    {
+        "name": "rating.deleted"
+    },
+    {
+        "name": "podcast.created"
+    },
+    {
+        "name": "podcast.updated"
+    },
+    {
+        "name": "podcast.deleted"
+    },
+    {
+        "name": "episode.created"
+    },
+    {
+        "name": "episode.updated"
+    },
+    {
+        "name": "episode.deleted"
+    }
+]
