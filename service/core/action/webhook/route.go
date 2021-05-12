@@ -1,6 +1,7 @@
 package webhook
 
 import (
+	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -16,13 +17,15 @@ type webhook struct {
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/", list)
-	r.Post("/", create)
-	r.Get("/logs", logs)
+	entity := "webhooks"
+
+	r.With(util.CheckKetoPolicy(entity, "get")).Get("/", list)
+	r.With(util.CheckKetoPolicy(entity, "create")).Post("/", create)
+	r.With(util.CheckKetoPolicy(entity, "get")).Get("/logs", logs)
 	r.Route("/{webhook_id}", func(r chi.Router) {
-		r.Get("/", details)
-		r.Put("/", update)
-		r.Delete("/", delete)
+		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
+		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
+		r.With(util.CheckKetoPolicy(entity, "deletgete")).Delete("/", delete)
 	})
 
 	return r

@@ -40,7 +40,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hukzURL := viper.GetString("hukz_url") + "/webhooks?tag=app:dega&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
+	sID, err := middlewarex.GetSpace(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	hukzURL := viper.GetString("hukz_url") + "/webhooks?tag=app:dega&tag=space:" + fmt.Sprint(sID) + "&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
 
 	resp, err := requestx.Request("GET", hukzURL, nil, map[string]string{
 		"X-User": fmt.Sprint(uID),
