@@ -6,6 +6,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/event"
 	"github.com/factly/dega-server/service/core/action/info"
 	"github.com/factly/dega-server/service/core/action/menu"
+	"github.com/factly/dega-server/service/core/action/page"
 	"github.com/factly/dega-server/service/core/action/permissions"
 	"github.com/factly/dega-server/service/core/action/request"
 	"github.com/factly/dega-server/service/core/action/webhook"
@@ -36,6 +37,7 @@ func Router() http.Handler {
 	r.Mount("/tags", tag.Router())
 	r.Mount("/spaces", space.Router())
 	r.Mount("/posts", post.Router())
+	r.Mount("/pages", page.Router())
 	r.Mount("/policies", policy.Router())
 	r.Mount("/authors", author.Router())
 	r.Mount("/search", search.Router())

@@ -111,8 +111,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).First(&result.Post).Error
-
+	}).Where("page = ?", false).First(&result.Post).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -122,7 +121,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	post.SpaceID = result.SpaceID
 
 	var postSlug string
-
 	// Get table name
 	stmt := &gorm.Statement{DB: config.DB}
 	_ = stmt.Parse(&model.Post{})

@@ -105,7 +105,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Order("created_at " + sort)
+	}).Where("page = ?", false).Order("created_at " + sort)
 
 	var statusTemplate bool = false
 	for _, status := range queryMap["status"] {
@@ -121,13 +121,17 @@ func list(w http.ResponseWriter, r *http.Request) {
 		formatIDs = append(formatIDs, uint(fidStr))
 	}
 
+	if len(formatIDs) > 0 {
+		tx.Where("format_id IN (?)", formatIDs)
+	}
+
 	if len(filteredPostIDs) > 0 {
 		if !statusTemplate {
 			tx.Where("status != ?", "template")
 		}
-		err = tx.Where(filteredPostIDs).Where("format_id IN (?)", formatIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+		err = tx.Where(filteredPostIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 	} else {
-		err = tx.Where("status != ?", "template").Where("format_id IN (?)", formatIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+		err = tx.Where("status != ?", "template").Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
 	}
 
 	if err != nil {

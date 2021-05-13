@@ -1391,6 +1391,238 @@ var doc = `{
                 }
             }
         },
+        "/core/pages": {
+            "get": {
+                "description": "Get all pages",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Page"
+                ],
+                "summary": "Show all pages",
+                "operationId": "get-all-pages",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "limit per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "sort",
+                        "name": "sort",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/page.pageData"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create page",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Page"
+                ],
+                "summary": "Create page",
+                "operationId": "add-page",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "description": "Page Object",
+                        "name": "Page",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/page.page"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/page.pageData"
+                        }
+                    }
+                }
+            }
+        },
+        "/core/pages/{page_id}": {
+            "get": {
+                "description": "Get page by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Page"
+                ],
+                "summary": "Show a page by id",
+                "operationId": "get-page-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Page ID",
+                        "name": "page_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/page.pageData"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update page by ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Page"
+                ],
+                "summary": "Update a page by id",
+                "operationId": "update-page-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Page ID",
+                        "name": "page_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Page",
+                        "name": "Page",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/page.page"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/page.pageData"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete page by ID",
+                "tags": [
+                    "Page"
+                ],
+                "summary": "Delete a page",
+                "operationId": "delete-page-by-id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User ID",
+                        "name": "X-User",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Space ID",
+                        "name": "X-Space",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Page ID",
+                        "name": "page_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    }
+                }
+            }
+        },
         "/core/permissions/organisations": {
             "get": {
                 "description": "Get all organisation permissions",
@@ -7097,6 +7329,167 @@ var doc = `{
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "page.page": {
+            "type": "object",
+            "required": [
+                "format_id",
+                "title"
+            ],
+            "properties": {
+                "author_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "category_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "description": {
+                    "type": "string"
+                },
+                "excerpt": {
+                    "type": "string"
+                },
+                "featured_medium_id": {
+                    "type": "integer"
+                },
+                "format_id": {
+                    "type": "integer"
+                },
+                "is_featured": {
+                    "type": "boolean"
+                },
+                "is_highlighted": {
+                    "type": "boolean"
+                },
+                "is_sticky": {
+                    "type": "boolean"
+                },
+                "published_date": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subtitle": {
+                    "type": "string"
+                },
+                "tag_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                }
+            }
+        },
+        "page.pageData": {
+            "type": "object",
+            "properties": {
+                "authors": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Author"
+                    }
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Category"
+                    }
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "created_by_id": {
+                    "type": "integer"
+                },
+                "deleted_at": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "excerpt": {
+                    "type": "string"
+                },
+                "featured_medium_id": {
+                    "type": "integer"
+                },
+                "format": {
+                    "$ref": "#/definitions/model.Format"
+                },
+                "format_id": {
+                    "type": "integer"
+                },
+                "html_description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_featured": {
+                    "type": "boolean"
+                },
+                "is_highlighted": {
+                    "type": "boolean"
+                },
+                "is_sticky": {
+                    "type": "boolean"
+                },
+                "medium": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "page": {
+                    "type": "boolean"
+                },
+                "published_date": {
+                    "type": "string"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "space": {
+                    "$ref": "#/definitions/model.Space"
+                },
+                "space_id": {
+                    "type": "integer"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "subtitle": {
+                    "type": "string"
+                },
+                "tags": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Tag"
+                    }
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updated_at": {
+                    "type": "string"
+                },
+                "updated_by_id": {
+                    "type": "integer"
                 }
             }
         },

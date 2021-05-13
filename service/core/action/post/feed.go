@@ -57,7 +57,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Post{}).Where(&model.Post{
 		Status:  "publish",
 		SpaceID: uint(sID),
-	}).Order("created_at desc").Limit(10).Find(&postList)
+	}).Where("page = ?", false).Order("created_at desc").Limit(10).Find(&postList)
 
 	postIDs := make([]uint, 0)
 	for _, post := range postList {
