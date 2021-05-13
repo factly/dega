@@ -5,8 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"reflect"
 
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/test"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -37,6 +39,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	sID, err := middlewarex.GetSpace(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	event := &event{}
 
 	if err = json.NewDecoder(r.Body).Decode(&event); err != nil {
@@ -48,6 +57,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if validationError := validationx.Check(event); validationError != nil {
 		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
+		return
+	}
+
+	// append app and space tag even if not provided
+	if err = AddTags(event, sID); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
@@ -63,6 +79,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if resp.StatusCode == http.StatusUnprocessableEntity {
+		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
+		return
+	}
+
 	if resp.StatusCode != http.StatusCreated {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
@@ -75,4 +96,24 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusCreated, eventRes)
+}
+
+func AddTags(event *event, sID int) error {
+	tags := make(map[string]string)
+	if len(event.Tags.RawMessage) > 0 && !reflect.DeepEqual(event.Tags, test.NilJsonb()) {
+		err := json.Unmarshal(event.Tags.RawMessage, &tags)
+		if err != nil {
+			return err
+		}
+	}
+
+	tags["app"] = "dega"
+	tags["space"] = fmt.Sprint(sID)
+
+	bytesArr, err := json.Marshal(tags)
+	if err != nil {
+		return err
+	}
+	event.Tags.RawMessage = bytesArr
+	return nil
 }

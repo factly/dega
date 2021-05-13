@@ -48,6 +48,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	sID, err := middlewarex.GetSpace(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	webhook := &webhook{}
 
 	if err = json.NewDecoder(r.Body).Decode(&webhook); err != nil {
@@ -59,6 +66,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if validationError := validationx.Check(webhook); validationError != nil {
 		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
+		return
+	}
+
+	// append app and space tag even if not provided
+	if err = AddTags(webhook, sID); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 

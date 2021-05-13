@@ -434,6 +434,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
+		if result.Post.Status == "publish" {
+			if err = util.NC.Publish("post.published", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

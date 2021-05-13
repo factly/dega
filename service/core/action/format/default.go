@@ -67,9 +67,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	for i := range formats {
 		formats[i].SpaceID = uint(sID)
-	}
-	tx.Model(&model.Format{}).Create(&formats)
-	for i := range formats {
+		tx.Model(&model.Format{}).FirstOrCreate(&formats[i], &formats[i])
 		err = insertIntoMeili(formats[i])
 		if err != nil {
 			tx.Rollback()

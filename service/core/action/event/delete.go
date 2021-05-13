@@ -1,6 +1,7 @@
 package event
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -56,6 +57,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if resp.StatusCode == http.StatusNotFound {
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		return
+	}
+
+	if resp.StatusCode == http.StatusUnprocessableEntity {
+		body := map[string]interface{}{}
+		_ = json.NewDecoder(resp.Body).Decode(&body)
+		renderx.JSON(w, http.StatusUnprocessableEntity, body)
 		return
 	}
 
