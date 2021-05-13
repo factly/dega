@@ -58,11 +58,11 @@ type Publisher struct {
 
 // ArticleSchema for article
 type ArticleSchema struct {
-	Context       string    `json:"@context"`
-	Type          string    `json:"@type"`
-	Headline      string    `json:"headline"`
-	Image         []Image   `json:"image"`
-	DatePublished time.Time `json:"datePublished"`
-	Author        []Author  `json:"author"`
-	Publisher     Publisher `json:"publisher"`
+	Context       string     `json:"@context"`
+	Type          string     `json:"@type"`
+	Headline      string     `json:"headline"`
+	Image         []Image    `json:"image"`
+	DatePublished *time.Time `json:"datePublished"`
+	Author        []Author   `json:"author"`
+	Publisher     Publisher  `json:"publisher"`
 }
