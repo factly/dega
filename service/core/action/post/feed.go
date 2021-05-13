@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -11,15 +12,17 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
+	"github.com/factly/x/paginationx"
+	"github.com/go-chi/chi"
 	"github.com/gorilla/feeds"
 )
 
 func Feeds(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
+	spaceID := chi.URLParam(r, "space_id")
+	sID, err := strconv.Atoi(spaceID)
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
@@ -29,6 +32,12 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
+	}
+
+	offset, limit := paginationx.Parse(r.URL.Query())
+	sort := r.URL.Query().Get("sort")
+	if sort != "asc" {
+		sort = "desc"
 	}
 
 	now := time.Now()
@@ -57,7 +66,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Post{}).Where(&model.Post{
 		Status:  "publish",
 		SpaceID: uint(sID),
-	}).Where("page = ?", false).Order("created_at desc").Limit(10).Find(&postList)
+	}).Where("page = ?", false).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	postIDs := make([]uint, 0)
 	for _, post := range postList {

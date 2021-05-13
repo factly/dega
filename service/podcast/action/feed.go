@@ -14,15 +14,15 @@ import (
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/go-chi/chi"
 )
 
 func Feeds(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
+	spaceID := chi.URLParam(r, "space_id")
+	sID, err := strconv.Atoi(spaceID)
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
@@ -34,19 +34,40 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	podcastID := chi.URLParam(r, "podcast_id")
-	id, err := strconv.Atoi(podcastID)
-	if err != nil {
-		loggerx.Error(err)
+	slug := chi.URLParam(r, "podcast_slug")
+	if slug == "" {
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
+	// getting page query param
+	pageNo := 1
+	page := r.URL.Query().Get("page")
+	if page != "" {
+		pageNo, _ = strconv.Atoi(page)
+	}
+
+	// getting limit query param
+	limit := 10
+	lim := r.URL.Query().Get("limit")
+	if lim != "" {
+		limit, _ = strconv.Atoi(lim)
+	}
+	// max limit of 300
+	if limit > 300 {
+		limit = 300
+	}
+
+	sort := r.URL.Query().Get("sort")
+	if sort != "asc" {
+		sort = "desc"
+	}
+
 	result := &model.Podcast{}
-	result.ID = uint(id)
 
 	err = config.DB.Model(&model.Podcast{}).Where(&model.Podcast{
 		SpaceID: uint(sID),
+		Slug:    slug,
 	}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").First(&result).Error
 
 	if err != nil {
@@ -91,10 +112,9 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	// fetch all episodes related to this podcast
 	episodeList := make([]model.Episode, 0)
 
-	pID := uint(id)
 	config.DB.Model(&model.Episode{}).Where(&model.Episode{
-		PodcastID: &pID,
-	}).Find(&episodeList)
+		PodcastID: &result.ID,
+	}).Preload("Medium").Order("created_at " + sort).Limit(limit).Offset((pageNo - 1) * limit).Find(&episodeList)
 
 	episodeIDs := make([]uint, 0)
 	for _, each := range episodeList {

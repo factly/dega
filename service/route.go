@@ -77,8 +77,12 @@ func RegisterFeedsRoutes() http.Handler {
 	r.Use(middleware.Recoverer)
 	r.Use(middleware.Heartbeat("/ping"))
 
-	r.With(middlewarex.CheckSpace(1)).Get("/posts/feeds", post.Feeds)
-	r.With(middlewarex.CheckSpace(1)).Get("/podcasts/{podcast_id}/feeds", podcastAction.Feeds)
+	r.Route("/spaces/{space_id}", func(r chi.Router) {
+		r.Get("/posts/feed", post.Feeds)
+		r.Get("/posts/feeds/rss2", post.Feeds)
+		r.Get("/podcasts/{podcast_slug}/feed", podcastAction.Feeds)
+		r.Get("/podcasts/{podcast_slug}/feeds/rss2", podcastAction.Feeds)
+	})
 
 	return r
 }
