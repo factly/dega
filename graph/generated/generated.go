@@ -175,6 +175,7 @@ type ComplexityRoot struct {
 		IsHighlighted   func(childComplexity int) int
 		IsSticky        func(childComplexity int) int
 		Medium          func(childComplexity int) int
+		Page            func(childComplexity int) int
 		PublishedDate   func(childComplexity int) int
 		Schemas         func(childComplexity int) int
 		Slug            func(childComplexity int) int
@@ -1041,6 +1042,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Post.Medium(childComplexity), true
 
+	case "Post.page":
+		if e.complexity.Post.Page == nil {
+			break
+		}
+
+		return e.complexity.Post.Page(childComplexity), true
+
 	case "Post.published_date":
 		if e.complexity.Post.PublishedDate == nil {
 			break
@@ -1887,6 +1895,7 @@ type Post {
   is_featured: Boolean
   is_sticky: Boolean
   is_highlighted: Boolean
+  page: Boolean
   published_date: Time
   format: Format!
   medium: Medium
@@ -5506,6 +5515,38 @@ func (ec *executionContext) _Post_is_highlighted(ctx context.Context, field grap
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return obj.IsHighlighted, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Post_page(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Post",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Page, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -10611,6 +10652,8 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 			out.Values[i] = ec._Post_is_sticky(ctx, field, obj)
 		case "is_highlighted":
 			out.Values[i] = ec._Post_is_highlighted(ctx, field, obj)
+		case "page":
+			out.Values[i] = ec._Post_page(ctx, field, obj)
 		case "published_date":
 			out.Values[i] = ec._Post_published_date(ctx, field, obj)
 		case "format":
