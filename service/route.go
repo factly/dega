@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service/core"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/action/category"
+	"github.com/factly/dega-server/service/core/action/format"
 	"github.com/factly/dega-server/service/core/action/meta"
 	"github.com/factly/dega-server/service/core/action/post"
 	"github.com/factly/dega-server/service/core/action/request/organisation"
@@ -87,6 +88,8 @@ func RegisterFeedsRoutes() http.Handler {
 		r.Get("/tags/{slugs}/feeds/rss2", tag.Feeds)
 		r.Get("/categories/{slugs}/feed", category.Feeds)
 		r.Get("/categories/{slugs}/feeds/rss2", category.Feeds)
+		r.Get("/formats/{slugs}/feed", format.Feeds)
+		r.Get("/formats/{slugs}/feeds/rss2", format.Feeds)
 		r.Get("/authors/{slugs}/feed", author.Feeds)
 		r.Get("/authors/{slugs}/feeds/rss2", author.Feeds)
 
