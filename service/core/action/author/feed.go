@@ -1,14 +1,14 @@
-package post
+package author
 
 import (
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -32,6 +32,15 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 
+	// create slug map from author's slugs provided in path param
+	slugs := chi.URLParam(r, "slugs")
+	authorSlugs := strings.Split(slugs, ",")
+
+	slugMap := make(map[string]bool)
+	for _, each := range authorSlugs {
+		slugMap[each] = true
+	}
+
 	space := model.Space{}
 	space.ID = uint(sID)
 	if err := config.DB.Preload("Logo").First(&space).Error; err != nil {
@@ -40,24 +49,6 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	feed := GetFeed(space)
-
-	postList := make([]model.Post, 0)
-	config.DB.Model(&model.Post{}).Where(&model.Post{
-		Status:  "publish",
-		SpaceID: uint(sID),
-	}).Where("page = ?", false).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
-
-	feed.Items = GetItemsList(postList, space)
-
-	if err := feed.WriteRss(w); err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-}
-
-func GetFeed(space model.Space) *feeds.Feed {
 	now := time.Now()
 	feed := &feeds.Feed{
 		Id:          fmt.Sprint(space.ID),
@@ -79,24 +70,31 @@ func GetFeed(space model.Space) *feeds.Feed {
 			}
 		}
 	}
-	return feed
-}
 
-func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
-	postIDs := make([]uint, 0)
-	for _, post := range postList {
-		postIDs = append(postIDs, post.ID)
-	}
-
+	// get post authors from published posts in given space
 	postAuthors := make([]model.PostAuthor, 0)
-	config.DB.Model(&model.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postAuthors)
+	config.DB.Model(&model.PostAuthor{}).Joins("JOIN posts ON posts.id = post_authors.post_id").Where("status = ? AND space_id = ? AND page = ?", "publish", spaceID, false).Find(&postAuthors)
 
 	var userID int
 	if len(postAuthors) > 0 {
 		userID = int(postAuthors[0].AuthorID)
 	}
 
-	authorMap := author.Mapper(space.OrganisationID, userID)
+	// create list of author ids whose posts are to be included
+	authorIDs := make([]uint, 0)
+	authorMap := Mapper(space.OrganisationID, userID)
+
+	for _, author := range authorMap {
+		if _, found := slugMap[author.Slug]; found {
+			authorIDs = append(authorIDs, author.ID)
+		}
+	}
+
+	postList := make([]model.Post, 0)
+	config.DB.Model(&model.Post{}).Joins("JOIN post_authors ON posts.id = post_authors.post_id").Where(&model.Post{
+		Status:  "publish",
+		SpaceID: uint(sID),
+	}).Where("page = ?", false).Where("author_id IN (?)", authorIDs).Where("post_authors.deleted_at IS NULL").Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	// generate post author map
 	postAuthorMap := make(map[uint][]uint)
@@ -107,7 +105,6 @@ func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
 		postAuthorMap[po.PostID] = append(postAuthorMap[po.PostID], po.AuthorID)
 	}
 
-	itemList := make([]*feeds.Item, 0)
 	for _, post := range postList {
 		author := authorMap[fmt.Sprint(postAuthorMap[post.ID][0])]
 
@@ -124,7 +121,12 @@ func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
 		if authorName != " " {
 			item.Author = &feeds.Author{Name: authorName, Email: author.Email}
 		}
-		itemList = append(itemList, &item)
+		feed.Items = append(feed.Items, &item)
 	}
-	return itemList
+
+	if err := feed.WriteRss(w); err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 }
