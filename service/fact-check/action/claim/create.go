@@ -74,10 +74,18 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tableName := stmt.Schema.Table
 
 	var claimSlug string
-	if claim.Slug != "" && slugx.Check(claim.Slug) {
-		claimSlug = claim.Slug
+	slug := claim.Slug
+	if len(slug) > 150 {
+		slug = claim.Slug[:150]
+	}
+	if claim.Slug != "" && slugx.Check(slug) {
+		claimSlug = slug
 	} else {
-		claimSlug = slugx.Make(claim.Claim)
+		if len(claim.Claim) > 150 {
+			claimSlug = slugx.Make(claim.Claim[:150])
+		} else {
+			claimSlug = slugx.Make(claim.Claim)
+		}
 	}
 
 	// Store HTML description
