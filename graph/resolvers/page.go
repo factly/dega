@@ -20,7 +20,7 @@ func (r *queryResolver) Page(ctx context.Context, id int) (*models.Post, error) 
 	err = config.DB.Model(&models.Post{}).Where(&models.Post{
 		ID:      uint(id),
 		SpaceID: sID,
-	}).Where("page = ?", true).First(&result).Error
+	}).Where("is_page = ?", true).First(&result).Error
 
 	if err != nil {
 		return nil, nil
@@ -54,7 +54,7 @@ func (r *queryResolver) Pages(ctx context.Context, spaces []int, page *int, limi
 	offset, pageLimit := util.Parse(page, limit)
 
 	var total int64
-	config.DB.Model(&models.Post{}).Where("page = ?", true).Where(&models.Post{
+	config.DB.Model(&models.Post{}).Where("is_page = ?", true).Where(&models.Post{
 		SpaceID: uint(sID),
 	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
