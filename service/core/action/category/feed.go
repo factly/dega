@@ -53,7 +53,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Post{}).Joins("JOIN post_categories ON posts.id = post_categories.post_id").Where(&model.Post{
 		Status:  "publish",
 		SpaceID: uint(sID),
-	}).Where("page = ?", false).Where("category_id IN (?)", categoryIDs).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
+	}).Where("is_page = ?", false).Where("category_id IN (?)", categoryIDs).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	feed.Items = post.GetItemsList(postList, space)
 

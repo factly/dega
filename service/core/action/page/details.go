@@ -50,7 +50,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
 		SpaceID: uint(sID),
-		Page:    true,
+		IsPage:  true,
 	}).First(&result.Post).Error
 
 	if err != nil {

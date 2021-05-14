@@ -111,7 +111,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("page = ?", false).First(&result.Post).Error
+	}).Where("is_page = ?", false).First(&result.Post).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -247,11 +247,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted", "Page").Omit("Tags", "Categories").Updates(model.Post{
+	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted", "IsPage").Omit("Tags", "Categories").Updates(model.Post{
 		IsFeatured:    post.IsFeatured,
 		IsSticky:      post.IsSticky,
 		IsHighlighted: post.IsHighlighted,
-		Page:          post.Page,
+		IsPage:        post.IsPage,
 	})
 	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
@@ -407,6 +407,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"is_featured":    result.IsFeatured,
 		"is_sticky":      result.IsSticky,
 		"is_highlighted": result.IsHighlighted,
+		"is_page":        result.IsPage,
 		"format_id":      result.FormatID,
 		"published_date": meiliPublishDate,
 		"space_id":       result.SpaceID,

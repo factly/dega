@@ -87,7 +87,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-		Page:    true,
+		IsPage:  true,
 	}).First(&result.Post).Error
 
 	if err != nil {
@@ -285,6 +285,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"is_featured":    result.IsFeatured,
 		"is_sticky":      result.IsSticky,
 		"is_highlighted": result.IsHighlighted,
+		"is_page":        result.IsPage,
 		"format_id":      result.FormatID,
 		"published_date": meiliPublishDate,
 		"space_id":       result.SpaceID,

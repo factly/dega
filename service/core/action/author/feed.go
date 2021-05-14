@@ -94,7 +94,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Post{}).Joins("JOIN post_authors ON posts.id = post_authors.post_id").Where(&model.Post{
 		Status:  "publish",
 		SpaceID: uint(sID),
-	}).Where("page = ?", false).Where("author_id IN (?)", authorIDs).Where("post_authors.deleted_at IS NULL").Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
+	}).Where("is_page = ?", false).Where("author_id IN (?)", authorIDs).Where("post_authors.deleted_at IS NULL").Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	// generate post author map
 	postAuthorMap := make(map[uint][]uint)

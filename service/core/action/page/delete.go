@@ -47,7 +47,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-		Page:    true,
+		IsPage:  true,
 	}).Preload("Tags").Preload("Categories").First(&result).Error
 	if err != nil {
 		loggerx.Error(err)
