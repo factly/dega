@@ -99,10 +99,6 @@ var invalidData = map[string]interface{}{
 	"title": "a",
 }
 
-var templateData = map[string]interface{}{
-	"post_id": 1,
-}
-
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "subtitle", "slug", "status", "is_page", "excerpt", "description", "html_description", "is_featured", "is_sticky", "is_highlighted", "featured_medium_id", "format_id", "published_date", "space_id"}
 
 var selectQuery = `SELECT (.+) FROM "posts"`
