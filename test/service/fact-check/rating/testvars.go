@@ -128,7 +128,7 @@ var invalidData = map[string]interface{}{
 
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "background_colour", "text_colour", "medium_id", "description", "html_description", "numeric_value", "space_id"}
 
-var selectQuery = regexp.QuoteMeta(`SELECT * FROM "ratings"`)
+var selectQuery = `SELECT (.+) FROM "ratings"`
 var deleteQuery = regexp.QuoteMeta(`UPDATE "ratings" SET "deleted_at"=`)
 var paginationQuery = `SELECT \* FROM "ratings" (.+) LIMIT 1 OFFSET 1`
 

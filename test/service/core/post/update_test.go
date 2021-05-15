@@ -24,7 +24,7 @@ var updatePost = map[string]interface{}{
 	"subtitle": "post subtitle",
 	"status":   "draft",
 	"excerpt":  "post excerpt",
-	"page":     true,
+	"is_page":  false,
 	"description": postgres.Jsonb{
 		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
@@ -147,7 +147,7 @@ func TestPostUpdate(t *testing.T) {
 		preUpdateDraftMock(mock, updatePost, false)
 
 		mock.ExpectExec(`UPDATE \"posts\"`).
-			WithArgs(test.AnyTime{}, Data["page"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], 1).
+			WithArgs(test.AnyTime{}, Data["is_page"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		medium.SelectWithSpace(mock)
 		format.SelectMock(mock, 1, 1)
