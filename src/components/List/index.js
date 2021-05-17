@@ -183,7 +183,7 @@ function PostList({ actions, format }) {
               item.id !== id ? (
                 item.medium ? (
                   <img
-                    style={{ width: '100%', height: '100%' }}
+                    style={{ width: '150', height: '150' }}
                     alt={item.medium.alt_text}
                     src={
                       item.medium.url?.proxy

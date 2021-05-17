@@ -532,25 +532,25 @@ const routes = {
     },
   },
   menu: {
-    path: '/menu',
+    path: '/menus',
     Component: Menu,
-    title: 'Menu',
+    title: 'Menus',
   },
   createMenu: {
-    path: '/menu/create',
+    path: '/menus/create',
     Component: CreateMenu,
-    title: 'Create Menu',
+    title: 'Create',
     permission: {
-      resource: 'menu',
+      resource: 'menus',
       action: 'create',
     },
   },
   editMenu: {
-    path: '/menu/:id/edit',
+    path: '/menus/:id/edit',
     Component: EditMenu,
-    title: 'Edit Menu',
+    title: 'Edit',
     permission: {
-      resource: 'menu',
+      resource: 'menus',
       action: 'update',
     },
   },
