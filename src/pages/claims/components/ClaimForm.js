@@ -123,7 +123,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             <Input />
           </Form.Item>
           <Form.Item name="fact" label="Fact">
-            <Editor placeholder="Enter Fact..." basic={true} />
+            <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
           </Form.Item>
           <Form.Item
             name="claimant"
