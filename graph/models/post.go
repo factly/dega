@@ -25,7 +25,7 @@ type Post struct {
 	IsHighlighted    bool            `gorm:"column:is_highlighted" json:"is_highlighted"`
 	FeaturedMediumID uint            `gorm:"column:featured_medium_id" json:"featured_medium_id" sql:"DEFAULT:NULL"`
 	FormatID         uint            `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
-	PublishedDate    time.Time       `gorm:"column:published_date" json:"published_date"`
+	PublishedDate    *time.Time      `gorm:"column:published_date" json:"published_date"`
 	SpaceID          uint            `gorm:"column:space_id" json:"space_id"`
 }
 
