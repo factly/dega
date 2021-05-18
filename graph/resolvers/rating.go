@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *ratingResolver) ID(ctx context.Context, obj *models.Rating) (string, error) {
@@ -76,6 +77,10 @@ func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, li
 	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
+
+	if err = cache.SaveToCache(ctx, result); err != nil {
+		return result, nil
+	}
 
 	return result, nil
 }

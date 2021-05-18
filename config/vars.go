@@ -46,4 +46,12 @@ func SetupVars() {
 		log.Fatal("please provide kavach_url config param")
 	}
 
+	if !viper.IsSet("redis_url") {
+		log.Fatal("please provide redis_url config param")
+	}
+
+	if !viper.IsSet("redis_password") {
+		log.Fatal("please provide redis_password config param")
+	}
+
 }

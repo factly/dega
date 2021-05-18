@@ -12,6 +12,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/dega-api/util/cache"
 )
 
 type postResolver struct{ *Resolver }
@@ -228,6 +229,10 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 		return nil, nil
 	}
 
+	if err = cache.SaveToCache(ctx, result); err != nil {
+		return result, nil
+	}
+
 	return result, nil
 }
 
@@ -290,6 +295,10 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
+
+	if err = cache.SaveToCache(ctx, result); err != nil {
+		return result, nil
+	}
 
 	return result, nil
 }

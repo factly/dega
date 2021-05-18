@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/dega-api/util/cache"
 	"github.com/factly/x/requestx"
 	"github.com/spf13/viper"
 )
@@ -95,6 +96,10 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 	result.Nodes = users[offset:upperLimit]
 	result.Total = len(users)
 
+	if err = cache.SaveToCache(ctx, result); err != nil {
+		return &result, nil
+	}
+
 	return &result, nil
 }
 
@@ -136,6 +141,10 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	}
 
 	if user, found := userMap[uint(id)]; found {
+		if err = cache.SaveToCache(ctx, user); err != nil {
+			return &user, nil
+		}
+
 		return &user, nil
 	}
 

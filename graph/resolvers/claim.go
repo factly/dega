@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *claimResolver) ID(ctx context.Context, obj *models.Claim) (string, error) {
@@ -93,6 +94,10 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
+
+	if err = cache.SaveToCache(ctx, result); err != nil {
+		return result, nil
+	}
 
 	return result, nil
 }

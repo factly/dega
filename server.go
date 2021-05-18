@@ -3,11 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/spf13/viper"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -57,6 +59,11 @@ func main() {
 		promRouter.Mount("/metrics", promhttp.Handler())
 		log.Fatal(http.ListenAndServe(":8001", promRouter))
 	}()
+
+	err := cache.SetupCache(viper.GetString("redis_url"), viper.GetString("redis_password"), 30*time.Second, 0)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
