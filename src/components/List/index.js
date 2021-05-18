@@ -177,7 +177,7 @@ function PostList({ actions, format, status }) {
                         Draft
                       </Button>
                     ) : item.status === 'ready' ? (
-                      <Button style={{ border: 'solid 1px', color: '#F7DA21', width: '140px' }}>
+                      <Button style={{ border: 'solid 1px', color: 'gold', width: '140px' }}>
                         Ready to Publish
                       </Button>
                     ) : null,
