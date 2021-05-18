@@ -1,3 +1,4 @@
+import React from 'react';
 import { MEDIA_API } from '../../constants/media';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
@@ -5,7 +6,9 @@ import '@uppy/url/dist/style.css';
 import 'antd/dist/antd.css';
 import { Empty } from 'antd';
 import ReactDOMServer from 'react-dom/server';
-import React from 'react';
+import Tunes from './Tunes';
+import Ui from './Ui';
+
 const Uppy = require('@uppy/core');
 const Dashboard = require('@uppy/dashboard');
 const GoogleDrive = require('@uppy/google-drive');
@@ -17,6 +20,7 @@ class UppyUploader {
   constructor({ data, api, config }) {
     this.config = config;
     this.data = data;
+    //this._data = {};
     this.nodes = {};
     this.blockIndex = api.blocks.getCurrentBlockIndex();
     this.api = api;
@@ -24,6 +28,29 @@ class UppyUploader {
       page: 1,
       limit: 8,
     };
+
+    // this.ui = new Ui({
+    //   api,
+    //   config: this.config,
+    //   onSelectFile: () => {
+    //     this.uploader.uploadSelectedFile({
+    //       onPreview: (src) => {
+    //         this.ui.showPreloader(src);
+    //       },
+    //     });
+    //   },
+    //   // readOnly,
+    // });
+    
+    this.tunes = new Tunes({
+      api,
+      actions: this.config.actions,
+      onChange: (tuneName) => this.tuneToggled(tuneName),
+    });
+    Tunes.tunes.forEach(({ name: tune }) => {
+      const value = typeof data[tune] !== 'undefined' ? data[tune] === true || data[tune] === 'true' : false;
+      this.setTune(tune, value);
+    });
     this.total = 0;
     this.mediaData = [];
     this.nodes.wrapper = document.createElement('div');
@@ -36,7 +63,7 @@ class UppyUploader {
 
     var imageContainer = document.createElement('img');
     imageContainer.setAttribute('style', 'padding:8px');
-    imageContainer.id = 'ImageContainer';
+    imageContainer.id = 'ImageContainer-' + this.blockIndex;
     imageContainer.style.width = '100%';
 
     this.nodes.wrapper.appendChild(imageContainer);
@@ -58,6 +85,109 @@ class UppyUploader {
     return el;
   }
 
+  /**
+   * Set new image file
+   *
+   * @private
+   *
+   * @param {object} file - uploaded file data
+   */
+  // set image(file) {
+  //   if (this._data) {
+  //     this._data.file = file || {};
+
+  //     if (file && file.url) {
+  //       this.ui.fillImage(file.url);
+  //     }
+  //   }
+  // }
+  
+  // get CSS() {
+  //   return {
+  //     baseClass: this.api.styles.block,
+  //     loading: this.api.styles.loader,
+  //     input: this.api.styles.input,
+  //     button: this.api.styles.button,
+
+  //     /**
+  //      * Tool's classes
+  //      */
+  //     wrapper: 'image-tool',
+  //     imageContainer: 'image-tool__image',
+  //     imagePreloader: 'image-tool__image-preloader',
+  //     imageEl: 'image-tool__image-picture',
+  //     caption: 'image-tool__caption',
+  //   };
+  // }
+  
+  
+  tuneToggled(tuneName) {
+    // inverse tune state
+    //this.setTune(tuneName, !this._data[tuneName]);
+    console.log('tune toggle', tuneName, this.data[tuneName]);
+    this.setTune(tuneName, !this.data[tuneName]);
+
+  }
+  setTune(tuneName, value) {
+    //this._data[tuneName] = value;
+    this.data[tuneName] = value;
+
+    this.applyTune(tuneName, value);
+
+    //this.ui.applyTune(tuneName, value,this.nodes.wrapper);
+
+    if (tuneName === 'stretched') {
+      /**
+       * Wait until the API is ready
+       */
+      Promise.resolve()
+        .then(() => {
+          const blockId = this.api.blocks.getCurrentBlockIndex();
+
+          this.api.blocks.stretchBlock(blockId, value);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+  applyTune(tuneName, status) {
+    console.log('tuneName in Ui', tuneName, 'status', status);
+
+    if (tuneName === 'stretched' && status) {
+      console.log('strect called', status)
+      // document
+      //   .getElementById(`ImageContainer-${this.blockIndex}`)
+      //   .setAttribute(
+      //     'style',
+      //     'width: 100%;border-radius: 3px;overflow: hidden;margin-bottom: 10px;max-width: 100%;vertical-align: bottom;display: block;',
+      //   );
+      document.getElementById(`ImageContainer-${this.blockIndex}`).style.removeProperty('max-width');
+        document.getElementById(`ImageContainer-${this.blockIndex}`).style.width = '100%';
+
+    }
+    if (tuneName === 'withBackground' && status) {
+      document
+        .getElementById(`ImageContainer-${this.blockIndex}`)
+        .setAttribute(
+          'style',
+          'padding: 15px;background: white;max-width: 60%;margin: 0 auto;vertical-align: bottom;display: block;border-radius: 3px;overflow: hidden;margin-bottom: 10px;',
+        );
+    }
+    if (tuneName === 'withBorder' && status) {
+      document
+        .getElementById(`ImageContainer-${this.blockIndex}`)
+        .setAttribute(
+          'style',
+          'border-radius: 3px;  overflow: hidden;  margin-bottom: 10px;  border: 1px solid #e8e8eb;',
+        );
+    }
+    //this.nodes.wrapper.classList.toggle(`${this.CSS.wrapper}--${tuneName}`, status);
+
+  }
+  renderSettings() {
+    return this.tunes.render(this.data);
+  }
   createRadioButtons() {
     const radioGroup = this.make('div', 'ant-radio-group ant-radio-group-solid', {
       style: 'margin-bottom: 8px;width:750px;margin-left:8px',
@@ -375,8 +505,10 @@ class UppyUploader {
     }
   }
   save() {
+    //this._data.caption = this.data.caption;
     return this.data;
   }
 }
 
 export default UppyUploader;
+
