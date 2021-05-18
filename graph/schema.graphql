@@ -83,6 +83,7 @@ type Post {
   is_featured: Boolean
   is_sticky: Boolean
   is_highlighted: Boolean
+  is_page: Boolean
   published_date: Time
   format: Format!
   medium: Medium
@@ -240,6 +241,8 @@ type Query {
   formats(spaces:[Int!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int!): Post
+  page(id: Int!): Post
+  pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   user(id: Int!): User
   ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
