@@ -326,7 +326,9 @@ export const updatePost = (data) => {
         );
         data.status === 'publish'
           ? dispatch(addSuccessNotification(`${post.format.name} Published`))
-          : dispatch(addSuccessNotification('Draft Saved'));
+          : data.status === 'draft'
+          ? dispatch(addSuccessNotification('Draft Saved'))
+          : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
