@@ -100,6 +100,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	if post.Status == "ready" {
+		status = "ready"
+	}
+
 	post.SpaceID = uint(sID)
 
 	result, errMessage := createPost(r.Context(), post, status)

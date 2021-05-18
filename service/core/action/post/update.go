@@ -45,7 +45,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	postID := chi.URLParam(r, "post_id")
 	id, err := strconv.Atoi(postID)
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
@@ -247,6 +246,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
+	} else if post.Status == "ready" {
+		updatedPost.Status = "ready"
+	} else if result.Post.Status == "ready" && post.Status == "draft" {
+		updatedPost.Status = "draft"
 	}
 
 	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted", "Page").Omit("Tags", "Categories").Updates(model.Post{
