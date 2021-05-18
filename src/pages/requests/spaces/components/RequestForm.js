@@ -53,9 +53,6 @@ const RequestForm = ({ onCreate, data = {} }) => {
       >
         <Input />
       </Form.Item>
-      <Form.Item name="description" label="Description">
-        <Input.TextArea />
-      </Form.Item>
       <Form.Item name="space_id" label="Space">
         <Select
           allowClear
