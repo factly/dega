@@ -87,7 +87,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-		Page:    true,
+		IsPage:  true,
 	}).First(&result.Post).Error
 
 	if err != nil {
@@ -193,7 +193,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsSticky:      page.IsSticky,
 		IsHighlighted: page.IsHighlighted,
 	})
-	err = tx.Model(&result.Post).Updates(updatedPage).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
+	err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(updatedPage).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -204,7 +204,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	pageAuthors := []model.PostAuthor{}
 	// fetch existing post authors
-	config.DB.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
+	tx.Model(&model.PostAuthor{}).Where(&model.PostAuthor{
 		PostID: uint(id),
 	}).Find(&pageAuthors)
 
@@ -285,6 +285,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"is_featured":    result.IsFeatured,
 		"is_sticky":      result.IsSticky,
 		"is_highlighted": result.IsHighlighted,
+		"is_page":        result.IsPage,
 		"format_id":      result.FormatID,
 		"published_date": meiliPublishDate,
 		"space_id":       result.SpaceID,

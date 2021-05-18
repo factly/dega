@@ -70,7 +70,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	// check of post exist
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("page = ?", false).Preload("Tags").Preload("Categories").First(&result).Error
+	}).Where("is_page = ?", false).Preload("Tags").Preload("Categories").First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)

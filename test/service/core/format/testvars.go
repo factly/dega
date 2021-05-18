@@ -40,7 +40,7 @@ var defaultData = []map[string]interface{}{
 
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug"}
 
-var selectQuery = regexp.QuoteMeta(`SELECT * FROM "formats"`)
+var selectQuery = `SELECT (.+) FROM "formats"`
 var deleteQuery = regexp.QuoteMeta(`UPDATE "formats" SET "deleted_at"=`)
 var paginationQuery = `SELECT \* FROM "formats" (.+) LIMIT 1 OFFSET 1`
 

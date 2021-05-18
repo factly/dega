@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/factly/dega-server/service/core/action/format"
 
@@ -35,11 +36,16 @@ func TestDefaultFormatCreate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectBegin()
-		mock.ExpectQuery(`INSERT INTO "formats"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], 1).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"id"}).
-				AddRow(1))
+		for i := 0; i < 2; i++ {
+			mock.ExpectQuery(selectQuery).
+				WillReturnRows(sqlmock.NewRows(columns))
+
+			mock.ExpectQuery(`INSERT INTO "formats"`).
+				WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["description"], 1).
+				WillReturnRows(sqlmock.
+					NewRows([]string{"id"}).
+					AddRow(1))
+		}
 		mock.ExpectCommit()
 
 		e.POST(defaultsPath).
@@ -50,7 +56,27 @@ func TestDefaultFormatCreate(t *testing.T) {
 			Value("nodes").
 			Array()
 		test.ExpectationsMet(t, mock)
+	})
 
+	t.Run("default formats already created", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+
+		mock.ExpectBegin()
+		for i := 0; i < 2; i++ {
+			mock.ExpectQuery(selectQuery).
+				WillReturnRows(sqlmock.NewRows(columns).
+					AddRow(1, time.Now(), time.Now(), nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"]))
+		}
+		mock.ExpectCommit()
+
+		e.POST(defaultsPath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusCreated).JSON().
+			Object().
+			Value("nodes").
+			Array()
+		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("when cannot open data file", func(t *testing.T) {
@@ -82,8 +108,11 @@ func TestDefaultFormatCreate(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectBegin()
+		mock.ExpectQuery(selectQuery).
+			WillReturnRows(sqlmock.NewRows(columns))
+
 		mock.ExpectQuery(`INSERT INTO "formats"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1, test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["description"], 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["description"], 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

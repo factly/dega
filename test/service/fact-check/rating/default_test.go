@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service/fact-check/action/rating"
@@ -38,22 +39,40 @@ func TestDefaultRatingCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 
-		mock.ExpectQuery(`INSERT INTO "ratings"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["background_colour"], defaultData[0]["text_colour"], defaultData[0]["description"], defaultData[0]["html_description"], defaultData[0]["numeric_value"], nil, 1,
+		for i := 0; i < 6; i++ {
+			mock.ExpectQuery(selectQuery).
+				WillReturnRows(sqlmock.NewRows(columns))
 
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["background_colour"], defaultData[1]["text_colour"], defaultData[1]["description"], defaultData[1]["html_description"], defaultData[1]["numeric_value"], nil, 1,
+			mock.ExpectQuery(`INSERT INTO "ratings"`).
+				WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["background_colour"], defaultData[i]["text_colour"], defaultData[i]["description"], defaultData[i]["html_description"], defaultData[i]["numeric_value"], nil, 1).
+				WillReturnRows(sqlmock.
+					NewRows([]string{"id"}).
+					AddRow(1))
+		}
+		mock.ExpectCommit()
 
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[2]["name"], defaultData[2]["slug"], defaultData[2]["background_colour"], defaultData[2]["text_colour"], defaultData[2]["description"], defaultData[2]["html_description"], defaultData[2]["numeric_value"], nil, 1,
+		e.POST(defaultsPath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			Value("nodes").
+			Array()
+		test.ExpectationsMet(t, mock)
+	})
 
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[3]["name"], defaultData[3]["slug"], defaultData[3]["background_colour"], defaultData[3]["text_colour"], defaultData[3]["description"], defaultData[3]["html_description"], defaultData[3]["numeric_value"], nil, 1,
+	t.Run("default ratings already created", func(t *testing.T) {
+		test.CheckSpaceMock(mock)
+		space.SelectQuery(mock, 1)
 
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[4]["name"], defaultData[4]["slug"], defaultData[4]["background_colour"], defaultData[4]["text_colour"], defaultData[4]["description"], defaultData[4]["html_description"], defaultData[4]["numeric_value"], nil, 1,
+		mock.ExpectBegin()
 
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[5]["name"], defaultData[5]["slug"], defaultData[5]["background_colour"], defaultData[5]["text_colour"], defaultData[5]["description"], defaultData[5]["html_description"], defaultData[5]["numeric_value"], nil, 1).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"id"}).
-				AddRow(1))
-
+		for i := 0; i < 6; i++ {
+			mock.ExpectQuery(selectQuery).
+				WillReturnRows(sqlmock.NewRows(columns).
+					AddRow(1, time.Now(), time.Now(), nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["background_colour"], defaultData[i]["text_colour"], defaultData[i]["medium_id"], defaultData[i]["description"], defaultData[i]["html_description"], defaultData[i]["numeric_value"], 1))
+		}
 		mock.ExpectCommit()
 
 		e.POST(defaultsPath).
@@ -101,18 +120,11 @@ func TestDefaultRatingCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 
+		mock.ExpectQuery(selectQuery).
+			WillReturnRows(sqlmock.NewRows(columns))
+
 		mock.ExpectQuery(`INSERT INTO "ratings"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["background_colour"], defaultData[0]["text_colour"], defaultData[0]["description"], defaultData[0]["html_description"], defaultData[0]["numeric_value"], nil, 1,
-
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[1]["name"], defaultData[1]["slug"], defaultData[1]["background_colour"], defaultData[1]["text_colour"], defaultData[1]["description"], defaultData[1]["html_description"], defaultData[1]["numeric_value"], nil, 1,
-
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[2]["name"], defaultData[2]["slug"], defaultData[2]["background_colour"], defaultData[2]["text_colour"], defaultData[2]["description"], defaultData[2]["html_description"], defaultData[2]["numeric_value"], nil, 1,
-
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[3]["name"], defaultData[3]["slug"], defaultData[3]["background_colour"], defaultData[3]["text_colour"], defaultData[3]["description"], defaultData[3]["html_description"], defaultData[3]["numeric_value"], nil, 1,
-
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[4]["name"], defaultData[4]["slug"], defaultData[4]["background_colour"], defaultData[4]["text_colour"], defaultData[4]["description"], defaultData[4]["html_description"], defaultData[4]["numeric_value"], nil, 1,
-
-				test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[5]["name"], defaultData[5]["slug"], defaultData[5]["background_colour"], defaultData[5]["text_colour"], defaultData[5]["description"], defaultData[5]["html_description"], defaultData[5]["numeric_value"], nil, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["background_colour"], defaultData[0]["text_colour"], defaultData[0]["description"], defaultData[0]["html_description"], defaultData[0]["numeric_value"], nil, 1).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"id"}).
 				AddRow(1))

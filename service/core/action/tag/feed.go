@@ -53,7 +53,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Post{}).Joins("JOIN post_tags ON posts.id = post_tags.post_id").Where(&model.Post{
 		Status:  "publish",
 		SpaceID: uint(sID),
-	}).Where("page = ?", false).Where("tag_id IN (?)", tagIDs).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
+	}).Where("is_page = ?", false).Where("tag_id IN (?)", tagIDs).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	feed.Items = post.GetItemsList(postList, space)
 

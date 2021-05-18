@@ -54,7 +54,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("page = ?", true).Order("created_at " + sort).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts)
+	}).Where("is_page = ?", true).Order("created_at " + sort).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts)
 
 	var postIDs []uint
 	for _, p := range posts {

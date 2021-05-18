@@ -19,7 +19,7 @@ type post struct {
 	Excerpt          string         `json:"excerpt"`
 	Description      postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	Status           string         `json:"status"`
-	Page             bool           `json:"page"`
+	IsPage           bool           `json:"is_page"`
 	IsFeatured       bool           `json:"is_featured"`
 	IsSticky         bool           `json:"is_sticky"`
 	IsHighlighted    bool           `json:"is_highlighted"`

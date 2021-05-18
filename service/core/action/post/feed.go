@@ -46,7 +46,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.Post{}).Where(&model.Post{
 		Status:  "publish",
 		SpaceID: uint(sID),
-	}).Where("page = ?", false).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
+	}).Where("is_page = ?", false).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
 	feed.Items = GetItemsList(postList, space)
 

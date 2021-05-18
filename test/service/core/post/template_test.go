@@ -91,7 +91,7 @@ func TestPostTemplateCreate(t *testing.T) {
 	t.Run("post record not found", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		mock.ExpectQuery(selectQuery).
-			WithArgs(1, 1).
+			WithArgs(1, false, 1).
 			WillReturnRows(sqlmock.NewRows(columns))
 
 		e.POST(templatePath).
@@ -126,7 +126,7 @@ func TestPostTemplateCreate(t *testing.T) {
 		format.SelectMock(mock, 1, 1)
 
 		mock.ExpectQuery(`INSERT INTO "posts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["page"], Data["excerpt"], Data["description"], Data["html_description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], nil, 1, Data["featured_medium_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["is_page"], Data["excerpt"], Data["description"], Data["html_description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], nil, 1, Data["featured_medium_id"]).
 			WillReturnError(errors.New("cannot create post"))
 		mock.ExpectRollback()
 
