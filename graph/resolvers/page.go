@@ -7,6 +7,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *queryResolver) Page(ctx context.Context, id int) (*models.Post, error) {
@@ -24,6 +25,10 @@ func (r *queryResolver) Page(ctx context.Context, id int) (*models.Post, error) 
 
 	if err != nil {
 		return nil, nil
+	}
+
+	if err = cache.SaveToCache(ctx, result); err != nil {
+		return result, nil
 	}
 
 	return result, nil
@@ -59,6 +64,10 @@ func (r *queryResolver) Pages(ctx context.Context, spaces []int, page *int, limi
 	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
+
+	if err = cache.SaveToCache(ctx, result); err != nil {
+		return result, nil
+	}
 
 	return result, nil
 }
