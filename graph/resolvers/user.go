@@ -96,8 +96,10 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 	result.Nodes = users[offset:upperLimit]
 	result.Total = len(users)
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return &result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return &result, nil
+		}
 	}
 
 	return &result, nil
@@ -141,8 +143,10 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	}
 
 	if user, found := userMap[uint(id)]; found {
-		if err = cache.SaveToCache(ctx, user); err != nil {
-			return &user, nil
+		if cache.IsEnabled() {
+			if err = cache.SaveToCache(ctx, user); err != nil {
+				return &user, nil
+			}
 		}
 
 		return &user, nil

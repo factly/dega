@@ -3,6 +3,7 @@ package config
 import (
 	"log"
 
+	"github.com/factly/dega-api/util/cache"
 	"github.com/spf13/viper"
 )
 
@@ -46,12 +47,17 @@ func SetupVars() {
 		log.Fatal("please provide kavach_url config param")
 	}
 
-	if !viper.IsSet("redis_url") {
-		log.Fatal("please provide redis_url config param")
+	if !viper.IsSet("enable_cache") {
+		log.Fatal("please provide enable_cache config param")
 	}
 
-	if !viper.IsSet("redis_password") {
-		log.Fatal("please provide redis_password config param")
-	}
+	if cache.IsEnabled() {
+		if !viper.IsSet("redis_url") {
+			log.Fatal("please provide redis_url config param")
+		}
 
+		if !viper.IsSet("redis_password") {
+			log.Fatal("please provide redis_password config param")
+		}
+	}
 }

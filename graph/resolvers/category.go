@@ -65,8 +65,10 @@ func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category,
 		return nil, nil
 	}
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil
@@ -112,8 +114,10 @@ func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int,
 
 	result.Total = int(total)
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil

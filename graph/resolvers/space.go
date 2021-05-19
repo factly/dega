@@ -77,8 +77,10 @@ func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 		ID: sID,
 	}).First(&result)
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil

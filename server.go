@@ -60,14 +60,27 @@ func main() {
 		log.Fatal(http.ListenAndServe(":8001", promRouter))
 	}()
 
-	err := cache.SetupCache(viper.GetString("redis_url"), viper.GetString("redis_password"), 30*time.Second, 0)
-	if err != nil {
-		log.Fatal(err)
+	if cache.IsEnabled() {
+		cacheExpiration := 30
+		if viper.IsSet("redis_cache_expiration") {
+			cacheExpiration = viper.GetInt("redis_cache_expiration")
+		}
+
+		err := cache.SetupCache(viper.GetString("redis_url"), viper.GetString("redis_password"), time.Duration(cacheExpiration)*time.Second, 0)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation), cache.CachingMiddleware()).Handle("/query", loaders.DataloaderMiddleware(srv))
+	r := router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation))
+
+	if cache.IsEnabled() {
+		r = r.With(cache.CachingMiddleware())
+	}
+
+	r.Handle("/query", loaders.DataloaderMiddleware(srv))
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 

@@ -27,8 +27,10 @@ func (r *queryResolver) Page(ctx context.Context, id int) (*models.Post, error) 
 		return nil, nil
 	}
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil
@@ -65,8 +67,10 @@ func (r *queryResolver) Pages(ctx context.Context, spaces []int, page *int, limi
 
 	result.Total = int(total)
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil

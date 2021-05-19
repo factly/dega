@@ -35,8 +35,10 @@ func (r *queryResolver) Media(ctx context.Context) ([]*models.Medium, error) {
 		SpaceID: sID,
 	}).Find(&result)
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil

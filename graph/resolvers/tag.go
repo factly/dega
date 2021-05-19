@@ -42,8 +42,10 @@ func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
 		return nil, nil
 	}
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil
@@ -88,8 +90,10 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 
 	result.Total = int(total)
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil

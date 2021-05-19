@@ -36,8 +36,10 @@ func (r *queryResolver) Formats(ctx context.Context, spaces []int) (*models.Form
 
 	result.Total = int(total)
 
-	if err = cache.SaveToCache(ctx, result); err != nil {
-		return result, nil
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil

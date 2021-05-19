@@ -13,6 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/go-redis/redis"
+	"github.com/spf13/viper"
 )
 
 // GlobalCache: global cache
@@ -75,4 +76,8 @@ func SaveToCache(ctx context.Context, data interface{}) error {
 		return nil
 	}
 	return nil
+}
+
+func IsEnabled() bool {
+	return viper.IsSet("enable_cache") && viper.GetBool("enable_cache")
 }
