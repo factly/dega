@@ -5,7 +5,7 @@ import deepEqual from 'deep-equal';
 import { Space, Button, Popconfirm, Table } from 'antd';
 import { Link } from 'react-router-dom';
 
-function MenuList() {
+function MenuList({ actions }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -47,7 +47,9 @@ function MenuList() {
               }}
               to={`/menus/${record.id}/edit`}
             >
-              <Button>Edit</Button>
+              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
+                Edit
+              </Button>
             </Link>
             <Popconfirm
               title="Sure to delete?"
@@ -57,8 +59,11 @@ function MenuList() {
                   window.location.reload();
                 })
               }
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
             >
-              <Button>Delete</Button>
+              <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                Delete
+              </Button>
             </Popconfirm>
           </span>
         );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Popconfirm, Button, List, Input, Select, Form, Space, Tag } from 'antd';
+import { Popconfirm, Button, List, Input, Select, Form, Space, Tag, Row, Col } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts, deletePost } from '../../actions/posts';
@@ -59,6 +59,8 @@ function PostList({ actions, format }) {
       category: values.categories,
       sort: values.sort,
       q: values.q,
+      author: values.authors,
+      status: values.status !== 'all' ? values.status : null,
     };
 
     setFilters({ ...filters, ...filterValue });
@@ -81,37 +83,86 @@ function PostList({ actions, format }) {
         layout="inline"
         onFinish={(values) => onSave(values)}
         style={{ maxWidth: '100%' }}
+        className="ant-advanced-search-form"
       >
-        <Form.Item name="q" label="Search" style={{ width: '25%' }}>
-          <Input placeholder="search posts" />
-        </Form.Item>
-        <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
-          <Select defaultValue="desc" style={{ maxWidth: '160px' }}>
-            <Option value="desc">Latest</Option>
-            <Option value="asc">Old</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item name="tags" label="Tags" style={{ width: '15%' }}>
-          <Selector
-            mode="multiple"
-            action="Tags"
-            placeholder="Filter Tags"
-            style={{ maxWidth: '160px' }}
-          />
-        </Form.Item>
-        <Form.Item name="categories" label="Categories" style={{ width: '15%' }}>
-          <Selector
-            mode="multiple"
-            action="Categories"
-            placeholder="Filter Categories"
-            style={{ maxWidth: '160px' }}
-          />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
+        <Row gutter={24}>
+          <Col span={8} key={1}>
+            <Form.Item name="q" label="Search" style={{ width: '260px' }}>
+              <Input placeholder="search posts" />
+            </Form.Item>
+          </Col>
+          <Col span={8} key={2}>
+            <Form.Item name="sort" label="Sort" style={{ width: '260px' }}>
+              <Select defaultValue="desc" style={{ maxWidth: '260px' }}>
+                <Option value="desc">Latest</Option>
+                <Option value="asc">Old</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8} key={3}>
+            <Form.Item name="status" label="Status" style={{ width: '260px' }}>
+              <Select defaultValue="all" style={{ maxWidth: '260px' }}>
+                <Option value="all">All</Option>
+                <Option value="draft">Draft</Option>
+                <Option value="publish">Publish</Option>
+                <Option value="ready">Ready to Publish</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8} key={4}>
+            <Form.Item name="tags" label="Tags" style={{ width: '260px' }}>
+              <Selector
+                mode="multiple"
+                action="Tags"
+                placeholder="Filter Tags"
+                style={{
+                  maxWidth: '260px',
+                  marginTop: '8px',
+                }}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8} key={5}>
+            <Form.Item name="categories" label="Categories" style={{ width: '260px' }}>
+              <Selector
+                mode="multiple"
+                action="Categories"
+                placeholder="Filter Categories"
+                style={{
+                  maxWidth: '260px',
+                  marginTop: '8px',
+                }}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={8} key={6}>
+            <Form.Item name="authors" label="Authors" style={{ width: '260px' }}>
+              <Selector
+                mode="multiple"
+                action="Authors"
+                placeholder="Filter Authors"
+                display={'email'}
+                style={{
+                  maxWidth: '260px',
+                  marginTop: '8px',
+                }}
+              />
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={24}>
+            <Form.Item>
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ marginTop: '8px', marginLeft: '1080px' }}
+              >
+                Submit
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
       <List
         bordered
