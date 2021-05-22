@@ -7,7 +7,6 @@ import 'antd/dist/antd.css';
 import { Empty } from 'antd';
 import ReactDOMServer from 'react-dom/server';
 import Tunes from './Tunes';
-import Ui from './Ui';
 
 const Uppy = require('@uppy/core');
 const Dashboard = require('@uppy/dashboard');
@@ -16,11 +15,18 @@ const Url = require('@uppy/url');
 const AwsS3 = require('@uppy/aws-s3');
 const axios = require('axios');
 
+const style = {
+  withBackground:
+    'padding: 15px;background: white;max-width: 60%;margin: 0 auto;vertical-align: bottom;display: block;border-radius: 3px;overflow: hidden;margin-bottom: 10px;',
+  withBorder:
+    'border-radius: 3px;  overflow: hidden;  margin-bottom: 10px;  border: 1px solid #e8e8eb;',
+  stretched: 'width:100%',
+};
+
 class UppyUploader {
   constructor({ data, api, config }) {
     this.config = config;
     this.data = data;
-    //this._data = {};
     this.nodes = {};
     this.blockIndex = api.blocks.getCurrentBlockIndex();
     this.api = api;
@@ -29,19 +35,6 @@ class UppyUploader {
       limit: 8,
     };
 
-    // this.ui = new Ui({
-    //   api,
-    //   config: this.config,
-    //   onSelectFile: () => {
-    //     this.uploader.uploadSelectedFile({
-    //       onPreview: (src) => {
-    //         this.ui.showPreloader(src);
-    //       },
-    //     });
-    //   },
-    //   // readOnly,
-    // });
-    
     this.tunes = new Tunes({
       api,
       actions: this.config.actions,
@@ -85,57 +78,22 @@ class UppyUploader {
     return el;
   }
 
-  /**
-   * Set new image file
-   *
-   * @private
-   *
-   * @param {object} file - uploaded file data
-   */
-  // set image(file) {
-  //   if (this._data) {
-  //     this._data.file = file || {};
-
-  //     if (file && file.url) {
-  //       this.ui.fillImage(file.url);
-  //     }
-  //   }
-  // }
-  
-  // get CSS() {
-  //   return {
-  //     baseClass: this.api.styles.block,
-  //     loading: this.api.styles.loader,
-  //     input: this.api.styles.input,
-  //     button: this.api.styles.button,
-
-  //     /**
-  //      * Tool's classes
-  //      */
-  //     wrapper: 'image-tool',
-  //     imageContainer: 'image-tool__image',
-  //     imagePreloader: 'image-tool__image-preloader',
-  //     imageEl: 'image-tool__image-picture',
-  //     caption: 'image-tool__caption',
-  //   };
-  // }
-  
-  
   tuneToggled(tuneName) {
-    // inverse tune state
-    //this.setTune(tuneName, !this._data[tuneName]);
-    console.log('tune toggle', tuneName, this.data[tuneName]);
+    Tunes.tunes.forEach(({ name: tune }) => {
+      if (this.data[tune] === true && tune !== tuneName) {
+        this.data[tune] = false;
+        const button = this.tunes.buttons.find((el) => el.dataset.tune === tune);
+        button.classList.toggle(
+          this.tunes.CSS.buttonActive,
+          !button.classList.contains(this.tunes.CSS.buttonActive),
+        );
+      }
+    });
     this.setTune(tuneName, !this.data[tuneName]);
-
   }
   setTune(tuneName, value) {
-    //this._data[tuneName] = value;
     this.data[tuneName] = value;
-
     this.applyTune(tuneName, value);
-
-    //this.ui.applyTune(tuneName, value,this.nodes.wrapper);
-
     if (tuneName === 'stretched') {
       /**
        * Wait until the API is ready
@@ -152,38 +110,16 @@ class UppyUploader {
     }
   }
   applyTune(tuneName, status) {
-    console.log('tuneName in Ui', tuneName, 'status', status);
-
-    if (tuneName === 'stretched' && status) {
-      console.log('strect called', status)
-      // document
-      //   .getElementById(`ImageContainer-${this.blockIndex}`)
-      //   .setAttribute(
-      //     'style',
-      //     'width: 100%;border-radius: 3px;overflow: hidden;margin-bottom: 10px;max-width: 100%;vertical-align: bottom;display: block;',
-      //   );
-      document.getElementById(`ImageContainer-${this.blockIndex}`).style.removeProperty('max-width');
-        document.getElementById(`ImageContainer-${this.blockIndex}`).style.width = '100%';
-
-    }
-    if (tuneName === 'withBackground' && status) {
+    if (document.getElementById(`ImageContainer-${this.blockIndex}`) && status === false) {
       document
         .getElementById(`ImageContainer-${this.blockIndex}`)
-        .setAttribute(
-          'style',
-          'padding: 15px;background: white;max-width: 60%;margin: 0 auto;vertical-align: bottom;display: block;border-radius: 3px;overflow: hidden;margin-bottom: 10px;',
-        );
+        .setAttribute('style', 'padding:8px; width:100%');
     }
-    if (tuneName === 'withBorder' && status) {
+    if (document.getElementById(`ImageContainer-${this.blockIndex}`) && status) {
       document
         .getElementById(`ImageContainer-${this.blockIndex}`)
-        .setAttribute(
-          'style',
-          'border-radius: 3px;  overflow: hidden;  margin-bottom: 10px;  border: 1px solid #e8e8eb;',
-        );
+        .setAttribute('style', style[tuneName]);
     }
-    //this.nodes.wrapper.classList.toggle(`${this.CSS.wrapper}--${tuneName}`, status);
-
   }
   renderSettings() {
     return this.tunes.render(this.data);
@@ -253,6 +189,11 @@ class UppyUploader {
   }
   render() {
     if (this.data.url) {
+      Tunes.tunes.forEach(({ name: tune }) => {
+        if (this.data[tune] === true) {
+          this.nodes.wrapper.children[0].setAttribute('style', style[tune]);
+        }
+      });
       this.nodes.wrapper.children[0].src = this.data.url.proxy;
     }
     return this.nodes.wrapper;
@@ -505,10 +446,8 @@ class UppyUploader {
     }
   }
   save() {
-    //this._data.caption = this.data.caption;
     return this.data;
   }
 }
 
 export default UppyUploader;
-
