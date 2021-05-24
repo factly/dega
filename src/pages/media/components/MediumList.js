@@ -5,7 +5,7 @@ import { getMedia } from '../../../actions/media';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
-function MediumList({ actions }) {
+function MediumList() {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -91,7 +91,7 @@ function MediumList({ actions }) {
               style={{
                 marginRight: 8,
               }}
-              to={{ pathname: `/media/${item.id}/edit`, state: { actions } }}
+              to={{ pathname: `/media/${item.id}/edit` }}
             >
               <Card
                 size="default"

@@ -5,14 +5,17 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { ArrowLeftOutlined } from '@ant-design/icons';
+import getUserPermission from '../../utils/getUserPermission';
+import { useHistory } from 'react-router-dom';
 
 function EditMedium() {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
   const { id } = useParams();
-  const { state } = useLocation();
-  const { actions } = state || { actions: [] };
+  const history = useHistory();
+  const spaces = useSelector(({ spaces }) => spaces);
+  const actions = getUserPermission({ resource: 'media', action: 'get', spaces });
   const disabled = !(actions.includes('admin') || actions.includes('update'));
   const dispatch = useDispatch();
   const { media, loading } = useSelector((state) => {
@@ -83,7 +86,12 @@ function EditMedium() {
           </Form.Item>
           <Form.Item>
             <Space>
-              <Popconfirm title="Sure to Delete?" onConfirm={() => dispatch(deleteMedium(id))}>
+              <Popconfirm
+                title="Sure to Delete?"
+                onConfirm={() => {
+                  dispatch(deleteMedium(id)).then(() => history.push('/media'));
+                }}
+              >
                 <Button type="primary" danger disabled={disabled}>
                   Delete
                 </Button>

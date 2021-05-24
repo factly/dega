@@ -45,6 +45,9 @@ export const getPosts = (query) => {
     if (query.status) {
       params.append('status', query.status);
     }
+    if (query.author) {
+      query.author.map((each) => params.append('author', each));
+    }
     return axios
       .get(POSTS_API, {
         params: params,
