@@ -11,7 +11,7 @@ import ImagePlaceholder from '../../components/ErrorsAndImage/PlaceholderImage';
 import QuickEdit from './QuickEdit';
 import moment from 'moment';
 
-function PostList({ actions, format }) {
+function PostList({ actions, format, status }) {
   const dispatch = useDispatch();
   const { Option } = Select;
   const [form] = Form.useForm();
@@ -20,6 +20,7 @@ function PostList({ actions, format }) {
     page: 1,
     limit: 20,
     format: [format.id],
+    status: status,
   });
   const [id, setID] = useState(0);
 
@@ -219,14 +220,18 @@ function PostList({ actions, format }) {
                       Quick Edit
                     </Button>,
                     item.status === 'publish' ? (
-                      <Button style={{ border: 'solid 1px', color: 'green', width: '100px' }}>
+                      <Button style={{ border: 'solid 1px', color: 'green', width: '140px' }}>
                         Published
                       </Button>
-                    ) : (
-                      <Button style={{ border: 'solid 1px', color: 'red', width: '100px' }}>
+                    ) : item.status === 'draft' ? (
+                      <Button style={{ border: 'solid 1px', color: 'red', width: '140px' }}>
                         Draft
                       </Button>
-                    ),
+                    ) : item.status === 'ready' ? (
+                      <Button style={{ border: 'solid 1px', color: 'gold', width: '140px' }}>
+                        Ready to Publish
+                      </Button>
+                    ) : null,
                   ]
                 : []
             }

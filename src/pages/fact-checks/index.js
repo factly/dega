@@ -5,10 +5,13 @@ import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
 import FactCheckList from '../../components/List';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { useLocation } from 'react-router-dom';
 
 function FactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
+  let query = new URLSearchParams(useLocation().search);
+  const status = query.get('status');
 
   if (!formats.loading && formats.factcheck)
     return (
@@ -18,7 +21,7 @@ function FactCheck({ formats }) {
             Create New
           </Button>
         </Link>
-        <FactCheckList actions={actions} format={formats.factcheck} />
+        <FactCheckList actions={actions} format={formats.factcheck} status={status} />
       </Space>
     );
 
