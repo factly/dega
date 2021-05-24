@@ -7,6 +7,7 @@ import 'antd/dist/antd.css';
 import { Empty } from 'antd';
 import ReactDOMServer from 'react-dom/server';
 import Tunes from './Tunes';
+import { make } from './utils';
 
 const Uppy = require('@uppy/core');
 const Dashboard = require('@uppy/dashboard');
@@ -19,8 +20,8 @@ const style = {
   withBackground:
     'padding: 15px;background: white;max-width: 60%;margin: 0 auto;vertical-align: bottom;display: block;border-radius: 3px;overflow: hidden;margin-bottom: 10px;',
   withBorder:
-    'border-radius: 3px;  overflow: hidden;  margin-bottom: 10px;  border: 1px solid #e8e8eb;',
-  stretched: 'width:100%',
+    'border-radius: 3px;  overflow: hidden;  margin-bottom: 10px;  border: 1px solid #e8e8eb; width:100%',
+  stretched: 'width:120%; margin-left:-10%; margin-right:10%',
 };
 
 class UppyUploader {
@@ -41,7 +42,8 @@ class UppyUploader {
       onChange: (tuneName) => this.tuneToggled(tuneName),
     });
     Tunes.tunes.forEach(({ name: tune }) => {
-      const value = typeof data[tune] !== 'undefined' ? data[tune] === true || data[tune] === 'true' : false;
+      const value =
+        typeof data[tune] !== 'undefined' ? data[tune] === true || data[tune] === 'true' : false;
       this.setTune(tune, value);
     });
     this.total = 0;
@@ -65,17 +67,6 @@ class UppyUploader {
       this.createRadioButtons();
     }
     this.nodes.wrapper.appendChild(uploader);
-  }
-
-  make(tagName, className = null, attributes = {}) {
-    const el = document.createElement(tagName);
-    if (className) {
-      el.className = className;
-    }
-    for (const attrName in attributes) {
-      el[attrName] = attributes[attrName];
-    }
-    return el;
   }
 
   tuneToggled(tuneName) {
@@ -125,25 +116,25 @@ class UppyUploader {
     return this.tunes.render(this.data);
   }
   createRadioButtons() {
-    const radioGroup = this.make('div', 'ant-radio-group ant-radio-group-solid', {
+    const radioGroup = make('div', ['ant-radio-group', 'ant-radio-group-solid'], {
       style: 'margin-bottom: 8px;width:750px;margin-left:8px',
     });
-    const list = this.make('input', 'ant-radio-button-input', {
+    const list = make('input', 'ant-radio-button-input', {
       type: 'radio',
       id: 'opt1',
       value: 'list',
       name: 'tabOption',
       checked: true,
     });
-    const label1 = this.make('label', 'ant-radio-button-wrapper ant-radio-button-wrapper-checked');
-    const label2 = this.make('label', 'ant-radio-button-wrapper');
-    const uploader = this.make('input', 'ant-radio-button-input', {
+    const label1 = make('label', ['ant-radio-button-wrapper', 'ant-radio-button-wrapper-checked']);
+    const label2 = make('label', 'ant-radio-button-wrapper');
+    const uploader = make('input', 'ant-radio-button-input', {
       type: 'radio',
       id: 'opt2',
       value: 'uploader',
       name: 'tabOption',
     });
-    const searchInput = this.make('input', 'ant-input', {
+    const searchInput = make('input', 'ant-input', {
       placeholder: 'Search Media',
       style: 'margin-bottom: 8px;margin-top: 8px',
       type: 'text',
@@ -216,10 +207,10 @@ class UppyUploader {
       obj.getMediaList(newQuery);
     }
 
-    const ul = this.make('ul', 'ant-pagination', { style: 'margin-bottom:8px' });
+    const ul = make('ul', 'ant-pagination', { style: 'margin-bottom:8px' });
     ul.unselectable = 'unselectable';
-    const previous = this.make('li', 'ant-pagination-prev');
-    const prevButton = this.make('button', 'ant-pagination-item-link', { type: 'button' });
+    const previous = make('li', 'ant-pagination-prev');
+    const prevButton = make('button', 'ant-pagination-item-link', { type: 'button' });
     prevButton.tabindex = '-1';
     previous.addEventListener('click', () => {
       if (query.page > 1) {
@@ -257,8 +248,8 @@ class UppyUploader {
         ul.appendChild(li);
       })(query, this);
     }
-    const next = this.make('li', 'ant-pagination-next');
-    const nextButton = this.make('button', 'ant-pagination-item-link', { type: 'button' });
+    const next = make('li', 'ant-pagination-next');
+    const nextButton = make('button', 'ant-pagination-item-link', { type: 'button' });
     nextButton.addEventListener('click', () => {
       if (query.page < last) {
         this.handlePaginationButtonCLick(1, query);
@@ -283,11 +274,11 @@ class UppyUploader {
       obj.nodes.wrapper.children[2].style.display = 'none';
       obj.nodes.wrapper.children[1].style.display = 'none';
     }
-    const listDiv = this.make('div', 'ant-list ant-list-split ant-list-grid', {
+    const listDiv = make('div', ['ant-list', 'ant-list-split', 'ant-list-grid'], {
       style: 'width:750px',
       id: 'DashboardContainer-' + this.blockIndex,
     });
-    const rowDiv = this.make('div', 'ant-row', {
+    const rowDiv = make('div', 'ant-row', {
       style: 'margin-left:-18px;margin-right:-18px',
     });
 
@@ -331,7 +322,7 @@ class UppyUploader {
     const noDataFound = ReactDOMServer.renderToString(
       <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />,
     );
-    const emptyDataDiv = this.make('div', null, {
+    const emptyDataDiv = make('div', null, {
       id: 'DashboardContainer-' + this.blockIndex,
     });
     emptyDataDiv.innerHTML = noDataFound;

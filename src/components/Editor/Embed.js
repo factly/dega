@@ -1,5 +1,7 @@
 import axios from 'axios';
 import './embed.css';
+import { make } from './utils';
+
 export default class Embed {
   constructor({ data, api, readOnly }) {
     this.api = api;
@@ -45,8 +47,8 @@ export default class Embed {
   }
 
   render() {
-    this.nodes.wrapper = this.make('div', this.CSS.baseClass);
-    this.nodes.container = this.make('div', this.CSS.container);
+    this.nodes.wrapper = make('div', this.CSS.baseClass);
+    this.nodes.container = make('div', this.CSS.container);
 
     this.nodes.inputHolder = this.makeInputHolder();
     this.nodes.captionHolder = this.makeCaptionHolder();
@@ -87,10 +89,10 @@ export default class Embed {
     };
   }
   makeInputHolder() {
-    const inputHolder = this.make('div', this.CSS.inputHolder);
+    const inputHolder = make('div', this.CSS.inputHolder);
 
-    this.nodes.progress = this.make('label', this.CSS.progress);
-    this.nodes.input = this.make('div', [this.CSS.input, this.CSS.inputEl], {
+    this.nodes.progress = make('label', this.CSS.progress);
+    this.nodes.input = make('div', [this.CSS.input, this.CSS.inputEl], {
       contentEditable: !this.readOnly,
     });
 
@@ -131,9 +133,9 @@ export default class Embed {
     return inputHolder;
   }
   makeCaptionHolder() {
-    const captionHolder = this.make('div', this.CSS.captionHolder);
+    const captionHolder = make('div', this.CSS.captionHolder);
 
-    this.nodes.caption = this.make('div', [this.CSS.input, this.CSS.captionEl], {
+    this.nodes.caption = make('div', [this.CSS.input, this.CSS.captionEl], {
       contentEditable: !this.readOnly,
       innerHTML: this.data.caption,
     });
@@ -254,21 +256,7 @@ export default class Embed {
       html: true, // Allow HTML tags
     };
   }
-  make(tagName, classNames = null, attributes = {}) {
-    const el = document.createElement(tagName);
 
-    if (Array.isArray(classNames)) {
-      el.classList.add(...classNames);
-    } else if (classNames) {
-      el.classList.add(classNames);
-    }
-
-    for (const attrName in attributes) {
-      el[attrName] = attributes[attrName];
-    }
-
-    return el;
-  }
   setInnerHTML(elm, html) {
     elm.innerHTML = html;
     Array.from(elm.querySelectorAll('script')).forEach((oldScript) => {
