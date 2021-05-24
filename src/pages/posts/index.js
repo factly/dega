@@ -10,8 +10,8 @@ import { useLocation } from 'react-router-dom';
 function Posts({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
-  const location = useLocation();
-  const status = location.state ? location.state.status : null;
+  let query = new URLSearchParams(useLocation().search);
+  const status = query.get('status');
 
   if (!formats.loading && formats.article)
     return (

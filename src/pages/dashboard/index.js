@@ -3,8 +3,8 @@ import { Col, Row, Space, Statistic, Typography } from 'antd';
 import Features from './components/Features';
 import getUserPermission from '../../utils/getUserPermission';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { getInfo } from '../../actions/info';
+import { Link } from 'react-router-dom';
 
 function Dashboard() {
   const { spaces, info } = useSelector(({ spaces, info }) => ({
@@ -13,7 +13,6 @@ function Dashboard() {
   }));
   const actions = getUserPermission({ resource: 'dashboard', action: 'get', spaces });
   const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     fetchInfo();
@@ -25,56 +24,57 @@ function Dashboard() {
 
   const { article, factCheck } = info;
 
-  const handlePostClick = (status) => {
-    history.push({
-      pathname: '/posts',
-      state: {
-        status: status,
-      },
-    });
-  };
-  const handleFactcheckClick = (status) => {
-    history.push({
-      pathname: '/fact-checks',
-      state: {
-        status: status,
-      },
-    });
-  };
-
   return (
     <Space direction="vertical">
       <Typography.Title>Dashboard</Typography.Title>
       <Row gutter={16}>
-        <Col span={6} onClick={() => handlePostClick()}>
-          <Statistic title="Total Posts" value={article.publish + article.draft + article.ready} />
+        <Col span={6}>
+          <Link to="/posts">
+            <Statistic
+              title="Total Posts"
+              value={article.publish + article.draft + article.ready}
+            />
+          </Link>
         </Col>
-        <Col span={6} onClick={() => handlePostClick('publish')}>
-          <Statistic title="Published Posts" value={info.article.publish} />
+        <Col span={6}>
+          <Link to="/posts?status=publish">
+            <Statistic title="Published Posts" value={info.article.publish} />
+          </Link>
         </Col>
-        <Col span={6} onClick={() => handlePostClick('draft')}>
-          <Statistic title="Draft Posts" value={info.article.draft} />
+        <Col span={6}>
+          <Link to="/posts?status=draft">
+            <Statistic title="Draft Posts" value={info.article.draft} />
+          </Link>
         </Col>
-        <Col span={6} onClick={() => handlePostClick('ready')}>
-          <Statistic title="Ready to publish Posts" value={info.article.ready} />
+        <Col span={6}>
+          <Link to="/posts?status=ready">
+            <Statistic title="Ready to publish Posts" value={info.article.ready} />
+          </Link>
         </Col>
       </Row>
       <Row gutter={16}>
         <Col span={6}>
-          <Statistic
-            onClick={() => handleFactcheckClick()}
-            title="Total Fact Checks"
-            value={factCheck.publish + factCheck.draft + factCheck.ready}
-          />
+          <Link to="/fact-checks">
+            <Statistic
+              title="Total Fact Checks"
+              value={factCheck.publish + factCheck.draft + factCheck.ready}
+            />
+          </Link>
         </Col>
-        <Col span={6} onClick={() => handleFactcheckClick('publish')}>
-          <Statistic title="Published Fact Checks" value={info.factCheck.publish} />
+        <Col span={6}>
+          <Link to="/fact-checks?status=publish">
+            <Statistic title="Published Fact Checks" value={info.factCheck.publish} />
+          </Link>
         </Col>
-        <Col span={6} onClick={() => handleFactcheckClick('draft')}>
-          <Statistic title="Draft Fact Checks" value={info.factCheck.draft} />
+        <Col span={6}>
+          <Link to="/fact-checks?status=draft">
+            <Statistic title="Draft Fact Checks" value={info.factCheck.draft} />
+          </Link>
         </Col>
-        <Col span={6} onClick={() => handleFactcheckClick('ready')}>
-          <Statistic title="Ready to publish Fact Checks" value={info.factCheck.ready} />
+        <Col span={6}>
+          <Link to="/fact-checks?status=ready">
+            <Statistic title="Ready to publish Fact Checks" value={info.factCheck.ready} />
+          </Link>
         </Col>
       </Row>
       {actions.includes('admin') ? <Features /> : null}
