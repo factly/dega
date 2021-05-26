@@ -51,6 +51,7 @@ func TestCategory(t *testing.T) {
 		CheckSpaceMock(mock)
 		CategoryCountMock(mock, 1)
 		CategorySelectMock(mock)
+		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -81,6 +82,7 @@ func TestCategory(t *testing.T) {
 		CheckSpaceMock(mock)
 		CategoryCountMock(mock, 1)
 		CategorySelectMock(mock, 1, 2, 1)
+		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -111,6 +113,7 @@ func TestCategory(t *testing.T) {
 		mock.ExpectQuery(`SELECT \* FROM "categories" (.+) ORDER BY updated_at asc`).
 			WillReturnRows(sqlmock.NewRows(categoryColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categoryData["name"], categoryData["slug"], categoryData["description"], categoryData["html_description"], categoryData["parent_id"], categoryData["meta_fields"], categoryData["medium_id"], categoryData["is_featured"], 1))
+		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -139,6 +142,7 @@ func TestCategory(t *testing.T) {
 	t.Run("get category by id", func(t *testing.T) {
 		CheckSpaceMock(mock)
 		CategorySelectMock(mock, 1, 1)
+		mediumPreloadMock(mock)
 
 		mock.ExpectQuery(`SELECT \* FROM "media"`).
 			WithArgs(1).
@@ -200,4 +204,10 @@ func CategorySelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 func CategoryCountMock(mock sqlmock.Sqlmock, count int) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "categories"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
+}
+
+func mediumPreloadMock(mock sqlmock.Sqlmock, args ...driver.Value) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+		WithArgs(args...).
+		WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
 }

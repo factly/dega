@@ -47,9 +47,8 @@ func TestClaimants(t *testing.T) {
 		CheckSpaceMock(mock)
 		ClaimantCountMock(mock, 1)
 		ClaimantSelectMock(mock)
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
+		mediumPreloadMock(mock)
+		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -87,6 +86,7 @@ func TestClaimants(t *testing.T) {
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(claimantColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantData["name"], claimantData["slug"], claimantData["medium_id"], claimantData["description"], claimantData["html_description"], claimantData["tag_line"], 1))
+		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
 			WithHeaders(headers).

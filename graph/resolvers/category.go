@@ -59,7 +59,7 @@ func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category,
 	err = config.DB.Model(&models.Category{}).Where(&models.Category{
 		ID:      uint(id),
 		SpaceID: sID,
-	}).First(&result).Error
+	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		return nil, nil

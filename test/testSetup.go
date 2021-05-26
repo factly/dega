@@ -9,13 +9,11 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/alicebob/miniredis/v2"
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/resolvers"
 	"github.com/factly/dega-api/graph/validator"
-	"github.com/factly/dega-api/util/cache"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
 	"github.com/gavv/httpexpect/v2"
@@ -56,13 +54,6 @@ func TestRouter() http.Handler {
 	router.Use(loggerx.Init())
 	router.Use(validator.CheckSpace())
 	router.Use(middleware.RealIP)
-	// router.Use(util.GormRequestID)
-
-	s, err := miniredis.Run()
-	if err != nil {
-		panic(err)
-	}
-	_ = cache.SetupCache(s.Addr(), viper.GetString("redis_password"), 30*time.Second, 0)
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
@@ -91,6 +82,8 @@ func SetupMockDB() sqlmock.Sqlmock {
 	if err != nil {
 		log.Println(err)
 	}
+
+	viper.Set("enable_cache", false)
 
 	return mock
 }

@@ -64,6 +64,13 @@ func TestClaim(t *testing.T) {
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
 
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
+
 		resp := e.POST(path).
 			WithHeaders(headers).
 			WithJSON(Query{
@@ -106,6 +113,12 @@ func TestClaim(t *testing.T) {
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(claimColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], 1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -136,6 +149,12 @@ func TestClaim(t *testing.T) {
 		mock.ExpectQuery(`SELECT \* FROM "claims" (.+)claims.rating_id IN \(2,3\) AND claims.claimant_id IN \(4,5\)`).
 			WillReturnRows(sqlmock.NewRows(claimColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], 1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
+			WithArgs(1).
+			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
 
 		resp := e.POST(path).
 			WithHeaders(headers).
