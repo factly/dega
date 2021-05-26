@@ -40,18 +40,6 @@ type PostsPaging struct {
 	Total int     `json:"total"`
 }
 
-// // PostTag model
-// type PostTag struct {
-// 	TagID  uint `gorm:"column:tag_id" json:"tag_id"`
-// 	PostID uint `gorm:"column:post_id" json:"post_id"`
-// }
-
-// // PostCategory model
-// type PostCategory struct {
-// 	CategoryID uint `gorm:"column:category_id" json:"category_id"`
-// 	PostID     uint `gorm:"column:post_id" json:"post_id"`
-// }
-
 // PostAuthor model
 type PostAuthor struct {
 	AuthorID uint `gorm:"column:author_id" json:"author_id"`

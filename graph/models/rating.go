@@ -21,6 +21,7 @@ type Rating struct {
 	HTMLDescription  string          `gorm:"column:html_description" json:"html_description"`
 	NumericValue     int             `gorm:"column:numeric_value" json:"numeric_value"`
 	MediumID         uint            `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
+	Medium           *Medium         `gorm:"foreignKey:medium_id" json:"medium"`
 	SpaceID          uint            `gorm:"column:space_id" json:"space_id"`
 }
 

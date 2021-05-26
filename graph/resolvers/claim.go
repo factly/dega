@@ -91,7 +91,7 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 	var total int64
 	tx.Where(&models.Claim{
 		SpaceID: uint(sID),
-	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	}).Where(filterStr).Preload("Claimant").Preload("Rating").Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 

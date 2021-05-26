@@ -74,7 +74,7 @@ func (r *queryResolver) Ratings(ctx context.Context, spaces []int, page *int, li
 	var total int64
 	tx.Where(&models.Rating{
 		SpaceID: uint(sID),
-	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	}).Preload("Medium").Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 

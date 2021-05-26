@@ -66,7 +66,7 @@ func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, 
 	var total int64
 	tx.Where(&models.Claimant{
 		SpaceID: uint(sID),
-	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	}).Preload("Medium").Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
 
