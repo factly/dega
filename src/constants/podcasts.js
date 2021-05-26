@@ -6,4 +6,4 @@ export const RESET_PODCASTS = 'RESET_PODCASTS';
 export const SET_PODCASTS_LOADING = 'SET_PODCASTS_LOADING';
 
 //API
-export const PODCASTS_API = '/podcast/podcasts';
+export const PODCASTS_API = '/podcast';
