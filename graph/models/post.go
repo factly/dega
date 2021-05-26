@@ -27,6 +27,10 @@ type Post struct {
 	FeaturedMediumID uint            `gorm:"column:featured_medium_id" json:"featured_medium_id" sql:"DEFAULT:NULL"`
 	FormatID         uint            `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
 	PublishedDate    *time.Time      `gorm:"column:published_date" json:"published_date"`
+	Tags             []Tag           `gorm:"many2many:post_tags;" json:"tags,omitempty"`
+	Categories       []Category      `gorm:"many2many:post_categories;" json:"categories,omitempty"`
+	Format           *Format         `gorm:"foreignKey:format_id" json:"format,omitempty"`
+	Medium           *Medium         `gorm:"foreignKey:featured_medium_id" json:"medium,omitempty"`
 	SpaceID          uint            `gorm:"column:space_id" json:"space_id"`
 }
 
@@ -36,17 +40,17 @@ type PostsPaging struct {
 	Total int     `json:"total"`
 }
 
-// PostTag model
-type PostTag struct {
-	TagID  uint `gorm:"column:tag_id" json:"tag_id"`
-	PostID uint `gorm:"column:post_id" json:"post_id"`
-}
+// // PostTag model
+// type PostTag struct {
+// 	TagID  uint `gorm:"column:tag_id" json:"tag_id"`
+// 	PostID uint `gorm:"column:post_id" json:"post_id"`
+// }
 
-// PostCategory model
-type PostCategory struct {
-	CategoryID uint `gorm:"column:category_id" json:"category_id"`
-	PostID     uint `gorm:"column:post_id" json:"post_id"`
-}
+// // PostCategory model
+// type PostCategory struct {
+// 	CategoryID uint `gorm:"column:category_id" json:"category_id"`
+// 	PostID     uint `gorm:"column:post_id" json:"post_id"`
+// }
 
 // PostAuthor model
 type PostAuthor struct {
