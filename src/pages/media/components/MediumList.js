@@ -1,72 +1,12 @@
 import React from 'react';
-import { Button, Space, Form, Input, Select, List, Card } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { getMedia } from '../../../actions/media';
+import { Space, List, Card } from 'antd';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
 
-function MediumList() {
+function MediumList({ data, filters, setFilters, fetchMedia}) {
   const dispatch = useDispatch();
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-  });
-  const [form] = Form.useForm();
-  const { Option } = Select;
-
-  const { media, total, loading } = useSelector((state) => {
-    const node = state.media.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node)
-      return {
-        media: node.data.map((element) => state.media.details[element]),
-        total: node.total,
-        loading: state.media.loading,
-      };
-    return { media: [], total: 0, loading: state.media.loading };
-  });
-
-  React.useEffect(() => {
-    fetchMedia();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchMedia = () => {
-    dispatch(getMedia(filters));
-  };
-
   return (
     <Space direction={'vertical'}>
-      <Form
-        initialValues={filters}
-        form={form}
-        name="filters"
-        layout="inline"
-        onFinish={(values) =>
-          setFilters({
-            ...filters,
-            ...values,
-          })
-        }
-        style={{ maxWidth: '100%', marginBottom: '1rem' }}
-      >
-        <Form.Item name="q" label="Search" style={{ width: '25%' }}>
-          <Input placeholder="search media" />
-        </Form.Item>
-        <Form.Item name="sort" label="Sort" style={{ width: '15%' }}>
-          <Select>
-            <Option value="desc">Latest</Option>
-            <Option value="asc">Old</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
       <List
         grid={{
           gutter: 16,
@@ -78,13 +18,13 @@ function MediumList() {
           xxl: 5,
         }}
         pagination={{
-          total: total,
+          total: data.total,
           current: filters.page,
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}
-        dataSource={media}
+        dataSource={data.media}
         renderItem={(item) => (
           <List.Item>
             <Link

@@ -80,28 +80,41 @@ function PostList({ actions, format }) {
         initialValues={filters}
         form={form}
         name="filters"
-        layout="inline"
         onFinish={(values) => onSave(values)}
         style={{ maxWidth: '100%' }}
         className="ant-advanced-search-form"
+        onValuesChange={(changedValues, allValues) => {
+          console.log('changedValues', changedValues, 'all', allValues);
+          if (!changedValues.q) {
+            onSave(allValues);
+          }
+        }}
       >
-        <Row gutter={24}>
-          <Col span={8} key={1}>
-            <Form.Item name="q" label="Search" style={{ width: '260px' }}>
+        <Row gutter={10}>
+          <Col span={4} key={1} offset={12}>
+            <Form.Item name="q">
               <Input placeholder="search posts" />
             </Form.Item>
           </Col>
-          <Col span={8} key={2}>
-            <Form.Item name="sort" label="Sort" style={{ width: '260px' }}>
-              <Select defaultValue="desc" style={{ maxWidth: '260px' }}>
+
+          <Col>
+            <Form.Item>
+              <Button htmlType="submit">Search</Button>
+            </Form.Item>
+          </Col>
+          <Col key={2}>
+            <Form.Item name="sort" label="Sort">
+              <Select defaultValue="desc" style={{ width: '100%' }}>
                 <Option value="desc">Latest</Option>
                 <Option value="asc">Old</Option>
               </Select>
             </Form.Item>
           </Col>
-          <Col span={8} key={3}>
-            <Form.Item name="status" label="Status" style={{ width: '260px' }}>
-              <Select defaultValue="all" style={{ maxWidth: '260px' }}>
+        </Row>
+        <Row gutter={10}>
+          <Col span={5} key={3}>
+            <Form.Item name="status" label="Status">
+              <Select defaultValue="all">
                 <Option value="all">All</Option>
                 <Option value="draft">Draft</Option>
                 <Option value="publish">Publish</Option>
@@ -109,57 +122,24 @@ function PostList({ actions, format }) {
               </Select>
             </Form.Item>
           </Col>
-          <Col span={8} key={4}>
-            <Form.Item name="tags" label="Tags" style={{ width: '260px' }}>
-              <Selector
-                mode="multiple"
-                action="Tags"
-                placeholder="Filter Tags"
-                style={{
-                  maxWidth: '260px',
-                  marginTop: '8px',
-                }}
-              />
+          <Col span={5} key={4}>
+            <Form.Item name="tags" label="Tags">
+              <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
             </Form.Item>
           </Col>
-          <Col span={8} key={5}>
-            <Form.Item name="categories" label="Categories" style={{ width: '260px' }}>
-              <Selector
-                mode="multiple"
-                action="Categories"
-                placeholder="Filter Categories"
-                style={{
-                  maxWidth: '260px',
-                  marginTop: '8px',
-                }}
-              />
+          <Col span={5} key={5}>
+            <Form.Item name="categories" label="Categories">
+              <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
             </Form.Item>
           </Col>
-          <Col span={8} key={6}>
-            <Form.Item name="authors" label="Authors" style={{ width: '260px' }}>
+          <Col span={5} key={6}>
+            <Form.Item name="authors" label="Authors">
               <Selector
                 mode="multiple"
                 action="Authors"
                 placeholder="Filter Authors"
                 display={'email'}
-                style={{
-                  maxWidth: '260px',
-                  marginTop: '8px',
-                }}
               />
-            </Form.Item>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={24}>
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                style={{ marginTop: '8px', marginLeft: '1080px' }}
-              >
-                Submit
-              </Button>
             </Form.Item>
           </Col>
         </Row>
