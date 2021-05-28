@@ -1,4 +1,4 @@
-package category
+package tag
 
 import (
 	"fmt"
@@ -37,12 +37,12 @@ func postList(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	category := model.Category{}
+	tag := model.Tag{}
 	// get category
-	if err = config.DB.Model(&model.Category{}).Where(&model.Category{
+	if err = config.DB.Model(&model.Tag{}).Where(&model.Tag{
 		Slug:    slug,
 		SpaceID: uint(sID),
-	}).Find(&category).Error; err != nil {
+	}).Find(&tag).Error; err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
@@ -51,9 +51,9 @@ func postList(w http.ResponseWriter, r *http.Request) {
 	postList := make([]model.Post, 0)
 	result := make([]post.PostData, 0)
 	// get posts
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN formats ON formats.id = posts.format_id").Joins("INNER JOIN post_categories ON posts.id = post_categories.post_id").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN formats ON formats.id = posts.format_id").Joins("INNER JOIN post_tags ON posts.id = post_tags.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("category_id = ?", category.ID).Where("formats.slug = ?", formatSlug).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
+	}).Where("is_page = ?", false).Where("tag_id = ?", tag.ID).Where("formats.slug = ?", formatSlug).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
