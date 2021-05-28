@@ -5,8 +5,9 @@ import Selector from '../Selector';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { updatePost } from '../../actions/posts';
+import { updatePage } from '../../actions/pages';
 
-function QuickEdit({ data, setID, slug }) {
+function QuickEdit({ data, setID, slug, page = false }) {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const dispatch = useDispatch();
@@ -51,12 +52,21 @@ function QuickEdit({ data, setID, slug }) {
               ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
               : moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ'))
           : (values.published_date = null);
-        dispatch(
-          updatePost({
-            ...data,
-            ...values,
-          }),
-        ).then(() => setID(0));
+        if (page) {
+          dispatch(
+            updatePage({
+              ...data,
+              ...values,
+            }),
+          ).then(() => setID(0));
+        } else {
+          dispatch(
+            updatePost({
+              ...data,
+              ...values,
+            }),
+          ).then(() => setID(0));
+        }
       }}
       onValuesChange={() => {
         setValueChange(true);

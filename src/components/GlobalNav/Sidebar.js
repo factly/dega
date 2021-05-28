@@ -51,6 +51,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
 
   let protectedResouces = [
     'posts',
+    'pages',
     'categories',
     'tags',
     'media',

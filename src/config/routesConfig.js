@@ -103,6 +103,11 @@ import Menu from '../pages/menu';
 import CreateMenu from '../pages/menu/CreateMenu';
 import EditMenu from '../pages/menu/EditMenu';
 
+//Pages
+import Pages from '../pages/pages';
+import CreatePage from '../pages/pages/CreatePage';
+import EditPage from '../pages/pages/EditPage';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -554,6 +559,29 @@ const routes = {
       action: 'update',
     },
   },
+  pages: {
+    path: '/pages',
+    Component: Pages,
+    title: 'Pages',
+  },
+  createPage: {
+    path: '/pages/create',
+    Component: CreatePage,
+    title: 'Create',
+    permission: {
+      resource: 'pages',
+      action: 'create',
+    },
+  },
+  editPost: {
+    path: '/pages/:id/edit',
+    Component: EditPage,
+    title: 'Edit',
+    permission: {
+      resource: 'pages',
+      action: 'update',
+    },
+  },
 };
 
 export const sidebarMenu = [
@@ -567,6 +595,7 @@ export const sidebarMenu = [
     Icon: FileDoneOutlined,
     children: [
       routes.posts,
+      routes.pages,
       routes.categories,
       routes.tags,
       routes.media,
