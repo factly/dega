@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-vito/config"
 	"github.com/factly/dega-vito/service/author"
 	"github.com/factly/dega-vito/service/category"
+	"github.com/factly/dega-vito/service/format"
 	"github.com/factly/dega-vito/service/post"
 	"github.com/factly/dega-vito/service/tag"
 	"github.com/factly/x/healthx"
@@ -44,6 +45,7 @@ func RegisterRoutes() http.Handler {
 		r.Mount("/authors", author.Router())
 		r.Mount("/categories", category.Router())
 		r.Mount("/tags", tag.Router())
+		r.Mount("/formats", format.Router())
 	})
 
 	return r
