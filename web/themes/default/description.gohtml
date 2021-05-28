@@ -57,6 +57,9 @@
         {{end}}
       </table>  
 
+    {{else if eq .type "embed"}}
+      {{noesc .data.html}}
+
     {{end}}
   {{end}}
 {{end}}

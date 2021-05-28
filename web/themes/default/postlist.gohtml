@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Post List</title>
-  <link rel="stylesheet" href="/default/css/main.css">
+  <link rel="stylesheet" href="{{publicURL "/default/css/main.css"}}">
 </head>
 <body>
 
@@ -21,7 +21,7 @@
           <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
         {{end}}
         <br>
-        <h3><a href="/posts/{{$post.ID}}">{{$post.Title}}</a></h3>
+        <h3><a href="{{ print "/posts/" $post.Slug | publicURL}}">{{$post.Title}}</a></h3>
         {{if dateVal $post.PublishedDate}} <b>Published Date:</b> {{$post.PublishedDate | dateFmt}} {{end}} <br>
 
         <b>Authors:</b>
