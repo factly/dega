@@ -8,6 +8,7 @@ func Router() chi.Router {
 
 	r.Get("/", list)
 	r.Get("/{author_id}", details)
+	r.Get("/{slug}/formats/{format_slug}", postList)
 
 	return r
 }
