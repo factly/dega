@@ -9,6 +9,7 @@ func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Get("/", list)
+	r.Get("/{slug}/formats/{format_slug}", postList)
 
 	return r
 }

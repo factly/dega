@@ -28,7 +28,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &postData{}
+	result := &PostData{}
 	result.Claims = make([]model.Claim, 0)
 
 	postAuthors := []model.PostAuthor{}
