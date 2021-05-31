@@ -106,6 +106,7 @@ function QuickEdit({ data, setID, slug, page = false }) {
         <Select style={{ maxWidth: '160px' }}>
           <Select.Option value="publish">Published</Select.Option>
           <Select.Option value="draft">Draft</Select.Option>
+          <Select.Option value="ready">Ready to Publish</Select.Option>
         </Select>
       </Form.Item>
       <Form.Item name="published_date" label="Published Date">
