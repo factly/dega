@@ -8,6 +8,7 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
+	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *menuResolver) ID(ctx context.Context, obj *models.Menu) (string, error) {
@@ -38,6 +39,12 @@ func (r *queryResolver) Menu(ctx context.Context) (*models.MenusPaging, error) {
 	}).Count(&total).Order("id desc").Find(&result.Nodes)
 
 	result.Total = int(total)
+
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
+	}
 
 	return result, nil
 }

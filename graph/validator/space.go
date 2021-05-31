@@ -17,20 +17,19 @@ func CheckSpace() func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			space := r.Header.Get("X-Space")
-
 			if space == "" {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			uid, err := strconv.Atoi(space)
-			if err != nil {
+			sid, err := strconv.Atoi(space)
+			if err != nil || sid == 0 {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 			ctx := r.Context()
 
-			ctx = context.WithValue(ctx, SpaceIDKey, uid)
+			ctx = context.WithValue(ctx, SpaceIDKey, sid)
 			next.ServeHTTP(w, r.WithContext(ctx))
 		})
 	}

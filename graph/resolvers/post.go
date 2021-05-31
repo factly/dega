@@ -12,6 +12,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/dega-api/util/cache"
 )
 
 type postResolver struct{ *Resolver }
@@ -47,37 +48,27 @@ func (r *postResolver) Medium(ctx context.Context, obj *models.Post) (*models.Me
 }
 
 func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*models.Category, error) {
-	postCategories := []models.PostCategory{}
-
 	// fetch all categories
-	config.DB.Model(&models.PostCategory{}).Where(&models.PostCategory{
-		PostID: obj.ID,
-	}).Find(&postCategories)
+	config.DB.Model(&obj).Preload("Categories").Find(&obj)
 
-	var allCategoryID []string
+	categories := make([]*models.Category, 0)
 
-	for _, postCategory := range postCategories {
-		allCategoryID = append(allCategoryID, fmt.Sprint(postCategory.CategoryID))
+	for _, postCategory := range obj.Categories {
+		categories = append(categories, &postCategory)
 	}
 
-	categories, _ := loaders.GetCategoryLoader(ctx).LoadAll(allCategoryID)
 	return categories, nil
 }
 
 func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Tag, error) {
-	postTags := []models.PostTag{}
+	// fetch all tags
+	config.DB.Model(&obj).Preload("Tags").Find(&obj)
 
-	config.DB.Model(&models.PostTag{}).Where(&models.PostTag{
-		PostID: obj.ID,
-	}).Find(&postTags)
+	tags := make([]*models.Tag, 0)
 
-	var allTagID []string
-
-	for _, postTag := range postTags {
-		allTagID = append(allTagID, fmt.Sprint(postTag.TagID))
+	for _, postTag := range obj.Tags {
+		tags = append(tags, &postTag)
 	}
-
-	tags, _ := loaders.GetTagLoader(ctx).LoadAll(allTagID)
 	return tags, nil
 }
 
@@ -211,6 +202,12 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 	return result, nil
 }
 
+type redisPost struct {
+	models.Post
+	Claims []*models.Claim `json:"claims,omitempty"`
+	Users  []*models.User  `json:"users,omitempty"`
+}
+
 func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
@@ -228,7 +225,47 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 		return nil, nil
 	}
 
+	// preload every associations and store object in cache
+	if cache.IsEnabled() {
+		postObj := redisPost{}
+		postObj.Post.ID = result.ID
+		config.DB.Model(&postObj.Post).Preload("Tags").Preload("Categories").Preload("Format").Preload("Medium").Find(&postObj.Post)
+
+		postUsers := []models.PostAuthor{}
+		config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
+			PostID: result.ID,
+		}).Find(&postUsers)
+
+		var allUserID []string
+		for _, postUser := range postUsers {
+			allUserID = append(allUserID, fmt.Sprint(postUser.AuthorID))
+		}
+
+		postObj.Users, _ = loaders.GetUserLoader(ctx).LoadAll(allUserID)
+
+		if postObj.Post.Format.Slug == "fact-check" {
+			postObj.Claims = make([]*models.Claim, 0)
+			postClaims := []models.PostClaim{}
+			config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
+				PostID: result.ID,
+			}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Rating").Find(&postClaims)
+
+			for _, postClaim := range postClaims {
+				postObj.Claims = append(postObj.Claims, postClaim.Claim)
+			}
+		}
+
+		if err = cache.SaveToCache(ctx, postObj); err != nil {
+			return result, nil
+		}
+	}
+
 	return result, nil
+}
+
+type redisPostPaging struct {
+	Nodes []redisPost `json:"nodes,omitempty"`
+	Total int64       `json:"total,omitempty"`
 }
 
 func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
@@ -290,6 +327,65 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
+
+	postIDs := make([]uint, 0)
+	for _, each := range result.Nodes {
+		postIDs = append(postIDs, each.ID)
+	}
+
+	// preload every associations and store object in cache
+	if cache.IsEnabled() {
+		postObj := redisPostPaging{}
+		postObj.Nodes = make([]redisPost, 0)
+		postList := make([]models.Post, 0)
+		config.DB.Model(&models.Post{}).Preload("Tags").Preload("Categories").Preload("Format").Preload("Medium").Where(postIDs).Count(&postObj.Total).Find(&postList)
+
+		// get all users
+		postUsers := []models.PostAuthor{}
+		config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postUsers)
+
+		var allUserID []string
+		postUserMap := make(map[uint][]uint)
+		for _, postUser := range postUsers {
+			allUserID = append(allUserID, fmt.Sprint(postUser.AuthorID))
+			if _, found := postUserMap[postUser.PostID]; !found {
+				postUserMap[postUser.PostID] = make([]uint, 0)
+			}
+			postUserMap[postUser.PostID] = append(postUserMap[postUser.PostID], postUser.AuthorID)
+		}
+		users, _ := loaders.GetUserLoader(ctx).LoadAll(allUserID)
+
+		userMap := make(map[uint]*models.User)
+		for _, user := range users {
+			userMap[user.ID] = user
+		}
+
+		for _, post := range postList {
+			redisPost := redisPost{}
+			if post.Format.Slug == "fact-check" {
+				redisPost.Claims = make([]*models.Claim, 0)
+				postClaims := []models.PostClaim{}
+				config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
+					PostID: post.ID,
+				}).Preload("Claim").Preload("Claim.Claimant").Preload("Claim.Rating").Find(&postClaims)
+
+				for _, postClaim := range postClaims {
+					redisPost.Claims = append(redisPost.Claims, postClaim.Claim)
+				}
+			}
+
+			for _, postAuthor := range postUserMap[post.ID] {
+				redisPost.Users = append(redisPost.Users, userMap[postAuthor])
+			}
+
+			redisPost.Post = post
+			postObj.Nodes = append(postObj.Nodes, redisPost)
+		}
+
+		if err = cache.SaveToCache(ctx, postObj); err != nil {
+			return result, nil
+		}
+	}
 
 	return result, nil
 }

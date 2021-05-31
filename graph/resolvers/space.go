@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
+	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *spaceResolver) ID(ctx context.Context, obj *models.Space) (string, error) {
@@ -75,6 +76,12 @@ func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 	config.DB.Where(&models.Space{
 		ID: sID,
 	}).First(&result)
+
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
+	}
 
 	return result, nil
 }

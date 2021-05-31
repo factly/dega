@@ -12,6 +12,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *categoryResolver) ID(ctx context.Context, obj *models.Category) (string, error) {
@@ -58,10 +59,16 @@ func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category,
 	err = config.DB.Model(&models.Category{}).Where(&models.Category{
 		ID:      uint(id),
 		SpaceID: sID,
-	}).First(&result).Error
+	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		return nil, nil
+	}
+
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
 	}
 
 	return result, nil
@@ -103,9 +110,15 @@ func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int,
 	var total int64
 	tx.Where(&models.Category{
 		SpaceID: uint(sID),
-	}).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	}).Preload("Medium").Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
 
 	result.Total = int(total)
+
+	if cache.IsEnabled() {
+		if err = cache.SaveToCache(ctx, result); err != nil {
+			return result, nil
+		}
+	}
 
 	return result, nil
 }

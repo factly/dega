@@ -53,9 +53,8 @@ func TestRatings(t *testing.T) {
 		CheckSpaceMock(mock)
 		RatingCountMock(mock, 1)
 		RatingSelectMock(mock)
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
+		mediumPreloadMock(mock)
+		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -95,6 +94,7 @@ func TestRatings(t *testing.T) {
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(ratingColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratingData["name"], ratingData["slug"], ratingData["background_colour"], ratingData["text_colour"], ratingData["medium_id"], ratingData["description"], ratingData["html_description"], ratingData["numeric_value"], 1))
+		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
 			WithHeaders(headers).

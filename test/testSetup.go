@@ -54,7 +54,6 @@ func TestRouter() http.Handler {
 	router.Use(loggerx.Init())
 	router.Use(validator.CheckSpace())
 	router.Use(middleware.RealIP)
-	// router.Use(util.GormRequestID)
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
@@ -83,6 +82,8 @@ func SetupMockDB() sqlmock.Sqlmock {
 	if err != nil {
 		log.Println(err)
 	}
+
+	viper.Set("enable_cache", false)
 
 	return mock
 }

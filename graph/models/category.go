@@ -17,6 +17,7 @@ type Category struct {
 	Slug            string          `gorm:"column:slug" json:"slug"`
 	Description     postgres.Jsonb  `gorm:"column:description" json:"description"`
 	HTMLDescription string          `gorm:"column:html_description" json:"html_description"`
+	Medium          *Medium         `json:"medium"`
 	ParentID        uint            `gorm:"column:parent_id" json:"parent_id" sql:"DEFAULT:NULL"`
 	MediumID        uint            `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
 	SpaceID         uint            `gorm:"column:space_id" json:"space_id"`

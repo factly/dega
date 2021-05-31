@@ -3,11 +3,13 @@ package main
 import (
 	"log"
 	"net/http"
+	"time"
 
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/spf13/viper"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -17,6 +19,7 @@ import (
 	"github.com/factly/dega-api/graph/resolvers"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/dega-api/util/cache"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -57,9 +60,27 @@ func main() {
 		log.Fatal(http.ListenAndServe(":8001", promRouter))
 	}()
 
+	if cache.IsEnabled() {
+		cacheExpiration := 30
+		if viper.IsSet("redis_cache_expiration") {
+			cacheExpiration = viper.GetInt("redis_cache_expiration")
+		}
+
+		err := cache.SetupCache(viper.GetString("redis_url"), viper.GetString("redis_password"), time.Duration(cacheExpiration)*time.Second, 0)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation)).Handle("/query", loaders.DataloaderMiddleware(srv))
+	r := router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation))
+
+	if cache.IsEnabled() {
+		r = r.With(cache.CachingMiddleware())
+	}
+
+	r.Handle("/query", loaders.DataloaderMiddleware(srv))
 
 	router.Handle("/", playground.Handler("GraphQL playground", "/query"))
 
