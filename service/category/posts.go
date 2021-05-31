@@ -15,7 +15,7 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func postList(w http.ResponseWriter, r *http.Request) {
+func allPosts(w http.ResponseWriter, r *http.Request) {
 	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -26,12 +26,6 @@ func postList(w http.ResponseWriter, r *http.Request) {
 	slug := chi.URLParam(r, "slug")
 	if slug == "" {
 		errorx.Render(w, errorx.Parser(errorx.GetMessage("Invalid Slug", http.StatusBadRequest)))
-		return
-	}
-
-	formatSlug := chi.URLParam(r, "format_slug")
-	if formatSlug == "" {
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("Invalid Format Slug", http.StatusBadRequest)))
 		return
 	}
 
@@ -51,9 +45,9 @@ func postList(w http.ResponseWriter, r *http.Request) {
 	postList := make([]model.Post, 0)
 	result := make([]post.PostData, 0)
 	// get posts
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN formats ON formats.id = posts.format_id").Joins("INNER JOIN post_categories ON posts.id = post_categories.post_id").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN post_categories ON posts.id = post_categories.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("category_id = ?", category.ID).Where("formats.slug = ?", formatSlug).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
+	}).Where("is_page = ?", false).Where("category_id = ?", category.ID).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))

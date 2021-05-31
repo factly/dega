@@ -1,4 +1,4 @@
-package author
+package tag
 
 import (
 	"fmt"
@@ -15,7 +15,7 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func allPosts(w http.ResponseWriter, r *http.Request) {
+func postList(w http.ResponseWriter, r *http.Request) {
 	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -29,38 +29,31 @@ func allPosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	formatSlug := chi.URLParam(r, "format_slug")
+	if formatSlug == "" {
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("Invalid Format Slug", http.StatusBadRequest)))
+		return
+	}
+
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	postAuthor := model.PostAuthor{}
-	// get user id for kavach
-	if err = config.DB.Model(&model.PostAuthor{}).Joins("INNER JOIN posts ON posts.id = post_authors.post_id").Where("posts.space_id = ?", sID).First(&postAuthor).Error; err != nil {
+	tag := model.Tag{}
+	// get category
+	if err = config.DB.Model(&model.Tag{}).Where(&model.Tag{
+		Slug:    slug,
+		SpaceID: uint(sID),
+	}).Find(&tag).Error; err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	authors, err := util.AllAuthors(r.Context(), uint(sID), postAuthor.AuthorID)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	// get author id for slug
-	var authorID int
-	for _, v := range authors {
-		if v.Slug == slug {
-			authorID = int(v.ID)
-			break
-		}
-	}
-
 	postList := make([]model.Post, 0)
 	result := make([]post.PostData, 0)
 	// get posts
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN post_authors ON posts.id = post_authors.post_id").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN formats ON formats.id = posts.format_id").Joins("INNER JOIN post_tags ON posts.id = post_tags.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("author_id = ?", authorID).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
+	}).Where("is_page = ?", false).Where("tag_id = ?", tag.ID).Where("formats.slug = ?", formatSlug).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
@@ -89,7 +82,14 @@ func allPosts(w http.ResponseWriter, r *http.Request) {
 	config.DB.Model(&model.PostAuthor{}).Where("post_id in (?)", postIDs).Find(&postAuthors)
 
 	postAuthorMap := make(map[uint][]uint)
+	authors := make(map[string]model.Author)
 	if len(postAuthors) > 0 {
+		authors, err = util.AllAuthors(r.Context(), uint(sID), postAuthors[0].AuthorID)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 		for _, po := range postAuthors {
 			if _, found := postAuthorMap[po.PostID]; !found {
 				postAuthorMap[po.PostID] = make([]uint, 0)
