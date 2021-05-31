@@ -99,6 +99,8 @@ models:
           resolver: true
         schema:
           resolver: true
+        published_date:
+          resolver: true
   PostsPaging:
     model: github.com/factly/dega-api/graph/models.PostsPaging
   Rating:
@@ -121,6 +123,10 @@ models:
         claimant:
           resolver: true
         rating:
+          resolver: true
+        claim_date:
+          resolver: true
+        checked_date:
           resolver: true
   ClaimsPaging:
     model: github.com/factly/dega-api/graph/models.ClaimsPaging
