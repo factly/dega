@@ -24,7 +24,7 @@ function EditOrganisationPermission() {
     dispatch(getOrganisations());
   }, [dispatch, oid, pid]);
 
-  if (loading) return <Skeleton />;
+  //if (loading) return <Skeleton />;
 
   if (!organisation) {
     return <RecordNotFound />;
@@ -35,8 +35,8 @@ function EditOrganisationPermission() {
       history.push('/permissions/organisations'),
     );
   };
-
-  return <OrganisationPermissionEditForm data={organisation.permission} onCreate={onUpdate} />;
+  if (organisation)
+    return <OrganisationPermissionEditForm data={organisation.permission} onCreate={onUpdate} />;
 }
 
 export default EditOrganisationPermission;

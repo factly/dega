@@ -104,38 +104,38 @@ function PermissionList() {
         return <p>{record.permission.podcast ? 'Enabled' : 'Disabled'}</p>;
       },
     },
-    // {
-    //   title: 'Action',
-    //   dataIndex: 'operation',
-    //   width: '20%',
-    //   render: (_, record) => {
-    //     return (
-    //       <span>
-    //         <Link
-    //           className="ant-dropdown-link"
-    //           style={{
-    //             marginRight: 8,
-    //           }}
-    //           to={`/permissions/${record.id}/spaces/${record.permission.id}/edit`}
-    //         >
-    //           <Button>Edit</Button>
-    //         </Link>
-    //         <Popconfirm
-    //           title="Sure to Delete?"
-    //           onConfirm={() =>
-    //             dispatch(deleteSpacePermission(record.permission.id)).then(() =>
-    //               fetchSpacePermissions(),
-    //             )
-    //           }
-    //         >
-    //           <Link to="" className="ant-dropdown-link">
-    //             <Button>Delete</Button>
-    //           </Link>
-    //         </Popconfirm>
-    //       </span>
-    //     );
-    //   },
-    // },
+    {
+      title: 'Action',
+      dataIndex: 'operation',
+      width: '20%',
+      render: (_, record) => {
+        return (
+          <span>
+            <Link
+              className="ant-dropdown-link"
+              style={{
+                marginRight: 8,
+              }}
+              to={`/spaces/${record.id}/permissions/${record.permission.id}/edit`}
+            >
+              <Button>Edit</Button>
+            </Link>
+            {/* <Popconfirm
+              title="Sure to Delete?"
+              onConfirm={() =>
+                dispatch(deleteSpacePermission(record.permission.id)).then(() =>
+                  fetchSpacePermissions(),
+                )
+              }
+            >
+              <Link to="" className="ant-dropdown-link">
+                <Button>Delete</Button>
+              </Link>
+            </Popconfirm> */}
+          </span>
+        );
+      },
+    },
   ];
 
   return (
