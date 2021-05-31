@@ -314,12 +314,14 @@ type CategoryResolver interface {
 
 	MetaFields(ctx context.Context, obj *models.Category) (interface{}, error)
 	ParentID(ctx context.Context, obj *models.Category) (*int, error)
-	Medium(ctx context.Context, obj *models.Category) (*models.Medium, error)
+
 	SpaceID(ctx context.Context, obj *models.Category) (int, error)
 }
 type ClaimResolver interface {
 	ID(ctx context.Context, obj *models.Claim) (string, error)
 
+	ClaimDate(ctx context.Context, obj *models.Claim) (*time.Time, error)
+	CheckedDate(ctx context.Context, obj *models.Claim) (*time.Time, error)
 	ClaimSources(ctx context.Context, obj *models.Claim) (interface{}, error)
 	Description(ctx context.Context, obj *models.Claim) (interface{}, error)
 
@@ -359,6 +361,7 @@ type PostResolver interface {
 
 	Description(ctx context.Context, obj *models.Post) (interface{}, error)
 
+	PublishedDate(ctx context.Context, obj *models.Post) (*time.Time, error)
 	Format(ctx context.Context, obj *models.Post) (*models.Format, error)
 	Medium(ctx context.Context, obj *models.Post) (*models.Medium, error)
 	Categories(ctx context.Context, obj *models.Post) ([]*models.Category, error)
@@ -3083,14 +3086,14 @@ func (ec *executionContext) _Category_medium(ctx context.Context, field graphql.
 		Object:     "Category",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Category().Medium(rctx, obj)
+		return obj.Medium, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3319,14 +3322,14 @@ func (ec *executionContext) _Claim_claim_date(ctx context.Context, field graphql
 		Object:     "Claim",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ClaimDate, nil
+		return ec.resolvers.Claim().ClaimDate(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3335,9 +3338,9 @@ func (ec *executionContext) _Claim_claim_date(ctx context.Context, field graphql
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(time.Time)
+	res := resTmp.(*time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_checked_date(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -3351,14 +3354,14 @@ func (ec *executionContext) _Claim_checked_date(ctx context.Context, field graph
 		Object:     "Claim",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CheckedDate, nil
+		return ec.resolvers.Claim().CheckedDate(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3367,9 +3370,9 @@ func (ec *executionContext) _Claim_checked_date(ctx context.Context, field graph
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(time.Time)
+	res := resTmp.(*time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_claim_sources(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -5667,14 +5670,14 @@ func (ec *executionContext) _Post_published_date(ctx context.Context, field grap
 		Object:     "Post",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PublishedDate, nil
+		return ec.resolvers.Post().PublishedDate(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5683,9 +5686,9 @@ func (ec *executionContext) _Post_published_date(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(time.Time)
+	res := resTmp.(*time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Post_format(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
@@ -10128,16 +10131,7 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				return res
 			})
 		case "medium":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Category_medium(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Category_medium(ctx, field, obj)
 		case "space_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -10203,9 +10197,27 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "claim_date":
-			out.Values[i] = ec._Claim_claim_date(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_claim_date(ctx, field, obj)
+				return res
+			})
 		case "checked_date":
-			out.Values[i] = ec._Claim_checked_date(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_checked_date(ctx, field, obj)
+				return res
+			})
 		case "claim_sources":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -10829,7 +10841,16 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 		case "is_page":
 			out.Values[i] = ec._Post_is_page(ctx, field, obj)
 		case "published_date":
-			out.Values[i] = ec._Post_published_date(ctx, field, obj)
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Post_published_date(ctx, field, obj)
+				return res
+			})
 		case "format":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -13100,6 +13121,21 @@ func (ec *executionContext) unmarshalOTime2timeᚐTime(ctx context.Context, v in
 
 func (ec *executionContext) marshalOTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
 	return graphql.MarshalTime(v)
+}
+
+func (ec *executionContext) unmarshalOTime2ᚖtimeᚐTime(ctx context.Context, v interface{}) (*time.Time, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := graphql.UnmarshalTime(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTime2ᚖtimeᚐTime(ctx context.Context, sel ast.SelectionSet, v *time.Time) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return graphql.MarshalTime(*v)
 }
 
 func (ec *executionContext) marshalOUser2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐUser(ctx context.Context, sel ast.SelectionSet, v *models.User) graphql.Marshaler {

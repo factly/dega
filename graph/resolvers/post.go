@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -33,6 +34,10 @@ func (r *postResolver) Description(ctx context.Context, obj *models.Post) (inter
 
 func (r *postResolver) HTMLDescription(ctx context.Context, obj *models.Post) (*string, error) {
 	return &obj.HTMLDescription, nil
+}
+
+func (r *postResolver) PublishedDate(ctx context.Context, obj *models.Post) (*time.Time, error) {
+	return obj.PublishedDate, nil
 }
 
 func (r *postResolver) Format(ctx context.Context, obj *models.Post) (*models.Format, error) {
@@ -148,7 +153,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.ReviewRating.RatingExplaination = each.Claim.Fact
 		claimSchema.ReviewRating.WorstRating = worstRating
 		claimSchema.ItemReviewed.Type = "Claim"
-		claimSchema.ItemReviewed.DatePublished = each.Claim.CheckedDate
+		claimSchema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
 		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
 		claimSchema.ItemReviewed.Author.Type = "Organization"
 		claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
