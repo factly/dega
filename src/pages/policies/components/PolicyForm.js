@@ -75,6 +75,11 @@ const entities = [
     label: 'Menus',
     options: options,
   },
+  {
+    name: 'pages',
+    label: 'Pages',
+    options: options,
+  }
 ];
 
 function PolicyForm({ data = {}, onCreate }) {

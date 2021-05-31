@@ -76,14 +76,18 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
                       Quick Edit
                     </Button>,
                     item.status === 'publish' ? (
-                      <Button style={{ border: 'solid 1px', color: 'green', width: '100px' }}>
+                      <Button style={{ border: 'solid 1px', color: 'green', width: '140px' }}>
                         Published
                       </Button>
-                    ) : (
-                      <Button style={{ border: 'solid 1px', color: 'red', width: '100px' }}>
+                    ) : item.status === 'draft' ? (
+                      <Button style={{ border: 'solid 1px', color: 'red', width: '140px' }}>
                         Draft
                       </Button>
-                    ),
+                    ) : item.status === 'ready' ? (
+                      <Button style={{ border: 'solid 1px', color: 'gold', width: '140px' }}>
+                        Ready to Publish
+                      </Button>
+                    ) : null,
                   ]
                 : []
             }

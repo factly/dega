@@ -9,10 +9,13 @@ import deepEqual from 'deep-equal';
 import { getPosts } from '../../actions/posts';
 import Selector from '../../components/Selector';
 import Template from '../../components/Template';
+import { useLocation } from 'react-router-dom';
 
 function Posts({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
+  let query = new URLSearchParams(useLocation().search);
+  const status = query.get('status');
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -20,6 +23,7 @@ function Posts({ formats }) {
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
+    status: status,
   });
   if (!formatFlag && !formats.loading && formats.article) {
     setFilters({ ...filters, format: [formats.article.id] });
