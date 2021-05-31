@@ -222,7 +222,7 @@ func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) 
 	err = config.DB.Model(&models.Post{}).Where(&models.Post{
 		ID:      uint(id),
 		SpaceID: sID,
-	}).First(&result).Error
+	}).Where("is_page = ?", false).First(&result).Error
 
 	if err != nil {
 		return nil, nil
@@ -255,7 +255,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 
 	offset, pageLimit := util.Parse(page, limit)
 
-	tx := config.DB.Model(&models.Post{})
+	tx := config.DB.Model(&models.Post{}).Where("is_page = ?", false)
 
 	if status != nil {
 		tx.Where("status = ?", status)

@@ -119,7 +119,7 @@ func TestPosts(t *testing.T) {
 	t.Run("get list of draft posts from some spaces", func(t *testing.T) {
 		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
-		PostSelectMock(mock, "draft", 1)
+		PostSelectMock(mock, false, "draft", 1)
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -150,7 +150,7 @@ func TestPosts(t *testing.T) {
 		PostCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT (.+) FROM "posts" INNER JOIN post_categories (.+) INNER JOIN post_tags (.+)category_id IN \(2,3\) (.+)tag_id IN \(1,2\) (.+)format_id IN \(1\)\)`).
-			WithArgs("publish", 1).
+			WithArgs(false, "publish", 1).
 			WillReturnRows(sqlmock.NewRows(postColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
 
@@ -212,7 +212,7 @@ func TestPosts(t *testing.T) {
 		PostCountMock(mock, 1)
 
 		mock.ExpectQuery(`SELECT (.+) FROM "posts" INNER JOIN post_authors (.+)author_id IN \(5,6\)`).
-			WithArgs("publish", 1).
+			WithArgs(false, "publish", 1).
 			WillReturnRows(sqlmock.NewRows(postColumns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
 
@@ -253,7 +253,7 @@ func TestPosts(t *testing.T) {
 	// post testcases
 	t.Run("fetch a post by id from a space", func(t *testing.T) {
 		CheckSpaceMock(mock)
-		PostSelectMock(mock, 1, 1)
+		PostSelectMock(mock, 1, 1, false)
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -275,7 +275,7 @@ func TestPosts(t *testing.T) {
 
 	t.Run("fetch post with claim", func(t *testing.T) {
 		CheckSpaceMock(mock)
-		PostSelectMock(mock, 1, 1)
+		PostSelectMock(mock, 1, 1, false)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 			WithArgs(1).
@@ -311,7 +311,7 @@ func TestPosts(t *testing.T) {
 	t.Run("post record not found", func(t *testing.T) {
 		CheckSpaceMock(mock)
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "posts"`)).
-			WithArgs(1, 1).
+			WithArgs(1, 1, false).
 			WillReturnRows(sqlmock.NewRows(postColumns))
 
 		resp := e.POST(path).
@@ -334,7 +334,7 @@ func TestPosts(t *testing.T) {
 
 	t.Run("fetch post with schemas", func(t *testing.T) {
 		CheckSpaceMock(mock)
-		PostSelectMock(mock, 1, 1)
+		PostSelectMock(mock, 1, 1, false)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 			WithArgs(1).
