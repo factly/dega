@@ -97,8 +97,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 		result = append(result, *postList)
 	}
 
+	nextURL, prevURL := util.GetNextPrevURL(*r.URL, limit)
 	err = util.Template.ExecuteTemplate(w, "postlist.gohtml", map[string]interface{}{
 		"postList": result,
+		"nextURL":  nextURL,
+		"prevURL":  prevURL,
 	})
 	if err != nil {
 		loggerx.Error(err)
