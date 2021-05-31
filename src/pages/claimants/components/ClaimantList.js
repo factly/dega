@@ -1,42 +1,12 @@
 import React from 'react';
-import { Popconfirm, Button, Typography, Table, Space, Form, Select, Input } from 'antd';
+import { Popconfirm, Button, Typography, Table, Space } from 'antd';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { getClaimants, deleteClaimant } from '../../../actions/claimants';
+import { useDispatch } from 'react-redux';
+import { deleteClaimant } from '../../../actions/claimants';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
 
-function ClaimantList({ actions }) {
+function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
   const dispatch = useDispatch();
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-  });
-  const [form] = Form.useForm();
-  const { Option } = Select;
-
-  const { claimants, total, loading } = useSelector((state) => {
-    const node = state.claimants.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node)
-      return {
-        claimants: node.data.map((element) => state.claimants.details[element]),
-        total: node.total,
-        loading: state.claimants.loading,
-      };
-    return { claimants: [], total: 0, loading: state.claimants.loading };
-  });
-
-  React.useEffect(() => {
-    fetchClaimants();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchClaimants = () => {
-    dispatch(getClaimants(filters));
-  };
 
   const columns = [
     { title: 'Name', dataIndex: 'name', key: 'name' },
@@ -98,43 +68,14 @@ function ClaimantList({ actions }) {
 
   return (
     <Space direction={'vertical'}>
-      <Form
-        initialValues={filters}
-        form={form}
-        name="filters"
-        layout="inline"
-        onFinish={(values) =>
-          setFilters({
-            ...filters,
-            sort_by: values.sort,
-            q: values.q,
-          })
-        }
-        style={{ maxWidth: '100%' }}
-      >
-        <Form.Item name="q" label="Query" style={{ width: '25%' }}>
-          <Input placeholder="search post" />
-        </Form.Item>
-        <Form.Item name="sort" label="sort" style={{ width: '15%' }}>
-          <Select>
-            <Option value="desc">Latest</Option>
-            <Option value="asc">Old</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
       <Table
         bordered
         columns={columns}
-        dataSource={claimants}
-        loading={loading}
+        dataSource={data.claimants}
+        loading={data.loading}
         rowKey={'id'}
         pagination={{
-          total: total,
+          total: data.total,
           current: filters.page,
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>

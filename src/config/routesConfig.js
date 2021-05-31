@@ -573,7 +573,7 @@ const routes = {
       action: 'create',
     },
   },
-  editPost: {
+  editPage: {
     path: '/pages/:id/edit',
     Component: EditPage,
     title: 'Edit',
