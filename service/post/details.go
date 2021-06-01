@@ -13,7 +13,7 @@ import (
 	"github.com/go-chi/chi"
 )
 
-func details(w http.ResponseWriter, r *http.Request) {
+func PostDetails(w http.ResponseWriter, r *http.Request) {
 
 	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {

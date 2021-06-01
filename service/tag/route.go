@@ -8,7 +8,7 @@ func Router() chi.Router {
 
 	r.Get("/", list)
 	r.Get("/{slug}", allPosts)
-	r.Get("/{slug}/formats/{format_slug}", postList)
+	r.Get("/{slug}/format/{format_slug}", postList)
 
 	return r
 }

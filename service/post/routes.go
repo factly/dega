@@ -16,7 +16,6 @@ func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Get("/", list)
-	r.Get("/{post_slug}", details)
 
 	return r
 }
