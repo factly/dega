@@ -120,7 +120,7 @@ function PermissionList({ admin }) {
             >
               <Button disabled={!admin}>Edit</Button>
             </Link>
-            {/* <Popconfirm
+            <Popconfirm
               title="Sure to Delete?"
               onConfirm={() =>
                 dispatch(deleteSpacePermission(record.permission.id)).then(() =>
@@ -129,9 +129,9 @@ function PermissionList({ admin }) {
               }
             >
               <Link to="" className="ant-dropdown-link">
-                <Button>Delete</Button>
+                <Button disabled={!admin}>Delete</Button>
               </Link>
-            </Popconfirm> */}
+            </Popconfirm>
           </span>
         );
       },
