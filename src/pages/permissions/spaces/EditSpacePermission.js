@@ -24,8 +24,6 @@ function EditSpacePermission() {
     dispatch(getSpaces());
   }, [dispatch, sid, pid]);
 
-  //if (loading) return <Skeleton />;
-
   if (!space) {
     return <RecordNotFound />;
   }
@@ -38,6 +36,8 @@ function EditSpacePermission() {
   if (space) {
     return <SpacePermissionEditForm data={space.permission} onCreate={onUpdate} />;
   }
+  if (loading) return <Skeleton />;
+
 }
 
 export default EditSpacePermission;
