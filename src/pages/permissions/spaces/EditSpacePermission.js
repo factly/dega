@@ -35,8 +35,9 @@ function EditSpacePermission() {
       history.push('/permissions/spaces'),
     );
   };
-
-  return <SpacePermissionEditForm data={space.permission} onCreate={onUpdate} />;
+  if (space) {
+    return <SpacePermissionEditForm data={space.permission} onCreate={onUpdate} />;
+  }
 }
 
 export default EditSpacePermission;

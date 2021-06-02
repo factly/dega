@@ -4,7 +4,7 @@ import { Popconfirm, Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrganisations, deleteOrganisationPermission } from '../../../../actions/organisations';
 import { Link } from 'react-router-dom';
-function PermissionList({ actions }) {
+function PermissionList({ admin }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -75,9 +75,7 @@ function PermissionList({ actions }) {
               }}
               to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
             >
-              <Button disabled={!actions.includes('admin')}>
-                Edit
-              </Button>
+              <Button disabled={!admin}>Edit</Button>
             </Link>
             {/* <Popconfirm
               title="Sure to Delete?"

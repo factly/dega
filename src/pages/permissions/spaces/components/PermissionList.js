@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces, deleteSpacePermission } from '../../../../actions/spacePermissions';
 import { Link } from 'react-router-dom';
 
-function PermissionList() {
+function PermissionList({ admin }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -118,7 +118,7 @@ function PermissionList() {
               }}
               to={`/spaces/${record.id}/permissions/${record.permission.id}/edit`}
             >
-              <Button>Edit</Button>
+              <Button disabled={!admin}>Edit</Button>
             </Link>
             {/* <Popconfirm
               title="Sure to Delete?"
