@@ -53,28 +53,37 @@ func (r *postResolver) Medium(ctx context.Context, obj *models.Post) (*models.Me
 }
 
 func (r *postResolver) Categories(ctx context.Context, obj *models.Post) ([]*models.Category, error) {
-	// fetch all categories
-	config.DB.Model(&obj).Preload("Categories").Find(&obj)
+	res := make([]models.PostCategory, 0)
+	cats := make([]string, 0)
 
-	categories := make([]*models.Category, 0)
+	// fetch all tags
+	config.DB.Model(&models.PostCategory{}).Where(&models.PostCategory{
+		PostID: obj.ID,
+	}).Find(&res)
 
-	for _, postCategory := range obj.Categories {
-		categories = append(categories, &postCategory)
+	for _, postCat := range res {
+		cats = append(cats, fmt.Sprint(postCat.CategoryID))
 	}
 
+	categories, _ := loaders.GetCategoryLoader(ctx).LoadAll(cats)
 	return categories, nil
 }
 
 func (r *postResolver) Tags(ctx context.Context, obj *models.Post) ([]*models.Tag, error) {
+	res := make([]models.PostTag, 0)
+	tags := make([]string, 0)
+
 	// fetch all tags
-	config.DB.Model(&obj).Preload("Tags").Find(&obj)
+	config.DB.Model(&models.PostTag{}).Where(&models.PostTag{
+		PostID: obj.ID,
+	}).Find(&res)
 
-	tags := make([]*models.Tag, 0)
-
-	for _, postTag := range obj.Tags {
-		tags = append(tags, &postTag)
+	for _, postTag := range res {
+		tags = append(tags, fmt.Sprint(postTag.TagID))
 	}
-	return tags, nil
+
+	tagList, _ := loaders.GetTagLoader(ctx).LoadAll(tags)
+	return tagList, nil
 }
 
 func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.Claim, error) {
