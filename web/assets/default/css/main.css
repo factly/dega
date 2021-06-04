@@ -6,21 +6,21 @@ h3,h2,h1 {
   text-align: center;
 }
 
-div#post_description.description {
+/* div#post_description.description {
   font-family: sans-serif;
   text-align: justify;
-}
+} */
 
 div.image {
   text-align: center;
 }
 
-img {
+/* img {
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-}
+} */
 
 img.featured_image {
   display: inline-block;

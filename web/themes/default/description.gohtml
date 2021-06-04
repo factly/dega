@@ -4,25 +4,25 @@
       <p>{{noesc .data.text}}</p>
     
     {{else if eq .type "header"}}
-      <h{{.data.level}}>{{.data.text}}</h{{.data.level}}>
+      <h{{.data.level}}>{{noesc .data.text}}</h{{.data.level}}>
     
     {{else if eq .type "list"}}
       {{if eq .data.style "ordered"}}
         <ol>
           {{range .data.items}}
-            <li>{{.}}</li>
+            <li>{{noesc .}}</li>
           {{end}}
         </ol>
       {{else if eq .data.style "unordered"}}
         <ul>
           {{range .data.items}}
-            <li>{{.}}</li>
+            <li>{{noesc .}}</li>
           {{end}}
         </ul>
       {{end}}
 
     {{else if eq .type "quote"}}
-      <blockquote>{{.data.text}}</blockquote>
+      <blockquote>{{noesc .data.text}}</blockquote>
 
     {{else if eq .type "raw"}}
         {{noesc .data.html}}
@@ -40,7 +40,7 @@
     {{else if eq .type "uppy"}}
       <div class="image">
         <img src="{{if .data.url.proxy}} {{.data.url.proxy}} {{else}} {{.data.url.raw}} {{end}}" id="{{.data.slug}}" alt="{{.data.alt_text}}">
-        <p>{{.data.caption}}</p>
+        <p>{{noesc .data.caption}}</p>
       </div>
 
     {{else if eq .type "table"}}

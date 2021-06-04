@@ -4,7 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <link rel="stylesheet" href="/default/css/main.css">
+  <link rel="stylesheet" href="{{publicURL "/default/css/main.css"}}">
+  <link rel="stylesheet" href="{{publicURL "/default/css/post.css"}}">
+  <link rel="stylesheet" href="{{publicURL "/default/css/navbar.css"}}">
+
+  
   {{if .post.Medium}}
     {{$urlMap := unmar .post.Medium.URL}}
     <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
@@ -12,49 +18,102 @@
   <title>{{.post.Slug}}</title>
 </head>
 <body>
-  
-  <h1>{{.post.Title}}  
-    {{if .post.Medium}}
-    {{$urlMap := unmar .post.Medium.URL}}
-      <img class="featured_image" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
-      <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
-    {{end}}
-  </h1>
-  
-  <h3>{{.post.Subtitle}}</h3>
-  <blockquote>{{.post.Excerpt}}</blockquote>
-  <br><br>
-  <p id="format"><b> Format: {{.post.Format.Name}}</b></p>
-  
-  <p><b>Tags: </b></p>
-  <ul>
-  {{range .post.Tags}}
-    {{$tagDesc := unmar .Description}}
-    <li>{{.Name}} - {{template "description" $tagDesc.blocks}}</li>
-  {{end}}
-  </ul>
+{{template "navbar"}}
+<main>
+  <div class="main-content-container">
+    <div class="main-content">
+      <div>
+        <article class="post">
+          {{/* Header start */}}
+          <div class="post-header">
+            <h1 class="post-title">{{.post.Title}}</h1>
+            <div class="post-info">
+              <div class="post-info-meta-container">
+                <div class="post-info-meta">
+                  <div class="post-info-links">
+                  
+                    {{$length := len .post.Authors}}
+                    {{$last_idx := sub $length 1}}
+                    {{range $idx, $cat := .post.Authors}}
+                    {{if eq $idx $last_idx}}
+                    <a class="post-info-users" href="{{print "/author/" $cat.Slug | publicURL}}">{{.FirstName}} {{.LastName}}</a>
+                    {{else}}
+                    <a class="post-info-users" href="{{print "/author/" $cat.Slug | publicURL}}">{{.FirstName}} {{.LastName}}</a>,
+                    {{end}}
+                    {{end}}
+                    <span>in</span>
+                    <script>
+                    let posts = {{.post}}
+                    console.log({posts});
+                    </script>
+                    {{$length := len .post.Categories}}
+                    {{$last_idx := sub $length 1}}
+                    {{range $idx, $cat := .post.Categories}}
+                    {{if eq $idx $last_idx}}
+                    <a class="post-info-categories" href="{{print "/category/" $cat.Slug | publicURL}}">{{.Name}}</a>
+                    {{else}}
+                    <a class="post-info-categories" href="{{print "/category/" $cat.Slug | publicURL}}">{{.Name}}</a>,
+                    {{end}}
+                    {{end}}
+                    {{/* fix comma issue */}}
+                  </div>
+                  <span class="post-published">
+                    <i class="fas fa-clock clock-icon"></i>
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" class="clock-icon" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"></path>
+                    </svg> 
+                    Apr 26, 2021
+                    {{/* Need Time from server */}}
+                  </span>
+                </div>
+              </div>
+              <div social-icon="" class="social-icons">
+                <a title="Share on Facebook" href="https://www.facebook.com/sharer.php?u=https%3A%2F%2Fhealth.factly.in%2Fgeneral-vaccine-trends-in-india-15" target="_blank" rel="noopener noreferrer" class="social-icon"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" color="var(--theme-ui-colors-socialFacebook)" font-size="1.25rem" style="color:var(--theme-ui-colors-socialFacebook);" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M400 32H48A48 48 0 0 0 0 80v352a48 48 0 0 0 48 48h137.25V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.27c-30.81 0-40.42 19.12-40.42 38.73V256h68.78l-11 71.69h-57.78V480H400a48 48 0 0 0 48-48V80a48 48 0 0 0-48-48z"></path></svg></a><a title="Tweet it" href="https://twitter.com/share?url=https%3A%2F%2Fhealth.factly.in%2Fgeneral-vaccine-trends-in-india-15" target="_blank" rel="noopener noreferrer" class="social-icon"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" color="var(--theme-ui-colors-socialTwitter)" font-size="1.25rem" style="color:var(--theme-ui-colors-socialTwitter);" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-48.9 158.8c.2 2.8.2 5.7.2 8.5 0 86.7-66 186.6-186.6 186.6-37.2 0-71.7-10.8-100.7-29.4 5.3.6 10.4.8 15.8.8 30.7 0 58.9-10.4 81.4-28-28.8-.6-53-19.5-61.3-45.5 10.1 1.5 19.2 1.5 29.6-1.2-30-6.1-52.5-32.5-52.5-64.4v-.8c8.7 4.9 18.9 7.9 29.6 8.3a65.447 65.447 0 0 1-29.2-54.6c0-12.2 3.2-23.4 8.9-33.1 32.3 39.8 80.8 65.8 135.2 68.6-9.3-44.5 24-80.6 64-80.6 18.9 0 35.9 7.9 47.9 20.7 14.8-2.8 29-8.3 41.6-15.8-4.9 15.2-15.2 28-28.8 36.1 13.2-1.4 26-5.1 37.8-10.2-8.9 13.1-20.1 24.7-32.9 34z"></path></svg></a><a title="Share on WhatsApp" href="https://api.whatsapp.com/send?text=https%3A%2F%2Fhealth.factly.in%2Fgeneral-vaccine-trends-in-india-15" target="_blank" rel="noopener noreferrer" class="social-icon"><svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 448 512" color="var(--theme-ui-colors-socialWhatsapp)" font-size="1.25rem" style="color:var(--theme-ui-colors-socialWhatsapp);" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg"><path d="M224 122.8c-72.7 0-131.8 59.1-131.9 131.8 0 24.9 7 49.2 20.2 70.1l3.1 5-13.3 48.6 49.9-13.1 4.8 2.9c20.2 12 43.4 18.4 67.1 18.4h.1c72.6 0 133.3-59.1 133.3-131.8 0-35.2-15.2-68.3-40.1-93.2-25-25-58-38.7-93.2-38.7zm77.5 188.4c-3.3 9.3-19.1 17.7-26.7 18.8-12.6 1.9-22.4.9-47.5-9.9-39.7-17.2-65.7-57.2-67.7-59.8-2-2.6-16.2-21.5-16.2-41s10.2-29.1 13.9-33.1c3.6-4 7.9-5 10.6-5 2.6 0 5.3 0 7.6.1 2.4.1 5.7-.9 8.9 6.8 3.3 7.9 11.2 27.4 12.2 29.4s1.7 4.3.3 6.9c-7.6 15.2-15.7 14.6-11.6 21.6 15.3 26.3 30.6 35.4 53.9 47.1 4 2 6.3 1.7 8.6-1 2.3-2.6 9.9-11.6 12.5-15.5 2.6-4 5.3-3.3 8.9-2 3.6 1.3 23.1 10.9 27.1 12.9s6.6 3 7.6 4.6c.9 1.9.9 9.9-2.4 19.1zM400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zM223.9 413.2c-26.6 0-52.7-6.7-75.8-19.3L64 416l22.5-82.2c-13.9-24-21.2-51.3-21.2-79.3C65.4 167.1 136.5 96 223.9 96c42.4 0 82.2 16.5 112.2 46.5 29.9 30 47.9 69.8 47.9 112.2 0 87.4-72.7 158.5-160.1 158.5z"></path></svg></a>
+                {{/* add paths to social sharing links */}}
+              </div>
+            </div>
+          </div>
+          {{/* Header end */}}
+          {{/* Excerpt start */}}
+            <div class="featured-container">
+              {{if .post.Medium}}
+                {{$urlMap := unmar .post.Medium.URL}}
+                  <div class="featured-image-container">
+                    <div class="image-wrapper">
+                      <div class="aspect-ratio-container">
+                      </div>
+                      <img class="featured-image" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"> 
+                    </div>
+                  </div>
+              {{end}}
+              {{if .post.Excerpt}}
+                <div class="excerpt-container">
+                <div class="excerpt-header">Excerpt</div>
+                <p class="excerpt">{{.post.Excerpt}}</p></div>
+              {{end}}
+            </div>
+            {{/* Excerpt end */}}
+            {{/* Content start */}}
+            {{$bmap := unmar .post.Description | bmap}}
 
-  <p><b>Categories: </b></p>
-  <ul>
-  {{range .post.Categories}}
-    {{$catDesc := unmar .Description}}
-    <li>{{.Name}} - {{template "description" $catDesc.blocks}}</li>
-  {{end}}
-  </ul>
-
-  <p><b>Authors: </b></p>
-  <ul>
-  {{range .post.Authors}}
-    <li>{{.FirstName}} {{.LastName}} - {{.Email}}</li>
-  {{end}}
-  </ul>
-  <br><hr>
-
-  {{$bmap := unmar .post.Description | bmap}}
-
-  <div id="post_description" class="description">
-    {{template "description" $bmap}}
+            <div id="post_description" class="description parsed" dangerously>
+              {{template "description" $bmap}}
+            </div>
+            {{/* Content end */}}
+            {{/* Tags Start */}}
+            <div class="tags-container">
+            <div class="tag-links">
+            {{range .post.Tags}}
+              {{$tagDesc := unmar .Description}}
+              <a href="{{print "/tag/" .Slug | publicURL}}" class="tag-link">{{.Name}}</a>
+            {{end}}
+            </div>
+            </div>
+            {{/* Tags End */}}
+        </article>
+      </div>
+    </div>
   </div>
-  
+</main>
 </body>
 </html>
