@@ -38,9 +38,8 @@ func RegisterRoutes() http.Handler {
 	workDir, _ := os.Getwd()
 	filesDir := http.Dir(filepath.Join(workDir, "web/assets"))
 
-	FileServer(r, "/", filesDir)
-
 	r.With(middlewarex.CheckSpace(0)).Group(func(r chi.Router) {
+		r.Get("/", home)
 		r.Get("/{post_slug}", post.PostDetails)
 		r.Mount("/post", post.Router())
 		r.Mount("/author", author.Router())
@@ -48,6 +47,8 @@ func RegisterRoutes() http.Handler {
 		r.Mount("/tag", tag.Router())
 		r.Mount("/format", format.Router())
 	})
+
+	FileServer(r, "/", filesDir)
 
 	return r
 }
