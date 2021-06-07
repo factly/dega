@@ -29,6 +29,7 @@ func allPosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	var totalPosts int64
 	offset, limit := paginationx.Parse(r.URL.Query())
 
 	tag := model.Tag{}
@@ -47,7 +48,7 @@ func allPosts(w http.ResponseWriter, r *http.Request) {
 	// get posts
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN post_tags ON posts.id = post_tags.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("tag_id = ?", tag.ID).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
+	}).Where("is_page = ?", false).Where("tag_id = ?", tag.ID).Count(&totalPosts).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
@@ -115,6 +116,14 @@ func allPosts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	nextURL, prevURL := util.GetNextPrevURL(*r.URL, limit)
+	if totalPosts <= int64(limit+offset) {
+		nextURL = ""
+	}
+
+	if offset == 0 {
+		prevURL = ""
+	}
+
 	err = util.Template.ExecuteTemplate(w, "postlist.gohtml", map[string]interface{}{
 		"postList": result,
 		"tag":      tag,

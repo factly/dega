@@ -25,11 +25,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	posts := make([]model.Post, 0)
 
+	var totalPosts int64
 	offset, limit := paginationx.Parse(r.URL.Query())
-
 	err = config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Order("created_at").Where("status != ?", "template").Offset(offset).Limit(limit).Find(&posts).Error
+	}).Order("created_at").Where("status != ?", "template").Count(&totalPosts).Offset(offset).Limit(limit).Find(&posts).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -98,6 +98,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	nextURL, prevURL := util.GetNextPrevURL(*r.URL, limit)
+	if totalPosts <= int64(limit+offset) {
+		nextURL = ""
+	}
+
+	if offset == 0 {
+		prevURL = ""
+	}
+
 	err = util.Template.ExecuteTemplate(w, "postlist.gohtml", map[string]interface{}{
 		"postList": result,
 		"nextURL":  nextURL,
