@@ -123,6 +123,8 @@ func postList(w http.ResponseWriter, r *http.Request) {
 	nextURL, prevURL := util.GetNextPrevURL(*r.URL, limit)
 	err = util.Template.ExecuteTemplate(w, "postlist.gohtml", map[string]interface{}{
 		"postList": result,
+		"tag":      tag,
+		"from_tag": true,
 		"nextURL":  nextURL,
 		"prevURL":  prevURL,
 	})

@@ -3,6 +3,7 @@ package author
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/factly/dega-vito/config"
 	"github.com/factly/dega-vito/model"
@@ -23,9 +24,11 @@ func postList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slug := chi.URLParam(r, "slug")
-	if slug == "" {
-		errorx.Render(w, errorx.Parser(errorx.GetMessage("Invalid Slug", http.StatusBadRequest)))
+	aID := chi.URLParam(r, "id")
+	id, err := strconv.Atoi(aID)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
@@ -52,21 +55,12 @@ func postList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// get author id for slug
-	var authorID int
-	for _, v := range authors {
-		if v.Slug == slug {
-			authorID = int(v.ID)
-			break
-		}
-	}
-
 	postList := make([]model.Post, 0)
 	result := make([]post.PostData, 0)
 	// get posts
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN formats ON formats.id = posts.format_id").Joins("INNER JOIN post_authors ON posts.id = post_authors.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("author_id = ?", authorID).Where("formats.slug = ?", formatSlug).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
+	}).Where("is_page = ?", false).Where("author_id = ?", id).Where("formats.slug = ?", formatSlug).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
@@ -128,9 +122,11 @@ func postList(w http.ResponseWriter, r *http.Request) {
 
 	nextURL, prevURL := util.GetNextPrevURL(*r.URL, limit)
 	err = util.Template.ExecuteTemplate(w, "postlist.gohtml", map[string]interface{}{
-		"postList": result,
-		"nextURL":  nextURL,
-		"prevURL":  prevURL,
+		"postList":    result,
+		"author":      authors[fmt.Sprint(id)],
+		"from_author": true,
+		"nextURL":     nextURL,
+		"prevURL":     prevURL,
 	})
 	if err != nil {
 		loggerx.Error(err)

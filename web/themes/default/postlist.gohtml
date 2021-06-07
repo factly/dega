@@ -52,7 +52,7 @@
             {{if .from_category}}
             <ul>
               <li>
-                <a href="{{ publicURL "/category" }}" activeclass="active">All</a>
+                <a href="{{print "/category/" .category.Slug  | publicURL}}" activeclass="active">All</a>
               </li>
               <li >
                 <a href="{{print "/category/" .category.Slug "/format/article" | publicURL}}" activeclass="active">Articles</a>
@@ -64,13 +64,25 @@
             {{else if .from_tag}}
             <ul>
               <li>
-                <a href="{{ publicURL "/tag" }}" activeclass="active">All</a>
+                <a href="{{print "/tag/" .tag.Slug | publicURL}}" activeclass="active">All</a>
               </li>
               <li >
                 <a href="{{print "/tag/" .tag.Slug "/format/article" | publicURL}}" activeclass="active">Articles</a>
               </li>
               <li>
                 <a href="{{print "/tag/" .tag.Slug "/format/fact-check" | publicURL}}" activeclass="active">Fact Checks</a>
+              </li>
+            </ul>
+            {{else if .from_author}}
+            <ul>
+              <li>
+                <a href="{{print "/author/" .author.ID | publicURL}}" activeclass="active">All</a>
+              </li>
+              <li >
+                <a href="{{print "/author/" .author.ID "/format/article" | publicURL}}" activeclass="active">Articles</a>
+              </li>
+              <li>
+                <a href="{{print "/author/" .author.ID "/format/fact-check" | publicURL}}" activeclass="active">Fact Checks</a>
               </li>
             </ul>
 
