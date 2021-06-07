@@ -11,8 +11,13 @@
 </head>
 <body>
 
-  <h1>Post List</h1>
-
+  {{if .from_category}}
+    <h1>{{.category.Name}}</h1>
+  {{else if .from_tag}}
+    <h1>{{.tag.Name}}</h1>
+  {{else}}
+    <h1>Post List</h1>
+  {{end}}
   {{/* <div class="row">      
       
     {{range $index, $post := .postList}}
@@ -43,18 +48,46 @@
       <div class="list-page-header">
         <h1 class="list-page-title">{{.name}}</h1>
         <div class="tabs">
-          <ul>
           {{/* dynamic urls for categories,tags,authors and their slugs */}}
-            <li>
-              <a href="/category/" activeclass="active">All</a>
-            </li>
-            <li >
-              <a href="{{print "/category/" .Slug "/format/article" | publicURL}}" activeclass="active">Articles</a>
-            </li>
-            <li>
-              <a href="{{print "/category/" .Slug "/format/fact-check" | publicURL}}" activeclass="active">Fact Checks</a>
-            </li>
-          </ul>
+            {{if .from_category}}
+            <ul>
+              <li>
+                <a href="{{ publicURL "/category" }}" activeclass="active">All</a>
+              </li>
+              <li >
+                <a href="{{print "/category/" .category.Slug "/format/article" | publicURL}}" activeclass="active">Articles</a>
+              </li>
+              <li>
+                <a href="{{print "/category/" .category.Slug "/format/fact-check" | publicURL}}" activeclass="active">Fact Checks</a>
+              </li>
+            </ul>
+            {{else if .from_tag}}
+            <ul>
+              <li>
+                <a href="{{ publicURL "/tag" }}" activeclass="active">All</a>
+              </li>
+              <li >
+                <a href="{{print "/tag/" .tag.Slug "/format/article" | publicURL}}" activeclass="active">Articles</a>
+              </li>
+              <li>
+                <a href="{{print "/tag/" .tag.Slug "/format/fact-check" | publicURL}}" activeclass="active">Fact Checks</a>
+              </li>
+            </ul>
+
+            {{else}}
+            <ul>
+              <li>
+                <a href="{{ publicURL "/post" }}" activeclass="active">All</a>
+              </li>
+              <li >
+                <a href="{{publicURL "/format/article" }}" activeclass="active">Articles</a>
+              </li>
+              <li>
+                <a href="{{publicURL "/format/fact-check" }}" activeclass="active">Fact Checks</a>
+              </li>
+            </ul>
+
+            {{end}}
         </div>
         {{/* posts list */}}
         <div class="posts-list">

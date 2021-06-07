@@ -116,9 +116,11 @@ func allPosts(w http.ResponseWriter, r *http.Request) {
 
 	nextURL, prevURL := util.GetNextPrevURL(*r.URL, limit)
 	err = util.Template.ExecuteTemplate(w, "postlist.gohtml", map[string]interface{}{
-		"postList": result,
-		"nextURL":  nextURL,
-		"prevURL":  prevURL,
+		"postList":      result,
+		"category":      category,
+		"from_category": true,
+		"nextURL":       nextURL,
+		"prevURL":       prevURL,
 	})
 	if err != nil {
 		loggerx.Error(err)

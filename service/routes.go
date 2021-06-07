@@ -43,7 +43,7 @@ func RegisterRoutes() http.Handler {
 	r.With(middlewarex.CheckSpace(0)).Group(func(r chi.Router) {
 		r.Get("/{post_slug}", post.PostDetails)
 		r.Mount("/post", post.Router())
-		r.Mount("/authors", author.Router())
+		r.Mount("/author", author.Router())
 		r.Mount("/category", category.Router())
 		r.Mount("/tag", tag.Router())
 		r.Mount("/format", format.Router())
