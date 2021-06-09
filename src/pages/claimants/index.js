@@ -1,7 +1,7 @@
 import React from 'react';
 import ClaimantList from './components/ClaimantList';
 import { Space, Button, Form, Row, Col, Select, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants } from '../../actions/claimants';
 import deepEqual from 'deep-equal';
@@ -9,10 +9,13 @@ import deepEqual from 'deep-equal';
 function Claimants({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const [form] = Form.useForm();
   const { Option } = Select;
 

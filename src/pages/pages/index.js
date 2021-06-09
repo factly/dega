@@ -1,6 +1,6 @@
 import React from 'react';
 import { Space, Button, Select, Form, Col, Row, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PageList from './components/PageList';
 import { useSelector, useDispatch } from 'react-redux';
 import getUserPermission from '../../utils/getUserPermission';
@@ -15,10 +15,13 @@ function Pages({ formats }) {
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { pages, total, loading, tags, categories } = useSelector((state) => {
     const node = state.pages.req.find((item) => {
       return deepEqual(item.query, filters);
@@ -71,7 +74,6 @@ function Pages({ formats }) {
           style={{ maxWidth: '100%' }}
           className="ant-advanced-search-form"
           onValuesChange={(changedValues, allValues) => {
-            console.log('changedValues', changedValues, 'all', allValues);
             if (!changedValues.q) {
               onSave(allValues);
             }

@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryList from './components/CategoryList';
 import { Space, Button, Form, Input, Select, Row, Col } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../actions/categories';
 import deepEqual from 'deep-equal';
@@ -9,10 +9,13 @@ import deepEqual from 'deep-equal';
 function Categories({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { Option } = Select;
   const [form] = Form.useForm();
   const { categories, total, loading } = useSelector((state) => {

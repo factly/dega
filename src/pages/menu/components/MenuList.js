@@ -3,14 +3,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMenus, deleteMenu } from '../../../actions/menu';
 import deepEqual from 'deep-equal';
 import { Space, Button, Popconfirm, Table } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 function MenuList({ actions }) {
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { menus, total, loading } = useSelector((state) => {
     const node = state.menu.req.find((item) => {
       return deepEqual(item.query, filters);

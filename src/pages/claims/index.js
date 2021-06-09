@@ -1,6 +1,6 @@
 import React from 'react';
 import { Space, Button, Row, Col, Form, Input, Select } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import ClaimList from './components/ClaimList';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
@@ -10,10 +10,13 @@ import { getClaims } from '../../actions/claims';
 function Claims({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const [form] = Form.useForm();
   const { Option } = Select;
 
@@ -67,7 +70,6 @@ function Claims({ permission }) {
         onFinish={(values) => onSave(values)}
         style={{ maxWidth: '100%' }}
         onValuesChange={(changedValues, allValues) => {
-          console.log('changedValues', changedValues, 'all', allValues);
           if (!changedValues.q) {
             onSave(allValues);
           }

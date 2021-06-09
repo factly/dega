@@ -25,6 +25,8 @@ function FactCheck({ formats }) {
     limit: 20,
     status: status,
   });
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   if (!formatFlag && !formats.loading && formats.factcheck) {
     setFilters({ ...filters, format: [formats.factcheck.id] });
     setFormatFlag(true);
@@ -81,7 +83,6 @@ function FactCheck({ formats }) {
           style={{ maxWidth: '100%' }}
           className="ant-advanced-search-form"
           onValuesChange={(changedValues, allValues) => {
-            console.log('changedValues', changedValues, 'all', allValues);
             if (!changedValues.q) {
               onSave(allValues);
             }

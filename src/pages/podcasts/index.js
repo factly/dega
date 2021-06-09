@@ -1,7 +1,7 @@
 import React from 'react';
 import PodcastList from './components/PodcastList';
 import { Space, Button, Form, Row, Col, Input, Select } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPodcasts } from '../../actions/podcasts';
 import deepEqual from 'deep-equal';
@@ -10,10 +10,13 @@ function Podcasts({ permission }) {
   //const { actions } = permission;
   const actions = ['admin'];
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const [form] = Form.useForm();
   const { Option } = Select;
 

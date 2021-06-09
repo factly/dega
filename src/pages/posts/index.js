@@ -14,7 +14,7 @@ import { useLocation } from 'react-router-dom';
 function Posts({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
-  let query = new URLSearchParams(useLocation().search);
+  const query = new URLSearchParams(useLocation().search);
   const status = query.get('status');
   const { Option } = Select;
   const [form] = Form.useForm();
@@ -25,6 +25,8 @@ function Posts({ formats }) {
     limit: 20,
     status: status,
   });
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   if (!formatFlag && !formats.loading && formats.article) {
     setFilters({ ...filters, format: [formats.article.id] });
     setFormatFlag(true);
@@ -82,7 +84,6 @@ function Posts({ formats }) {
           style={{ maxWidth: '100%' }}
           className="ant-advanced-search-form"
           onValuesChange={(changedValues, allValues) => {
-            console.log('changedValues', changedValues, 'all', allValues);
             if (!changedValues.q) {
               onSave(allValues);
             }

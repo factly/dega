@@ -3,16 +3,18 @@ import { Popconfirm, Button, Typography, Table, Avatar, Tooltip } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies, deletePolicy } from '../../../actions/policies';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
 function PolicyList({ actions }) {
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
-
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { policies, total, loading } = useSelector((state) => {
     const node = state.policies.req.find((item) => {
       return deepEqual(item.query, filters);
