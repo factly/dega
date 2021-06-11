@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-vito/config"
 	"github.com/factly/dega-vito/service/author"
 	"github.com/factly/dega-vito/service/category"
+	"github.com/factly/dega-vito/service/format"
 	"github.com/factly/dega-vito/service/post"
 	"github.com/factly/dega-vito/service/tag"
 	"github.com/factly/x/healthx"
@@ -37,14 +38,17 @@ func RegisterRoutes() http.Handler {
 	workDir, _ := os.Getwd()
 	filesDir := http.Dir(filepath.Join(workDir, "web/assets"))
 
-	FileServer(r, "/", filesDir)
-
 	r.With(middlewarex.CheckSpace(0)).Group(func(r chi.Router) {
-		r.Mount("/posts", post.Router())
-		r.Mount("/authors", author.Router())
-		r.Mount("/categories", category.Router())
-		r.Mount("/tags", tag.Router())
+		r.Get("/", home)
+		r.Get("/{post_slug}", post.PostDetails)
+		r.Mount("/post", post.Router())
+		r.Mount("/author", author.Router())
+		r.Mount("/category", category.Router())
+		r.Mount("/tag", tag.Router())
+		r.Mount("/format", format.Router())
 	})
+
+	FileServer(r, "/", filesDir)
 
 	return r
 }

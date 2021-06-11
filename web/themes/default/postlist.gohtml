@@ -6,12 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Post List</title>
   <link rel="stylesheet" href="{{publicURL "/default/css/main.css"}}">
+  <link rel="stylesheet" href="{{publicURL "/default/css/listpage.css"}}">
+  <link rel="stylesheet" href="{{publicURL "/default/css/post.css"}}">
 </head>
 <body>
 
-  <h1>Post List</h1>
-
-  <div class="row">      
+  {{if .from_category}}
+    <h1>{{.category.Name}}</h1>
+  {{else if .from_tag}}
+    <h1>{{.tag.Name}}</h1>
+  {{else}}
+    <h1>Post List</h1>
+  {{end}}
+  {{/* <div class="row">      
       
     {{range $index, $post := .postList}}
       <div class="column">
@@ -21,7 +28,7 @@
           <link rel="icon" href="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}" />
         {{end}}
         <br>
-        <h3><a href="{{ print "/posts/" $post.Slug | publicURL}}">{{$post.Title}}</a></h3>
+        <h3><a href="{{ print "/" $post.Slug | publicURL}}">{{$post.Title}}</a></h3>
         {{if dateVal $post.PublishedDate}} <b>Published Date:</b> {{$post.PublishedDate | dateFmt}} {{end}} <br>
 
         <b>Authors:</b>
@@ -34,7 +41,147 @@
       </div>
     {{end}}
 
+  </div> */}}
+
+  <div class="list-page-content-container">
+    <div class="list-page-content">
+      <div class="list-page-header">
+        <h1 class="list-page-title">{{.name}}</h1>
+        <div class="tabs">
+          {{/* dynamic urls for categories,tags,authors and their slugs */}}
+            {{if .from_category}}
+            <ul>
+              <li>
+                <a href="{{print "/category/" .category.Slug  | publicURL}}" activeclass="active">All</a>
+              </li>
+              <li >
+                <a href="{{print "/category/" .category.Slug "/format/article" | publicURL}}" activeclass="active">Articles</a>
+              </li>
+              <li>
+                <a href="{{print "/category/" .category.Slug "/format/fact-check" | publicURL}}" activeclass="active">Fact Checks</a>
+              </li>
+            </ul>
+            {{else if .from_tag}}
+            <ul>
+              <li>
+                <a href="{{print "/tag/" .tag.Slug | publicURL}}" activeclass="active">All</a>
+              </li>
+              <li >
+                <a href="{{print "/tag/" .tag.Slug "/format/article" | publicURL}}" activeclass="active">Articles</a>
+              </li>
+              <li>
+                <a href="{{print "/tag/" .tag.Slug "/format/fact-check" | publicURL}}" activeclass="active">Fact Checks</a>
+              </li>
+            </ul>
+            {{else if .from_author}}
+            <ul>
+              <li>
+                <a href="{{print "/author/" .author.ID | publicURL}}" activeclass="active">All</a>
+              </li>
+              <li >
+                <a href="{{print "/author/" .author.ID "/format/article" | publicURL}}" activeclass="active">Articles</a>
+              </li>
+              <li>
+                <a href="{{print "/author/" .author.ID "/format/fact-check" | publicURL}}" activeclass="active">Fact Checks</a>
+              </li>
+            </ul>
+
+            {{else}}
+            <ul>
+              <li>
+                <a href="{{ publicURL "/post" }}" activeclass="active">All</a>
+              </li>
+              <li >
+                <a href="{{publicURL "/format/article" }}" activeclass="active">Articles</a>
+              </li>
+              <li>
+                <a href="{{publicURL "/format/fact-check" }}" activeclass="active">Fact Checks</a>
+              </li>
+            </ul>
+
+            {{end}}
+        </div>
+        {{/* posts list */}}
+        <div class="posts-list">
+          {{range $index, $post := .postList}}
+          <div class="post-item">
+            <div class="post-item-card">
+              <div class="card-image">
+                {{/* <div class="card-image-aspect-ratio-container">
+                  <div class="image-container">
+                    <a href="/postslug">
+                    {{if $post.Medium}} 
+                    
+                    {{$urlMap := unmar $post.Medium.URL}}
+                    <script>
+                    let medium = {{$post.Medium}}
+                    let url = {{$urlMap}}
+                    console.log({medium,url});
+                    </script>
+
+                    <img src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"/> 
+
+                    {{end}}
+                    </a>
+                  </div>
+                </div> */}}
+                <div class="featured-image-container">
+                  <div class="image-wrapper">
+                    <div class="aspect-ratio-container">
+                    </div> 
+                    <a href="{{print "/" $post.Slug | publicURL}}">
+                    {{if $post.Medium}} 
+                    {{$urlMap := unmar $post.Medium.URL}}
+                    <img class="featured-image" src="{{if $urlMap.proxy}} {{$urlMap.proxy}} {{else}} {{$urlMap.raw}} {{end}}"/>
+                    {{end}}
+                    </a> 
+                  </div>
+                </div>
+              </div>
+              <a class="meta-info-container" href="{{print "/" $post.Slug | publicURL}}">
+                <h3>{{$post.Title}}</h3>
+                {{/* conditional excerpt based on format true for articles false for factchecks */}}
+                {{if $post.Excerpt}}
+                <p>
+                  {{$post.Excerpt}}
+                  {{/*trim to 150characters */}}
+                </p>
+                {{end}}
+                <div class="card-meta-info">
+                  <span>{{$post.Format.Name}}</span>
+                  <span>/</span>
+                  <span>
+                  {{$author := index $post.Authors 0}}
+                  {{$author.FirstName}} {{$author.LastName}}
+                  </span>
+                  <span>/</span>
+                  <span>{{if dateVal $post.PublishedDate}} {{$post.PublishedDate | dateFmt}} {{end}}</span>
+                </div>
+              </a>
+            </div>
+          </div>
+          {{end}}
+        </div>
+        {{/* <h2 class="no-posts-info">No posts found</h2> */}}
+      </div>
+    </div>
   </div>
-  
+  <div class="page-navigation">
+    <!-- {{if eq .prevURL ""}}
+    {{else}}
+    {{end}} -->
+    <a href="{{publicURL .prevURL}}">
+      <span>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-left" class="svg-inline--fa fa-arrow-left fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M257.5 445.1l-22.2 22.2c-9.4 9.4-24.6 9.4-33.9 0L7 273c-9.4-9.4-9.4-24.6 0-33.9L201.4 44.7c9.4-9.4 24.6-9.4 33.9 0l22.2 22.2c9.5 9.5 9.3 25-.4 34.3L136.6 216H424c13.3 0 24 10.7 24 24v32c0 13.3-10.7 24-24 24H136.6l120.5 114.8c9.8 9.3 10 24.8.4 34.3z"></path></svg>
+      </span>
+      Prev
+    </a>
+    <a href="{{publicURL .nextURL}}">
+      Next
+      <span>
+        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-right" class="svg-inline--fa fa-arrow-right fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"></path></svg>
+      </span>
+    </a>
+  </div>
 </body>
 </html>

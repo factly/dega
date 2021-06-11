@@ -5,7 +5,7 @@ import (
 	"github.com/go-chi/chi"
 )
 
-type postData struct {
+type PostData struct {
 	model.Post
 	Authors []model.Author `json:"authors"`
 	Claims  []model.Claim  `json:"claims"`
@@ -16,7 +16,6 @@ func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.Get("/", list)
-	r.Get("/{post_slug}", details)
 
 	return r
 }

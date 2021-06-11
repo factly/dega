@@ -23,6 +23,7 @@ func SetupTemplates() {
 		"dateVal":   validateDate,
 		"noesc":     noescape,
 		"publicURL": publicURL,
+		"sub": sub,
 	}).ParseGlob("web/themes/default/*"))
 }
 
@@ -49,4 +50,8 @@ func publicURL(str string) string {
 		return fmt.Sprint(viper.GetString("public_prefix") + str)
 	}
 	return str
+}
+
+func sub(a int, b int) int {
+	return a - b
 }

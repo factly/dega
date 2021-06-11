@@ -9,7 +9,7 @@ import (
 func BlockMap(raw map[string]interface{}) ([]map[string]interface{}, error) {
 	blocks, ok := raw["blocks"].([]interface{})
 	if !ok {
-		return nil, errors.New("type error for blocks")
+		return nil, nil
 	}
 
 	blockMap := make([]map[string]interface{}, 0)

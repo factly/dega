@@ -1,4 +1,4 @@
-package post
+package category
 
 import (
 	"fmt"
@@ -6,14 +6,16 @@ import (
 
 	"github.com/factly/dega-vito/config"
 	"github.com/factly/dega-vito/model"
+	"github.com/factly/dega-vito/service/post"
 	"github.com/factly/dega-vito/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
+	"github.com/go-chi/chi"
 )
 
-func list(w http.ResponseWriter, r *http.Request) {
+func allPosts(w http.ResponseWriter, r *http.Request) {
 	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -21,16 +23,32 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := make([]PostData, 0)
+	slug := chi.URLParam(r, "slug")
+	if slug == "" {
+		errorx.Render(w, errorx.Parser(errorx.GetMessage("Invalid Slug", http.StatusBadRequest)))
+		return
+	}
 
-	posts := make([]model.Post, 0)
+	offset, limit := paginationx.Parse(r.URL.Query())
+
+	category := model.Category{}
+	// get category
+	if err = config.DB.Model(&model.Category{}).Where(&model.Category{
+		Slug:    slug,
+		SpaceID: uint(sID),
+	}).Find(&category).Error; err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		return
+	}
 
 	var totalPosts int64
-	offset, limit := paginationx.Parse(r.URL.Query())
-	err = config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
+	postList := make([]model.Post, 0)
+	result := make([]post.PostData, 0)
+	// get posts
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN post_categories ON posts.id = post_categories.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Order("created_at").Where("status != ?", "template").Where("is_page = ?", false).Count(&totalPosts).Offset(offset).Limit(limit).Find(&posts).Error
-
+	}).Where("is_page = ?", false).Where("category_id = ?", category.ID).Count(&totalPosts).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
@@ -38,7 +56,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var postIDs []uint
-	for _, p := range posts {
+	for _, p := range postList {
 		postIDs = append(postIDs, p.ID)
 	}
 
@@ -75,16 +93,16 @@ func list(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	for _, post := range posts {
-		postList := &PostData{}
+	for _, p := range postList {
+		postList := &post.PostData{}
 		postList.Claims = make([]model.Claim, 0)
 		postList.Authors = make([]model.Author, 0)
-		if len(postClaimMap[post.ID]) > 0 {
-			postList.Claims = postClaimMap[post.ID]
+		if len(postClaimMap[p.ID]) > 0 {
+			postList.Claims = postClaimMap[p.ID]
 		}
-		postList.Post = post
+		postList.Post = p
 
-		postAuths, hasEle := postAuthorMap[post.ID]
+		postAuths, hasEle := postAuthorMap[p.ID]
 
 		if hasEle {
 			for _, postAuthor := range postAuths {
@@ -107,9 +125,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = util.Template.ExecuteTemplate(w, "postlist.gohtml", map[string]interface{}{
-		"postList": result,
-		"nextURL":  nextURL,
-		"prevURL":  prevURL,
+		"postList":      result,
+		"category":      category,
+		"from_category": true,
+		"nextURL":       nextURL,
+		"prevURL":       prevURL,
 	})
 	if err != nil {
 		loggerx.Error(err)
