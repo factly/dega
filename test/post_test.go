@@ -156,13 +156,6 @@ func TestPosts(t *testing.T) {
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
-			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows([]string{"category_id", "post_id"}).AddRow(1, 1))
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
 			WithArgs(1).
