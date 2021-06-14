@@ -202,7 +202,7 @@ type ComplexityRoot struct {
 		Menu       func(childComplexity int) int
 		Page       func(childComplexity int, id *int, slug *string) int
 		Pages      func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Post       func(childComplexity int, id *int, slug *string) int
+		Post       func(childComplexity int, id *int, slug *string, includePages *bool) int
 		Posts      func(childComplexity int, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Ratings    func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Sitemap    func(childComplexity int) int
@@ -380,7 +380,7 @@ type QueryResolver interface {
 	Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error)
 	Formats(ctx context.Context, spaces []int) (*models.FormatsPaging, error)
 	Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
-	Post(ctx context.Context, id *int, slug *string) (*models.Post, error)
+	Post(ctx context.Context, id *int, slug *string, includePages *bool) (*models.Post, error)
 	Page(ctx context.Context, id *int, slug *string) (*models.Post, error)
 	Pages(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error)
@@ -1241,7 +1241,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Post(childComplexity, args["id"].(*int), args["slug"].(*string)), true
+		return e.complexity.Query.Post(childComplexity, args["id"].(*int), args["slug"].(*string), args["include_pages"].(*bool)), true
 
 	case "Query.posts":
 		if e.complexity.Query.Posts == nil {
@@ -2083,7 +2083,7 @@ type Query {
   tag(id: Int, slug: String): Tag
   formats(spaces:[Int!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
-  post(id: Int, slug: String): Post
+  post(id: Int, slug: String, include_pages: Boolean): Post
   page(id: Int, slug: String): Post
   pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
@@ -2433,6 +2433,15 @@ func (ec *executionContext) field_Query_post_args(ctx context.Context, rawArgs m
 		}
 	}
 	args["slug"] = arg1
+	var arg2 *bool
+	if tmp, ok := rawArgs["include_pages"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("include_pages"))
+		arg2, err = ec.unmarshalOBoolean2ᚖbool(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["include_pages"] = arg2
 	return args, nil
 }
 
@@ -6394,7 +6403,7 @@ func (ec *executionContext) _Query_post(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Post(rctx, args["id"].(*int), args["slug"].(*string))
+		return ec.resolvers.Query().Post(rctx, args["id"].(*int), args["slug"].(*string), args["include_pages"].(*bool))
 	})
 	if err != nil {
 		ec.Error(ctx, err)

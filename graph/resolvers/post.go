@@ -223,7 +223,7 @@ type redisPost struct {
 	Users  []*models.User  `json:"users,omitempty"`
 }
 
-func (r *queryResolver) Post(ctx context.Context, id *int, slug *string) (*models.Post, error) {
+func (r *queryResolver) Post(ctx context.Context, id *int, slug *string, include_page *bool) (*models.Post, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -234,16 +234,23 @@ func (r *queryResolver) Post(ctx context.Context, id *int, slug *string) (*model
 	}
 
 	result := &models.Post{}
+	tx := config.DB.Model(&models.Post{})
 	if id != nil {
-		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+		tx.Where(&models.Post{
 			ID:      uint(*id),
 			SpaceID: sID,
-		}).Where("is_page = ?", false).First(&result).Error
+		})
 	} else {
-		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+		tx.Where(&models.Post{
 			Slug:    *slug,
 			SpaceID: sID,
-		}).Where("is_page = ?", false).First(&result).Error
+		})
+	}
+
+	if include_page == nil || !*include_page {
+		err = tx.Where("is_page = ?", false).First(&result).Error
+	} else {
+		err = tx.First(&result).Error
 	}
 
 	if err != nil {
