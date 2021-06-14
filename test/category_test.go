@@ -144,11 +144,6 @@ func TestCategory(t *testing.T) {
 		CategorySelectMock(mock, 1, 1)
 		mediumPreloadMock(mock)
 
-		mock.ExpectQuery(`SELECT \* FROM "media"`).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id"}).
-				AddRow(1))
-
 		resp := e.POST(path).
 			WithHeaders(headers).
 			WithJSON(Query{

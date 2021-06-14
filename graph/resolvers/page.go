@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/models"
@@ -10,18 +11,29 @@ import (
 	"github.com/factly/dega-api/util/cache"
 )
 
-func (r *queryResolver) Page(ctx context.Context, id int) (*models.Post, error) {
+func (r *queryResolver) Page(ctx context.Context, id *int, slug *string) (*models.Post, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
 	}
 
+	if id == nil && slug == nil {
+		return nil, errors.New("please provide either id or slug")
+	}
+
 	result := &models.Post{}
 
-	err = config.DB.Model(&models.Post{}).Where(&models.Post{
-		ID:      uint(id),
-		SpaceID: sID,
-	}).Where("is_page = ?", true).First(&result).Error
+	if id != nil {
+		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+			ID:      uint(*id),
+			SpaceID: sID,
+		}).Where("is_page = ?", true).First(&result).Error
+	} else {
+		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+			Slug:    *slug,
+			SpaceID: sID,
+		}).Where("is_page = ?", true).First(&result).Error
+	}
 
 	if err != nil {
 		return nil, nil

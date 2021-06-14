@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"gorm.io/gorm"
@@ -25,18 +26,30 @@ func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 func (r *tagResolver) HTMLDescription(ctx context.Context, obj *models.Tag) (*string, error) {
 	return &obj.HTMLDescription, nil
 }
-func (r *queryResolver) Tag(ctx context.Context, id int) (*models.Tag, error) {
+func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
 	}
 
+	if id == nil && slug == nil {
+		return nil, errors.New("please provide either id or slug")
+	}
+
 	result := &models.Tag{}
 
-	err = config.DB.Model(&models.Tag{}).Where(&models.Tag{
-		ID:      uint(id),
-		SpaceID: sID,
-	}).First(&result).Error
+	if id != nil {
+		err = config.DB.Model(&models.Tag{}).Where(&models.Tag{
+			ID:      uint(*id),
+			SpaceID: sID,
+		}).First(&result).Error
+	} else {
+		err = config.DB.Model(&models.Tag{}).Where(&models.Tag{
+			Slug:    *slug,
+			SpaceID: sID,
+		}).First(&result).Error
+
+	}
 
 	if err != nil {
 		return nil, nil

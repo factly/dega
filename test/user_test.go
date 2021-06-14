@@ -37,8 +37,6 @@ func TestUsers(t *testing.T) {
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "author_id"}).AddRow(1, 1).AddRow(1, 2))
 
-		SpaceSelectQuery(mock)
-
 		resp := e.POST(path).
 			WithHeaders(headers).
 			WithJSON(Query{
@@ -110,7 +108,6 @@ func TestUsers(t *testing.T) {
 
 	t.Run("get user by id", func(t *testing.T) {
 		CheckSpaceMock(mock)
-		SpaceSelectQuery(mock)
 
 		resp := e.POST(path).
 			WithHeaders(headers).

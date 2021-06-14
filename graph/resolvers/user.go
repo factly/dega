@@ -36,6 +36,11 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 		return nil, nil
 	}
 
+	oID, err := validator.GetOrganisation(ctx)
+	if err != nil {
+		return nil, nil
+	}
+
 	posts := make([]models.Post, 0)
 
 	err = config.DB.Model(&models.Post{}).Where(&models.Post{
@@ -57,20 +62,12 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 		return nil, nil
 	}
 
-	space := &models.Space{}
-	space.ID = sID
-
-	err = config.DB.First(space).Error
-	if err != nil {
-		return nil, nil
-	}
-
 	url := fmt.Sprint(viper.GetString("kavach_url"), "/users/application?application=dega")
 
 	resp, err := requestx.Request("GET", url, nil, map[string]string{
 		"Content-Type":   "application/json",
 		"X-User":         fmt.Sprint(postAuthor.AuthorID),
-		"X-Organisation": fmt.Sprint(space.OrganisationID),
+		"X-Organisation": fmt.Sprint(oID),
 	})
 
 	if err != nil {
@@ -107,15 +104,14 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 
 func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) {
 	sID, err := validator.GetSpace(ctx)
-
 	if err != nil || sID == 0 {
 		return nil, nil
 	}
 
-	space := &models.Space{}
-	space.ID = sID
-
-	config.DB.First(space)
+	oID, err := validator.GetOrganisation(ctx)
+	if err != nil {
+		return nil, nil
+	}
 
 	userMap := make(map[uint]models.User)
 	url := fmt.Sprint(viper.GetString("kavach_url"), "/users/application?application=dega")
@@ -123,7 +119,7 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 	resp, err := requestx.Request("GET", url, nil, map[string]string{
 		"Content-Type":   "application/json",
 		"X-User":         fmt.Sprint(id),
-		"X-Organisation": fmt.Sprint(space.OrganisationID),
+		"X-Organisation": fmt.Sprint(oID),
 	})
 
 	if err != nil {
