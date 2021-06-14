@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"strings"
 	"time"
@@ -222,18 +223,28 @@ type redisPost struct {
 	Users  []*models.User  `json:"users,omitempty"`
 }
 
-func (r *queryResolver) Post(ctx context.Context, id int) (*models.Post, error) {
+func (r *queryResolver) Post(ctx context.Context, id *int, slug *string) (*models.Post, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
 	}
 
-	result := &models.Post{}
+	if id == nil && slug == nil {
+		return nil, errors.New("please provide either id or slug")
+	}
 
-	err = config.DB.Model(&models.Post{}).Where(&models.Post{
-		ID:      uint(id),
-		SpaceID: sID,
-	}).Where("is_page = ?", false).First(&result).Error
+	result := &models.Post{}
+	if id != nil {
+		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+			ID:      uint(*id),
+			SpaceID: sID,
+		}).Where("is_page = ?", false).First(&result).Error
+	} else {
+		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+			Slug:    *slug,
+			SpaceID: sID,
+		}).Where("is_page = ?", false).First(&result).Error
+	}
 
 	if err != nil {
 		return nil, nil

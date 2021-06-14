@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"gorm.io/gorm"
@@ -48,19 +49,28 @@ func (r *categoryResolver) MetaFields(ctx context.Context, obj *models.Category)
 	return obj.MetaFields, nil
 }
 
-func (r *queryResolver) Category(ctx context.Context, id int) (*models.Category, error) {
+func (r *queryResolver) Category(ctx context.Context, id *int, slug *string) (*models.Category, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
 	}
 
+	if id == nil && slug == nil {
+		return nil, errors.New("please provide either id or slug")
+	}
+
 	result := &models.Category{}
-
-	err = config.DB.Model(&models.Category{}).Where(&models.Category{
-		ID:      uint(id),
-		SpaceID: sID,
-	}).Preload("Medium").First(&result).Error
-
+	if id != nil {
+		err = config.DB.Model(&models.Category{}).Where(&models.Category{
+			ID:      uint(*id),
+			SpaceID: sID,
+		}).Preload("Medium").First(&result).Error
+	} else {
+		err = config.DB.Model(&models.Category{}).Where(&models.Category{
+			Slug:    *slug,
+			SpaceID: sID,
+		}).Preload("Medium").First(&result).Error
+	}
 	if err != nil {
 		return nil, nil
 	}

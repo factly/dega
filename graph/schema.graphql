@@ -235,13 +235,13 @@ type Query {
   space: Space
   menu: MenusPaging
   categories(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
-  category(id: Int!): Category
+  category(id: Int, slug: String): Category
   tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
-  tag(id: Int!): Tag
+  tag(id: Int, slug: String): Tag
   formats(spaces:[Int!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
-  post(id: Int!): Post
-  page(id: Int!): Post
+  post(id: Int, slug: String): Post
+  page(id: Int, slug: String): Post
   pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   user(id: Int!): User

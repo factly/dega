@@ -195,19 +195,19 @@ type ComplexityRoot struct {
 
 	Query struct {
 		Categories func(childComplexity int, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Category   func(childComplexity int, id int) int
+		Category   func(childComplexity int, id *int, slug *string) int
 		Claimants  func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claims     func(childComplexity int, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Formats    func(childComplexity int, spaces []int) int
 		Menu       func(childComplexity int) int
-		Page       func(childComplexity int, id int) int
+		Page       func(childComplexity int, id *int, slug *string) int
 		Pages      func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Post       func(childComplexity int, id int) int
+		Post       func(childComplexity int, id *int, slug *string) int
 		Posts      func(childComplexity int, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Ratings    func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Sitemap    func(childComplexity int) int
 		Space      func(childComplexity int) int
-		Tag        func(childComplexity int, id int) int
+		Tag        func(childComplexity int, id *int, slug *string) int
 		Tags       func(childComplexity int, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		User       func(childComplexity int, id int) int
 		Users      func(childComplexity int, page *int, limit *int) int
@@ -375,13 +375,13 @@ type QueryResolver interface {
 	Space(ctx context.Context) (*models.Space, error)
 	Menu(ctx context.Context) (*models.MenusPaging, error)
 	Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error)
-	Category(ctx context.Context, id int) (*models.Category, error)
+	Category(ctx context.Context, id *int, slug *string) (*models.Category, error)
 	Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
-	Tag(ctx context.Context, id int) (*models.Tag, error)
+	Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error)
 	Formats(ctx context.Context, spaces []int) (*models.FormatsPaging, error)
 	Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
-	Post(ctx context.Context, id int) (*models.Post, error)
-	Page(ctx context.Context, id int) (*models.Post, error)
+	Post(ctx context.Context, id *int, slug *string) (*models.Post, error)
+	Page(ctx context.Context, id *int, slug *string) (*models.Post, error)
 	Pages(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error)
 	User(ctx context.Context, id int) (*models.User, error)
@@ -1162,7 +1162,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Category(childComplexity, args["id"].(int)), true
+		return e.complexity.Query.Category(childComplexity, args["id"].(*int), args["slug"].(*string)), true
 
 	case "Query.claimants":
 		if e.complexity.Query.Claimants == nil {
@@ -1217,7 +1217,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Page(childComplexity, args["id"].(int)), true
+		return e.complexity.Query.Page(childComplexity, args["id"].(*int), args["slug"].(*string)), true
 
 	case "Query.pages":
 		if e.complexity.Query.Pages == nil {
@@ -1241,7 +1241,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Post(childComplexity, args["id"].(int)), true
+		return e.complexity.Query.Post(childComplexity, args["id"].(*int), args["slug"].(*string)), true
 
 	case "Query.posts":
 		if e.complexity.Query.Posts == nil {
@@ -1291,7 +1291,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Tag(childComplexity, args["id"].(int)), true
+		return e.complexity.Query.Tag(childComplexity, args["id"].(*int), args["slug"].(*string)), true
 
 	case "Query.tags":
 		if e.complexity.Query.Tags == nil {
@@ -2078,13 +2078,13 @@ type Query {
   space: Space
   menu: MenusPaging
   categories(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
-  category(id: Int!): Category
+  category(id: Int, slug: String): Category
   tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
-  tag(id: Int!): Tag
+  tag(id: Int, slug: String): Tag
   formats(spaces:[Int!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
-  post(id: Int!): Post
-  page(id: Int!): Post
+  post(id: Int, slug: String): Post
+  page(id: Int, slug: String): Post
   pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   user(id: Int!): User
@@ -2181,15 +2181,24 @@ func (ec *executionContext) field_Query_categories_args(ctx context.Context, raw
 func (ec *executionContext) field_Query_category_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 int
+	var arg0 *int
 	if tmp, ok := rawArgs["id"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		arg0, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["id"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["slug"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("slug"))
+		arg1, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["slug"] = arg1
 	return args, nil
 }
 
@@ -2331,15 +2340,24 @@ func (ec *executionContext) field_Query_formats_args(ctx context.Context, rawArg
 func (ec *executionContext) field_Query_page_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 int
+	var arg0 *int
 	if tmp, ok := rawArgs["id"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		arg0, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["id"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["slug"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("slug"))
+		arg1, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["slug"] = arg1
 	return args, nil
 }
 
@@ -2397,15 +2415,24 @@ func (ec *executionContext) field_Query_pages_args(ctx context.Context, rawArgs 
 func (ec *executionContext) field_Query_post_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 int
+	var arg0 *int
 	if tmp, ok := rawArgs["id"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		arg0, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["id"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["slug"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("slug"))
+		arg1, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["slug"] = arg1
 	return args, nil
 }
 
@@ -2559,15 +2586,24 @@ func (ec *executionContext) field_Query_ratings_args(ctx context.Context, rawArg
 func (ec *executionContext) field_Query_tag_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 int
+	var arg0 *int
 	if tmp, ok := rawArgs["id"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		arg0, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["id"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["slug"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("slug"))
+		arg1, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["slug"] = arg1
 	return args, nil
 }
 
@@ -6163,7 +6199,7 @@ func (ec *executionContext) _Query_category(ctx context.Context, field graphql.C
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Category(rctx, args["id"].(int))
+		return ec.resolvers.Query().Category(rctx, args["id"].(*int), args["slug"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6241,7 +6277,7 @@ func (ec *executionContext) _Query_tag(ctx context.Context, field graphql.Collec
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Tag(rctx, args["id"].(int))
+		return ec.resolvers.Query().Tag(rctx, args["id"].(*int), args["slug"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6358,7 +6394,7 @@ func (ec *executionContext) _Query_post(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Post(rctx, args["id"].(int))
+		return ec.resolvers.Query().Post(rctx, args["id"].(*int), args["slug"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6397,7 +6433,7 @@ func (ec *executionContext) _Query_page(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Page(rctx, args["id"].(int))
+		return ec.resolvers.Query().Page(rctx, args["id"].(*int), args["slug"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
