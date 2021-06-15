@@ -238,13 +238,13 @@ type Query {
   category(id: Int, slug: String): Category
   tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   tag(id: Int, slug: String): Tag
-  formats(spaces:[Int!]): FormatsPaging
+  formats(spaces:[Int!], slugs:[String!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int, slug: String, include_pages: Boolean): Post
   page(id: Int, slug: String): Post
   pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
-  user(id: Int!): User
+  user(id: Int, slug: String): User
   ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(spaces:[Int!], ratings: [Int!], claimants:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging

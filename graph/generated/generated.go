@@ -198,7 +198,7 @@ type ComplexityRoot struct {
 		Category   func(childComplexity int, id *int, slug *string) int
 		Claimants  func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claims     func(childComplexity int, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		Formats    func(childComplexity int, spaces []int) int
+		Formats    func(childComplexity int, spaces []int, slugs []string) int
 		Menu       func(childComplexity int) int
 		Page       func(childComplexity int, id *int, slug *string) int
 		Pages      func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
@@ -209,7 +209,7 @@ type ComplexityRoot struct {
 		Space      func(childComplexity int) int
 		Tag        func(childComplexity int, id *int, slug *string) int
 		Tags       func(childComplexity int, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
-		User       func(childComplexity int, id int) int
+		User       func(childComplexity int, id *int, slug *string) int
 		Users      func(childComplexity int, page *int, limit *int) int
 	}
 
@@ -378,13 +378,13 @@ type QueryResolver interface {
 	Category(ctx context.Context, id *int, slug *string) (*models.Category, error)
 	Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
 	Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error)
-	Formats(ctx context.Context, spaces []int) (*models.FormatsPaging, error)
+	Formats(ctx context.Context, spaces []int, slugs []string) (*models.FormatsPaging, error)
 	Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Post(ctx context.Context, id *int, slug *string, includePages *bool) (*models.Post, error)
 	Page(ctx context.Context, id *int, slug *string) (*models.Post, error)
 	Pages(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Users(ctx context.Context, page *int, limit *int) (*models.UsersPaging, error)
-	User(ctx context.Context, id int) (*models.User, error)
+	User(ctx context.Context, id *int, slug *string) (*models.User, error)
 	Ratings(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.RatingsPaging, error)
 	Claimants(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error)
 	Claims(ctx context.Context, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimsPaging, error)
@@ -1198,7 +1198,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Formats(childComplexity, args["spaces"].([]int)), true
+		return e.complexity.Query.Formats(childComplexity, args["spaces"].([]int), args["slugs"].([]string)), true
 
 	case "Query.menu":
 		if e.complexity.Query.Menu == nil {
@@ -1315,7 +1315,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.User(childComplexity, args["id"].(int)), true
+		return e.complexity.Query.User(childComplexity, args["id"].(*int), args["slug"].(*string)), true
 
 	case "Query.users":
 		if e.complexity.Query.Users == nil {
@@ -2081,13 +2081,13 @@ type Query {
   category(id: Int, slug: String): Category
   tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   tag(id: Int, slug: String): Tag
-  formats(spaces:[Int!]): FormatsPaging
+  formats(spaces:[Int!], slugs:[String!]): FormatsPaging
   posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int, slug: String, include_pages: Boolean): Post
   page(id: Int, slug: String): Post
   pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
-  user(id: Int!): User
+  user(id: Int, slug: String): User
   ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
   claimants(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(spaces:[Int!], ratings: [Int!], claimants:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
@@ -2334,6 +2334,15 @@ func (ec *executionContext) field_Query_formats_args(ctx context.Context, rawArg
 		}
 	}
 	args["spaces"] = arg0
+	var arg1 []string
+	if tmp, ok := rawArgs["slugs"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("slugs"))
+		arg1, err = ec.unmarshalOString2ᚕstringᚄ(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["slugs"] = arg1
 	return args, nil
 }
 
@@ -2679,15 +2688,24 @@ func (ec *executionContext) field_Query_tags_args(ctx context.Context, rawArgs m
 func (ec *executionContext) field_Query_user_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 int
+	var arg0 *int
 	if tmp, ok := rawArgs["id"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		arg0, err = ec.unmarshalOInt2ᚖint(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["id"] = arg0
+	var arg1 *string
+	if tmp, ok := rawArgs["slug"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("slug"))
+		arg1, err = ec.unmarshalOString2ᚖstring(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["slug"] = arg1
 	return args, nil
 }
 
@@ -6325,7 +6343,7 @@ func (ec *executionContext) _Query_formats(ctx context.Context, field graphql.Co
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Formats(rctx, args["spaces"].([]int))
+		return ec.resolvers.Query().Formats(rctx, args["spaces"].([]int), args["slugs"].([]string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6559,7 +6577,7 @@ func (ec *executionContext) _Query_user(ctx context.Context, field graphql.Colle
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().User(rctx, args["id"].(int))
+		return ec.resolvers.Query().User(rctx, args["id"].(*int), args["slug"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -13128,6 +13146,42 @@ func (ec *executionContext) unmarshalOString2string(ctx context.Context, v inter
 
 func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	return graphql.MarshalString(v)
+}
+
+func (ec *executionContext) unmarshalOString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		if tmp1, ok := v.([]interface{}); ok {
+			vSlice = tmp1
+		} else {
+			vSlice = []interface{}{v}
+		}
+	}
+	var err error
+	res := make([]string, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNString2string(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOString2ᚕstringᚄ(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalNString2string(ctx, sel, v[i])
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
