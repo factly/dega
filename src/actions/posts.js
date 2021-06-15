@@ -6,7 +6,6 @@ import {
   SET_POSTS_LOADING,
   RESET_POSTS,
   POSTS_API,
-  RECENT_POST,
 } from '../constants/posts';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addCategories } from './categories';
@@ -192,17 +191,6 @@ export const addPost = (data) => {
         if (post.medium) dispatch(addMediaList([post.medium]));
 
         dispatch(resetPosts());
-        dispatch(
-          recentPost({
-            ...post,
-            authors: post.authors.map((author) => author.id),
-            categories: post.categories.map((category) => category.id),
-            claims: post.claims.map((claim) => claim.id),
-            tags: post.tags.map((tag) => tag.id),
-            format: post.format.id,
-            medium: post.medium?.id,
-          }),
-        );
         data.status === 'publish'
           ? dispatch(addSuccessNotification(`${post.format.name} Published`))
           : data.status === 'draft'
@@ -398,9 +386,4 @@ export const addPostsRequest = (data) => ({
 
 export const resetPosts = () => ({
   type: RESET_POSTS,
-});
-
-export const recentPost = (data) => ({
-  type: RECENT_POST,
-  payload: data,
 });

@@ -4,7 +4,6 @@ import {
   ADD_PAGES_REQUEST,
   RESET_PAGES,
   SET_PAGES_LOADING,
-  RECENT_PAGE,
 } from '../constants/pages';
 import deepEqual from 'deep-equal';
 
@@ -12,7 +11,6 @@ const initialState = {
   req: [],
   details: {},
   loading: true,
-  recent: {},
 };
 
 export default function pagesReducer(state = initialState, action = {}) {
@@ -53,14 +51,6 @@ export default function pagesReducer(state = initialState, action = {}) {
         details: {
           ...state.details,
           [action.payload.id]: action.payload,
-        },
-      };
-    case RECENT_PAGE:
-      return {
-        ...state,
-        recent: {
-          ...state.recent,
-          data: action.payload,
         },
       };
     default:

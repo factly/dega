@@ -10,16 +10,13 @@ function CreatePage({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'pages', action: 'get', spaces });
   const history = useHistory();
-  const [newPage, setNewPage] = React.useState(false);
-  const pages = useSelector(({ pages }) => pages);
   const dispatch = useDispatch();
-  if (newPage) {
-    history.push(`/pages/${pages.recent.data.id}/edit`);
-    setNewPage(false);
-  }
+
   const onCreate = (values) => {
     if (values.status === 'publish') {
-      dispatch(addPage(values)).then(() => setNewPage(true));
+      dispatch(addPage(values)).then((page) => {
+        if (page && page.id) history.push(`/pages/${page.id}/edit`);
+      });
     } else {
       dispatch(addPage(values));
     }

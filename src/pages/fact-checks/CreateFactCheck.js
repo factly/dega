@@ -10,16 +10,12 @@ function CreateFactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
   const history = useHistory();
-  const [newPost, setNewPost] = React.useState(false);
-  const posts = useSelector(({ posts }) => posts);
   const dispatch = useDispatch();
-  if (newPost) {
-    history.push(`/fact-checks/${posts.recent.data.id}/edit`);
-    setNewPost(false);
-  }
   const onCreate = (values) => {
     if (values.status === 'publish') {
-      dispatch(addPost(values)).then(() => setNewPost(true));
+      dispatch(addPost(values)).then((post) => {
+        if (post && post.id) history.push(`/fact-checks/${post.id}/edit`);
+      });
     } else {
       dispatch(addPost(values));
     }

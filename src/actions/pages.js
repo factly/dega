@@ -6,7 +6,6 @@ import {
   RESET_PAGES,
   SET_PAGES_LOADING,
   PAGES_API,
-  RECENT_PAGE,
 } from '../constants/pages';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addMediaList } from './media';
@@ -171,15 +170,6 @@ export const addPage = (data) => {
         if (page.medium) dispatch(addMediaList([page.medium]));
 
         dispatch(resetPages());
-        dispatch(
-          recentPage({
-            ...page,
-            authors: page.authors.map((author) => author.id),
-            categories: page.categories.map((category) => category.id),
-            tags: page.tags.map((tag) => tag.id),
-            medium: page.medium?.id,
-          }),
-        );
         data.status === 'publish'
           ? dispatch(addSuccessNotification(`Page Published`))
           : data.status === 'draft'
@@ -269,9 +259,4 @@ export const addPagesRequest = (data) => ({
 
 export const resetPages = () => ({
   type: RESET_PAGES,
-});
-
-export const recentPage = (data) => ({
-  type: RECENT_PAGE,
-  payload: data,
 });

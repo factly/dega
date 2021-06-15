@@ -4,7 +4,6 @@ import {
   ADD_POSTS_REQUEST,
   SET_POSTS_LOADING,
   RESET_POSTS,
-  RECENT_POST,
 } from '../constants/posts';
 import deepEqual from 'deep-equal';
 
@@ -12,7 +11,6 @@ const initialState = {
   req: [],
   details: {},
   loading: true,
-  recent: {},
 };
 
 export default function postsReducer(state = initialState, action = {}) {
@@ -53,14 +51,6 @@ export default function postsReducer(state = initialState, action = {}) {
         details: {
           ...state.details,
           [action.payload.id]: action.payload,
-        },
-      };
-    case RECENT_POST:
-      return {
-        ...state,
-        recent: {
-          ...state.recent,
-          data: action.payload,
         },
       };
     default:
