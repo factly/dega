@@ -26,6 +26,7 @@ import sidebar from './sidebarReducer';
 import episodes from './episodesReducer';
 import podcasts from './podcastReducer';
 import redirect from './redirectReducer';
+import events from './eventsReducer';
 
 const appReducer = combineReducers({
   admin,
@@ -54,6 +55,7 @@ const appReducer = combineReducers({
   users,
   menu,
   sidebar,
+  events,
 });
 
 const rootReducer = (state, action) => {

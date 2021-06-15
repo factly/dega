@@ -103,6 +103,11 @@ import Menu from '../pages/menu';
 import CreateMenu from '../pages/menu/CreateMenu';
 import EditMenu from '../pages/menu/EditMenu';
 
+//Events
+import Events from '../pages/events';
+import CreateEvent from '../pages/events/CreateEvent';
+import EditEvent from '../pages/events/EditEvent';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -553,6 +558,24 @@ const routes = {
       resource: 'menu',
       action: 'update',
     },
+  },
+  events: {
+    path: '/events',
+    Component: Events,
+    title: 'Events',
+    isAdmin: true,
+  },
+  createEvent: {
+    path: '/events/create',
+    Component: CreateEvent,
+    title: 'Create',
+    isAdmin: true,
+  },
+  editEvent: {
+    path: '/events/:eid/edit',
+    Component: EditEvent,
+    title: 'Edit',
+    isAdmin: true,
   },
 };
 
