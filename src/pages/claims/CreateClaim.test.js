@@ -11,6 +11,7 @@ import CreateClaim from './CreateClaim';
 import * as actions from '../../actions/claims';
 import ClaimCreateForm from './components/ClaimForm';
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),

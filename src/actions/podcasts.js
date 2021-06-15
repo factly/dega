@@ -10,7 +10,6 @@ import {
 import { addCategories } from './categories';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
-import { addEpisodes } from './episodes';
 
 export const getPodcasts = (query) => {
   return (dispatch) => {
@@ -31,22 +30,11 @@ export const getPodcasts = (query) => {
           ),
         );
         dispatch(
-          addEpisodes(
-            response.data.nodes
-              .filter((podcast) => podcast.episodes.length > 0)
-              .map((podcast) => {
-                return podcast.episodes;
-              })
-              .flat(1),
-          ),
-        );
-        dispatch(
           addPodcastsList(
             response.data.nodes.map((podcast) => {
               return {
                 ...podcast,
                 categories: podcast.categories.map((category) => category.id),
-                episodes: podcast.episodes.map((episode) => episode.id),
               };
             }),
           ),
@@ -73,12 +61,10 @@ export const getPodcast = (id) => {
       .get(PODCASTS_API + '/' + id)
       .then((response) => {
         let podcast = response.data;
-        dispatch(addEpisodes(podcast.episodes));
         dispatch(addCategories(podcast.categories));
         dispatch(
           getPodcastByID({
             ...podcast,
-            episodes: podcast.episodes.map((episode) => episode.id),
             categories: podcast.categories.map((category) => category.id),
           }),
         );
@@ -112,12 +98,10 @@ export const updatePodcast = (data) => {
       .put(PODCASTS_API + '/' + data.id, data)
       .then((response) => {
         let podcast = response.data;
-        dispatch(addEpisodes(podcast.episodes));
         dispatch(addCategories(podcast.categories));
         dispatch(
           getPodcastByID({
             ...podcast,
-            episodes: podcast.episodes.map((episode) => episode.id),
             categories: podcast.categories.map((category) => category.id),
           }),
         );

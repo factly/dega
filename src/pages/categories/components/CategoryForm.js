@@ -4,6 +4,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import JsonEditor from '../../../components/JsonEditor';
+import Selector from '../../../components/Selector';
 
 const layout = {
   labelCol: {
@@ -56,9 +57,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         setValueChange(true);
       }}
     >
-      {/* <Form.Item name="parent_id" label="Parent Category">
+      <Form.Item name="parent_id" label="Parent Category">
         <Selector action="Categories" />
-      </Form.Item> */}
+      </Form.Item>
       <Form.Item
         name="name"
         label="Category"
@@ -96,9 +97,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         <Switch />
       </Form.Item>
       <Form.Item name="description" label="Description">
-        <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
+        <Editor style={{ width: '600px' }} placeholder="Enter Description..." basic={true} />
       </Form.Item>
-      <Form.Item name="meta_fields" label="Meta">
+      <Form.Item name="meta_fields" label="Metafields">
         <JsonEditor json={json} onChangeJSON={(data) => setJson(data)} />
       </Form.Item>
       <Form.Item {...tailLayout}>

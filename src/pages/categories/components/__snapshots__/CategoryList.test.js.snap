@@ -93,7 +93,7 @@ exports[`Categories List component snapshot testing should match component when 
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -136,7 +136,7 @@ exports[`Categories List component snapshot testing should match component when 
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -186,6 +186,31 @@ exports[`Categories List component snapshot testing should match component when 
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_q"
                               label="Search"
                               messageVariables={
@@ -265,6 +290,7 @@ exports[`Categories List component snapshot testing should match component when 
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "25%",
@@ -337,16 +363,21 @@ exports[`Categories List component snapshot testing should match component when 
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -382,6 +413,31 @@ exports[`Categories List component snapshot testing should match component when 
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_sort"
                               label="Sort"
                               messageVariables={
@@ -461,6 +517,7 @@ exports[`Categories List component snapshot testing should match component when 
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "15%",
@@ -486,15 +543,11 @@ exports[`Categories List component snapshot testing should match component when 
                                             <Component
                                               update={2}
                                             >
-                                              <Select
-                                                bordered={true}
-                                                choiceTransitionName=""
+                                              <ForwardRef(InternalSelect)
                                                 id="filters_sort"
                                                 onChange={[Function]}
-                                                transitionName="slide-up"
                                               >
                                                 <Select
-                                                  choiceTransitionName=""
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   dropdownClassName=""
@@ -514,7 +567,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                   transitionName="slide-up"
                                                 >
                                                   <ForwardRef(Select)
-                                                    choiceTransitionName=""
                                                     className=""
                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                     dropdownClassName=""
@@ -765,7 +817,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                           <Selector
                                                             accessibilityIndex={0}
                                                             activeValue={null}
-                                                            choiceTransitionName=""
                                                             className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             domRef={
@@ -834,7 +885,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                               <SingleSelector
                                                                 accessibilityIndex={0}
                                                                 activeValue={null}
-                                                                choiceTransitionName=""
                                                                 className=""
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 domRef={
@@ -1080,20 +1130,25 @@ exports[`Categories List component snapshot testing should match component when 
                                                     </div>
                                                   </ForwardRef(Select)>
                                                 </Select>
-                                              </Select>
+                                              </ForwardRef(InternalSelect)>
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -1119,6 +1174,7 @@ exports[`Categories List component snapshot testing should match component when 
                                 errors={Array []}
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 validateStatus=""
                               >
                                 <Col
@@ -1176,16 +1232,21 @@ exports[`Categories List component snapshot testing should match component when 
                                         </Button>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -1223,13 +1284,6 @@ exports[`Categories List component snapshot testing should match component when 
                         "dataIndex": "slug",
                         "key": "slug",
                         "title": "Slug",
-                      },
-                      Object {
-                        "dataIndex": "description",
-                        "key": "description",
-                        "render": [Function],
-                        "title": "Description",
-                        "width": "50%",
                       },
                       Object {
                         "dataIndex": "parent_id",
@@ -1278,7 +1332,7 @@ exports[`Categories List component snapshot testing should match component when 
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -1337,13 +1391,6 @@ exports[`Categories List component snapshot testing should match component when 
                                   "dataIndex": "slug",
                                   "key": "slug",
                                   "title": "Slug",
-                                },
-                                Object {
-                                  "dataIndex": "description",
-                                  "key": "description",
-                                  "render": [Function],
-                                  "title": "Description",
-                                  "width": "50%",
                                 },
                                 Object {
                                   "dataIndex": "parent_id",
@@ -1441,13 +1488,7 @@ exports[`Categories List component snapshot testing should match component when 
                                     <table
                                       style="table-layout: auto;"
                                     >
-                                      <colgroup>
-                                        <col />
-                                        <col />
-                                        <col
-                                          style="width: 50%; min-width: 50%;"
-                                        />
-                                      </colgroup>
+                                      <colgroup />
                                       <thead
                                         class="ant-table-thead"
                                       >
@@ -1461,11 +1502,6 @@ exports[`Categories List component snapshot testing should match component when 
                                             class="ant-table-cell"
                                           >
                                             Slug
-                                          </th>
-                                          <th
-                                            class="ant-table-cell"
-                                          >
-                                            Description
                                           </th>
                                           <th
                                             class="ant-table-cell"
@@ -1495,15 +1531,6 @@ exports[`Categories List component snapshot testing should match component when 
                                             class="ant-table-cell"
                                           >
                                             andhra-pradesh
-                                          </td>
-                                          <td
-                                            class="ant-table-cell"
-                                          >
-                                            <div
-                                              class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                            >
-                                              
-                                            </div>
                                           </td>
                                           <td
                                             class="ant-table-cell"
@@ -1561,15 +1588,6 @@ exports[`Categories List component snapshot testing should match component when 
                                           <td
                                             class="ant-table-cell"
                                           >
-                                            <div
-                                              class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                            >
-                                              
-                                            </div>
-                                          </td>
-                                          <td
-                                            class="ant-table-cell"
-                                          >
                                             0
                                           </td>
                                           <td
@@ -1617,7 +1635,7 @@ exports[`Categories List component snapshot testing should match component when 
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -1646,13 +1664,6 @@ exports[`Categories List component snapshot testing should match component when 
                                         "dataIndex": "slug",
                                         "key": "slug",
                                         "title": "Slug",
-                                      },
-                                      Object {
-                                        "dataIndex": "description",
-                                        "key": "description",
-                                        "render": [Function],
-                                        "title": "Description",
-                                        "width": "50%",
                                       },
                                       Object {
                                         "dataIndex": "parent_id",
@@ -1741,13 +1752,7 @@ exports[`Categories List component snapshot testing should match component when 
                                           <table
                                             style="table-layout: auto;"
                                           >
-                                            <colgroup>
-                                              <col />
-                                              <col />
-                                              <col
-                                                style="width: 50%; min-width: 50%;"
-                                              />
-                                            </colgroup>
+                                            <colgroup />
                                             <thead
                                               class="ant-table-thead"
                                             >
@@ -1761,11 +1766,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                   class="ant-table-cell"
                                                 >
                                                   Slug
-                                                </th>
-                                                <th
-                                                  class="ant-table-cell"
-                                                >
-                                                  Description
                                                 </th>
                                                 <th
                                                   class="ant-table-cell"
@@ -1795,15 +1795,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                   class="ant-table-cell"
                                                 >
                                                   andhra-pradesh
-                                                </td>
-                                                <td
-                                                  class="ant-table-cell"
-                                                >
-                                                  <div
-                                                    class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                  >
-                                                    
-                                                  </div>
                                                 </td>
                                                 <td
                                                   class="ant-table-cell"
@@ -1861,15 +1852,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                 <td
                                                   class="ant-table-cell"
                                                 >
-                                                  <div
-                                                    class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                  >
-                                                    
-                                                  </div>
-                                                </td>
-                                                <td
-                                                  class="ant-table-cell"
-                                                >
                                                   0
                                                 </td>
                                                 <td
@@ -1916,7 +1898,7 @@ exports[`Categories List component snapshot testing should match component when 
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -1928,10 +1910,8 @@ exports[`Categories List component snapshot testing should match component when 
                                         0,
                                         0,
                                         0,
-                                        0,
                                       ],
                                       "right": Array [
-                                        0,
                                         0,
                                         0,
                                         0,
@@ -1962,7 +1942,6 @@ exports[`Categories List component snapshot testing should match component when 
                                           Array [
                                             undefined,
                                             undefined,
-                                            "50%",
                                             undefined,
                                             undefined,
                                           ]
@@ -1980,14 +1959,6 @@ exports[`Categories List component snapshot testing should match component when 
                                               "fixed": undefined,
                                               "key": "slug",
                                               "title": "Slug",
-                                            },
-                                            Object {
-                                              "dataIndex": "description",
-                                              "fixed": undefined,
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
                                             },
                                             Object {
                                               "dataIndex": "parent_id",
@@ -2004,35 +1975,7 @@ exports[`Categories List component snapshot testing should match component when 
                                           ]
                                         }
                                       >
-                                        <colgroup>
-                                          <col
-                                            key="0"
-                                            style={
-                                              Object {
-                                                "minWidth": undefined,
-                                                "width": undefined,
-                                              }
-                                            }
-                                          />
-                                          <col
-                                            key="1"
-                                            style={
-                                              Object {
-                                                "minWidth": undefined,
-                                                "width": undefined,
-                                              }
-                                            }
-                                          />
-                                          <col
-                                            key="2"
-                                            style={
-                                              Object {
-                                                "minWidth": "50%",
-                                                "width": "50%",
-                                              }
-                                            }
-                                          />
-                                        </colgroup>
+                                        <colgroup />
                                       </ColGroup>
                                       <Header
                                         colWidths={
@@ -2041,10 +1984,9 @@ exports[`Categories List component snapshot testing should match component when 
                                             undefined,
                                             undefined,
                                             undefined,
-                                            undefined,
                                           ]
                                         }
-                                        columCount={5}
+                                        columCount={4}
                                         columns={
                                           Array [
                                             Object {
@@ -2056,13 +1998,6 @@ exports[`Categories List component snapshot testing should match component when 
                                               "dataIndex": "slug",
                                               "key": "slug",
                                               "title": "Slug",
-                                            },
-                                            Object {
-                                              "dataIndex": "description",
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
                                             },
                                             Object {
                                               "dataIndex": "parent_id",
@@ -2091,14 +2026,6 @@ exports[`Categories List component snapshot testing should match component when 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "description",
-                                              "fixed": undefined,
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
-                                            },
-                                            Object {
                                               "dataIndex": "parent_id",
                                               "fixed": undefined,
                                               "key": "parent_id",
@@ -2119,10 +2046,8 @@ exports[`Categories List component snapshot testing should match component when 
                                               0,
                                               0,
                                               0,
-                                              0,
                                             ],
                                             "right": Array [
-                                              0,
                                               0,
                                               0,
                                               0,
@@ -2167,27 +2092,11 @@ exports[`Categories List component snapshot testing should match component when 
                                                   "rowSpan": 1,
                                                 },
                                                 Object {
-                                                  "children": "Description",
+                                                  "children": "Parent Category",
                                                   "className": "",
                                                   "colEnd": 2,
                                                   "colSpan": 1,
                                                   "colStart": 2,
-                                                  "column": Object {
-                                                    "dataIndex": "description",
-                                                    "key": "description",
-                                                    "render": [Function],
-                                                    "title": "Description",
-                                                    "width": "50%",
-                                                  },
-                                                  "key": "description",
-                                                  "rowSpan": 1,
-                                                },
-                                                Object {
-                                                  "children": "Parent Category",
-                                                  "className": "",
-                                                  "colEnd": 3,
-                                                  "colSpan": 1,
-                                                  "colStart": 3,
                                                   "column": Object {
                                                     "dataIndex": "parent_id",
                                                     "key": "parent_id",
@@ -2199,9 +2108,9 @@ exports[`Categories List component snapshot testing should match component when 
                                                 Object {
                                                   "children": "Action",
                                                   "className": "",
-                                                  "colEnd": 4,
+                                                  "colEnd": 3,
                                                   "colSpan": 1,
-                                                  "colStart": 4,
+                                                  "colStart": 3,
                                                   "column": Object {
                                                     "dataIndex": "operation",
                                                     "render": [Function],
@@ -2227,14 +2136,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "description",
-                                                  "fixed": undefined,
-                                                  "key": "description",
-                                                  "render": [Function],
-                                                  "title": "Description",
-                                                  "width": "50%",
-                                                },
-                                                Object {
                                                   "dataIndex": "parent_id",
                                                   "fixed": undefined,
                                                   "key": "parent_id",
@@ -2258,10 +2159,8 @@ exports[`Categories List component snapshot testing should match component when 
                                                   0,
                                                   0,
                                                   0,
-                                                  0,
                                                 ],
                                                 "right": Array [
-                                                  0,
                                                   0,
                                                   0,
                                                   0,
@@ -2340,39 +2239,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                 colStart={2}
                                                 column={
                                                   Object {
-                                                    "dataIndex": "description",
-                                                    "key": "description",
-                                                    "render": [Function],
-                                                    "title": "Description",
-                                                    "width": "50%",
-                                                  }
-                                                }
-                                                component="th"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                rowSpan={1}
-                                                rowType="header"
-                                              >
-                                                <th
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  Description
-                                                </th>
-                                              </Cell>
-                                              <Cell
-                                                className=""
-                                                colEnd={3}
-                                                colSpan={1}
-                                                colStart={3}
-                                                column={
-                                                  Object {
                                                     "dataIndex": "parent_id",
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
@@ -2399,9 +2265,9 @@ exports[`Categories List component snapshot testing should match component when 
                                               </Cell>
                                               <Cell
                                                 className=""
-                                                colEnd={4}
+                                                colEnd={3}
                                                 colSpan={1}
-                                                colStart={4}
+                                                colStart={3}
                                                 column={
                                                   Object {
                                                     "dataIndex": "operation",
@@ -2576,85 +2442,6 @@ exports[`Categories List component snapshot testing should match component when 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="description"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                index={0}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                record={
-                                                  Object {
-                                                    "created_at": "2020-09-09T06:49:36.566567Z",
-                                                    "deleted_at": null,
-                                                    "description": "",
-                                                    "id": 1,
-                                                    "medium_id": 0,
-                                                    "name": "Andhra Pradesh",
-                                                    "parent_id": 0,
-                                                    "posts": null,
-                                                    "slug": "andhra-pradesh",
-                                                    "space_id": 1,
-                                                    "updated_at": "2020-09-09T06:49:36.566567Z",
-                                                  }
-                                                }
-                                                render={[Function]}
-                                              >
-                                                <td
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  <Paragraph
-                                                    ellipsis={
-                                                      Object {
-                                                        "rows": 2,
-                                                      }
-                                                    }
-                                                  >
-                                                    <Base
-                                                      component="div"
-                                                      ellipsis={
-                                                        Object {
-                                                          "rows": 2,
-                                                        }
-                                                      }
-                                                    >
-                                                      <LocaleReceiver
-                                                        componentName="Text"
-                                                      >
-                                                        <ResizeObserver
-                                                          disabled={false}
-                                                          onResize={[Function]}
-                                                        >
-                                                          <Typography
-                                                            className="ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                            component="div"
-                                                            style={
-                                                              Object {
-                                                                "WebkitLineClamp": 2,
-                                                              }
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                              style={
-                                                                Object {
-                                                                  "WebkitLineClamp": 2,
-                                                                }
-                                                              }
-                                                            />
-                                                          </Typography>
-                                                        </ResizeObserver>
-                                                      </LocaleReceiver>
-                                                    </Base>
-                                                  </Paragraph>
-                                                </td>
-                                              </Cell>
-                                              <Cell
-                                                component="td"
                                                 dataIndex="parent_id"
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
@@ -2801,7 +2588,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -2831,7 +2618,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -3099,7 +2886,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -3384,7 +3171,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -3569,85 +3356,6 @@ exports[`Categories List component snapshot testing should match component when 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="description"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                index={1}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                record={
-                                                  Object {
-                                                    "created_at": "2020-09-09T06:49:54.027402Z",
-                                                    "deleted_at": null,
-                                                    "description": "",
-                                                    "id": 2,
-                                                    "medium_id": 0,
-                                                    "name": "Telangana",
-                                                    "parent_id": 0,
-                                                    "posts": null,
-                                                    "slug": "telangana",
-                                                    "space_id": 1,
-                                                    "updated_at": "2020-09-09T06:49:54.027402Z",
-                                                  }
-                                                }
-                                                render={[Function]}
-                                              >
-                                                <td
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  <Paragraph
-                                                    ellipsis={
-                                                      Object {
-                                                        "rows": 2,
-                                                      }
-                                                    }
-                                                  >
-                                                    <Base
-                                                      component="div"
-                                                      ellipsis={
-                                                        Object {
-                                                          "rows": 2,
-                                                        }
-                                                      }
-                                                    >
-                                                      <LocaleReceiver
-                                                        componentName="Text"
-                                                      >
-                                                        <ResizeObserver
-                                                          disabled={false}
-                                                          onResize={[Function]}
-                                                        >
-                                                          <Typography
-                                                            className="ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                            component="div"
-                                                            style={
-                                                              Object {
-                                                                "WebkitLineClamp": 2,
-                                                              }
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                              style={
-                                                                Object {
-                                                                  "WebkitLineClamp": 2,
-                                                                }
-                                                              }
-                                                            />
-                                                          </Typography>
-                                                        </ResizeObserver>
-                                                      </LocaleReceiver>
-                                                    </Base>
-                                                  </Paragraph>
-                                                </td>
-                                              </Cell>
-                                              <Cell
-                                                component="td"
                                                 dataIndex="parent_id"
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
@@ -3794,7 +3502,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -3824,7 +3532,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -4092,7 +3800,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -4377,7 +4085,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -4470,7 +4178,7 @@ exports[`Categories List component snapshot testing should match component when 
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -4558,7 +4266,7 @@ exports[`Categories List component snapshot testing should match component when 
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -4569,7 +4277,15 @@ exports[`Categories List component snapshot testing should match component when 
                                     <ForwardRef(LeftOutlined) />
                                   </button>
                                 }
-                                selectComponentClass={[Function]}
+                                selectComponentClass={
+                                  Object {
+                                    "$$typeof": Symbol(react.forward_ref),
+                                    "OptGroup": [Function],
+                                    "Option": [Function],
+                                    "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                    "render": [Function],
+                                  }
+                                }
                                 selectPrefixCls="ant-select"
                                 showLessItems={false}
                                 showPrevNextJumpers={true}
@@ -4818,7 +4534,7 @@ exports[`Categories List component snapshot testing should match component when 
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -4829,7 +4545,15 @@ exports[`Categories List component snapshot testing should match component when 
                                     }
                                     quickGo={null}
                                     rootPrefixCls="ant-pagination"
-                                    selectComponentClass={[Function]}
+                                    selectComponentClass={
+                                      Object {
+                                        "$$typeof": Symbol(react.forward_ref),
+                                        "OptGroup": [Function],
+                                        "Option": [Function],
+                                        "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                        "render": [Function],
+                                      }
+                                    }
                                     selectPrefixCls="ant-select"
                                   />
                                 </ul>
@@ -4944,7 +4668,7 @@ exports[`Categories List component snapshot testing should match component with 
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -4987,7 +4711,7 @@ exports[`Categories List component snapshot testing should match component with 
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -5037,6 +4761,31 @@ exports[`Categories List component snapshot testing should match component with 
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_q"
                               label="Search"
                               messageVariables={
@@ -5116,6 +4865,7 @@ exports[`Categories List component snapshot testing should match component with 
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "25%",
@@ -5188,16 +4938,21 @@ exports[`Categories List component snapshot testing should match component with 
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -5233,6 +4988,31 @@ exports[`Categories List component snapshot testing should match component with 
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_sort"
                               label="Sort"
                               messageVariables={
@@ -5312,6 +5092,7 @@ exports[`Categories List component snapshot testing should match component with 
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "15%",
@@ -5337,15 +5118,11 @@ exports[`Categories List component snapshot testing should match component with 
                                             <Component
                                               update={2}
                                             >
-                                              <Select
-                                                bordered={true}
-                                                choiceTransitionName=""
+                                              <ForwardRef(InternalSelect)
                                                 id="filters_sort"
                                                 onChange={[Function]}
-                                                transitionName="slide-up"
                                               >
                                                 <Select
-                                                  choiceTransitionName=""
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   dropdownClassName=""
@@ -5365,7 +5142,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                   transitionName="slide-up"
                                                 >
                                                   <ForwardRef(Select)
-                                                    choiceTransitionName=""
                                                     className=""
                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                     dropdownClassName=""
@@ -5616,7 +5392,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                           <Selector
                                                             accessibilityIndex={0}
                                                             activeValue={null}
-                                                            choiceTransitionName=""
                                                             className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             domRef={
@@ -5685,7 +5460,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                               <SingleSelector
                                                                 accessibilityIndex={0}
                                                                 activeValue={null}
-                                                                choiceTransitionName=""
                                                                 className=""
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 domRef={
@@ -5931,20 +5705,25 @@ exports[`Categories List component snapshot testing should match component with 
                                                     </div>
                                                   </ForwardRef(Select)>
                                                 </Select>
-                                              </Select>
+                                              </ForwardRef(InternalSelect)>
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -5970,6 +5749,7 @@ exports[`Categories List component snapshot testing should match component with 
                                 errors={Array []}
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 validateStatus=""
                               >
                                 <Col
@@ -6027,16 +5807,21 @@ exports[`Categories List component snapshot testing should match component with 
                                         </Button>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -6074,13 +5859,6 @@ exports[`Categories List component snapshot testing should match component with 
                         "dataIndex": "slug",
                         "key": "slug",
                         "title": "Slug",
-                      },
-                      Object {
-                        "dataIndex": "description",
-                        "key": "description",
-                        "render": [Function],
-                        "title": "Description",
-                        "width": "50%",
                       },
                       Object {
                         "dataIndex": "parent_id",
@@ -6129,7 +5907,7 @@ exports[`Categories List component snapshot testing should match component with 
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -6164,13 +5942,6 @@ exports[`Categories List component snapshot testing should match component with 
                                   "dataIndex": "slug",
                                   "key": "slug",
                                   "title": "Slug",
-                                },
-                                Object {
-                                  "dataIndex": "description",
-                                  "key": "description",
-                                  "render": [Function],
-                                  "title": "Description",
-                                  "width": "50%",
                                 },
                                 Object {
                                   "dataIndex": "parent_id",
@@ -6268,13 +6039,7 @@ exports[`Categories List component snapshot testing should match component with 
                                     <table
                                       style="table-layout: auto;"
                                     >
-                                      <colgroup>
-                                        <col />
-                                        <col />
-                                        <col
-                                          style="width: 50%; min-width: 50%;"
-                                        />
-                                      </colgroup>
+                                      <colgroup />
                                       <thead
                                         class="ant-table-thead"
                                       >
@@ -6288,11 +6053,6 @@ exports[`Categories List component snapshot testing should match component with 
                                             class="ant-table-cell"
                                           >
                                             Slug
-                                          </th>
-                                          <th
-                                            class="ant-table-cell"
-                                          >
-                                            Description
                                           </th>
                                           <th
                                             class="ant-table-cell"
@@ -6322,15 +6082,6 @@ exports[`Categories List component snapshot testing should match component with 
                                             class="ant-table-cell"
                                           >
                                             andhra-pradesh
-                                          </td>
-                                          <td
-                                            class="ant-table-cell"
-                                          >
-                                            <div
-                                              class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                            >
-                                              
-                                            </div>
                                           </td>
                                           <td
                                             class="ant-table-cell"
@@ -6388,15 +6139,6 @@ exports[`Categories List component snapshot testing should match component with 
                                           <td
                                             class="ant-table-cell"
                                           >
-                                            <div
-                                              class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                            >
-                                              
-                                            </div>
-                                          </td>
-                                          <td
-                                            class="ant-table-cell"
-                                          >
                                             0
                                           </td>
                                           <td
@@ -6444,7 +6186,7 @@ exports[`Categories List component snapshot testing should match component with 
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -6473,13 +6215,6 @@ exports[`Categories List component snapshot testing should match component with 
                                         "dataIndex": "slug",
                                         "key": "slug",
                                         "title": "Slug",
-                                      },
-                                      Object {
-                                        "dataIndex": "description",
-                                        "key": "description",
-                                        "render": [Function],
-                                        "title": "Description",
-                                        "width": "50%",
                                       },
                                       Object {
                                         "dataIndex": "parent_id",
@@ -6568,13 +6303,7 @@ exports[`Categories List component snapshot testing should match component with 
                                           <table
                                             style="table-layout: auto;"
                                           >
-                                            <colgroup>
-                                              <col />
-                                              <col />
-                                              <col
-                                                style="width: 50%; min-width: 50%;"
-                                              />
-                                            </colgroup>
+                                            <colgroup />
                                             <thead
                                               class="ant-table-thead"
                                             >
@@ -6588,11 +6317,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                   class="ant-table-cell"
                                                 >
                                                   Slug
-                                                </th>
-                                                <th
-                                                  class="ant-table-cell"
-                                                >
-                                                  Description
                                                 </th>
                                                 <th
                                                   class="ant-table-cell"
@@ -6622,15 +6346,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                   class="ant-table-cell"
                                                 >
                                                   andhra-pradesh
-                                                </td>
-                                                <td
-                                                  class="ant-table-cell"
-                                                >
-                                                  <div
-                                                    class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                  >
-                                                    
-                                                  </div>
                                                 </td>
                                                 <td
                                                   class="ant-table-cell"
@@ -6688,15 +6403,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                 <td
                                                   class="ant-table-cell"
                                                 >
-                                                  <div
-                                                    class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                  >
-                                                    
-                                                  </div>
-                                                </td>
-                                                <td
-                                                  class="ant-table-cell"
-                                                >
                                                   0
                                                 </td>
                                                 <td
@@ -6743,7 +6449,7 @@ exports[`Categories List component snapshot testing should match component with 
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -6755,10 +6461,8 @@ exports[`Categories List component snapshot testing should match component with 
                                         0,
                                         0,
                                         0,
-                                        0,
                                       ],
                                       "right": Array [
-                                        0,
                                         0,
                                         0,
                                         0,
@@ -6789,7 +6493,6 @@ exports[`Categories List component snapshot testing should match component with 
                                           Array [
                                             undefined,
                                             undefined,
-                                            "50%",
                                             undefined,
                                             undefined,
                                           ]
@@ -6807,14 +6510,6 @@ exports[`Categories List component snapshot testing should match component with 
                                               "fixed": undefined,
                                               "key": "slug",
                                               "title": "Slug",
-                                            },
-                                            Object {
-                                              "dataIndex": "description",
-                                              "fixed": undefined,
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
                                             },
                                             Object {
                                               "dataIndex": "parent_id",
@@ -6831,35 +6526,7 @@ exports[`Categories List component snapshot testing should match component with 
                                           ]
                                         }
                                       >
-                                        <colgroup>
-                                          <col
-                                            key="0"
-                                            style={
-                                              Object {
-                                                "minWidth": undefined,
-                                                "width": undefined,
-                                              }
-                                            }
-                                          />
-                                          <col
-                                            key="1"
-                                            style={
-                                              Object {
-                                                "minWidth": undefined,
-                                                "width": undefined,
-                                              }
-                                            }
-                                          />
-                                          <col
-                                            key="2"
-                                            style={
-                                              Object {
-                                                "minWidth": "50%",
-                                                "width": "50%",
-                                              }
-                                            }
-                                          />
-                                        </colgroup>
+                                        <colgroup />
                                       </ColGroup>
                                       <Header
                                         colWidths={
@@ -6868,10 +6535,9 @@ exports[`Categories List component snapshot testing should match component with 
                                             undefined,
                                             undefined,
                                             undefined,
-                                            undefined,
                                           ]
                                         }
-                                        columCount={5}
+                                        columCount={4}
                                         columns={
                                           Array [
                                             Object {
@@ -6883,13 +6549,6 @@ exports[`Categories List component snapshot testing should match component with 
                                               "dataIndex": "slug",
                                               "key": "slug",
                                               "title": "Slug",
-                                            },
-                                            Object {
-                                              "dataIndex": "description",
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
                                             },
                                             Object {
                                               "dataIndex": "parent_id",
@@ -6918,14 +6577,6 @@ exports[`Categories List component snapshot testing should match component with 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "description",
-                                              "fixed": undefined,
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
-                                            },
-                                            Object {
                                               "dataIndex": "parent_id",
                                               "fixed": undefined,
                                               "key": "parent_id",
@@ -6946,10 +6597,8 @@ exports[`Categories List component snapshot testing should match component with 
                                               0,
                                               0,
                                               0,
-                                              0,
                                             ],
                                             "right": Array [
-                                              0,
                                               0,
                                               0,
                                               0,
@@ -6994,27 +6643,11 @@ exports[`Categories List component snapshot testing should match component with 
                                                   "rowSpan": 1,
                                                 },
                                                 Object {
-                                                  "children": "Description",
+                                                  "children": "Parent Category",
                                                   "className": "",
                                                   "colEnd": 2,
                                                   "colSpan": 1,
                                                   "colStart": 2,
-                                                  "column": Object {
-                                                    "dataIndex": "description",
-                                                    "key": "description",
-                                                    "render": [Function],
-                                                    "title": "Description",
-                                                    "width": "50%",
-                                                  },
-                                                  "key": "description",
-                                                  "rowSpan": 1,
-                                                },
-                                                Object {
-                                                  "children": "Parent Category",
-                                                  "className": "",
-                                                  "colEnd": 3,
-                                                  "colSpan": 1,
-                                                  "colStart": 3,
                                                   "column": Object {
                                                     "dataIndex": "parent_id",
                                                     "key": "parent_id",
@@ -7026,9 +6659,9 @@ exports[`Categories List component snapshot testing should match component with 
                                                 Object {
                                                   "children": "Action",
                                                   "className": "",
-                                                  "colEnd": 4,
+                                                  "colEnd": 3,
                                                   "colSpan": 1,
-                                                  "colStart": 4,
+                                                  "colStart": 3,
                                                   "column": Object {
                                                     "dataIndex": "operation",
                                                     "render": [Function],
@@ -7054,14 +6687,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "description",
-                                                  "fixed": undefined,
-                                                  "key": "description",
-                                                  "render": [Function],
-                                                  "title": "Description",
-                                                  "width": "50%",
-                                                },
-                                                Object {
                                                   "dataIndex": "parent_id",
                                                   "fixed": undefined,
                                                   "key": "parent_id",
@@ -7085,10 +6710,8 @@ exports[`Categories List component snapshot testing should match component with 
                                                   0,
                                                   0,
                                                   0,
-                                                  0,
                                                 ],
                                                 "right": Array [
-                                                  0,
                                                   0,
                                                   0,
                                                   0,
@@ -7167,39 +6790,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                 colStart={2}
                                                 column={
                                                   Object {
-                                                    "dataIndex": "description",
-                                                    "key": "description",
-                                                    "render": [Function],
-                                                    "title": "Description",
-                                                    "width": "50%",
-                                                  }
-                                                }
-                                                component="th"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                rowSpan={1}
-                                                rowType="header"
-                                              >
-                                                <th
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  Description
-                                                </th>
-                                              </Cell>
-                                              <Cell
-                                                className=""
-                                                colEnd={3}
-                                                colSpan={1}
-                                                colStart={3}
-                                                column={
-                                                  Object {
                                                     "dataIndex": "parent_id",
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
@@ -7226,9 +6816,9 @@ exports[`Categories List component snapshot testing should match component with 
                                               </Cell>
                                               <Cell
                                                 className=""
-                                                colEnd={4}
+                                                colEnd={3}
                                                 colSpan={1}
-                                                colStart={4}
+                                                colStart={3}
                                                 column={
                                                   Object {
                                                     "dataIndex": "operation",
@@ -7403,85 +6993,6 @@ exports[`Categories List component snapshot testing should match component with 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="description"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                index={0}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                record={
-                                                  Object {
-                                                    "created_at": "2020-09-09T06:49:36.566567Z",
-                                                    "deleted_at": null,
-                                                    "description": "",
-                                                    "id": 1,
-                                                    "medium_id": 0,
-                                                    "name": "Andhra Pradesh",
-                                                    "parent_id": 0,
-                                                    "posts": null,
-                                                    "slug": "andhra-pradesh",
-                                                    "space_id": 1,
-                                                    "updated_at": "2020-09-09T06:49:36.566567Z",
-                                                  }
-                                                }
-                                                render={[Function]}
-                                              >
-                                                <td
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  <Paragraph
-                                                    ellipsis={
-                                                      Object {
-                                                        "rows": 2,
-                                                      }
-                                                    }
-                                                  >
-                                                    <Base
-                                                      component="div"
-                                                      ellipsis={
-                                                        Object {
-                                                          "rows": 2,
-                                                        }
-                                                      }
-                                                    >
-                                                      <LocaleReceiver
-                                                        componentName="Text"
-                                                      >
-                                                        <ResizeObserver
-                                                          disabled={false}
-                                                          onResize={[Function]}
-                                                        >
-                                                          <Typography
-                                                            className="ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                            component="div"
-                                                            style={
-                                                              Object {
-                                                                "WebkitLineClamp": 2,
-                                                              }
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                              style={
-                                                                Object {
-                                                                  "WebkitLineClamp": 2,
-                                                                }
-                                                              }
-                                                            />
-                                                          </Typography>
-                                                        </ResizeObserver>
-                                                      </LocaleReceiver>
-                                                    </Base>
-                                                  </Paragraph>
-                                                </td>
-                                              </Cell>
-                                              <Cell
-                                                component="td"
                                                 dataIndex="parent_id"
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
@@ -7628,7 +7139,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -7658,7 +7169,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -7926,7 +7437,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -8211,7 +7722,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -8396,85 +7907,6 @@ exports[`Categories List component snapshot testing should match component with 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="description"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                index={1}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                record={
-                                                  Object {
-                                                    "created_at": "2020-09-09T06:49:54.027402Z",
-                                                    "deleted_at": null,
-                                                    "description": "",
-                                                    "id": 2,
-                                                    "medium_id": 0,
-                                                    "name": "Telangana",
-                                                    "parent_id": 0,
-                                                    "posts": null,
-                                                    "slug": "telangana",
-                                                    "space_id": 1,
-                                                    "updated_at": "2020-09-09T06:49:54.027402Z",
-                                                  }
-                                                }
-                                                render={[Function]}
-                                              >
-                                                <td
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  <Paragraph
-                                                    ellipsis={
-                                                      Object {
-                                                        "rows": 2,
-                                                      }
-                                                    }
-                                                  >
-                                                    <Base
-                                                      component="div"
-                                                      ellipsis={
-                                                        Object {
-                                                          "rows": 2,
-                                                        }
-                                                      }
-                                                    >
-                                                      <LocaleReceiver
-                                                        componentName="Text"
-                                                      >
-                                                        <ResizeObserver
-                                                          disabled={false}
-                                                          onResize={[Function]}
-                                                        >
-                                                          <Typography
-                                                            className="ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                            component="div"
-                                                            style={
-                                                              Object {
-                                                                "WebkitLineClamp": 2,
-                                                              }
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                              style={
-                                                                Object {
-                                                                  "WebkitLineClamp": 2,
-                                                                }
-                                                              }
-                                                            />
-                                                          </Typography>
-                                                        </ResizeObserver>
-                                                      </LocaleReceiver>
-                                                    </Base>
-                                                  </Paragraph>
-                                                </td>
-                                              </Cell>
-                                              <Cell
-                                                component="td"
                                                 dataIndex="parent_id"
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
@@ -8621,7 +8053,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -8651,7 +8083,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -8919,7 +8351,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -9204,7 +8636,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -9297,7 +8729,7 @@ exports[`Categories List component snapshot testing should match component with 
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -9385,7 +8817,7 @@ exports[`Categories List component snapshot testing should match component with 
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -9396,7 +8828,15 @@ exports[`Categories List component snapshot testing should match component with 
                                     <ForwardRef(LeftOutlined) />
                                   </button>
                                 }
-                                selectComponentClass={[Function]}
+                                selectComponentClass={
+                                  Object {
+                                    "$$typeof": Symbol(react.forward_ref),
+                                    "OptGroup": [Function],
+                                    "Option": [Function],
+                                    "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                    "render": [Function],
+                                  }
+                                }
                                 selectPrefixCls="ant-select"
                                 showLessItems={false}
                                 showPrevNextJumpers={true}
@@ -9645,7 +9085,7 @@ exports[`Categories List component snapshot testing should match component with 
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -9656,7 +9096,15 @@ exports[`Categories List component snapshot testing should match component with 
                                     }
                                     quickGo={null}
                                     rootPrefixCls="ant-pagination"
-                                    selectComponentClass={[Function]}
+                                    selectComponentClass={
+                                      Object {
+                                        "$$typeof": Symbol(react.forward_ref),
+                                        "OptGroup": [Function],
+                                        "Option": [Function],
+                                        "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                        "render": [Function],
+                                      }
+                                    }
                                     selectPrefixCls="ant-select"
                                   />
                                 </ul>
@@ -9771,7 +9219,7 @@ exports[`Categories List component snapshot testing should render the component 
                   }
                   initialValues={
                     Object {
-                      "limit": 5,
+                      "limit": 20,
                       "page": 1,
                     }
                   }
@@ -9814,7 +9262,7 @@ exports[`Categories List component snapshot testing should render the component 
                       id="filters"
                       initialValues={
                         Object {
-                          "limit": 5,
+                          "limit": 20,
                           "page": 1,
                         }
                       }
@@ -9864,6 +9312,31 @@ exports[`Categories List component snapshot testing should render the component 
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_q"
                               label="Search"
                               messageVariables={
@@ -9943,6 +9416,7 @@ exports[`Categories List component snapshot testing should render the component 
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "25%",
@@ -10015,16 +9489,21 @@ exports[`Categories List component snapshot testing should render the component 
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -10060,6 +9539,31 @@ exports[`Categories List component snapshot testing should render the component 
                             validateTrigger="onChange"
                           >
                             <Field
+                              fieldContext={
+                                Object {
+                                  "__INTERNAL__": Object {
+                                    "itemRef": [Function],
+                                    "name": "filters",
+                                  },
+                                  "getFieldError": [Function],
+                                  "getFieldInstance": [Function],
+                                  "getFieldValue": [Function],
+                                  "getFieldsError": [Function],
+                                  "getFieldsValue": [Function],
+                                  "getInternalHooks": [Function],
+                                  "isFieldTouched": [Function],
+                                  "isFieldValidating": [Function],
+                                  "isFieldsTouched": [Function],
+                                  "isFieldsValidating": [Function],
+                                  "resetFields": [Function],
+                                  "scrollToField": [Function],
+                                  "setFields": [Function],
+                                  "setFieldsValue": [Function],
+                                  "submit": [Function],
+                                  "validateFields": [Function],
+                                  "validateTrigger": "onChange",
+                                }
+                              }
                               key="_sort"
                               label="Sort"
                               messageVariables={
@@ -10139,6 +9643,7 @@ exports[`Categories List component snapshot testing should render the component 
                                     }
                                     onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
+                                    status=""
                                     style={
                                       Object {
                                         "width": "15%",
@@ -10164,15 +9669,11 @@ exports[`Categories List component snapshot testing should render the component 
                                             <Component
                                               update={2}
                                             >
-                                              <Select
-                                                bordered={true}
-                                                choiceTransitionName=""
+                                              <ForwardRef(InternalSelect)
                                                 id="filters_sort"
                                                 onChange={[Function]}
-                                                transitionName="slide-up"
                                               >
                                                 <Select
-                                                  choiceTransitionName=""
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   dropdownClassName=""
@@ -10192,7 +9693,6 @@ exports[`Categories List component snapshot testing should render the component 
                                                   transitionName="slide-up"
                                                 >
                                                   <ForwardRef(Select)
-                                                    choiceTransitionName=""
                                                     className=""
                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                     dropdownClassName=""
@@ -10443,7 +9943,6 @@ exports[`Categories List component snapshot testing should render the component 
                                                           <Selector
                                                             accessibilityIndex={0}
                                                             activeValue={null}
-                                                            choiceTransitionName=""
                                                             className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             domRef={
@@ -10512,7 +10011,6 @@ exports[`Categories List component snapshot testing should render the component 
                                                               <SingleSelector
                                                                 accessibilityIndex={0}
                                                                 activeValue={null}
-                                                                choiceTransitionName=""
                                                                 className=""
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 domRef={
@@ -10758,20 +10256,25 @@ exports[`Categories List component snapshot testing should render the component 
                                                     </div>
                                                   </ForwardRef(Select)>
                                                 </Select>
-                                              </Select>
+                                              </ForwardRef(InternalSelect)>
                                             </Component>
                                           </div>
                                         </div>
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
+                                        <ErrorList
+                                          errors={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
-                                          <DomWrapper />
-                                        </CSSMotion>
+                                          <CSSMotion
+                                            motionAppear={true}
+                                            motionDeadline={500}
+                                            motionName="show-help"
+                                            onLeaveEnd={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </ErrorList>
                                       </div>
                                     </Col>
                                   </FormItemInput>
@@ -10797,6 +10300,7 @@ exports[`Categories List component snapshot testing should render the component 
                                 errors={Array []}
                                 onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
+                                status=""
                                 validateStatus=""
                               >
                                 <Col
@@ -10854,16 +10358,21 @@ exports[`Categories List component snapshot testing should render the component 
                                         </Button>
                                       </div>
                                     </div>
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
                                   </div>
                                 </Col>
                               </FormItemInput>
@@ -10901,13 +10410,6 @@ exports[`Categories List component snapshot testing should render the component 
                         "dataIndex": "slug",
                         "key": "slug",
                         "title": "Slug",
-                      },
-                      Object {
-                        "dataIndex": "description",
-                        "key": "description",
-                        "render": [Function],
-                        "title": "Description",
-                        "width": "50%",
                       },
                       Object {
                         "dataIndex": "parent_id",
@@ -10956,7 +10458,7 @@ exports[`Categories List component snapshot testing should render the component 
                     Object {
                       "current": 1,
                       "onChange": [Function],
-                      "pageSize": 5,
+                      "pageSize": 20,
                       "total": 2,
                     }
                   }
@@ -10991,13 +10493,6 @@ exports[`Categories List component snapshot testing should render the component 
                                   "dataIndex": "slug",
                                   "key": "slug",
                                   "title": "Slug",
-                                },
-                                Object {
-                                  "dataIndex": "description",
-                                  "key": "description",
-                                  "render": [Function],
-                                  "title": "Description",
-                                  "width": "50%",
                                 },
                                 Object {
                                   "dataIndex": "parent_id",
@@ -11095,13 +10590,7 @@ exports[`Categories List component snapshot testing should render the component 
                                     <table
                                       style="table-layout: auto;"
                                     >
-                                      <colgroup>
-                                        <col />
-                                        <col />
-                                        <col
-                                          style="width: 50%; min-width: 50%;"
-                                        />
-                                      </colgroup>
+                                      <colgroup />
                                       <thead
                                         class="ant-table-thead"
                                       >
@@ -11115,11 +10604,6 @@ exports[`Categories List component snapshot testing should render the component 
                                             class="ant-table-cell"
                                           >
                                             Slug
-                                          </th>
-                                          <th
-                                            class="ant-table-cell"
-                                          >
-                                            Description
                                           </th>
                                           <th
                                             class="ant-table-cell"
@@ -11149,15 +10633,6 @@ exports[`Categories List component snapshot testing should render the component 
                                             class="ant-table-cell"
                                           >
                                             andhra-pradesh
-                                          </td>
-                                          <td
-                                            class="ant-table-cell"
-                                          >
-                                            <div
-                                              class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                            >
-                                              
-                                            </div>
                                           </td>
                                           <td
                                             class="ant-table-cell"
@@ -11215,15 +10690,6 @@ exports[`Categories List component snapshot testing should render the component 
                                           <td
                                             class="ant-table-cell"
                                           >
-                                            <div
-                                              class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                            >
-                                              
-                                            </div>
-                                          </td>
-                                          <td
-                                            class="ant-table-cell"
-                                          >
                                             0
                                           </td>
                                           <td
@@ -11271,7 +10737,7 @@ exports[`Categories List component snapshot testing should render the component 
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
-                                "pageSize": 5,
+                                "pageSize": 20,
                                 "total": 2,
                               }
                             }
@@ -11300,13 +10766,6 @@ exports[`Categories List component snapshot testing should render the component 
                                         "dataIndex": "slug",
                                         "key": "slug",
                                         "title": "Slug",
-                                      },
-                                      Object {
-                                        "dataIndex": "description",
-                                        "key": "description",
-                                        "render": [Function],
-                                        "title": "Description",
-                                        "width": "50%",
                                       },
                                       Object {
                                         "dataIndex": "parent_id",
@@ -11395,13 +10854,7 @@ exports[`Categories List component snapshot testing should render the component 
                                           <table
                                             style="table-layout: auto;"
                                           >
-                                            <colgroup>
-                                              <col />
-                                              <col />
-                                              <col
-                                                style="width: 50%; min-width: 50%;"
-                                              />
-                                            </colgroup>
+                                            <colgroup />
                                             <thead
                                               class="ant-table-thead"
                                             >
@@ -11415,11 +10868,6 @@ exports[`Categories List component snapshot testing should render the component 
                                                   class="ant-table-cell"
                                                 >
                                                   Slug
-                                                </th>
-                                                <th
-                                                  class="ant-table-cell"
-                                                >
-                                                  Description
                                                 </th>
                                                 <th
                                                   class="ant-table-cell"
@@ -11449,15 +10897,6 @@ exports[`Categories List component snapshot testing should render the component 
                                                   class="ant-table-cell"
                                                 >
                                                   andhra-pradesh
-                                                </td>
-                                                <td
-                                                  class="ant-table-cell"
-                                                >
-                                                  <div
-                                                    class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                  >
-                                                    
-                                                  </div>
                                                 </td>
                                                 <td
                                                   class="ant-table-cell"
@@ -11515,15 +10954,6 @@ exports[`Categories List component snapshot testing should render the component 
                                                 <td
                                                   class="ant-table-cell"
                                                 >
-                                                  <div
-                                                    class="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                  >
-                                                    
-                                                  </div>
-                                                </td>
-                                                <td
-                                                  class="ant-table-cell"
-                                                >
                                                   0
                                                 </td>
                                                 <td
@@ -11570,7 +11000,7 @@ exports[`Categories List component snapshot testing should render the component 
                                     "pagination": Object {
                                       "current": 1,
                                       "onChange": [Function],
-                                      "pageSize": 5,
+                                      "pageSize": 20,
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -11582,10 +11012,8 @@ exports[`Categories List component snapshot testing should render the component 
                                         0,
                                         0,
                                         0,
-                                        0,
                                       ],
                                       "right": Array [
-                                        0,
                                         0,
                                         0,
                                         0,
@@ -11616,7 +11044,6 @@ exports[`Categories List component snapshot testing should render the component 
                                           Array [
                                             undefined,
                                             undefined,
-                                            "50%",
                                             undefined,
                                             undefined,
                                           ]
@@ -11634,14 +11061,6 @@ exports[`Categories List component snapshot testing should render the component 
                                               "fixed": undefined,
                                               "key": "slug",
                                               "title": "Slug",
-                                            },
-                                            Object {
-                                              "dataIndex": "description",
-                                              "fixed": undefined,
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
                                             },
                                             Object {
                                               "dataIndex": "parent_id",
@@ -11658,35 +11077,7 @@ exports[`Categories List component snapshot testing should render the component 
                                           ]
                                         }
                                       >
-                                        <colgroup>
-                                          <col
-                                            key="0"
-                                            style={
-                                              Object {
-                                                "minWidth": undefined,
-                                                "width": undefined,
-                                              }
-                                            }
-                                          />
-                                          <col
-                                            key="1"
-                                            style={
-                                              Object {
-                                                "minWidth": undefined,
-                                                "width": undefined,
-                                              }
-                                            }
-                                          />
-                                          <col
-                                            key="2"
-                                            style={
-                                              Object {
-                                                "minWidth": "50%",
-                                                "width": "50%",
-                                              }
-                                            }
-                                          />
-                                        </colgroup>
+                                        <colgroup />
                                       </ColGroup>
                                       <Header
                                         colWidths={
@@ -11695,10 +11086,9 @@ exports[`Categories List component snapshot testing should render the component 
                                             undefined,
                                             undefined,
                                             undefined,
-                                            undefined,
                                           ]
                                         }
-                                        columCount={5}
+                                        columCount={4}
                                         columns={
                                           Array [
                                             Object {
@@ -11710,13 +11100,6 @@ exports[`Categories List component snapshot testing should render the component 
                                               "dataIndex": "slug",
                                               "key": "slug",
                                               "title": "Slug",
-                                            },
-                                            Object {
-                                              "dataIndex": "description",
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
                                             },
                                             Object {
                                               "dataIndex": "parent_id",
@@ -11745,14 +11128,6 @@ exports[`Categories List component snapshot testing should render the component 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "description",
-                                              "fixed": undefined,
-                                              "key": "description",
-                                              "render": [Function],
-                                              "title": "Description",
-                                              "width": "50%",
-                                            },
-                                            Object {
                                               "dataIndex": "parent_id",
                                               "fixed": undefined,
                                               "key": "parent_id",
@@ -11773,10 +11148,8 @@ exports[`Categories List component snapshot testing should render the component 
                                               0,
                                               0,
                                               0,
-                                              0,
                                             ],
                                             "right": Array [
-                                              0,
                                               0,
                                               0,
                                               0,
@@ -11821,27 +11194,11 @@ exports[`Categories List component snapshot testing should render the component 
                                                   "rowSpan": 1,
                                                 },
                                                 Object {
-                                                  "children": "Description",
+                                                  "children": "Parent Category",
                                                   "className": "",
                                                   "colEnd": 2,
                                                   "colSpan": 1,
                                                   "colStart": 2,
-                                                  "column": Object {
-                                                    "dataIndex": "description",
-                                                    "key": "description",
-                                                    "render": [Function],
-                                                    "title": "Description",
-                                                    "width": "50%",
-                                                  },
-                                                  "key": "description",
-                                                  "rowSpan": 1,
-                                                },
-                                                Object {
-                                                  "children": "Parent Category",
-                                                  "className": "",
-                                                  "colEnd": 3,
-                                                  "colSpan": 1,
-                                                  "colStart": 3,
                                                   "column": Object {
                                                     "dataIndex": "parent_id",
                                                     "key": "parent_id",
@@ -11853,9 +11210,9 @@ exports[`Categories List component snapshot testing should render the component 
                                                 Object {
                                                   "children": "Action",
                                                   "className": "",
-                                                  "colEnd": 4,
+                                                  "colEnd": 3,
                                                   "colSpan": 1,
-                                                  "colStart": 4,
+                                                  "colStart": 3,
                                                   "column": Object {
                                                     "dataIndex": "operation",
                                                     "render": [Function],
@@ -11881,14 +11238,6 @@ exports[`Categories List component snapshot testing should render the component 
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "description",
-                                                  "fixed": undefined,
-                                                  "key": "description",
-                                                  "render": [Function],
-                                                  "title": "Description",
-                                                  "width": "50%",
-                                                },
-                                                Object {
                                                   "dataIndex": "parent_id",
                                                   "fixed": undefined,
                                                   "key": "parent_id",
@@ -11912,10 +11261,8 @@ exports[`Categories List component snapshot testing should render the component 
                                                   0,
                                                   0,
                                                   0,
-                                                  0,
                                                 ],
                                                 "right": Array [
-                                                  0,
                                                   0,
                                                   0,
                                                   0,
@@ -11994,39 +11341,6 @@ exports[`Categories List component snapshot testing should render the component 
                                                 colStart={2}
                                                 column={
                                                   Object {
-                                                    "dataIndex": "description",
-                                                    "key": "description",
-                                                    "render": [Function],
-                                                    "title": "Description",
-                                                    "width": "50%",
-                                                  }
-                                                }
-                                                component="th"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                rowSpan={1}
-                                                rowType="header"
-                                              >
-                                                <th
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  Description
-                                                </th>
-                                              </Cell>
-                                              <Cell
-                                                className=""
-                                                colEnd={3}
-                                                colSpan={1}
-                                                colStart={3}
-                                                column={
-                                                  Object {
                                                     "dataIndex": "parent_id",
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
@@ -12053,9 +11367,9 @@ exports[`Categories List component snapshot testing should render the component 
                                               </Cell>
                                               <Cell
                                                 className=""
-                                                colEnd={4}
+                                                colEnd={3}
                                                 colSpan={1}
-                                                colStart={4}
+                                                colStart={3}
                                                 column={
                                                   Object {
                                                     "dataIndex": "operation",
@@ -12230,85 +11544,6 @@ exports[`Categories List component snapshot testing should render the component 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="description"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                index={0}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                record={
-                                                  Object {
-                                                    "created_at": "2020-09-09T06:49:36.566567Z",
-                                                    "deleted_at": null,
-                                                    "description": "",
-                                                    "id": 1,
-                                                    "medium_id": 0,
-                                                    "name": "Andhra Pradesh",
-                                                    "parent_id": 0,
-                                                    "posts": null,
-                                                    "slug": "andhra-pradesh",
-                                                    "space_id": 1,
-                                                    "updated_at": "2020-09-09T06:49:36.566567Z",
-                                                  }
-                                                }
-                                                render={[Function]}
-                                              >
-                                                <td
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  <Paragraph
-                                                    ellipsis={
-                                                      Object {
-                                                        "rows": 2,
-                                                      }
-                                                    }
-                                                  >
-                                                    <Base
-                                                      component="div"
-                                                      ellipsis={
-                                                        Object {
-                                                          "rows": 2,
-                                                        }
-                                                      }
-                                                    >
-                                                      <LocaleReceiver
-                                                        componentName="Text"
-                                                      >
-                                                        <ResizeObserver
-                                                          disabled={false}
-                                                          onResize={[Function]}
-                                                        >
-                                                          <Typography
-                                                            className="ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                            component="div"
-                                                            style={
-                                                              Object {
-                                                                "WebkitLineClamp": 2,
-                                                              }
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                              style={
-                                                                Object {
-                                                                  "WebkitLineClamp": 2,
-                                                                }
-                                                              }
-                                                            />
-                                                          </Typography>
-                                                        </ResizeObserver>
-                                                      </LocaleReceiver>
-                                                    </Base>
-                                                  </Paragraph>
-                                                </td>
-                                              </Cell>
-                                              <Cell
-                                                component="td"
                                                 dataIndex="parent_id"
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
@@ -12455,7 +11690,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -12485,7 +11720,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -12753,7 +11988,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -13038,7 +12273,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -13223,85 +12458,6 @@ exports[`Categories List component snapshot testing should render the component 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="description"
-                                                firstFixLeft={false}
-                                                firstFixRight={false}
-                                                index={1}
-                                                key="description"
-                                                lastFixLeft={false}
-                                                lastFixRight={false}
-                                                prefixCls="ant-table"
-                                                record={
-                                                  Object {
-                                                    "created_at": "2020-09-09T06:49:54.027402Z",
-                                                    "deleted_at": null,
-                                                    "description": "",
-                                                    "id": 2,
-                                                    "medium_id": 0,
-                                                    "name": "Telangana",
-                                                    "parent_id": 0,
-                                                    "posts": null,
-                                                    "slug": "telangana",
-                                                    "space_id": 1,
-                                                    "updated_at": "2020-09-09T06:49:54.027402Z",
-                                                  }
-                                                }
-                                                render={[Function]}
-                                              >
-                                                <td
-                                                  className="ant-table-cell"
-                                                  colSpan={null}
-                                                  rowSpan={null}
-                                                  style={Object {}}
-                                                >
-                                                  <Paragraph
-                                                    ellipsis={
-                                                      Object {
-                                                        "rows": 2,
-                                                      }
-                                                    }
-                                                  >
-                                                    <Base
-                                                      component="div"
-                                                      ellipsis={
-                                                        Object {
-                                                          "rows": 2,
-                                                        }
-                                                      }
-                                                    >
-                                                      <LocaleReceiver
-                                                        componentName="Text"
-                                                      >
-                                                        <ResizeObserver
-                                                          disabled={false}
-                                                          onResize={[Function]}
-                                                        >
-                                                          <Typography
-                                                            className="ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                            component="div"
-                                                            style={
-                                                              Object {
-                                                                "WebkitLineClamp": 2,
-                                                              }
-                                                            }
-                                                          >
-                                                            <div
-                                                              className="ant-typography ant-typography-ellipsis ant-typography-ellipsis-multiple-line"
-                                                              style={
-                                                                Object {
-                                                                  "WebkitLineClamp": 2,
-                                                                }
-                                                              }
-                                                            />
-                                                          </Typography>
-                                                        </ResizeObserver>
-                                                      </LocaleReceiver>
-                                                    </Base>
-                                                  </Paragraph>
-                                                </td>
-                                              </Cell>
-                                              <Cell
-                                                component="td"
                                                 dataIndex="parent_id"
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
@@ -13448,7 +12604,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                       okType="primary"
                                                       onConfirm={[Function]}
                                                       placement="top"
-                                                      title="Sure to cancel?"
+                                                      title="Sure to Delete?"
                                                       transitionName="zoom-big"
                                                       trigger="click"
                                                     >
@@ -13478,7 +12634,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                         overlayClassName="ant-popconfirm"
                                                         placement="top"
                                                         prefixCls="ant-popover"
-                                                        title="Sure to cancel?"
+                                                        title="Sure to Delete?"
                                                         transitionName="zoom-big"
                                                         trigger="click"
                                                       >
@@ -13746,7 +12902,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to cancel?"
+                                                          title="Sure to Delete?"
                                                           transitionName="zoom-big"
                                                           trigger="click"
                                                         >
@@ -14031,7 +13187,7 @@ exports[`Categories List component snapshot testing should render the component 
                                                             popupTransitionName="zoom-big"
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
-                                                            title="Sure to cancel?"
+                                                            title="Sure to Delete?"
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -14124,7 +13280,7 @@ exports[`Categories List component snapshot testing should render the component 
                             className="ant-table-pagination ant-table-pagination-right"
                             current={1}
                             onChange={[Function]}
-                            pageSize={5}
+                            pageSize={20}
                             total={2}
                           >
                             <LocaleReceiver
@@ -14212,7 +13368,7 @@ exports[`Categories List component snapshot testing should render the component 
                                 }
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
-                                pageSize={5}
+                                pageSize={20}
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -14223,7 +13379,15 @@ exports[`Categories List component snapshot testing should render the component 
                                     <ForwardRef(LeftOutlined) />
                                   </button>
                                 }
-                                selectComponentClass={[Function]}
+                                selectComponentClass={
+                                  Object {
+                                    "$$typeof": Symbol(react.forward_ref),
+                                    "OptGroup": [Function],
+                                    "Option": [Function],
+                                    "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                    "render": [Function],
+                                  }
+                                }
                                 selectPrefixCls="ant-select"
                                 showLessItems={false}
                                 showPrevNextJumpers={true}
@@ -14472,7 +13636,7 @@ exports[`Categories List component snapshot testing should render the component 
                                         "prev_page": "Previous Page",
                                       }
                                     }
-                                    pageSize={5}
+                                    pageSize={20}
                                     pageSizeOptions={
                                       Array [
                                         "10",
@@ -14483,7 +13647,15 @@ exports[`Categories List component snapshot testing should render the component 
                                     }
                                     quickGo={null}
                                     rootPrefixCls="ant-pagination"
-                                    selectComponentClass={[Function]}
+                                    selectComponentClass={
+                                      Object {
+                                        "$$typeof": Symbol(react.forward_ref),
+                                        "OptGroup": [Function],
+                                        "Option": [Function],
+                                        "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                        "render": [Function],
+                                      }
+                                    }
                                     selectPrefixCls="ant-select"
                                   />
                                 </ul>

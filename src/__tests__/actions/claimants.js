@@ -10,6 +10,7 @@ import { ADD_MEDIA } from '../../constants/media';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -222,7 +223,12 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -250,7 +256,12 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -338,6 +349,7 @@ describe('claimants actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Claimant added',
+          time: Date.now(),
         },
       },
     ];
@@ -364,6 +376,7 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -389,16 +402,17 @@ describe('claimants actions', () => {
         payload: { id: 1, name: 'Claimant', medium: undefined },
       },
       {
-        type: types.SET_CLAIMANTS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Claimant updated',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -428,16 +442,17 @@ describe('claimants actions', () => {
         payload: { id: 1, name: 'Claimant', medium: 4 },
       },
       {
-        type: types.SET_CLAIMANTS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Claimant updated',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -463,7 +478,12 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
       },
     ];
 
@@ -490,6 +510,7 @@ describe('claimants actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Claimant deleted',
+          time: Date.now(),
         },
       },
     ];
@@ -515,6 +536,7 @@ describe('claimants actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];

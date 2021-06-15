@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -15,6 +14,7 @@ import TagCreateForm from './components/TagForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -40,19 +40,22 @@ describe('Tags create component', () => {
       details: {},
       loading: true,
     },
+    spaces: {
+      orgs: [],
+      details: {},
+      loading: true,
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
   useDispatch.mockReturnValue(mockedDispatch);
   describe('snapshot testing', () => {
     it('should render the component', () => {
-      const tree = renderer
-        .create(
-          <Provider store={store}>
-            <CreateTag />
-          </Provider>,
-        )
-        .toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <CreateTag />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });

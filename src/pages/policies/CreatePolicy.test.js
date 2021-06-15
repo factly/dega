@@ -79,5 +79,32 @@ describe('Policies create component', () => {
         done();
       }, 0);
     });
+    it('should call addPolicy with some permissions', (done) => {
+      actions.addPolicy.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <CreatePolicy />
+          </Provider>,
+        );
+      });
+      wrapper
+        .find(PolicyCreateForm)
+        .props()
+        .onCreate({
+          users: [],
+          permissions: [{ resource: 'posts', actions: ['create', 'update'] }],
+        });
+      setTimeout(() => {
+        expect(actions.addPolicy).toHaveBeenCalledWith({
+          permissions: [{ resource: 'posts', actions: ['create', 'update'] }],
+          users: [],
+        });
+        expect(push).toHaveBeenCalledWith('/policies');
+        done();
+      }, 0);
+    });
   });
 });

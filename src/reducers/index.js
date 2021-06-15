@@ -27,9 +27,12 @@ import episodes from './episodesReducer';
 import podcasts from './podcastReducer';
 import redirect from './redirectReducer';
 import events from './eventsReducer';
+import info from './infoReducer';
+import pages from './pagesReducer';
 
 const appReducer = combineReducers({
   admin,
+  info,
   settings,
   spaces,
   organisations,
@@ -46,6 +49,7 @@ const appReducer = combineReducers({
   media,
   authors,
   posts,
+  pages,
   ratings,
   claimants,
   claims,

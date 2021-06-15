@@ -9,6 +9,7 @@ import { ADD_NOTIFICATION } from '../../constants/notifications';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
+Date.now = jest.fn(() => 1487076708000);
 
 const initialState = {
   req: [],
@@ -118,7 +119,12 @@ describe('tags actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -173,7 +179,12 @@ describe('tags actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -202,6 +213,7 @@ describe('tags actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Tag added',
+          time: Date.now(),
         },
       },
     ];
@@ -228,6 +240,7 @@ describe('tags actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];
@@ -253,16 +266,17 @@ describe('tags actions', () => {
         payload: { id: 1, name: 'Tag' },
       },
       {
-        type: types.SET_TAGS_LOADING,
-        payload: false,
-      },
-      {
         type: ADD_NOTIFICATION,
         payload: {
           type: 'success',
           title: 'Success',
           message: 'Tag updated',
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -288,7 +302,12 @@ describe('tags actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
+      },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
       },
     ];
 
@@ -315,6 +334,7 @@ describe('tags actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Tag deleted',
+          time: Date.now(),
         },
       },
     ];
@@ -340,6 +360,7 @@ describe('tags actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
         },
       },
     ];

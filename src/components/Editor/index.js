@@ -15,51 +15,61 @@ import { useSelector } from 'react-redux';
 import Embed from './Embed';
 import './index.css';
 
-function Editor({ value, onChange, style, placeholder = 'Begin writing your post...' }) {
+function Editor({
+  value,
+  onChange,
+  style,
+  basic = false,
+  placeholder = 'Begin writing your post...',
+}) {
   const editor_block = React.useRef(null);
   const space_slug = useSelector((state) => {
     return state.spaces.details[state.spaces.selected]?.slug;
   });
+  const basicTools = {
+    header: {
+      class: Header,
+      inlineToolbar: true,
+    },
+    list: {
+      class: List,
+      inlineToolbar: true,
+    },
+    paragraph: {
+      class: Paragraph,
+      inlineToolbar: true,
+    },
+    quote: {
+      class: Quote,
+      inlineToolbar: true,
+    },
+  };
+  const editorTools = {
+    ...basicTools,
+    raw: RawTool,
+    table: Table,
+    code: CodeTool,
+    delimiter: Delimiter,
+    inlineCode: InlineCode,
+    marker: {
+      class: Marker,
+    },
+    embed: {
+      class: Embed,
+    },
+    uppy: {
+      class: UppyUploader,
+      config: {
+        space_slug: space_slug,
+      },
+    },
+  };
 
   React.useEffect(() => {
     const editor = new EditorJS({
       holder: editor_block.current,
       placeholder: placeholder,
-      tools: {
-        header: {
-          class: Header,
-          inlineToolbar: true,
-        },
-        list: {
-          class: List,
-          inlineToolbar: true,
-        },
-        paragraph: {
-          class: Paragraph,
-          inlineToolbar: true,
-        },
-        quote: {
-          class: Quote,
-          inlineToolbar: true,
-        },
-        raw: RawTool,
-        table: Table,
-        code: CodeTool,
-        delimiter: Delimiter,
-        inlineCode: InlineCode,
-        marker: {
-          class: Marker,
-        },
-        embed: {
-          class: Embed,
-        },
-        uppy: {
-          class: UppyUploader,
-          config: {
-            space_slug: space_slug,
-          },
-        },
-      },
+      tools: basic ? basicTools : editorTools,
       onChange: (value) =>
         value.saver.save().then((value) => {
           onChange(value);

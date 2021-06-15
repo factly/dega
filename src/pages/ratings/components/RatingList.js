@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button, Table, Tag } from 'antd';
+import { Popconfirm, Button, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getRatings, deleteRating } from '../../../actions/ratings';
@@ -41,12 +41,21 @@ function RatingList({ actions }) {
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
     { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
     {
-      title: 'Colour',
-      dataIndex: 'color',
+      title: 'Preview',
+      dataIndex: 'preview',
       render: (_, record) => (
-        <Tag color={record.background_colour ? record.background_colour.hex : ''}>
+        <div
+          style={{
+            color: record.text_colour?.hex,
+            backgroundColor: record.background_colour?.hex,
+            width: '100px',
+            border: '1px solid black',
+            padding: '0.5rem',
+            textAlign: 'center',
+          }}
+        >
           {record.name}
-        </Tag>
+        </div>
       ),
     },
     {

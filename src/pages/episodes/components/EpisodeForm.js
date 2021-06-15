@@ -4,6 +4,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import Audio from './Audio';
+import Selector from '../../../components/Selector';
 
 const layout = {
   labelCol: {
@@ -28,6 +29,13 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
+  const onSave = (values) => {
+    if (values.podcast) {
+      values.podcast_id = values.podcast;
+    }
+    onCreate(values);
+  };
+
   const [url, setURL] = useState(data?.audio_url);
 
   const onTitleChange = (string) => {
@@ -44,7 +52,7 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
-        onCreate(values);
+        onSave(values);
         onReset();
       }}
       onValuesChange={() => {
@@ -82,6 +90,9 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
             ]}
           >
             <Input />
+          </Form.Item>
+          <Form.Item name="podcast" label="Podcasts">
+            <Selector action="Podcasts" display="title" />
           </Form.Item>
           <Form.Item>
             <Input.Group compact>

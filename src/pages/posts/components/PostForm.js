@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Select, Drawer, DatePicker } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Select, Drawer, DatePicker, Dropdown, Switch, Menu } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -78,7 +78,16 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/posts'));
   };
-
+  const setReadyFlag = () => {
+    status === 'ready' ? setStatus('draft') : setStatus('ready');
+  };
+  const readyToPublish = (
+    <Menu>
+      <Menu.Item>
+        Ready to Publish <Switch onChange={setReadyFlag} checked={status === 'ready'}></Switch>
+      </Menu.Item>
+    </Menu>
+  );
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (shouldBlockNavigation) {
@@ -121,9 +130,16 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
-                <Button disabled={!valueChange} type="secondary" htmlType="submit" onClick={() => setStatus('draft')}>
-                  Save as draft
-                </Button>
+                <Dropdown overlay={readyToPublish}>
+                  <Button
+                    disabled={!valueChange}
+                    type="secondary"
+                    htmlType="submit"
+                    onClick={() => (status === 'ready' ? setStatus('ready') : setStatus('draft'))}
+                  >
+                    Save
+                  </Button>
+                </Dropdown>
               </Form.Item>
               {actions.includes('admin') || actions.includes('publish') ? (
                 <Form.Item name="submit">
@@ -163,6 +179,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                     textAlign: 'center',
                     resize: 'none',
                   }}
+                  autoSize={{ minRows: 2, maxRows: 6 }}
                 />
               </Form.Item>
 

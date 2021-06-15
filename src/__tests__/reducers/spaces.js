@@ -35,6 +35,7 @@ describe('spaces reducer', () => {
     expect(
       reducer(initialState, {
         type: types.LOADING_SPACES,
+        payload: {},
       }),
     ).toEqual({
       orgs: [],

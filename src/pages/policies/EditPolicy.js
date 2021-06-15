@@ -46,7 +46,9 @@ function EditPolicy() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updatePolicy({ ...policy, ...values })).then(() => history.push(`/policies/${id}/edit`));
+    dispatch(updatePolicy({ ...policy, ...values })).then(() =>
+      history.push(`/policies/${id}/edit`),
+    );
   };
 
   return <PolicyEditForm data={policy} onCreate={onUpdate} />;

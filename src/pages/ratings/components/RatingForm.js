@@ -130,13 +130,13 @@ const RatingForm = ({ onCreate, data = {} }) => {
               border: '1px solid black',
             }}
           >
-            {console.log({ backgroundColour, textColour })}Preview
+            Preview
           </div>
         </Col>
       </Row>
 
       <Form.Item name="description" label="Description">
-        <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
+        <Editor style={{ width: '600px' }} placeholder="Enter Description..." basic={true} />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

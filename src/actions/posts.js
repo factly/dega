@@ -45,6 +45,9 @@ export const getPosts = (query) => {
     if (query.status) {
       params.append('status', query.status);
     }
+    if (query.author) {
+      query.author.map((each) => params.append('author', each));
+    }
     return axios
       .get(POSTS_API, {
         params: params,
@@ -188,7 +191,11 @@ export const addPost = (data) => {
         if (post.medium) dispatch(addMediaList([post.medium]));
 
         dispatch(resetPosts());
-        dispatch(addSuccessNotification('Post added'));
+        data.status === 'publish'
+          ? dispatch(addSuccessNotification(`${post.format.name} Published`))
+          : data.status === 'draft'
+          ? dispatch(addSuccessNotification('Post added'))
+          : dispatch(addSuccessNotification('Post added & Ready to Publish'));
         return post;
       })
       .catch((error) => {
@@ -326,7 +333,9 @@ export const updatePost = (data) => {
         );
         data.status === 'publish'
           ? dispatch(addSuccessNotification(`${post.format.name} Published`))
-          : dispatch(addSuccessNotification('Draft Saved'));
+          : data.status === 'draft'
+          ? dispatch(addSuccessNotification('Draft Saved'))
+          : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));

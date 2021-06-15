@@ -1,28 +1,22 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
-import { Row, Col, Skeleton, Form, Input, Button, Space } from 'antd';
+import { Link, useParams, useLocation } from 'react-router-dom';
+import { Row, Col, Skeleton, Form, Input, Button, Space, Popconfirm } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMedium, updateMedium } from '../../actions/media';
+import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
-
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
+import { ArrowLeftOutlined } from '@ant-design/icons';
+import getUserPermission from '../../utils/getUserPermission';
+import { useHistory } from 'react-router-dom';
 
 function EditMedium() {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
   const { id } = useParams();
+  const history = useHistory();
+  const spaces = useSelector(({ spaces }) => spaces);
+  const actions = getUserPermission({ resource: 'media', action: 'get', spaces });
+  const disabled = !(actions.includes('admin') || actions.includes('update'));
   const dispatch = useDispatch();
   const { media, loading } = useSelector((state) => {
     return {
@@ -50,13 +44,24 @@ function EditMedium() {
   }
 
   return (
-    <Row>
+    <Row gutter={['20', '20']}>
+      <Col span={'24'}>
+        <Link to="/media">
+          <Button>
+            <ArrowLeftOutlined /> Back
+          </Button>
+        </Link>
+      </Col>
       <Col span={'12'}>
-        <img src={media.url?.proxy} alt={'space'} style={{ width: '100%' }} />
+        <img
+          src={media.url?.proxy}
+          alt={'space'}
+          style={{ maxHeight: '500px', maxWidth: '100%', margin: '0 auto', display: 'block' }}
+        />
       </Col>
       <Col span={'12'}>
         <Form
-          {...layout}
+          layout="vertical"
           form={form}
           name="create-space"
           onFinish={(values) => {
@@ -68,24 +73,31 @@ function EditMedium() {
           initialValues={media}
         >
           <Form.Item name="name" label="Name">
-            <Input />
+            <Input disabled={disabled} />
           </Form.Item>
           <Form.Item name="alt_text" label="Alt Text">
-            <Input />
+            <Input disabled={disabled} />
           </Form.Item>
           <Form.Item name="caption" label="Caption">
-            <Input />
+            <Input disabled={disabled} />
           </Form.Item>
           <Form.Item name="description" label="Description">
-            <Input />
+            <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} disabled={disabled} />
           </Form.Item>
-          <Form.Item {...tailLayout}>
+          <Form.Item>
             <Space>
-              <Link to="/media">
-                <Button>Back</Button>
-              </Link>
-              <Button disabled={!valueChange} type="primary" htmlType="submit">
-                Update
+              <Popconfirm
+                title="Sure to Delete?"
+                onConfirm={() => {
+                  dispatch(deleteMedium(id)).then(() => history.push('/media'));
+                }}
+              >
+                <Button type="primary" danger disabled={disabled}>
+                  Delete
+                </Button>
+              </Popconfirm>
+              <Button type="primary" htmlType="submit" disabled={disabled || !valueChange}>
+                Submit
               </Button>
             </Space>
           </Form.Item>

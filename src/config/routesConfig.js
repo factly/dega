@@ -108,6 +108,11 @@ import Events from '../pages/events';
 import CreateEvent from '../pages/events/CreateEvent';
 import EditEvent from '../pages/events/EditEvent';
 
+//Pages
+import Pages from '../pages/pages';
+import CreatePage from '../pages/pages/CreatePage';
+import EditPage from '../pages/pages/EditPage';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -537,25 +542,48 @@ const routes = {
     },
   },
   menu: {
-    path: '/menu',
+    path: '/menus',
     Component: Menu,
-    title: 'Menu',
+    title: 'Menus',
   },
   createMenu: {
-    path: '/menu/create',
+    path: '/menus/create',
     Component: CreateMenu,
-    title: 'Create Menu',
+    title: 'Create',
     permission: {
-      resource: 'menu',
+      resource: 'menus',
       action: 'create',
     },
   },
   editMenu: {
-    path: '/menu/:id/edit',
+    path: '/menus/:id/edit',
     Component: EditMenu,
-    title: 'Edit Menu',
+    title: 'Edit',
     permission: {
-      resource: 'menu',
+      resource: 'menus',
+      action: 'update',
+    },
+  },
+  pages: {
+    path: '/pages',
+    Component: Pages,
+    title: 'Pages',
+  },
+  createPage: {
+    path: '/pages/create',
+    Component: CreatePage,
+    title: 'Create',
+    permission: {
+      resource: 'pages',
+      action: 'create',
+    },
+  },
+  editPage: {
+    path: '/pages/:id/edit',
+    Component: EditPage,
+    title: 'Edit',
+    permission: {
+      resource: 'pages',
       action: 'update',
     },
   },
@@ -590,6 +618,7 @@ export const sidebarMenu = [
     Icon: FileDoneOutlined,
     children: [
       routes.posts,
+      routes.pages,
       routes.categories,
       routes.tags,
       routes.media,

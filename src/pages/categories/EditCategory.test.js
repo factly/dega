@@ -1,6 +1,5 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import renderer, { act as rendererAct } from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -15,6 +14,7 @@ import CategoryEditForm from './components/CategoryForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -87,19 +87,14 @@ describe('Categories Edit component', () => {
 
   describe('snapshot testing', () => {
     it('should render the component', () => {
-      let component;
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditCategory />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditCategory />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match component with empty data', () => {
-      let component;
       store = mockStore({
         categories: {
           req: [],
@@ -112,18 +107,14 @@ describe('Categories Edit component', () => {
           loading: true,
         },
       });
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditCategory />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditCategory />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
     it('should match skeleton while loading', () => {
-      let component;
       store = mockStore({
         categories: {
           req: [],
@@ -131,14 +122,11 @@ describe('Categories Edit component', () => {
           loading: true,
         },
       });
-      rendererAct(() => {
-        component = renderer.create(
-          <Provider store={store}>
-            <EditCategory />
-          </Provider>,
-        );
-      });
-      const tree = component.toJSON();
+      const tree = mount(
+        <Provider store={store}>
+          <EditCategory />
+        </Provider>,
+      );
       expect(tree).toMatchSnapshot();
     });
   });
@@ -189,6 +177,14 @@ describe('Categories Edit component', () => {
           details: {},
           loading: true,
         },
+        spaces: {
+          orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
+          details: {
+            11: { id: 11, name: 'Space 11' },
+          },
+          loading: false,
+          selected: 11,
+        },
       });
     });
     afterEach(() => {
@@ -231,7 +227,7 @@ describe('Categories Edit component', () => {
           space_id: 1,
           test: 'test',
         });
-        expect(push).toHaveBeenCalledWith('/categories');
+        expect(push).toHaveBeenCalledWith('/categories/1/edit');
         done();
       }, 0);
     });

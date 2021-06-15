@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Select, Drawer, DatePicker } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Drawer, DatePicker, Dropdown, Menu, Switch } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -7,12 +7,13 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
-import { addClaim } from '../../../actions/claims';
+import { addClaim, getClaims, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
+import ClaimList from './ClaimList';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -21,7 +22,14 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
-  const [valueChange, setValueChange] = React.useState(false);
+  const [claimCreatedFlag, setClaimCreatedFlag] = React.useState(false);
+  const [newClaim, setNewClaim] = React.useState(null);
+  const [valueChange, setValueChange] = useState(false);
+  const [claimID, setClaimID] = useState(0);
+  const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
+    details,
+    loading,
+  }));
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -34,7 +42,37 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { Option } = Select;
+  const { claims, claimLoading } = useSelector((state) => {
+    return { claims: state.claims, claimLoading: state.claims.loading };
+  });
+  const updateClaims = (fetchedClaimId) => {
+    const claimList = form.getFieldValue('claims');
+    if (claimList.length === data.claims.length) {
+      data.claims.push(fetchedClaimId);
+    } else {
+      form.setFieldsValue({
+        claims: [...claimList, fetchedClaimId],
+      });
+      data.claims = form.getFieldValue('claims');
+    }
+    setClaimCreatedFlag(false);
+  };
+  if (!claimLoading && claimCreatedFlag) {
+    const fetchedClaimId = claims.req[0].data[0];
+    const fetchedClaim = claims.details[fetchedClaimId];
+    if (newClaim.title === fetchedClaim.title) {
+      updateClaims(fetchedClaimId); 
+    }
+  }
+
+  const fetchAddedClaim = () => {
+    dispatch(getClaims({}));
+  };
+  useEffect(() => {
+    fetchAddedClaim();
+  }, [newClaim]);
+
+  useEffect(() => {}, [details, loading]);
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {
@@ -86,20 +124,42 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   const handleOk = () => {
     setVisible(false);
+    setClaimID(0);
   };
 
   const handleCancel = () => {
     setVisible(false);
+    setClaimID(0);
   };
 
   const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then(() => setVisible(false));
+    dispatch(addClaim(values)).then(() => {
+      setVisible(false);
+      setClaimCreatedFlag(true);
+      setNewClaim(values);
+      setClaimID(0);
+    });
+  };
+  const onClaimEdit = (values) => {
+    dispatch(updateClaim({ ...details[claimID], ...values })).then(() => {
+      setVisible(false);
+      setClaimID(0);
+    });
   };
 
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/fact-checks'));
   };
-
+  const setReadyFlag = () => {
+    status === 'ready' ? setStatus('draft') : setStatus('ready');
+  };
+  const readyToPublish = (
+    <Menu>
+      <Menu.Item>
+        Ready to Publish <Switch onChange={setReadyFlag} checked={status === 'ready'}></Switch>
+      </Menu.Item>
+    </Menu>
+  );
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (shouldBlockNavigation) {
@@ -120,9 +180,15 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         when={shouldBlockNavigation}
         message="You have unsaved changes, are you sure you want to leave?"
       />
-      <Modal visible={visible} onOk={handleOk} onCancel={handleCancel}>
-        <ClaimCreateForm onCreate={onClaimCreate} width={560} />
-      </Modal>
+      {visible && (
+        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel} maskClosable={false}>
+          <ClaimCreateForm
+            data={details[claimID]}
+            onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
+            width={560}
+          />
+        </Modal>
+      )}
       <Form
         form={form}
         initialValues={{ ...data }}
@@ -145,14 +211,16 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
-                <Button
-                  disabled={!valueChange}
-                  type="secondary"
-                  htmlType="submit"
-                  onClick={() => setStatus('draft')}
-                >
-                  Save as draft
-                </Button>
+                <Dropdown overlay={readyToPublish}>
+                  <Button
+                    disabled={!valueChange}
+                    type="secondary"
+                    htmlType="submit"
+                    onClick={() => (status === 'ready' ? setStatus('ready') : setStatus('draft'))}
+                  >
+                    Save
+                  </Button>
+                </Dropdown>
               </Form.Item>
               {actions.includes('admin') || actions.includes('publish') ? (
                 <Form.Item name="submit">
@@ -185,9 +253,21 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   bordered={false}
                   placeholder="Add title for the fact-check"
                   onChange={(e) => onTitleChange(e.target.value)}
+                  autoSize={{ minRows: 2, maxRows: 6 }}
                   style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
+
+              {form.getFieldValue('claims') &&
+              form.getFieldValue('claims').length > 0 &&
+              !loading ? (
+                <ClaimList
+                  ids={form.getFieldValue('claims')}
+                  setClaimID={setClaimID}
+                  showModal={showModal}
+                  details={details}
+                />
+              ) : null}
 
               <Form.Item name="description" className="post-description">
                 <Editor />
@@ -206,7 +286,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   <MediaSelector />
                 </Form.Item>
                 <Form.Item name="claims" label="Claims" key={!visible}>
-                  <Selector mode="multiple" display={'title'} action="Claims" />
+                  <Selector mode="multiple" display={'claim'} action="Claims" />
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" onClick={showModal}>
