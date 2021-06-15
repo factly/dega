@@ -15,6 +15,8 @@ import (
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
 	"github.com/factly/dega-api/util/cache"
+	"github.com/factly/x/requestx"
+	"github.com/spf13/viper"
 )
 
 type postResolver struct{ *Resolver }
@@ -109,7 +111,7 @@ func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.U
 
 	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
 		PostID: obj.ID,
-	}).Find(&postUsers)
+	}).Where("deleted_at IS NULL").Find(&postUsers)
 
 	var allUserID []string
 
@@ -300,11 +302,16 @@ type redisPostPaging struct {
 	Total int64       `json:"total,omitempty"`
 }
 
-func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models.PostFilter, categories *models.PostFilter, tags *models.PostFilter, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models.PostFilter, categories *models.PostFilter, tags *models.PostFilter, users *models.PostFilter, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
 	}
+	oID, err := validator.GetOrganisation(ctx)
+	if err != nil {
+		return nil, err
+	}
+
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"
@@ -332,6 +339,63 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 		tx.Where("status = ?", "publish")
 	}
 
+	userIDs := make([]int, 0)
+	// get user ids if slugs provided
+	if users != nil && len(users.Ids) == 0 && len(users.Slugs) > 0 {
+		var userID int
+		// fetch all posts of current space
+		postList := make([]models.Post, 0)
+		config.DB.Model(&models.Post{}).Where(&models.Post{
+			SpaceID: uint(sID),
+		}).Find(&postList)
+
+		postIDs := make([]uint, 0)
+		for _, each := range postList {
+			postIDs = append(postIDs, each.ID)
+		}
+
+		postAuthors := make([]models.PostAuthor, 0)
+		config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postAuthors)
+
+		if len(postAuthors) > 0 {
+			userID = int(postAuthors[0].AuthorID)
+		} else {
+			return nil, errors.New("please provide ID instead of slug")
+		}
+
+		userSlugMap := make(map[string]int)
+		url := fmt.Sprint(viper.GetString("kavach_url"), "/users/application?application=dega")
+
+		resp, err := requestx.Request("GET", url, nil, map[string]string{
+			"Content-Type":   "application/json",
+			"X-User":         fmt.Sprint(userID),
+			"X-Organisation": fmt.Sprint(oID),
+		})
+
+		if err != nil {
+			return nil, err
+		}
+		defer resp.Body.Close()
+
+		usersResp := models.UsersPaging{}
+		err = json.NewDecoder(resp.Body).Decode(&usersResp)
+		if err != nil {
+			return nil, nil
+		}
+
+		for _, u := range usersResp.Nodes {
+			userSlugMap[u.Slug] = int((*u).ID)
+		}
+
+		for _, each := range users.Slugs {
+			userIDs = append(userIDs, userSlugMap[each])
+		}
+	} else if users != nil && len(users.Ids) > 0 && len(users.Slugs) == 0 {
+		userIDs = users.Ids
+	} else if users != nil && len(users.Ids) > 0 && len(users.Slugs) > 0 {
+		userIDs = users.Ids
+	}
+
 	filterStr := ""
 	if categories != nil {
 		tx.Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id")
@@ -343,9 +407,9 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 		}
 	}
 
-	if len(users) > 0 {
+	if len(userIDs) > 0 {
 		tx.Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id")
-		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(users), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(userIDs), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	if tags != nil {

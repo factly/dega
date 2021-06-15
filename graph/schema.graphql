@@ -244,7 +244,7 @@ type Query {
   tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   tag(id: Int, slug: String): Tag
   formats(spaces:[Int!], slugs:[String!]): FormatsPaging
-  posts(spaces:[Int!], formats: PostFilter, categories: PostFilter, tags: PostFilter, users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  posts(spaces:[Int!], formats: PostFilter, categories: PostFilter, tags: PostFilter, users: PostFilter, status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int, slug: String, include_pages: Boolean): Post
   page(id: Int, slug: String): Post
   pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
