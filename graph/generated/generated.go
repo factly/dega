@@ -203,7 +203,7 @@ type ComplexityRoot struct {
 		Page       func(childComplexity int, id *int, slug *string) int
 		Pages      func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Post       func(childComplexity int, id *int, slug *string, includePages *bool) int
-		Posts      func(childComplexity int, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) int
+		Posts      func(childComplexity int, spaces []int, formats *models.PostFilter, categories *models.PostFilter, tags *models.PostFilter, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Ratings    func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Sitemap    func(childComplexity int) int
 		Space      func(childComplexity int) int
@@ -379,7 +379,7 @@ type QueryResolver interface {
 	Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
 	Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error)
 	Formats(ctx context.Context, spaces []int, slugs []string) (*models.FormatsPaging, error)
-	Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
+	Posts(ctx context.Context, spaces []int, formats *models.PostFilter, categories *models.PostFilter, tags *models.PostFilter, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
 	Post(ctx context.Context, id *int, slug *string, includePages *bool) (*models.Post, error)
 	Page(ctx context.Context, id *int, slug *string) (*models.Post, error)
 	Pages(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error)
@@ -1253,7 +1253,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.Posts(childComplexity, args["spaces"].([]int), args["formats"].([]int), args["categories"].([]int), args["tags"].([]int), args["users"].([]int), args["status"].(*string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
+		return e.complexity.Query.Posts(childComplexity, args["spaces"].([]int), args["formats"].(*models.PostFilter), args["categories"].(*models.PostFilter), args["tags"].(*models.PostFilter), args["users"].([]int), args["status"].(*string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string)), true
 
 	case "Query.ratings":
 		if e.complexity.Query.Ratings == nil {
@@ -2074,6 +2074,11 @@ type Sitemaps {
   ratings: [Sitemap] 
 }
 
+input PostFilter {
+  slugs: [String!]
+  ids: [Int!]
+}
+
 type Query {
   space: Space
   menu: MenusPaging
@@ -2082,7 +2087,7 @@ type Query {
   tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
   tag(id: Int, slug: String): Tag
   formats(spaces:[Int!], slugs:[String!]): FormatsPaging
-  posts(spaces:[Int!], formats: [Int!], categories: [Int!], tags: [Int!], users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  posts(spaces:[Int!], formats: PostFilter, categories: PostFilter, tags: PostFilter, users: [Int!], status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int, slug: String, include_pages: Boolean): Post
   page(id: Int, slug: String): Post
   pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
@@ -2466,28 +2471,28 @@ func (ec *executionContext) field_Query_posts_args(ctx context.Context, rawArgs 
 		}
 	}
 	args["spaces"] = arg0
-	var arg1 []int
+	var arg1 *models.PostFilter
 	if tmp, ok := rawArgs["formats"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("formats"))
-		arg1, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
+		arg1, err = ec.unmarshalOPostFilter2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["formats"] = arg1
-	var arg2 []int
+	var arg2 *models.PostFilter
 	if tmp, ok := rawArgs["categories"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("categories"))
-		arg2, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
+		arg2, err = ec.unmarshalOPostFilter2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
 	args["categories"] = arg2
-	var arg3 []int
+	var arg3 *models.PostFilter
 	if tmp, ok := rawArgs["tags"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("tags"))
-		arg3, err = ec.unmarshalOInt2ᚕintᚄ(ctx, tmp)
+		arg3, err = ec.unmarshalOPostFilter2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostFilter(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -6382,7 +6387,7 @@ func (ec *executionContext) _Query_posts(ctx context.Context, field graphql.Coll
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Posts(rctx, args["spaces"].([]int), args["formats"].([]int), args["categories"].([]int), args["tags"].([]int), args["users"].([]int), args["status"].(*string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
+		return ec.resolvers.Query().Posts(rctx, args["spaces"].([]int), args["formats"].(*models.PostFilter), args["categories"].(*models.PostFilter), args["tags"].(*models.PostFilter), args["users"].([]int), args["status"].(*string), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -10079,6 +10084,34 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 
 // region    **************************** input.gotpl *****************************
 
+func (ec *executionContext) unmarshalInputPostFilter(ctx context.Context, obj interface{}) (models.PostFilter, error) {
+	var it models.PostFilter
+	var asMap = obj.(map[string]interface{})
+
+	for k, v := range asMap {
+		switch k {
+		case "slugs":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("slugs"))
+			it.Slugs, err = ec.unmarshalOString2ᚕstringᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "ids":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("ids"))
+			it.Ids, err = ec.unmarshalOInt2ᚕintᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 // endregion **************************** input.gotpl *****************************
 
 // region    ************************** interface.gotpl ***************************
@@ -13062,6 +13095,14 @@ func (ec *executionContext) marshalOPost2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapi�
 		return graphql.Null
 	}
 	return ec._Post(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOPostFilter2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostFilter(ctx context.Context, v interface{}) (*models.PostFilter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	res, err := ec.unmarshalInputPostFilter(ctx, v)
+	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) marshalOPostsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostsPaging(ctx context.Context, sel ast.SelectionSet, v *models.PostsPaging) graphql.Marshaler {

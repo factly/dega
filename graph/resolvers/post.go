@@ -300,7 +300,7 @@ type redisPostPaging struct {
 	Total int64       `json:"total,omitempty"`
 }
 
-func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, categories []int, tags []int, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
+func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models.PostFilter, categories *models.PostFilter, tags *models.PostFilter, users []int, status *string, page *int, limit *int, sortBy *string, sortOrder *string) (*models.PostsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -333,21 +333,38 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 	}
 
 	filterStr := ""
-
-	if len(categories) > 0 {
+	if categories != nil {
 		tx.Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id")
-		filterStr = filterStr + fmt.Sprint("post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories), " ", ",", -1), "[]"), ") AND ")
+		if len(categories.Ids) > 0 {
+			filterStr = filterStr + fmt.Sprint("post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories.Ids), " ", ",", -1), "[]"), ") AND ")
+		} else if len(tags.Slugs) > 0 {
+			tx.Joins("INNER JOIN categories ON post_categories.category_id = categories.id")
+			filterStr = filterStr + fmt.Sprint("categories.slug IN (", createFilters(categories.Slugs), ") AND ")
+		}
 	}
+
 	if len(users) > 0 {
 		tx.Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id")
 		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(users), " ", ",", -1), "[]"), ") AND ")
 	}
-	if len(tags) > 0 {
+
+	if tags != nil {
 		tx.Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id")
-		filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tags), " ", ",", -1), "[]"), ") AND ")
+		if len(tags.Ids) > 0 {
+			filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tags.Ids), " ", ",", -1), "[]"), ") AND ")
+		} else if len(tags.Slugs) > 0 {
+			tx.Joins("INNER JOIN tags ON post_tags.tag_id = tags.id")
+			filterStr = filterStr + fmt.Sprint("tags.slug IN (", createFilters(tags.Slugs), ") AND ")
+		}
 	}
-	if len(formats) > 0 {
-		filterStr = filterStr + fmt.Sprint("posts.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formats), " ", ",", -1), "[]"), ") AND ")
+
+	if formats != nil {
+		if len(formats.Ids) > 0 {
+			filterStr = filterStr + fmt.Sprint("posts.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formats.Ids), " ", ",", -1), "[]"), ") AND ")
+		} else if len(formats.Slugs) > 0 {
+			tx.Joins("INNER JOIN formats ON posts.format_id = formats.id")
+			filterStr = filterStr + fmt.Sprint("formats.slug IN (", createFilters(formats.Slugs), ") AND ")
+		}
 	}
 
 	tx.Group("posts.id")
@@ -420,4 +437,10 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats []int, 
 	}
 
 	return result, nil
+}
+
+func createFilters(arr []string) string {
+	filter := strings.Trim(strings.Replace(fmt.Sprint(arr), " ", "','", -1), "[]")
+	filter = "'" + filter + "'"
+	return filter
 }
