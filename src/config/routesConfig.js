@@ -113,6 +113,11 @@ import Pages from '../pages/pages';
 import CreatePage from '../pages/pages/CreatePage';
 import EditPage from '../pages/pages/EditPage';
 
+//Webhooks
+import Webhooks from '../pages/webhooks';
+import CreateWebhook from '../pages/webhooks/CreateWebhook';
+import EditWebhook from '../pages/webhooks/EditWebhook';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -604,6 +609,33 @@ const routes = {
     Component: EditEvent,
     title: 'Edit',
     isAdmin: true,
+  },
+  webhooks: {
+    path: '/webhooks',
+    Component: Webhooks,
+    title: 'Webhooks',
+    permission: {
+      resource: 'webhooks',
+      action: 'get',
+    },
+  },
+  createWebhook: {
+    path: '/webhooks/create',
+    Component: CreateWebhook,
+    title: 'Create',
+    permission: {
+      resource: 'webhooks',
+      action: 'create',
+    },
+  },
+  editWebhook: {
+    path: '/webhooks/:id/edit',
+    Component: EditWebhook,
+    title: 'Edit',
+    permission: {
+      resource: 'webhooks',
+      action: 'update',
+    },
   },
 };
 
