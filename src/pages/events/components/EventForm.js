@@ -1,6 +1,21 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
 
+const layout = {
+  labelCol: {
+    span: 9,
+  },
+  wrapperCol: {
+    span: 7,
+  },
+};
+const tailLayout = {
+  wrapperCol: {
+    offset: 10,
+    span: 14,
+  },
+};
+
 const EventForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const onReset = () => {
@@ -8,6 +23,7 @@ const EventForm = ({ onCreate, data = {} }) => {
   };
   return (
     <Form
+      {...layout}
       form={form}
       initialValues={{ ...data }}
       name="create-event"
@@ -16,10 +32,10 @@ const EventForm = ({ onCreate, data = {} }) => {
         onReset();
       }}
     >
-      <Form.Item name="name">
+      <Form.Item name="name" label="Name">
         <Input placeholder="Enter name" />
       </Form.Item>
-      <Form.Item>
+      <Form.Item {...tailLayout}>
         <Space>
           <Button type="primary" htmlType="submit">
             Submit
