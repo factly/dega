@@ -600,7 +600,7 @@ const routes = {
     isAdmin: true,
   },
   editEvent: {
-    path: '/events/:eid/edit',
+    path: '/events/:id/edit',
     Component: EditEvent,
     title: 'Edit',
     isAdmin: true,

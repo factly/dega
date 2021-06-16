@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
-import Selector from '../../../components/Selector';
 
 const EventForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
@@ -19,9 +18,6 @@ const EventForm = ({ onCreate, data = {} }) => {
     >
       <Form.Item name="name">
         <Input placeholder="Enter name" />
-      </Form.Item>
-      <Form.Item name="tags">
-        <Selector mode="multiple" action="Tags" createEntity="Tag" />
       </Form.Item>
       <Form.Item>
         <Space>

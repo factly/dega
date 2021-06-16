@@ -9,7 +9,7 @@ function Events() {
       <Link key="1" to="/events/create">
         <Button>Create New</Button>
       </Link>
-      {/* <EventList /> */}
+      <EventList />
     </Space>
   );
 }
