@@ -9,12 +9,19 @@ import deepEqual from 'deep-equal';
 function Categories({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
-  const query = new URLSearchParams(useLocation().search);
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
   const [filters, setFilters] = React.useState({
-    page: 1,
+    page: query.get('page') ? query.get('page') : 1,
     limit: 20,
+    sort: query.get('sort'),
+    q: query.get('q'),
   });
-  query.set('page',filters.page);
+  Object.keys(filters).forEach(function(key) {
+    if(filters[key] && key !== 'limit' ) 
+      query.set(key,filters[key])
+  });
+  //window.history.pushState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { Option } = Select;
   const [form] = Form.useForm();
@@ -59,6 +66,8 @@ function Categories({ permission }) {
             onFinish={(values) => setFilters({ ...filters, ...values })}
             style={{ width: '100%' }}
             onValuesChange={(changedValues, allValues) => {
+              let changedKey = Object.keys(changedValues)[0];
+              query.set(changedKey, changedValues[changedKey]);
               if (!changedValues.q) {
                 setFilters({ ...filters, ...changedValues });
               }
