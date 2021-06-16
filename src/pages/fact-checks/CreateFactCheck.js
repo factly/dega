@@ -12,13 +12,9 @@ function CreateFactCheck({ formats }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    if (values.status === 'publish') {
-      dispatch(addPost(values)).then((post) => {
-        if (post && post.id) history.push(`/fact-checks/${post.id}/edit`);
-      });
-    } else {
-      dispatch(addPost(values));
-    }
+    dispatch(addPost(values)).then((post) => {
+      if (post && post.id) history.push(`/fact-checks/${post.id}/edit`);
+    });
   };
 
   if (!formats.loading && formats.factcheck) {

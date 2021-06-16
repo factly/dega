@@ -13,13 +13,9 @@ function CreatePage({ formats }) {
   const dispatch = useDispatch();
 
   const onCreate = (values) => {
-    if (values.status === 'publish') {
-      dispatch(addPage(values)).then((page) => {
-        if (page && page.id) history.push(`/pages/${page.id}/edit`);
-      });
-    } else {
-      dispatch(addPage(values));
-    }
+    dispatch(addPage(values)).then((page) => {
+      if (page && page.id) history.push(`/pages/${page.id}/edit`);
+    });
   };
   if (!formats.loading && formats.article) {
     return <PageForm onCreate={onCreate} actions={actions} page={true} format={formats.article} />;
