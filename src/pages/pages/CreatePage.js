@@ -4,14 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addPage } from '../../actions/pages';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { useHistory } from 'react-router-dom';
 
 function CreatePage({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'pages', action: 'get', spaces });
-
+  const history = useHistory();
   const dispatch = useDispatch();
+
   const onCreate = (values) => {
-    dispatch(addPage(values));
+    dispatch(addPage(values)).then((page) => {
+      if (page && page.id) history.push(`/pages/${page.id}/edit`);
+    });
   };
   if (!formats.loading && formats.article) {
     return <PageForm onCreate={onCreate} actions={actions} page={true} format={formats.article} />;
