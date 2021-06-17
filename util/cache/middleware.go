@@ -15,8 +15,8 @@ import (
 )
 
 type requestBody struct {
-	OperationName *string     `json:"operationName"`
-	Query         *string     `json:"query"`
+	OperationName string      `json:"operationName"`
+	Query         string      `json:"query"`
 	Variables     interface{} `json:"variables"`
 }
 
@@ -31,13 +31,14 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 				return
 			}
 
-			if body.OperationName != nil {
+			if body.OperationName == "IntrospectionQuery" {
 				next.ServeHTTP(w, r)
 				return
 			}
 
 			// get query string from the request body
-			queryString := *body.Query
+			queryString := body.Query
+
 			queryStr := strings.ReplaceAll(queryString, "\n", "")
 			queryStr = strings.ReplaceAll(queryStr, " ", "")
 

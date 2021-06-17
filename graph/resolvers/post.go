@@ -455,7 +455,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 
 		// get all users
 		postUsers := []models.PostAuthor{}
-		config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postUsers)
+		config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?) AND deleted_at IS NULL", postIDs).Find(&postUsers)
 
 		var allUserID []string
 		postUserMap := make(map[uint][]uint)
@@ -470,7 +470,9 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 
 		userMap := make(map[uint]*models.User)
 		for _, user := range users {
-			userMap[user.ID] = user
+			if user != nil {
+				userMap[user.ID] = user
+			}
 		}
 
 		for _, post := range postList {
@@ -488,7 +490,9 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 			}
 
 			for _, postAuthor := range postUserMap[post.ID] {
-				redisPost.Users = append(redisPost.Users, userMap[postAuthor])
+				if _, found := userMap[postAuthor]; found && userMap[postAuthor] != nil {
+					redisPost.Users = append(redisPost.Users, userMap[postAuthor])
+				}
 			}
 
 			redisPost.Post = post
