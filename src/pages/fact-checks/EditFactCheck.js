@@ -35,6 +35,7 @@ function EditFactCheck({ formats }) {
       history.push(`/fact-checks/${id}/edit`);
     });
   };
+  if(post) post.claimOrder = [165,166,161]
   return (
     <EditFactCheckForm
       data={post}

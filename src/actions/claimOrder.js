@@ -8,6 +8,13 @@ export const setClaimOrder = (claimOrder) => {
     });
   };
 };
-export const resetClaimOrder = () => ({
-  type: RESET_CLAIMORDER,
-});
+export const resetClaimOrder = () => {
+  return (dispatch) => {
+    dispatch({
+      type: RESET_CLAIMORDER,
+    })
+  }
+}
+// export const resetClaimOrder = () => ({
+//   type: RESET_CLAIMORDER,
+// });

@@ -1,17 +1,41 @@
-import { CaretRightOutlined, EditOutlined } from '@ant-design/icons';
+import { CaretRightOutlined, EditOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
 import { Button, Card, Collapse, Tree } from 'antd';
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setClaimOrder, resetClaimOrder } from '../../../actions/claimOrder';
 
 function DraggableClaimList({ ids, setClaimID, details, showModal }) {
+  const [updateData, setUpdateData] = React.useState(true);
+
   const dispatch = useDispatch();
   const { claimOrder } = useSelector((state) => {
     const order = state.claimOrder.order;
     return { claimOrder: order };
   });
+  const [treeData, setTreeData] = React.useState(claimOrder);
+
   const setClaimListOrder = (order) => {
     dispatch(setClaimOrder(order));
+    setUpdateData(true);
+  };
+
+  const moveUp = (id) => {
+    const index = claimOrder.indexOf(id);
+    if (index > 0) {
+      let temp = claimOrder[index - 1];
+      claimOrder[index - 1] = id;
+      claimOrder[index] = temp;
+    }
+    setTreeData(dig(claimOrder, ids));
+  };
+  const moveDown = (id) => {
+    const index = claimOrder.indexOf(id);
+    if (index < claimOrder.length - 1) {
+      let temp = claimOrder[index + 1];
+      claimOrder[index + 1] = id;
+      claimOrder[index] = temp;
+    }
+    setTreeData(dig(claimOrder, ids));
   };
 
   useEffect(() => {}, [claimOrder, dispatch]);
@@ -19,6 +43,7 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
   let key;
   let treeNode;
   const dig = (claimOrder, claims) => {
+    setUpdateData(false);
     const list = [];
     if (claims.length > claimOrder.length) {
       let newClaims = claims.filter((x) => !claimOrder.includes(x));
@@ -46,12 +71,29 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
                     {details[id].claim}
                   </p>
                   <Button
+                    size="small"
                     onClick={() => {
                       setClaimID(id);
                       showModal();
                     }}
                   >
                     <EditOutlined />
+                  </Button>
+                  <Button
+                    size="small"
+                    onClick={() => {
+                      moveUp(id);
+                    }}
+                  >
+                    <UpOutlined />
+                  </Button>
+                  <Button
+                   size="small"
+                    onClick={() => {
+                      moveDown(id);
+                    }}
+                  >
+                    <DownOutlined />
                   </Button>
                 </div>
               }
@@ -67,7 +109,7 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
     return list;
   };
 
-  const [treeData, setTreeData] = React.useState(dig(claimOrder, ids));
+  if (claimOrder && updateData) setTreeData(dig(claimOrder, ids));
   React.useEffect(() => {}, [treeData]);
 
   const onDrop = (info) => {
@@ -126,7 +168,11 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
       expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
     >
       <Panel header="Claims" key="1">
-        <Tree className="draggable-tree" draggable blockNode onDrop={onDrop} treeData={treeData} />
+        <Tree className="draggable-tree"
+         //draggable blockNode onDrop={onDrop} 
+         blockNode
+         treeData={treeData} 
+         />
       </Panel>
     </Collapse>
   );
