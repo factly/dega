@@ -10,6 +10,7 @@ import (
 // Webhook webhook model
 type Webhook struct {
 	config.Base
+	Name    string            `json:"name"`
 	URL     string            `json:"url"`
 	Enabled bool              `json:"enabled"`
 	Events  []Event           `json:"events"`
