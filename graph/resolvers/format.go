@@ -8,7 +8,6 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
-	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *formatResolver) ID(ctx context.Context, obj *models.Format) (string, error) {
@@ -39,12 +38,6 @@ func (r *queryResolver) Formats(ctx context.Context, spaces []int, slugs []strin
 	tx.Count(&total).Order("id desc").Find(&result.Nodes)
 
 	result.Total = int(total)
-
-	if cache.IsEnabled() {
-		if err = cache.SaveToCache(ctx, result); err != nil {
-			return result, nil
-		}
-	}
 
 	return result, nil
 }

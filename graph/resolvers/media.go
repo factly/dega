@@ -8,7 +8,6 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
-	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *mediumResolver) ID(ctx context.Context, obj *models.Medium) (string, error) {
@@ -34,12 +33,6 @@ func (r *queryResolver) Media(ctx context.Context) ([]*models.Medium, error) {
 	config.DB.Model(&models.Medium{}).Where(&models.Medium{
 		SpaceID: sID,
 	}).Find(&result)
-
-	if cache.IsEnabled() {
-		if err = cache.SaveToCache(ctx, result); err != nil {
-			return result, nil
-		}
-	}
 
 	return result, nil
 }

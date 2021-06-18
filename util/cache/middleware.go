@@ -10,9 +10,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
-	"github.com/tmc/graphql/parser"
 )
 
 type requestBody struct {
@@ -39,13 +37,6 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 
 			// get query string from the request body
 			queryString := body.Query
-
-			queryType, err := getQueryType(queryString)
-			if err != nil {
-				errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse query", http.StatusUnprocessableEntity)))
-				return
-			}
-
 			queryStr := strings.ReplaceAll(queryString, "\n", "")
 			queryStr = strings.ReplaceAll(queryStr, " ", "")
 
@@ -56,18 +47,7 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 
 			respBodyBytes, err := GlobalCache.Get(r.Context(), hash)
 			if err == nil {
-				var respBody interface{}
-				err = json.Unmarshal(respBodyBytes, &respBody)
-				if err != nil {
-					errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusInternalServerError)))
-					return
-				}
-				data := map[string]interface{}{
-					"data": map[string]interface{}{
-						queryType: respBody,
-					},
-				}
-				renderx.JSON(w, http.StatusOK, data)
+				renderx.JSON(w, http.StatusOK, respBodyBytes)
 				return
 			}
 
@@ -76,27 +56,4 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 			next.ServeHTTP(w, r)
 		})
 	}
-}
-
-func getQueryType(queryString string) (string, error) {
-	plural := map[string]string{
-		"category": "categories",
-		"tag":      "tags",
-		"post":     "posts",
-		"page":     "pages",
-		"user":     "users",
-	}
-	qd, err := parser.ParseOperation([]byte(queryString))
-	if err != nil {
-		return "", err
-	}
-
-	lastQT := qd.SelectionSet[len(qd.SelectionSet)-1].Field.Name
-	for _, each := range qd.SelectionSet {
-		if each.Field.Name == plural[lastQT] {
-			return plural[lastQT], nil
-		}
-	}
-
-	return lastQT, nil
 }
