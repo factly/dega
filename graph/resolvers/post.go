@@ -218,12 +218,6 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 	return result, nil
 }
 
-type redisPost struct {
-	models.Post
-	Claims []*models.Claim `json:"claims,omitempty"`
-	Users  []*models.User  `json:"users,omitempty"`
-}
-
 func (r *queryResolver) Post(ctx context.Context, id *int, slug *string, include_page *bool) (*models.Post, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
