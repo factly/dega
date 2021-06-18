@@ -56,9 +56,7 @@ function WebhookList({ actions }) {
               }}
               to={`/webhooks/${record.id}/edit`}
             >
-              <Button
-              //disabled={!(actions.includes('admin') || actions.includes('update'))}
-              >
+              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
                 Edit
               </Button>
             </Link>
@@ -67,9 +65,7 @@ function WebhookList({ actions }) {
               onConfirm={() => dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button
-                //disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                >
+                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
                   Delete
                 </Button>
               </Link>
