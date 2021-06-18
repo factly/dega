@@ -52,7 +52,7 @@ func TestPageList(t *testing.T) {
 		pageCountQuery(mock, len(pageList))
 
 		mock.ExpectQuery(selectQuery).
-			WithArgs(1, true).
+			WithArgs(1, true, "template").
 			WillReturnRows(sqlmock.NewRows(columns).
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, pageList[0]["title"], pageList[0]["subtitle"], pageList[0]["slug"], pageList[0]["status"], pageList[0]["is_page"], pageList[0]["excerpt"],
 					pageList[0]["description"], pageList[0]["html_description"], pageList[0]["is_featured"], pageList[0]["is_sticky"], pageList[0]["is_highlighted"], pageList[0]["featured_medium_id"], pageList[0]["format_id"], pageList[0]["published_date"], 1).
@@ -87,7 +87,7 @@ func TestPageList(t *testing.T) {
 		pageCountQuery(mock, len(pageList))
 
 		mock.ExpectQuery(selectQuery).
-			WithArgs(1, true).
+			WithArgs(1, true, "template").
 			WillReturnRows(sqlmock.NewRows(columns).
 				AddRow(2, time.Now(), time.Now(), nil, 1, 1, pageList[1]["title"], pageList[1]["subtitle"], pageList[1]["slug"], pageList[1]["status"], pageList[1]["is_page"], pageList[1]["excerpt"],
 					pageList[1]["description"], pageList[1]["html_description"], pageList[1]["is_featured"], pageList[1]["is_sticky"], pageList[1]["is_highlighted"], pageList[1]["featured_medium_id"], pageList[1]["format_id"], pageList[1]["published_date"], 1))
