@@ -12,6 +12,7 @@ import (
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
+	"github.com/tmc/graphql/parser"
 )
 
 type requestBody struct {
@@ -39,14 +40,14 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 			// get query string from the request body
 			queryString := body.Query
 
-			queryStr := strings.ReplaceAll(queryString, "\n", "")
-			queryStr = strings.ReplaceAll(queryStr, " ", "")
-
-			queryType := GetField(queryStr)
-			if queryType == "" {
-				errorx.Render(w, errorx.Parser(errorx.GetMessage("invalid query field", http.StatusUnprocessableEntity)))
+			queryType, err := getQueryType(queryString)
+			if err != nil {
+				errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse query", http.StatusUnprocessableEntity)))
 				return
 			}
+
+			queryStr := strings.ReplaceAll(queryString, "\n", "")
+			queryStr = strings.ReplaceAll(queryStr, " ", "")
 
 			// hash query
 			h := md5.New()
@@ -77,24 +78,25 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 	}
 }
 
-func GetField(queryStr string) string {
-	toks := strings.Split(queryStr, "{")
-	if len(toks) == 0 {
-		return ""
+func getQueryType(queryString string) (string, error) {
+	plural := map[string]string{
+		"category": "categories",
+		"tag":      "tags",
+		"post":     "posts",
+		"page":     "pages",
+		"user":     "users",
 	}
-	queryTok := strings.ReplaceAll(strings.Split(toks[1], "(")[0], " ", "")
+	qd, err := parser.ParseOperation([]byte(queryString))
+	if err != nil {
+		return "", err
+	}
 
-	validToks := []string{"space", "menu", "categories", "category", "tags", "tag", "formats", "posts", "post", "page", "pages", "users", "user", "ratings", "claimants", "claims", "sitemap"}
-
-	isValidQuery := false
-	for _, each := range validToks {
-		if queryTok == each {
-			isValidQuery = true
-			break
+	lastQT := qd.SelectionSet[len(qd.SelectionSet)-1].Field.Name
+	for _, each := range qd.SelectionSet {
+		if each.Field.Name == plural[lastQT] {
+			return plural[lastQT], nil
 		}
 	}
-	if isValidQuery {
-		return queryTok
-	}
-	return ""
+
+	return lastQT, nil
 }

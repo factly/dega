@@ -401,7 +401,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 		tx.Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id")
 		if len(categories.Ids) > 0 {
 			filterStr = filterStr + fmt.Sprint("post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories.Ids), " ", ",", -1), "[]"), ") AND ")
-		} else if len(tags.Slugs) > 0 {
+		} else if len(categories.Slugs) > 0 {
 			tx.Joins("INNER JOIN categories ON post_categories.category_id = categories.id")
 			filterStr = filterStr + fmt.Sprint("categories.slug IN (", createFilters(categories.Slugs), ") AND ")
 		}

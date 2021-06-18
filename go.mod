@@ -6,7 +6,6 @@ require (
 	github.com/99designs/gqlgen v0.13.0
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/agnivade/levenshtein v1.1.0 // indirect
-	github.com/alicebob/miniredis/v2 v2.14.3
 	github.com/dgryski/trifles v0.0.0-20200830180326-aaf60a07f6a3 // indirect
 	github.com/factly/x v0.0.48
 	github.com/gavv/httpexpect/v2 v2.2.0
@@ -18,6 +17,7 @@ require (
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
 	github.com/prometheus/client_golang v0.9.3
 	github.com/spf13/viper v1.7.1
+	github.com/tmc/graphql v0.0.0-20170602052103-08ddf3728865
 	github.com/vektah/gqlparser/v2 v2.1.0
 	gopkg.in/h2non/gock.v1 v1.0.16
 	gorm.io/driver/postgres v1.0.5
