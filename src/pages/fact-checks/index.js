@@ -15,17 +15,33 @@ function FactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
   let query = new URLSearchParams(useLocation().search);
-  const status = query.get('status');
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [formatFlag, setFormatFlag] = React.useState(false);
   const [filters, setFilters] = React.useState({
-    page: 1,
+    page: query.get('page') ? query.get('page') : 1,
     limit: 20,
-    status: status,
+    status: query.get('status'),
+    sort: query.get('sort'),
+    q: query.get('q'),
+    tag: query.getAll('tag').map((t) => parseInt(t)),
+    category: query.getAll('category').map((c) => parseInt(c)),
+    author: query.getAll('author').map((a) => parseInt(a)),
   });
-  query.set('page',filters.page);
+  Object.keys(filters).forEach(function (key) {
+    if (filters[key] && key !== 'limit')
+      if (filters[key].length !== 0 && (key === 'tag' || key === 'category' || key === 'author')) {
+        query.delete(key);
+        filters[key].map((each) => {
+          query.append(key, each);
+        });
+      } else if (filters[key].length === 0) {
+        query.delete(key);
+      } else {
+        query.set(key, filters[key]);
+      }
+  });
   window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   if (!formatFlag && !formats.loading && formats.factcheck) {
     setFilters({ ...filters, format: [formats.factcheck.id] });
@@ -61,11 +77,11 @@ function FactCheck({ formats }) {
   };
   const onSave = (values) => {
     let filterValue = {
-      tag: values.tags,
-      category: values.categories,
+      tag: values.tag,
+      category: values.category,
       sort: values.sort,
       q: values.q,
-      author: values.authors,
+      author: values.author,
       status: values.status !== 'all' ? values.status : null,
     };
 
@@ -83,6 +99,16 @@ function FactCheck({ formats }) {
           style={{ maxWidth: '100%' }}
           className="ant-advanced-search-form"
           onValuesChange={(changedValues, allValues) => {
+            let changedKey = Object.keys(changedValues)[0];
+            if (
+              (changedValues[changedKey].length !== 0 && changedKey === 'tag') ||
+              changedKey === 'category' ||
+              changedKey === 'author'
+            ) {
+              query.append(changedKey, changedValues[changedKey]);
+            } else {
+              query.set(changedKey, changedValues[changedKey]);
+            }
             if (!changedValues.q) {
               onSave(allValues);
             }
@@ -126,17 +152,17 @@ function FactCheck({ formats }) {
               </Form.Item>
             </Col>
             <Col span={6} key={5}>
-              <Form.Item name="tags" label="Tags">
+              <Form.Item name="tag" label="Tags">
                 <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
               </Form.Item>
             </Col>
             <Col span={6} key={6}>
-              <Form.Item name="categories" label="Categories">
+              <Form.Item name="category" label="Categories">
                 <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
               </Form.Item>
             </Col>
             <Col span={6} key={7}>
-              <Form.Item name="authors" label="Authors">
+              <Form.Item name="author" label="Authors">
                 <Selector
                   mode="multiple"
                   action="Authors"

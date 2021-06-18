@@ -10,13 +10,30 @@ import { getClaims } from '../../actions/claims';
 function Claims({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
-  const query = new URLSearchParams(useLocation().search);
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
   const [filters, setFilters] = React.useState({
-    page: 1,
+    page: query.get('page') ? query.get('page') : 1,
     limit: 20,
+    sort: query.get('sort'),
+    q: query.get('q'),
+    rating: query.getAll('rating').map((r) => parseInt(r)),
+    claimant: query.getAll('claimant').map((c) => parseInt(c)),
   });
-  query.set('page',filters.page);
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
+  Object.keys(filters).forEach(function (key) {
+    if (filters[key] && key !== 'limit')
+      if (filters[key].length !== 0 && (key === 'claimant' || key === 'rating')) {
+        query.delete(key);
+        filters[key].map((each) => {
+          query.append(key, each);
+        });
+      } else if (filters[key].length === 0) {
+        query.delete(key);
+      } else {
+        query.set(key, filters[key]);
+      }
+  });
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${location.pathname}?${query}`);
   const [form] = Form.useForm();
   const { Option } = Select;
 
@@ -52,8 +69,8 @@ function Claims({ permission }) {
 
   const onSave = (values) => {
     let filterValue = {
-      claimant: values.claimants,
-      rating: values.ratings,
+      claimant: values.claimant,
+      rating: values.rating,
       sort: values.sort,
       q: values.q,
     };
@@ -70,6 +87,15 @@ function Claims({ permission }) {
         onFinish={(values) => onSave(values)}
         style={{ maxWidth: '100%' }}
         onValuesChange={(changedValues, allValues) => {
+          let changedKey = Object.keys(changedValues)[0];
+          if (
+            (changedValues[changedKey].length !== 0 && changedKey === 'rating') ||
+            changedKey === 'claimant'
+          ) {
+            query.append(changedKey, changedValues[changedKey]);
+          } else {
+            query.set(changedKey, changedValues[changedKey]);
+          }
           if (!changedValues.q) {
             onSave(allValues);
           }
@@ -102,12 +128,12 @@ function Claims({ permission }) {
         </Row>
         <Row gutter={2}>
           <Col span={5}>
-            <Form.Item name="claimants" label="Claimants">
+            <Form.Item name="claimant" label="Claimants">
               <Selector mode="multiple" action="Claimants" />
             </Form.Item>
           </Col>
           <Col span={5} offset={1}>
-            <Form.Item name="ratings" label="Ratings">
+            <Form.Item name="rating" label="Ratings">
               <Selector mode="multiple" action="Ratings" />
             </Form.Item>
           </Col>

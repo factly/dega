@@ -12,10 +12,14 @@ function Episodes({ permission }) {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
-    page: 1,
+    page: query.get('page') ? query.get('page') : 1,
     limit: 20,
+    sort: query.get('sort'),
+    q: query.get('q'),
   });
-  query.set('page',filters.page);
+  Object.keys(filters).forEach(function (key) {
+    if (filters[key] && key !== 'limit') query.set(key, filters[key]);
+  });
   window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const [form] = Form.useForm();
   const { Option } = Select;
@@ -61,6 +65,8 @@ function Episodes({ permission }) {
             onFinish={(values) => setFilters({ ...filters, ...values })}
             style={{ maxWidth: '100%' }}
             onValuesChange={(changedValues, allValues) => {
+              let changedKey = Object.keys(changedValues)[0];
+              query.set(changedKey, changedValues[changedKey]);
               if (!changedValues.q) {
                 setFilters({ ...filters, ...changedValues });
               }
