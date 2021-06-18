@@ -678,7 +678,7 @@ export const sidebarMenu = [
   {
     title: 'ADMINSTRATION',
     Icon: IdcardOutlined,
-    children: [routes.spaces, routes.policies, routes.users],
+    children: [routes.spaces, routes.policies, routes.users, routes.events, routes.webhooks],
     submenu: [
       {
         isAdmin: true,
