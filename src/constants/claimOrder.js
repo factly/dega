@@ -1,4 +1,0 @@
-//Actions
-export const SET_CLAIMORDER = 'SET_CLAIMORDER';
-export const GET_CLAIMORDER = 'GET_CLAIMORDER';
-export const RESET_CLAIMORDER = 'RESET_CLAIMORDER';
