@@ -44,11 +44,6 @@ func RespMiddleware(next http.Handler) http.Handler {
 
 		next.ServeHTTP(crw, r)
 
-		if body.OperationName == "IntrospectionQuery" {
-			return
-		}
-
-		// get query string from the request body
 		queryString := body.Query
 		queryStr := strings.ReplaceAll(queryString, "\n", "")
 		queryStr = strings.ReplaceAll(queryStr, " ", "")
