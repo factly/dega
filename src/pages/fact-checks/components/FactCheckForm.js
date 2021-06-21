@@ -31,7 +31,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     details,
     loading,
   }));
-
+  const [claimListChange, setClaimListChange] = React.useState(false);
   const [claimOrder, setClaimOrder] = useState(
     data.claimOrder ? data.claimOrder : data.claims && data.claims.length > 0 ? data.claims : [],
   );
@@ -201,9 +201,17 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
-        onValuesChange={() => {
+        onValuesChange={(changedValues) => {
           setShouldBlockNavigation(true);
           setValueChange(true);
+          if (changedValues.claims) {
+            setClaimListChange(true);
+            if (claimOrder.length < changedValues.claims.length) {
+              setClaimOrder(
+                claimOrder.concat(changedValues.claims.filter((x) => !claimOrder.includes(x))),
+              );
+            } else setClaimOrder(claimOrder.filter((x) => changedValues.claims.includes(x)));
+          }
         }}
         layout="vertical"
       >
@@ -275,6 +283,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     details={details}
                     claimOrder={claimOrder}
                     setClaimOrder={setClaimOrder}
+                    claimListChange={claimListChange}
+                    setClaimListChange={setClaimListChange}
                   />
                 </Form.Item>
               ) : null}
