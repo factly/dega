@@ -164,7 +164,9 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		claimSchema.ReviewRating.RatingExplaination = each.Claim.Fact
 		claimSchema.ReviewRating.WorstRating = worstRating
 		claimSchema.ItemReviewed.Type = "Claim"
-		claimSchema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
+		if each.Claim.CheckedDate != nil {
+			claimSchema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
+		}
 		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
 		claimSchema.ItemReviewed.Author.Type = "Organization"
 		claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
@@ -176,7 +178,7 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 
 	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
 		PostID: obj.ID,
-	}).Find(&postAuthors)
+	}).Where("deleted_at IS NULL").Find(&postAuthors)
 
 	var allAuthorID []string
 
@@ -201,12 +203,14 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 		Type: "ImageObject",
 		URL:  jsonLogo["raw"]})
 	articleSchema.DatePublished = obj.PublishedDate
-	for _, eachAuthor := range authors {
-		articleSchema.Author = append(articleSchema.Author, models.Author{
-			Type: "Person",
-			Name: eachAuthor.FirstName + " " + eachAuthor.LastName,
-			URL:  fmt.Sprint(space.SiteAddress, "/users/", eachAuthor.Slug),
-		})
+	if len(authors) > 0 {
+		for _, eachAuthor := range authors {
+			articleSchema.Author = append(articleSchema.Author, models.Author{
+				Type: "Person",
+				Name: eachAuthor.FirstName + " " + eachAuthor.LastName,
+				URL:  fmt.Sprint(space.SiteAddress, "/users/", eachAuthor.Slug),
+			})
+		}
 	}
 	articleSchema.Publisher.Type = "Organization"
 	articleSchema.Publisher.Name = space.Name
