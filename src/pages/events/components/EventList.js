@@ -31,9 +31,22 @@ function EventList() {
   const fetchEvents = () => {
     dispatch(getEvents(filters));
   };
-
+  const getName = (eventLabel) => {
+    var labelArr = eventLabel.split('.');
+    for (var i = 0; i < labelArr.length; i++) {
+      labelArr[i] = labelArr[i][0].toUpperCase() + labelArr[i].slice(1);
+    }
+    return labelArr.join(' ');
+  };
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (_, record) => {
+        return <p>{getName(record.name)}</p>;
+      },
+    },
     {
       title: 'Action',
       dataIndex: 'operation',
