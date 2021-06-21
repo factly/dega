@@ -31,6 +31,8 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 			}
 
 			if body.OperationName == "IntrospectionQuery" {
+				r.Body.Close()
+				r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
 				next.ServeHTTP(w, r)
 				return
 			}
@@ -47,7 +49,9 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 
 			respBodyBytes, err := GlobalCache.Get(r.Context(), hash)
 			if err == nil {
-				renderx.JSON(w, http.StatusOK, respBodyBytes)
+				var data interface{}
+				_ = json.Unmarshal(respBodyBytes, &data)
+				renderx.JSON(w, http.StatusOK, data)
 				return
 			}
 

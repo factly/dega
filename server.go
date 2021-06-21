@@ -77,7 +77,7 @@ func main() {
 	r := router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation))
 
 	if cache.IsEnabled() {
-		r = r.With(cache.CachingMiddleware()).With(cache.RespMiddleware)
+		r = r.With(cache.CachingMiddleware(), cache.RespMiddleware)
 	}
 
 	r.Handle("/query", loaders.DataloaderMiddleware(srv))

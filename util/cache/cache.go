@@ -8,10 +8,8 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"strings"
 	"time"
 
-	"github.com/99designs/gqlgen/graphql"
 	"github.com/go-redis/redis"
 	"github.com/spf13/viper"
 )
@@ -60,12 +58,7 @@ func (c *Cache) Get(ctx context.Context, key string) ([]byte, error) {
 	}
 }
 
-func SaveToCache(ctx context.Context, data interface{}) error {
-	// get query string
-	opCtx := graphql.GetOperationContext(ctx)
-	queryStr := strings.ReplaceAll(opCtx.RawQuery, "\n", "")
-	queryStr = strings.ReplaceAll(queryStr, " ", "")
-
+func SaveToCache(ctx context.Context, queryStr string, data interface{}) error {
 	// hash query
 	h := md5.New()
 	_, _ = io.WriteString(h, queryStr)

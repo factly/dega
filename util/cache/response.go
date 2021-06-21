@@ -2,11 +2,12 @@ package cache
 
 import (
 	"bytes"
+	"encoding/json"
 	"io"
+	"io/ioutil"
 	"log"
 	"net/http"
-
-	"github.com/99designs/gqlgen/graphql"
+	"strings"
 )
 
 type CacheResponseWriter struct {
@@ -19,6 +20,10 @@ func (myrw *CacheResponseWriter) Write(p []byte) (int, error) {
 	return myrw.buf.Write(p)
 }
 
+func (myrw *CacheResponseWriter) WriteHeader(header int) {
+	myrw.ResponseWriter.WriteHeader(header)
+}
+
 func RespMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// Create a response writer:
@@ -27,11 +32,33 @@ func RespMiddleware(next http.Handler) http.Handler {
 			buf:            &bytes.Buffer{},
 		}
 
+		body := requestBody{}
+		bodyBytes, _ := ioutil.ReadAll(r.Body)
+		err := json.Unmarshal(bodyBytes, &body)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		r.Body.Close()
+		r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+
 		next.ServeHTTP(crw, r)
 
-		bytes := crw.buf.Bytes()
+		if body.OperationName == "IntrospectionQuery" {
+			return
+		}
 
-		err := SaveToCache(graphql.WithOperationContext(r.Context(), &graphql.OperationContext{}), bytes)
+		// get query string from the request body
+		queryString := body.Query
+		queryStr := strings.ReplaceAll(queryString, "\n", "")
+		queryStr = strings.ReplaceAll(queryStr, " ", "")
+
+		var data interface{}
+		saveBytes := crw.buf.Bytes()
+
+		_ = json.Unmarshal(saveBytes, &data)
+
+		err = SaveToCache(r.Context(), queryStr, data)
 		if err != nil {
 			log.Println(err.Error())
 		}
