@@ -24,7 +24,7 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  if (loading) return <Skeleton />;
+  //if (loading) return <Skeleton />;
 
   if (!category) {
     return <RecordNotFound />;
@@ -35,8 +35,7 @@ function EditCategory() {
       history.push(`/categories/${id}/edit`),
     );
   };
-
-  return <CategoryEditForm data={category} onCreate={onUpdate} />;
+  if (category) return <CategoryEditForm data={category} onCreate={onUpdate} />;
 }
 
 export default EditCategory;

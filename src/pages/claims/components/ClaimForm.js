@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Steps, DatePicker, Row, Col } from 'antd';
+import { Button, Form, Input, Steps, DatePicker, Row, Col, Divider } from 'antd';
 import Selector from '../../../components/Selector';
 import Editor from '../../../components/Editor';
 import { maker, checker } from '../../../utils/sluger';
@@ -40,10 +40,16 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     onCreate(values);
   };
 
-  const onTitleChange = (string) => {
-    form.setFieldsValue({
-      slug: maker(string),
-    });
+  const onClaimChange = (string) => {
+    if (string.length > 150) {
+      form.setFieldsValue({
+        slug: maker(string.substring(0, 150)),
+      });
+    } else {
+      form.setFieldsValue({
+        slug: maker(string),
+      });
+    }
   };
 
   if (data && data.id) {
@@ -87,16 +93,16 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             rules={[
               {
                 required: true,
-                message: 'Please input the title!',
+                message: 'Please input the Claim!',
               },
-              { min: 3, message: 'Title must be minimum 3 characters.' },
-              { max: 5000, message: 'Title must be maximum 150 characters.' },
+              { min: 3, message: 'Claim must be minimum 3 characters.' },
+              { max: 5000, message: 'Claim must be maximum 5000 characters.' },
             ]}
           >
             <Input.TextArea
               rows={6}
               placeholder="Enter claim...."
-              onChange={(e) => onTitleChange(e.target.value)}
+              onChange={(e) => onClaimChange(e.target.value)}
             />
           </Form.Item>
           <Form.Item
@@ -111,6 +117,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 pattern: checker,
                 message: 'Please enter valid slug!',
               },
+              { max: 150, message: 'Slug must be maximum 150 characters.' },
             ]}
           >
             <Input />
@@ -155,83 +162,86 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           <Form.Item name="checked_date" label="Checked Date">
             <DatePicker />
           </Form.Item>
-          <Form.List name="claim_sources" label="Claim sources">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map((field) => (
-                  <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
-                    <Col span={10}>
-                      <Form.Item
-                        {...field}
-                        name={[field.name, 'url']}
-                        fieldKey={[field.fieldKey, 'url']}
-                        rules={[{ required: true, message: 'Url required' }]}
-                        wrapperCol={24}
-                      >
-                        <Input placeholder="Enter url" />
-                      </Form.Item>
-                    </Col>
-                    <Col span={10}>
-                      <Form.Item
-                        {...field}
-                        name={[field.name, 'description']}
-                        fieldKey={[field.fieldKey, 'description']}
-                        rules={[{ required: true, message: 'Description required' }]}
-                        wrapperCol={24}
-                      >
-                        <Input placeholder="Enter description" />
-                      </Form.Item>
-                    </Col>
-                    <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </Row>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                    Add Claim sources
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
-
-          <Form.List name="review_sources" label="Review sources">
-            {(fields, { add, remove }) => (
-              <>
-                {fields.map((field) => (
-                  <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
-                    <Col span={10}>
-                      <Form.Item
-                        {...field}
-                        name={[field.name, 'url']}
-                        fieldKey={[field.fieldKey, 'url']}
-                        rules={[{ required: true, message: 'Url required' }]}
-                        wrapperCol={24}
-                      >
-                        <Input placeholder="Enter url" />
-                      </Form.Item>
-                    </Col>
-                    <Col span={10}>
-                      <Form.Item
-                        {...field}
-                        name={[field.name, 'description']}
-                        fieldKey={[field.fieldKey, 'description']}
-                        rules={[{ required: true, message: 'Description required' }]}
-                        wrapperCol={24}
-                      >
-                        <Input placeholder="Enter description" />
-                      </Form.Item>
-                    </Col>
-                    <MinusCircleOutlined onClick={() => remove(field.name)} />
-                  </Row>
-                ))}
-                <Form.Item>
-                  <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
-                    Add Review sources
-                  </Button>
-                </Form.Item>
-              </>
-            )}
-          </Form.List>
+          <Form.Item label="Claim Sources">
+            <Form.List name="claim_sources" label="Claim sources">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field) => (
+                    <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
+                      <Col span={11}>
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'url']}
+                          fieldKey={[field.fieldKey, 'url']}
+                          rules={[{ required: true, message: 'Url required' }]}
+                          wrapperCol={24}
+                        >
+                          <Input placeholder="Enter url" />
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'description']}
+                          fieldKey={[field.fieldKey, 'description']}
+                          rules={[{ required: true, message: 'Description required' }]}
+                          wrapperCol={24}
+                        >
+                          <Input placeholder="Enter description" />
+                        </Form.Item>
+                      </Col>
+                      <MinusCircleOutlined onClick={() => remove(field.name)} />
+                    </Row>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Claim sources
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
+          <Form.Item label="Review Sources">
+            <Form.List name="review_sources" label="Review sources">
+              {(fields, { add, remove }) => (
+                <>
+                  {fields.map((field) => (
+                    <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
+                      <Col span={11}>
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'url']}
+                          fieldKey={[field.fieldKey, 'url']}
+                          rules={[{ required: true, message: 'Url required' }]}
+                          wrapperCol={24}
+                        >
+                          <Input placeholder="Enter url" />
+                        </Form.Item>
+                      </Col>
+                      <Col span={12}>
+                        <Form.Item
+                          {...field}
+                          name={[field.name, 'description']}
+                          fieldKey={[field.fieldKey, 'description']}
+                          rules={[{ required: true, message: 'Description required' }]}
+                          wrapperCol={24}
+                        >
+                          <Input placeholder="Enter description" />
+                        </Form.Item>
+                      </Col>
+                      <MinusCircleOutlined onClick={() => remove(field.name)} />
+                    </Row>
+                  ))}
+                  <Form.Item>
+                    <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                      Add Review sources
+                    </Button>
+                  </Form.Item>
+                </>
+              )}
+            </Form.List>
+          </Form.Item>
         </div>
         <Form.Item>
           <Button disabled={current === 0} onClick={() => setCurrent(current - 1)}>

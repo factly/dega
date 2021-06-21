@@ -1,27 +1,26 @@
 import React from 'react';
-import PostForm from './components/PostForm';
+import PageForm from '../posts/components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../../actions/posts';
+import { addPage } from '../../actions/pages';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { useHistory } from 'react-router-dom';
 
-function CreatePost({ formats }) {
+function CreatePage({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
+  const actions = getUserPermission({ resource: 'pages', action: 'get', spaces });
   const history = useHistory();
   const dispatch = useDispatch();
 
   const onCreate = (values) => {
-    dispatch(addPost(values)).then((post) => {
-      if (post && post.id) history.push(`/posts/${post.id}/edit`);
+    dispatch(addPage(values)).then((page) => {
+      if (page && page.id) history.push(`/pages/${page.id}/edit`);
     });
   };
   if (!formats.loading && formats.article) {
-    return <PostForm onCreate={onCreate} actions={actions} format={formats.article} />;
+    return <PageForm onCreate={onCreate} actions={actions} page={true} format={formats.article} />;
   }
-
   return <FormatNotFound status="info" title="Article format not found" link="/formats" />;
 }
 
-export default CreatePost;
+export default CreatePage;

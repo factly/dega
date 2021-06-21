@@ -16,6 +16,7 @@ function Selector({
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
 
+  const [entityCreatedFlag, setEntityCreatedFlag] = React.useState(false);
   const [query, setQuery] = React.useState({
     page: 1,
     limit: 5,
@@ -42,7 +43,7 @@ function Selector({
     }
   };
 
-  const { details, total, loading } = useSelector((state) => {
+  const { details, total, loading, ids } = useSelector((state) => {
     let details = [];
     let ids = [];
     let total = 0;
@@ -80,9 +81,13 @@ function Selector({
       }
     }
 
-    return { details, total: total, loading: state[entity].loading };
+    return { details, total: total, loading: state[entity].loading, ids };
   });
 
+  if (entityCreatedFlag && !loading && entity) {
+    value.push(ids[0]);
+    setEntityCreatedFlag(false);
+  }
   React.useEffect(() => {
     fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,7 +134,7 @@ function Selector({
                 selectorType['add' + createEntity]({
                   name: query.q.trim(),
                 }),
-              ).then(() => setQuery({ page: 1 }))
+              ).then(() => setQuery({ page: 1 }), setEntityCreatedFlag(true))
             }
           >
             Create a {createEntity} '{query.q}'

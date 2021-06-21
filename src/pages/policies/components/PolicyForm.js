@@ -70,6 +70,16 @@ const entities = [
     label: 'Episodes',
     options: options,
   },
+  {
+    name: 'menus',
+    label: 'Menus',
+    options: options,
+  },
+  {
+    name: 'pages',
+    label: 'Pages',
+    options: options,
+  }
 ];
 
 function PolicyForm({ data = {}, onCreate }) {

@@ -1,62 +1,54 @@
 import React from 'react';
-import { Space, Button, Form, Col, Row, Input, Select } from 'antd';
+import { Space, Button, Select, Form, Col, Row, Input } from 'antd';
 import { Link } from 'react-router-dom';
-import getUserPermission from '../../utils/getUserPermission';
+import PageList from './components/PageList';
 import { useSelector, useDispatch } from 'react-redux';
-import FactCheckList from '../../components/List';
+import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
-import Template from '../../components/Template';
-import { getPosts } from '../../actions/posts';
-import Selector from '../../components/Selector';
 import deepEqual from 'deep-equal';
-import { useLocation } from 'react-router-dom';
+import { getPages } from '../../actions/pages';
+import Selector from '../../components/Selector';
 
-function FactCheck({ formats }) {
+function Pages({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'fact-checks', action: 'get', spaces });
-  let query = new URLSearchParams(useLocation().search);
-  const status = query.get('status');
+  const actions = getUserPermission({ resource: 'pages', action: 'get', spaces });
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [formatFlag, setFormatFlag] = React.useState(false);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
-    status: status,
   });
-  if (!formatFlag && !formats.loading && formats.factcheck) {
-    setFilters({ ...filters, format: [formats.factcheck.id] });
-    setFormatFlag(true);
-  }
-  const { posts, total, loading, tags, categories } = useSelector((state) => {
-    const node = state.posts.req.find((item) => {
+  const { pages, total, loading, tags, categories } = useSelector((state) => {
+    const node = state.pages.req.find((item) => {
       return deepEqual(item.query, filters);
     });
 
     if (node)
       return {
-        posts: node.data.map((element) => {
-          const post = state.posts.details[element];
+        pages: node.data.map((element) => {
+          const page = state.pages.details[element];
 
-          post.medium = state.media.details[post.featured_medium_id];
-          return post;
+          page.medium = state.media.details[page.featured_medium_id];
+          return page;
         }),
         total: node.total,
-        loading: state.posts.loading,
+        loading: state.pages.loading,
         tags: state.tags.details,
         categories: state.categories.details,
       };
-    return { posts: [], total: 0, loading: state.posts.loading, tags: {}, categories: {} };
+    return { pages: [], total: 0, loading: state.pages.loading, tags: {}, categories: {} };
   });
 
   React.useEffect(() => {
-    fetchPosts();
+    fetchPages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
-  const fetchPosts = () => {
-    dispatch(getPosts(filters));
+  const fetchPages = () => {
+    dispatch(getPages(filters));
   };
+
   const onSave = (values) => {
     let filterValue = {
       tag: values.tags,
@@ -66,13 +58,11 @@ function FactCheck({ formats }) {
       author: values.authors,
       status: values.status !== 'all' ? values.status : null,
     };
-
     setFilters({ ...filters, ...filterValue });
   };
-  if (!formats.loading && formats.factcheck)
+  if (!formats.loading && formats.article)
     return (
       <Space direction="vertical">
-        <Template format={formats.factcheck} />
         <Form
           initialValues={filters}
           form={form}
@@ -89,7 +79,7 @@ function FactCheck({ formats }) {
         >
           <Row gutter={24}>
             <Col key={1}>
-              <Link to="/fact-checks/create">
+              <Link to="/pages/create">
                 <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
                   Create New
                 </Button>
@@ -98,7 +88,7 @@ function FactCheck({ formats }) {
             <Col key={2} span={9} offset={12}>
               <Space direction="horizontal">
                 <Form.Item name="q">
-                  <Input placeholder="Search factchecks" />
+                  <Input placeholder="Search pages" />
                 </Form.Item>
 
                 <Form.Item>
@@ -146,11 +136,11 @@ function FactCheck({ formats }) {
             </Col>
           </Row>
         </Form>
-        <FactCheckList
+        <PageList
           actions={actions}
-          format={formats.factcheck}
+          format={formats.article}
           data={{
-            posts: posts,
+            pages: pages,
             total: total,
             loading: loading,
             tags: tags,
@@ -158,14 +148,11 @@ function FactCheck({ formats }) {
           }}
           filters={filters}
           setFilters={setFilters}
-          fetchPosts={fetchPosts}
+          fetchPages={fetchPages}
         />
       </Space>
     );
-
-  return (
-    <FormatNotFound status="info" title="Fact-Check format not found" link="/formats/create" />
-  );
+  return <FormatNotFound status="info" title="Article format not found" link="/formats/create" />;
 }
 
-export default FactCheck;
+export default Pages;

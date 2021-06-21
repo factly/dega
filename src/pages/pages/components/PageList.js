@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { Popconfirm, Button, List, Space, Tag } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { deletePost } from '../../actions/posts';
+import { deletePage } from '../../../actions/pages';
 import { Link } from 'react-router-dom';
-import ImagePlaceholder from '../../components/ErrorsAndImage/PlaceholderImage';
-import QuickEdit from './QuickEdit';
+import ImagePlaceholder from '../../../components/ErrorsAndImage/PlaceholderImage';
+import QuickEdit from '../../../components/List/QuickEdit';
 import moment from 'moment';
 
-function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
+function PageList({ actions, format, status, data, filters, setFilters, fetchPages }) {
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
 
@@ -26,7 +26,7 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
         className="post-list"
         loading={data.loading}
         itemLayout="vertical"
-        dataSource={data.posts}
+        dataSource={data.pages}
         pagination={{
           total: data.total,
           current: filters.page,
@@ -43,11 +43,7 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
                       style={{
                         marginRight: 8,
                       }}
-                      to={
-                        format.slug === 'article'
-                          ? `/posts/${item.id}/edit`
-                          : `/fact-checks/${item.id}/edit`
-                      }
+                      to={`/pages/${item.id}/edit`}
                     >
                       <Button
                         icon={<EditOutlined />}
@@ -58,7 +54,7 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
                     </Link>,
                     <Popconfirm
                       title="Sure to Delete?"
-                      onConfirm={() => dispatch(deletePost(item.id)).then(() => fetchPosts())}
+                      onConfirm={() => dispatch(deletePage(item.id)).then(() => fetchPages())}
                       disabled={!(actions.includes('admin') || actions.includes('delete'))}
                     >
                       <Button
@@ -111,21 +107,13 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
           >
             {item.id !== id ? (
               <List.Item.Meta
-                title={
-                  <Link
-                    to={
-                      format.slug === 'article'
-                        ? `/posts/${item.id}/edit`
-                        : `/fact-checks/${item.id}/edit`
-                    }
-                  >
-                    {item.title}
-                  </Link>
-                }
+                title={<Link to={`/pages/${item.id}/edit`}>{item.title}</Link>}
                 description={item.excerpt}
               />
             ) : null}
-            {item.id === id ? <QuickEdit data={item} setID={setID} slug={format.slug} /> : null}
+            {item.id === id ? (
+              <QuickEdit data={item} setID={setID} slug={format.slug} page={true} />
+            ) : null}
             {item.id !== id ? (
               <Space direction="vertical">
                 {item.published_date ? (
@@ -147,4 +135,4 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
   );
 }
 
-export default PostList;
+export default PageList;

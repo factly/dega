@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Drawer, DatePicker } from 'antd';
+import { Row, Col, Form, Input, Button, Space, Drawer, DatePicker, Dropdown, Menu, Switch } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -7,7 +7,7 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
-import { addClaim, updateClaim } from '../../../actions/claims';
+import { addClaim, getClaims, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled } from '@ant-design/icons';
@@ -23,6 +23,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
+  const [claimCreatedFlag, setClaimCreatedFlag] = React.useState(false);
+  const [newClaim, setNewClaim] = React.useState(null);
   const [valueChange, setValueChange] = useState(false);
   const [claimID, setClaimID] = useState(0);
   const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
@@ -43,6 +45,36 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const { claims, claimLoading } = useSelector((state) => {
+    return { claims: state.claims, claimLoading: state.claims.loading };
+  });
+  const updateClaims = (fetchedClaimId) => {
+    const claimList = form.getFieldValue('claims');
+    if (claimList.length === data.claims.length) {
+      data.claims.push(fetchedClaimId);
+    } else {
+      form.setFieldsValue({
+        claims: [...claimList, fetchedClaimId],
+      });
+      data.claims = form.getFieldValue('claims');
+    }
+    setClaimCreatedFlag(false);
+  };
+  if (!claimLoading && claimCreatedFlag) {
+    const fetchedClaimId = claims.req[0].data[0];
+    const fetchedClaim = claims.details[fetchedClaimId];
+    if (newClaim.title === fetchedClaim.title) {
+      updateClaims(fetchedClaimId); 
+    }
+  }
+
+  const fetchAddedClaim = () => {
+    dispatch(getClaims({}));
+  };
+  useEffect(() => {
+    fetchAddedClaim();
+  }, [newClaim]);
 
   useEffect(() => {}, [details, loading]);
 
@@ -110,6 +142,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const onClaimCreate = (values) => {
     dispatch(addClaim(values)).then(() => {
       setVisible(false);
+      setClaimCreatedFlag(true);
+      setNewClaim(values);
       setClaimID(0);
     });
   };
@@ -123,7 +157,16 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const createTemplate = () => {
     dispatch(addTemplate({ post_id: parseInt(data.id) })).then(() => history.push('/fact-checks'));
   };
-
+  const setReadyFlag = () => {
+    status === 'ready' ? setStatus('draft') : setStatus('ready');
+  };
+  const readyToPublish = (
+    <Menu>
+      <Menu.Item>
+        Ready to Publish <Switch onChange={setReadyFlag} checked={status === 'ready'}></Switch>
+      </Menu.Item>
+    </Menu>
+  );
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (shouldBlockNavigation) {
@@ -175,14 +218,16 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
-                <Button
-                  disabled={!valueChange}
-                  type="secondary"
-                  htmlType="submit"
-                  onClick={() => setStatus('draft')}
-                >
-                  Save as draft
-                </Button>
+                <Dropdown overlay={readyToPublish}>
+                  <Button
+                    disabled={!valueChange}
+                    type="secondary"
+                    htmlType="submit"
+                    onClick={() => (status === 'ready' ? setStatus('ready') : setStatus('draft'))}
+                  >
+                    Save
+                  </Button>
+                </Dropdown>
               </Form.Item>
               {actions.includes('admin') || actions.includes('publish') ? (
                 <Form.Item name="submit">
