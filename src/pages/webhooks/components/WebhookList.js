@@ -1,5 +1,5 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
+import { Popconfirm, Button, Table, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getWebhooks, deleteWebhook } from '../../../actions/webhooks';
 import { Link } from 'react-router-dom';
@@ -35,10 +35,24 @@ function WebhookList({ actions }) {
   };
 
   const columns = [
-    { title: 'Url', dataIndex: 'url', key: 'url' },
+    { title: 'Name', dataIndex: 'name', key: 'name', width: '20%' },
+    {
+      title: 'Url',
+      dataIndex: 'url',
+      key: 'url',
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (url) => (
+        <Tooltip placement="topLeft" title={url}>
+          {url}
+        </Tooltip>
+      ),
+    },
     {
       title: '',
       dataIndex: 'enabled',
+      width: '10%',
       render: (_, record) => {
         return <p>{record.enabled ? 'Enabled' : 'Disabled'}</p>;
       },
@@ -46,6 +60,7 @@ function WebhookList({ actions }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      width: '20%',
       render: (_, record) => {
         return (
           <span>
