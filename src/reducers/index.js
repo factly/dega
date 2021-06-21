@@ -27,7 +27,6 @@ import episodes from './episodesReducer';
 import podcasts from './podcastReducer';
 import redirect from './redirectReducer';
 import info from './infoReducer';
-import claimOrder from './claimOrderReducer';
 
 const appReducer = combineReducers({
   admin,
@@ -57,7 +56,6 @@ const appReducer = combineReducers({
   users,
   menu,
   sidebar,
-  claimOrder,
 });
 
 const rootReducer = (state, action) => {

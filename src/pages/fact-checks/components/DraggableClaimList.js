@@ -1,23 +1,12 @@
 import { CaretRightOutlined, EditOutlined, UpOutlined, DownOutlined } from '@ant-design/icons';
 import { Button, Card, Collapse, Tree } from 'antd';
 import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setClaimOrder, resetClaimOrder } from '../../../actions/claimOrder';
+import { useDispatch } from 'react-redux';
 
-function DraggableClaimList({ ids, setClaimID, details, showModal }) {
+function DraggableClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOrder }) {
   const [updateData, setUpdateData] = React.useState(true);
-
   const dispatch = useDispatch();
-  const { claimOrder } = useSelector((state) => {
-    const order = state.claimOrder.order;
-    return { claimOrder: order };
-  });
   const [treeData, setTreeData] = React.useState(claimOrder);
-
-  const setClaimListOrder = (order) => {
-    dispatch(setClaimOrder(order));
-    setUpdateData(true);
-  };
 
   const moveUp = (id) => {
     const index = claimOrder.indexOf(id);
@@ -52,7 +41,7 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
       });
     }
     claimOrder.map(
-      (id) => (
+      (id, index) => (
         (key = id),
         (treeNode = {
           key,
@@ -80,6 +69,7 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
                     <EditOutlined />
                   </Button>
                   <Button
+                    disabled={index === 0}
                     size="small"
                     onClick={() => {
                       moveUp(id);
@@ -88,7 +78,8 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
                     <UpOutlined />
                   </Button>
                   <Button
-                   size="small"
+                    disabled={index === claimOrder.length - 1}
+                    size="small"
                     onClick={() => {
                       moveDown(id);
                     }}
@@ -112,54 +103,6 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
   if (claimOrder && updateData) setTreeData(dig(claimOrder, ids));
   React.useEffect(() => {}, [treeData]);
 
-  const onDrop = (info) => {
-    const dropKey = info.node.key;
-    const dragKey = info.dragNode.key;
-    const dropPos = info.node.pos.split('-');
-    const dropPosition = info.dropPosition - Number(dropPos[dropPos.length - 1]);
-    const loop = (data, key, callback) => {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].key === key) {
-          return callback(data[i], i, data, claimListOrder);
-        }
-        if (data[i].children) {
-          loop(data[i].children, key, callback);
-        }
-      }
-    };
-    const data = treeData;
-    const claimListOrder = claimOrder;
-
-    let dragObj;
-    let drapObjKey;
-
-    loop(data, dragKey, (item, index, arr, orderArr) => {
-      arr.splice(index, 1);
-      orderArr.splice(index, 1);
-      dragObj = item;
-      drapObjKey = item.key;
-    });
-    if (info.dropToGap || dropPosition !== 1) {
-      let ar;
-      let i;
-      let orderAr;
-      loop(data, dropKey, (item, index, arr, orderArr) => {
-        ar = arr;
-        i = index;
-        orderAr = orderArr;
-      });
-      if (dropPosition === -1) {
-        ar.splice(i, 0, dragObj);
-        orderAr.splice(i, 0, drapObjKey);
-      } else {
-        ar.splice(i + 1, 0, dragObj);
-        orderAr.splice(i + 1, 0, drapObjKey);
-      }
-    }
-    setTreeData(data);
-    setClaimListOrder(claimListOrder);
-  };
-
   return (
     <Collapse
       bordered={false}
@@ -168,11 +111,7 @@ function DraggableClaimList({ ids, setClaimID, details, showModal }) {
       expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
     >
       <Panel header="Claims" key="1">
-        <Tree className="draggable-tree"
-         //draggable blockNode onDrop={onDrop} 
-         blockNode
-         treeData={treeData} 
-         />
+        <Tree className="draggable-tree" blockNode treeData={treeData} />
       </Panel>
     </Collapse>
   );
