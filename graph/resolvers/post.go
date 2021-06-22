@@ -125,7 +125,7 @@ func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.U
 func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface{}, error) {
 	result := make([]interface{}, 0)
 
-	postClaims := []models.PostClaim{}
+	postClaims := make([]models.PostClaim, 0)
 
 	config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
 		PostID: obj.ID,
@@ -148,30 +148,32 @@ func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface
 	config.DB.Preload("Logo").First(&space)
 
 	for _, each := range postClaims {
-		claimSchema := models.FactCheckSchema{}
-		claimSchema.Context = "https://schema.org"
-		claimSchema.Type = "ClaimReview"
-		claimSchema.DatePublished = obj.CreatedAt
-		claimSchema.URL = space.SiteAddress + "/" + obj.Slug
-		claimSchema.ClaimReviewed = each.Claim.Claim
-		claimSchema.Author.Type = "Organization"
-		claimSchema.Author.Name = space.Name
-		claimSchema.Author.URL = space.SiteAddress
-		claimSchema.ReviewRating.Type = "Rating"
-		claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
-		claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
-		claimSchema.ReviewRating.BestRating = bestRating
-		claimSchema.ReviewRating.RatingExplaination = each.Claim.Fact
-		claimSchema.ReviewRating.WorstRating = worstRating
-		claimSchema.ItemReviewed.Type = "Claim"
-		if each.Claim.CheckedDate != nil {
-			claimSchema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
-		}
-		claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
-		claimSchema.ItemReviewed.Author.Type = "Organization"
-		claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
+		if each.Claim != nil {
+			claimSchema := models.FactCheckSchema{}
+			claimSchema.Context = "https://schema.org"
+			claimSchema.Type = "ClaimReview"
+			claimSchema.DatePublished = obj.CreatedAt
+			claimSchema.URL = space.SiteAddress + "/" + obj.Slug
+			claimSchema.ClaimReviewed = each.Claim.Claim
+			claimSchema.Author.Type = "Organization"
+			claimSchema.Author.Name = space.Name
+			claimSchema.Author.URL = space.SiteAddress
+			claimSchema.ReviewRating.Type = "Rating"
+			claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
+			claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
+			claimSchema.ReviewRating.BestRating = bestRating
+			claimSchema.ReviewRating.RatingExplaination = each.Claim.Fact
+			claimSchema.ReviewRating.WorstRating = worstRating
+			claimSchema.ItemReviewed.Type = "Claim"
+			if each.Claim.CheckedDate != nil {
+				claimSchema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
+			}
+			claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
+			claimSchema.ItemReviewed.Author.Type = "Organization"
+			claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
 
-		result = append(result, claimSchema)
+			result = append(result, claimSchema)
+		}
 	}
 
 	postAuthors := []models.PostAuthor{}
