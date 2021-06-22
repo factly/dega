@@ -36,9 +36,15 @@ func SetupDB() {
 		}),
 	})
 
+	sqlDB, err := DB.DB()
+
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	sqlDB.SetMaxIdleConns(10)
+	sqlDB.SetMaxOpenConns(100)
+	sqlDB.SetConnMaxLifetime(time.Hour)
 
 	fmt.Println("connected to database ...")
 }
