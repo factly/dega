@@ -3,7 +3,7 @@ import { Button, Card, Collapse, Tree } from 'antd';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-function DraggableClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOrder,claimListChange, setClaimListChange }) {
+function DraggableClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOrder }) {
   const [updateData, setUpdateData] = React.useState(true);
   const dispatch = useDispatch();
   const [treeData, setTreeData] = React.useState(claimOrder);
@@ -35,7 +35,6 @@ function DraggableClaimList({ ids, setClaimID, details, showModal, setClaimOrder
   let treeNode;
   const dig = (claimOrder, claims) => {
     setUpdateData(false);
-    setClaimListChange(false);
     const list = [];
     if (claims.length > claimOrder.length) {
       let newClaims = claims.filter((x) => !claimOrder.includes(x));
@@ -104,7 +103,6 @@ function DraggableClaimList({ ids, setClaimID, details, showModal, setClaimOrder
   };
 
   if (claimOrder && updateData) setTreeData(dig(claimOrder, ids));
-  if(claimListChange) setTreeData(dig(claimOrder,ids));
   React.useEffect(() => {}, [treeData]);
 
   return (
