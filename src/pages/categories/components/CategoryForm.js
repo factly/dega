@@ -3,7 +3,6 @@ import { Button, Form, Input, Space, Switch } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
-import JsonEditor from '../../../components/JsonEditor';
 import Selector from '../../../components/Selector';
 import MonacoEditor from '../../../components/MonacoEditor';
 
@@ -30,17 +29,15 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const [jsonParseError, setJsonParseError] = React.useState(null);
-  // const [jsonMsg, setJsonMsg] = React.useState('');
   const [jsonValidated, setJsonValidated] = React.useState(false);
 
-  const [json, setJson] = useState();
-  // const [json, setJson] = useState(
-  //   data.meta_fields && Object.keys(data.meta_fields).length > 0
-  //     ? data.meta_fields
-  //     : {
-  //         sample: 'testing',
-  //       },
-  // );
+  const [json, setJson] = useState(
+    data.meta_fields && Object.keys(data.meta_fields).length > 0
+      ? data.meta_fields
+      : {
+          sample: 'testing',
+        },
+  );
 
   const onReset = () => {
     form.resetFields();
@@ -53,19 +50,15 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   };
 
   const getJsonVal = (val) => {
-    console.log('val',val)
     var jsonObj;
     try {
-      console.log('enter')
       jsonObj = JSON.parse(val);
       setJsonParseError(null);
       setJsonValidated(true);    }
     catch (e) {
-      console.log('error')
       setJsonParseError('error');
       return;
     }
-    
     return jsonObj;
   };
   return (
@@ -75,21 +68,15 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
-        // if (values.meta_fields) {
-        //   values.meta_fields = getJsonVal(values.meta_fields);
-        // }
-
-        console.log('jsonerr',jsonParseError,'validate',jsonValidated)
+        if (values.meta_fields) {
+          values.meta_fields = getJsonVal(values.meta_fields);
+        }
         if(jsonParseError === null && jsonValidated){
-          console.log('no error')
           onCreate(values);
           onReset();
         } 
       }}
-      onValuesChange={(changedValues) => {
-        if(changedValues.meta_fields) {
-          setJson(getJsonVal(changedValues.meta_fields))
-        }
+      onValuesChange={() => {
         setValueChange(true);
       }}
     >
@@ -135,25 +122,13 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       <Form.Item name="description" label="Description">
         <Editor style={{ width: '600px' }} placeholder="Enter Description..." basic={true} />
       </Form.Item>
-      {/* <Form.Item name="meta_fields" label="Metafields">
-        <JsonEditor json={json} onChangeJSON={(data) => setJson(data)} />
-      </Form.Item> */}
       <Form.Item
         name="meta_fields"
         label="Metafields"
         hasFeedback
         validateStatus={!jsonParseError ? "" : jsonParseError}
         help={jsonParseError ? `Unnecessary  token ' , ' at end ` : ''}
-        // rules={[
-        //   ({ getFieldValue }) => ({
-        //     validator(rule, value) {
-        //       if (jsonParseError === 'error') {
-        //         return Promise.reject(jsonMsg);
-        //       }
-        //       return Promise.resolve();
-        //     },
-        //   }),
-        // ]}
+
       >
         <MonacoEditor />
       </Form.Item>
