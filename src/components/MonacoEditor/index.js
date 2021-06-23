@@ -19,7 +19,6 @@ const MONACOEditor = ({ value, onChange }) => {
         minimap: { enabled: false },
         scrollBeyondLastLine: false,
         wordWrap: 'on',
-        readOnly: false,
         theme:"vs-dark"
 
       }}

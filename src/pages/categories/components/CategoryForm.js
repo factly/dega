@@ -48,6 +48,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
     });
   };
 
+  const getJsonVal = (val) => {
+    return JSON.parse(val);
+  };
   return (
     <Form
       {...layout}
@@ -55,7 +58,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
-        //onCreate({ ...values, meta_fields: json });
+        if(values.meta_fields) {
+          values.meta_fields = JSON.parse(values.meta_fields);
+        }
         onCreate(values);
         onReset();
       }}
