@@ -29,6 +29,10 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
+  const [jsonParseError, setJsonParseError] = React.useState(null);
+  // const [jsonMsg, setJsonMsg] = React.useState('');
+  const [jsonValidated, setJsonValidated] = React.useState(false);
+
 
   const [json, setJson] = useState(
     data.meta_fields && Object.keys(data.meta_fields).length > 0
@@ -49,7 +53,20 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   };
 
   const getJsonVal = (val) => {
-    return JSON.parse(val);
+    console.log('val',val)
+    var jsonObj;
+    try {
+      console.log('enter')
+      jsonObj = JSON.parse(val);
+      setJsonParseError(null);
+      setJsonValidated(true);    }
+    catch (e) {
+      console.log('error')
+      setJsonParseError('error');
+      return;
+    }
+    
+    return jsonObj;
   };
   return (
     <Form
@@ -58,11 +75,16 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
-        if(values.meta_fields) {
-          values.meta_fields = JSON.parse(values.meta_fields);
+        if (values.meta_fields) {
+          values.meta_fields = getJsonVal(values.meta_fields);
         }
-        onCreate(values);
-        onReset();
+
+        console.log('jsonerr',jsonParseError,'validate',jsonValidated)
+        if(jsonParseError === null && jsonValidated){
+          console.log('no error')
+          onCreate(values);
+          onReset();
+        } 
       }}
       onValuesChange={() => {
         setValueChange(true);
@@ -113,7 +135,23 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       {/* <Form.Item name="meta_fields" label="Metafields">
         <JsonEditor json={json} onChangeJSON={(data) => setJson(data)} />
       </Form.Item> */}
-      <Form.Item name="meta_fields" label="Metafields">
+      <Form.Item
+        name="meta_fields"
+        label="Metafields"
+        hasFeedback
+        validateStatus={!jsonParseError ? "" : jsonParseError}
+        help={jsonParseError ? `Unnecessary  token ' , ' at end ` : ''}
+        // rules={[
+        //   ({ getFieldValue }) => ({
+        //     validator(rule, value) {
+        //       if (jsonParseError === 'error') {
+        //         return Promise.reject(jsonMsg);
+        //       }
+        //       return Promise.resolve();
+        //     },
+        //   }),
+        // ]}
+      >
         <MonacoEditor />
       </Form.Item>
       <Form.Item {...tailLayout}>

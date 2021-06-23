@@ -3,9 +3,9 @@ import MonacoEditor from 'react-monaco-editor';
 
 const MONACOEditor = ({ value, onChange }) => {
  
-  const editorDidMount = (editor) => {
-    editor.focus();
-  };
+  // const editorDidMount = (editor) => {
+  //   editor.focus();
+  // };
 
   return (
     <MonacoEditor
@@ -26,7 +26,7 @@ const MONACOEditor = ({ value, onChange }) => {
       value={value}
       //onChange={debounce(300, onChange)}
       onChange={onChange}
-      editorDidMount={editorDidMount}
+      // editorDidMount={editorDidMount}
     />
   );
 };
