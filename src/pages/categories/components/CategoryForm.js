@@ -33,14 +33,14 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   // const [jsonMsg, setJsonMsg] = React.useState('');
   const [jsonValidated, setJsonValidated] = React.useState(false);
 
-
-  const [json, setJson] = useState(
-    data.meta_fields && Object.keys(data.meta_fields).length > 0
-      ? data.meta_fields
-      : {
-          sample: 'testing',
-        },
-  );
+  const [json, setJson] = useState();
+  // const [json, setJson] = useState(
+  //   data.meta_fields && Object.keys(data.meta_fields).length > 0
+  //     ? data.meta_fields
+  //     : {
+  //         sample: 'testing',
+  //       },
+  // );
 
   const onReset = () => {
     form.resetFields();
@@ -75,9 +75,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
-        if (values.meta_fields) {
-          values.meta_fields = getJsonVal(values.meta_fields);
-        }
+        // if (values.meta_fields) {
+        //   values.meta_fields = getJsonVal(values.meta_fields);
+        // }
 
         console.log('jsonerr',jsonParseError,'validate',jsonValidated)
         if(jsonParseError === null && jsonValidated){
@@ -86,7 +86,10 @@ const CategoryForm = ({ onCreate, data = {} }) => {
           onReset();
         } 
       }}
-      onValuesChange={() => {
+      onValuesChange={(changedValues) => {
+        if(changedValues.meta_fields) {
+          setJson(getJsonVal(changedValues.meta_fields))
+        }
         setValueChange(true);
       }}
     >
