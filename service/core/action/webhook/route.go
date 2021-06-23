@@ -7,6 +7,7 @@ import (
 )
 
 type webhook struct {
+	Name     string         `json:"name"`
 	URL      string         `json:"url" validate:"required"`
 	Enabled  bool           `json:"enabled"`
 	EventIDs []uint         `json:"event_ids" validate:"required"`

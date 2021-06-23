@@ -6267,8 +6267,17 @@ var doc = `{
                 "deleted_at": {
                     "type": "string"
                 },
+                "description": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
                 "email": {
                     "type": "string"
+                },
+                "featured_medium_id": {
+                    "type": "integer"
                 },
                 "first_name": {
                     "type": "string"
@@ -6279,7 +6288,19 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "kid": {
+                    "type": "string"
+                },
                 "last_name": {
+                    "type": "string"
+                },
+                "medium": {
+                    "$ref": "#/definitions/model.Medium"
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "social_media_urls": {
                     "type": "string"
                 },
                 "updated_at": {
@@ -6879,14 +6900,14 @@ var doc = `{
                 "is_highlighted": {
                     "type": "boolean"
                 },
+                "is_page": {
+                    "type": "boolean"
+                },
                 "is_sticky": {
                     "type": "boolean"
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
-                },
-                "page": {
-                    "type": "boolean"
                 },
                 "published_date": {
                     "type": "string"
@@ -7495,14 +7516,14 @@ var doc = `{
                 "is_highlighted": {
                     "type": "boolean"
                 },
+                "is_page": {
+                    "type": "boolean"
+                },
                 "is_sticky": {
                     "type": "boolean"
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
-                },
-                "page": {
-                    "type": "boolean"
                 },
                 "published_date": {
                     "type": "string"
@@ -7669,10 +7690,10 @@ var doc = `{
                 "is_highlighted": {
                     "type": "boolean"
                 },
-                "is_sticky": {
+                "is_page": {
                     "type": "boolean"
                 },
-                "page": {
+                "is_sticky": {
                     "type": "boolean"
                 },
                 "published_date": {
@@ -7758,14 +7779,14 @@ var doc = `{
                 "is_highlighted": {
                     "type": "boolean"
                 },
+                "is_page": {
+                    "type": "boolean"
+                },
                 "is_sticky": {
                     "type": "boolean"
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
-                },
-                "page": {
-                    "type": "boolean"
                 },
                 "published_date": {
                     "type": "string"
@@ -8165,8 +8186,17 @@ var doc = `{
                 "deleted_at": {
                     "type": "string"
                 },
+                "description": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
                 "email": {
                     "type": "string"
+                },
+                "featured_medium_id": {
+                    "type": "integer"
                 },
                 "first_name": {
                     "type": "string"
@@ -8177,14 +8207,26 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "kid": {
+                    "type": "string"
+                },
                 "last_name": {
                     "type": "string"
+                },
+                "medium": {
+                    "$ref": "#/definitions/model.Medium"
                 },
                 "policies": {
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/user.policyRes"
                     }
+                },
+                "slug": {
+                    "type": "string"
+                },
+                "social_media_urls": {
+                    "type": "string"
                 },
                 "updated_at": {
                     "type": "string"
@@ -8223,6 +8265,9 @@ var doc = `{
                     "items": {
                         "type": "integer"
                     }
+                },
+                "name": {
+                    "type": "string"
                 },
                 "tags": {
                     "type": "string"

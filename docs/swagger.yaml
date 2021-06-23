@@ -450,15 +450,29 @@ definitions:
         type: integer
       deleted_at:
         type: string
+      description:
+        type: string
+      display_name:
+        type: string
       email:
         type: string
+      featured_medium_id:
+        type: integer
       first_name:
         type: string
       gender:
         type: string
       id:
         type: integer
+      kid:
+        type: string
       last_name:
+        type: string
+      medium:
+        $ref: '#/definitions/model.Medium'
+      slug:
+        type: string
+      social_media_urls:
         type: string
       updated_at:
         type: string
@@ -854,12 +868,12 @@ definitions:
         type: boolean
       is_highlighted:
         type: boolean
+      is_page:
+        type: boolean
       is_sticky:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-      page:
-        type: boolean
       published_date:
         type: string
       slug:
@@ -1261,12 +1275,12 @@ definitions:
         type: boolean
       is_highlighted:
         type: boolean
+      is_page:
+        type: boolean
       is_sticky:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-      page:
-        type: boolean
       published_date:
         type: string
       slug:
@@ -1373,9 +1387,9 @@ definitions:
         type: boolean
       is_highlighted:
         type: boolean
-      is_sticky:
+      is_page:
         type: boolean
-      page:
+      is_sticky:
         type: boolean
       published_date:
         type: string
@@ -1435,12 +1449,12 @@ definitions:
         type: boolean
       is_highlighted:
         type: boolean
+      is_page:
+        type: boolean
       is_sticky:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
-      page:
-        type: boolean
       published_date:
         type: string
       slug:
@@ -1703,20 +1717,34 @@ definitions:
         type: integer
       deleted_at:
         type: string
+      description:
+        type: string
+      display_name:
+        type: string
       email:
         type: string
+      featured_medium_id:
+        type: integer
       first_name:
         type: string
       gender:
         type: string
       id:
         type: integer
+      kid:
+        type: string
       last_name:
         type: string
+      medium:
+        $ref: '#/definitions/model.Medium'
       policies:
         items:
           $ref: '#/definitions/user.policyRes'
         type: array
+      slug:
+        type: string
+      social_media_urls:
+        type: string
       updated_at:
         type: string
       updated_by_id:
@@ -1739,6 +1767,8 @@ definitions:
         items:
           type: integer
         type: array
+      name:
+        type: string
       tags:
         type: string
       url:
