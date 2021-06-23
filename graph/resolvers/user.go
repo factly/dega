@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 
 	"github.com/factly/dega-api/config"
@@ -10,7 +11,6 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
-	"github.com/factly/dega-api/util/cache"
 	"github.com/factly/x/requestx"
 	"github.com/spf13/viper"
 )
@@ -93,16 +93,10 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 	result.Nodes = users[offset:upperLimit]
 	result.Total = len(users)
 
-	if cache.IsEnabled() {
-		if err = cache.SaveToCache(ctx, result); err != nil {
-			return &result, nil
-		}
-	}
-
 	return &result, nil
 }
 
-func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) {
+func (r *queryResolver) User(ctx context.Context, id *int, slug *string) (*models.User, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil || sID == 0 {
 		return nil, nil
@@ -113,12 +107,42 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 		return nil, nil
 	}
 
+	if id == nil && slug == nil {
+		return nil, errors.New("please provide either id or slug")
+	}
+
+	var userID int
+	if id == nil {
+		// fetch all posts of current space
+		postList := make([]models.Post, 0)
+		config.DB.Model(&models.Post{}).Where(&models.Post{
+			SpaceID: uint(sID),
+		}).Find(&postList)
+
+		postIDs := make([]uint, 0)
+		for _, each := range postList {
+			postIDs = append(postIDs, each.ID)
+		}
+
+		postAuthors := make([]models.PostAuthor, 0)
+		config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postAuthors)
+
+		if len(postAuthors) > 0 {
+			userID = int(postAuthors[0].AuthorID)
+		} else {
+			return nil, errors.New("please provide ID instead of slug")
+		}
+	} else {
+		userID = *id
+	}
+
 	userMap := make(map[uint]models.User)
+	userSlugMap := make(map[string]models.User)
 	url := fmt.Sprint(viper.GetString("kavach_url"), "/users/application?application=dega")
 
 	resp, err := requestx.Request("GET", url, nil, map[string]string{
 		"Content-Type":   "application/json",
-		"X-User":         fmt.Sprint(id),
+		"X-User":         fmt.Sprint(userID),
 		"X-Organisation": fmt.Sprint(oID),
 	})
 
@@ -136,16 +160,18 @@ func (r *queryResolver) User(ctx context.Context, id int) (*models.User, error) 
 
 	for _, u := range usersResp.Nodes {
 		userMap[u.ID] = *u
+		userSlugMap[u.Slug] = *u
 	}
 
-	if user, found := userMap[uint(id)]; found {
-		if cache.IsEnabled() {
-			if err = cache.SaveToCache(ctx, user); err != nil {
-				return &user, nil
-			}
+	if id != nil {
+		if user, found := userMap[uint(*id)]; found {
+			return &user, nil
+		}
+	} else {
+		if user, found := userSlugMap[*slug]; found {
+			return &user, nil
 		}
 
-		return &user, nil
 	}
 
 	return nil, nil

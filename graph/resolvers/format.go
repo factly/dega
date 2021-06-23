@@ -8,7 +8,6 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
-	"github.com/factly/dega-api/util/cache"
 )
 
 func (r *formatResolver) ID(ctx context.Context, obj *models.Format) (string, error) {
@@ -19,7 +18,7 @@ func (r *formatResolver) SpaceID(ctx context.Context, obj *models.Format) (int, 
 	return int(obj.SpaceID), nil
 }
 
-func (r *queryResolver) Formats(ctx context.Context, spaces []int) (*models.FormatsPaging, error) {
+func (r *queryResolver) Formats(ctx context.Context, spaces []int, slugs []string) (*models.FormatsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
@@ -27,20 +26,18 @@ func (r *queryResolver) Formats(ctx context.Context, spaces []int) (*models.Form
 	result := &models.FormatsPaging{}
 	result.Nodes = make([]*models.Format, 0)
 
-	tx := config.DB.Model(&models.Format{})
-
 	var total int64
-	tx.Where(&models.Format{
+	tx := config.DB.Model(&models.Format{}).Where(&models.Format{
 		SpaceID: uint(sID),
-	}).Count(&total).Order("id desc").Find(&result.Nodes)
+	})
+
+	if len(slugs) > 0 {
+		tx.Where("slug IN (?)", slugs)
+	}
+
+	tx.Count(&total).Order("id desc").Find(&result.Nodes)
 
 	result.Total = int(total)
-
-	if cache.IsEnabled() {
-		if err = cache.SaveToCache(ctx, result); err != nil {
-			return result, nil
-		}
-	}
 
 	return result, nil
 }
