@@ -99,7 +99,7 @@ const WebhookForm = ({ onCreate, data = {} }) => {
           <Checkbox.Group>
             <Row gutter={[4, 16]}>
               {events.map((event) => (
-                <Col span={8} key={event.id}>
+                <Col span={8} key={event.id} style={{ width: '550px' }}>
                   <Checkbox label={event.name} value={event.id}>
                     {getEventName(event.name)}
                   </Checkbox>
