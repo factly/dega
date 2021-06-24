@@ -17,11 +17,16 @@ const AwsS3 = require('@uppy/aws-s3');
 const axios = require('axios');
 
 const style = {
-  withBackground:
-    'padding: 15px;background: white;max-width: 60%;margin: 0 auto;vertical-align: bottom;display: block;border-radius: 3px;overflow: hidden;margin-bottom: 10px;',
-  withBorder:
-    'border-radius: 3px;  overflow: hidden;  margin-bottom: 10px;  border: 1px solid #e8e8eb; width:100%',
-  stretched: 'width:120%; margin-left:-10%; margin-right:10%',
+  imgContainer: 'border-radius: 3px;  overflow: hidden; margin-bottom:10px;',
+  img: 'max-width: 100%; vertical-align:bottom; display:block;',
+  container: {
+    stretched: ' ',
+    withBackground: 'padding: 15px; background: white;',
+    withBorder: 'border: 1px solid #e8e8eb;',
+  },
+  withBorder: '',
+  withBackground: 'max-width:60%; margin:0 auto;',
+  stretched: 'width:100%;',
 };
 
 class UppyUploader {
@@ -49,19 +54,17 @@ class UppyUploader {
     this.total = 0;
     this.mediaData = [];
     this.nodes.wrapper = document.createElement('div');
-    this.nodes.wrapper.className = 'ant-card ant-card-bordered';
-    this.nodes.wrapper.setAttribute('style', 'width:800px');
+    this.nodes.wrapper.setAttribute('style', style.imgContainer);
     this.nodes.wrapper.id = 'Uploader-' + this.blockIndex;
 
     var uploader = document.createElement('div');
     uploader.id = 'DashboardContainer-' + this.blockIndex;
 
-    var imageContainer = document.createElement('img');
-    imageContainer.setAttribute('style', 'padding:8px');
-    imageContainer.id = 'ImageContainer-' + this.blockIndex;
-    imageContainer.style.width = '100%';
+    var image = document.createElement('img');
+    image.setAttribute('style', style.img);
+    image.id = 'Image-' + this.blockIndex;
 
-    this.nodes.wrapper.appendChild(imageContainer);
+    this.nodes.wrapper.appendChild(image);
     if (!this.data.url) {
       this.getMediaList(this.query);
       this.createRadioButtons();
@@ -101,15 +104,19 @@ class UppyUploader {
     }
   }
   applyTune(tuneName, status) {
-    if (document.getElementById(`ImageContainer-${this.blockIndex}`) && status === false) {
+    if (document.getElementById(`Image-${this.blockIndex}`) && status === false) {
+      document.getElementById(`Image-${this.blockIndex}`).setAttribute('style', style.img);
       document
-        .getElementById(`ImageContainer-${this.blockIndex}`)
-        .setAttribute('style', 'padding:8px; width:100%');
+        .getElementById(`Uploader-${this.blockIndex}`)
+        .setAttribute('style', style.imgContainer);
     }
-    if (document.getElementById(`ImageContainer-${this.blockIndex}`) && status) {
+    if (document.getElementById(`Image-${this.blockIndex}`) && status) {
       document
-        .getElementById(`ImageContainer-${this.blockIndex}`)
-        .setAttribute('style', style[tuneName]);
+        .getElementById(`Image-${this.blockIndex}`)
+        .setAttribute('style', `${style.img} ${style[tuneName]}`);
+      document
+        .getElementById(`Uploader-${this.blockIndex}`)
+        .setAttribute('style', `${style.imgContainer} ${style.container[tuneName]}`);
     }
   }
   renderSettings() {
@@ -174,15 +181,18 @@ class UppyUploader {
   static get toolbox() {
     return {
       title: 'Image',
-      icon:
-        '<svg width="17" height="15" viewBox="0 0 336 276" xmlns="http://www.w3.org/2000/svg"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>',
+      icon: '<svg width="17" height="15" viewBox="0 0 336 276" xmlns="http://www.w3.org/2000/svg"><path d="M291 150V79c0-19-15-34-34-34H79c-19 0-34 15-34 34v42l67-44 81 72 56-29 42 30zm0 52l-43-30-56 30-81-67-66 39v23c0 19 15 34 34 34h178c17 0 31-13 34-29zM79 0h178c44 0 79 35 79 79v118c0 44-35 79-79 79H79c-44 0-79-35-79-79V79C0 35 35 0 79 0z"/></svg>',
     };
   }
   render() {
     if (this.data.url) {
       Tunes.tunes.forEach(({ name: tune }) => {
         if (this.data[tune] === true) {
-          this.nodes.wrapper.children[0].setAttribute('style', style[tune]);
+          this.nodes.wrapper.setAttribute(
+            'style',
+            `${style.imgContainer} ${style.container[tune]}`,
+          );
+          this.nodes.wrapper.children[0].setAttribute('style', `${style.img} ${style[tune]}`);
         }
       });
       this.nodes.wrapper.children[0].src = this.data.url.proxy;
@@ -268,7 +278,7 @@ class UppyUploader {
   }
 
   createDisplayList(data, query, total) {
-    function handleCLick(imageDetails, obj) {
+    function handleClick(imageDetails, obj) {
       obj.data = imageDetails;
       obj.nodes.wrapper.children[0].src = imageDetails.url.proxy;
       obj.nodes.wrapper.children[2].style.display = 'none';
@@ -292,7 +302,7 @@ class UppyUploader {
         image.addEventListener(
           'click',
           function () {
-            handleCLick(imageDetails, obj);
+            handleClick(imageDetails, obj);
           },
           false,
         );
