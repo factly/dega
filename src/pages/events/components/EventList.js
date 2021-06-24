@@ -60,22 +60,14 @@ function EventList() {
               }}
               to={`/events/${record.id}/edit`}
             >
-              <Button
-              //disabled={!(actions.includes('admin') || actions.includes('update'))}
-              >
-                Edit
-              </Button>
+              <Button>Edit</Button>
             </Link>
             <Popconfirm
               title="Sure to Delete?"
               onConfirm={() => dispatch(deleteEvent(record.id)).then(() => fetchEvents())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button
-                //disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                >
-                  Delete
-                </Button>
+                <Button>Delete</Button>
               </Link>
             </Popconfirm>
           </span>

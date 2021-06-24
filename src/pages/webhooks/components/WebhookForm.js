@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Form, Input, Space, Switch, Checkbox, Row, Col } from 'antd';
-import Selector from '../../../components/Selector';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEvents } from '../../../actions/events';
 import deepEqual from 'deep-equal';
@@ -46,26 +45,8 @@ const WebhookForm = ({ onCreate, data = {} }) => {
         ids = ids.concat(state.events.req[j].data);
       }
     }
-
     details = ids.map((element) => state.events.details[element]);
-    // details = value.filter((id) => state.events.details[id]).map((id) => state.events.details[id]);
-
-    // details = details.concat(
-    //   ids.filter((id) => !value.includes(id)).map((id) => state.events.details[id]),
-    // );
-
     return { events: details, total: total, loading: state.events.loading };
-
-    // const node = state.events.req.find((item) => {
-    //   return deepEqual(item.query, filters);
-    // });
-    // if (node)
-    //   return {
-    //     events: node.data.map((element) => state.events.details[element]),
-    //     total: node.total,
-    //     loading: state.events.loading,
-    //   };
-    // return { events: [], total: 0, loading: state.events.loading };
   });
 
   const onReset = () => {
@@ -105,9 +86,6 @@ const WebhookForm = ({ onCreate, data = {} }) => {
           setValueChange(true);
         }}
       >
-        {/* <Form.Item name="events" label="Events">
-        <Selector action="Events" mode="multiple" />
-     </Form.Item> */}
         <Form.Item name="name" label="Name">
           <Input />
         </Form.Item>

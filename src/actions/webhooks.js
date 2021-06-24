@@ -29,13 +29,6 @@ export const getWebhooks = (query) => {
               .flat(1),
           ),
         );
-        // dispatch(
-        //   addEvents(
-        //     response.data.nodes
-        //       .filter((webhook) => webhook.events)
-        //       .map((webhook) => webhook.events),
-        //   ),
-        // );
         dispatch(
           addWebhookList(
             response.data.nodes.map((webhook) => {
