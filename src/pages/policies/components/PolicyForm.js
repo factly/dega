@@ -57,12 +57,12 @@ const entities = [
   },
   {
     name: 'policies',
-    label: 'policies',
+    label: 'Policies',
     options: options,
   },
   {
-    name: 'podcast',
-    label: 'Podcast',
+    name: 'podcasts',
+    label: 'Podcasts',
     options: options,
   },
   {
