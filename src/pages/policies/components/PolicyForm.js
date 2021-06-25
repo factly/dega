@@ -61,8 +61,8 @@ const entities = [
     options: options,
   },
   {
-    name: 'podcast',
-    label: 'Podcast',
+    name: 'podcasts',
+    label: 'Podcasts',
     options: options,
   },
   {
