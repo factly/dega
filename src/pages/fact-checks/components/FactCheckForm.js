@@ -14,7 +14,6 @@ import { SettingFilled } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
 import ClaimList from './ClaimList';
-import DraggableClaimList from './DraggableClaimList';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -274,7 +273,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
               form.getFieldValue('claims').length > 0 &&
               !loading ? (
                 <Form.Item name="claimOrder">
-                  <DraggableClaimList
+                  <ClaimList
                     ids={form.getFieldValue('claims')}
                     setClaimID={setClaimID}
                     showModal={showModal}
@@ -284,19 +283,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   />
                 </Form.Item>
               ) : null}
-
-              {/* 
-              {form.getFieldValue('claims') &&
-              form.getFieldValue('claims').length > 0 &&
-              !loading ? (
-                <ClaimList
-                  ids={form.getFieldValue('claims')}
-                  setClaimID={setClaimID}
-                  showModal={showModal}
-                  details={details}
-                />
-              ) : null} */}
-
               <Form.Item name="description" className="post-description">
                 <Editor />
               </Form.Item>

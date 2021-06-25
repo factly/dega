@@ -35,7 +35,6 @@ function EditFactCheck({ formats }) {
       history.push(`/fact-checks/${id}/edit`);
     });
   };
-
   return (
     <EditFactCheckForm
       data={post}
