@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces, deleteSpacePermission } from '../../../../actions/spacePermissions';
 import { Link } from 'react-router-dom';
 
-function PermissionList() {
+function PermissionList({ admin }) {
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
@@ -104,38 +104,38 @@ function PermissionList() {
         return <p>{record.permission.podcast ? 'Enabled' : 'Disabled'}</p>;
       },
     },
-    // {
-    //   title: 'Action',
-    //   dataIndex: 'operation',
-    //   width: '20%',
-    //   render: (_, record) => {
-    //     return (
-    //       <span>
-    //         <Link
-    //           className="ant-dropdown-link"
-    //           style={{
-    //             marginRight: 8,
-    //           }}
-    //           to={`/permissions/${record.id}/spaces/${record.permission.id}/edit`}
-    //         >
-    //           <Button>Edit</Button>
-    //         </Link>
-    //         <Popconfirm
-    //           title="Sure to Delete?"
-    //           onConfirm={() =>
-    //             dispatch(deleteSpacePermission(record.permission.id)).then(() =>
-    //               fetchSpacePermissions(),
-    //             )
-    //           }
-    //         >
-    //           <Link to="" className="ant-dropdown-link">
-    //             <Button>Delete</Button>
-    //           </Link>
-    //         </Popconfirm>
-    //       </span>
-    //     );
-    //   },
-    // },
+    {
+      title: 'Action',
+      dataIndex: 'operation',
+      width: '20%',
+      render: (_, record) => {
+        return (
+          <span>
+            <Link
+              className="ant-dropdown-link"
+              style={{
+                marginRight: 8,
+              }}
+              to={`/spaces/${record.id}/permissions/${record.permission.id}/edit`}
+            >
+              <Button disabled={!admin}>Edit</Button>
+            </Link>
+            <Popconfirm
+              title="Sure to Delete?"
+              onConfirm={() =>
+                dispatch(deleteSpacePermission(record.permission.id)).then(() =>
+                  fetchSpacePermissions(),
+                )
+              }
+            >
+              <Link to="" className="ant-dropdown-link">
+                <Button disabled={!admin}>Delete</Button>
+              </Link>
+            </Popconfirm>
+          </span>
+        );
+      },
+    },
   ];
 
   return (

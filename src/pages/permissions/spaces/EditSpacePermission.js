@@ -9,22 +9,20 @@ import RecordNotFound from '../../../components/ErrorsAndImage/RecordNotFound';
 
 function EditSpacePermission() {
   const history = useHistory();
-  const { oid, pid } = useParams();
+  const { sid, pid } = useParams();
 
   const dispatch = useDispatch();
 
   const { space, loading } = useSelector((state) => {
     return {
-      space: state.spaces.details[oid] ? state.spaces.details[oid] : null,
+      space: state.spacePermissions.details[sid] ? state.spacePermissions.details[sid] : null,
       loading: state.spaces.loading,
     };
   });
 
   React.useEffect(() => {
     dispatch(getSpaces());
-  }, [dispatch, oid, pid]);
-
-  if (loading) return <Skeleton />;
+  }, [dispatch, sid, pid]);
 
   if (!space) {
     return <RecordNotFound />;
@@ -35,8 +33,11 @@ function EditSpacePermission() {
       history.push('/permissions/spaces'),
     );
   };
+  if (space) {
+    return <SpacePermissionEditForm data={space.permission} onCreate={onUpdate} />;
+  }
+  if (loading) return <Skeleton />;
 
-  return <SpacePermissionEditForm data={space.permission} onCreate={onUpdate} />;
 }
 
 export default EditSpacePermission;

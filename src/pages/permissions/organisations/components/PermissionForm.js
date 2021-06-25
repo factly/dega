@@ -50,33 +50,6 @@ const PermissionForm = ({ onCreate, data = {} }) => {
       >
         <InputNumber min={-1} />
       </Form.Item>
-      <Form.Item
-        name="posts"
-        label="Posts"
-        rules={[
-          {
-            required: true,
-            message: 'Please enter the numeric value!',
-          },
-        ]}
-      >
-        <InputNumber min={-1} />
-      </Form.Item>
-      <Form.Item
-        name="media"
-        label="Media"
-        rules={[
-          {
-            required: true,
-            message: 'Please enter the numeric value!',
-          },
-        ]}
-      >
-        <InputNumber min={-1} />
-      </Form.Item>
-      <Form.Item label="Fact Check" name="fact_check" valuePropName="checked">
-        <Switch />
-      </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
           <Button type="primary" htmlType="submit">
