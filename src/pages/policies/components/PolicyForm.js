@@ -79,6 +79,11 @@ const entities = [
     name: 'pages',
     label: 'Pages',
     options: options,
+  },
+  {
+    name: 'webhooks',
+    label: 'Webhooks',
+    options: options,
   }
 ];
 
