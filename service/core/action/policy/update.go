@@ -105,5 +105,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if util.CheckNats() {
+		if err = util.NC.Publish("policy.updated", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	}
+
 	renderx.JSON(w, http.StatusOK, result)
 }

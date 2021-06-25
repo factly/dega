@@ -212,7 +212,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("category.created", result); err != nil {
+		if err = util.NC.Publish("category.updated", result); err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
