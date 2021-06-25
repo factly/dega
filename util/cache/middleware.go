@@ -5,6 +5,7 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
@@ -42,9 +43,12 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 			queryStr := strings.ReplaceAll(queryString, "\n", "")
 			queryStr = strings.ReplaceAll(queryStr, " ", "")
 
+			varBytes, _ := json.Marshal(body.Variables)
+			varString := string(varBytes)
+
 			// hash query
 			h := md5.New()
-			_, _ = io.WriteString(h, queryStr)
+			_, _ = io.WriteString(h, fmt.Sprint(queryStr, varString))
 			hash := hex.EncodeToString(h.Sum(nil))
 
 			respBodyBytes, err := GlobalCache.Get(r.Context(), hash)
