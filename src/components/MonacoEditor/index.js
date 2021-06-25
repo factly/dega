@@ -2,11 +2,6 @@ import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 
 const MONACOEditor = ({ value, onChange }) => {
- 
-  // const editorDidMount = (editor) => {
-  //   editor.focus();
-  // };
-
   return (
     <MonacoEditor
       language="json"
@@ -19,14 +14,11 @@ const MONACOEditor = ({ value, onChange }) => {
         minimap: { enabled: false },
         scrollBeyondLastLine: false,
         wordWrap: 'on',
-        theme:"vs-dark"
-
+        theme: 'vs-dark',
       }}
       height="240"
       value={value}
-      //onChange={debounce(300, onChange)}
       onChange={onChange}
-      // editorDidMount={editorDidMount}
     />
   );
 };

@@ -23,13 +23,12 @@ const tailLayout = {
 
 const CategoryForm = ({ onCreate, data = {} }) => {
   if (data && data.meta_fields) {
-    if (typeof data.meta_fields !== 'string') {      
-      data.meta_fields = JSON.stringify(data.meta_fields)};
+    if (typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
   }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
-  const [jsonParseError, setJsonParseError] = React.useState(null);
-  const [jsonValidated, setJsonValidated] = React.useState(false);
 
   const [json, setJson] = useState(
     data.meta_fields && Object.keys(data.meta_fields).length > 0
@@ -50,16 +49,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   };
 
   const getJsonVal = (val) => {
-    var jsonObj;
-    try {
-      jsonObj = JSON.parse(val);
-      setJsonParseError(null);
-      setJsonValidated(true);    }
-    catch (e) {
-      setJsonParseError('error');
-      return;
-    }
-    return jsonObj;
+    let regex = /\,(?!\s*?[\{\[\"\'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
   };
   return (
     <Form
@@ -71,10 +63,8 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         if (values.meta_fields) {
           values.meta_fields = getJsonVal(values.meta_fields);
         }
-        if(jsonParseError === null && jsonValidated){
-          onCreate(values);
-          onReset();
-        } 
+        onCreate(values);
+        onReset();
       }}
       onValuesChange={() => {
         setValueChange(true);
@@ -122,14 +112,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       <Form.Item name="description" label="Description">
         <Editor style={{ width: '600px' }} placeholder="Enter Description..." basic={true} />
       </Form.Item>
-      <Form.Item
-        name="meta_fields"
-        label="Metafields"
-        hasFeedback
-        validateStatus={!jsonParseError ? "" : jsonParseError}
-        help={jsonParseError ? `Unnecessary  token ' , ' at end ` : ''}
-
-      >
+      <Form.Item name="meta_fields" label="Metafields">
         <MonacoEditor />
       </Form.Item>
       <Form.Item {...tailLayout}>

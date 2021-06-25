@@ -1,4 +1,3 @@
-// import stringify from 'json-stringify-pretty-compact';
 import * as Monaco from 'monaco-editor/esm/vs/editor/editor.api';
 const schemas = [
   {
