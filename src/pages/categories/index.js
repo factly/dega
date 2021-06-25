@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryList from './components/CategoryList';
 import { Space, Button, Form, Input, Select, Row, Col } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../actions/categories';
 import deepEqual from 'deep-equal';
@@ -10,6 +10,7 @@ function Categories({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const query = new URLSearchParams(location.search);
   const [filters, setFilters] = React.useState({
     page: query.get('page') ? query.get('page') : 1,
@@ -17,12 +18,32 @@ function Categories({ permission }) {
     sort: query.get('sort'),
     q: query.get('q'),
   });
-  Object.keys(filters).forEach(function(key) {
-    if(filters[key] && key !== 'limit' ) 
-      query.set(key,filters[key])
+  React.useEffect(() => {
+    if (history.action === 'POP') {
+      //window.location.reload(false);
+      //  setFilters({
+      //         page: query.get('page'),
+      //         limit: 10,
+      //         sort: query.get('sort'),
+      //         q: query.get('q'),
+      //       });
+      console.log('------pop------');
+    }
+  }, [location.search]);
+
+  console.log('location', location, 'pageNo', query.get('page'), 'filter page', filters);
+  Object.keys(filters).forEach(function (key) {
+    if (filters[key] && key !== 'limit') query.set(key, filters[key]);
   });
+  React.useEffect(() => {
+    history.push({
+      pathname: location.pathname,
+      search: '?' + query.toString(),
+    });
+  }, [filters]);
+
   //window.history.pushState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
+  //window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { Option } = Select;
   const [form] = Form.useForm();
   const { categories, total, loading } = useSelector((state) => {
