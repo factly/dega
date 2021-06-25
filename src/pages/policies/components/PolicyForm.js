@@ -57,7 +57,7 @@ const entities = [
   },
   {
     name: 'policies',
-    label: 'policies',
+    label: 'Policies',
     options: options,
   },
   {
