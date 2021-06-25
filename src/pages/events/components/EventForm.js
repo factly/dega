@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
-import JsonEditor from '../../../components/JsonEditor';
-
+import MonacoEditor from '../../../components/MonacoEditor';
 const layout = {
   labelCol: {
     span: 9,
@@ -19,6 +18,11 @@ const tailLayout = {
 
 const EventForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
+  if (data && data.tags) {
+    if (typeof data.tags !== 'string') {
+      data.tags = JSON.stringify(data.tags);
+    }
+  }
   const [json, setJson] = React.useState(
     data.tags && Object.keys(data.tags).length > 0
       ? data.tags
@@ -29,6 +33,11 @@ const EventForm = ({ onCreate, data = {} }) => {
   const onReset = () => {
     form.resetFields();
   };
+  const getJsonVal = (val) => {
+    let regex = /\,(?!\s*?[\{\[\"\'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
   return (
     <Form
       {...layout}
@@ -36,6 +45,9 @@ const EventForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-event"
       onFinish={(values) => {
+        if (values.tags) {
+          values.tags = getJsonVal(values.tags);
+        }
         onCreate(values);
         onReset();
       }}
@@ -44,7 +56,7 @@ const EventForm = ({ onCreate, data = {} }) => {
         <Input placeholder="Enter name" />
       </Form.Item>
       <Form.Item name="tags" label="Tags">
-        <JsonEditor json={json} onChangeJSON={(data) => setJson(data)} />
+        <MonacoEditor />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

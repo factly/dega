@@ -30,7 +30,6 @@
     "axios": "^0.21.1",
     "deep-equal": "^2.0.3",
     "jest-sonar-reporter": "^2.0.0",
-    "jsoneditor": "^9.1.5",
     "moment": "^2.26.0",
     "monaco-editor": "^0.25.2",
     "react": "^16.13.1",
