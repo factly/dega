@@ -69,6 +69,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if util.CheckNats() {
+		if err = util.NC.Publish("policy.created", result); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	}
+
 	renderx.JSON(w, http.StatusOK, result)
 }
 
