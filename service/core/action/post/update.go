@@ -22,9 +22,11 @@ import (
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/schemax"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -110,7 +112,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).First(&result.Post).Error
+	}).Where("is_page = ?", false).Preload("Space").First(&result.Post).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -392,6 +394,30 @@ func update(w http.ResponseWriter, r *http.Request) {
 			result.Authors = append(result.Authors, author)
 		}
 	}
+
+	ratings := make([]factCheckModel.Rating, 0)
+	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
+		SpaceID: uint(sID),
+	}).Order("numeric_value asc").Find(&ratings)
+
+	schemas := schemax.GetSchemas(schemax.PostData{
+		Post:    result.Post,
+		Authors: result.Authors,
+		Claims:  result.Claims,
+	}, *result.Space, ratings)
+
+	byteArr, err := json.Marshal(schemas)
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	tx.Model(&result.Post).Select("Schemas").Updates(&model.Post{
+		Schemas: postgres.Jsonb{RawMessage: byteArr},
+	})
+
+	result.Post.Schemas = postgres.Jsonb{RawMessage: byteArr}
 
 	// Update into meili index
 	var meiliPublishDate int64
