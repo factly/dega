@@ -3,6 +3,7 @@ package cache
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -48,12 +49,15 @@ func RespMiddleware(next http.Handler) http.Handler {
 		queryStr := strings.ReplaceAll(queryString, "\n", "")
 		queryStr = strings.ReplaceAll(queryStr, " ", "")
 
+		varBytes, _ := json.Marshal(body.Variables)
+		varString := string(varBytes)
+
 		var data interface{}
 		saveBytes := crw.buf.Bytes()
 
 		_ = json.Unmarshal(saveBytes, &data)
 
-		err = SaveToCache(r.Context(), queryStr, data)
+		err = SaveToCache(r.Context(), fmt.Sprint(queryStr, varString), data)
 		if err != nil {
 			log.Println(err.Error())
 		}
