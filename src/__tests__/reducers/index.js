@@ -6,6 +6,21 @@ const initialState = {
     organisation: {},
     loading: true,
   },
+  info: {
+    categories: 0,
+    tag: 0,
+    article: {
+      draft: 0,
+      template: 0,
+      publish: 0,
+    },
+    factCheck: {
+      draft: 0,
+      template: 0,
+      publish: 0,
+    },
+    podcasts: 0,
+  },
   settings: {
     navTheme: 'dark',
     primaryColor: '#1890ff',
@@ -87,6 +102,11 @@ const initialState = {
     details: {},
     loading: true,
   },
+  pages: {
+    req: [],
+    details: {},
+    loading: true,
+  },
   ratings: {
     req: [],
     details: {},
@@ -128,6 +148,16 @@ const initialState = {
   },
   sidebar: {
     collapsed: false,
+  },
+  events: {
+    req: [],
+    details: {},
+    loading: true,
+  },
+  webhooks: {
+    req: [],
+    details: {},
+    loading: true,
   },
 };
 describe('root reducer', () => {

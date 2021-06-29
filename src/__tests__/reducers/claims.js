@@ -37,7 +37,11 @@ describe('claims reducer', () => {
           payload: {},
         },
       ),
-    ).toEqual(initialState);
+    ).toEqual({
+      req: [],
+      loading: true,
+      details: [{ id: 1, name: 'claim' }],
+    });
   });
   it('should handle SET_CLAIMS_LOADING', () => {
     expect(
