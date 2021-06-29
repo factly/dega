@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import * as actions from '../../actions/episodes';
 import * as types from '../../constants/episodes';
 import { ADD_NOTIFICATION } from '../../constants/notifications';
+import { ADD_PODCASTS } from '../../constants/podcasts';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -68,7 +69,15 @@ describe('episodes actions', () => {
   });
   it('should create actions to fetch episodes success', () => {
     const query = { page: 1, limit: 5 };
-    const episodes = [{ id: 1, title: 'Episode' }];
+    const episodes = [
+      {
+        id: 1,
+        title: 'Episode',
+        podcast: {
+          id: 1,
+        },
+      },
+    ];
     const resp = { data: { nodes: episodes, total: 1 } };
     axios.get.mockResolvedValue(resp);
 
@@ -78,8 +87,12 @@ describe('episodes actions', () => {
         payload: true,
       },
       {
+        type: ADD_PODCASTS,
+        payload: [{ id: 1 }],
+      },
+      {
         type: types.ADD_EPISODES,
-        payload: [{ id: 1, title: 'Episode' }],
+        payload: [{ id: 1, title: 'Episode', podcast: 1 }],
       },
       {
         type: types.ADD_EPISODES_REQUEST,
@@ -138,7 +151,8 @@ describe('episodes actions', () => {
   });
   it('should create actions to get episode by id success', () => {
     const id = 1;
-    const episode = { id, title: 'Episode' };
+    const podcast = { id: 1 };
+    const episode = { id, title: 'Episode', podcast: podcast };
     const resp = { data: episode };
     axios.get.mockResolvedValue(resp);
 
@@ -148,8 +162,12 @@ describe('episodes actions', () => {
         payload: true,
       },
       {
+        type: ADD_PODCASTS,
+        payload: [podcast],
+      },
+      {
         type: types.ADD_EPISODE,
-        payload: { id, title: 'Episode' },
+        payload: { id, title: 'Episode', podcast: 1 },
       },
       {
         type: types.SET_EPISODES_LOADING,
@@ -181,6 +199,34 @@ describe('episodes actions', () => {
           message: errorMessage,
           time: Date.now(),
         },
+      },
+      {
+        type: types.SET_EPISODES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getEpisode(id))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.EPISODES_API + '/' + id);
+  });
+  it('should create actions to get episode by id with no podcast ', () => {
+    const id = 1;
+    const podcast = {};
+    const episode = { id, title: 'Episode', podcast: podcast };
+    const resp = { data: episode };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_EPISODES_LOADING,
+        payload: true,
+      },
+      {
+        type: types.ADD_EPISODE,
+        payload: { id, title: 'Episode' },
       },
       {
         type: types.SET_EPISODES_LOADING,
@@ -252,7 +298,8 @@ describe('episodes actions', () => {
     expect(axios.post).toHaveBeenCalledWith(types.EPISODES_API, episode);
   });
   it('should create actions to update episode success', () => {
-    const episode = { id: 1, title: 'Episode' };
+    const podcast = { id: 1 };
+    const episode = { id: 1, title: 'Episode', podcast: podcast };
     const resp = { data: episode };
     axios.put.mockResolvedValue(resp);
 
@@ -262,8 +309,12 @@ describe('episodes actions', () => {
         payload: true,
       },
       {
+        type: ADD_PODCASTS,
+        payload: [podcast],
+      },
+      {
         type: types.ADD_EPISODE,
-        payload: { id: 1, title: 'Episode' },
+        payload: { id: 1, title: 'Episode', podcast: 1 },
       },
       {
         type: ADD_NOTIFICATION,
@@ -302,6 +353,42 @@ describe('episodes actions', () => {
           type: 'error',
           title: 'Error',
           message: errorMessage,
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_EPISODES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateEpisode(episode))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.EPISODES_API + '/1', episode);
+  });
+  it('should create actions to update episode success without podcast', () => {
+    const podcast = {};
+    const episode = { id: 1, title: 'Episode', podcast: podcast };
+    const resp = { data: episode };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_EPISODES_LOADING,
+        payload: true,
+      },
+      {
+        type: types.ADD_EPISODE,
+        payload: { id: 1, title: 'Episode' },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Episode updated',
           time: Date.now(),
         },
       },
