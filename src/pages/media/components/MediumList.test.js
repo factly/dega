@@ -69,7 +69,7 @@ const info = {
   ],
   total: 2,
   loading: false,
-}
+};
 let state = {
   media: {
     req: [
@@ -135,11 +135,13 @@ describe('Media List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MediumList actions={['update', 'delete']}
+            <MediumList
+              actions={['update', 'delete']}
               data={{ media: [], total: 0, loading: false }}
               filters={filters}
               setFilters={setFilters}
-              fetchMedia={fetchMedia} />
+              fetchMedia={fetchMedia}
+            />
           </Router>
         </Provider>,
       );
@@ -148,16 +150,18 @@ describe('Media List component', () => {
     it('should match component when loading', () => {
       state.media.loading = true;
       store = mockStore(state);
-      const info2 = { ...info }
-      info2.loading = true
+      const info2 = { ...info };
+      info2.loading = true;
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MediumList actions={['update', 'delete']}
+            <MediumList
+              actions={['update', 'delete']}
               data={info2}
               filters={filters}
               setFilters={setFilters}
-              fetchMedia={fetchMedia} />
+              fetchMedia={fetchMedia}
+            />
           </Router>
         </Provider>,
       );
@@ -169,10 +173,13 @@ describe('Media List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MediumList actions={['update', 'delete']} data={info}
+            <MediumList
+              actions={['update', 'delete']}
+              data={info}
               filters={filters}
               setFilters={setFilters}
-              fetchMedia={fetchMedia} />
+              fetchMedia={fetchMedia}
+            />
           </Router>
         </Provider>,
       );
@@ -192,10 +199,13 @@ describe('Media List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MediumList actions={['update', 'delete']} data={info}
+              <MediumList
+                actions={['update', 'delete']}
+                data={info}
                 filters={filters}
                 setFilters={setFilters}
-                fetchMedia={fetchMedia} />
+                fetchMedia={fetchMedia}
+              />
             </Router>
           </Provider>,
         );
@@ -213,10 +223,13 @@ describe('Media List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MediumList actions={['update', 'delete']} data={info}
+              <MediumList
+                actions={['update', 'delete']}
+                data={info}
                 filters={filters}
                 setFilters={setFilters}
-                fetchMedia={fetchMedia} />
+                fetchMedia={fetchMedia}
+              />
             </Router>
           </Provider>,
         );
