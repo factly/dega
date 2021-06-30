@@ -53,6 +53,7 @@ describe('Episode Edit component', () => {
           slug: 'episode-1',
           season: 1,
           episode: 1,
+          podcast: [1],
           type: 'full',
           description: {
             time: 1595747741807,
@@ -68,6 +69,30 @@ describe('Episode Edit component', () => {
           },
           audio_url: 'audioUrl',
           medium_id: 1,
+        },
+      },
+      loading: false,
+    },
+    podcasts: {
+      req: [
+        {
+          data: [1],
+          query: {
+            page: 1,
+            limit: 5,
+          },
+          total: 1,
+        },
+      ],
+      details: {
+        1: {
+          id: 1,
+          title: 'Podcast-1',
+          slug: 'podcast-1',
+          medium_id: 1,
+          language: 'english',
+          categories: [1],
+          episodes: [1],
         },
       },
       loading: false,
@@ -101,6 +126,11 @@ describe('Episode Edit component', () => {
     it('should match component with empty data', () => {
       store = mockStore({
         episodes: {
+          req: [],
+          details: {},
+          loading: false,
+        },
+        podcasts: {
           req: [],
           details: {},
           loading: false,
@@ -166,6 +196,30 @@ describe('Episode Edit component', () => {
               },
               audio_url: 'audioUrl',
               medium_id: 1,
+            },
+          },
+          loading: false,
+        },
+        podcasts: {
+          req: [
+            {
+              data: [1],
+              query: {
+                page: 1,
+                limit: 5,
+              },
+              total: 1,
+            },
+          ],
+          details: {
+            1: {
+              id: 1,
+              title: 'Podcast-1',
+              slug: 'podcast-1',
+              medium_id: 1,
+              language: 'english',
+              categories: [1],
+              episodes: [1],
             },
           },
           loading: false,
