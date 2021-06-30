@@ -84,7 +84,7 @@ const entities = [
     name: 'webhooks',
     label: 'Webhooks',
     options: options,
-  }
+  },
 ];
 
 function PolicyForm({ data = {}, onCreate }) {

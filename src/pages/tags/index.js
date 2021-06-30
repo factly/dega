@@ -67,9 +67,7 @@ function Tags({ permission }) {
               }
             }}
           >
-            <Form.Item
-              name="q"
-            >
+            <Form.Item name="q">
               <Input placeholder="Search tags" />
             </Form.Item>
             <Form.Item>
