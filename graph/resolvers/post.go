@@ -123,105 +123,11 @@ func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.U
 }
 
 func (r *postResolver) Schemas(ctx context.Context, obj *models.Post) (interface{}, error) {
-	result := make([]interface{}, 0)
-
-	postClaims := make([]models.PostClaim, 0)
-
-	config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
-		PostID: obj.ID,
-	}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Claimant").Find(&postClaims)
-
-	space := &models.Space{}
-	space.ID = obj.SpaceID
-
-	ratings := make([]models.Rating, 0)
-
-	config.DB.Model(&models.Rating{}).Where(&models.Rating{SpaceID: space.ID}).Order("numeric_value asc").Find(&ratings)
-
-	bestRating := 5
-	worstRating := 1
-	if len(ratings) > 2 {
-		bestRating = ratings[len(ratings)-1].NumericValue
-		worstRating = ratings[0].NumericValue
+	var schema interface{}
+	if err := json.Unmarshal(obj.Schemas.RawMessage, &schema); err != nil {
+		return schema, nil
 	}
-
-	config.DB.Preload("Logo").First(&space)
-
-	for _, each := range postClaims {
-		if each.Claim != nil {
-			claimSchema := models.FactCheckSchema{}
-			claimSchema.Context = "https://schema.org"
-			claimSchema.Type = "ClaimReview"
-			claimSchema.DatePublished = obj.CreatedAt
-			claimSchema.URL = space.SiteAddress + "/" + obj.Slug
-			claimSchema.ClaimReviewed = each.Claim.Claim
-			claimSchema.Author.Type = "Organization"
-			claimSchema.Author.Name = space.Name
-			claimSchema.Author.URL = space.SiteAddress
-			claimSchema.ReviewRating.Type = "Rating"
-			claimSchema.ReviewRating.RatingValue = each.Claim.Rating.NumericValue
-			claimSchema.ReviewRating.AlternateName = each.Claim.Rating.Name
-			claimSchema.ReviewRating.BestRating = bestRating
-			claimSchema.ReviewRating.RatingExplaination = each.Claim.Fact
-			claimSchema.ReviewRating.WorstRating = worstRating
-			claimSchema.ItemReviewed.Type = "Claim"
-			if each.Claim.CheckedDate != nil {
-				claimSchema.ItemReviewed.DatePublished = *each.Claim.CheckedDate
-			}
-			claimSchema.ItemReviewed.Appearance = each.Claim.ClaimSources
-			claimSchema.ItemReviewed.Author.Type = "Organization"
-			claimSchema.ItemReviewed.Author.Name = each.Claim.Claimant.Name
-
-			result = append(result, claimSchema)
-		}
-	}
-
-	postAuthors := []models.PostAuthor{}
-
-	config.DB.Model(&models.PostAuthor{}).Where(&models.PostAuthor{
-		PostID: obj.ID,
-	}).Where("deleted_at IS NULL").Find(&postAuthors)
-
-	var allAuthorID []string
-
-	for _, postAuthor := range postAuthors {
-		allAuthorID = append(allAuthorID, fmt.Sprint(postAuthor.AuthorID))
-	}
-
-	authors, _ := loaders.GetUserLoader(ctx).LoadAll(allAuthorID)
-
-	jsonLogo := map[string]string{}
-
-	if space.Logo != nil {
-		rawLogo, _ := space.Logo.URL.RawMessage.MarshalJSON()
-		_ = json.Unmarshal(rawLogo, &jsonLogo)
-	}
-
-	articleSchema := models.ArticleSchema{}
-	articleSchema.Context = "https://schema.org"
-	articleSchema.Type = "NewsArticle"
-	articleSchema.Headline = obj.Title
-	articleSchema.Image = append(articleSchema.Image, models.Image{
-		Type: "ImageObject",
-		URL:  jsonLogo["raw"]})
-	articleSchema.DatePublished = obj.PublishedDate
-	if len(authors) > 0 {
-		for _, eachAuthor := range authors {
-			articleSchema.Author = append(articleSchema.Author, models.Author{
-				Type: "Person",
-				Name: eachAuthor.FirstName + " " + eachAuthor.LastName,
-				URL:  fmt.Sprint(space.SiteAddress, "/users/", eachAuthor.Slug),
-			})
-		}
-	}
-	articleSchema.Publisher.Type = "Organization"
-	articleSchema.Publisher.Name = space.Name
-	articleSchema.Publisher.Logo.Type = "ImageObject"
-	articleSchema.Publisher.Logo.URL = jsonLogo["raw"]
-
-	result = append(result, articleSchema)
-
-	return result, nil
+	return schema, nil
 }
 
 func (r *queryResolver) Post(ctx context.Context, id *int, slug *string, include_page *bool) (*models.Post, error) {
