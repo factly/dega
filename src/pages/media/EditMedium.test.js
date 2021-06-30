@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import { useDispatch, Provider, useSelector } from 'react-redux';
-import { Form } from 'antd';
+import { Form, Popconfirm } from 'antd';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
@@ -22,7 +22,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
   useParams: jest.fn().mockReturnValue({ id: '1' }),
 }));
 
@@ -30,6 +32,7 @@ jest.mock('../../actions/media', () => ({
   addMedium: jest.fn(),
   getMedium: jest.fn(),
   updateMedium: jest.fn(),
+  deleteMedium: jest.fn(),
 }));
 
 describe('Media edit component', () => {
@@ -50,7 +53,7 @@ describe('Media edit component', () => {
             },
           ],
           details: {
-            '1': {
+            1: {
               id: 1,
               name: 'name',
               url: 'some-url',
@@ -61,9 +64,17 @@ describe('Media edit component', () => {
           },
           loading: false,
         },
+        spaces: {
+          orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
+          details: {
+            11: { id: 11, name: 'Space 11' },
+          },
+          loading: false,
+          selected: 11,
+        },
       });
       store.dispatch = jest.fn(() => ({}));
-      mockedDispatch = jest.fn();
+      mockedDispatch = jest.fn(() => Promise.resolve({}));
       useDispatch.mockReturnValue(mockedDispatch);
     });
     it('should render the component', () => {
@@ -83,6 +94,14 @@ describe('Media edit component', () => {
           details: {},
           loading: false,
         },
+        spaces: {
+          orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
+          details: {
+            11: { id: 11, name: 'Space 11' },
+          },
+          loading: false,
+          selected: 11,
+        },
       });
       const tree = mount(
         <Provider store={store}>
@@ -99,6 +118,14 @@ describe('Media edit component', () => {
           req: [],
           details: {},
           loading: true,
+        },
+        spaces: {
+          orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
+          details: {
+            11: { id: 11, name: 'Space 11' },
+          },
+          loading: false,
+          selected: 11,
         },
       });
       const tree = mount(
@@ -124,7 +151,7 @@ describe('Media edit component', () => {
             },
           ],
           details: {
-            '1': {
+            1: {
               id: 1,
               name: 'name',
               url: 'some-url',
@@ -135,9 +162,17 @@ describe('Media edit component', () => {
           },
           loading: false,
         },
+        spaces: {
+          orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
+          details: {
+            11: { id: 11, name: 'Space 11' },
+          },
+          loading: false,
+          selected: 11,
+        },
       });
       store.dispatch = jest.fn(() => ({}));
-      mockedDispatch = jest.fn();
+      mockedDispatch = jest.fn(() => Promise.resolve({}));
       useDispatch.mockReturnValue(mockedDispatch);
     });
     afterEach(() => {
@@ -169,7 +204,7 @@ describe('Media edit component', () => {
             },
           ],
           details: {
-            '2': {
+            2: {
               id: 2,
               name: 'name',
               url: 'some-url',
@@ -179,6 +214,14 @@ describe('Media edit component', () => {
             },
           },
           loading: false,
+        },
+        spaces: {
+          orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
+          details: {
+            11: { id: 11, name: 'Space 11' },
+          },
+          loading: false,
+          selected: 11,
         },
       });
       actions.getMedium.mockReset();
@@ -194,8 +237,6 @@ describe('Media edit component', () => {
     });
     it('should call updateMedia', () => {
       actions.updateMedium.mockReset();
-      const push = jest.fn();
-      useHistory.mockReturnValueOnce({ push });
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -211,8 +252,8 @@ describe('Media edit component', () => {
           .at(2)
           .find('Input')
           .simulate('change', { target: { value: 'caption ' } });
-        const submitButton = wrapper.find('Button').at(1);
-        expect(submitButton.text()).toBe('Update');
+        const submitButton = wrapper.find('Button').at(2);
+        expect(submitButton.text()).toBe('Submit');
         submitButton.simulate('submit');
       });
       wrapper.update();
@@ -226,6 +267,30 @@ describe('Media edit component', () => {
         description: 'description',
         test: 'test',
       });
+    });
+    it('should call deleteMedia', (done) => {
+      actions.deleteMedium.mockReset();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <EditMedium permission={{ actions: ['admin'] }} />
+            </Router>
+          </Provider>,
+        );
+      });
+      const submitButton = wrapper.find('Button').at(1);
+      expect(submitButton.text()).toBe('Delete');
+      submitButton.simulate('click');
+
+      const popconfirm = wrapper.find(Popconfirm);
+      popconfirm
+        .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
+        .simulate('click');
+      setTimeout(() => {
+        expect(actions.deleteMedium).toHaveBeenCalledWith('1');
+        done();
+      }, 0);
     });
   });
 });
