@@ -3718,6 +3718,7 @@ exports[`Ratings create component snapshot component should render the component
                                     update={1}
                                   >
                                     <Editor
+                                      basic={true}
                                       id="creat-rating_description"
                                       onChange={[Function]}
                                       placeholder="Enter Description..."

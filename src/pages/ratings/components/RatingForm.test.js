@@ -142,6 +142,22 @@ describe('Ratings Create Form component', () => {
       }, 0);
     });
     it('should submit form with new name', (done) => {
+      const data2 = { ...data };
+      data2.text_colour = {
+        hex: '#f9f9fa',
+        hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+        hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+        oldHue: 240,
+        rgb: { r: 249, g: 249, b: 250, a: 1 },
+        source: 'hsv',
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <RatingForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
       act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
@@ -158,6 +174,14 @@ describe('Ratings Create Form component', () => {
           numeric_value: 3,
           medium_id: 1,
           background_colour: {
+            hex: '#f9f9fa',
+            hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+            hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+            oldHue: 240,
+            rgb: { r: 249, g: 249, b: 250, a: 1 },
+            source: 'hsv',
+          },
+          text_colour: {
             hex: '#f9f9fa',
             hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
             hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
