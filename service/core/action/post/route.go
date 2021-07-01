@@ -35,8 +35,9 @@ type post struct {
 
 type postData struct {
 	model.Post
-	Authors []model.Author         `json:"authors"`
-	Claims  []factCheckModel.Claim `json:"claims"`
+	Authors    []model.Author         `json:"authors"`
+	Claims     []factCheckModel.Claim `json:"claims"`
+	ClaimOrder []uint                 `json:"claim_order"`
 }
 
 var userContext config.ContextKey = "post_user"

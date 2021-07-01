@@ -276,45 +276,29 @@ func update(w http.ResponseWriter, r *http.Request) {
 			PostID: uint(id),
 		}).Find(&postClaims)
 
-		prevClaimIDs := make([]uint, 0)
-		mapperPostClaim := map[uint]factCheckModel.PostClaim{}
-		postClaimIDs := make([]uint, 0)
-
-		for _, postClaim := range postClaims {
-			mapperPostClaim[postClaim.ClaimID] = postClaim
-			prevClaimIDs = append(prevClaimIDs, postClaim.ClaimID)
+		err = config.DB.Model(&factCheckModel.PostClaim{}).Delete(&postClaims).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
 		}
 
-		toCreateIDs, toDeleteIDs = arrays.Difference(prevClaimIDs, post.ClaimIDs)
-
-		// map post claim ids
-		for _, id := range toDeleteIDs {
-			postClaimIDs = append(postClaimIDs, mapperPostClaim[id].ID)
-		}
-
-		// delete post claims
-		if len(postClaimIDs) > 0 {
-			err = tx.Where(&postClaimIDs).Delete(&factCheckModel.PostClaim{}).Error
-			if err != nil {
-				tx.Rollback()
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return
-			}
-		}
-
-		for _, id := range toCreateIDs {
-			postClaim := &factCheckModel.PostClaim{}
+		toCreatePostClaims := make([]factCheckModel.PostClaim, 0)
+		for i, id := range post.ClaimIDs {
+			postClaim := factCheckModel.PostClaim{}
 			postClaim.ClaimID = uint(id)
 			postClaim.PostID = result.ID
+			postClaim.Position = uint(i + 1)
+			toCreatePostClaims = append(toCreatePostClaims, postClaim)
+		}
 
-			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
-			if err != nil {
-				tx.Rollback()
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return
-			}
+		err = tx.Model(&factCheckModel.PostClaim{}).Create(&toCreatePostClaims).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
 		}
 
 		// fetch updated post claims
@@ -323,9 +307,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&updatedPostClaims)
 
+		result.ClaimOrder = make([]uint, len(postClaims))
 		// appending previous post claims to result
 		for _, postClaim := range updatedPostClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
+			result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
 		}
 
 	}

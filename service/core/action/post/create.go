@@ -231,10 +231,11 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 
 	if result.Format.Slug == "fact-check" {
 		// create post claim
-		for _, id := range post.ClaimIDs {
+		for i, id := range post.ClaimIDs {
 			postClaim := &factCheckModel.PostClaim{}
 			postClaim.ClaimID = uint(id)
 			postClaim.PostID = result.ID
+			postClaim.Position = uint(i + 1)
 
 			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
@@ -250,9 +251,11 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 			PostID: result.ID,
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
+		result.ClaimOrder = make([]uint, len(postClaims))
 		// appending all post claims
 		for _, postClaim := range postClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
+			result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
 		}
 	}
 

@@ -35,9 +35,10 @@ type Claim struct {
 // PostClaim model
 type PostClaim struct {
 	config.Base
-	ClaimID uint  `gorm:"column:claim_id" json:"claim_id"`
-	Claim   Claim `json:"claim"`
-	PostID  uint  `gorm:"column:post_id" json:"post_id"`
+	ClaimID  uint  `gorm:"column:claim_id" json:"claim_id"`
+	Claim    Claim `json:"claim"`
+	PostID   uint  `gorm:"column:post_id" json:"post_id"`
+	Position uint  `gorm:"column:position" json:"position"`
 }
 
 // BeforeSave - validation for rating & claimant

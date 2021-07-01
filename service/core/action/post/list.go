@@ -149,12 +149,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 	postClaims := []factCheckModel.PostClaim{}
 	config.DB.Model(&factCheckModel.PostClaim{}).Where("post_id in (?)", postIDs).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
-	postClaimMap := make(map[uint][]factCheckModel.Claim)
+	postClaimMap := make(map[uint][]factCheckModel.PostClaim)
 	for _, pc := range postClaims {
 		if _, found := postClaimMap[pc.PostID]; !found {
-			postClaimMap[pc.PostID] = make([]factCheckModel.Claim, 0)
+			postClaimMap[pc.PostID] = make([]factCheckModel.PostClaim, 0)
 		}
-		postClaimMap[pc.PostID] = append(postClaimMap[pc.PostID], pc.Claim)
+		postClaimMap[pc.PostID] = append(postClaimMap[pc.PostID], pc)
 	}
 
 	// fetch all authors
@@ -182,7 +182,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 		postList.Claims = make([]factCheckModel.Claim, 0)
 		postList.Authors = make([]model.Author, 0)
 		if len(postClaimMap[post.ID]) > 0 {
-			postList.Claims = postClaimMap[post.ID]
+			postList.ClaimOrder = make([]uint, len(postClaimMap[post.ID]))
+			for _, postCla := range postClaimMap[post.ID] {
+				postList.Claims = append(postList.Claims, postCla.Claim)
+				postList.ClaimOrder[int(postCla.Position-1)] = postCla.ClaimID
+			}
 		}
 		postList.Post = post
 
