@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Drawer, DatePicker, Dropdown, Menu, Switch } from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  Button,
+  Space,
+  Drawer,
+  DatePicker,
+  Dropdown,
+  Menu,
+  Switch,
+} from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -31,7 +43,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     loading,
   }));
   const [claimOrder, setClaimOrder] = useState(
-    data.claimOrder ? data.claimOrder : data.claims && data.claims.length > 0 ? data.claims : [],
+    data.claims && data.claims.length > 0 ? data.claim_order : [],
   );
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -63,7 +75,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     const fetchedClaimId = claims.req[0].data[0];
     const fetchedClaim = claims.details[fetchedClaimId];
     if (newClaim.title === fetchedClaim.title) {
-      updateClaims(fetchedClaimId); 
+      updateClaims(fetchedClaimId);
     }
   }
 
@@ -98,11 +110,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.tag_ids = values.tags || [];
     values.format_id = format.id;
     values.author_ids = values.authors || [];
-    values.claim_ids = values.claims || [];
+    values.claim_ids = values.claims ? claimOrder : [];
+    values.claim_order = values.claim_ids;
     values.status = status;
-    if (values.claim_ids.length > 0) {
-      values.claimOrder = claimOrder;
-    }
     values.status === 'publish'
       ? (values.published_date = values.published_date
           ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
