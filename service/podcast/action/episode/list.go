@@ -3,6 +3,7 @@ package episode
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -33,6 +34,7 @@ type paging struct {
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Param q query string false "Query"
+// @Param podcast query string false "Podcast"
 // @Param sort query string false "Sort"
 // @Success 200 {object} paging
 // @Router /podcast/episodes [get]
@@ -48,18 +50,32 @@ func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
+	// Filters
+	u, _ := url.Parse(r.URL.String())
+	queryMap := u.Query()
+	filters := generateFilters(queryMap["podcast"])
+
 	filteredEpisodeIDs := make([]uint, 0)
+
+	if filters != "" {
+		filters = fmt.Sprint(filters, " AND space_id=", sID)
+	}
 
 	result := paging{}
 	result.Nodes = make([]episodeData, 0)
 
-	if searchQuery != "" {
-
-		filters := fmt.Sprint("space_id=", sID)
+	if filters != "" || searchQuery != "" {
 		var hits []interface{}
+		var res map[string]interface{}
 
-		hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "episode")
-
+		if searchQuery != "" {
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "episode")
+		} else {
+			res, err = meilisearchx.SearchWithoutQuery("dega", filters, "episode")
+			if _, found := res["hits"]; found {
+				hits = res["hits"].([]interface{})
+			}
+		}
 		if err != nil {
 			loggerx.Error(err)
 			renderx.JSON(w, http.StatusOK, result)
@@ -132,4 +148,17 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
+}
+
+func generateFilters(podcast []string) string {
+	filters := ""
+	if len(podcast) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
+	}
+
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
 }
