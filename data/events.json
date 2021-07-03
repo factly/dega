@@ -112,5 +112,11 @@
     },
     {
         "name": "episode.deleted"
+    },
+    {
+        "name": "policy.created"
+    },
+    {
+        "name": "policy.updated"
     }
 ]

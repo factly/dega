@@ -160,7 +160,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		PodcastID:       podcastID,
 		MediumID:        mediumID,
 		SpaceID:         uint(sID),
-	}).Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
+	}).Preload("Medium").Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
 
 	// fetch old authors
 	prevEpisodeAuthors := make([]model.EpisodeAuthor, 0)

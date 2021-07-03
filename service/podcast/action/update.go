@@ -175,7 +175,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		MediumID:          mediumID,
 		PrimaryCategoryID: primaryCategoryID,
 		SpaceID:           uint(sID),
-	}).Preload("Categories").First(&result)
+	}).Preload("Categories").Preload("Medium").First(&result)
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
