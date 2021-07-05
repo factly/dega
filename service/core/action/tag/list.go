@@ -32,7 +32,7 @@ type paging struct {
 // @Param page query string false "page number"
 // @Param q query string false "Query"
 // @Param sort query string false "Sort"
-// @Success 200 {array} model.Tag
+// @Success 200 {array} paging
 // @Router /core/tags [get]
 func list(w http.ResponseWriter, r *http.Request) {
 

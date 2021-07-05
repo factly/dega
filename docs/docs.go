@@ -3670,7 +3670,7 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/model.Tag"
+                                "$ref": "#/definitions/tag.paging"
                             }
                         }
                     }
@@ -5129,6 +5129,24 @@ var doc = `{
                     },
                     {
                         "type": "string",
+                        "description": "Category",
+                        "name": "category",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Primary Category",
+                        "name": "primary_category",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Language",
+                        "name": "language",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
                         "description": "Sort",
                         "name": "sort",
                         "in": "query"
@@ -5239,6 +5257,12 @@ var doc = `{
                         "type": "string",
                         "description": "Query",
                         "name": "q",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Podcast",
+                        "name": "podcast",
                         "in": "query"
                     },
                     {
@@ -6912,6 +6936,9 @@ var doc = `{
                 "published_date": {
                     "type": "string"
                 },
+                "schemas": {
+                    "type": "string"
+                },
                 "slug": {
                     "type": "string"
                 },
@@ -7269,6 +7296,9 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "name": {
+                    "type": "string"
+                },
                 "tags": {
                     "type": "object",
                     "additionalProperties": {
@@ -7528,6 +7558,9 @@ var doc = `{
                 "published_date": {
                     "type": "string"
                 },
+                "schemas": {
+                    "type": "string"
+                },
                 "slug": {
                     "type": "string"
                 },
@@ -7737,6 +7770,12 @@ var doc = `{
                         "$ref": "#/definitions/model.Category"
                     }
                 },
+                "claim_order": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    }
+                },
                 "claims": {
                     "type": "array",
                     "items": {
@@ -7789,6 +7828,9 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "published_date": {
+                    "type": "string"
+                },
+                "schemas": {
                     "type": "string"
                 },
                 "slug": {
@@ -8120,6 +8162,20 @@ var doc = `{
                 },
                 "title": {
                     "type": "string"
+                }
+            }
+        },
+        "tag.paging": {
+            "type": "object",
+            "properties": {
+                "nodes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/model.Tag"
+                    }
+                },
+                "total": {
+                    "type": "integer"
                 }
             }
         },

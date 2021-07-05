@@ -8,18 +8,13 @@ require (
 	github.com/dlmiddlecote/sqlstats v1.0.2
 	github.com/eduncan911/podcast v1.4.2
 	github.com/factly/x v0.0.63
-	github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 // indirect
 	github.com/gavv/httpexpect v2.0.0+incompatible
 	github.com/gavv/httpexpect/v2 v2.1.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/gorilla/feeds v1.1.1
 	github.com/jinzhu/gorm v1.9.16
-	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/meilisearch/meilisearch-go v0.12.0
-	github.com/moul/http2curl v1.0.0 // indirect
 	github.com/nats-io/gnatsd v1.4.1
-	github.com/nats-io/go-nats v1.7.2 // indirect
-	github.com/nats-io/nats-server/v2 v2.1.9 // indirect
 	github.com/nats-io/nats.go v1.10.0
 	github.com/prometheus/client_golang v1.9.0
 	github.com/spf13/cobra v1.1.3
