@@ -79,7 +79,7 @@ func TestMenuUpdate(t *testing.T) {
 
 		SelectQuery(mock, 1, 1)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
 
 		Data["name"] = "test"

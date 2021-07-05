@@ -112,7 +112,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Preload("Space").First(&result.Post).Error
+	}).Where("is_page = ?", false).First(&result.Post).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -258,7 +258,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsHighlighted: post.IsHighlighted,
 		IsPage:        post.IsPage,
 	})
-	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -272,11 +272,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Post.Format.Slug == "fact-check" {
 		// fetch existing post claims
-		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
+		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
 		}).Find(&postClaims)
 
-		err = config.DB.Model(&factCheckModel.PostClaim{}).Delete(&postClaims).Error
+		err = tx.Model(&factCheckModel.PostClaim{}).Delete(&postClaims).Error
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)

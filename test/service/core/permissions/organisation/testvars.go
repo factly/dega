@@ -31,7 +31,7 @@ var undecodableData = map[string]interface{}{
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "organisation_id", "spaces"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "organisation_permissions"`)
-var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "organisation_permissions"`)
+var countQuery = regexp.QuoteMeta(`SELECT count(*) FROM "organisation_permissions"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "organisation_permissions" SET "deleted_at"=`)
 
 var basePath = "/core/permissions/organisations"

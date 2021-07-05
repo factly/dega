@@ -103,7 +103,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 
-	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
+	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
 	}).Where("is_page = ?", false).Order("created_at " + sort)
 

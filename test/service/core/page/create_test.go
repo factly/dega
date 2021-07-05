@@ -79,7 +79,7 @@ func TestPageCreate(t *testing.T) {
 		medium.SelectWithSpace(mock)
 		format.SelectMock(mock, 1, 1)
 		mock.ExpectQuery(`INSERT INTO "posts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["is_page"], Data["excerpt"], Data["description"], Data["html_description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], nil, 1, Data["featured_medium_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["is_page"], Data["excerpt"], Data["description"], Data["html_description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], nil, 1, nil, Data["featured_medium_id"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"featured_medium_id", "id"}).
 				AddRow(1, 1))
@@ -134,7 +134,7 @@ func TestPageCreate(t *testing.T) {
 		medium.SelectWithSpace(mock)
 		format.SelectMock(mock, 1, 1)
 		mock.ExpectQuery(`INSERT INTO "posts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["is_page"], Data["excerpt"], Data["description"], Data["html_description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], nil, 1, Data["featured_medium_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["subtitle"], Data["slug"], Data["status"], Data["is_page"], Data["excerpt"], Data["description"], Data["html_description"], Data["is_featured"], Data["is_sticky"], Data["is_highlighted"], Data["format_id"], nil, 1, nil, Data["featured_medium_id"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"featured_medium_id", "id"}).
 				AddRow(1, 1))

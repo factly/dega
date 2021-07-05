@@ -121,6 +121,7 @@ func TestEpisodeUpdate(t *testing.T) {
 			WithArgs(test.AnyTime{}, 1, Data["title"], Data["slug"], Data["season"], Data["episode"], Data["audio_url"], Data["podcast_id"], Data["description"], Data["html_description"], Data["medium_id"], 1, 1).WillReturnResult(driver.ResultNoRows)
 
 		SelectQuery(mock)
+		medium.SelectWithOutSpace(mock)
 		podcast.SelectQuery(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectQuery(`SELECT \* FROM "episode_authors"`).
@@ -162,6 +163,7 @@ func TestEpisodeUpdate(t *testing.T) {
 			WithArgs(test.AnyTime{}, 1, Data["title"], Data["slug"], Data["season"], Data["episode"], Data["audio_url"], Data["podcast_id"], Data["description"], Data["html_description"], 1, 1).WillReturnResult(driver.ResultNoRows)
 
 		SelectQuery(mock)
+		medium.SelectWithOutSpace(mock)
 		podcast.SelectQuery(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectQuery(`SELECT \* FROM "episode_authors"`).
@@ -205,6 +207,7 @@ func TestEpisodeUpdate(t *testing.T) {
 			WithArgs(test.AnyTime{}, 1, Data["title"], Data["slug"], Data["season"], Data["episode"], Data["audio_url"], Data["description"], Data["html_description"], Data["medium_id"], 1, 1).WillReturnResult(driver.ResultNoRows)
 
 		SelectQuery(mock)
+		medium.SelectWithOutSpace(mock)
 		podcast.SelectQuery(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectQuery(`SELECT \* FROM "episode_authors"`).
@@ -247,6 +250,7 @@ func TestEpisodeUpdate(t *testing.T) {
 			WithArgs(test.AnyTime{}, 1, Data["title"], Data["slug"], Data["season"], Data["episode"], Data["audio_url"], Data["podcast_id"], Data["description"], Data["html_description"], Data["medium_id"], 1, 1).WillReturnResult(driver.ResultNoRows)
 
 		SelectQuery(mock)
+		medium.SelectWithOutSpace(mock)
 		podcast.SelectQuery(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectQuery(`SELECT \* FROM "episode_authors"`).
@@ -296,6 +300,7 @@ func TestEpisodeUpdate(t *testing.T) {
 			WithArgs(test.AnyTime{}, 1, Data["title"], Data["slug"], Data["season"], Data["episode"], Data["audio_url"], Data["podcast_id"], Data["description"], Data["html_description"], Data["medium_id"], 1, 1).WillReturnResult(driver.ResultNoRows)
 
 		SelectQuery(mock)
+		medium.SelectWithOutSpace(mock)
 		podcast.SelectQuery(mock)
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectQuery(`SELECT \* FROM "episode_authors"`).

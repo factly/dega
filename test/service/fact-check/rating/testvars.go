@@ -198,20 +198,20 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 }
 
 func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "ratings"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
 		WithArgs(1, strings.ToLower(name.(string))).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 // check rating associated with any claim before deleting
 func ratingClaimExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claims"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claims"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func ratingCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "ratings"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 

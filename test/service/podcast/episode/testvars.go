@@ -70,7 +70,7 @@ func EpisodeAuthorSelect(mock sqlmock.Sqlmock) {
 }
 
 func CountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "episodes"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "episodes"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).
 			AddRow(count))
 }

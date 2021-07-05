@@ -120,7 +120,7 @@ func SelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 }
 
 func pageCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 

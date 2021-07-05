@@ -113,13 +113,13 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 
 // check claimant associated with any claim before deleting
 func claimantClaimExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claims"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claims"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func claimantCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claimants"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claimants"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 

@@ -75,7 +75,7 @@ var invalidData = map[string]interface{}{
 var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "slug", "description", "html_description", "language", "primary_category_id", "medium_id", "space_id"}
 
 var selectQuery = `SELECT (.+) FROM "podcasts"`
-var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "podcasts"`)
+var countQuery = regexp.QuoteMeta(`SELECT count(*) FROM "podcasts"`)
 
 var basePath = "/podcast"
 var path = "/podcast/{podcast_id}"

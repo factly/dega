@@ -64,7 +64,7 @@ var invalidData = map[string]interface{}{
 var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "description", "status", "media", "posts", "episodes", "podcast", "fact_check", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "space_permission_requests"`)
-var countQuery = regexp.QuoteMeta(`SELECT count(1) FROM "space_permission_requests"`)
+var countQuery = regexp.QuoteMeta(`SELECT count(*) FROM "space_permission_requests"`)
 
 var basePath = "/core/requests/spaces"
 var path = "/core/requests/spaces/{request_id}"
