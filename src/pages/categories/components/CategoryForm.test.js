@@ -12,7 +12,10 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 jest.mock('@editorjs/editorjs');
-// jest.mock('jsoneditor');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('../../../actions/categories', () => ({
   getCategories: jest.fn(),
   deleteCategory: jest.fn(),
@@ -143,16 +146,49 @@ describe('Categories Create Form component', () => {
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
-        expect(props.onCreate).toHaveBeenCalledWith(props.data);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          name: 'Name',
+          description: {
+            time: 1613559903378,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
+          slug: 'slug',
+          is_featured: false,
+          medium_id: 2,
+          meta_fields: {
+            sample: 'testing',
+          },
+        });
         done();
       }, 0);
     });
     it('should submit form with new title', (done) => {
+      const data2 = {
+        id: 1,
+        name: 'Name',
+        description: {
+          time: 1613559903378,
+          blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+          version: '2.19.0',
+        },
+        slug: 'slug',
+        is_featured: false,
+        medium_id: 2,
+      };
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        wrapper = mount(
+          <Provider store={store}>
+            <CategoryCreateForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
+      act(() => {
+        const input = wrapper.find('FormItem').at(1).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
-        const submitButtom = wrapper.find('Button').at(0);
+        const submitButtom = wrapper.find('Button').at(1);
+        expect(submitButtom.text()).toBe('Update');
         submitButtom.simulate('submit');
       });
 
@@ -168,9 +204,6 @@ describe('Categories Create Form component', () => {
           slug: 'new-name',
           is_featured: false,
           medium_id: 2,
-          meta_fields: {
-            sample: 'testing',
-          },
         });
         done();
       }, 0);
@@ -179,7 +212,7 @@ describe('Categories Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(5)
           .find('Editor')
           .props()
           .onChange({
@@ -193,15 +226,9 @@ describe('Categories Create Form component', () => {
           });
         wrapper
           .find('FormItem')
-          .at(0)
-          .find('Input')
-          .simulate('change', { target: { value: 'new name' } });
-        wrapper
-          .find('FormItem')
           .at(1)
           .find('Input')
-          .simulate('change', { target: { value: 'new-slug' } });
-
+          .simulate('change', { target: { value: 'new name' } });
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
@@ -215,7 +242,7 @@ describe('Categories Create Form component', () => {
             blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
             version: '2.19.0',
           },
-          slug: 'new-slug',
+          slug: 'new-name',
           is_featured: false,
           medium_id: 2,
           meta_fields: {
