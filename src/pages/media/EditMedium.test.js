@@ -1,7 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { useDispatch, Provider, useSelector } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { useDispatch, Provider } from 'react-redux';
 import { Form, Popconfirm } from 'antd';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -237,11 +236,47 @@ describe('Media edit component', () => {
     });
     it('should call updateMedia', () => {
       actions.updateMedium.mockReset();
+      store = mockStore({
+        media: {
+          req: [
+            {
+              data: [1],
+              query: {
+                page: 1,
+              },
+              total: 1,
+            },
+          ],
+          details: {
+            1: {
+              id: 1,
+              name: 'name',
+              url: 'some-url',
+              file_size: 'file_size',
+              caption: 'caption',
+              description: 'description',
+            },
+          },
+          loading: false,
+        },
+        spaces: {
+          orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
+          details: {
+            11: {
+              id: 11,
+              name: 'Space 11',
+              permissions: [{ resource: 'admin', actions: ['admin'] }],
+            },
+          },
+          loading: false,
+          selected: 11,
+        },
+      });
       act(() => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <EditMedium />
+              <EditMedium permission={{ actions: ['admin'] }} />
             </Router>
           </Provider>,
         );
