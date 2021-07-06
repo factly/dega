@@ -1328,7 +1328,8 @@ exports[`Episode Component snapshot testing should render the component 1`] = `
                 <EpisodeList
                   actions={
                     Array [
-                      "admin",
+                      "get",
+                      "create",
                     ]
                   }
                   data={
@@ -3685,7 +3686,8 @@ exports[`Episode Component snapshot testing should render the component with dat
                 <EpisodeList
                   actions={
                     Array [
-                      "admin",
+                      "get",
+                      "create",
                     ]
                   }
                   data={
@@ -4018,6 +4020,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                         >
                                                           <button
                                                             class="ant-btn"
+                                                            disabled=""
                                                             type="button"
                                                           >
                                                             <span>
@@ -4031,6 +4034,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                         >
                                                           <button
                                                             class="ant-btn"
+                                                            disabled=""
                                                             type="button"
                                                           >
                                                             <span>
@@ -4242,6 +4246,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                               >
                                                                 <button
                                                                   class="ant-btn"
+                                                                  disabled=""
                                                                   type="button"
                                                                 >
                                                                   <span>
@@ -4255,6 +4260,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                               >
                                                                 <button
                                                                   class="ant-btn"
+                                                                  disabled=""
                                                                   type="button"
                                                                 >
                                                                   <span>
@@ -5099,7 +5105,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                                   >
                                                                     <Button
                                                                       block={false}
-                                                                      disabled={false}
+                                                                      disabled={true}
                                                                       ghost={false}
                                                                       htmlType="button"
                                                                       loading={false}
@@ -5107,7 +5113,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                                       <Wave>
                                                                         <button
                                                                           className="ant-btn"
-                                                                          disabled={false}
+                                                                          disabled={true}
                                                                           onClick={[Function]}
                                                                           type="button"
                                                                         >
@@ -5760,7 +5766,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                                           >
                                                                             <Button
                                                                               block={false}
-                                                                              disabled={false}
+                                                                              disabled={true}
                                                                               ghost={false}
                                                                               htmlType="button"
                                                                               loading={false}
@@ -5768,7 +5774,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                                               <Wave>
                                                                                 <button
                                                                                   className="ant-btn"
-                                                                                  disabled={false}
+                                                                                  disabled={true}
                                                                                   onClick={[Function]}
                                                                                   type="button"
                                                                                 >
