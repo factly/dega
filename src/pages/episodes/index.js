@@ -2,13 +2,14 @@ import React from 'react';
 import EpisodeList from './components/EpisodeList';
 import { Space, Button, Form, Col, Row, Select, Input } from 'antd';
 import { Link } from 'react-router-dom';
+import getUserPermission from '../../utils/getUserPermission';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
 import { getEpisodes } from '../../actions/episodes';
 
 function Episodes({ permission }) {
-  //const { actions } = permission;
-  const actions = ['admin'];
+  const spaces = useSelector(({ spaces }) => spaces);
+  const actions = getUserPermission({ resource: 'episodes', action: 'get', spaces });
   const dispatch = useDispatch();
   const [filters, setFilters] = React.useState({
     page: 1,
