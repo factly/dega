@@ -40,7 +40,8 @@ exports[`Podcast component snapshot testing should render the component 1`] = `
         permission={
           Object {
             "actions": Array [
-              "admin",
+              "get",
+              "create",
             ],
           }
         }
@@ -1328,7 +1329,8 @@ exports[`Podcast component snapshot testing should render the component 1`] = `
                 <PodcastList
                   actions={
                     Array [
-                      "admin",
+                      "get",
+                      "create",
                     ]
                   }
                   data={
@@ -3685,7 +3687,8 @@ exports[`Podcast component snapshot testing should render the component with dat
                 <PodcastList
                   actions={
                     Array [
-                      "admin",
+                      "get",
+                      "create",
                     ]
                   }
                   data={
@@ -4018,6 +4021,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                         >
                                                           <button
                                                             class="ant-btn"
+                                                            disabled=""
                                                             type="button"
                                                           >
                                                             <span>
@@ -4031,6 +4035,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                         >
                                                           <button
                                                             class="ant-btn"
+                                                            disabled=""
                                                             type="button"
                                                           >
                                                             <span>
@@ -4072,6 +4077,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                         >
                                                           <button
                                                             class="ant-btn"
+                                                            disabled=""
                                                             type="button"
                                                           >
                                                             <span>
@@ -4085,6 +4091,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                         >
                                                           <button
                                                             class="ant-btn"
+                                                            disabled=""
                                                             type="button"
                                                           >
                                                             <span>
@@ -4294,6 +4301,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                               >
                                                                 <button
                                                                   class="ant-btn"
+                                                                  disabled=""
                                                                   type="button"
                                                                 >
                                                                   <span>
@@ -4307,6 +4315,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                               >
                                                                 <button
                                                                   class="ant-btn"
+                                                                  disabled=""
                                                                   type="button"
                                                                 >
                                                                   <span>
@@ -4348,6 +4357,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                               >
                                                                 <button
                                                                   class="ant-btn"
+                                                                  disabled=""
                                                                   type="button"
                                                                 >
                                                                   <span>
@@ -4361,6 +4371,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                               >
                                                                 <button
                                                                   class="ant-btn"
+                                                                  disabled=""
                                                                   type="button"
                                                                 >
                                                                   <span>
@@ -5130,7 +5141,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                                   >
                                                                     <Button
                                                                       block={false}
-                                                                      disabled={false}
+                                                                      disabled={true}
                                                                       ghost={false}
                                                                       htmlType="button"
                                                                       loading={false}
@@ -5138,7 +5149,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                                       <Wave>
                                                                         <button
                                                                           className="ant-btn"
-                                                                          disabled={false}
+                                                                          disabled={true}
                                                                           onClick={[Function]}
                                                                           type="button"
                                                                         >
@@ -5791,7 +5802,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                                           >
                                                                             <Button
                                                                               block={false}
-                                                                              disabled={false}
+                                                                              disabled={true}
                                                                               ghost={false}
                                                                               htmlType="button"
                                                                               loading={false}
@@ -5799,7 +5810,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                                               <Wave>
                                                                                 <button
                                                                                   className="ant-btn"
-                                                                                  disabled={false}
+                                                                                  disabled={true}
                                                                                   onClick={[Function]}
                                                                                   type="button"
                                                                                 >
@@ -6075,7 +6086,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                                   >
                                                                     <Button
                                                                       block={false}
-                                                                      disabled={false}
+                                                                      disabled={true}
                                                                       ghost={false}
                                                                       htmlType="button"
                                                                       loading={false}
@@ -6083,7 +6094,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                                       <Wave>
                                                                         <button
                                                                           className="ant-btn"
-                                                                          disabled={false}
+                                                                          disabled={true}
                                                                           onClick={[Function]}
                                                                           type="button"
                                                                         >
@@ -6736,7 +6747,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                                           >
                                                                             <Button
                                                                               block={false}
-                                                                              disabled={false}
+                                                                              disabled={true}
                                                                               ghost={false}
                                                                               htmlType="button"
                                                                               loading={false}
@@ -6744,7 +6755,7 @@ exports[`Podcast component snapshot testing should render the component with dat
                                                                               <Wave>
                                                                                 <button
                                                                                   className="ant-btn"
-                                                                                  disabled={false}
+                                                                                  disabled={true}
                                                                                   onClick={[Function]}
                                                                                   type="button"
                                                                                 >
