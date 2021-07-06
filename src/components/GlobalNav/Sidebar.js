@@ -65,7 +65,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     'episodes',
     'podcasts',
     'events',
-    'webhooks'
+    'webhooks',
   ];
 
   permission.forEach((each) => {
