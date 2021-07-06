@@ -5862,9 +5862,13 @@
         "event.event": {
             "type": "object",
             "required": [
+                "event",
                 "name"
             ],
             "properties": {
+                "event": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -6510,6 +6514,9 @@
                     "type": "integer"
                 },
                 "deleted_at": {
+                    "type": "string"
+                },
+                "event": {
                     "type": "string"
                 },
                 "id": {

@@ -8,8 +8,9 @@ import (
 )
 
 type event struct {
-	Name string         `json:"name" validate:"required"`
-	Tags postgres.Jsonb `json:"tags" swaggertype:"primitive,string"`
+	Name  string         `json:"name" validate:"required"`
+	Event string         `json:"event" validate:"required"`
+	Tags  postgres.Jsonb `json:"tags" swaggertype:"primitive,string"`
 }
 
 // Router events endpoint router

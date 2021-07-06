@@ -5877,9 +5877,13 @@ var doc = `{
         "event.event": {
             "type": "object",
             "required": [
+                "event",
                 "name"
             ],
             "properties": {
+                "event": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -6525,6 +6529,9 @@ var doc = `{
                     "type": "integer"
                 },
                 "deleted_at": {
+                    "type": "string"
+                },
+                "event": {
                     "type": "string"
                 },
                 "id": {

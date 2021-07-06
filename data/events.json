@@ -1,128 +1,170 @@
 [
     {
-        "name": "category.created"
+        "name": "Create Category",
+        "event": "category.created"
     },
     {
-        "name": "category.updated"
+        "name": "Update Category",
+        "event": "category.updated"
     },
     {
-        "name": "category.deleted"
+        "name": "Delete Category",
+        "event": "category.deleted"
     },
     {
-        "name": "format.created"
+        "name": "Create Format",
+        "event": "format.created"
     },
     {
-        "name": "format.updated"
+        "name": "Update Format",
+        "event": "format.updated"
     },
     {
-        "name": "format.deleted"
+        "name": "Delete Format",
+        "event": "format.deleted"
     },
     {
-        "name": "media.created"
+        "name": "Create Media",
+        "event": "media.created"
     },
     {
-        "name": "media.updated"
+        "name": "Update Media",
+        "event": "media.updated"
     },
     {
-        "name": "media.deleted"
+        "name": "Delete Media",
+        "event": "media.deleted"
     },
     {
-        "name": "menu.created"
+        "name": "Create Menu",
+        "event": "menu.created"
     },
     {
-        "name": "menu.updated"
+        "name": "Update Menu",
+        "event": "menu.updated"
     },
     {
-        "name": "menu.deleted"
+        "name": "Delete Menu",
+        "event": "menu.deleted"
     },
     {
-        "name": "post.created"
+        "name": "Create Post",
+        "event": "post.created"
     },
     {
-        "name": "post.updated"
+        "name": "Update Post",
+        "event": "post.updated"
     },
     {
-        "name": "post.deleted"
+        "name": "Delete Post",
+        "event": "post.deleted"
     },
     {
-        "name": "post.template.created"
+        "name": "Create Template",
+        "event": "post.template.created"
     },
     {
-        "name": "post.published"
+        "name": "Publish Post",
+        "event": "post.published"
     },
     {
-        "name": "post.unpublished"
+        "name": "Unpublish Post",
+        "event": "post.unpublished"
     },
     {
-        "name": "post.ready"
+        "name": "Ready Post",
+        "event": "post.ready"
     },
     {
-        "name": "space.created"
+        "name": "Create Space",
+        "event": "space.created"
     },
     {
-        "name": "space.updated"
+        "name": "Update Space",
+        "event": "space.updated"
     },
     {
-        "name": "space.deleted"
+        "name": "Delete Space",
+        "event": "space.deleted"
     },
     {
-        "name": "tag.created"
+        "name": "Create Tag",
+        "event": "tag.created"
     },
     {
-        "name": "tag.updated"
+        "name": "Update Tag",
+        "event": "tag.updated"
     },
     {
-        "name": "tag.deleted"
+        "name": "Delete Tag",
+        "event": "tag.deleted"
     },
     {
-        "name": "claim.created"
+        "name": "Create Claim",
+        "event": "claim.created"
     },
     {
-        "name": "claim.updated"
+        "name": "Update Claim",
+        "event": "claim.updated"
     },
     {
-        "name": "claim.deleted"
+        "name": "Delete Claim",
+        "event": "claim.deleted"
     },
     {
-        "name": "claimant.created"
+        "name": "Create Claimant",
+        "event": "claimant.created"
     },
     {
-        "name": "claimant.updated"
+        "name": "Update Claimant",
+        "event": "claimant.updated"
     },
     {
-        "name": "claimant.deleted"
+        "name": "Delete Claimant",
+        "event": "claimant.deleted"
     },
     {
-        "name": "rating.created"
+        "name": "Create Rating",
+        "event": "rating.created"
     },
     {
-        "name": "rating.updated"
+        "name": "Update Rating",
+        "event": "rating.updated"
     },
     {
-        "name": "rating.deleted"
+        "name": "Delete Rating",
+        "event": "rating.deleted"
     },
     {
-        "name": "podcast.created"
+        "name": "Create Podcast",
+        "event": "podcast.created"
     },
     {
-        "name": "podcast.updated"
+        "name": "Update Podcast",
+        "event": "podcast.updated"
     },
     {
-        "name": "podcast.deleted"
+        "name": "Delete Podcast",
+        "event": "podcast.deleted"
     },
     {
-        "name": "episode.created"
+        "name": "Create Episode",
+        "event": "episode.created"
     },
     {
-        "name": "episode.updated"
+        "name": "Update Episode",
+        "event": "episode.updated"
     },
     {
-        "name": "episode.deleted"
+        "name": "Delete Episode",
+        "event": "episode.deleted"
     },
     {
-        "name": "policy.created"
+        "name": "Create Policy",
+        "event": "policy.created"
     },
     {
-        "name": "policy.updated"
+        "name": "Update Policy",
+        "event": "policy.updated"
     }
 ]

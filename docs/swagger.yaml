@@ -178,11 +178,14 @@ definitions:
     type: object
   event.event:
     properties:
+      event:
+        type: string
       name:
         type: string
       tags:
         type: string
     required:
+    - event
     - name
     type: object
   event.paging:
@@ -605,6 +608,8 @@ definitions:
       created_by_id:
         type: integer
       deleted_at:
+        type: string
+      event:
         type: string
       id:
         type: integer

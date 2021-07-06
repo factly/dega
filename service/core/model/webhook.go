@@ -20,8 +20,9 @@ type Webhook struct {
 // Event event model
 type Event struct {
 	config.Base
-	Name string            `json:"name"`
-	Tags map[string]string `json:"tags"`
+	Name  string            `json:"name"`
+	Event string            `json:"event"`
+	Tags  map[string]string `json:"tags"`
 }
 
 // WebhookLog model
