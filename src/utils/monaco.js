@@ -2,16 +2,15 @@ import * as Monaco from 'monaco-editor/esm/vs/editor/editor.api';
 const schemas = [
   {
     schema: {
-        type: 'object',
-        properties: {
-          q1: {
-            enum: ['x1', 'x2']
-          },
+      type: 'object',
+      properties: {
+        q1: {
+          enum: ['x1', 'x2'],
         },
       },
+    },
     uri: 'JsonSchema',
   },
-  
 ];
 
 export default function setupMonaco() {

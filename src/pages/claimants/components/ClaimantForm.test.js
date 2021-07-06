@@ -131,6 +131,17 @@ describe('Claimants Create Form component', () => {
         done();
       }, 0);
     });
+    it('Text on button should be Update for existing data', () => {
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <ClaimantCreateForm onCreate={props.onCreate} data={{ ...data, id: 1 }} />
+          </Provider>,
+        );
+      });
+      const submitButtom = wrapper.find('Button').at(1);
+      expect(submitButtom.text()).toBe('Update');
+    });
     it('should submit form with new name', (done) => {
       act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');

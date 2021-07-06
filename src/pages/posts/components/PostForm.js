@@ -1,5 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Select, Drawer, DatePicker, Dropdown, Switch, Menu } from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  Button,
+  Space,
+  Select,
+  Drawer,
+  DatePicker,
+  Dropdown,
+  Switch,
+  Menu,
+} from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';

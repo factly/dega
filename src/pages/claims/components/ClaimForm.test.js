@@ -19,14 +19,14 @@ jest.mock('../../../actions/claimants', () => ({
 }));
 
 const data = {
-  title: 'title',
+  claim: 'title',
   slug: 'slug',
   claimant: 1,
   rating: 1,
   claim_date: moment(new Date('2020-12-12')),
   checked_date: moment(new Date('2020-12-12')),
   claim_sources: 'claim_sources',
-  review: 'review',
+  fact: 'review',
   review_tag_line: 'review_tag_line',
   review_sources: 'review_sources',
   description: {
@@ -183,15 +183,21 @@ describe('Claims Create Form component', () => {
     });
     it('should submit form with given data', (done) => {
       act(() => {
-        const submitButtom = wrapper.find('Button').at(1);
-        submitButtom.simulate('submit');
-        wrapper.update();
+        const nextButton = wrapper.find('Button').at(3);
+        nextButton.simulate('click');
       });
+      wrapper.update();
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(3);
+        expect(submitButtom.text()).toBe('Submit');
+        submitButtom.simulate('submit');
+      });
+      wrapper.update();
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
-          title: 'title',
+          claim: 'title',
           slug: 'slug',
           claimant: 1,
           claimant_id: 1,
@@ -200,7 +206,7 @@ describe('Claims Create Form component', () => {
           claim_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
           checked_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
           claim_sources: 'claim_sources',
-          review: 'review',
+          fact: 'review',
           review_sources: 'review_sources',
           description: {
             time: 1595747741807,
@@ -227,19 +233,41 @@ describe('Claims Create Form component', () => {
       }, 0);
     });
     it('should submit form with new name', (done) => {
+      const data2 = { ...data, id: 1 };
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
-        input.simulate('change', { target: { value: 'new name' } });
+        wrapper = mount(
+          <Provider store={store}>
+            <ClaimCreateForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
+      act(() => {
+        const input = wrapper.find('FormItem').at(0).find('TextArea').at(0);
+        input.simulate('change', {
+          target: {
+            value:
+              'new name new claim title for testing claim update and testing slug update. slug maker should take only first one hundred and fifty characters to create a slug and not all characters from title, since claim title can be  more than 150',
+          },
+        });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(3);
+        expect(submitButtom.text()).toBe('Next');
+        submitButtom.simulate('click');
+      });
+      wrapper.update();
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(3);
+        expect(submitButtom.text()).toBe('Update');
         submitButtom.simulate('submit');
       });
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
-          title: 'new name',
-          slug: 'new-name',
+          claim:
+            'new name new claim title for testing claim update and testing slug update. slug maker should take only first one hundred and fifty characters to create a slug and not all characters from title, since claim title can be  more than 150',
+          slug:
+            'new-name-new-claim-title-for-testing-claim-update-and-testing-slug-update-slug-maker-should-take-only-first-one-hundred-and-fifty-characters-to-creat',
           claimant: 1,
           claimant_id: 1,
           rating: 1,
@@ -247,7 +275,7 @@ describe('Claims Create Form component', () => {
           claim_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
           checked_date: moment(new Date('2020-12-12')).format('YYYY-MM-DDTHH:mm:ssZ'),
           claim_sources: 'claim_sources',
-          review: 'review',
+          fact: 'review',
           review_sources: 'review_sources',
           description: {
             time: 1595747741807,
@@ -293,63 +321,6 @@ describe('Claims Create Form component', () => {
         ],
         version: '2.18.0',
       };
-      const newClaimSources = {
-        time: 1595747741807,
-        blocks: [
-          {
-            type: 'header',
-            data: {
-              text: 'Editor.js',
-              level: 2,
-            },
-          },
-          {
-            type: 'paragraph',
-            data: {
-              text: 'updated claim sources',
-            },
-          },
-        ],
-        version: '2.18.0',
-      };
-      const newReview = {
-        time: 1595747741807,
-        blocks: [
-          {
-            type: 'header',
-            data: {
-              text: 'Editor.js',
-              level: 2,
-            },
-          },
-          {
-            type: 'paragraph',
-            data: {
-              text: 'updated review',
-            },
-          },
-        ],
-        version: '2.18.0',
-      };
-      const newReviewTagLines = {
-        time: 1595747741807,
-        blocks: [
-          {
-            type: 'header',
-            data: {
-              text: 'Editor.js',
-              level: 2,
-            },
-          },
-          {
-            type: 'paragraph',
-            data: {
-              text: 'updated review taglines',
-            },
-          },
-        ],
-        version: '2.18.0',
-      };
       act(() => {
         wrapper
           .find('FormItem')
@@ -361,7 +332,8 @@ describe('Claims Create Form component', () => {
         wrapper
           .find('FormItem')
           .at(0)
-          .find('Input')
+          .find('TextArea')
+          .at(0)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
@@ -370,18 +342,18 @@ describe('Claims Create Form component', () => {
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(3)
           .find('Select')
           .at(0)
           .props()
           .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(4)
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 2 } });
+          .onChange({ target: { value: 3 } });
         wrapper
           .find('FormItem')
           .at(6)
@@ -398,11 +370,10 @@ describe('Claims Create Form component', () => {
           .onChange({ target: { value: moment(new Date('2020-04-04')) } });
         wrapper
           .find('FormItem')
-          .at(4)
-          .find('Editor')
+          .at(2)
+          .find('TextArea')
           .at(0)
-          .props()
-          .onChange({ target: { value: newReview } });
+          .simulate('change', { target: { value: 'new review' } });
         const submitButtom = wrapper.find('Button').at(3);
         expect(submitButtom.text()).toBe('Next');
         submitButtom.simulate('click');
@@ -418,16 +389,16 @@ describe('Claims Create Form component', () => {
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
-          title: 'new name',
+          claim: 'new name',
           slug: 'new-slug',
           claimant: 2,
           claimant_id: 2,
-          rating: 2,
-          rating_id: 2,
+          rating: 3,
+          rating_id: 3,
           claim_date: moment(new Date('2020-01-01')).format('YYYY-MM-DDTHH:mm:ssZ'),
           checked_date: moment(new Date('2020-04-04')).format('YYYY-MM-DDTHH:mm:ssZ'),
           claim_sources: 'claim_sources',
-          review: newReview,
+          fact: 'new review',
           review_sources: 'review_sources',
           description: newDescription,
         });
@@ -453,7 +424,7 @@ describe('Claims Create Form component', () => {
       const formListInputCount = wrapper.find('FormList').find('Input').length;
       expect(formListInputCount).toBe(0);
       act(() => {
-        const button = wrapper.find('FormItem').at(9).find('Button').at(0);
+        const button = wrapper.find('FormItem').at(10).find('Button').at(0);
         expect(button.text()).toBe('Add Review sources');
         button.simulate('click');
       });
@@ -462,7 +433,7 @@ describe('Claims Create Form component', () => {
     });
     it('should remove review sources input field on button click', () => {
       act(() => {
-        const button = wrapper.find('FormItem').at(9).find('Button');
+        const button = wrapper.find('FormItem').at(10).find('Button');
         expect(button.text()).toBe('Add Review sources');
         button.simulate('click');
       });
@@ -478,7 +449,7 @@ describe('Claims Create Form component', () => {
       const formListInputCount = wrapper.find('FormList').find('Input').length;
       expect(formListInputCount).toBe(0);
       act(() => {
-        const button = wrapper.find('FormItem').at(8).find('Button').at(0);
+        const button = wrapper.find('FormItem').at(9).find('Button').at(0);
         expect(button.text()).toBe('Add Claim sources');
         button.simulate('click');
       });
@@ -487,7 +458,7 @@ describe('Claims Create Form component', () => {
     });
     it('should remove claim sources input field on button click', () => {
       act(() => {
-        const button = wrapper.find('FormItem').at(8).find('Button');
+        const button = wrapper.find('FormItem').at(9).find('Button');
         expect(button.text()).toBe('Add Claim sources');
         button.simulate('click');
       });
@@ -501,13 +472,12 @@ describe('Claims Create Form component', () => {
     });
     it('should submit with no dates', (done) => {
       const data2 = {
-        id: 1,
-        title: 'title',
+        claim: 'title',
         slug: 'slug',
         claimant: 1,
         rating: 1,
         claim_sources: 'claim_sources',
-        review: 'review',
+        fact: 'review',
         review_sources: 'review_sources',
         description: {
           time: 1595747741807,
@@ -538,15 +508,21 @@ describe('Claims Create Form component', () => {
         );
       });
       act(() => {
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(3);
+        expect(submitButtom.text()).toBe('Next');
+        submitButtom.simulate('click');
+      });
+      wrapper.update();
+      act(() => {
+        const submitButtom = wrapper.find('Button').at(3);
+        expect(submitButtom.text()).toBe('Submit');
         submitButtom.simulate('submit');
-        wrapper.update();
       });
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
-          title: 'title',
+          claim: 'title',
           slug: 'slug',
           claimant: 1,
           claimant_id: 1,
@@ -555,7 +531,7 @@ describe('Claims Create Form component', () => {
           claim_date: null,
           checked_date: null,
           claim_sources: 'claim_sources',
-          review: 'review',
+          fact: 'review',
           review_sources: 'review_sources',
           description: {
             time: 1595747741807,
@@ -591,12 +567,12 @@ describe('Claims Create Form component', () => {
     it('should not submit with empty url for review sources', (done) => {
       const data2 = {
         id: 1,
-        title: 'title',
+        claim: 'title',
         slug: 'slug',
         claimant: 1,
         rating: 1,
         claim_sources: 'claim_sources',
-        review: 'review',
+        fact: 'review',
         description: {
           time: 1595747741807,
           blocks: [
@@ -628,7 +604,7 @@ describe('Claims Create Form component', () => {
       const formListInputCount = wrapper.find('FormList').find('Input').length;
       expect(formListInputCount).toBe(0);
       act(() => {
-        const button = wrapper.find('FormItem').at(9).find('Button').at(0);
+        const button = wrapper.find('FormItem').at(10).find('Button').at(0);
         expect(button.text()).toBe('Add Review sources');
         button.simulate('click');
       });

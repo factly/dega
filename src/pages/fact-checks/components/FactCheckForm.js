@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Form, Input, Button, Space, Drawer, DatePicker, Dropdown, Menu, Switch } from 'antd';
+import {
+  Row,
+  Col,
+  Form,
+  Input,
+  Button,
+  Space,
+  Drawer,
+  DatePicker,
+  Dropdown,
+  Menu,
+  Switch,
+} from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
@@ -61,7 +73,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     const fetchedClaimId = claims.req[0].data[0];
     const fetchedClaim = claims.details[fetchedClaimId];
     if (newClaim.title === fetchedClaim.title) {
-      updateClaims(fetchedClaimId); 
+      updateClaims(fetchedClaimId);
     }
   }
 
