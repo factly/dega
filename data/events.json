@@ -51,6 +51,12 @@
         "name": "post.published"
     },
     {
+        "name": "post.unpublished"
+    },
+    {
+        "name": "post.ready"
+    },
+    {
         "name": "space.created"
     },
     {
