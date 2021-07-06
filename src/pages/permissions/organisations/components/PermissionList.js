@@ -54,10 +54,14 @@ function PermissionList({ admin }) {
       title: 'Spaces',
       dataIndex: ['permission', 'spaces'],
       render: (_, record) => {
-        return record.permission.spaces > 0 ? (
-          <p>{record.permission.spaces ? record.permission.spaces : 0}</p>
+        return record.permission.spaces ? (
+          record.permission.spaces > 0 ? (
+            <p>{record.permission.spaces}</p>
+          ) : (
+            <p>Unlimited</p>
+          )
         ) : (
-          <p>Unlimited</p>
+          <p>0</p>
         );
       },
     },
