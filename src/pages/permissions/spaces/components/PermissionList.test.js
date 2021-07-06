@@ -19,12 +19,12 @@ let state = {
   spacePermissions: {
     req: [
       {
-        data: [1, 2, 3],
+        data: [1, 2, 3, 4],
         query: {
           page: 1,
           limit: 20,
         },
-        total: 2,
+        total: 4,
       },
     ],
     details: {
@@ -37,6 +37,7 @@ let state = {
           fact_check: true,
           media: -1,
           posts: -1,
+          episodes: -1,
         },
       },
       2: {
@@ -53,9 +54,19 @@ let state = {
         },
       },
       3: {
-        id: 1,
+        id: 3,
         name: 'Space 3',
         organisation_id: 9,
+      },
+      4: {
+        id: 4,
+        name: 'Space 4',
+        organisation_id: 5,
+        permission: {
+          id: 3,
+          fact_check: false,
+          podcast: true,
+        },
       },
     },
     loading: false,
