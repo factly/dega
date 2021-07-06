@@ -61,10 +61,10 @@ function PermissionList({ admin }) {
       title: 'Media',
       dataIndex: ['permission', 'media'],
       render: (_, record) => {
-        return record.permission.media > 0 ? (
-          <p>{record.permission.media ? record.permission.media : 0}</p>
+        return record.permission.media ? (
+          <p>{record.permission.media >= 0 ? record.permission.media : 'Unlimited'}</p>
         ) : (
-          <p>Unlimited</p>
+          <p>0</p>
         );
       },
     },
@@ -72,10 +72,10 @@ function PermissionList({ admin }) {
       title: 'Posts',
       dataIndex: ['permission', 'posts'],
       render: (_, record) => {
-        return record.permission.posts > 0 ? (
-          <p>{record.permission.posts ? record.permission.posts : 0}</p>
+        return record.permission.posts ? (
+          <p>{record.permission.posts >= 0 ? record.permission.posts : 'Unlimited'}</p>
         ) : (
-          <p>Unlimited</p>
+          <p>0</p>
         );
       },
     },
@@ -83,10 +83,10 @@ function PermissionList({ admin }) {
       title: 'Episodes',
       dataIndex: ['permission', 'episodes'],
       render: (_, record) => {
-        return record.permission.episodes > 0 ? (
-          <p>{record.permission.episodes ? record.permission.episodes : 0}</p>
+        return record.permission.episodes ? (
+          <p>{record.permission.episodes >= 0 ? record.permission.episodes : 'Unlimited'}</p>
         ) : (
-          <p>Unlimited</p>
+          <p>0</p>
         );
       },
     },

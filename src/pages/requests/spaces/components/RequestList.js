@@ -45,24 +45,24 @@ function RequestList() {
       title: 'Media',
       dataIndex: 'media',
       render: (_, record) => {
-        return record.media > 0 ? <p>{record.media ? record.media : 0}</p> : <p>Unlimited</p>;
+        return record.media ? <p>{record.media >= 0 ? record.media : 'Unlimited'}</p> : <p>0</p>;
       },
     },
     {
       title: 'Posts',
       dataIndex: 'posts',
       render: (_, record) => {
-        return record.posts > 0 ? <p>{record.posts ? record.posts : 0}</p> : <p>Unlimited</p>;
+        return record.posts ? <p>{record.posts >= 0 ? record.posts : 'Unlimited'}</p> : <p>0</p>;
       },
     },
     {
       title: 'Episodes',
       dataIndex: 'episodes',
       render: (_, record) => {
-        return record.episodes > 0 ? (
-          <p>{record.episodes ? record.episodes : 0}</p>
+        return record.episodes ? (
+          <p>{record.episodes >= 0 ? record.episodes : 'Unlimited'}</p>
         ) : (
-          <p>Unlimited</p>
+          <p>0</p>
         );
       },
     },
