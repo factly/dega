@@ -6940,6 +6940,9 @@ var doc = `{
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
                 },
+                "meta": {
+                    "type": "string"
+                },
                 "published_date": {
                     "type": "string"
                 },
@@ -7562,6 +7565,9 @@ var doc = `{
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
                 },
+                "meta": {
+                    "type": "string"
+                },
                 "published_date": {
                     "type": "string"
                 },
@@ -7736,6 +7742,9 @@ var doc = `{
                 "is_sticky": {
                     "type": "boolean"
                 },
+                "meta": {
+                    "type": "string"
+                },
                 "published_date": {
                     "type": "string"
                 },
@@ -7833,6 +7842,9 @@ var doc = `{
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
+                },
+                "meta": {
+                    "type": "string"
                 },
                 "published_date": {
                     "type": "string"

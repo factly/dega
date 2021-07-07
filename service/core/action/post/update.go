@@ -199,6 +199,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsSticky:         post.IsSticky,
 		FormatID:         post.FormatID,
 		FeaturedMediumID: featuredMediumID,
+		Meta:             post.Meta,
 	}
 
 	oldStatus := result.Post.Status

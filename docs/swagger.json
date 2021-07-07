@@ -6925,6 +6925,9 @@
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
                 },
+                "meta": {
+                    "type": "string"
+                },
                 "published_date": {
                     "type": "string"
                 },
@@ -7547,6 +7550,9 @@
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
                 },
+                "meta": {
+                    "type": "string"
+                },
                 "published_date": {
                     "type": "string"
                 },
@@ -7721,6 +7727,9 @@
                 "is_sticky": {
                     "type": "boolean"
                 },
+                "meta": {
+                    "type": "string"
+                },
                 "published_date": {
                     "type": "string"
                 },
@@ -7818,6 +7827,9 @@
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
+                },
+                "meta": {
+                    "type": "string"
                 },
                 "published_date": {
                     "type": "string"

@@ -879,6 +879,8 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
+      meta:
+        type: string
       published_date:
         type: string
       schemas:
@@ -1290,6 +1292,8 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
+      meta:
+        type: string
       published_date:
         type: string
       schemas:
@@ -1402,6 +1406,8 @@ definitions:
         type: boolean
       is_sticky:
         type: boolean
+      meta:
+        type: string
       published_date:
         type: string
       slug:
@@ -1470,6 +1476,8 @@ definitions:
         type: boolean
       medium:
         $ref: '#/definitions/model.Medium'
+      meta:
+        type: string
       published_date:
         type: string
       schemas:

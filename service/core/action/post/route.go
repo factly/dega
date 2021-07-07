@@ -27,6 +27,7 @@ type post struct {
 	PublishedDate    *time.Time     `json:"published_date"`
 	FormatID         uint           `json:"format_id" validate:"required"`
 	SpaceID          uint           `json:"space_id"`
+	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`
 	ClaimIDs         []uint         `json:"claim_ids"`
