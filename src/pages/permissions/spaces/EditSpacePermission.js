@@ -37,7 +37,6 @@ function EditSpacePermission() {
     return <SpacePermissionEditForm data={space.permission} onCreate={onUpdate} />;
   }
   if (loading) return <Skeleton />;
-
 }
 
 export default EditSpacePermission;

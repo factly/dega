@@ -37,7 +37,6 @@ function EditOrganisationPermission() {
     return <OrganisationPermissionEditForm data={organisation.permission} onCreate={onUpdate} />;
 
   if (loading) return <Skeleton />;
-
 }
 
 export default EditOrganisationPermission;
