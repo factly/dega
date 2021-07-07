@@ -4748,7 +4748,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
             </FormItem>
             <FormItem
               key="permissions-9"
-              label="policies"
+              label="Policies"
               name={
                 Array [
                   "permissions",
@@ -4757,10 +4757,10 @@ exports[`Policy Create Form component snapshot testing should match component wi
               }
             >
               <WrapperField
-                label="policies"
+                label="Policies"
                 messageVariables={
                   Object {
-                    "label": "policies",
+                    "label": "Policies",
                   }
                 }
                 name={
@@ -4800,10 +4800,10 @@ exports[`Policy Create Form component snapshot testing should match component wi
                     }
                   }
                   key="_permissions_policies"
-                  label="policies"
+                  label="Policies"
                   messageVariables={
                     Object {
-                      "label": "policies",
+                      "label": "Policies",
                     }
                   }
                   name={
@@ -4827,7 +4827,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                     >
                       <FormItemLabel
                         htmlFor="create-policy_permissions_policies"
-                        label="policies"
+                        label="Policies"
                         name={
                           Array [
                             "permissions",
@@ -4848,16 +4848,16 @@ exports[`Policy Create Form component snapshot testing should match component wi
                             <label
                               className=""
                               htmlFor="create-policy_permissions_policies"
-                              title="policies"
+                              title="Policies"
                             >
-                              policies
+                              Policies
                             </label>
                           </div>
                         </Col>
                       </FormItemLabel>
                       <FormItemInput
                         errors={Array []}
-                        label="policies"
+                        label="Policies"
                         name={
                           Array [
                             "permissions",
@@ -5129,25 +5129,25 @@ exports[`Policy Create Form component snapshot testing should match component wi
             </FormItem>
             <FormItem
               key="permissions-10"
-              label="Podcast"
+              label="Podcasts"
               name={
                 Array [
                   "permissions",
-                  "podcast",
+                  "podcasts",
                 ]
               }
             >
               <WrapperField
-                label="Podcast"
+                label="Podcasts"
                 messageVariables={
                   Object {
-                    "label": "Podcast",
+                    "label": "Podcasts",
                   }
                 }
                 name={
                   Array [
                     "permissions",
-                    "podcast",
+                    "podcasts",
                   ]
                 }
                 onReset={[Function]}
@@ -5180,17 +5180,17 @@ exports[`Policy Create Form component snapshot testing should match component wi
                       "validateTrigger": "onChange",
                     }
                   }
-                  key="_permissions_podcast"
-                  label="Podcast"
+                  key="_permissions_podcasts"
+                  label="Podcasts"
                   messageVariables={
                     Object {
-                      "label": "Podcast",
+                      "label": "Podcasts",
                     }
                   }
                   name={
                     Array [
                       "permissions",
-                      "podcast",
+                      "podcasts",
                     ]
                   }
                   onReset={[Function]}
@@ -5207,12 +5207,12 @@ exports[`Policy Create Form component snapshot testing should match component wi
                       style={Object {}}
                     >
                       <FormItemLabel
-                        htmlFor="create-policy_permissions_podcast"
-                        label="Podcast"
+                        htmlFor="create-policy_permissions_podcasts"
+                        label="Podcasts"
                         name={
                           Array [
                             "permissions",
-                            "podcast",
+                            "podcasts",
                           ]
                         }
                         prefixCls="ant-form"
@@ -5228,21 +5228,21 @@ exports[`Policy Create Form component snapshot testing should match component wi
                           >
                             <label
                               className=""
-                              htmlFor="create-policy_permissions_podcast"
-                              title="Podcast"
+                              htmlFor="create-policy_permissions_podcasts"
+                              title="Podcasts"
                             >
-                              Podcast
+                              Podcasts
                             </label>
                           </div>
                         </Col>
                       </FormItemLabel>
                       <FormItemInput
                         errors={Array []}
-                        label="Podcast"
+                        label="Podcasts"
                         name={
                           Array [
                             "permissions",
-                            "podcast",
+                            "podcasts",
                           ]
                         }
                         onDomErrorVisibleChange={[Function]}
@@ -5269,7 +5269,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                   update={1}
                                 >
                                   <Memo(CheckboxGroup)
-                                    id="create-policy_permissions_podcast"
+                                    id="create-policy_permissions_podcasts"
                                     onChange={[Function]}
                                     options={
                                       Array [
@@ -5294,7 +5294,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                   >
                                     <div
                                       className="ant-checkbox-group"
-                                      id="create-policy_permissions_podcast"
+                                      id="create-policy_permissions_podcasts"
                                     >
                                       <Checkbox
                                         checked={false}
@@ -5676,6 +5676,1149 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                     <div
                                       className="ant-checkbox-group"
                                       id="create-policy_permissions_episodes"
+                                    >
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="get"
+                                        prefixCls="ant-checkbox"
+                                        value="get"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="get"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="get"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Get
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="create"
+                                        prefixCls="ant-checkbox"
+                                        value="create"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="create"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="create"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Create
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="update"
+                                        prefixCls="ant-checkbox"
+                                        value="update"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="update"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="update"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Update
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="delete"
+                                        prefixCls="ant-checkbox"
+                                        value="delete"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="delete"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="delete"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Delete
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                    </div>
+                                  </Memo(CheckboxGroup)>
+                                </Component>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </Field>
+              </WrapperField>
+            </FormItem>
+            <FormItem
+              key="permissions-12"
+              label="Menus"
+              name={
+                Array [
+                  "permissions",
+                  "menus",
+                ]
+              }
+            >
+              <WrapperField
+                label="Menus"
+                messageVariables={
+                  Object {
+                    "label": "Menus",
+                  }
+                }
+                name={
+                  Array [
+                    "permissions",
+                    "menus",
+                  ]
+                }
+                onReset={[Function]}
+                trigger="onChange"
+                validateTrigger="onChange"
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_permissions_menus"
+                  label="Menus"
+                  messageVariables={
+                    Object {
+                      "label": "Menus",
+                    }
+                  }
+                  name={
+                    Array [
+                      "permissions",
+                      "menus",
+                    ]
+                  }
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="value"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        htmlFor="create-policy_permissions_menus"
+                        label="Menus"
+                        name={
+                          Array [
+                            "permissions",
+                            "menus",
+                          ]
+                        }
+                        prefixCls="ant-form"
+                        required={false}
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              htmlFor="create-policy_permissions_menus"
+                              title="Menus"
+                            >
+                              Menus
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Menus"
+                        name={
+                          Array [
+                            "permissions",
+                            "menus",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        touched={false}
+                        validateStatus=""
+                        validating={false}
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <Component
+                                  update={1}
+                                >
+                                  <Memo(CheckboxGroup)
+                                    id="create-policy_permissions_menus"
+                                    onChange={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Get",
+                                          "value": "get",
+                                        },
+                                        Object {
+                                          "label": "Create",
+                                          "value": "create",
+                                        },
+                                        Object {
+                                          "label": "Update",
+                                          "value": "update",
+                                        },
+                                        Object {
+                                          "label": "Delete",
+                                          "value": "delete",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="ant-checkbox-group"
+                                      id="create-policy_permissions_menus"
+                                    >
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="get"
+                                        prefixCls="ant-checkbox"
+                                        value="get"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="get"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="get"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Get
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="create"
+                                        prefixCls="ant-checkbox"
+                                        value="create"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="create"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="create"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Create
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="update"
+                                        prefixCls="ant-checkbox"
+                                        value="update"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="update"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="update"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Update
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="delete"
+                                        prefixCls="ant-checkbox"
+                                        value="delete"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="delete"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="delete"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Delete
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                    </div>
+                                  </Memo(CheckboxGroup)>
+                                </Component>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </Field>
+              </WrapperField>
+            </FormItem>
+            <FormItem
+              key="permissions-13"
+              label="Pages"
+              name={
+                Array [
+                  "permissions",
+                  "pages",
+                ]
+              }
+            >
+              <WrapperField
+                label="Pages"
+                messageVariables={
+                  Object {
+                    "label": "Pages",
+                  }
+                }
+                name={
+                  Array [
+                    "permissions",
+                    "pages",
+                  ]
+                }
+                onReset={[Function]}
+                trigger="onChange"
+                validateTrigger="onChange"
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_permissions_pages"
+                  label="Pages"
+                  messageVariables={
+                    Object {
+                      "label": "Pages",
+                    }
+                  }
+                  name={
+                    Array [
+                      "permissions",
+                      "pages",
+                    ]
+                  }
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="value"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        htmlFor="create-policy_permissions_pages"
+                        label="Pages"
+                        name={
+                          Array [
+                            "permissions",
+                            "pages",
+                          ]
+                        }
+                        prefixCls="ant-form"
+                        required={false}
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              htmlFor="create-policy_permissions_pages"
+                              title="Pages"
+                            >
+                              Pages
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Pages"
+                        name={
+                          Array [
+                            "permissions",
+                            "pages",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        touched={false}
+                        validateStatus=""
+                        validating={false}
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <Component
+                                  update={1}
+                                >
+                                  <Memo(CheckboxGroup)
+                                    id="create-policy_permissions_pages"
+                                    onChange={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Get",
+                                          "value": "get",
+                                        },
+                                        Object {
+                                          "label": "Create",
+                                          "value": "create",
+                                        },
+                                        Object {
+                                          "label": "Update",
+                                          "value": "update",
+                                        },
+                                        Object {
+                                          "label": "Delete",
+                                          "value": "delete",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="ant-checkbox-group"
+                                      id="create-policy_permissions_pages"
+                                    >
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="get"
+                                        prefixCls="ant-checkbox"
+                                        value="get"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="get"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="get"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Get
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="create"
+                                        prefixCls="ant-checkbox"
+                                        value="create"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="create"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="create"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Create
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="update"
+                                        prefixCls="ant-checkbox"
+                                        value="update"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="update"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="update"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Update
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="delete"
+                                        prefixCls="ant-checkbox"
+                                        value="delete"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="delete"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="delete"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Delete
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                    </div>
+                                  </Memo(CheckboxGroup)>
+                                </Component>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </Field>
+              </WrapperField>
+            </FormItem>
+            <FormItem
+              key="permissions-14"
+              label="Webhooks"
+              name={
+                Array [
+                  "permissions",
+                  "webhooks",
+                ]
+              }
+            >
+              <WrapperField
+                label="Webhooks"
+                messageVariables={
+                  Object {
+                    "label": "Webhooks",
+                  }
+                }
+                name={
+                  Array [
+                    "permissions",
+                    "webhooks",
+                  ]
+                }
+                onReset={[Function]}
+                trigger="onChange"
+                validateTrigger="onChange"
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_permissions_webhooks"
+                  label="Webhooks"
+                  messageVariables={
+                    Object {
+                      "label": "Webhooks",
+                    }
+                  }
+                  name={
+                    Array [
+                      "permissions",
+                      "webhooks",
+                    ]
+                  }
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="value"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        htmlFor="create-policy_permissions_webhooks"
+                        label="Webhooks"
+                        name={
+                          Array [
+                            "permissions",
+                            "webhooks",
+                          ]
+                        }
+                        prefixCls="ant-form"
+                        required={false}
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              htmlFor="create-policy_permissions_webhooks"
+                              title="Webhooks"
+                            >
+                              Webhooks
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Webhooks"
+                        name={
+                          Array [
+                            "permissions",
+                            "webhooks",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        touched={false}
+                        validateStatus=""
+                        validating={false}
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <Component
+                                  update={1}
+                                >
+                                  <Memo(CheckboxGroup)
+                                    id="create-policy_permissions_webhooks"
+                                    onChange={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Get",
+                                          "value": "get",
+                                        },
+                                        Object {
+                                          "label": "Create",
+                                          "value": "create",
+                                        },
+                                        Object {
+                                          "label": "Update",
+                                          "value": "update",
+                                        },
+                                        Object {
+                                          "label": "Delete",
+                                          "value": "delete",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="ant-checkbox-group"
+                                      id="create-policy_permissions_webhooks"
                                     >
                                       <Checkbox
                                         checked={false}
@@ -10666,7 +11809,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
             </FormItem>
             <FormItem
               key="permissions-9"
-              label="policies"
+              label="Policies"
               name={
                 Array [
                   "permissions",
@@ -10675,10 +11818,10 @@ exports[`Policy Create Form component snapshot testing should render the compone
               }
             >
               <WrapperField
-                label="policies"
+                label="Policies"
                 messageVariables={
                   Object {
-                    "label": "policies",
+                    "label": "Policies",
                   }
                 }
                 name={
@@ -10718,10 +11861,10 @@ exports[`Policy Create Form component snapshot testing should render the compone
                     }
                   }
                   key="_permissions_policies"
-                  label="policies"
+                  label="Policies"
                   messageVariables={
                     Object {
-                      "label": "policies",
+                      "label": "Policies",
                     }
                   }
                   name={
@@ -10745,7 +11888,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                     >
                       <FormItemLabel
                         htmlFor="create-policy_permissions_policies"
-                        label="policies"
+                        label="Policies"
                         name={
                           Array [
                             "permissions",
@@ -10766,16 +11909,16 @@ exports[`Policy Create Form component snapshot testing should render the compone
                             <label
                               className=""
                               htmlFor="create-policy_permissions_policies"
-                              title="policies"
+                              title="Policies"
                             >
-                              policies
+                              Policies
                             </label>
                           </div>
                         </Col>
                       </FormItemLabel>
                       <FormItemInput
                         errors={Array []}
-                        label="policies"
+                        label="Policies"
                         name={
                           Array [
                             "permissions",
@@ -11047,25 +12190,25 @@ exports[`Policy Create Form component snapshot testing should render the compone
             </FormItem>
             <FormItem
               key="permissions-10"
-              label="Podcast"
+              label="Podcasts"
               name={
                 Array [
                   "permissions",
-                  "podcast",
+                  "podcasts",
                 ]
               }
             >
               <WrapperField
-                label="Podcast"
+                label="Podcasts"
                 messageVariables={
                   Object {
-                    "label": "Podcast",
+                    "label": "Podcasts",
                   }
                 }
                 name={
                   Array [
                     "permissions",
-                    "podcast",
+                    "podcasts",
                   ]
                 }
                 onReset={[Function]}
@@ -11098,17 +12241,17 @@ exports[`Policy Create Form component snapshot testing should render the compone
                       "validateTrigger": "onChange",
                     }
                   }
-                  key="_permissions_podcast"
-                  label="Podcast"
+                  key="_permissions_podcasts"
+                  label="Podcasts"
                   messageVariables={
                     Object {
-                      "label": "Podcast",
+                      "label": "Podcasts",
                     }
                   }
                   name={
                     Array [
                       "permissions",
-                      "podcast",
+                      "podcasts",
                     ]
                   }
                   onReset={[Function]}
@@ -11125,12 +12268,12 @@ exports[`Policy Create Form component snapshot testing should render the compone
                       style={Object {}}
                     >
                       <FormItemLabel
-                        htmlFor="create-policy_permissions_podcast"
-                        label="Podcast"
+                        htmlFor="create-policy_permissions_podcasts"
+                        label="Podcasts"
                         name={
                           Array [
                             "permissions",
-                            "podcast",
+                            "podcasts",
                           ]
                         }
                         prefixCls="ant-form"
@@ -11146,21 +12289,21 @@ exports[`Policy Create Form component snapshot testing should render the compone
                           >
                             <label
                               className=""
-                              htmlFor="create-policy_permissions_podcast"
-                              title="Podcast"
+                              htmlFor="create-policy_permissions_podcasts"
+                              title="Podcasts"
                             >
-                              Podcast
+                              Podcasts
                             </label>
                           </div>
                         </Col>
                       </FormItemLabel>
                       <FormItemInput
                         errors={Array []}
-                        label="Podcast"
+                        label="Podcasts"
                         name={
                           Array [
                             "permissions",
-                            "podcast",
+                            "podcasts",
                           ]
                         }
                         onDomErrorVisibleChange={[Function]}
@@ -11187,7 +12330,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                   update={1}
                                 >
                                   <Memo(CheckboxGroup)
-                                    id="create-policy_permissions_podcast"
+                                    id="create-policy_permissions_podcasts"
                                     onChange={[Function]}
                                     options={
                                       Array [
@@ -11212,7 +12355,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                   >
                                     <div
                                       className="ant-checkbox-group"
-                                      id="create-policy_permissions_podcast"
+                                      id="create-policy_permissions_podcasts"
                                     >
                                       <Checkbox
                                         checked={false}
@@ -11594,6 +12737,1149 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                     <div
                                       className="ant-checkbox-group"
                                       id="create-policy_permissions_episodes"
+                                    >
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="get"
+                                        prefixCls="ant-checkbox"
+                                        value="get"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="get"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="get"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Get
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="create"
+                                        prefixCls="ant-checkbox"
+                                        value="create"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="create"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="create"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Create
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="update"
+                                        prefixCls="ant-checkbox"
+                                        value="update"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="update"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="update"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Update
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="delete"
+                                        prefixCls="ant-checkbox"
+                                        value="delete"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="delete"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="delete"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Delete
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                    </div>
+                                  </Memo(CheckboxGroup)>
+                                </Component>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </Field>
+              </WrapperField>
+            </FormItem>
+            <FormItem
+              key="permissions-12"
+              label="Menus"
+              name={
+                Array [
+                  "permissions",
+                  "menus",
+                ]
+              }
+            >
+              <WrapperField
+                label="Menus"
+                messageVariables={
+                  Object {
+                    "label": "Menus",
+                  }
+                }
+                name={
+                  Array [
+                    "permissions",
+                    "menus",
+                  ]
+                }
+                onReset={[Function]}
+                trigger="onChange"
+                validateTrigger="onChange"
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_permissions_menus"
+                  label="Menus"
+                  messageVariables={
+                    Object {
+                      "label": "Menus",
+                    }
+                  }
+                  name={
+                    Array [
+                      "permissions",
+                      "menus",
+                    ]
+                  }
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="value"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        htmlFor="create-policy_permissions_menus"
+                        label="Menus"
+                        name={
+                          Array [
+                            "permissions",
+                            "menus",
+                          ]
+                        }
+                        prefixCls="ant-form"
+                        required={false}
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              htmlFor="create-policy_permissions_menus"
+                              title="Menus"
+                            >
+                              Menus
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Menus"
+                        name={
+                          Array [
+                            "permissions",
+                            "menus",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        touched={false}
+                        validateStatus=""
+                        validating={false}
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <Component
+                                  update={1}
+                                >
+                                  <Memo(CheckboxGroup)
+                                    id="create-policy_permissions_menus"
+                                    onChange={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Get",
+                                          "value": "get",
+                                        },
+                                        Object {
+                                          "label": "Create",
+                                          "value": "create",
+                                        },
+                                        Object {
+                                          "label": "Update",
+                                          "value": "update",
+                                        },
+                                        Object {
+                                          "label": "Delete",
+                                          "value": "delete",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="ant-checkbox-group"
+                                      id="create-policy_permissions_menus"
+                                    >
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="get"
+                                        prefixCls="ant-checkbox"
+                                        value="get"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="get"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="get"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Get
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="create"
+                                        prefixCls="ant-checkbox"
+                                        value="create"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="create"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="create"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Create
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="update"
+                                        prefixCls="ant-checkbox"
+                                        value="update"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="update"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="update"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Update
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="delete"
+                                        prefixCls="ant-checkbox"
+                                        value="delete"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="delete"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="delete"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Delete
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                    </div>
+                                  </Memo(CheckboxGroup)>
+                                </Component>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </Field>
+              </WrapperField>
+            </FormItem>
+            <FormItem
+              key="permissions-13"
+              label="Pages"
+              name={
+                Array [
+                  "permissions",
+                  "pages",
+                ]
+              }
+            >
+              <WrapperField
+                label="Pages"
+                messageVariables={
+                  Object {
+                    "label": "Pages",
+                  }
+                }
+                name={
+                  Array [
+                    "permissions",
+                    "pages",
+                  ]
+                }
+                onReset={[Function]}
+                trigger="onChange"
+                validateTrigger="onChange"
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_permissions_pages"
+                  label="Pages"
+                  messageVariables={
+                    Object {
+                      "label": "Pages",
+                    }
+                  }
+                  name={
+                    Array [
+                      "permissions",
+                      "pages",
+                    ]
+                  }
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="value"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        htmlFor="create-policy_permissions_pages"
+                        label="Pages"
+                        name={
+                          Array [
+                            "permissions",
+                            "pages",
+                          ]
+                        }
+                        prefixCls="ant-form"
+                        required={false}
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              htmlFor="create-policy_permissions_pages"
+                              title="Pages"
+                            >
+                              Pages
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Pages"
+                        name={
+                          Array [
+                            "permissions",
+                            "pages",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        touched={false}
+                        validateStatus=""
+                        validating={false}
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <Component
+                                  update={1}
+                                >
+                                  <Memo(CheckboxGroup)
+                                    id="create-policy_permissions_pages"
+                                    onChange={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Get",
+                                          "value": "get",
+                                        },
+                                        Object {
+                                          "label": "Create",
+                                          "value": "create",
+                                        },
+                                        Object {
+                                          "label": "Update",
+                                          "value": "update",
+                                        },
+                                        Object {
+                                          "label": "Delete",
+                                          "value": "delete",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="ant-checkbox-group"
+                                      id="create-policy_permissions_pages"
+                                    >
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="get"
+                                        prefixCls="ant-checkbox"
+                                        value="get"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="get"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="get"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Get
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="create"
+                                        prefixCls="ant-checkbox"
+                                        value="create"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="create"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="create"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Create
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="update"
+                                        prefixCls="ant-checkbox"
+                                        value="update"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="update"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="update"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Update
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                      <Checkbox
+                                        checked={false}
+                                        className="ant-checkbox-group-item"
+                                        indeterminate={false}
+                                        key="delete"
+                                        prefixCls="ant-checkbox"
+                                        value="delete"
+                                      >
+                                        <label
+                                          className="ant-checkbox-wrapper ant-checkbox-group-item"
+                                        >
+                                          <Checkbox
+                                            checked={false}
+                                            className=""
+                                            defaultChecked={false}
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            prefixCls="ant-checkbox"
+                                            style={Object {}}
+                                            type="checkbox"
+                                            value="delete"
+                                          >
+                                            <span
+                                              className="ant-checkbox"
+                                              style={Object {}}
+                                            >
+                                              <input
+                                                checked={false}
+                                                className="ant-checkbox-input"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                type="checkbox"
+                                                value="delete"
+                                              />
+                                              <span
+                                                className="ant-checkbox-inner"
+                                              />
+                                            </span>
+                                          </Checkbox>
+                                          <span>
+                                            Delete
+                                          </span>
+                                        </label>
+                                      </Checkbox>
+                                    </div>
+                                  </Memo(CheckboxGroup)>
+                                </Component>
+                              </div>
+                            </div>
+                            <ErrorList
+                              errors={Array []}
+                              onDomErrorVisibleChange={[Function]}
+                            >
+                              <CSSMotion
+                                motionAppear={true}
+                                motionDeadline={500}
+                                motionName="show-help"
+                                onLeaveEnd={[Function]}
+                                removeOnLeave={true}
+                                visible={false}
+                              >
+                                <DomWrapper />
+                              </CSSMotion>
+                            </ErrorList>
+                          </div>
+                        </Col>
+                      </FormItemInput>
+                    </div>
+                  </Row>
+                </Field>
+              </WrapperField>
+            </FormItem>
+            <FormItem
+              key="permissions-14"
+              label="Webhooks"
+              name={
+                Array [
+                  "permissions",
+                  "webhooks",
+                ]
+              }
+            >
+              <WrapperField
+                label="Webhooks"
+                messageVariables={
+                  Object {
+                    "label": "Webhooks",
+                  }
+                }
+                name={
+                  Array [
+                    "permissions",
+                    "webhooks",
+                  ]
+                }
+                onReset={[Function]}
+                trigger="onChange"
+                validateTrigger="onChange"
+              >
+                <Field
+                  fieldContext={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "create-policy",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                      "validateTrigger": "onChange",
+                    }
+                  }
+                  key="_permissions_webhooks"
+                  label="Webhooks"
+                  messageVariables={
+                    Object {
+                      "label": "Webhooks",
+                    }
+                  }
+                  name={
+                    Array [
+                      "permissions",
+                      "webhooks",
+                    ]
+                  }
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="value"
+                >
+                  <Row
+                    className="ant-form-item"
+                    key="row"
+                  >
+                    <div
+                      className="ant-row ant-form-item"
+                      style={Object {}}
+                    >
+                      <FormItemLabel
+                        htmlFor="create-policy_permissions_webhooks"
+                        label="Webhooks"
+                        name={
+                          Array [
+                            "permissions",
+                            "webhooks",
+                          ]
+                        }
+                        prefixCls="ant-form"
+                        required={false}
+                        requiredMark={true}
+                      >
+                        <Col
+                          className="ant-form-item-label"
+                        >
+                          <div
+                            className="ant-col ant-form-item-label"
+                            style={Object {}}
+                          >
+                            <label
+                              className=""
+                              htmlFor="create-policy_permissions_webhooks"
+                              title="Webhooks"
+                            >
+                              Webhooks
+                            </label>
+                          </div>
+                        </Col>
+                      </FormItemLabel>
+                      <FormItemInput
+                        errors={Array []}
+                        label="Webhooks"
+                        name={
+                          Array [
+                            "permissions",
+                            "webhooks",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
+                        prefixCls="ant-form"
+                        status=""
+                        touched={false}
+                        validateStatus=""
+                        validating={false}
+                      >
+                        <Col
+                          className="ant-form-item-control"
+                        >
+                          <div
+                            className="ant-col ant-form-item-control"
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-form-item-control-input"
+                            >
+                              <div
+                                className="ant-form-item-control-input-content"
+                              >
+                                <Component
+                                  update={1}
+                                >
+                                  <Memo(CheckboxGroup)
+                                    id="create-policy_permissions_webhooks"
+                                    onChange={[Function]}
+                                    options={
+                                      Array [
+                                        Object {
+                                          "label": "Get",
+                                          "value": "get",
+                                        },
+                                        Object {
+                                          "label": "Create",
+                                          "value": "create",
+                                        },
+                                        Object {
+                                          "label": "Update",
+                                          "value": "update",
+                                        },
+                                        Object {
+                                          "label": "Delete",
+                                          "value": "delete",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className="ant-checkbox-group"
+                                      id="create-policy_permissions_webhooks"
                                     >
                                       <Checkbox
                                         checked={false}

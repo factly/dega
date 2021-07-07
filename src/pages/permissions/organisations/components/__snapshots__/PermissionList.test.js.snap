@@ -3935,6 +3935,12 @@ exports[`Organisation Permission List component  snapshot testing should render 
             "render": [Function],
             "title": "Spaces",
           },
+          Object {
+            "dataIndex": "operation",
+            "render": [Function],
+            "title": "Action",
+            "width": "30%",
+          },
         ]
       }
       dataSource={Array []}
@@ -3983,6 +3989,12 @@ exports[`Organisation Permission List component  snapshot testing should render 
                       "render": [Function],
                       "title": "Spaces",
                     },
+                    Object {
+                      "dataIndex": "operation",
+                      "render": [Function],
+                      "title": "Action",
+                      "width": "30%",
+                    },
                   ]
                 }
                 data={Array []}
@@ -4011,7 +4023,13 @@ exports[`Organisation Permission List component  snapshot testing should render 
                         <table
                           style="table-layout: auto;"
                         >
-                          <colgroup />
+                          <colgroup>
+                            <col />
+                            <col />
+                            <col
+                              style="width: 30%; min-width: 30%;"
+                            />
+                          </colgroup>
                           <thead
                             class="ant-table-thead"
                           >
@@ -4026,6 +4044,11 @@ exports[`Organisation Permission List component  snapshot testing should render 
                               >
                                 Spaces
                               </th>
+                              <th
+                                class="ant-table-cell"
+                              >
+                                Action
+                              </th>
                             </tr>
                           </thead>
                           <tbody
@@ -4036,7 +4059,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                             >
                               <td
                                 class="ant-table-cell"
-                                colspan="2"
+                                colspan="3"
                               >
                                 <div
                                   class="ant-empty ant-empty-normal"
@@ -4131,6 +4154,12 @@ exports[`Organisation Permission List component  snapshot testing should render 
                             "render": [Function],
                             "title": "Spaces",
                           },
+                          Object {
+                            "dataIndex": "operation",
+                            "render": [Function],
+                            "title": "Action",
+                            "width": "30%",
+                          },
                         ],
                         "data": Array [],
                         "dataSource": Array [],
@@ -4154,7 +4183,13 @@ exports[`Organisation Permission List component  snapshot testing should render 
                               <table
                                 style="table-layout: auto;"
                               >
-                                <colgroup />
+                                <colgroup>
+                                  <col />
+                                  <col />
+                                  <col
+                                    style="width: 30%; min-width: 30%;"
+                                  />
+                                </colgroup>
                                 <thead
                                   class="ant-table-thead"
                                 >
@@ -4169,6 +4204,11 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     >
                                       Spaces
                                     </th>
+                                    <th
+                                      class="ant-table-cell"
+                                    >
+                                      Action
+                                    </th>
                                   </tr>
                                 </thead>
                                 <tbody
@@ -4179,7 +4219,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                   >
                                     <td
                                       class="ant-table-cell"
-                                      colspan="2"
+                                      colspan="3"
                                     >
                                       <div
                                         class="ant-empty ant-empty-normal"
@@ -4249,8 +4289,10 @@ exports[`Organisation Permission List component  snapshot testing should render 
                           "left": Array [
                             0,
                             0,
+                            0,
                           ],
                           "right": Array [
+                            0,
                             0,
                             0,
                           ],
@@ -4279,6 +4321,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                               Array [
                                 "",
                                 undefined,
+                                "30%",
                               ]
                             }
                             columns={
@@ -4299,19 +4342,55 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                   "render": [Function],
                                   "title": "Spaces",
                                 },
+                                Object {
+                                  "dataIndex": "operation",
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Action",
+                                  "width": "30%",
+                                },
                               ]
                             }
                           >
-                            <colgroup />
+                            <colgroup>
+                              <col
+                                key="0"
+                                style={
+                                  Object {
+                                    "minWidth": "",
+                                    "width": "",
+                                  }
+                                }
+                              />
+                              <col
+                                key="1"
+                                style={
+                                  Object {
+                                    "minWidth": undefined,
+                                    "width": undefined,
+                                  }
+                                }
+                              />
+                              <col
+                                key="2"
+                                style={
+                                  Object {
+                                    "minWidth": "30%",
+                                    "width": "30%",
+                                  }
+                                }
+                              />
+                            </colgroup>
                           </ColGroup>
                           <Header
                             colWidths={
                               Array [
                                 undefined,
                                 undefined,
+                                undefined,
                               ]
                             }
-                            columCount={2}
+                            columCount={3}
                             columns={
                               Array [
                                 Object {
@@ -4327,6 +4406,12 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                   ],
                                   "render": [Function],
                                   "title": "Spaces",
+                                },
+                                Object {
+                                  "dataIndex": "operation",
+                                  "render": [Function],
+                                  "title": "Action",
+                                  "width": "30%",
                                 },
                               ]
                             }
@@ -4348,6 +4433,13 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                   "render": [Function],
                                   "title": "Spaces",
                                 },
+                                Object {
+                                  "dataIndex": "operation",
+                                  "fixed": undefined,
+                                  "render": [Function],
+                                  "title": "Action",
+                                  "width": "30%",
+                                },
                               ]
                             }
                             stickyOffsets={
@@ -4355,8 +4447,10 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                 "left": Array [
                                   0,
                                   0,
+                                  0,
                                 ],
                                 "right": Array [
+                                  0,
                                   0,
                                   0,
                                 ],
@@ -4402,6 +4496,21 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                       "key": undefined,
                                       "rowSpan": 1,
                                     },
+                                    Object {
+                                      "children": "Action",
+                                      "className": "",
+                                      "colEnd": 2,
+                                      "colSpan": 1,
+                                      "colStart": 2,
+                                      "column": Object {
+                                        "dataIndex": "operation",
+                                        "render": [Function],
+                                        "title": "Action",
+                                        "width": "30%",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
                                   ]
                                 }
                                 flattenColumns={
@@ -4422,6 +4531,13 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                       "render": [Function],
                                       "title": "Spaces",
                                     },
+                                    Object {
+                                      "dataIndex": "operation",
+                                      "fixed": undefined,
+                                      "render": [Function],
+                                      "title": "Action",
+                                      "width": "30%",
+                                    },
                                   ]
                                 }
                                 index={0}
@@ -4432,8 +4548,10 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     "left": Array [
                                       0,
                                       0,
+                                      0,
                                     ],
                                     "right": Array [
+                                      0,
                                       0,
                                       0,
                                     ],
@@ -4507,6 +4625,38 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                       Spaces
                                     </th>
                                   </Cell>
+                                  <Cell
+                                    className=""
+                                    colEnd={2}
+                                    colSpan={1}
+                                    colStart={2}
+                                    column={
+                                      Object {
+                                        "dataIndex": "operation",
+                                        "render": [Function],
+                                        "title": "Action",
+                                        "width": "30%",
+                                      }
+                                    }
+                                    component="th"
+                                    firstFixLeft={false}
+                                    firstFixRight={false}
+                                    key="operation"
+                                    lastFixLeft={false}
+                                    lastFixRight={false}
+                                    prefixCls="ant-table"
+                                    rowSpan={1}
+                                    rowType="header"
+                                  >
+                                    <th
+                                      className="ant-table-cell"
+                                      colSpan={null}
+                                      rowSpan={null}
+                                      style={Object {}}
+                                    >
+                                      Action
+                                    </th>
+                                  </Cell>
                                 </tr>
                               </HeaderRow>
                             </thead>
@@ -4529,7 +4679,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                               <ExpandedRow
                                 cellComponent="td"
                                 className="ant-table-placeholder"
-                                colSpan={2}
+                                colSpan={3}
                                 component="tr"
                                 componentWidth={0}
                                 expanded={true}
@@ -4544,13 +4694,13 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                   }
                                 >
                                   <Cell
-                                    colSpan={2}
+                                    colSpan={3}
                                     component="td"
                                     prefixCls="ant-table"
                                   >
                                     <td
                                       className="ant-table-cell"
-                                      colSpan={2}
+                                      colSpan={3}
                                       rowSpan={null}
                                       style={Object {}}
                                     >
