@@ -3619,6 +3619,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                         value={"2020-07-17T10:14:44.251Z"}
                                       >
                                         <Picker
+                                          disabledDate={[Function]}
                                           id="create-claim_claim_date"
                                           onChange={[Function]}
                                           value={"2020-07-17T10:14:44.251Z"}
@@ -3637,6 +3638,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                   "rangeItem": [Function],
                                                 }
                                               }
+                                              disabledDate={[Function]}
                                               generateConfig={
                                                 Object {
                                                   "addDate": [Function],
@@ -3759,6 +3761,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                     "rangeItem": [Function],
                                                   }
                                                 }
+                                                disabledDate={[Function]}
                                                 generateConfig={
                                                   Object {
                                                     "addDate": [Function],
@@ -3895,6 +3898,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                             "rangeItem": [Function],
                                                           }
                                                         }
+                                                        disabledDate={[Function]}
                                                         generateConfig={
                                                           Object {
                                                             "addDate": [Function],
@@ -4115,6 +4119,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                               "rangeItem": [Function],
                                                             }
                                                           }
+                                                          disabledDate={[Function]}
                                                           generateConfig={
                                                             Object {
                                                               "addDate": [Function],
@@ -4588,6 +4593,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                         value={"2020-07-17T10:14:44.251Z"}
                                       >
                                         <Picker
+                                          disabledDate={[Function]}
                                           id="create-claim_checked_date"
                                           onChange={[Function]}
                                           value={"2020-07-17T10:14:44.251Z"}
@@ -4606,6 +4612,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                   "rangeItem": [Function],
                                                 }
                                               }
+                                              disabledDate={[Function]}
                                               generateConfig={
                                                 Object {
                                                   "addDate": [Function],
@@ -4728,6 +4735,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                     "rangeItem": [Function],
                                                   }
                                                 }
+                                                disabledDate={[Function]}
                                                 generateConfig={
                                                   Object {
                                                     "addDate": [Function],
@@ -4864,6 +4872,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                             "rangeItem": [Function],
                                                           }
                                                         }
+                                                        disabledDate={[Function]}
                                                         generateConfig={
                                                           Object {
                                                             "addDate": [Function],
@@ -5084,6 +5093,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                               "rangeItem": [Function],
                                                             }
                                                           }
+                                                          disabledDate={[Function]}
                                                           generateConfig={
                                                             Object {
                                                               "addDate": [Function],

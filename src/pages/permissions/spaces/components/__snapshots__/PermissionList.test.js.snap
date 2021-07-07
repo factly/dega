@@ -18093,21 +18093,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                       "title": "Action",
                                       "width": "20%",
                                     },
-                                    Object {
-                                      "children": "Action",
-                                      "className": "",
-                                      "colEnd": 7,
-                                      "colSpan": 1,
-                                      "colStart": 7,
-                                      "column": Object {
-                                        "dataIndex": "operation",
-                                        "render": [Function],
-                                        "title": "Action",
-                                        "width": "20%",
-                                      },
-                                      "key": undefined,
-                                      "rowSpan": 1,
-                                    },
                                   ]
                                 }
                                 flattenColumns={
