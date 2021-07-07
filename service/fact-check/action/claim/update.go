@@ -142,6 +142,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		RatingID:        claim.RatingID,
 		Fact:            claim.Fact,
 		ReviewSources:   claim.ReviewSources,
+		MetaFields:      claim.MetaFields,
 	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").First(&result).Error
 
 	if err != nil {

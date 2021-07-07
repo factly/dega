@@ -34,6 +34,7 @@ type Post struct {
 	Meta             postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode       string         `gorm:"column:footer_code" json:"footer_code"`
+	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
 	Space            *Space         `json:"space,omitempty"`

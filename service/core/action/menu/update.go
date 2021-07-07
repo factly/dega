@@ -115,10 +115,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 
 	err = tx.Model(&result).Updates(model.Menu{
-		Base: config.Base{UpdatedByID: uint(uID)},
-		Name: menu.Name,
-		Slug: menuSlug,
-		Menu: menu.Menu,
+		Base:       config.Base{UpdatedByID: uint(uID)},
+		Name:       menu.Name,
+		Slug:       menuSlug,
+		Menu:       menu.Menu,
+		MetaFields: menu.MetaFields,
 	}).First(&result).Error
 
 	if err != nil {

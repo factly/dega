@@ -116,6 +116,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FileSize:    medium.FileSize,
 		URL:         medium.URL,
 		Dimensions:  medium.Dimensions,
+		MetaFields:  medium.MetaFields,
 	}).First(&result).Error
 
 	if err != nil {

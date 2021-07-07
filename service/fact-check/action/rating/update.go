@@ -163,6 +163,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Description:      rating.Description,
 		HTMLDescription:  description,
 		NumericValue:     rating.NumericValue,
+		MetaFields:       rating.MetaFields,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {

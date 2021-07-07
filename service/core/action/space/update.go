@@ -171,6 +171,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		ContactInfo:       space.ContactInfo,
 		HeaderCode:        space.HeaderCode,
 		FooterCode:        space.FooterCode,
+		MetaFields:        space.MetaFields,
 	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
 
 	if err != nil {

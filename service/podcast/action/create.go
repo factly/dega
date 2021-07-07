@@ -119,6 +119,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		PrimaryCategoryID: primaryCategoryID,
 		HeaderCode:        podcast.HeaderCode,
 		FooterCode:        podcast.FooterCode,
+		MetaFields:        podcast.MetaFields,
 		SpaceID:           uint(sID),
 	}
 

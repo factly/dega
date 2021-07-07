@@ -24,6 +24,7 @@ type episode struct {
 	MediumID      uint           `json:"medium_id"`
 	SpaceID       uint           `json:"space_id"`
 	AuthorIDs     []uint         `json:"author_ids"`
+	MetaFields    postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 type episodeData struct {

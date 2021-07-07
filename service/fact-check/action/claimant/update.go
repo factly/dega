@@ -147,6 +147,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		TagLine:         claimant.TagLine,
 		Description:     claimant.Description,
 		HTMLDescription: description,
+		MetaFields:      claimant.MetaFields,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {

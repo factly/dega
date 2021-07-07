@@ -20,6 +20,7 @@ type medium struct {
 	FileSize    int64          `json:"file_size" validate:"required"`
 	URL         postgres.Jsonb `json:"url" swaggertype:"primitive,string"`
 	Dimensions  string         `json:"dimensions" validate:"required"`
+	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "medium_user"

@@ -21,6 +21,7 @@ type claim struct {
 	RatingID      uint           `json:"rating_id" validate:"required"`
 	Fact          string         `json:"fact"`
 	ReviewSources postgres.Jsonb `json:"review_sources" swaggertype:"primitive,string"`
+	MetaFields    postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "claim_user"

@@ -202,6 +202,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Meta:             post.Meta,
 		HeaderCode:       post.HeaderCode,
 		FooterCode:       post.FooterCode,
+		MetaFields:       post.MetaFields,
 	}
 
 	oldStatus := result.Post.Status

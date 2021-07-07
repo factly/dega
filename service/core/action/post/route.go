@@ -30,6 +30,7 @@ type post struct {
 	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `json:"header_code"`
 	FooterCode       string         `json:"footer_code"`
+	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`
 	ClaimIDs         []uint         `json:"claim_ids"`

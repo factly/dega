@@ -4,13 +4,15 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // format model
 type format struct {
-	Name        string `json:"name" validate:"required,min=3,max=50"`
-	Slug        string `json:"slug"`
-	Description string `json:"description"`
+	Name        string         `json:"name" validate:"required,min=3,max=50"`
+	Slug        string         `json:"slug"`
+	Description string         `json:"description"`
+	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "format_user"

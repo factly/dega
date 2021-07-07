@@ -13,6 +13,7 @@ type tag struct {
 	Slug        string         `json:"slug"`
 	IsFeatured  bool           `json:"is_featured"`
 	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
+	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "tag_user"

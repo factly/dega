@@ -199,6 +199,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		Meta:             post.Meta,
 		HeaderCode:       post.HeaderCode,
 		FooterCode:       post.FooterCode,
+		MetaFields:       post.MetaFields,
 		SpaceID:          uint(sID),
 	}
 

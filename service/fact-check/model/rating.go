@@ -22,6 +22,7 @@ type Rating struct {
 	NumericValue     int            `gorm:"column:numeric_value" json:"numeric_value"`
 	MediumID         *uint          `gorm:"column:medium_id;default=NULL" json:"medium_id"`
 	Medium           *model.Medium  `json:"medium"`
+	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 	Space            *model.Space   `json:"space,omitempty"`
 }
