@@ -32,6 +32,8 @@ type Post struct {
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 	Schemas          postgres.Jsonb `gorm:"column:schemas" json:"schemas" swaggertype:"primitive,string"`
 	Meta             postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
+	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`
+	FooterCode       string         `gorm:"column:footer_code" json:"footer_code"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
 	Space            *Space         `json:"space,omitempty"`

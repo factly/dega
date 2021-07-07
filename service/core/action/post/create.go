@@ -197,6 +197,8 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		FeaturedMediumID: featuredMediumID,
 		FormatID:         post.FormatID,
 		Meta:             post.Meta,
+		HeaderCode:       post.HeaderCode,
+		FooterCode:       post.FooterCode,
 		SpaceID:          uint(sID),
 	}
 

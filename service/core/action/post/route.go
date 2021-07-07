@@ -28,6 +28,8 @@ type post struct {
 	FormatID         uint           `json:"format_id" validate:"required"`
 	SpaceID          uint           `json:"space_id"`
 	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
+	HeaderCode       string         `json:"header_code"`
+	FooterCode       string         `json:"footer_code"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`
 	ClaimIDs         []uint         `json:"claim_ids"`

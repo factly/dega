@@ -169,6 +169,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		VerificationCodes: space.VerificationCodes,
 		SocialMediaURLs:   space.SocialMediaURLs,
 		ContactInfo:       space.ContactInfo,
+		HeaderCode:        space.HeaderCode,
+		FooterCode:        space.FooterCode,
 	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
 
 	if err != nil {

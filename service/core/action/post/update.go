@@ -200,6 +200,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FormatID:         post.FormatID,
 		FeaturedMediumID: featuredMediumID,
 		Meta:             post.Meta,
+		HeaderCode:       post.HeaderCode,
+		FooterCode:       post.FooterCode,
 	}
 
 	oldStatus := result.Post.Status

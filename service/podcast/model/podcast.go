@@ -22,6 +22,8 @@ type Podcast struct {
 	PrimaryCategory   *model.Category  `gorm:"foreignKey:primary_category_id" json:"primary_category"`
 	MediumID          *uint            `gorm:"column:medium_id;default:NULL" json:"medium_id"`
 	Medium            *model.Medium    `json:"medium"`
+	HeaderCode        string           `gorm:"column:header_code" json:"header_code"`
+	FooterCode        string           `gorm:"column:footer_code" json:"footer_code"`
 	SpaceID           uint             `gorm:"column:space_id" json:"space_id"`
 	Space             *model.Space     `json:"space,omitempty"`
 }

@@ -174,6 +174,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Language:          podcast.Language,
 		MediumID:          mediumID,
 		PrimaryCategoryID: primaryCategoryID,
+		HeaderCode:        podcast.HeaderCode,
+		FooterCode:        podcast.FooterCode,
 		SpaceID:           uint(sID),
 	}).Preload("Categories").Preload("Medium").First(&result)
 
