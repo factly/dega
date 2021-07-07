@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Episode Component should render the component 1`] = `
+exports[`Episode Component snapshot testing should render the component 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -365,7 +365,7 @@ exports[`Episode Component should render the component 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <Input
                                                         id="filters_q"
@@ -687,7 +687,7 @@ exports[`Episode Component should render the component 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         id="filters_sort"
@@ -1328,14 +1328,15 @@ exports[`Episode Component should render the component 1`] = `
                 <EpisodeList
                   actions={
                     Array [
-                      "admin",
+                      "get",
+                      "create",
                     ]
                   }
                   data={
                     Object {
-                      "episodes": undefined,
-                      "loading": undefined,
-                      "total": undefined,
+                      "episodes": Array [],
+                      "loading": false,
+                      "total": 0,
                     }
                   }
                   fetchEpisodes={[Function]}
@@ -1396,12 +1397,14 @@ exports[`Episode Component should render the component 1`] = `
                                 },
                               ]
                             }
+                            dataSource={Array []}
+                            loading={false}
                             pagination={
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
-                                "total": undefined,
+                                "total": 0,
                               }
                             }
                             rowKey="id"
@@ -1454,6 +1457,7 @@ exports[`Episode Component should render the component 1`] = `
                                         ]
                                       }
                                       data={Array []}
+                                      dataSource={Array []}
                                       emptyText={
                                         <Context.Consumer>
                                           [Function]
@@ -1574,12 +1578,13 @@ exports[`Episode Component should render the component 1`] = `
                                           },
                                         }
                                       }
+                                      loading={false}
                                       pagination={
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
                                           "pageSize": 20,
-                                          "total": undefined,
+                                          "total": 0,
                                         }
                                       }
                                       prefixCls="ant-table"
@@ -1625,7 +1630,7 @@ exports[`Episode Component should render the component 1`] = `
                                                 },
                                               ],
                                               "data": Array [],
-                                              "dataSource": undefined,
+                                              "dataSource": Array [],
                                               "direction": undefined,
                                               "emptyText": <Context.Consumer>
                                                 [Function]
@@ -1741,13 +1746,13 @@ exports[`Episode Component should render the component 1`] = `
                                                   </div>,
                                                 },
                                               },
-                                              "loading": undefined,
+                                              "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
                                                 "pageSize": 20,
-                                                "total": undefined,
+                                                "total": 0,
                                               },
                                               "prefixCls": "ant-table",
                                               "rowClassName": [Function],
@@ -2353,12 +2358,12 @@ exports[`Episode Component should render the component 1`] = `
 </Provider>
 `;
 
-exports[`Episode Component should render the component with data 1`] = `
+exports[`Episode Component snapshot testing should render the component with data 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -2718,7 +2723,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <Input
                                                         id="filters_q"
@@ -3040,7 +3045,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         id="filters_sort"
@@ -3681,7 +3686,8 @@ exports[`Episode Component should render the component with data 1`] = `
                 <EpisodeList
                   actions={
                     Array [
-                      "admin",
+                      "get",
+                      "create",
                     ]
                   }
                   data={
@@ -3689,8 +3695,24 @@ exports[`Episode Component should render the component with data 1`] = `
                       "episodes": Array [
                         Object {
                           "audio_url": "audioUrl",
+                          "description": Object {
+                            "blocks": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "Description",
+                                },
+                                "type": "paragraph",
+                              },
+                            ],
+                            "time": 1595747741807,
+                            "version": "2.18.0",
+                          },
                           "episode": 1,
+                          "id": 1,
                           "medium_id": 1,
+                          "podcast": Array [
+                            1,
+                          ],
                           "season": 1,
                           "slug": "episode-1",
                           "title": "Episode 1",
@@ -3763,8 +3785,24 @@ exports[`Episode Component should render the component with data 1`] = `
                               Array [
                                 Object {
                                   "audio_url": "audioUrl",
+                                  "description": Object {
+                                    "blocks": Array [
+                                      Object {
+                                        "data": Object {
+                                          "text": "Description",
+                                        },
+                                        "type": "paragraph",
+                                      },
+                                    ],
+                                    "time": 1595747741807,
+                                    "version": "2.18.0",
+                                  },
                                   "episode": 1,
+                                  "id": 1,
                                   "medium_id": 1,
+                                  "podcast": Array [
+                                    1,
+                                  ],
                                   "season": 1,
                                   "slug": "episode-1",
                                   "title": "Episode 1",
@@ -3834,8 +3872,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                         Array [
                                           Object {
                                             "audio_url": "audioUrl",
+                                            "description": Object {
+                                              "blocks": Array [
+                                                Object {
+                                                  "data": Object {
+                                                    "text": "Description",
+                                                  },
+                                                  "type": "paragraph",
+                                                },
+                                              ],
+                                              "time": 1595747741807,
+                                              "version": "2.18.0",
+                                            },
                                             "episode": 1,
+                                            "id": 1,
                                             "medium_id": 1,
+                                            "podcast": Array [
+                                              1,
+                                            ],
                                             "season": 1,
                                             "slug": "episode-1",
                                             "title": "Episode 1",
@@ -3847,8 +3901,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                         Array [
                                           Object {
                                             "audio_url": "audioUrl",
+                                            "description": Object {
+                                              "blocks": Array [
+                                                Object {
+                                                  "data": Object {
+                                                    "text": "Description",
+                                                  },
+                                                  "type": "paragraph",
+                                                },
+                                              ],
+                                              "time": 1595747741807,
+                                              "version": "2.18.0",
+                                            },
                                             "episode": 1,
+                                            "id": 1,
                                             "medium_id": 1,
+                                            "podcast": Array [
+                                              1,
+                                            ],
                                             "season": 1,
                                             "slug": "episode-1",
                                             "title": "Episode 1",
@@ -3917,6 +3987,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                 >
                                                   <tr
                                                     class="ant-table-row ant-table-row-level-0"
+                                                    data-row-key="1"
                                                   >
                                                     <td
                                                       class="ant-table-cell"
@@ -3944,11 +4015,12 @@ exports[`Episode Component should render the component with data 1`] = `
                                                       <span>
                                                         <a
                                                           class="ant-dropdown-link"
-                                                          href="/episodes/undefined/edit"
+                                                          href="/episodes/1/edit"
                                                           style="margin-right: 8px;"
                                                         >
                                                           <button
                                                             class="ant-btn"
+                                                            disabled=""
                                                             type="button"
                                                           >
                                                             <span>
@@ -3962,6 +4034,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                         >
                                                           <button
                                                             class="ant-btn"
+                                                            disabled=""
                                                             type="button"
                                                           >
                                                             <span>
@@ -4032,8 +4105,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                               "data": Array [
                                                 Object {
                                                   "audio_url": "audioUrl",
+                                                  "description": Object {
+                                                    "blocks": Array [
+                                                      Object {
+                                                        "data": Object {
+                                                          "text": "Description",
+                                                        },
+                                                        "type": "paragraph",
+                                                      },
+                                                    ],
+                                                    "time": 1595747741807,
+                                                    "version": "2.18.0",
+                                                  },
                                                   "episode": 1,
+                                                  "id": 1,
                                                   "medium_id": 1,
+                                                  "podcast": Array [
+                                                    1,
+                                                  ],
                                                   "season": 1,
                                                   "slug": "episode-1",
                                                   "title": "Episode 1",
@@ -4043,8 +4132,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                               "dataSource": Array [
                                                 Object {
                                                   "audio_url": "audioUrl",
+                                                  "description": Object {
+                                                    "blocks": Array [
+                                                      Object {
+                                                        "data": Object {
+                                                          "text": "Description",
+                                                        },
+                                                        "type": "paragraph",
+                                                      },
+                                                    ],
+                                                    "time": 1595747741807,
+                                                    "version": "2.18.0",
+                                                  },
                                                   "episode": 1,
+                                                  "id": 1,
                                                   "medium_id": 1,
+                                                  "podcast": Array [
+                                                    1,
+                                                  ],
                                                   "season": 1,
                                                   "slug": "episode-1",
                                                   "title": "Episode 1",
@@ -4108,6 +4213,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                       >
                                                         <tr
                                                           class="ant-table-row ant-table-row-level-0"
+                                                          data-row-key="1"
                                                         >
                                                           <td
                                                             class="ant-table-cell"
@@ -4135,11 +4241,12 @@ exports[`Episode Component should render the component with data 1`] = `
                                                             <span>
                                                               <a
                                                                 class="ant-dropdown-link"
-                                                                href="/episodes/undefined/edit"
+                                                                href="/episodes/1/edit"
                                                                 style="margin-right: 8px;"
                                                               >
                                                                 <button
                                                                   class="ant-btn"
+                                                                  disabled=""
                                                                   type="button"
                                                                 >
                                                                   <span>
@@ -4153,6 +4260,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                               >
                                                                 <button
                                                                   class="ant-btn"
+                                                                  disabled=""
                                                                   type="button"
                                                                 >
                                                                   <span>
@@ -4655,8 +4763,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                                     Array [
                                                       Object {
                                                         "audio_url": "audioUrl",
+                                                        "description": Object {
+                                                          "blocks": Array [
+                                                            Object {
+                                                              "data": Object {
+                                                                "text": "Description",
+                                                              },
+                                                              "type": "paragraph",
+                                                            },
+                                                          ],
+                                                          "time": 1595747741807,
+                                                          "version": "2.18.0",
+                                                        },
                                                         "episode": 1,
+                                                        "id": 1,
                                                         "medium_id": 1,
+                                                        "podcast": Array [
+                                                          1,
+                                                        ],
                                                         "season": 1,
                                                         "slug": "episode-1",
                                                         "title": "Episode 1",
@@ -4678,21 +4802,41 @@ exports[`Episode Component should render the component with data 1`] = `
                                                       expandedKeys={Set {}}
                                                       getRowKey={[Function]}
                                                       index={0}
+                                                      key="1"
                                                       record={
                                                         Object {
                                                           "audio_url": "audioUrl",
+                                                          "description": Object {
+                                                            "blocks": Array [
+                                                              Object {
+                                                                "data": Object {
+                                                                  "text": "Description",
+                                                                },
+                                                                "type": "paragraph",
+                                                              },
+                                                            ],
+                                                            "time": 1595747741807,
+                                                            "version": "2.18.0",
+                                                          },
                                                           "episode": 1,
+                                                          "id": 1,
                                                           "medium_id": 1,
+                                                          "podcast": Array [
+                                                            1,
+                                                          ],
                                                           "season": 1,
                                                           "slug": "episode-1",
                                                           "title": "Episode 1",
                                                           "type": "full",
                                                         }
                                                       }
+                                                      recordKey={1}
                                                       rowComponent="tr"
+                                                      rowKey={1}
                                                     >
                                                       <tr
                                                         className="ant-table-row ant-table-row-level-0"
+                                                        data-row-key={1}
                                                         onClick={[Function]}
                                                         style={Object {}}
                                                       >
@@ -4709,8 +4853,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                                           record={
                                                             Object {
                                                               "audio_url": "audioUrl",
+                                                              "description": Object {
+                                                                "blocks": Array [
+                                                                  Object {
+                                                                    "data": Object {
+                                                                      "text": "Description",
+                                                                    },
+                                                                    "type": "paragraph",
+                                                                  },
+                                                                ],
+                                                                "time": 1595747741807,
+                                                                "version": "2.18.0",
+                                                              },
                                                               "episode": 1,
+                                                              "id": 1,
                                                               "medium_id": 1,
+                                                              "podcast": Array [
+                                                                1,
+                                                              ],
                                                               "season": 1,
                                                               "slug": "episode-1",
                                                               "title": "Episode 1",
@@ -4740,8 +4900,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                                           record={
                                                             Object {
                                                               "audio_url": "audioUrl",
+                                                              "description": Object {
+                                                                "blocks": Array [
+                                                                  Object {
+                                                                    "data": Object {
+                                                                      "text": "Description",
+                                                                    },
+                                                                    "type": "paragraph",
+                                                                  },
+                                                                ],
+                                                                "time": 1595747741807,
+                                                                "version": "2.18.0",
+                                                              },
                                                               "episode": 1,
+                                                              "id": 1,
                                                               "medium_id": 1,
+                                                              "podcast": Array [
+                                                                1,
+                                                              ],
                                                               "season": 1,
                                                               "slug": "episode-1",
                                                               "title": "Episode 1",
@@ -4771,8 +4947,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                                           record={
                                                             Object {
                                                               "audio_url": "audioUrl",
+                                                              "description": Object {
+                                                                "blocks": Array [
+                                                                  Object {
+                                                                    "data": Object {
+                                                                      "text": "Description",
+                                                                    },
+                                                                    "type": "paragraph",
+                                                                  },
+                                                                ],
+                                                                "time": 1595747741807,
+                                                                "version": "2.18.0",
+                                                              },
                                                               "episode": 1,
+                                                              "id": 1,
                                                               "medium_id": 1,
+                                                              "podcast": Array [
+                                                                1,
+                                                              ],
                                                               "season": 1,
                                                               "slug": "episode-1",
                                                               "title": "Episode 1",
@@ -4802,8 +4994,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                                           record={
                                                             Object {
                                                               "audio_url": "audioUrl",
+                                                              "description": Object {
+                                                                "blocks": Array [
+                                                                  Object {
+                                                                    "data": Object {
+                                                                      "text": "Description",
+                                                                    },
+                                                                    "type": "paragraph",
+                                                                  },
+                                                                ],
+                                                                "time": 1595747741807,
+                                                                "version": "2.18.0",
+                                                              },
                                                               "episode": 1,
+                                                              "id": 1,
                                                               "medium_id": 1,
+                                                              "podcast": Array [
+                                                                1,
+                                                              ],
                                                               "season": 1,
                                                               "slug": "episode-1",
                                                               "title": "Episode 1",
@@ -4833,8 +5041,24 @@ exports[`Episode Component should render the component with data 1`] = `
                                                           record={
                                                             Object {
                                                               "audio_url": "audioUrl",
+                                                              "description": Object {
+                                                                "blocks": Array [
+                                                                  Object {
+                                                                    "data": Object {
+                                                                      "text": "Description",
+                                                                    },
+                                                                    "type": "paragraph",
+                                                                  },
+                                                                ],
+                                                                "time": 1595747741807,
+                                                                "version": "2.18.0",
+                                                              },
                                                               "episode": 1,
+                                                              "id": 1,
                                                               "medium_id": 1,
+                                                              "podcast": Array [
+                                                                1,
+                                                              ],
                                                               "season": 1,
                                                               "slug": "episode-1",
                                                               "title": "Episode 1",
@@ -4857,11 +5081,11 @@ exports[`Episode Component should render the component with data 1`] = `
                                                                     "marginRight": 8,
                                                                   }
                                                                 }
-                                                                to="/episodes/undefined/edit"
+                                                                to="/episodes/1/edit"
                                                               >
                                                                 <LinkAnchor
                                                                   className="ant-dropdown-link"
-                                                                  href="/episodes/undefined/edit"
+                                                                  href="/episodes/1/edit"
                                                                   navigate={[Function]}
                                                                   style={
                                                                     Object {
@@ -4871,7 +5095,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                                 >
                                                                   <a
                                                                     className="ant-dropdown-link"
-                                                                    href="/episodes/undefined/edit"
+                                                                    href="/episodes/1/edit"
                                                                     onClick={[Function]}
                                                                     style={
                                                                       Object {
@@ -4881,7 +5105,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                                   >
                                                                     <Button
                                                                       block={false}
-                                                                      disabled={false}
+                                                                      disabled={true}
                                                                       ghost={false}
                                                                       htmlType="button"
                                                                       loading={false}
@@ -4889,7 +5113,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                                       <Wave>
                                                                         <button
                                                                           className="ant-btn"
-                                                                          disabled={false}
+                                                                          disabled={true}
                                                                           onClick={[Function]}
                                                                           type="button"
                                                                         >
@@ -5542,7 +5766,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                                           >
                                                                             <Button
                                                                               block={false}
-                                                                              disabled={false}
+                                                                              disabled={true}
                                                                               ghost={false}
                                                                               htmlType="button"
                                                                               loading={false}
@@ -5550,7 +5774,7 @@ exports[`Episode Component should render the component with data 1`] = `
                                                                               <Wave>
                                                                                 <button
                                                                                   className="ant-btn"
-                                                                                  disabled={false}
+                                                                                  disabled={true}
                                                                                   onClick={[Function]}
                                                                                   type="button"
                                                                                 >

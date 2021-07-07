@@ -153,7 +153,7 @@ describe('Menu Edit component', () => {
           name: 'Menu 1',
           test: 'test',
         });
-        expect(push).toHaveBeenCalledWith('/menu/1/edit');
+        expect(push).toHaveBeenCalledWith('/menus/1/edit');
         done();
       }, 0);
     });

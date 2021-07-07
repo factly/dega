@@ -17,6 +17,7 @@ exports[`Claims Create Form component snapshot testing should match component in
     data={
       Object {
         "checked_date": "2020-12-12T00:00:00.000Z",
+        "claim": "title",
         "claim_date": "2020-12-12T00:00:00.000Z",
         "claim_sources": "claim_sources",
         "claimant": 1,
@@ -39,12 +40,11 @@ exports[`Claims Create Form component snapshot testing should match component in
           "time": 1595747741807,
           "version": "2.18.0",
         },
+        "fact": "review",
         "rating": 1,
-        "review": "review",
         "review_sources": "review_sources",
         "review_tag_line": "review_tag_line",
         "slug": "slug",
-        "title": "title",
       }
     }
   >
@@ -229,6 +229,7 @@ exports[`Claims Create Form component snapshot testing should match component in
         initialValues={
           Object {
             "checked_date": "2020-12-12T00:00:00.000Z",
+            "claim": "title",
             "claim_date": "2020-12-12T00:00:00.000Z",
             "claim_sources": "claim_sources",
             "claimant": 1,
@@ -251,12 +252,11 @@ exports[`Claims Create Form component snapshot testing should match component in
               "time": 1595747741807,
               "version": "2.18.0",
             },
+            "fact": "review",
             "rating": 1,
-            "review": "review",
             "review_sources": "review_sources",
             "review_tag_line": "review_tag_line",
             "slug": "slug",
-            "title": "title",
           }
         }
         labelCol={
@@ -314,6 +314,7 @@ exports[`Claims Create Form component snapshot testing should match component in
             initialValues={
               Object {
                 "checked_date": "2020-12-12T00:00:00.000Z",
+                "claim": "title",
                 "claim_date": "2020-12-12T00:00:00.000Z",
                 "claim_sources": "claim_sources",
                 "claimant": 1,
@@ -336,12 +337,11 @@ exports[`Claims Create Form component snapshot testing should match component in
                   "time": 1595747741807,
                   "version": "2.18.0",
                 },
+                "fact": "review",
                 "rating": 1,
-                "review": "review",
                 "review_sources": "review_sources",
                 "review_tag_line": "review_tag_line",
                 "slug": "slug",
-                "title": "title",
               }
             }
             name="create-claim"
@@ -583,6 +583,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                         onChange={[Function]}
                                         placeholder="Enter claim...."
                                         rows={6}
+                                        value="title"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -594,6 +595,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               placeholder="Enter claim...."
                                               prefixCls="ant-input"
                                               rows={6}
+                                              value="title"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -604,7 +606,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                           prefixCls="ant-input"
                                           rows={6}
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="title"
                                         >
                                           <TextArea
                                             className=""
@@ -613,7 +615,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                             placeholder="Enter claim...."
                                             prefixCls="ant-input"
                                             rows={6}
-                                            value=""
+                                            value="title"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -623,7 +625,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               placeholder="Enter claim...."
                                               prefixCls="ant-input"
                                               rows={6}
-                                              value=""
+                                              value="title"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -637,7 +639,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                                   placeholder="Enter claim...."
                                                   rows={6}
                                                   style={Object {}}
-                                                  value=""
+                                                  value="title"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>
@@ -1072,12 +1074,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                                   >
                                     <Component
                                       update={1}
+                                      value="review"
                                     >
                                       <TextArea
                                         id="create-claim_fact"
                                         onChange={[Function]}
                                         placeholder="Enter Fact ..."
                                         rows={6}
+                                        value="review"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -1089,6 +1093,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               placeholder="Enter Fact ..."
                                               prefixCls="ant-input"
                                               rows={6}
+                                              value="review"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -1099,7 +1104,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                           prefixCls="ant-input"
                                           rows={6}
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="review"
                                         >
                                           <TextArea
                                             className=""
@@ -1108,7 +1113,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                             placeholder="Enter Fact ..."
                                             prefixCls="ant-input"
                                             rows={6}
-                                            value=""
+                                            value="review"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -1118,7 +1123,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               placeholder="Enter Fact ..."
                                               prefixCls="ant-input"
                                               rows={6}
-                                              value=""
+                                              value="review"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -1132,7 +1137,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                                   placeholder="Enter Fact ..."
                                                   rows={6}
                                                   style={Object {}}
-                                                  value=""
+                                                  value="review"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>
@@ -5898,6 +5903,7 @@ exports[`Claims Create Form component snapshot testing should match component in
     data={
       Object {
         "checked_date": "2020-12-12T00:00:00.000Z",
+        "claim": "title",
         "claim_date": "2020-12-12T00:00:00.000Z",
         "claim_sources": "claim_sources",
         "claimant": 1,
@@ -5920,12 +5926,11 @@ exports[`Claims Create Form component snapshot testing should match component in
           "time": 1595747741807,
           "version": "2.18.0",
         },
+        "fact": "review",
         "rating": 1,
-        "review": "review",
         "review_sources": "review_sources",
         "review_tag_line": "review_tag_line",
         "slug": "slug",
-        "title": "title",
       }
     }
   >
@@ -6185,6 +6190,7 @@ exports[`Claims Create Form component snapshot testing should match component in
         initialValues={
           Object {
             "checked_date": "2020-12-12T00:00:00.000Z",
+            "claim": "title",
             "claim_date": "2020-12-12T00:00:00.000Z",
             "claim_sources": "claim_sources",
             "claimant": 1,
@@ -6207,12 +6213,11 @@ exports[`Claims Create Form component snapshot testing should match component in
               "time": 1595747741807,
               "version": "2.18.0",
             },
+            "fact": "review",
             "rating": 1,
-            "review": "review",
             "review_sources": "review_sources",
             "review_tag_line": "review_tag_line",
             "slug": "slug",
-            "title": "title",
           }
         }
         labelCol={
@@ -6270,6 +6275,7 @@ exports[`Claims Create Form component snapshot testing should match component in
             initialValues={
               Object {
                 "checked_date": "2020-12-12T00:00:00.000Z",
+                "claim": "title",
                 "claim_date": "2020-12-12T00:00:00.000Z",
                 "claim_sources": "claim_sources",
                 "claimant": 1,
@@ -6292,12 +6298,11 @@ exports[`Claims Create Form component snapshot testing should match component in
                   "time": 1595747741807,
                   "version": "2.18.0",
                 },
+                "fact": "review",
                 "rating": 1,
-                "review": "review",
                 "review_sources": "review_sources",
                 "review_tag_line": "review_tag_line",
                 "slug": "slug",
-                "title": "title",
               }
             }
             name="create-claim"
@@ -6539,6 +6544,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                         onChange={[Function]}
                                         placeholder="Enter claim...."
                                         rows={6}
+                                        value="title"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -6550,6 +6556,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               placeholder="Enter claim...."
                                               prefixCls="ant-input"
                                               rows={6}
+                                              value="title"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -6560,7 +6567,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                           prefixCls="ant-input"
                                           rows={6}
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="title"
                                         >
                                           <TextArea
                                             className=""
@@ -6569,7 +6576,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                             placeholder="Enter claim...."
                                             prefixCls="ant-input"
                                             rows={6}
-                                            value=""
+                                            value="title"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -6579,7 +6586,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               placeholder="Enter claim...."
                                               prefixCls="ant-input"
                                               rows={6}
-                                              value=""
+                                              value="title"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -6593,7 +6600,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                                   placeholder="Enter claim...."
                                                   rows={6}
                                                   style={Object {}}
-                                                  value=""
+                                                  value="title"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>
@@ -7028,12 +7035,14 @@ exports[`Claims Create Form component snapshot testing should match component in
                                   >
                                     <Component
                                       update={2}
+                                      value="review"
                                     >
                                       <TextArea
                                         id="create-claim_fact"
                                         onChange={[Function]}
                                         placeholder="Enter Fact ..."
                                         rows={6}
+                                        value="review"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -7045,6 +7054,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               placeholder="Enter Fact ..."
                                               prefixCls="ant-input"
                                               rows={6}
+                                              value="review"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -7055,7 +7065,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                           prefixCls="ant-input"
                                           rows={6}
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="review"
                                         >
                                           <TextArea
                                             className=""
@@ -7064,7 +7074,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                             placeholder="Enter Fact ..."
                                             prefixCls="ant-input"
                                             rows={6}
-                                            value=""
+                                            value="review"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -7074,7 +7084,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                               placeholder="Enter Fact ..."
                                               prefixCls="ant-input"
                                               rows={6}
-                                              value=""
+                                              value="review"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -7088,7 +7098,7 @@ exports[`Claims Create Form component snapshot testing should match component in
                                                   placeholder="Enter Fact ..."
                                                   rows={6}
                                                   style={Object {}}
-                                                  value=""
+                                                  value="review"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>
@@ -11868,6 +11878,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
     data={
       Object {
         "checked_date": "2020-12-12T00:00:00.000Z",
+        "claim": "title",
         "claim_date": "2020-12-12T00:00:00.000Z",
         "claim_sources": "claim_sources",
         "claimant": 1,
@@ -11890,12 +11901,11 @@ exports[`Claims Create Form component snapshot testing should match component wi
           "time": 1595747741807,
           "version": "2.18.0",
         },
+        "fact": "review",
         "rating": 1,
-        "review": "review",
         "review_sources": "review_sources",
         "review_tag_line": "review_tag_line",
         "slug": "slug",
-        "title": "title",
       }
     }
     onCreate={[MockFunction]}
@@ -12081,6 +12091,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
         initialValues={
           Object {
             "checked_date": "2020-12-12T00:00:00.000Z",
+            "claim": "title",
             "claim_date": "2020-12-12T00:00:00.000Z",
             "claim_sources": "claim_sources",
             "claimant": 1,
@@ -12103,12 +12114,11 @@ exports[`Claims Create Form component snapshot testing should match component wi
               "time": 1595747741807,
               "version": "2.18.0",
             },
+            "fact": "review",
             "rating": 1,
-            "review": "review",
             "review_sources": "review_sources",
             "review_tag_line": "review_tag_line",
             "slug": "slug",
-            "title": "title",
           }
         }
         labelCol={
@@ -12166,6 +12176,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
             initialValues={
               Object {
                 "checked_date": "2020-12-12T00:00:00.000Z",
+                "claim": "title",
                 "claim_date": "2020-12-12T00:00:00.000Z",
                 "claim_sources": "claim_sources",
                 "claimant": 1,
@@ -12188,12 +12199,11 @@ exports[`Claims Create Form component snapshot testing should match component wi
                   "time": 1595747741807,
                   "version": "2.18.0",
                 },
+                "fact": "review",
                 "rating": 1,
-                "review": "review",
                 "review_sources": "review_sources",
                 "review_tag_line": "review_tag_line",
                 "slug": "slug",
-                "title": "title",
               }
             }
             name="create-claim"
@@ -12435,6 +12445,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                         onChange={[Function]}
                                         placeholder="Enter claim...."
                                         rows={6}
+                                        value="title"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -12446,6 +12457,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               placeholder="Enter claim...."
                                               prefixCls="ant-input"
                                               rows={6}
+                                              value="title"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -12456,7 +12468,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                           prefixCls="ant-input"
                                           rows={6}
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="title"
                                         >
                                           <TextArea
                                             className=""
@@ -12465,7 +12477,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                             placeholder="Enter claim...."
                                             prefixCls="ant-input"
                                             rows={6}
-                                            value=""
+                                            value="title"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -12475,7 +12487,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               placeholder="Enter claim...."
                                               prefixCls="ant-input"
                                               rows={6}
-                                              value=""
+                                              value="title"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -12489,7 +12501,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                                   placeholder="Enter claim...."
                                                   rows={6}
                                                   style={Object {}}
-                                                  value=""
+                                                  value="title"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>
@@ -12924,12 +12936,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                   >
                                     <Component
                                       update={1}
+                                      value="review"
                                     >
                                       <TextArea
                                         id="create-claim_fact"
                                         onChange={[Function]}
                                         placeholder="Enter Fact ..."
                                         rows={6}
+                                        value="review"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -12941,6 +12955,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               placeholder="Enter Fact ..."
                                               prefixCls="ant-input"
                                               rows={6}
+                                              value="review"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -12951,7 +12966,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                           prefixCls="ant-input"
                                           rows={6}
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="review"
                                         >
                                           <TextArea
                                             className=""
@@ -12960,7 +12975,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                             placeholder="Enter Fact ..."
                                             prefixCls="ant-input"
                                             rows={6}
-                                            value=""
+                                            value="review"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -12970,7 +12985,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               placeholder="Enter Fact ..."
                                               prefixCls="ant-input"
                                               rows={6}
-                                              value=""
+                                              value="review"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -12984,7 +12999,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                                   placeholder="Enter Fact ..."
                                                   rows={6}
                                                   style={Object {}}
-                                                  value=""
+                                                  value="review"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>
@@ -17750,6 +17765,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
     data={
       Object {
         "checked_date": "2020-12-12T00:00:00.000Z",
+        "claim": "title",
         "claim_date": "2020-12-12T00:00:00.000Z",
         "claim_sources": "claim_sources",
         "claimant": 1,
@@ -17772,12 +17788,11 @@ exports[`Claims Create Form component snapshot testing should match component wi
           "time": 1595747741807,
           "version": "2.18.0",
         },
+        "fact": "review",
         "rating": 1,
-        "review": "review",
         "review_sources": "review_sources",
         "review_tag_line": "review_tag_line",
         "slug": "slug",
-        "title": "title",
       }
     }
     onCreate={[MockFunction]}
@@ -18038,6 +18053,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
         initialValues={
           Object {
             "checked_date": "2020-12-12T00:00:00.000Z",
+            "claim": "title",
             "claim_date": "2020-12-12T00:00:00.000Z",
             "claim_sources": "claim_sources",
             "claimant": 1,
@@ -18060,12 +18076,11 @@ exports[`Claims Create Form component snapshot testing should match component wi
               "time": 1595747741807,
               "version": "2.18.0",
             },
+            "fact": "review",
             "rating": 1,
-            "review": "review",
             "review_sources": "review_sources",
             "review_tag_line": "review_tag_line",
             "slug": "slug",
-            "title": "title",
           }
         }
         labelCol={
@@ -18123,6 +18138,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
             initialValues={
               Object {
                 "checked_date": "2020-12-12T00:00:00.000Z",
+                "claim": "title",
                 "claim_date": "2020-12-12T00:00:00.000Z",
                 "claim_sources": "claim_sources",
                 "claimant": 1,
@@ -18145,12 +18161,11 @@ exports[`Claims Create Form component snapshot testing should match component wi
                   "time": 1595747741807,
                   "version": "2.18.0",
                 },
+                "fact": "review",
                 "rating": 1,
-                "review": "review",
                 "review_sources": "review_sources",
                 "review_tag_line": "review_tag_line",
                 "slug": "slug",
-                "title": "title",
               }
             }
             name="create-claim"
@@ -18392,6 +18407,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                         onChange={[Function]}
                                         placeholder="Enter claim...."
                                         rows={6}
+                                        value="title"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -18403,6 +18419,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               placeholder="Enter claim...."
                                               prefixCls="ant-input"
                                               rows={6}
+                                              value="title"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -18413,7 +18430,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                           prefixCls="ant-input"
                                           rows={6}
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="title"
                                         >
                                           <TextArea
                                             className=""
@@ -18422,7 +18439,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                             placeholder="Enter claim...."
                                             prefixCls="ant-input"
                                             rows={6}
-                                            value=""
+                                            value="title"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -18432,7 +18449,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               placeholder="Enter claim...."
                                               prefixCls="ant-input"
                                               rows={6}
-                                              value=""
+                                              value="title"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -18446,7 +18463,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                                   placeholder="Enter claim...."
                                                   rows={6}
                                                   style={Object {}}
-                                                  value=""
+                                                  value="title"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>
@@ -18881,12 +18898,14 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                   >
                                     <Component
                                       update={2}
+                                      value="review"
                                     >
                                       <TextArea
                                         id="create-claim_fact"
                                         onChange={[Function]}
                                         placeholder="Enter Fact ..."
                                         rows={6}
+                                        value="review"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -18898,6 +18917,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               placeholder="Enter Fact ..."
                                               prefixCls="ant-input"
                                               rows={6}
+                                              value="review"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -18908,7 +18928,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                           prefixCls="ant-input"
                                           rows={6}
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="review"
                                         >
                                           <TextArea
                                             className=""
@@ -18917,7 +18937,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                             placeholder="Enter Fact ..."
                                             prefixCls="ant-input"
                                             rows={6}
-                                            value=""
+                                            value="review"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -18927,7 +18947,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                               placeholder="Enter Fact ..."
                                               prefixCls="ant-input"
                                               rows={6}
-                                              value=""
+                                              value="review"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -18941,7 +18961,7 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                                   placeholder="Enter Fact ..."
                                                   rows={6}
                                                   style={Object {}}
-                                                  value=""
+                                                  value="review"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>

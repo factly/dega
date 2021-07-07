@@ -38,9 +38,6 @@ exports[`Podcast form component snapshot testing should match component with dat
           "time": 1595747741807,
           "version": "2.18.0",
         },
-        "episodes": Array [
-          1,
-        ],
         "id": 1,
         "language": "english",
         "medium_id": 1,
@@ -99,9 +96,6 @@ exports[`Podcast form component snapshot testing should match component with dat
             "time": 1595747741807,
             "version": "2.18.0",
           },
-          "episodes": Array [
-            1,
-          ],
           "id": 1,
           "language": "english",
           "medium_id": 1,
@@ -176,9 +170,6 @@ exports[`Podcast form component snapshot testing should match component with dat
                 "time": 1595747741807,
                 "version": "2.18.0",
               },
-              "episodes": Array [
-                1,
-              ],
               "id": 1,
               "language": "english",
               "medium_id": 1,

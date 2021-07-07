@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Media List component should render the component 1`] = `
+exports[`Media List component snapshot testing should render the component 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -333,7 +333,7 @@ exports[`Media List component should render the component 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <Input
                                                         id="filters_q"
@@ -656,7 +656,7 @@ exports[`Media List component should render the component 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         id="filters_sort"
@@ -1302,9 +1302,9 @@ exports[`Media List component should render the component 1`] = `
                   }
                   data={
                     Object {
-                      "loading": undefined,
-                      "media": undefined,
-                      "total": undefined,
+                      "loading": false,
+                      "media": Array [],
+                      "total": 0,
                     }
                   }
                   fetchMedia={[Function]}
@@ -1335,6 +1335,7 @@ exports[`Media List component should render the component 1`] = `
                           style={Object {}}
                         >
                           <List
+                            dataSource={Array []}
                             grid={
                               Object {
                                 "gutter": 16,
@@ -1351,7 +1352,7 @@ exports[`Media List component should render the component 1`] = `
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
-                                "total": undefined,
+                                "total": 0,
                               }
                             }
                             renderItem={[Function]}
@@ -1438,10 +1439,11 @@ exports[`Media List component should render the component 1`] = `
                                 className="ant-list-pagination"
                               >
                                 <Pagination
-                                  current={1}
+                                  current={0}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
                                   pageSize={20}
+                                  total={0}
                                 >
                                   <LocaleReceiver
                                     componentName="Pagination"
@@ -1462,7 +1464,7 @@ exports[`Media List component should render the component 1`] = `
                                   >
                                     <Pagination
                                       className=""
-                                      current={1}
+                                      current={0}
                                       defaultCurrent={1}
                                       defaultPageSize={10}
                                       hideOnSinglePage={false}
@@ -1780,7 +1782,7 @@ exports[`Media List component should render the component 1`] = `
                                         </li>
                                         <Options
                                           changeSize={null}
-                                          current={1}
+                                          current={0}
                                           goButton={false}
                                           locale={
                                             Object {
@@ -1840,12 +1842,12 @@ exports[`Media List component should render the component 1`] = `
 </Provider>
 `;
 
-exports[`Media List component should render the component with data 1`] = `
+exports[`Media List component snapshot testing should render the component with data 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -2173,7 +2175,7 @@ exports[`Media List component should render the component with data 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <Input
                                                         id="filters_q"
@@ -2496,7 +2498,7 @@ exports[`Media List component should render the component with data 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         id="filters_sort"

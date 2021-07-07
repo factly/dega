@@ -17,7 +17,6 @@ const data = {
   medium_id: 1,
   language: 'english',
   categories: [1],
-  episodes: [1],
   description: {
     time: 1595747741807,
     blocks: [
@@ -66,7 +65,6 @@ describe('Podcast form component', () => {
           medium_id: 1,
           language: 'english',
           categories: [1],
-          episodes: [1],
         },
       },
       loading: false,
@@ -141,7 +139,6 @@ describe('Podcast form component', () => {
           medium_id: 1,
           language: 'english',
           categories: [1],
-          episodes: [1],
           description: {
             time: 1595747741807,
             blocks: [
@@ -211,8 +208,6 @@ describe('Podcast form component', () => {
           language: 'english',
           categories: [1],
           category_ids: [1],
-          episodes: [1],
-          episode_ids: [1],
           description: {
             time: 1595747741807,
             blocks: [
@@ -237,7 +232,7 @@ describe('Podcast form component', () => {
         done();
       }, 0);
     });
-    it('should submit form with no categories and no episodes', (done) => {
+    it('should submit form with no categories', (done) => {
       const data2 = {
         id: 1,
         title: 'Podcast-1',
@@ -285,7 +280,6 @@ describe('Podcast form component', () => {
           medium_id: 1,
           language: 'english',
           category_ids: [],
-          episode_ids: [],
           description: {
             time: 1595747741807,
             blocks: [
@@ -327,8 +321,6 @@ describe('Podcast form component', () => {
           language: 'english',
           categories: [1],
           category_ids: [1],
-          episodes: [1],
-          episode_ids: [1],
           medium_id: 1,
           description: {
             time: 1595747741807,
