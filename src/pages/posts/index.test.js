@@ -93,43 +93,34 @@ describe('Posts List component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the component with data', () => {
-      const store2 = mockStore({
-        posts: {
-          req: [
-            {
-              data: [1],
-              query: {
-                page: 1,
-                limit: 20,
-              },
-              total: 1,
+      const state2 = { ...state };
+      state2.posts = {
+        req: [
+          {
+            data: [1],
+            query: {
+              page: 1,
+              limit: 20,
+              format: [1],
+              status: null,
             },
-          ],
-          details: {
-            1: {
-              id: 1,
-              title: 'Post-1',
-              slug: 'post-1',
-              tag_line: 'tag_line',
-              medium_id: 1,
-              format_id: 1,
-            },
+            total: 1,
           },
-          loading: false,
-        },
-        spaces: {
-          orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
-          details: {
-            11: { id: 11, name: 'Space 11' },
+        ],
+        details: {
+          1: {
+            id: 1,
+            title: 'Post-1',
+            slug: 'post-1',
+            tag_line: 'tag_line',
+            medium_id: 1,
+            format_id: 1,
           },
-          loading: false,
-          selected: 11,
         },
-        sidebar: {
-          collapsed: false,
-        },
-      });
-      const tree = shallow(
+        loading: false,
+      };
+      const store2 = mockStore(state2);
+      const tree = mount(
         <Provider store={store2}>
           <Router>
             <Posts permission={{ actions: ['create'] }} formats={formats} />
@@ -257,13 +248,19 @@ describe('Posts List component', () => {
         wrapper
           .find('FormItem')
           .at(3)
+          .find('Select')
+          .props()
+          .onChange({ target: { value: 'all' } });
+        wrapper
+          .find('FormItem')
+          .at(4)
           .find('Selector')
           .at(0)
           .props()
           .onChange({ target: { value: [2] } });
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(5)
           .find('Selector')
           .at(0)
           .props()

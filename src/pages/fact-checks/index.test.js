@@ -115,34 +115,34 @@ describe('FactCheck component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should render the component with data', () => {
-      const store2 = mockStore({
-        posts: {
-          req: [],
-          details: {
-            1: {
-              id: 1,
-              title: 'FactCheck-1',
-              slug: 'factcheck-1',
-              tag_line: 'tag_line',
-              medium_id: 1,
-              format_id: 2,
+      const state2 = { ...state };
+      state2.posts = {
+        req: [
+          {
+            data: [1],
+            query: {
+              page: 1,
+              limit: 20,
+              format: [2],
+              status: null,
             },
+            total: 1,
           },
-          loading: false,
-        },
-        spaces: {
-          orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
-          details: {
-            11: { id: 11, name: 'Space 11' },
+        ],
+        details: {
+          1: {
+            id: 1,
+            title: 'FactCheck-1',
+            slug: 'factcheck-1',
+            tag_line: 'tag_line',
+            medium_id: 1,
+            format_id: 2,
           },
-          loading: false,
-          selected: 11,
         },
-        sidebar: {
-          collapsed: false,
-        },
-      });
-      const tree = shallow(
+        loading: false,
+      };
+      const store2 = mockStore(state2);
+      const tree = mount(
         <Provider store={store2}>
           <Router>
             <FactCheck permission={{ actions: ['create'] }} formats={formats} />
@@ -194,6 +194,7 @@ describe('FactCheck component', () => {
               tag_line: 'tag_line',
               medium_id: 1,
               format_id: 2,
+              status: 'draft',
             },
           },
           loading: false,
@@ -279,13 +280,19 @@ describe('FactCheck component', () => {
         wrapper
           .find('FormItem')
           .at(3)
+          .find('Select')
+          .props()
+          .onChange({ target: { value: 'all' } });
+        wrapper
+          .find('FormItem')
+          .at(4)
           .find('Selector')
           .at(0)
           .props()
           .onChange({ target: { value: [2] } });
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(5)
           .find('Selector')
           .at(0)
           .props()
