@@ -25,6 +25,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
+  const disabledDate = (current) => {
+    return current.valueOf() > Date.now();
+  };
+
   const [current, setCurrent] = React.useState(0);
 
   const onSave = (values) => {
@@ -157,10 +161,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>
           <Form.Item name="claim_date" label="Claim Date">
-            <DatePicker />
+            <DatePicker disabledDate={disabledDate} />
           </Form.Item>
           <Form.Item name="checked_date" label="Checked Date">
-            <DatePicker />
+            <DatePicker disabledDate={disabledDate} />
           </Form.Item>
           <Form.Item label="Claim Sources">
             <Form.List name="claim_sources" label="Claim sources">
