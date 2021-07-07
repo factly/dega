@@ -1,5 +1,5 @@
-import reducer from '../../reducers/categoriesReducer';
-import * as types from '../../constants/categories';
+import reducer from '../../reducers/pagesReducer';
+import * as types from '../../constants/pages';
 
 const initialState = {
   req: [],
@@ -7,7 +7,7 @@ const initialState = {
   loading: true,
 };
 
-describe('categories reducer', () => {
+describe('pages reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
@@ -24,7 +24,7 @@ describe('categories reducer', () => {
       loading: false,
     });
   });
-  it('should handle RESET_CATEGORIES', () => {
+  it('should handle RESET_PAGES', () => {
     expect(
       reducer(
         {
@@ -33,20 +33,16 @@ describe('categories reducer', () => {
           loading: false,
         },
         {
-          type: types.RESET_CATEGORIES,
+          type: types.RESET_PAGES,
           payload: {},
         },
       ),
-    ).toEqual({
-      req: [],
-      loading: true,
-      details: [{ id: 1, name: 'category' }],
-    });
+    ).toEqual(initialState);
   });
-  it('should handle SET_CATEGORIES_LOADING', () => {
+  it('should handle SET_PAGES_LOADING', () => {
     expect(
       reducer(initialState, {
-        type: types.SET_CATEGORIES_LOADING,
+        type: types.SET_PAGES_LOADING,
         payload: true,
       }),
     ).toEqual({
@@ -56,7 +52,7 @@ describe('categories reducer', () => {
     });
     expect(
       reducer(initialState, {
-        type: types.SET_CATEGORIES_LOADING,
+        type: types.SET_PAGES_LOADING,
         payload: false,
       }),
     ).toEqual({
@@ -65,10 +61,10 @@ describe('categories reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_CATEGORIES_REQUEST', () => {
+  it('should handle ADD_PAGES_REQUEST', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORIES_REQUEST,
+        type: types.ADD_PAGES_REQUEST,
         payload: {
           data: [1, 2, 3],
           query: { page: 1, limit: 5 },
@@ -81,7 +77,7 @@ describe('categories reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORIES_REQUEST when req already exists', () => {
+  it('should handle ADD_PAGES_REQUEST when req already exists', () => {
     expect(
       reducer(
         {
@@ -90,7 +86,7 @@ describe('categories reducer', () => {
           loading: true,
         },
         {
-          type: types.ADD_CATEGORIES_REQUEST,
+          type: types.ADD_PAGES_REQUEST,
           payload: {
             data: [1, 2, 3],
             query: { page: 1, limit: 5 },
@@ -104,25 +100,25 @@ describe('categories reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORIES', () => {
+  it('should handle ADD_PAGES', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORIES,
+        type: types.ADD_PAGES,
         payload: [
-          { id: 1, name: 'Category 1' },
-          { id: 2, name: 'Category 2' },
+          { id: 1, title: 'Page 1' },
+          { id: 2, title: 'Page 2' },
         ],
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, name: 'Category 1' }, 2: { id: 2, name: 'Category 2' } },
+      details: { 1: { id: 1, title: 'Page 1' }, 2: { id: 2, title: 'Page 2' } },
       loading: true,
     });
   });
-  it('should handle empty payload ADD_CATEGORIES', () => {
+  it('should handle empty payload ADD_PAGES', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORIES,
+        type: types.ADD_PAGES,
         payload: [],
       }),
     ).toEqual({
@@ -131,61 +127,61 @@ describe('categories reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORY', () => {
+  it('should handle ADD_PAGE', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORY,
-        payload: { id: 1, name: 'new category' },
+        type: types.ADD_PAGE,
+        payload: { id: 1, title: 'new page' },
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, name: 'new category' } },
+      details: { 1: { id: 1, title: 'new page' } },
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORY when details is non-empty', () => {
+  it('should handle ADD_PAGE when details is non-empty', () => {
     expect(
       reducer(
         {
           req: [],
-          details: { 1: { id: 1, name: 'existing category' } },
+          details: { 1: { id: 1, title: 'existing page' } },
           loading: false,
         },
         {
-          type: types.ADD_CATEGORY,
-          payload: { id: 2, name: 'new category' },
+          type: types.ADD_PAGE,
+          payload: { id: 2, title: 'new page' },
         },
       ),
     ).toEqual({
       req: [],
       details: {
-        1: { id: 1, name: 'existing category' },
-        2: { id: 2, name: 'new category' },
+        1: { id: 1, title: 'existing page' },
+        2: { id: 2, title: 'new page' },
       },
       loading: false,
     });
   });
-  it('should handle ADD_CATEGORY when already exists', () => {
+  it('should handle ADD_PAGE when already exists', () => {
     expect(
       reducer(
         {
           req: [],
           details: {
-            1: { id: 1, name: 'existing category' },
-            2: { id: 2, name: 'new category' },
+            1: { id: 1, title: 'existing page' },
+            2: { id: 2, title: 'new page' },
           },
           loading: false,
         },
         {
-          type: types.ADD_CATEGORY,
-          payload: { id: 2, name: 'updated category' },
+          type: types.ADD_PAGE,
+          payload: { id: 2, title: 'updated page' },
         },
       ),
     ).toEqual({
       req: [],
       details: {
-        1: { id: 1, name: 'existing category' },
-        2: { id: 2, name: 'updated category' },
+        1: { id: 1, title: 'existing page' },
+        2: { id: 2, title: 'updated page' },
       },
       loading: false,
     });

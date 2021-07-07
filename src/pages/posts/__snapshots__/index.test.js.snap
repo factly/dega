@@ -10830,6 +10830,7 @@ exports[`Posts List component snapshot testing should render the component with 
                                                                         "theme": "outlined",
                                                                       }
                                                                     }
+                                                                    unselectable="on"
                                                                   >
                                                                     <span
                                                                       aria-label="delete"

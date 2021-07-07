@@ -37,7 +37,11 @@ describe('tags reducer', () => {
           payload: {},
         },
       ),
-    ).toEqual(initialState);
+    ).toEqual({
+      req: [],
+      details: [{ id: 1, name: 'tag' }],
+      loading: true,
+    });
   });
   it('should handle SET_TAGS_LOADING', () => {
     expect(

@@ -37,7 +37,11 @@ describe('Episode reducer', () => {
           payload: {},
         },
       ),
-    ).toEqual(initialState);
+    ).toEqual({
+      req: [],
+      loading: true,
+      details: [{ id: 1, title: 'episode' }],
+    });
   });
   it('should handle SET_EPISODES_LOADING', () => {
     expect(

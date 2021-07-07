@@ -1,5 +1,5 @@
-import reducer from '../../reducers/categoriesReducer';
-import * as types from '../../constants/categories';
+import reducer from '../../reducers/webhooksReducer';
+import * as types from '../../constants/webhooks';
 
 const initialState = {
   req: [],
@@ -7,7 +7,7 @@ const initialState = {
   loading: true,
 };
 
-describe('categories reducer', () => {
+describe('webhooks reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
@@ -24,29 +24,25 @@ describe('categories reducer', () => {
       loading: false,
     });
   });
-  it('should handle RESET_CATEGORIES', () => {
+  it('should handle RESET_WEBHOOKS', () => {
     expect(
       reducer(
         {
           req: [{ data: [1, 2, 3], query: { page: 1, limit: 5 }, total: 3 }],
-          details: [{ id: 1, name: 'category' }],
+          details: [{ id: 1, name: 'webhook' }],
           loading: false,
         },
         {
-          type: types.RESET_CATEGORIES,
+          type: types.RESET_WEBHOOKS,
           payload: {},
         },
       ),
-    ).toEqual({
-      req: [],
-      loading: true,
-      details: [{ id: 1, name: 'category' }],
-    });
+    ).toEqual(initialState);
   });
-  it('should handle SET_CATEGORIES_LOADING', () => {
+  it('should handle SET_WEBHOOKS_LOADING', () => {
     expect(
       reducer(initialState, {
-        type: types.SET_CATEGORIES_LOADING,
+        type: types.SET_WEBHOOKS_LOADING,
         payload: true,
       }),
     ).toEqual({
@@ -56,7 +52,7 @@ describe('categories reducer', () => {
     });
     expect(
       reducer(initialState, {
-        type: types.SET_CATEGORIES_LOADING,
+        type: types.SET_WEBHOOKS_LOADING,
         payload: false,
       }),
     ).toEqual({
@@ -65,10 +61,10 @@ describe('categories reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_CATEGORIES_REQUEST', () => {
+  it('should handle ADD_WEBHOOKS_REQUEST', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORIES_REQUEST,
+        type: types.ADD_WEBHOOKS_REQUEST,
         payload: {
           data: [1, 2, 3],
           query: { page: 1, limit: 5 },
@@ -81,7 +77,7 @@ describe('categories reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORIES_REQUEST when req already exists', () => {
+  it('should handle ADD_WEBHOOKS_REQUEST when req already exists', () => {
     expect(
       reducer(
         {
@@ -90,7 +86,7 @@ describe('categories reducer', () => {
           loading: true,
         },
         {
-          type: types.ADD_CATEGORIES_REQUEST,
+          type: types.ADD_WEBHOOKS_REQUEST,
           payload: {
             data: [1, 2, 3],
             query: { page: 1, limit: 5 },
@@ -104,25 +100,25 @@ describe('categories reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORIES', () => {
+  it('should handle ADD_WEBHOOKS', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORIES,
+        type: types.ADD_WEBHOOKS,
         payload: [
-          { id: 1, name: 'Category 1' },
-          { id: 2, name: 'Category 2' },
+          { id: 1, name: 'Webhook 1' },
+          { id: 2, name: 'Webhook 2' },
         ],
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, name: 'Category 1' }, 2: { id: 2, name: 'Category 2' } },
+      details: { 1: { id: 1, name: 'Webhook 1' }, 2: { id: 2, name: 'Webhook 2' } },
       loading: true,
     });
   });
-  it('should handle empty payload ADD_CATEGORIES', () => {
+  it('should handle empty payload ADD_WEBHOOKS', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORIES,
+        type: types.ADD_WEBHOOKS,
         payload: [],
       }),
     ).toEqual({
@@ -131,61 +127,61 @@ describe('categories reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORY', () => {
+  it('should handle ADD_WEBHOOK', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORY,
-        payload: { id: 1, name: 'new category' },
+        type: types.ADD_WEBHOOK,
+        payload: { id: 1, name: 'new webhook' },
       }),
     ).toEqual({
       req: [],
-      details: { 1: { id: 1, name: 'new category' } },
+      details: { 1: { id: 1, name: 'new webhook' } },
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORY when details is non-empty', () => {
+  it('should handle ADD_WEBHOOK when details is non-empty', () => {
     expect(
       reducer(
         {
           req: [],
-          details: { 1: { id: 1, name: 'existing category' } },
+          details: { 1: { id: 1, name: 'existing webhook' } },
           loading: false,
         },
         {
-          type: types.ADD_CATEGORY,
-          payload: { id: 2, name: 'new category' },
+          type: types.ADD_WEBHOOK,
+          payload: { id: 2, name: 'new webhook' },
         },
       ),
     ).toEqual({
       req: [],
       details: {
-        1: { id: 1, name: 'existing category' },
-        2: { id: 2, name: 'new category' },
+        1: { id: 1, name: 'existing webhook' },
+        2: { id: 2, name: 'new webhook' },
       },
       loading: false,
     });
   });
-  it('should handle ADD_CATEGORY when already exists', () => {
+  it('should handle ADD_WEBHOOK when already exists', () => {
     expect(
       reducer(
         {
           req: [],
           details: {
-            1: { id: 1, name: 'existing category' },
-            2: { id: 2, name: 'new category' },
+            1: { id: 1, name: 'existing webhook' },
+            2: { id: 2, name: 'new webhook' },
           },
           loading: false,
         },
         {
-          type: types.ADD_CATEGORY,
-          payload: { id: 2, name: 'updated category' },
+          type: types.ADD_WEBHOOK,
+          payload: { id: 2, name: 'updated webhook' },
         },
       ),
     ).toEqual({
       req: [],
       details: {
-        1: { id: 1, name: 'existing category' },
-        2: { id: 2, name: 'updated category' },
+        1: { id: 1, name: 'existing webhook' },
+        2: { id: 2, name: 'updated webhook' },
       },
       loading: false,
     });
