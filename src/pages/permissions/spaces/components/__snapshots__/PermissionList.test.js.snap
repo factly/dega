@@ -529,6 +529,7 @@ exports[`Space Permission List component snapshot testing should match component
                                   >
                                     <p>
                                       20
+                                       
                                     </p>
                                   </td>
                                   <td
@@ -606,21 +607,21 @@ exports[`Space Permission List component snapshot testing should match component
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -1030,6 +1031,7 @@ exports[`Space Permission List component snapshot testing should match component
                                         >
                                           <p>
                                             20
+                                             
                                           </p>
                                         </td>
                                         <td
@@ -1107,21 +1109,21 @@ exports[`Space Permission List component snapshot testing should match component
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -3382,6 +3384,7 @@ exports[`Space Permission List component snapshot testing should match component
                                         >
                                           <p>
                                             20
+                                             
                                           </p>
                                         </td>
                                       </Cell>
@@ -4420,7 +4423,7 @@ exports[`Space Permission List component snapshot testing should match component
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -4460,7 +4463,7 @@ exports[`Space Permission List component snapshot testing should match component
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -4500,7 +4503,7 @@ exports[`Space Permission List component snapshot testing should match component
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -6268,6 +6271,7 @@ exports[`Space Permission List component snapshot testing should match component
                                   >
                                     <p>
                                       20
+                                       
                                     </p>
                                   </td>
                                   <td
@@ -6345,21 +6349,21 @@ exports[`Space Permission List component snapshot testing should match component
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -6769,6 +6773,7 @@ exports[`Space Permission List component snapshot testing should match component
                                         >
                                           <p>
                                             20
+                                             
                                           </p>
                                         </td>
                                         <td
@@ -6846,21 +6851,21 @@ exports[`Space Permission List component snapshot testing should match component
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -9121,6 +9126,7 @@ exports[`Space Permission List component snapshot testing should match component
                                         >
                                           <p>
                                             20
+                                             
                                           </p>
                                         </td>
                                       </Cell>
@@ -10159,7 +10165,7 @@ exports[`Space Permission List component snapshot testing should match component
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -10199,7 +10205,7 @@ exports[`Space Permission List component snapshot testing should match component
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -10239,7 +10245,7 @@ exports[`Space Permission List component snapshot testing should match component
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -12007,6 +12013,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                   >
                                     <p>
                                       20
+                                       
                                     </p>
                                   </td>
                                   <td
@@ -12084,21 +12091,21 @@ exports[`Space Permission List component snapshot testing should render componen
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -12508,6 +12515,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                         >
                                           <p>
                                             20
+                                             
                                           </p>
                                         </td>
                                         <td
@@ -12585,21 +12593,21 @@ exports[`Space Permission List component snapshot testing should render componen
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -14860,6 +14868,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                         >
                                           <p>
                                             20
+                                             
                                           </p>
                                         </td>
                                       </Cell>
@@ -15898,7 +15907,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -15938,7 +15947,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -15978,7 +15987,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>

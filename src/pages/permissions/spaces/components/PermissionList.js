@@ -61,32 +61,24 @@ function PermissionList({ admin }) {
       title: 'Media',
       dataIndex: ['permission', 'media'],
       render: (_, record) => {
-        return record.permission.media ? (
-          <p>{record.permission.media >= 0 ? record.permission.media : 'Unlimited'}</p>
-        ) : (
-          <p>0</p>
-        );
+        return record.permission.media >= 0 ? <p>{record.permission.media}</p> : <p>Unlimited</p>;
       },
     },
     {
       title: 'Posts',
       dataIndex: ['permission', 'posts'],
       render: (_, record) => {
-        return record.permission.posts ? (
-          <p>{record.permission.posts >= 0 ? record.permission.posts : 'Unlimited'}</p>
-        ) : (
-          <p>0</p>
-        );
+        return record.permission.posts >= 0 ? <p>{record.permission.posts} </p> : <p>Unlimited</p>;
       },
     },
     {
       title: 'Episodes',
       dataIndex: ['permission', 'episodes'],
       render: (_, record) => {
-        return record.permission.episodes ? (
-          <p>{record.permission.episodes >= 0 ? record.permission.episodes : 'Unlimited'}</p>
+        return record.permission.episodes >= 0 ? (
+          <p>{record.permission.episodes}</p>
         ) : (
-          <p>0</p>
+          <p>Unlimited</p>
         );
       },
     },

@@ -402,7 +402,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -717,7 +717,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -3021,7 +3021,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -4580,7 +4580,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -4895,7 +4895,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -7199,7 +7199,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -8758,7 +8758,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -9073,7 +9073,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -11377,7 +11377,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>

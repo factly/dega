@@ -2009,7 +2009,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               class="ant-table-cell"
                                             >
                                               <p>
-                                                0
+                                                Unlimited
                                               </p>
                                             </td>
                                             <td
@@ -2086,13 +2086,14 @@ exports[`Space Permission component should render the component with data 1`] = 
                                             >
                                               <p>
                                                 20
+                                                 
                                               </p>
                                             </td>
                                             <td
                                               class="ant-table-cell"
                                             >
                                               <p>
-                                                0
+                                                Unlimited
                                               </p>
                                             </td>
                                             <td
@@ -2395,7 +2396,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     class="ant-table-cell"
                                                   >
                                                     <p>
-                                                      0
+                                                      Unlimited
                                                     </p>
                                                   </td>
                                                   <td
@@ -2472,13 +2473,14 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                   >
                                                     <p>
                                                       20
+                                                       
                                                     </p>
                                                   </td>
                                                   <td
                                                     class="ant-table-cell"
                                                   >
                                                     <p>
-                                                      0
+                                                      Unlimited
                                                     </p>
                                                   </td>
                                                   <td
@@ -3669,7 +3671,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     style={Object {}}
                                                   >
                                                     <p>
-                                                      0
+                                                      Unlimited
                                                     </p>
                                                   </td>
                                                 </Cell>
@@ -4705,6 +4707,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                   >
                                                     <p>
                                                       20
+                                                       
                                                     </p>
                                                   </td>
                                                 </Cell>
@@ -4745,7 +4748,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     style={Object {}}
                                                   >
                                                     <p>
-                                                      0
+                                                      Unlimited
                                                     </p>
                                                   </td>
                                                 </Cell>
@@ -6424,7 +6427,7 @@ exports[`Space Permission component should render the component with not admin 1
                                               class="ant-table-cell"
                                             >
                                               <p>
-                                                0
+                                                Unlimited
                                               </p>
                                             </td>
                                             <td
@@ -6503,13 +6506,14 @@ exports[`Space Permission component should render the component with not admin 1
                                             >
                                               <p>
                                                 20
+                                                 
                                               </p>
                                             </td>
                                             <td
                                               class="ant-table-cell"
                                             >
                                               <p>
-                                                0
+                                                Unlimited
                                               </p>
                                             </td>
                                             <td
@@ -6814,7 +6818,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                     class="ant-table-cell"
                                                   >
                                                     <p>
-                                                      0
+                                                      Unlimited
                                                     </p>
                                                   </td>
                                                   <td
@@ -6893,13 +6897,14 @@ exports[`Space Permission component should render the component with not admin 1
                                                   >
                                                     <p>
                                                       20
+                                                       
                                                     </p>
                                                   </td>
                                                   <td
                                                     class="ant-table-cell"
                                                   >
                                                     <p>
-                                                      0
+                                                      Unlimited
                                                     </p>
                                                   </td>
                                                   <td
@@ -8092,7 +8097,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                     style={Object {}}
                                                   >
                                                     <p>
-                                                      0
+                                                      Unlimited
                                                     </p>
                                                   </td>
                                                 </Cell>
@@ -9128,6 +9133,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                   >
                                                     <p>
                                                       20
+                                                       
                                                     </p>
                                                   </td>
                                                 </Cell>
@@ -9168,7 +9174,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                     style={Object {}}
                                                   >
                                                     <p>
-                                                      0
+                                                      Unlimited
                                                     </p>
                                                   </td>
                                                 </Cell>

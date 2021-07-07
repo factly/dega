@@ -499,21 +499,21 @@ exports[`Space Request List component snapshot testing should match the componen
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -915,21 +915,21 @@ exports[`Space Request List component snapshot testing should match the componen
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -4905,7 +4905,7 @@ exports[`Space Request List component snapshot testing should match the componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -4938,7 +4938,7 @@ exports[`Space Request List component snapshot testing should match the componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -4971,7 +4971,7 @@ exports[`Space Request List component snapshot testing should match the componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -7290,21 +7290,21 @@ exports[`Space Request List component snapshot testing should match the componen
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -7706,21 +7706,21 @@ exports[`Space Request List component snapshot testing should match the componen
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -11696,7 +11696,7 @@ exports[`Space Request List component snapshot testing should match the componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -11729,7 +11729,7 @@ exports[`Space Request List component snapshot testing should match the componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -11762,7 +11762,7 @@ exports[`Space Request List component snapshot testing should match the componen
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -14081,21 +14081,21 @@ exports[`Space Request List component snapshot testing should render the compone
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
                                     class="ant-table-cell"
                                   >
                                     <p>
-                                      0
+                                      Unlimited
                                     </p>
                                   </td>
                                   <td
@@ -14497,21 +14497,21 @@ exports[`Space Request List component snapshot testing should render the compone
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
                                           class="ant-table-cell"
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                         <td
@@ -18487,7 +18487,7 @@ exports[`Space Request List component snapshot testing should render the compone
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -18520,7 +18520,7 @@ exports[`Space Request List component snapshot testing should render the compone
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
@@ -18553,7 +18553,7 @@ exports[`Space Request List component snapshot testing should render the compone
                                           style={Object {}}
                                         >
                                           <p>
-                                            0
+                                            Unlimited
                                           </p>
                                         </td>
                                       </Cell>
