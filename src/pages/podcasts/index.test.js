@@ -74,7 +74,11 @@ let state = {
   spaces: {
     orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
     details: {
-      11: { id: 11, name: 'Space 11' },
+      11: {
+        id: 11,
+        name: 'Space 11',
+        permissions: [{ resource: 'podcasts', actions: ['get', 'create'] }],
+      },
     },
     loading: false,
     selected: 11,
@@ -104,6 +108,18 @@ describe('Podcast component', () => {
           details: {},
           loading: false,
         },
+        spaces: {
+          orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
+          details: {
+            11: {
+              id: 11,
+              name: 'Space 11',
+              permissions: [{ resource: 'podcasts', actions: ['get', 'create'] }],
+            },
+          },
+          loading: false,
+          selected: 11,
+        },
       };
       store = mockStore(state2);
       const tree = mount(
@@ -111,7 +127,7 @@ describe('Podcast component', () => {
           <Router>
             <Podcast
               permission={{
-                actions: ['admin'],
+                actions: ['get', 'create'],
               }}
             />
           </Router>
