@@ -53,6 +53,8 @@ definitions:
         type: string
       fact:
         type: string
+      meta_fields:
+        type: string
       rating_id:
         type: integer
       review_sources:
@@ -70,6 +72,8 @@ definitions:
         type: string
       medium_id:
         type: integer
+      meta_fields:
+        type: string
       name:
         type: string
       slug:
@@ -102,6 +106,8 @@ definitions:
         type: integer
       medium_id:
         type: integer
+      meta_fields:
+        type: string
       podcast_id:
         type: integer
       published_date:
@@ -146,6 +152,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       medium_id:
         type: integer
+      meta_fields:
+        type: string
       podcast:
         $ref: '#/definitions/model.Podcast'
       podcast_id:
@@ -201,6 +209,8 @@ definitions:
     properties:
       description:
         type: string
+      meta_fields:
+        type: string
       name:
         type: string
       slug:
@@ -253,6 +263,10 @@ definitions:
         $ref: '#/definitions/model.Medium'
       fav_icon_id:
         type: integer
+      footer_code:
+        type: string
+      header_code:
+        type: string
       id:
         type: integer
       logo:
@@ -263,6 +277,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       logo_mobile_id:
         type: integer
+      meta_fields:
+        type: string
       mobile_icon:
         $ref: '#/definitions/model.Medium'
       mobile_icon_id:
@@ -326,6 +342,10 @@ definitions:
         $ref: '#/definitions/model.Medium'
       fav_icon_id:
         type: integer
+      footer_code:
+        type: string
+      header_code:
+        type: string
       id:
         type: integer
       logo:
@@ -336,6 +356,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       logo_mobile_id:
         type: integer
+      meta_fields:
+        type: string
       mobile_icon:
         $ref: '#/definitions/model.Medium'
       mobile_icon_id:
@@ -388,6 +410,8 @@ definitions:
         type: string
       file_size:
         type: integer
+      meta_fields:
+        type: string
       name:
         type: string
       slug:
@@ -407,6 +431,8 @@ definitions:
   menu.menu:
     properties:
       menu:
+        type: string
+      meta_fields:
         type: string
       name:
         type: string
@@ -551,6 +577,8 @@ definitions:
         type: string
       id:
         type: integer
+      meta_fields:
+        type: string
       rating:
         $ref: '#/definitions/model.Rating'
       rating_id:
@@ -586,6 +614,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       medium_id:
         type: integer
+      meta_fields:
+        type: string
       name:
         type: string
       slug:
@@ -636,6 +666,8 @@ definitions:
         type: string
       id:
         type: integer
+      meta_fields:
+        type: string
       name:
         type: string
       slug:
@@ -687,6 +719,8 @@ definitions:
         type: integer
       id:
         type: integer
+      meta_fields:
+        type: string
       name:
         type: string
       slug:
@@ -715,6 +749,8 @@ definitions:
       id:
         type: integer
       menu:
+        type: string
+      meta_fields:
         type: string
       name:
         type: string
@@ -799,6 +835,10 @@ definitions:
         type: string
       description:
         type: string
+      footer_code:
+        type: string
+      header_code:
+        type: string
       html_description:
         type: string
       id:
@@ -809,6 +849,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       medium_id:
         type: integer
+      meta_fields:
+        type: string
       primary_category:
         $ref: '#/definitions/model.Category'
       primary_category_id:
@@ -861,10 +903,14 @@ definitions:
         type: string
       featured_medium_id:
         type: integer
+      footer_code:
+        type: string
       format:
         $ref: '#/definitions/model.Format'
       format_id:
         type: integer
+      header_code:
+        type: string
       html_description:
         type: string
       id:
@@ -880,6 +926,8 @@ definitions:
       medium:
         $ref: '#/definitions/model.Medium'
       meta:
+        type: string
+      meta_fields:
         type: string
       published_date:
         type: string
@@ -935,6 +983,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       medium_id:
         type: integer
+      meta_fields:
+        type: string
       name:
         type: string
       numeric_value:
@@ -970,6 +1020,10 @@ definitions:
         $ref: '#/definitions/model.Medium'
       fav_icon_id:
         type: integer
+      footer_code:
+        type: string
+      header_code:
+        type: string
       id:
         type: integer
       logo:
@@ -980,6 +1034,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       logo_mobile_id:
         type: integer
+      meta_fields:
+        type: string
       mobile_icon:
         $ref: '#/definitions/model.Medium'
       mobile_icon_id:
@@ -1085,6 +1141,8 @@ definitions:
         type: integer
       is_featured:
         type: boolean
+      meta_fields:
+        type: string
       name:
         type: string
       posts:
@@ -1274,10 +1332,14 @@ definitions:
         type: string
       featured_medium_id:
         type: integer
+      footer_code:
+        type: string
       format:
         $ref: '#/definitions/model.Format'
       format_id:
         type: integer
+      header_code:
+        type: string
       html_description:
         type: string
       id:
@@ -1293,6 +1355,8 @@ definitions:
       medium:
         $ref: '#/definitions/model.Medium'
       meta:
+        type: string
+      meta_fields:
         type: string
       published_date:
         type: string
@@ -1336,10 +1400,16 @@ definitions:
         type: array
       description:
         type: string
+      footer_code:
+        type: string
+      header_code:
+        type: string
       language:
         type: string
       medium_id:
         type: integer
+      meta_fields:
+        type: string
       primary_category_id:
         type: integer
       slug:
@@ -1396,8 +1466,12 @@ definitions:
         type: string
       featured_medium_id:
         type: integer
+      footer_code:
+        type: string
       format_id:
         type: integer
+      header_code:
+        type: string
       is_featured:
         type: boolean
       is_highlighted:
@@ -1407,6 +1481,8 @@ definitions:
       is_sticky:
         type: boolean
       meta:
+        type: string
+      meta_fields:
         type: string
       published_date:
         type: string
@@ -1458,10 +1534,14 @@ definitions:
         type: string
       featured_medium_id:
         type: integer
+      footer_code:
+        type: string
       format:
         $ref: '#/definitions/model.Format'
       format_id:
         type: integer
+      header_code:
+        type: string
       html_description:
         type: string
       id:
@@ -1477,6 +1557,8 @@ definitions:
       medium:
         $ref: '#/definitions/model.Medium'
       meta:
+        type: string
+      meta_fields:
         type: string
       published_date:
         type: string
@@ -1527,6 +1609,8 @@ definitions:
         type: string
       medium_id:
         type: integer
+      meta_fields:
+        type: string
       name:
         type: string
       numeric_value:
@@ -1637,10 +1721,16 @@ definitions:
         type: string
       fav_icon_id:
         type: integer
+      footer_code:
+        type: string
+      header_code:
+        type: string
       logo_id:
         type: integer
       logo_mobile_id:
         type: integer
+      meta_fields:
+        type: string
       mobile_icon_id:
         type: integer
       name:
@@ -1716,6 +1806,8 @@ definitions:
         type: string
       is_featured:
         type: boolean
+      meta_fields:
+        type: string
       name:
         type: string
       slug:

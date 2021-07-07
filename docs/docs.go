@@ -5694,6 +5694,9 @@ var doc = `{
                 "fact": {
                     "type": "string"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "rating_id": {
                     "type": "integer"
                 },
@@ -5716,6 +5719,9 @@ var doc = `{
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -5768,6 +5774,9 @@ var doc = `{
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "podcast_id": {
                     "type": "integer"
@@ -5827,6 +5836,9 @@ var doc = `{
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "podcast": {
                     "$ref": "#/definitions/model.Podcast"
@@ -5915,6 +5927,9 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -5992,6 +6007,12 @@ var doc = `{
                 "fav_icon_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6006,6 +6027,9 @@ var doc = `{
                 },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "mobile_icon": {
                     "$ref": "#/definitions/model.Medium"
@@ -6103,6 +6127,12 @@ var doc = `{
                 "fav_icon_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6117,6 +6147,9 @@ var doc = `{
                 },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "mobile_icon": {
                     "$ref": "#/definitions/model.Medium"
@@ -6203,6 +6236,9 @@ var doc = `{
                 "file_size": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -6227,6 +6263,9 @@ var doc = `{
             ],
             "properties": {
                 "menu": {
+                    "type": "string"
+                },
+                "meta_fields": {
                     "type": "string"
                 },
                 "name": {
@@ -6443,6 +6482,9 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "rating": {
                     "$ref": "#/definitions/model.Rating"
                 },
@@ -6495,6 +6537,9 @@ var doc = `{
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -6576,6 +6621,9 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -6649,6 +6697,9 @@ var doc = `{
                 "id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -6695,6 +6746,9 @@ var doc = `{
                     "type": "integer"
                 },
                 "menu": {
+                    "type": "string"
+                },
+                "meta_fields": {
                     "type": "string"
                 },
                 "name": {
@@ -6819,6 +6873,12 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "html_description": {
                     "type": "string"
                 },
@@ -6833,6 +6893,9 @@ var doc = `{
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "primary_category": {
                     "$ref": "#/definitions/model.Category"
@@ -6913,11 +6976,17 @@ var doc = `{
                 "featured_medium_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
                 "format": {
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
                     "type": "integer"
+                },
+                "header_code": {
+                    "type": "string"
                 },
                 "html_description": {
                     "type": "string"
@@ -6941,6 +7010,9 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "meta": {
+                    "type": "string"
+                },
+                "meta_fields": {
                     "type": "string"
                 },
                 "published_date": {
@@ -7025,6 +7097,9 @@ var doc = `{
                 "medium_id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -7078,6 +7153,12 @@ var doc = `{
                 "fav_icon_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -7092,6 +7173,9 @@ var doc = `{
                 },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "mobile_icon": {
                     "$ref": "#/definitions/model.Medium"
@@ -7255,6 +7339,9 @@ var doc = `{
                 },
                 "is_featured": {
                     "type": "boolean"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -7538,11 +7625,17 @@ var doc = `{
                 "featured_medium_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
                 "format": {
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
                     "type": "integer"
+                },
+                "header_code": {
+                    "type": "string"
                 },
                 "html_description": {
                     "type": "string"
@@ -7566,6 +7659,9 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "meta": {
+                    "type": "string"
+                },
+                "meta_fields": {
                     "type": "string"
                 },
                 "published_date": {
@@ -7636,11 +7732,20 @@ var doc = `{
                 "description": {
                     "type": "string"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "language": {
                     "type": "string"
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "primary_category_id": {
                     "type": "integer"
@@ -7727,8 +7832,14 @@ var doc = `{
                 "featured_medium_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
                 "format_id": {
                     "type": "integer"
+                },
+                "header_code": {
+                    "type": "string"
                 },
                 "is_featured": {
                     "type": "boolean"
@@ -7743,6 +7854,9 @@ var doc = `{
                     "type": "boolean"
                 },
                 "meta": {
+                    "type": "string"
+                },
+                "meta_fields": {
                     "type": "string"
                 },
                 "published_date": {
@@ -7816,11 +7930,17 @@ var doc = `{
                 "featured_medium_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
                 "format": {
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
                     "type": "integer"
+                },
+                "header_code": {
+                    "type": "string"
                 },
                 "html_description": {
                     "type": "string"
@@ -7844,6 +7964,9 @@ var doc = `{
                     "$ref": "#/definitions/model.Medium"
                 },
                 "meta": {
+                    "type": "string"
+                },
+                "meta_fields": {
                     "type": "string"
                 },
                 "published_date": {
@@ -7926,6 +8049,9 @@ var doc = `{
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -8091,11 +8217,20 @@ var doc = `{
                 "fav_icon_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "mobile_icon_id": {
                     "type": "integer"
@@ -8209,6 +8344,9 @@ var doc = `{
                 },
                 "is_featured": {
                     "type": "boolean"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
