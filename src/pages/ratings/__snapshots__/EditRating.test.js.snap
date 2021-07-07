@@ -4218,6 +4218,7 @@ exports[`Ratings Edit component snapshot testing should render the component 1`]
                                     }
                                   >
                                     <Editor
+                                      basic={true}
                                       id="creat-rating_description"
                                       onChange={[Function]}
                                       placeholder="Enter Description..."

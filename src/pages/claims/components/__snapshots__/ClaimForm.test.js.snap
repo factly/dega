@@ -577,7 +577,6 @@ exports[`Claims Create Form component snapshot testing should match component in
                                   >
                                     <Component
                                       update={1}
-                                      value="title"
                                     >
                                       <TextArea
                                         id="create-claim_claim"
@@ -6539,7 +6538,6 @@ exports[`Claims Create Form component snapshot testing should match component in
                                   >
                                     <Component
                                       update={2}
-                                      value="title"
                                     >
                                       <TextArea
                                         id="create-claim_claim"
@@ -12441,7 +12439,6 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                   >
                                     <Component
                                       update={1}
-                                      value="title"
                                     >
                                       <TextArea
                                         id="create-claim_claim"
@@ -18404,7 +18401,6 @@ exports[`Claims Create Form component snapshot testing should match component wi
                                   >
                                     <Component
                                       update={2}
-                                      value="title"
                                     >
                                       <TextArea
                                         id="create-claim_claim"

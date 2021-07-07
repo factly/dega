@@ -224,6 +224,64 @@ exports[`Space Edit Form component snapshot testing should match component in al
                 </div>
               </div>
             </Step>
+            <Step
+              active={false}
+              iconPrefix="ant"
+              icons={
+                Object {
+                  "error": <ForwardRef(CloseOutlined)
+                    className="ant-steps-error-icon"
+                  />,
+                  "finish": <ForwardRef(CheckOutlined)
+                    className="ant-steps-finish-icon"
+                  />,
+                }
+              }
+              key="3"
+              onStepClick={[Function]}
+              prefixCls="ant-steps"
+              progressDot={false}
+              status="wait"
+              stepIcon={[Function]}
+              stepIndex={3}
+              stepNumber="4"
+              title="Analytics"
+              wrapperStyle={Object {}}
+            >
+              <div
+                className="ant-steps-item ant-steps-item-wait"
+                style={Object {}}
+              >
+                <div
+                  className="ant-steps-item-container"
+                  onClick={[Function]}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <div
+                    className="ant-steps-item-tail"
+                  />
+                  <div
+                    className="ant-steps-item-icon"
+                  >
+                    <span
+                      className="ant-steps-icon"
+                    >
+                      4
+                    </span>
+                  </div>
+                  <div
+                    className="ant-steps-item-content"
+                  >
+                    <div
+                      className="ant-steps-item-title"
+                    >
+                      Analytics
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Step>
           </div>
         </Steps>
       </Steps>
@@ -4521,6 +4579,736 @@ exports[`Space Edit Form component snapshot testing should match component in al
                   </WrapperField>
                 </FormItem>
               </div>
+              <div
+                style={
+                  Object {
+                    "display": "none",
+                  }
+                }
+              >
+                <FormItem
+                  label="Server URL"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "server_url",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Server URL"
+                    messageVariables={
+                      Object {
+                        "label": "Server URL",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "server_url",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_server_url"
+                      label="Server URL"
+                      messageVariables={
+                        Object {
+                          "label": "Server URL",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "server_url",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_server_url"
+                            label="Server URL"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "server_url",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_server_url"
+                                  title="Server URL"
+                                >
+                                  Server URL
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Server URL"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "server_url",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <Input
+                                        id="create-space_analytics_plausible_server_url"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                        type="text"
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <input
+                                              className="ant-input"
+                                              id="create-space_analytics_plausible_server_url"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              type="text"
+                                            />
+                                          }
+                                          focused={false}
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_server_url"
+                                          inputType="input"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          type="text"
+                                          value=""
+                                        >
+                                          <input
+                                            className="ant-input"
+                                            id="create-space_analytics_plausible_server_url"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            type="text"
+                                            value=""
+                                          />
+                                        </ClearableLabeledInput>
+                                      </Input>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+                <FormItem
+                  label="Domain"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "domain",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Domain"
+                    messageVariables={
+                      Object {
+                        "label": "Domain",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "domain",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_domain"
+                      label="Domain"
+                      messageVariables={
+                        Object {
+                          "label": "Domain",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "domain",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_domain"
+                            label="Domain"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "domain",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_domain"
+                                  title="Domain"
+                                >
+                                  Domain
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Domain"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "domain",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <Input
+                                        id="create-space_analytics_plausible_domain"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                        type="text"
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <input
+                                              className="ant-input"
+                                              id="create-space_analytics_plausible_domain"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              type="text"
+                                            />
+                                          }
+                                          focused={false}
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_domain"
+                                          inputType="input"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          type="text"
+                                          value=""
+                                        >
+                                          <input
+                                            className="ant-input"
+                                            id="create-space_analytics_plausible_domain"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            type="text"
+                                            value=""
+                                          />
+                                        </ClearableLabeledInput>
+                                      </Input>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+                <FormItem
+                  label="Embed Code"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "embed_code",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Embed Code"
+                    messageVariables={
+                      Object {
+                        "label": "Embed Code",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "embed_code",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_embed_code"
+                      label="Embed Code"
+                      messageVariables={
+                        Object {
+                          "label": "Embed Code",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "embed_code",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_embed_code"
+                            label="Embed Code"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "embed_code",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_embed_code"
+                                  title="Embed Code"
+                                >
+                                  Embed Code
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Embed Code"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "embed_code",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <TextArea
+                                        id="create-space_analytics_plausible_embed_code"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <TextArea
+                                              className=""
+                                              id="create-space_analytics_plausible_embed_code"
+                                              onChange={[Function]}
+                                              prefixCls="ant-input"
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                            />
+                                          }
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_embed_code"
+                                          inputType="text"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          value=""
+                                        >
+                                          <TextArea
+                                            className=""
+                                            id="create-space_analytics_plausible_embed_code"
+                                            onChange={[Function]}
+                                            prefixCls="ant-input"
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            value=""
+                                          >
+                                            <ResizableTextArea
+                                              className=""
+                                              id="create-space_analytics_plausible_embed_code"
+                                              onChange={[Function]}
+                                              onKeyDown={[Function]}
+                                              prefixCls="ant-input"
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              value=""
+                                            >
+                                              <ResizeObserver
+                                                disabled={true}
+                                                onResize={[Function]}
+                                              >
+                                                <textarea
+                                                  className="ant-input"
+                                                  id="create-space_analytics_plausible_embed_code"
+                                                  onChange={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "width": "100%",
+                                                    }
+                                                  }
+                                                  value=""
+                                                />
+                                              </ResizeObserver>
+                                            </ResizableTextArea>
+                                          </TextArea>
+                                        </ClearableLabeledInput>
+                                      </TextArea>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+              </div>
               <FormItem>
                 <Row
                   className="ant-form-item"
@@ -4922,6 +5710,64 @@ exports[`Space Edit Form component snapshot testing should match component with 
                       className="ant-steps-item-title"
                     >
                       Contact
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Step>
+            <Step
+              active={false}
+              iconPrefix="ant"
+              icons={
+                Object {
+                  "error": <ForwardRef(CloseOutlined)
+                    className="ant-steps-error-icon"
+                  />,
+                  "finish": <ForwardRef(CheckOutlined)
+                    className="ant-steps-finish-icon"
+                  />,
+                }
+              }
+              key="3"
+              onStepClick={[Function]}
+              prefixCls="ant-steps"
+              progressDot={false}
+              status="wait"
+              stepIcon={[Function]}
+              stepIndex={3}
+              stepNumber="4"
+              title="Analytics"
+              wrapperStyle={Object {}}
+            >
+              <div
+                className="ant-steps-item ant-steps-item-wait"
+                style={Object {}}
+              >
+                <div
+                  className="ant-steps-item-container"
+                  onClick={[Function]}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <div
+                    className="ant-steps-item-tail"
+                  />
+                  <div
+                    className="ant-steps-item-icon"
+                  >
+                    <span
+                      className="ant-steps-icon"
+                    >
+                      4
+                    </span>
+                  </div>
+                  <div
+                    className="ant-steps-item-content"
+                  >
+                    <div
+                      className="ant-steps-item-title"
+                    >
+                      Analytics
                     </div>
                   </div>
                 </div>
@@ -9441,6 +10287,736 @@ exports[`Space Edit Form component snapshot testing should match component with 
                   </WrapperField>
                 </FormItem>
               </div>
+              <div
+                style={
+                  Object {
+                    "display": "none",
+                  }
+                }
+              >
+                <FormItem
+                  label="Server URL"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "server_url",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Server URL"
+                    messageVariables={
+                      Object {
+                        "label": "Server URL",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "server_url",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_server_url"
+                      label="Server URL"
+                      messageVariables={
+                        Object {
+                          "label": "Server URL",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "server_url",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_server_url"
+                            label="Server URL"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "server_url",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_server_url"
+                                  title="Server URL"
+                                >
+                                  Server URL
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Server URL"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "server_url",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <Input
+                                        id="create-space_analytics_plausible_server_url"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                        type="text"
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <input
+                                              className="ant-input"
+                                              id="create-space_analytics_plausible_server_url"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              type="text"
+                                            />
+                                          }
+                                          focused={false}
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_server_url"
+                                          inputType="input"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          type="text"
+                                          value=""
+                                        >
+                                          <input
+                                            className="ant-input"
+                                            id="create-space_analytics_plausible_server_url"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            type="text"
+                                            value=""
+                                          />
+                                        </ClearableLabeledInput>
+                                      </Input>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+                <FormItem
+                  label="Domain"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "domain",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Domain"
+                    messageVariables={
+                      Object {
+                        "label": "Domain",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "domain",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_domain"
+                      label="Domain"
+                      messageVariables={
+                        Object {
+                          "label": "Domain",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "domain",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_domain"
+                            label="Domain"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "domain",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_domain"
+                                  title="Domain"
+                                >
+                                  Domain
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Domain"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "domain",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <Input
+                                        id="create-space_analytics_plausible_domain"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                        type="text"
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <input
+                                              className="ant-input"
+                                              id="create-space_analytics_plausible_domain"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              type="text"
+                                            />
+                                          }
+                                          focused={false}
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_domain"
+                                          inputType="input"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          type="text"
+                                          value=""
+                                        >
+                                          <input
+                                            className="ant-input"
+                                            id="create-space_analytics_plausible_domain"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            type="text"
+                                            value=""
+                                          />
+                                        </ClearableLabeledInput>
+                                      </Input>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+                <FormItem
+                  label="Embed Code"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "embed_code",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Embed Code"
+                    messageVariables={
+                      Object {
+                        "label": "Embed Code",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "embed_code",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_embed_code"
+                      label="Embed Code"
+                      messageVariables={
+                        Object {
+                          "label": "Embed Code",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "embed_code",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_embed_code"
+                            label="Embed Code"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "embed_code",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_embed_code"
+                                  title="Embed Code"
+                                >
+                                  Embed Code
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Embed Code"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "embed_code",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <TextArea
+                                        id="create-space_analytics_plausible_embed_code"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <TextArea
+                                              className=""
+                                              id="create-space_analytics_plausible_embed_code"
+                                              onChange={[Function]}
+                                              prefixCls="ant-input"
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                            />
+                                          }
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_embed_code"
+                                          inputType="text"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          value=""
+                                        >
+                                          <TextArea
+                                            className=""
+                                            id="create-space_analytics_plausible_embed_code"
+                                            onChange={[Function]}
+                                            prefixCls="ant-input"
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            value=""
+                                          >
+                                            <ResizableTextArea
+                                              className=""
+                                              id="create-space_analytics_plausible_embed_code"
+                                              onChange={[Function]}
+                                              onKeyDown={[Function]}
+                                              prefixCls="ant-input"
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              value=""
+                                            >
+                                              <ResizeObserver
+                                                disabled={true}
+                                                onResize={[Function]}
+                                              >
+                                                <textarea
+                                                  className="ant-input"
+                                                  id="create-space_analytics_plausible_embed_code"
+                                                  onChange={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "width": "100%",
+                                                    }
+                                                  }
+                                                  value=""
+                                                />
+                                              </ResizeObserver>
+                                            </ResizableTextArea>
+                                          </TextArea>
+                                        </ClearableLabeledInput>
+                                      </TextArea>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+              </div>
               <FormItem>
                 <Row
                   className="ant-form-item"
@@ -9808,6 +11384,64 @@ exports[`Space Edit Form component snapshot testing should render the component 
                       className="ant-steps-item-title"
                     >
                       Contact
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Step>
+            <Step
+              active={false}
+              iconPrefix="ant"
+              icons={
+                Object {
+                  "error": <ForwardRef(CloseOutlined)
+                    className="ant-steps-error-icon"
+                  />,
+                  "finish": <ForwardRef(CheckOutlined)
+                    className="ant-steps-finish-icon"
+                  />,
+                }
+              }
+              key="3"
+              onStepClick={[Function]}
+              prefixCls="ant-steps"
+              progressDot={false}
+              status="wait"
+              stepIcon={[Function]}
+              stepIndex={3}
+              stepNumber="4"
+              title="Analytics"
+              wrapperStyle={Object {}}
+            >
+              <div
+                className="ant-steps-item ant-steps-item-wait"
+                style={Object {}}
+              >
+                <div
+                  className="ant-steps-item-container"
+                  onClick={[Function]}
+                  role="button"
+                  tabIndex={0}
+                >
+                  <div
+                    className="ant-steps-item-tail"
+                  />
+                  <div
+                    className="ant-steps-item-icon"
+                  >
+                    <span
+                      className="ant-steps-icon"
+                    >
+                      4
+                    </span>
+                  </div>
+                  <div
+                    className="ant-steps-item-content"
+                  >
+                    <div
+                      className="ant-steps-item-title"
+                    >
+                      Analytics
                     </div>
                   </div>
                 </div>
@@ -14083,6 +15717,736 @@ exports[`Space Edit Form component snapshot testing should render the component 
                                           />
                                         </ClearableLabeledInput>
                                       </Input>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+              </div>
+              <div
+                style={
+                  Object {
+                    "display": "none",
+                  }
+                }
+              >
+                <FormItem
+                  label="Server URL"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "server_url",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Server URL"
+                    messageVariables={
+                      Object {
+                        "label": "Server URL",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "server_url",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_server_url"
+                      label="Server URL"
+                      messageVariables={
+                        Object {
+                          "label": "Server URL",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "server_url",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_server_url"
+                            label="Server URL"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "server_url",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_server_url"
+                                  title="Server URL"
+                                >
+                                  Server URL
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Server URL"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "server_url",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <Input
+                                        id="create-space_analytics_plausible_server_url"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                        type="text"
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <input
+                                              className="ant-input"
+                                              id="create-space_analytics_plausible_server_url"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              type="text"
+                                            />
+                                          }
+                                          focused={false}
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_server_url"
+                                          inputType="input"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          type="text"
+                                          value=""
+                                        >
+                                          <input
+                                            className="ant-input"
+                                            id="create-space_analytics_plausible_server_url"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            type="text"
+                                            value=""
+                                          />
+                                        </ClearableLabeledInput>
+                                      </Input>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+                <FormItem
+                  label="Domain"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "domain",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Domain"
+                    messageVariables={
+                      Object {
+                        "label": "Domain",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "domain",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_domain"
+                      label="Domain"
+                      messageVariables={
+                        Object {
+                          "label": "Domain",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "domain",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_domain"
+                            label="Domain"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "domain",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_domain"
+                                  title="Domain"
+                                >
+                                  Domain
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Domain"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "domain",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <Input
+                                        id="create-space_analytics_plausible_domain"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                        type="text"
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <input
+                                              className="ant-input"
+                                              id="create-space_analytics_plausible_domain"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              type="text"
+                                            />
+                                          }
+                                          focused={false}
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_domain"
+                                          inputType="input"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          type="text"
+                                          value=""
+                                        >
+                                          <input
+                                            className="ant-input"
+                                            id="create-space_analytics_plausible_domain"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            type="text"
+                                            value=""
+                                          />
+                                        </ClearableLabeledInput>
+                                      </Input>
+                                    </Component>
+                                  </div>
+                                </div>
+                                <ErrorList
+                                  errors={Array []}
+                                  onDomErrorVisibleChange={[Function]}
+                                >
+                                  <CSSMotion
+                                    motionAppear={true}
+                                    motionDeadline={500}
+                                    motionName="show-help"
+                                    onLeaveEnd={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </ErrorList>
+                              </div>
+                            </Col>
+                          </FormItemInput>
+                        </div>
+                      </Row>
+                    </Field>
+                  </WrapperField>
+                </FormItem>
+                <FormItem
+                  label="Embed Code"
+                  name={
+                    Array [
+                      "analytics",
+                      "plausible",
+                      "embed_code",
+                    ]
+                  }
+                >
+                  <WrapperField
+                    label="Embed Code"
+                    messageVariables={
+                      Object {
+                        "label": "Embed Code",
+                      }
+                    }
+                    name={
+                      Array [
+                        "analytics",
+                        "plausible",
+                        "embed_code",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                  >
+                    <Field
+                      fieldContext={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "create-space",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                          "validateTrigger": "onChange",
+                        }
+                      }
+                      key="_analytics_plausible_embed_code"
+                      label="Embed Code"
+                      messageVariables={
+                        Object {
+                          "label": "Embed Code",
+                        }
+                      }
+                      name={
+                        Array [
+                          "analytics",
+                          "plausible",
+                          "embed_code",
+                        ]
+                      }
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                      valuePropName="value"
+                    >
+                      <Row
+                        className="ant-form-item"
+                        key="row"
+                      >
+                        <div
+                          className="ant-row ant-form-item"
+                          style={Object {}}
+                        >
+                          <FormItemLabel
+                            htmlFor="create-space_analytics_plausible_embed_code"
+                            label="Embed Code"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "embed_code",
+                              ]
+                            }
+                            prefixCls="ant-form"
+                            required={false}
+                            requiredMark={true}
+                          >
+                            <Col
+                              className="ant-form-item-label"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-label"
+                                style={Object {}}
+                              >
+                                <label
+                                  className=""
+                                  htmlFor="create-space_analytics_plausible_embed_code"
+                                  title="Embed Code"
+                                >
+                                  Embed Code
+                                </label>
+                              </div>
+                            </Col>
+                          </FormItemLabel>
+                          <FormItemInput
+                            errors={Array []}
+                            label="Embed Code"
+                            name={
+                              Array [
+                                "analytics",
+                                "plausible",
+                                "embed_code",
+                              ]
+                            }
+                            onDomErrorVisibleChange={[Function]}
+                            prefixCls="ant-form"
+                            status=""
+                            touched={false}
+                            validateStatus=""
+                            validating={false}
+                          >
+                            <Col
+                              className="ant-form-item-control"
+                              span={8}
+                            >
+                              <div
+                                className="ant-col ant-col-8 ant-form-item-control"
+                                style={Object {}}
+                              >
+                                <div
+                                  className="ant-form-item-control-input"
+                                >
+                                  <div
+                                    className="ant-form-item-control-input-content"
+                                  >
+                                    <Component
+                                      update={1}
+                                    >
+                                      <TextArea
+                                        id="create-space_analytics_plausible_embed_code"
+                                        onChange={[Function]}
+                                        style={
+                                          Object {
+                                            "width": "100%",
+                                          }
+                                        }
+                                      >
+                                        <ClearableLabeledInput
+                                          bordered={true}
+                                          element={
+                                            <TextArea
+                                              className=""
+                                              id="create-space_analytics_plausible_embed_code"
+                                              onChange={[Function]}
+                                              prefixCls="ant-input"
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                            />
+                                          }
+                                          handleReset={[Function]}
+                                          id="create-space_analytics_plausible_embed_code"
+                                          inputType="text"
+                                          onChange={[Function]}
+                                          prefixCls="ant-input"
+                                          style={
+                                            Object {
+                                              "width": "100%",
+                                            }
+                                          }
+                                          triggerFocus={[Function]}
+                                          value=""
+                                        >
+                                          <TextArea
+                                            className=""
+                                            id="create-space_analytics_plausible_embed_code"
+                                            onChange={[Function]}
+                                            prefixCls="ant-input"
+                                            style={
+                                              Object {
+                                                "width": "100%",
+                                              }
+                                            }
+                                            value=""
+                                          >
+                                            <ResizableTextArea
+                                              className=""
+                                              id="create-space_analytics_plausible_embed_code"
+                                              onChange={[Function]}
+                                              onKeyDown={[Function]}
+                                              prefixCls="ant-input"
+                                              style={
+                                                Object {
+                                                  "width": "100%",
+                                                }
+                                              }
+                                              value=""
+                                            >
+                                              <ResizeObserver
+                                                disabled={true}
+                                                onResize={[Function]}
+                                              >
+                                                <textarea
+                                                  className="ant-input"
+                                                  id="create-space_analytics_plausible_embed_code"
+                                                  onChange={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  style={
+                                                    Object {
+                                                      "width": "100%",
+                                                    }
+                                                  }
+                                                  value=""
+                                                />
+                                              </ResizeObserver>
+                                            </ResizableTextArea>
+                                          </TextArea>
+                                        </ClearableLabeledInput>
+                                      </TextArea>
                                     </Component>
                                   </div>
                                 </div>

@@ -37,7 +37,11 @@ describe('media reducer', () => {
           payload: {},
         },
       ),
-    ).toEqual(initialState);
+    ).toEqual({
+      req: [],
+      details: [{ id: 1, name: 'media' }],
+      loading: true,
+    });
   });
   it('should handle SET_MEDIA_LOADING', () => {
     expect(

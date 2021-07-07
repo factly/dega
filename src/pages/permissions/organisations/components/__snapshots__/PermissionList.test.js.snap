@@ -10004,6 +10004,21 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                       "title": "Action",
                                       "width": "30%",
                                     },
+                                    Object {
+                                      "children": "Action",
+                                      "className": "",
+                                      "colEnd": 2,
+                                      "colSpan": 1,
+                                      "colStart": 2,
+                                      "column": Object {
+                                        "dataIndex": "operation",
+                                        "render": [Function],
+                                        "title": "Action",
+                                        "width": "30%",
+                                      },
+                                      "key": undefined,
+                                      "rowSpan": 1,
+                                    },
                                   ]
                                 }
                                 flattenColumns={

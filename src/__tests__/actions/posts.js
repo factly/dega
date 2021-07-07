@@ -147,8 +147,9 @@ describe('posts actions', () => {
       category: [33],
       format: [42],
       status: 'draft',
+      author: [11],
     };
-    const posts = [post];
+    const posts = [{ ...post, status: 'draft' }];
     const resp = { data: { nodes: posts, total: 1 } };
     axios.get.mockResolvedValue(resp);
 
@@ -213,6 +214,7 @@ describe('posts actions', () => {
           {
             id: 1,
             name: 'Post 1',
+            status: 'draft',
             authors: [11],
             tags: [21, 22],
             categories: [31, 32],
@@ -237,7 +239,7 @@ describe('posts actions', () => {
     ];
 
     const params = new URLSearchParams(
-      'category=33&tag=21&format=42&page=1&limit=5&sort=asc&q=post&status=draft',
+      'category=33&tag=21&format=42&page=1&limit=5&sort=asc&q=post&status=draft&author=11',
     );
 
     const store = mockStore({ initialState });
@@ -255,9 +257,9 @@ describe('posts actions', () => {
       tag: [21],
       category: [33],
       format: [42],
-      status: 'draft',
+      status: 'publish',
     };
-    const posts = [post];
+    const posts = [{ ...post, status: 'publish' }];
     const resp = { data: { nodes: posts, total: 1 } };
     axios.get.mockResolvedValue(resp);
 
@@ -322,6 +324,7 @@ describe('posts actions', () => {
           {
             id: 1,
             name: 'Post 1',
+            status: 'publish',
             authors: [11],
             tags: [21, 22],
             categories: [31, 32],
@@ -345,7 +348,9 @@ describe('posts actions', () => {
       },
     ];
 
-    const params = new URLSearchParams('category=33&tag=21&format=42&sort=asc&q=post&status=draft');
+    const params = new URLSearchParams(
+      'category=33&tag=21&format=42&sort=asc&q=post&status=publish',
+    );
 
     const store = mockStore({ initialState });
     store
@@ -357,7 +362,7 @@ describe('posts actions', () => {
   });
   it('should create actions to fetch posts success without any optional fields', () => {
     const query = { page: 1, limit: 5 };
-    const post_without_fields = { ...post };
+    const post_without_fields = { ...post, status: 'ready' };
     post_without_fields.categories = [];
     post_without_fields.authors = [];
     post_without_fields.tags = [];
@@ -422,6 +427,7 @@ describe('posts actions', () => {
           {
             id: 1,
             name: 'Post 1',
+            status: 'ready',
             authors: [],
             tags: [],
             categories: [],
@@ -781,7 +787,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Post added',
+          message: 'Post added & Ready to Publish',
           time: Date.now(),
         },
       },
@@ -857,7 +863,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Post added',
+          message: 'Post added & Ready to Publish',
           time: Date.now(),
         },
       },
@@ -909,7 +915,7 @@ describe('posts actions', () => {
     expect(axios.post).toHaveBeenCalledWith(types.POSTS_API, post);
   });
   it('should create actions to update post success', () => {
-    const resp = { data: post };
+    const resp = { data: { ...post, status: 'draft' } };
     axios.put.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -972,6 +978,7 @@ describe('posts actions', () => {
         payload: {
           id: 1,
           name: 'Post 1',
+          status: 'draft',
           authors: [11],
           tags: [21, 22],
           categories: [31, 32],
@@ -985,7 +992,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Draft Saved',
+          message: 'Draft saved & Ready to Publish',
           time: Date.now(),
         },
       },
